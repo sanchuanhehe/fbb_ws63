@@ -6,7 +6,7 @@
 
 ## 购买渠道
 
-|      名称      | 硬件资料                                                     | 介绍          |
+|     片名称     | 硬件资料                                                     | 介绍          |
 | :------------: | ------------------------------------------------------------ | ------------- |
 | Q3553333N1100  | [购买链接](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html) | ws63解决方案  |
 | Q3553333N1100E | [购买链接](https://search.ickey.cn/?keyword=Q353333N1100E&bom_ab=null) | ws63E解决方案 |
@@ -247,8 +247,6 @@ HiHope_NearLink_DK3863E_V03提供了以下Demo供开发参考：
   <![endif]>
 </table>
 
-
-
 BearPi-Pico H3863提供了以下Demo供开发参考：
 
 <table  width="990" border="0" cellpadding="0" cellspacing="0" style='border-collapse:collapse;table-layout:fixed;'>
@@ -261,60 +259,59 @@ BearPi-Pico H3863提供了以下Demo供开发参考：
   <td width="140" align="center" rowspan="6" style='height:27.00pt' x:str>
 <strong>基础驱动</strong></td>
   <td x:str><strong>I2C</strong></td>
-  <td width="170" x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/6.I2C%20%E9%A9%B1%E5%8A%A8OLED%E5%B1%8F%E5%B9%95%E6%B5%8B%E8%AF%95.html">I2C驱动OLED屏幕案例</a></td>
-
+  <td width="170" x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/6.I2C%20%E9%A9%B1%E5%8A%A8OLED%E5%B1%8F%E5%B9%95%E6%B5%8B%E8%AF%95.html">I2C驱动OLED屏幕案例</a></td> <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
   <td width="170" x:str><a href=""></a></td>
   <td width="170" x:str><a href=""></a></td>
  </tr>
  <tr height="18" style='height:13.50pt;'>
   <td x:str><strong>SPI</strong></td>
-  <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/7.SPI%20%E9%A9%B1%E5%8A%A8OLED%E5%B1%8F%E5%B9%95%E6%B5%8B%E8%AF%95.html">SPI驱动OLED屏幕案例</a></td>
-
-  <td ></td>
+  <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/7.SPI%20%E9%A9%B1%E5%8A%A8OLED%E5%B1%8F%E5%B9%95%E6%B5%8B%E8%AF%95.html">SPI驱动OLED屏幕案例</a></td><td ></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
   <td ></td>
  </tr>
  <tr height="18" style='height:13.50pt;'>
   <td x:str><strong>UART</strong></td>
   <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/5.UART%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E6%B5%8B%E8%AF%95.html">开发板UART自发自收</a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
   <td ></td>
   <td ></td>
- </tr>
-
- <tr height="18" style='height:13.50pt;'>
+ </tr> <tr height="18" style='height:13.50pt;'>
   <td x:str><strong>ADC</strong></td>
-  <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/4.ADC%E9%87%87%E6%A0%B7%E6%B5%8B%E8%AF%95.html">ADC案例</a></td>
-
+  <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/4.ADC%E9%87%87%E6%A0%B7%E6%B5%8B%E8%AF%95.html">ADC案例</a></td>  <td ></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
   <td ></td>
-  <td ></td>
- </tr>
-
- <tr height="18" style='height:13.50pt;'>
+ </tr><tr height="18" style='height:13.50pt;'>
   <td x:str><strong>PWM</strong></td>
-  <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/3.PWM%E8%BE%93%E5%87%BA%E6%B5%8B%E8%AF%95.html">PWM案例</a></td>
-
+  <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/3.PWM%E8%BE%93%E5%87%BA%E6%B5%8B%E8%AF%95.html">PWM案例</a></td><td ></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
   <td ></td>
-  <td ></td>
- </tr>
-
- <tr height="18" style='height:13.50pt;'>
+ </tr><tr height="18" style='height:13.50pt;'>
   <td x:str><strong>GPIO</strong></td>
   <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/1.GPIO%E7%82%B9%E4%BA%AELED%E7%81%AF%E6%B5%8B%E8%AF%95.html">点亮LED灯案例</a></td>
-  <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/2.GPIO%E6%8C%89%E9%94%AE%E4%B8%AD%E6%96%AD%E6%B5%8B%E8%AF%95.html">按键案例</a></td>
-
-
-  <td ></td>
- </tr>
-
-  <tr height="18" style='height:13.50pt;'>
+  <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/2.GPIO%E6%8C%89%E9%94%AE%E4%B8%AD%E6%96%AD%E6%B5%8B%E8%AF%95.html">按键案例</a></td><td ></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
+ </tr> <tr height="18" style='height:13.50pt;'>
   <td width="140" align="center" rowspan="1" style='height:27.00pt' x:str>
 <strong>星闪</strong></td>
   <td x:str><strong>SLE</strong></td>
   <td width="170" x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/SLE%E4%B8%B2%E5%8F%A3%E9%80%8F%E4%BC%A0%E6%B5%8B%E8%AF%95.html">SLE串口透传</a></td>
   <td width="170" x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/SLE%E7%BD%91%E5%85%B3%E9%80%8F%E4%BC%A0%E6%B5%8B%E8%AF%95.html">SLE网关透传</a></td>
-
   <td width="170" x:str><a href=""></a></td>
-
- </tr>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td> </tr>
   <tr height="18" style='height:13.50pt;'>
   <td width="140" align="center" rowspan="1" style='height:27.00pt' x:str>
 <strong>BLE</strong></td>
@@ -322,17 +319,18 @@ BearPi-Pico H3863提供了以下Demo供开发参考：
     <td width="170" x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/BLE%E4%B8%B2%E5%8F%A3%E9%80%8F%E4%BC%A0%E6%B5%8B%E8%AF%95.html">BLE串口透传</a></td>
   <td width="170" x:str><a href=""></a></td>
   <td width="170" x:str><a href=""></a></td>
-
- </tr>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td></tr>
   <tr height="18" style='height:13.50pt;'>
   <td width="140" align="center" rowspan="1" style='height:27.00pt' x:str>
 <strong>Wi-Fi</strong></td>
   <td x:str><strong>Wi-Fi</strong></td>
   <td width="170" x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/Wi-Fi%20STA%20%E8%BF%9E%E6%8E%A5%E6%97%A0%E7%BA%BF%E7%83%AD%E7%82%B9%E6%B5%8B%E8%AF%95.html">Wi-Fi STA</a></td>
   <td width="170" x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/Wi-Fi%20SoftAP%20%E5%BC%80%E5%90%AF%E6%97%A0%E7%BA%BF%E7%83%AD%E7%82%B9%E6%B5%8B%E8%AF%95.html">Wi-Fi AP</a></td>
-  <td width="170" x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/Wi-Fi%20UDP%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B5%8B%E8%AF%95.html">Wi-Fi UDP客户端</a></td>
-
- </tr>
+  <td width="170" x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/Wi-Fi%20UDP%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B5%8B%E8%AF%95.html">Wi-Fi UDP客户端</a></td> <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td></tr>
  </tr>
  <tr>
 <![if supportMisalignedColumns]>
