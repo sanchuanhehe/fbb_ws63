@@ -4,6 +4,13 @@
 
   fbb_ws63代码仓为支持ws63和ws63e解决方案SDK，该SDK包从统一开发平台FBB（Family Big Box，统一开发框架，统一API）构建而来，在该平台上开发的应用很容易被移植到其他星闪解决方案上，有效降低开发者门槛，缩短开发周期，支持开发者快速开发星闪产品。
 
+## 芯片购买渠道
+
+|    芯片名称    | 硬件资料                                                     | 介绍          |
+| :------------: | ------------------------------------------------------------ | ------------- |
+| Q3553333N1100  | [购买链接](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html) | ws63解决方案  |
+| Q3553333N1100E | [购买链接](https://search.ickey.cn/?keyword=Q353333N1100E&bom_ab=null) | ws63E解决方案 |
+
 ## 支持的开发板
 
 |                          开发板名称                          | 硬件资料                                                     | 软件资料     | 购买链接                                                     | 开发板介绍                                                   |
@@ -293,7 +300,7 @@ BearPi-Pico H3863提供了以下Demo供开发参考：
   <td x:str><strong>GPIO</strong></td>
   <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/1.GPIO%E7%82%B9%E4%BA%AELED%E7%81%AF%E6%B5%8B%E8%AF%95.html">点亮LED灯案例</a></td>
   <td x:str><a href="https://www.bearpi.cn/core_board/bearpi/pico/h3863/software/study/2.GPIO%E6%8C%89%E9%94%AE%E4%B8%AD%E6%96%AD%E6%B5%8B%E8%AF%95.html">按键案例</a></td>
-  
+
 
   <td ></td>
  </tr>
