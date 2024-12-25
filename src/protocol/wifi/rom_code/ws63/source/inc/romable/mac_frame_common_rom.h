@@ -210,7 +210,8 @@ typedef enum {
     MAC_CHBA_COEX_FAIL, /* 不满足vap共存条件 */
     MAC_CHBA_UNSUP_PARALLEL_CONNECT, /* 暂不支持并行建链 */
 #endif
-    MAC_STATUS_MAX = 7000,
+    MAC_STATUS_AUTH_MAX = 7000,
+    MAC_STATUS_ASSOC_MAX = 8000,
 } mac_status_code_enum;
 typedef osal_u16 mac_status_code_enum_uint16;
 

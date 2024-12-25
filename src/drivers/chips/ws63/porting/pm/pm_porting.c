@@ -557,8 +557,6 @@ void pm_port_enter_lowpower_prepare_cb_default(void)
 #define UART_0_MODE   1
 void pm_port_enter_lowpower_finish_cb_default(void)
 {
-    uint32_t index;
-
     // dma恢复
     uapi_dma_resume(0);
 
@@ -572,10 +570,11 @@ void pm_port_enter_lowpower_finish_cb_default(void)
         uart_port_set_clock_value(UART_BUS_1, TCXO_CLOCK_40M);
         uart_port_set_clock_value(UART_BUS_2, TCXO_CLOCK_40M);
     }
-    uapi_uart_resume(0);
 
+    uapi_uart_resume(0);
+#if !defined(PM_LIGHT_SLEEP_SUPPORT)
     // UART0/2 关闭中断
-    for (index = UART_BUS_0; index < UART_BUS_MAX_NUMBER; index++) {
+    for (uint32_t index = UART_BUS_0; index < UART_BUS_MAX_NUMBER; index++) {
         if (index == WKUP_UART) {
             continue;
         }
@@ -588,13 +587,12 @@ void pm_port_enter_lowpower_finish_cb_default(void)
             writel(UART0_RXD_SEL, 0x0);
         }
     }
+#endif
 }
 
 void pm_port_exit_lowpower_prepare_cb_default(void)
 {
-    uint32_t index;
-
-    for (index = UART_BUS_0; index < UART_BUS_MAX_NUMBER; index++) {
+    for (uint32_t index = UART_BUS_0; index < UART_BUS_MAX_NUMBER; index++) {
         if (index == WKUP_UART) {
             continue;
         }
@@ -821,7 +819,6 @@ void pm_port_enter_lowpower(void)
     // wifi phy 时钟切换
     uapi_reg_clrbit(REG_CLDO_CRG_CLK_SEL, 19);   // 0x0 -> 0x44001134 bit 19
     uapi_tcxo_delay_us(PMU_PROCESS_DELAY_US);
-
     if (get_tcxo_freq() == CLK24M_TCXO) {
         // 总线时钟降频, 24M -> 4M
         uapi_reg_clrbit(REG_CLDO_CRG_DIV_CTL0, 8);          // 0x0 -> 0x44001108 bit 8
@@ -1055,7 +1052,7 @@ void pm_port_exit_lowpower(void)
 
 void pm_porting_wait_exit_lowpower(void)
 {
-    PRINT("[pm_port][0x%x][%ld]Wait start.\r\n", __builtin_return_address(0), osal_get_current_tid());
+    PRINT("[pm_port][%ld]Wait start.\r\n", osal_get_current_tid());
 #ifdef CONFIG_PM_SUPPORT_SRV_DECOUPLING
     while (g_pm_srv_ctrl.ctrl_mode == PM_CTRL_SUSPEND) {
 #else
@@ -1063,5 +1060,24 @@ void pm_porting_wait_exit_lowpower(void)
 #endif
         osal_msleep(PM_WAIT_EXIT_LOWPOWER_MS);
     }
-    PRINT("[pm_port][0x%x][%ld]Wait succ!\r\n", __builtin_return_address(0), osal_get_current_tid());
+    PRINT("[pm_port][%ld]Wait succ!\r\n", osal_get_current_tid());
 }
+
+#if defined(PM_LIGHT_SLEEP_SUPPORT)
+errcode_t pm_port_set_sleep_mode(int32_t type)
+{
+    errcode_t err = ERRCODE_SUCC;
+    switch (type) {
+        case PM_NO_SLEEP:
+            pm_port_exit_lowpower();
+            break;
+        case PM_LIGHT_SLEEP:
+            pm_port_enter_lowpower();
+            break;
+        default:
+            err = ERRCODE_NOT_SUPPORT;
+            break;
+    }
+    return err;
+}
+#endif

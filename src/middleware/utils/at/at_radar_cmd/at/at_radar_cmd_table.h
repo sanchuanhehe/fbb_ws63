@@ -1,8 +1,7 @@
 /**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved. \n
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
  *
- * Description: At plt cmd table \n
- * Author:
+ * Description: At plt cmd table
  */
 
 #if !defined(AT_RADAR_CMD_TALBE_H)

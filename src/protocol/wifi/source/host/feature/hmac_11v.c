@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2018-2024. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2024. All rights reserved.
  * 文 件 名   : hmac_11v.c
  * 生成日期   : 2018年4月7日
  * 功能描述   : 11v 功能处理
@@ -383,7 +383,11 @@ OAL_STATIC osal_u32 hmac_rx_bsst_req_action_parses(hmac_bsst_req_info_stru *bsst
                 oam_error_log0(0, OAM_SF_ANY, "{hmac_rx_bsst_req_action_parses:: session_url alloc fail.}");
                 return OAL_FAIL;
             }
-            (void)memcpy_s(bsst_req_info->session_url, data[handle_len], data + (handle_len + 1), data[handle_len]);
+            if (memcpy_s(bsst_req_info->session_url, data[handle_len], data + (handle_len + 1), data[handle_len]) !=
+                EOK) {
+                oam_error_log0(0, OAM_SF_ANY, "{hmac_rx_bsst_req_action_parses:: memcpy_s fail.}");
+                return OAL_FAIL;
+            }
             /* 转化成字符串 */
             bsst_req_info->session_url[data[handle_len]] = '\0';
         }

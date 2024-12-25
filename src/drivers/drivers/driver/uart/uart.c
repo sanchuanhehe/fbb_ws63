@@ -66,6 +66,10 @@ typedef struct {
 static uart_tx_state_t g_uart_tx_state_array[UART_BUS_MAX_NUM];
 #endif
 
+#if defined(CONFIG_SUPPORT_UART_POLL_TIMEOUT)
+#define UART_READ_MAX_TIMEOUT 1000000
+#endif
+
 #if defined(CONFIG_UART_SUPPORT_DMA)
 #define DMA_UART_TRANSFER_TIMEOUT_MS 1000
 #define UART_DMA_TRANS_MEMORY_TO_PERIPHERAL_DMA 1
@@ -179,12 +183,287 @@ static void uart_tx_isr(uart_bus_t bus);
 static bool g_uart_suspend_flag[UART_BUS_MAX_NUM] = { false };
 static uart_pin_config_t g_uart_pins[UART_BUS_MAX_NUM] = { 0 };
 static uart_attr_t g_uart_attr[UART_BUS_MAX_NUM] = { 0 };
-static uart_extra_attr_t g_uart_extra_attr[UART_BUS_MAX_NUM] = { 0 };
 static uart_buffer_config_t g_uart_buffer_config[UART_BUS_MAX_NUM] = { 0 };
 static uart_rx_condition_t g_uart_condition[UART_BUS_MAX_NUM] = { 0 };
 static uint32_t g_uart_size[UART_BUS_MAX_NUM] = { 0 };
-static uart_rx_callback_t g_uart_callback[UART_BUS_MAX_NUM] = { 0 };
 #endif  /* CONFIG_UART_SUPPORT_LPM */
+ 
+#if defined(CONFIG_UART_SUPPORT_LPM) || defined(CONFIG_UART_SUPPORT_RX_THREAD)
+STATIC uart_extra_attr_t g_uart_extra_attr[UART_BUS_MAX_NUM] = { 0 };
+STATIC uart_rx_callback_t g_uart_callback[UART_BUS_MAX_NUM] = { 0 };
+#endif
+
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD)
+STATIC uart_rx_callback_t g_uart_thread_callback[UART_BUS_MAX_NUM] = { 0 };
+STATIC osal_task *g_uart_rx_thread = NULL;
+
+typedef struct {
+    uint32_t cur_heap_size;
+} uart_rx_thread_ctrl;
+
+typedef struct {
+    void *buf;
+    uint16_t buf_len;
+    bool error;
+    struct osal_list_head node;
+} uart_rx_thread_node;
+
+static uart_rx_thread_ctrl g_uart_rx_thread_ctrl = {0};
+static struct osal_list_head g_uart_rx_list[UART_BUS_MAX_NUMBER];
+static osal_semaphore g_rx_thread_sem;
+
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD_DEBUG)
+typedef struct {
+    uint32_t cur_heap_size;
+    uint32_t max_heap_size;
+    uint32_t cur_node_cnt;
+    uint32_t max_node_cnt;
+    uint32_t max_node_size;
+    uint32_t drop_node_size;
+} uart_rx_thread_debug;
+
+static uart_rx_thread_debug g_uart_rx_thread_debug;
+
+void uart_rx_thread_debug_print(void)
+{
+    print_str("uart_rx_thread_debug_print :\r\n");
+    print_str("buffer size:[%u, %u]\r\n", g_uart_rx_thread_debug.cur_heap_size, g_uart_rx_thread_debug.max_heap_size);
+    print_str("queue size:[%u, %u, %u, %u]", g_uart_rx_thread_debug.cur_node_cnt, g_uart_rx_thread_debug.max_node_cnt,
+        g_uart_rx_thread_debug.max_node_size, g_uart_rx_thread_debug.drop_node_size);
+}
+
+STATIC void uart_rx_thread_debug_increase(uint16_t length)
+{
+    g_uart_rx_thread_debug.cur_heap_size += length;
+    g_uart_rx_thread_debug.cur_heap_size += sizeof(uart_rx_thread_node);
+    g_uart_rx_thread_debug.cur_node_cnt++;
+
+    if (g_uart_rx_thread_debug.cur_heap_size > g_uart_rx_thread_debug.max_heap_size) {
+        g_uart_rx_thread_debug.max_heap_size = g_uart_rx_thread_debug.cur_heap_size;
+    }
+
+    if (g_uart_rx_thread_debug.cur_node_cnt > g_uart_rx_thread_debug.max_node_cnt) {
+        g_uart_rx_thread_debug.max_node_cnt = g_uart_rx_thread_debug.cur_node_cnt;
+    }
+
+    if (g_uart_rx_thread_debug.max_node_size < length) {
+        g_uart_rx_thread_debug.max_node_size = length;
+    }
+}
+ 
+STATIC void uart_rx_thread_debug_decrease(uint16_t length)
+{
+    g_uart_rx_thread_debug.cur_heap_size -= length;
+    g_uart_rx_thread_debug.cur_heap_size -= sizeof(uart_rx_thread_node);
+    g_uart_rx_thread_debug.cur_node_cnt--;
+}
+#endif
+ 
+STATIC int uart_rx_thread(void *unused)
+{
+    UNUSED(unused);
+    int i;
+    uint32_t irq_sts;
+    uart_rx_thread_node *rx_list_node = NULL;
+    struct osal_list_head *rx_list_entry;
+    struct osal_list_head *rx_list_entry_tmp;
+    struct osal_list_head rx_list_excute;
+
+    OSAL_INIT_LIST_HEAD(&rx_list_excute);
+
+    while (1) {
+        if (osal_sem_down(&g_rx_thread_sem) != OSAL_SUCCESS) {
+            continue;
+        }
+        for (i = 0; i < UART_BUS_MAX_NUMBER; i++) {
+            if ((g_uart_extra_attr[i].rx_thread_enable != true) || (osal_list_empty(&(g_uart_rx_list[i])) != 0)) {
+                continue;
+            }
+
+            irq_sts = osal_irq_lock();
+            osal_list_for_each_safe(rx_list_entry, rx_list_entry_tmp, &(g_uart_rx_list[i])) {
+                rx_list_node = osal_list_entry(rx_list_entry, uart_rx_thread_node, node);
+                osal_list_del(rx_list_entry);
+                osal_list_add_tail(&(rx_list_node->node), &rx_list_excute);
+            }
+            osal_irq_restore(irq_sts);
+ 
+            osal_list_for_each_safe(rx_list_entry, rx_list_entry_tmp, &rx_list_excute) {
+                rx_list_node = osal_list_entry(rx_list_entry, uart_rx_thread_node, node);
+                g_uart_thread_callback[i](rx_list_node->buf, rx_list_node->buf_len, rx_list_node->error);
+                osal_list_del(rx_list_entry);
+
+                irq_sts = osal_irq_lock();
+                g_uart_rx_thread_ctrl.cur_heap_size -= ((size_t)(sizeof(uart_rx_thread_node)) +
+                    (rx_list_node->buf_len));
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD_DEBUG)
+                uart_rx_thread_debug_decrease(rx_list_node->buf_len);
+#endif
+                osal_irq_restore(irq_sts);
+
+                osal_kfree(rx_list_node->buf);
+                osal_kfree(rx_list_node);
+                rx_list_node = NULL;
+            }
+        }
+    }
+    return 0;
+}
+ 
+STATIC void uart_rx_thread_trigger(void)
+{
+    osal_sem_up(&g_rx_thread_sem);
+}
+ 
+STATIC void uart_rx_thread_entry(uart_bus_t bus, const void *buffer, uint16_t length, bool error)
+{
+    if (g_uart_rx_thread_ctrl.cur_heap_size + sizeof(uart_rx_thread_node) + length >
+        CONFIG_UART_SUPPORT_RX_THREAD_BUFFER_SIZE) {
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD_DEBUG)
+        g_uart_rx_thread_debug.drop_node_size += length;
+#endif
+        return;
+    }
+
+    uart_rx_thread_node *node = osal_kmalloc(sizeof(uart_rx_thread_node), OSAL_GFP_KERNEL);
+    if (node == NULL) {
+        return;
+    }
+
+    node->buf = osal_kmalloc(length, OSAL_GFP_KERNEL);
+    if (node->buf == NULL) {
+        osal_kfree(node);
+        return;
+    }
+
+    node->buf_len = length;
+    node->error = error;
+    errno_t ret = memcpy_s(node->buf, node->buf_len, buffer, length);
+    if (ret != EOK) {
+        osal_kfree(node->buf);
+        osal_kfree(node);
+        return;
+    }
+
+    uint32_t irq_sts = osal_irq_lock();
+    g_uart_rx_thread_ctrl.cur_heap_size += ((size_t)(sizeof(uart_rx_thread_node)) + length);
+    osal_list_add_tail(&(node->node), &(g_uart_rx_list[bus]));
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD_DEBUG)
+    uart_rx_thread_debug_increase(length);
+#endif
+    osal_irq_restore(irq_sts);
+
+    uart_rx_thread_trigger();
+}
+ 
+#if UART_BUS_MAX_NUMBER > 0
+STATIC void uart_rx_thread_callback_0(const void *buffer, uint16_t length, bool error)
+{
+    if (g_uart_thread_callback[UART_BUS_0] == NULL) {
+        return;
+    }
+    uart_rx_thread_entry(UART_BUS_0, buffer, length, error);
+}
+#endif
+
+#if UART_BUS_MAX_NUMBER > 1
+STATIC void uart_rx_thread_callback_1(const void *buffer, uint16_t length, bool error)
+{
+    if (g_uart_thread_callback[UART_BUS_1] == NULL) {
+        return;
+    }
+    uart_rx_thread_entry(UART_BUS_1, buffer, length, error);
+}
+#endif
+
+#if UART_BUS_MAX_NUMBER > 2
+STATIC void uart_rx_thread_callback_2(const void *buffer, uint16_t length, bool error)
+{
+    if (g_uart_thread_callback[UART_BUS_2] == NULL) {
+        return;
+    }
+    uart_rx_thread_entry(UART_BUS_2, buffer, length, error);
+}
+#endif
+
+#if UART_BUS_MAX_NUMBER > 3
+STATIC void uart_rx_thread_callback_3(const void *buffer, uint16_t length, bool error)
+{
+    if (g_uart_thread_callback[UART_BUS_3] == NULL) {
+        return;
+    }
+    uart_rx_thread_entry(UART_BUS_3, buffer, length, error);
+}
+#endif
+ 
+STATIC void uart_rx_thread_hook_callback(uart_bus_t bus, uart_rx_callback_t callback)
+{
+#if UART_BUS_MAX_NUMBER > 0
+    if (bus == UART_BUS_0) {
+        g_uart_callback[bus] = uart_rx_thread_callback_0;
+    }
+#endif
+
+#if UART_BUS_MAX_NUMBER > 1
+    if (bus == UART_BUS_1) {
+        g_uart_callback[bus] = uart_rx_thread_callback_1;
+    }
+#endif
+
+#if UART_BUS_MAX_NUMBER > 2
+    if (bus == UART_BUS_2) {
+        g_uart_callback[bus] = uart_rx_thread_callback_2;
+    }
+#endif
+
+#if UART_BUS_MAX_NUMBER > 3
+    if (bus == UART_BUS_3) {
+        g_uart_callback[bus] = uart_rx_thread_callback_3;
+    }
+#endif
+#if defined(CONFIG_UART_SUPPORT_LPM)
+    if (g_uart_suspend_flag[bus] == true) {
+        return;
+    }
+#endif
+    g_uart_thread_callback[bus] = callback;
+}
+ 
+STATIC errcode_t uart_rx_thread_init(uart_bus_t bus, uart_rx_callback_t callback)
+{
+    if (!(g_uart_extra_attr[bus].rx_thread_enable)) {
+        g_uart_callback[bus] = callback;
+        return ERRCODE_SUCC;
+    }
+
+    if (g_uart_rx_thread != NULL) {
+        goto setup_callback;
+    }
+
+    int i;
+
+    osal_kthread_lock();
+    g_uart_rx_thread = osal_kthread_create(uart_rx_thread, NULL, "uart_rx", CONFIG_UART_SUPPORT_RX_THREAD_STACK_SIZE);
+    if (g_uart_rx_thread == NULL) {
+        osal_kthread_unlock();
+        return ERRCODE_MALLOC;
+    }
+    osal_kthread_set_priority(g_uart_rx_thread, CONFIG_UART_SUPPORT_RX_THREAD_PRIORITY);
+    osal_kthread_unlock();
+
+    for (i = 0; i < UART_BUS_MAX_NUMBER; i++) {
+        OSAL_INIT_LIST_HEAD(&(g_uart_rx_list[i]));
+    }
+    (void)osal_sem_init(&g_rx_thread_sem, 0);
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD_DEBUG)
+    memset_s(&g_uart_rx_thread_debug, sizeof(uart_rx_thread_debug), 0, sizeof(uart_rx_thread_debug));
+#endif
+
+setup_callback:
+    uart_rx_thread_hook_callback(bus, callback);
+    return ERRCODE_SUCC;
+}
+#endif
 
 static errcode_t uart_evt_callback(uart_bus_t bus, hal_uart_evt_id_t evt, uintptr_t param);
 
@@ -205,6 +484,9 @@ errcode_t uapi_uart_init(uart_bus_t bus, const uart_pin_config_t *pins, const ua
             sizeof(uart_buffer_config_t));
     }
 #endif  /* CONFIG_UART_SUPPORT_LPM */
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD)
+    g_uart_extra_attr[bus].rx_thread_enable = (extra_attr != NULL) ? extra_attr->rx_thread_enable : 0;
+#endif
 #if defined(CONFIG_UART_SUPPORT_LPC)
     uart_port_clock_enable(bus, true);
 #endif
@@ -225,7 +507,7 @@ errcode_t uapi_uart_init(uart_bus_t bus, const uart_pin_config_t *pins, const ua
     flow_ctrl = attr->flow_ctrl;
 #endif  /* CONFIG_UART_SUPPORT_FLOW_CTRL */
     errcode_t ret = hal_uart_init(bus, uart_evt_callback, (hal_uart_pin_config_t *)pins, (hal_uart_attr_t *)attr,
-                                  (hal_uart_flow_ctrl_t)flow_ctrl);
+                                  (hal_uart_flow_ctrl_t)flow_ctrl, (hal_uart_extra_attr_t *)extra_attr);
     if (ret != ERRCODE_SUCC) { return ret; }
 
 #if defined(CONFIG_UART_SUPPORT_DMA)
@@ -314,10 +596,17 @@ errcode_t uapi_uart_register_rx_callback(uart_bus_t bus, uart_rx_condition_t con
         memcpy_s(&g_uart_callback[bus], sizeof(uart_rx_callback_t), &callback, sizeof(uart_rx_callback_t));
     }
 #endif  /* CONFIG_UART_SUPPORT_LPM */
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD)
+    (void)uart_rx_thread_init(bus, callback);
+#endif
 
     uart_rx_state_t *rx_state = &g_uart_rx_state_array[bus];
     uint32_t irq_sts = uart_porting_lock(bus);
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD)
+    rx_state->rx_callback = g_uart_callback[bus];
+#else
     rx_state->rx_callback = callback;
+#endif
     rx_state->rx_condition = condition;
 #if !defined(CONFIG_UART_NOT_SUPPORT_RX_CONDITON_SIZE_OPTIMIZE)
     uint32_t uart_rx_fifo_thresh = 0;
@@ -344,7 +633,7 @@ errcode_t uapi_uart_register_parity_error_callback(uart_bus_t bus, uart_error_ca
     uart_rx_state_t *rx_state = &g_uart_rx_state_array[bus];
     uint32_t irq_sts = uart_porting_lock(bus);
     rx_state->parity_error_callback = callback;
-    ret = hal_uart_ctrl(bus, UART_CTRL_EN_PARITY_ERR_INT, 0);
+    ret = hal_uart_ctrl(bus, UART_CTRL_EN_PARITY_ERR_INT, 1);
     uart_porting_unlock(bus, irq_sts);
 
     return ret;
@@ -360,7 +649,7 @@ errcode_t uapi_uart_register_frame_error_callback(uart_bus_t bus, uart_error_cal
     uart_rx_state_t *rx_state = &g_uart_rx_state_array[bus];
     uint32_t irq_sts = uart_porting_lock(bus);
     rx_state->frame_error_callback = callback;
-    ret = hal_uart_ctrl(bus, UART_CTRL_EN_FRAME_ERR_INT, 0);
+    ret = hal_uart_ctrl(bus, UART_CTRL_EN_FRAME_ERR_INT, 1);
     uart_porting_unlock(bus, irq_sts);
 
     return ret;
@@ -659,12 +948,23 @@ int32_t uapi_uart_read(uart_bus_t bus, const uint8_t *buffer, uint32_t length, u
     uint32_t len = length;
 
     uint32_t irq_sts = uart_porting_lock(bus);
+    uint32_t cnt = 0;
+
     while (len > 0) {
         hal_uart_ctrl(bus, UART_CTRL_CHECK_RX_FIFO_EMPTY, (uintptr_t)&rx_fifo_empty);
         if (rx_fifo_empty == false) {
             hal_uart_read(bus, data_buffer++, 1);
             len--;
             read_count++;
+        } else {
+#if defined(CONFIG_SUPPORT_UART_POLL_TIMEOUT)
+            cnt++;
+            if (cnt > UART_READ_MAX_TIMEOUT) {
+                break;
+            }
+#else
+            unused(cnt);
+#endif
         }
     }
     uart_porting_unlock(bus, irq_sts);

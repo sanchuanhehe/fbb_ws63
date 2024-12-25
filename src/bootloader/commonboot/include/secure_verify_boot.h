@@ -55,7 +55,7 @@ typedef enum {
     KEY_EREA_TYPE = 0,
     CODE_INFO_TYPE = 1,
     PARAMS_KEY_AREA_TYPE = 2,
-    PARAMS_AREA_IOFO_TYPE = 3,
+    PARAMS_AREA_INFO_TYPE = 3,
     INVALID_EREA_TYPE
 } area_type_t;
 

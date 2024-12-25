@@ -69,7 +69,8 @@ typedef struct {
 } hmac_radar_sensor_cfg_stru;
 
 typedef enum {
-    RADAR_SENSOR_WIFI_SCAN = 0,                          /* WIFI发起扫描，雷达停止工作 */
+    RADAR_SENSOR_WIFI_SCAN_BEGIN = 0,                    /* WIFI发起扫描，雷达停止工作 */
+    RADAR_SENSOR_WIFI_SCAN_END,                          /* WIFI停止扫描 */
     RADAR_SENSOR_PARAM_CHECK_FAIL,                       /* 参数校验失败，雷达停止工作 */
     RADAR_SENSOR_STA_DISCONNECT,                         /* STA 断连，雷达停止工作 */
     RADAR_SENSOR_WIFI_CONNETING,                         /* STA 关联中，雷达停止工作 */

@@ -435,11 +435,11 @@ def get_group_owner(data_dict, save_name):
         header = ['Group_Owner', 'Size', 'Limit']
         f.write(f"{','.join(header)}\n")
        # 各组规格限制 PLAT WIFI BTC BTH UNKNOWN  STACK PKTRAM
-        lim_all = {'ws63-liteos-app.map_ram': {'PLAT' : 35.50, 'WIFI':46.5, 'RADAR':49, 'BTC': 20, 'BTH': 10, 'UNKNOWN': 0.5, 'STACK':7,'PKTRAM':50},
+        lim_all = {'ws63-liteos-app.map_ram': {'PLAT' : 35.50, 'WIFI':46.5, 'RADAR':49, 'BTC': 20, 'BTC_CHBA': 1, 'BTH': 10, 'UNKNOWN': 0.5, 'STACK':7,'PKTRAM':50},
             'control_ws53.map_ram':{'PLAT' : 16.68, 'WIFI':18.64, 'BTC': 25, 'BTH': 10, 'UNKNOWN': 25, 'STACK':6,'HEAP':27},
             'control_ws53.map_flash':{'PLAT' : 15, 'WIFI':46.5, 'BTC': 109, 'BTH': 6, 'UNKNOWN': 35},
-            'liteos_ws53_light.map_flash':{'PLAT' : 191, 'WIFI':670, 'BTC': 1, 'BTH': 242.5, 'UNKNOWN': 1},
-            'ws63-liteos-app.map_flash':{'PLAT' : 197, 'WIFI':622.1, 'RADAR':37.5, 'BTC': 143.5, 'BTH': 228, 'UNKNOWN': 0.5}}
+            'liteos_ws53_light.map_flash':{'PLAT' : 191, 'WIFI':670, 'BTC': 1, 'BTC_CHBA': 16, 'BTH': 242.5, 'UNKNOWN': 1},
+            'ws63-liteos-app.map_flash':{'PLAT' : 198, 'WIFI':622.320, 'RADAR':45, 'BTC': 143.5, 'BTC_CHBA': 16, 'BTH': 228.4, 'UNKNOWN': 0.5}}
         lim_i = 0
         for owner, size in group_dict.items():
             size_t = size/BIT_SIZE
@@ -470,7 +470,7 @@ def get_group_owner(data_dict, save_name):
         f.write(f"{','.join(header)}\n")
         lim_all = {'control_ws53.map_flash':{'系统组' : 8.0, '协议组':9.5, '应用组': 2, '前端组': 27.1, '算法组': 0.5,'WIFI_UNKNOWN': 5},
             'liteos_ws53_light.map_flash':{'系统组' : 36, '协议组':212.5, '应用组': 356, '前端组': 15, '算法组': 39,'WIFI_UNKNOWN': 0.5},
-            'ws63-liteos-app.map_flash':{'系统组' : 35.5, '协议组':196.1, '应用组': 314.5, '前端组': 37.1, '算法组': 39.3,'WIFI_UNKNOWN': 0.5}}
+            'ws63-liteos-app.map_flash':{'系统组' : 35.5, '协议组':196.8, '应用组': 314.5, '前端组': 37.1, '算法组': 39.3,'WIFI_UNKNOWN': 0.5}}
         lim_i = 0
         for owner, size in wifi_group_dict.items():
             size_t = size/BIT_SIZE

@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description:   LOG UART MODULE
- * Author:
- * Create:
  */
 #if defined USE_CMSIS_OS
 #include <string.h>

@@ -25,6 +25,9 @@ osal_void hmac_pow_set_vap_tx_power(hmac_vap_stru *hmac_vap, hal_pow_set_type_en
 osal_s32 hmac_power_set_rate_power_offset(hmac_vap_stru *hmac_vap, const frw_msg *msg);
 extern osal_s32 hmac_config_host_dev_init_etc(hmac_vap_stru *hmac_vap, frw_msg *msg);
 extern osal_s32 hmac_config_host_dev_exit_etc(hmac_vap_stru *hmac_vap, frw_msg *msg);
+#ifdef _PRE_WLAN_FEATURE_ALWAYS_TX
+osal_void hmac_config_al_tx_cta_cfg(hal_to_dmac_device_stru *hal_device);
+#endif
 #ifdef __cplusplus
 #if __cplusplus
 }

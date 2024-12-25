@@ -180,6 +180,7 @@ inline void adc_irq_unlock(uint32_t irq_sts)
 }
 
 errcode_t adc_port_get_cali_param(uint8_t *data_s, uint8_t *data_b, uint8_t *data_k);
+errcode_t adc_port_read(uint8_t channel, uint16_t *data);
 /**
  * @}
  */

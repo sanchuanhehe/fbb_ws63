@@ -120,7 +120,7 @@ errcode_t upg_decry_fota_pkt(uint8_t *buf, uint32_t len, const upg_image_header_
     }
 
     ret = (errcode_t)drv_rom_cipher_symc_decrypt(cfg->decry_cfg.chnum, (uint8_t *)cfg->decry_cfg.iv, IV_LEN,
-        (uint32_t)buf, (uint32_t)buf, len);
+        (uint32_t)(uintptr_t)buf, (uint32_t)(uintptr_t)buf, len);
     if (ret != ERRCODE_SUCC) {
         upg_log_err("[UPG] upg_decry_fota_pkt:drv_rom_cipher_symc_decrypt failed, ret = 0x%x \r\n", ret);
         return ret;
@@ -139,7 +139,7 @@ errcode_t upg_encry_fota_pkt(uint8_t *buf, uint32_t len, const upg_image_header_
     }
 
     ret = (errcode_t)drv_rom_cipher_symc_decrypt(cfg->encry_cfg.chnum, (uint8_t *)cfg->encry_cfg.iv, IV_LEN,
-        (uint32_t)buf, (uint32_t)buf, len);
+        (uint32_t)(uintptr_t)buf, (uint32_t)(uintptr_t)buf, len);
     if (ret != ERRCODE_SUCC) {
         upg_log_err("[UPG] upg_encry_fota_pkt:drv_rom_cipher_symc_decrypt failed, ret = 0x%x \r\n", ret);
         return ret;

@@ -72,7 +72,7 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
     nv_bx = nv_bin + f"|0x5FC000|0x4000|1"
 
     # nv backup
-    nv_backup_bin = os.path.join(nv_bin_dir, "ws63_all_nv_backup.bin")
+    nv_backup_bin = os.path.join(nv_bin_dir, "ws63_all_nv_factory.bin")
     nv_backup_bx = nv_backup_bin + f"|0x20C000|0x4000|1"
 
     # hilink
@@ -213,7 +213,9 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
             packet_post_agvs.append(flashboot_bx)
             packet_post_agvs.append(flashboot_backup_bx)
             packet_post_agvs.append(nv_bx)
-            packet_post_agvs.append(nv_backup_bx)
+            if "PACKET_NV_FACTORY" in extr_defines:
+                print("nv factory pack")
+                packet_post_agvs.append(nv_backup_bx)
             app_bin = os.path.join(output_bin_dir, "ws63-liteos-app", "ws63-liteos-app-sign.bin")
             app_bx = app_bin + f"|0x230000|{hex(get_file_size(app_bin))}|1"
 
@@ -232,27 +234,46 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
         packet_post_agvs.append(flashboot_bx)
         packet_post_agvs.append(flashboot_backup_bx)
         packet_post_agvs.append(nv_bx)
-        packet_post_agvs.append(nv_backup_bx)
+        if "PACKET_NV_FACTORY" in extr_defines:
+            print("nv factory pack")
+            packet_post_agvs.append(nv_backup_bx)
         if "CONFIG_SUPPORT_HILINK_INDIE_UPGRADE" in defines:
             packet_post_agvs.append(hilink_bx)
         packet_post_agvs.append(app_bx)
-        if "SUPPORT_EFUSE" in extr_defines or "PACKET_MFG_BIN" in extr_defines:
+
+        if "SUPPORT_EFUSE" in extr_defines:
             print("efuse pack")
             packet_post_agvs.append(efuse_bx)
 
-        if "PACKET_MFG_BIN" in extr_defines:
+        double_fwpkg = is_pack_double_fwpkg(pack_style_str, extr_defines)
+
+        if "PACKET_MFG_BIN" in extr_defines and not double_fwpkg:
+            print("not packet app")
+        else:
+            print("packet app")
+            fpga_fwpkg = os.path.join(fwpkg_outdir, f"{pack_style_str}_all.fwpkg")
+            packet_bin(fpga_fwpkg, packet_post_agvs)
+
+        if ("PACKET_MFG_BIN" in extr_defines or double_fwpkg) and "SUPPORT_EFUSE" not in extr_defines:
+            print("efuse pack")
+            packet_post_agvs.append(efuse_bx)
+
+        if "PACKET_MFG_BIN" in extr_defines or double_fwpkg:
             mfg_sign_bin = os.path.join(SDK_DIR, "output", "ws63", "acore", "boot_bin", "ws63-liteos-mfg-sign.bin")
             if os.path.exists(mfg_sign_bin):
                 mfg_bx = mfg_sign_bin + f"|0x470000|{hex(0x183000)}|1" # 0x183000为产测分区B区大小
                 packet_post_agvs.append(mfg_bx)
+                if double_fwpkg:
+                    fpga_fwpkg = os.path.join(fwpkg_outdir, f"{pack_style_str}_mfg_all.fwpkg")
+                    packet_bin(fpga_fwpkg, packet_post_agvs)
+                else:
+                    fpga_fwpkg = os.path.join(fwpkg_outdir, f"{pack_style_str}_all.fwpkg")
+                    packet_bin(fpga_fwpkg, packet_post_agvs)                   
             else:
                 print("warning: don't find ws63-liteos-mfg-sign.bin...")
         else:
             if os.path.exists(os.path.join(SDK_DIR, "output", "ws63", "pktbin", "ws63-liteos-mfg.bin")):
                 os.remove(os.path.join(SDK_DIR, "output", "ws63", "pktbin", "ws63-liteos-mfg.bin"))
-
-        fpga_fwpkg = os.path.join(fwpkg_outdir, f"{pack_style_str}_all.fwpkg")
-        packet_bin(fpga_fwpkg, packet_post_agvs)
 
         packet_post_agvs = list()
         packet_post_agvs.append(loadboot_bx)
@@ -267,6 +288,11 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
             print("not windows.")
             subprocess.run(["tar", "-cf", "pktbin.zip", "./pktbin"], cwd=os.path.join(SDK_DIR, "output", "ws63"))
 
+def is_pack_double_fwpkg(pack_style_str, extr_defines):
+    if 'SDK_VERSION=' in extr_defines and 'SDK_VERSION="1.10.T0"' not in extr_defines and pack_style_str == 'ws63-liteos-app':
+        return True
+    else:
+        return False
 
 def is_packing_files_exist(soc, pack_style_str):
     return

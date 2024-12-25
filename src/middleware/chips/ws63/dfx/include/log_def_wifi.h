@@ -1,6 +1,5 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
- * Description: define wifi file id
  */
 
 #ifndef __LOG_DEF_WIFI_H__

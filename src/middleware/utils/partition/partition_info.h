@@ -1,10 +1,6 @@
 /**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved. \n
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
  *
- * Description: Partition information \n
- * Author:
- * History: \n
- * 2022-09-01, Create file. \n
  */
 #ifndef PARTITION_INFO_H
 #define PARTITION_INFO_H

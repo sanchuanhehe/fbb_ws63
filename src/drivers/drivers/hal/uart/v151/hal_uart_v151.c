@@ -98,7 +98,7 @@ static void hal_uart_init_reg_base(uart_bus_t uart)
 }
 
 static errcode_t hal_uart_v151_init(uart_bus_t uart, hal_uart_callback_t callback, const hal_uart_pin_config_t *pins,
-                                    const hal_uart_attr_t *attr, hal_uart_flow_ctrl_t flow_ctrl)
+    const hal_uart_attr_t *attr, hal_uart_flow_ctrl_t flow_ctrl, hal_uart_extra_attr_t *extra_attr)
 {
     unused(pins);
 
@@ -117,9 +117,17 @@ static errcode_t hal_uart_v151_init(uart_bus_t uart, hal_uart_callback_t callbac
     hal_uart_set_baud_rate(uart, attr->baud_rate, uart_port_get_clock_value(uart));
     uapi_tcxo_delay_us(HAL_UART_INIT_DELAY_10US);
 #ifdef HSO_SUPPORT
-    hal_uart_init_fifo(uart, HAL_UART_RX_FIFO_AVAILABLE_LEVEL_1_4, HAL_UART_TX_FIFO_EMPTY_LEVEL_EQ_2);
+    if (extra_attr != NULL) {
+        hal_uart_init_fifo(uart, extra_attr->rx_int_threshold, extra_attr->tx_int_threshold);
+    } else {
+        hal_uart_init_fifo(uart, HAL_UART_RX_FIFO_AVAILABLE_LEVEL_1_4, HAL_UART_TX_FIFO_EMPTY_LEVEL_EQ_2);
+    }
 #else
-    hal_uart_init_fifo(uart, HAL_UART_RX_FIFO_AVAILABLE_LEVEL_1_4, HAL_UART_TX_FIFO_EMPTY_LEVEL_EQ_2);
+    if (extra_attr != NULL) {
+        hal_uart_init_fifo(uart, extra_attr->rx_int_threshold, extra_attr->tx_int_threshold);
+    } else {
+        hal_uart_init_fifo(uart, HAL_UART_RX_FIFO_AVAILABLE_LEVEL_1_4, HAL_UART_TX_FIFO_EMPTY_LEVEL_EQ_2);
+    }
 #endif
     g_hal_uart_callback[uart] = callback;
     if (flow_ctrl == UART_FLOW_CTRL_RTS_CTS) {
@@ -674,7 +682,10 @@ void hal_uart_irq_handler(uart_bus_t uart)
     // ERROR INTERRUPT
     if (uart_int_reg.intr_id.intr_id == HAL_UART_INTERRUPT_RECEIVER_LINE_STATUS) {
         // read Line Status register to clear this interrupt
-        hal_uart_get_error_status(uart);
+        volatile uint32_t line_status = hal_uart_get_error_status(uart);
+        if ((line_status & HAL_UART_FRAME_ERR) != 0) {
+            g_hal_uart_callback[uart](uart, UART_EVT_FRAME_ERR_ISR, 0);
+        }
         g_hal_uart_callback[uart](uart, UART_EVT_OVERRUN_ERR_ISR, 0);
     }
 }

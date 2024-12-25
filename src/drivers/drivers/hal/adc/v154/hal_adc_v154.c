@@ -19,7 +19,7 @@
 
 #define DELAY_500US 500
 #define DELAY_300US 300
-#define FIFO_DATA_LENS 128
+#define FIFO_DATA_LENS 2
 #define MANUAL_CALI_LOW_LIMIT1 0
 #define MANUAL_CALI_UPPER_LIMIT1 2
 #define MANUAL_CALI_LOW_LIMIT2 3
@@ -237,7 +237,7 @@ errcode_t hal_adc_v154_channel_set(adc_channel_t ch, bool on)
     return ERRCODE_SUCC;
 }
 
-static void hal_adc_fifo_data_print(void)
+static void hal_adc_fifo_data_2_voltage(void)
 {
     adc_fifo_data_str_t ret;
     uint32_t code, ch, index, voltage;
@@ -259,20 +259,21 @@ static void hal_adc_fifo_data_print(void)
         ret.d32 = g_fifo_data[i];
         code = ret.b.data;
         ch = ret.b.channel;
-        g_ch_data_cnt[ch]++;
         index = g_ch_data_cnt[ch];
-        if (ret.b.data == 0) {
-            break;
-        }
+        g_ch_data_cnt[ch]++;
 
         if (data_k == 0) {
             voltage = code * VOLTAGE_UPPER_LIMIT / param2;
         } else {
-            if (data_s == 0) {
-                voltage = code * VOLTAGE_UPPER_LIMIT / data_k - data_b * VOLTAGE_UPPER_LIMIT / param3;
+            if (data_b >= param2) {
+                voltage = code * VOLTAGE_UPPER_LIMIT / data_k +
+                    (param3 - data_b) * VOLTAGE_UPPER_LIMIT / param3;
             } else {
-                voltage = code * VOLTAGE_UPPER_LIMIT / data_k + data_b * VOLTAGE_UPPER_LIMIT / param3;
+                voltage = code * VOLTAGE_UPPER_LIMIT / data_k - data_b * VOLTAGE_UPPER_LIMIT / param3;
             }
+        }
+        if ((voltage & 0x80000000) == 0x80000000) {        /* 如果出现负值，直接转成0 */
+            voltage = 0;
         }
         g_ch_output_data[ch][index] = voltage;
     }
@@ -298,7 +299,7 @@ static errcode_t hal_adc_v154_auto_scan_ch_enable(adc_channel_t ch, bool en)
 {
     hal_adc_auto_scan_mode_set(ch, en);
     if (!en) {
-        hal_adc_fifo_data_print();
+        hal_adc_fifo_data_2_voltage();
         hal_adc_v154_auto_scan_enable(false);
     }
     return ERRCODE_SUCC;

@@ -143,7 +143,7 @@ void sfc_port_unlock(uint32_t lock_sts)
 errcode_t hal_sfc_get_flash_id(uint32_t *flash_id)
 {
     hal_sfc_funcs_t *sfc = hal_sfc_get_funcs();
-    if ((sfc == NULL) && (sfc->get_flash_id == NULL)) {
+    if ((sfc == NULL) || (sfc->get_flash_id == NULL)) {
         return ERRCODE_INVALID_PARAM;
     }
 

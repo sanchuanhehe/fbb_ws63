@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description:   log OAM pcm producer interface
- * Author:
- * Create:
  */
 #ifndef LOG_OAM_DSCR_CB_H
 #define LOG_OAM_DSCR_CB_H

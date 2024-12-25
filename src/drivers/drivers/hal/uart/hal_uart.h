@@ -280,6 +280,10 @@ typedef struct uart_extra_attr {
                                                      true:  RX使用DMA，使用 @ref uapi_uart_write_by_dma 发送数据 @endif */
     uint8_t rx_int_threshold;               /*!< @if Eng uart rx fifo level to trigger interrupt.
                                              @else 触发中断的rxfifo水线 @endif */
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD)
+    bool rx_thread_enable;               /*!< @if Eng uart rx enable thread.
+                                             @else rx允许通过线程处理 @endif */
+#endif
 } hal_uart_extra_attr_t;
 
 /**
@@ -323,7 +327,8 @@ typedef errcode_t (*hal_uart_callback_t)(uart_bus_t bus, hal_uart_evt_id_t evt, 
  * @endif
  */
 typedef errcode_t (*hal_uart_init_t)(uart_bus_t bus, hal_uart_callback_t callback, const hal_uart_pin_config_t *pins,
-                                     const hal_uart_attr_t *attr, hal_uart_flow_ctrl_t flow_ctrl);
+                                     const hal_uart_attr_t *attr, hal_uart_flow_ctrl_t flow_ctrl,
+                                     hal_uart_extra_attr_t *extra_attr);
 /**
  * @if Eng
  * @brief  Deinit device for hal uart.
@@ -552,7 +557,7 @@ errcode_t hal_uart_set_rx_fifo_int_level(uart_bus_t bus, uart_fifo_rx_int_lvl_t 
  * @endif
  */
 errcode_t hal_uart_init(uart_bus_t bus, hal_uart_callback_t callback, const hal_uart_pin_config_t *pins,
-                        const hal_uart_attr_t *attr, hal_uart_flow_ctrl_t flow_ctrl);
+                        const hal_uart_attr_t *attr, hal_uart_flow_ctrl_t flow_ctrl, hal_uart_extra_attr_t *extra_attr);
 /**
  * @if Eng
  * @brief  Deinit device for hal uart.

@@ -3,7 +3,7 @@
 
 #===============================================================================
 # @brief    XML tools
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2022. All rights reserved.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.
 #===============================================================================
 import ctypes
 import sys

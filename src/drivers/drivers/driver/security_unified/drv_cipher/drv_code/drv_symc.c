@@ -335,7 +335,9 @@ td_s32 drv_cipher_symc_set_config(td_handle symc_handle, const crypto_symc_ctrl_
 
     drv_symc_ctx->work_mode = symc_ctrl->work_mode;
     drv_symc_ctx->iv_change_flag = symc_ctrl->iv_change_flag;
-    ret = memcpy_s(drv_symc_ctx->iv, sizeof(drv_symc_ctx->iv), symc_ctrl->iv, sizeof(drv_symc_ctx->iv));
+    drv_symc_ctx->iv_length = symc_ctrl->iv_length;
+    (void)memset_s(drv_symc_ctx->iv, sizeof(drv_symc_ctx->iv), 0, sizeof(drv_symc_ctx->iv));
+    ret = memcpy_s(drv_symc_ctx->iv, sizeof(drv_symc_ctx->iv), symc_ctrl->iv, symc_ctrl->iv_length);
     crypto_chk_return(ret != EOK, SYMC_COMPAT_ERRNO(ERROR_MEMCPY_S), "memcpy_s failed\n");
 
     if (symc_ctrl->work_mode == CRYPTO_SYMC_WORK_MODE_CCM || symc_ctrl->work_mode == CRYPTO_SYMC_WORK_MODE_GCM) {
@@ -343,7 +345,7 @@ td_s32 drv_cipher_symc_set_config(td_handle symc_handle, const crypto_symc_ctrl_
         crypto_chk_return(ret != TD_SUCCESS, ret, "inner_drv_set_config_ex failed, ret is 0x%x\n", ret);
     }
 
-    ret = hal_cipher_symc_set_iv(chn_num, drv_symc_ctx->iv, sizeof(drv_symc_ctx->iv));
+    ret = hal_cipher_symc_set_iv(chn_num, drv_symc_ctx->iv, drv_symc_ctx->iv_length);
     crypto_chk_return(ret != TD_SUCCESS, ret, "hal_cipher_symc_set_iv failed, ret is 0x%x\n", ret);
 
     hal_symc_config.symc_alg = symc_ctrl->symc_alg;

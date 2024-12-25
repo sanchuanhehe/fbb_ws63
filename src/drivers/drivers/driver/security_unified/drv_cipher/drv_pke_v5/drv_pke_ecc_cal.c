@@ -30,8 +30,18 @@ td_s32 drv_cipher_pke_mul_dot(const drv_pke_ecc_curve *ecc, const drv_pke_data *
     td_s32 ret = TD_FAILURE;
     ret = crypto_drv_pke_common_resume();
     crypto_chk_func_return(crypto_drv_pke_common_resume, ret);
-
-    ret = ecc_ecfp_mul_naf(sec_arg_add_cs(ecc, k, p, r));
+    if (ecc->ecc_type == DRV_PKE_ECC_TYPE_RFC5639_P256 || ecc->ecc_type == DRV_PKE_ECC_TYPE_RFC5639_P384 ||
+        ecc->ecc_type == DRV_PKE_ECC_TYPE_RFC5639_P512 || ecc->ecc_type == DRV_PKE_ECC_TYPE_FIPS_P192R ||
+        ecc->ecc_type == DRV_PKE_ECC_TYPE_FIPS_P224R || ecc->ecc_type == DRV_PKE_ECC_TYPE_FIPS_P256R ||
+        ecc->ecc_type == DRV_PKE_ECC_TYPE_FIPS_P384R || ecc->ecc_type == DRV_PKE_ECC_TYPE_FIPS_P521R) {
+        ret = ecc_ecfp_mul_naf(sec_arg_add_cs(ecc, k, p, r));
+    } else if (ecc->ecc_type == DRV_PKE_ECC_TYPE_RFC7748 || ecc->ecc_type == DRV_PKE_ECC_TYPE_RFC7748_448) {
+        ret = curve_ecfp_mul_dot(sec_arg_add_cs(ecc, k, p, r));
+    } else if (ecc->ecc_type == DRV_PKE_ECC_TYPE_RFC8032) {
+        ret = ed_ecfp_mul_naf(sec_arg_add_cs(ecc, k, p, r));
+    } else {
+        ret = PKE_COMPAT_ERRNO(ERROR_INVALID_PARAM);
+    }
 
     crypto_drv_pke_common_suspend();
     return ret;

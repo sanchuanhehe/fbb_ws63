@@ -114,6 +114,9 @@ static const inner_ecp_curve_item g_curve_item[] = {
     {
         .id = MBEDTLS_ECP_DP_BP512R1, .curve_type = MBEDTLS_ALT_ECP_CURVE_TYPE_RFC5639_P512, .klen = 64,
     },
+    {
+        .id = MBEDTLS_ECP_DP_CURVE25519, .curve_type = MBEDTLS_ALT_ECP_CURVE_TYPE_RFC7748, .klen = 32,
+    },
 };
 
 static void inner_get_curve_type_and_klen(mbedtls_ecp_group_id id,
@@ -175,12 +178,22 @@ int mbedtls_ecp_mul_restartable(mbedtls_ecp_group *grp, mbedtls_ecp_point *R,
 
     k_data.data = m_buf;
     k_data.length = klen;
-    p_point.x = (unsigned char *)(point_buf + 1);
-    p_point.y = (unsigned char *)(point_buf + 1 + klen);
-    p_point.length = klen;
-    r_point.x = (unsigned char *)(point_buf + 1);
-    r_point.y = (unsigned char *)(point_buf + 1 + klen);
-    r_point.length = klen;
+    if (mbedtls_ecp_get_type( grp ) == MBEDTLS_ECP_TYPE_MONTGOMERY) {
+        /* curve25519 & curve448 */
+        p_point.x = (unsigned char *)(point_buf);
+        p_point.y = NULL;
+        p_point.length = klen;
+        r_point.x = (unsigned char *)(point_buf);
+        r_point.y = NULL;
+        r_point.length = klen;
+    } else {
+        p_point.x = (unsigned char *)(point_buf + 1);
+        p_point.y = (unsigned char *)(point_buf + 1 + klen);
+        p_point.length = klen;
+        r_point.x = (unsigned char *)(point_buf + 1);
+        r_point.y = (unsigned char *)(point_buf + 1 + klen);
+        r_point.length = klen;
+    }
 
     ret = mbedtls_alt_ecp_mul(curve_type, &k_data, &p_point, &r_point);
     if (ret != 0) {

@@ -1,7 +1,7 @@
 {
     "OUT_BIN_DIR" : "output/ws63/acore/nv_bin",
     "OUT_BIN_NAME" : "ws63_all_nv.bin",
-    "OUT_BACKUP_BIN_NAME" : "ws63_all_nv_backup.bin",
+    "OUT_BACKUP_BIN_NAME" : "ws63_all_nv_factory.bin",
     "BUILD_TEMP_PATH" : "output/ws63",
 
     "NV_TARGET_JSON_PATH" : "middleware/chips/ws63/nv/nv_config/cfg/nv_target_perf.json",

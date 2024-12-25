@@ -13,6 +13,9 @@
 #ifndef SLE_SERVER_ADV_H
 #define SLE_SERVER_ADV_H
 
+/* 广播ID */
+#define SLE_ADV_HANDLE_DEFAULT                    1
+
 /**
  * @if Eng
  * @brief Definitaion of BLE ADV 通用广播结构.

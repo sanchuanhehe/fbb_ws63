@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2023. All rights reserved.
  * Description: hcc adapt bus completion.
- * Author:
- * Create: 2021-05-13
  */
 
 #ifndef HCC_BUS_INTERFACE_HEADER

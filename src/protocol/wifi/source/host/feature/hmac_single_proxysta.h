@@ -99,6 +99,10 @@ typedef struct {
 *****************************************************************************/
 typedef osal_u32 (*hmac_bridge_tx_process_cb)(const oal_netbuf_stru *netbuf, hmac_vap_stru *hmac_vap);
 typedef osal_u32 (*hmac_bridge_rx_process_cb)(const oal_netbuf_stru *netbuf, const hmac_vap_stru *hmac_vap);
+#ifdef _PRE_WLAN_FEATURE_SLE_BRIDGE
+typedef osal_u32 (*sle_tx_wifi_pbuf_t)(oal_lwip_buf *pbuf);
+typedef osal_u32 (*wifi_tx_sle_pbuf_t)(struct pbuf *lwip_buf);
+#endif
 
 static osal_u32 hmac_single_proxysta_init_weakref(osal_void)
     __attribute__ ((weakref("hmac_single_proxysta_init"), used));

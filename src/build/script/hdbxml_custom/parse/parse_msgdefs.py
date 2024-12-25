@@ -2,7 +2,7 @@
 # coding=utf-8
 
 #===============================================================================
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2022. All rights reserved.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.
 # Description: Parse C headers and extract message definitions as ctypes objects.
 #===============================================================================
 import pycparser

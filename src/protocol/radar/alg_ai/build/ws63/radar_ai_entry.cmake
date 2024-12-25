@@ -12,7 +12,6 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_conv2_layer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_fc_layer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_lstm_layer.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_model_para.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_model.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/spec/ws63/radar_ai_model_spec.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_model_preprocess.c
@@ -39,10 +38,7 @@ set(PRIVATE_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/ppl
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/proximity/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/presence/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/target_track/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/target_track/
 )
 
 set(PRIVATE_DEFINES

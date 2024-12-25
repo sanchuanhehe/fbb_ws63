@@ -1159,7 +1159,9 @@ static thread_return_type WINAPI call_auth_handle(void* context)
 static thread_return_type WINAPI MQTTClient_run(void* n)
 {
 	long timeout = 10L; /* first time in we have a small timeout.  Gets things started more quickly */
-
+#if defined(IOT_LITEOS_ADAPT)
+    int err_connack_sem_send = 0;
+#endif
 	FUNC_ENTRY;
 	Thread_set_name("MQTTClient_run");
 	Thread_lock_mutex(mqttclient_mutex);
@@ -1168,6 +1170,11 @@ static thread_return_type WINAPI MQTTClient_run(void* n)
 	running = 1;
 	while (!tostop)
 	{
+#if defined(IOT_LITEOS_ADAPT)
+        if (err_connack_sem_send == 1) {
+            osal_msleep(20); /* 20:睡眠20毫秒. tcp连接已建立，超时未收到connack时,让出cpu 20ms,防止此场景下看门狗挂死 */
+        }
+#endif
 		int rc = SOCKET_ERROR;
 		SOCKET sock = -1;
 		MQTTClients* m = NULL;
@@ -1216,6 +1223,9 @@ static thread_return_type WINAPI MQTTClient_run(void* n)
 				{
 					Log(TRACE_MIN, -1, "Posting connack semaphore for client %s", m->c->clientID);
 					m->c->connect_state = NOT_IN_PROGRESS;
+#if defined(IOT_LITEOS_ADAPT)
+                    err_connack_sem_send = 1;
+#endif
 					Thread_post_sem(m->connack_sem);
 				}
 			}

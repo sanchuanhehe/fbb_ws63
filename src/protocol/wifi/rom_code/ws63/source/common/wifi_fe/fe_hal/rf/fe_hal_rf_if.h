@@ -18,7 +18,7 @@
 extern "C" {
 #endif
 #endif
-
+#define CALI_RF_DEFAULT_IPA_CURRENT 0x4
 typedef struct {
     osal_u16 reg_addr;
     osal_u16 cfg_val;
@@ -168,8 +168,8 @@ osal_u16 fe_hal_get_c_code(const hal_rf_dev *rf_dev, wlan_channel_band_enum_uint
 osal_void fe_hal_rf_set_ipa_current_comp(const hal_rf_dev *rf_dev, wlan_channel_band_enum_uint8 band, osal_u8 bias);
 osal_void fe_rf_hal_get_efuse_ipa_current_code(const hal_rf_dev *rf_dev,
     wlan_channel_band_enum_uint8 band, osal_u16 *efuse_code);
-osal_u8 fe_rf_hal_cal_ipa_current_bias(const hal_rf_dev *rf_dev,
-    wlan_channel_band_enum_uint8 band, osal_u16 efuse_code);
+osal_void fe_rf_hal_get_efuse_iddq_code(const hal_rf_dev *rf_dev,
+    wlan_channel_band_enum_uint8 band, osal_u16 *efuse_code);
 #endif
 // 前端配置rf channel
 osal_void fe_hal_rf_set_channel_info(hal_rf_chan_info *rf_chan);
@@ -210,6 +210,9 @@ osal_void fe_hal_soc_recover_power_pgio_trxen(const hal_rf_dev *rf_dev, wlan_cha
 // pktmem接口
 osal_void fe_hal_rf_init_pll_lock(hal_rf_dev *rf_dev, wlan_channel_band_enum_uint8 band);
 osal_void fe_hal_rf_update_pll_in_out_freq(hal_rf_dev *rf_dev, wlan_channel_band_enum_uint8 band);
+// 温度码相关接口
+osal_void fe_hal_rf_update_temp_code_by_ipa_bias(osal_u8 bias_11b,
+    osal_u8 bias_mcs_low, osal_u8 bias_mcs_median, osal_u8 bias_mcs_high);
 #ifdef __cplusplus
 #if __cplusplus
 }

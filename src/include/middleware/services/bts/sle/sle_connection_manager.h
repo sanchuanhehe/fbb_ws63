@@ -252,6 +252,8 @@ typedef enum {
                                              @else 导频密度为8:1 @endif */
     SLE_PHY_PILOT_DENSITY_16_TO_1 = 0x2,    /*!< @if Eng The pilot density is 16:1.
                                              @else 导频密度为16:1 @endif */
+    SLE_PHY_PILOT_DENSITY_NO = 0x3,         /*!< @if Eng No pilot.
+                                             @else 无导频 @endif */
     SLE_PHY_PILOT_DENSITY_NUM,
 } sle_phy_tx_rx_pilot_density_t;
 

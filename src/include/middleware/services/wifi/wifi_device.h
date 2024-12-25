@@ -286,6 +286,19 @@ errcode_t wifi_get_channel(wifi_if_type_enum iftype, int32_t *channel);
  * @endif
  */
 errcode_t wifi_sta_wnm_bss_query(int32_t reason_code, int32_t candidate_list);
+
+/**
+ * @if Eng
+ * @brief  send wnm notify query
+ * @retval ERRCODE_SUCC        Execute successfully.
+ * @retval Other               Execute failed.
+ * @else
+ * @brief  发送wnm notify query报文。
+ * @retval ERRCODE_SUCC 成功。
+ * @retval Other        失败。
+ * @endif
+ */
+errcode_t wifi_sta_wnm_notify(const char *param, uint32_t len);
 #endif
 
 /**

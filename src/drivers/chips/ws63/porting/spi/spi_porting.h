@@ -25,6 +25,7 @@ extern "C" {
  * @ingroup  drivers_port
  * @{
  */
+#define SPI_CLK_FREQ        32000000
 
 #define SPI_BUS_MAX_NUM SPI_BUS_MAX_NUMBER
 #define CONFIG_SPI_MAX_TIMEOUT 0xFFFFFFFF

@@ -9,3 +9,4 @@ endif()
 if(mbedtls IN_LIST TARGET_COMPONENT)
     install_sdk(${ROOT_DIR}/open_source/mbedtls "*")
 endif()
+

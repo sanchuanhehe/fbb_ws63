@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description: LOG TRIGGER MODULE INTERRFACE
- * Author:
- * Create:
  */
 
 #ifndef SRC_LIB_LOG_PRIVATE_LOG_TRIGGER_H

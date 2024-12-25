@@ -103,9 +103,6 @@ elseif("BUILD_APPLICATION_STANDARD" IN_LIST DEFINES)
         ${CMAKE_CURRENT_SOURCE_DIR}/service_layer/security_init.c
         ${CMAKE_CURRENT_SOURCE_DIR}/service_layer/security_sha256.c
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/mbedtls_harden_adapt.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/ecp_harden_impl.c
-
         ${CMAKE_CURRENT_SOURCE_DIR}/init/cfbb/os/crypto_drv_init.c
         ${CMAKE_CURRENT_SOURCE_DIR}/init/cfbb/os/crypto_drv_irq.c
 
@@ -116,14 +113,7 @@ elseif("BUILD_APPLICATION_STANDARD" IN_LIST DEFINES)
         # ed25519 algorithm function realization.
         list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/drv_cipher/drv_pke_v5/drv_pke_eddsa.c")
     endif()
-    if(${CHIP} STREQUAL "ws53")
-        # for deep sleep feature.
-        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/hash_harden_impl_short_term.c")
-        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/aes_harden_impl_short_term.c")
-    else()
-        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/hash_harden_impl_long_term.c")
-        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/aes_harden_impl_long_term.c")
-    endif()
+
     if(DEFINED CONFIG_PKE_SUPPORT_RSA)
         # rsa algorithm function realization.
         list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/drv_cipher/drv_pke_v5/drv_pke_cal.c")
@@ -270,13 +260,6 @@ elseif("FUZZ_TEST" IN_LIST DEFINES)
         ${CMAKE_CURRENT_SOURCE_DIR}/service_layer/security_init.c
         ${CMAKE_CURRENT_SOURCE_DIR}/service_layer/security_sha256.c
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/mbedtls_harden_adapt.c
-        # ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/hash_harden_impl_short_term.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/hash_harden_impl_long_term.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/aes_harden_impl_long_term.c
-        # ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/aes_harden_impl_short_term.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/ecp_harden_impl.c
-
         ${CMAKE_CURRENT_SOURCE_DIR}/init/cfbb/ut/crypto_drv_init.c
     )
     if(DEFINED CONFIG_PKE_SUPPORT_EDWARD)
@@ -329,6 +312,23 @@ elseif("FUZZ_TEST" IN_LIST DEFINES)
     list(APPEND PUBLIC_DEFINES -DCRYPTO_ERROR_ENV=1)    # Linux
 endif()
 
+
+# mbedtls alt
+if("MBEDTLS_HARDEN_OPEN" IN_LIST DEFINES)
+    list(APPEND SOURCES
+        ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/mbedtls_harden_adapt.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/ecp_harden_impl.c
+    )
+    if(${CHIP} STREQUAL "ws53")
+        # for deep sleep feature.
+        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/hash_harden_impl_short_term.c")
+        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/aes_harden_impl_short_term.c")
+    else()
+        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/hash_harden_impl_long_term.c")
+        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/aes_harden_impl_long_term.c")
+    endif()
+endif()
+
 set(PRIVATE_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/drv_cipher/drv_code/fmea
     ${CMAKE_CURRENT_SOURCE_DIR}/drv_km/include
@@ -342,12 +342,22 @@ set(PUBLIC_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/drv_cipher/drv_code
     ${CMAKE_CURRENT_SOURCE_DIR}/drv_cipher/drv_include
     ${CMAKE_CURRENT_SOURCE_DIR}/kapi/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/init/cfbb
     ${CMAKE_CURRENT_SOURCE_DIR}/init/cfbb/${CRYPTO_BUILD_ENV}
     ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt
+    ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/mbedtls_alt/include
     ${CMAKE_CURRENT_SOURCE_DIR}/service_layer
+
+    # fix testsuite_brandy_app_yaffs compile error, need modify config.py later.
+    ${ROOT_DIR}/include/driver/security_unified
+
+    # fix sdk_ws63_haier compile error for wpa-supplicant.
+	${ROOT_DIR}/open_source/mbedtls/mbedtls_v3.6.0/include
+	${ROOT_DIR}/open_source/mbedtls/mbedtls_v3.6.0
 )
 
 set(PRIVATE_DEFINES
+
 )
 
 # use this when you want to add ccflags like -include xxx

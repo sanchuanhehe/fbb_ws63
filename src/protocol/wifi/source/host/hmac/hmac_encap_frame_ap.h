@@ -1,5 +1,5 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2013-2024. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2013-2024. All rights reserved.
  * 文 件 名   : hmac_encap_frame_ap.h
  * 生成日期   : 2013年6月28日
  * 功能描述   : hmac_encap_frame_ap.c 的头文件

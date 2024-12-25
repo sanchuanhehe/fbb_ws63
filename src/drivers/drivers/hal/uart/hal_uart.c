@@ -75,14 +75,15 @@ errcode_t hal_uart_set_tx_fifo_int_level(uart_bus_t bus, uart_fifo_tx_int_lvl_t 
 }
 
 errcode_t hal_uart_init(uart_bus_t bus, hal_uart_callback_t callback, const hal_uart_pin_config_t *pins,
-                        const hal_uart_attr_t *attr, hal_uart_flow_ctrl_t flow_ctrl)
+                        const hal_uart_attr_t *attr, hal_uart_flow_ctrl_t flow_ctrl, hal_uart_extra_attr_t *extra_attr)
 {
     uart_port_register_hal_funcs(bus);
     hal_uart_funcs_t *hal_funcs = g_hal_uarts_funcs[bus];
     if (hal_funcs == NULL || attr == NULL) {
         return ERRCODE_UART_NOT_IMPLEMENT;
     }
-    return hal_funcs->init(bus, callback, (hal_uart_pin_config_t *)pins, (hal_uart_attr_t *)attr, flow_ctrl);
+    return hal_funcs->init(bus, callback, (hal_uart_pin_config_t *)pins, (hal_uart_attr_t *)attr, flow_ctrl,
+        extra_attr);
 }
 
 errcode_t hal_uart_deinit(uart_bus_t bus)

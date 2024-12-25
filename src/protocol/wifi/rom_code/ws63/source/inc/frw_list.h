@@ -1,5 +1,5 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2021-2021. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021. All rights reserved.
  * Description: wifi dmac os adapt layer
  * Create: 2021-08-05
  */

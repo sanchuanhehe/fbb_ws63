@@ -6,6 +6,10 @@
  * History: \n
  * 2023-06-27, Create file. \n
  */
+#if defined(CONFIG_PWM_SUPPORT_LPM)
+#include "pm_veto.h"
+#endif
+#include "common_def.h"
 #include "pinctrl.h"
 #include "pwm.h"
 #include "tcxo.h"

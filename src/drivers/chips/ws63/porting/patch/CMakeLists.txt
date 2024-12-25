@@ -9,6 +9,7 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/systick_patch.c
     ${CMAKE_CURRENT_SOURCE_DIR}/timer_patch.c
     ${CMAKE_CURRENT_SOURCE_DIR}/watchdog_patch.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/acccode.c
 )
 
 set(PUBLIC_HEADER

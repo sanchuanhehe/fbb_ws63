@@ -116,7 +116,7 @@ int HILINK_OtaAdapterFlashErase(unsigned int size)
  * 返回值是RETURN_ERROR时，表示写入失败
  */
 
-/* 需要记录写入后的offset */
+/* TODO 需要记录写入后的offset */
 int HILINK_OtaAdapterFlashWrite(const unsigned char *buf, unsigned int bufLen)
 {
     (void)uapi_watchdog_kick();

@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description: log printf interface
- * Author:
- * Create: 2018-12-01
  */
 
 /*

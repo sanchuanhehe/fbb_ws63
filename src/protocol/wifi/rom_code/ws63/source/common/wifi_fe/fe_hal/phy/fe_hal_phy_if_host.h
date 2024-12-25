@@ -14,6 +14,7 @@ extern "C" {
 #endif
 #define CALI_CHANNEL_NUM13_IDX 12   // 从13信道开始做滤波收窄
 #define CALI_CHANNEL_NUM11_IDX 10   // 从11信道开始做滤波收窄
+#define CALI_CHANNEL_NUM9_IDX 8 // 从11n40M 9信道开始做滤波收窄
 typedef struct {
     osal_u32 reg_addr;
     osal_u32 cfg_val;

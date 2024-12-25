@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2023-2024. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2024. All rights reserved.
   文 件 名   : hmac_11r.h
   作    者   :
   生成日期   : 2023年3月2日

@@ -307,7 +307,7 @@ OSAL_STATIC osal_u32 hmac_sta_twt_update_event_etc(hmac_vap_stru *hmac_vap, hmac
         update_twt_cfg_event.twt_cfg.next_twt_size = 0;
     }
     msg_info.data = (osal_u8 *)&update_twt_cfg_event;
-    msg_info.data_len = sizeof(mac_ctx_update_twt_stru);
+    msg_info.data_len = (osal_u16)sizeof(mac_ctx_update_twt_stru);
 
     ret = frw_send_msg_to_device(hmac_vap->vap_id, WLAN_MSG_H2D_C_UPDATE_TWT, &msg_info, OSAL_TRUE);
     if (ret != OAL_SUCC) {
@@ -326,7 +326,7 @@ OSAL_STATIC osal_void mac_set_twt_element_field_etc(mac_twt_ie_individual_stru *
     mac_cfg_twt_basic_param_stru *twt_basic_param)
 {
     twt_element->element_id = MAC_EID_TWT;
-    twt_element->len = sizeof(mac_twt_ie_individual_stru) - 2; /* control之前有2 byte数据 */
+    twt_element->len = (osal_u8)sizeof(mac_twt_ie_individual_stru) - 2; /* control之前有2 byte数据 */
 
     twt_element->control.ndp_paging_indicator   = 0;
     twt_element->control.responder_pm_mode      = 0;
@@ -434,7 +434,7 @@ OSAL_STATIC osal_u32 hmac_mgmt_encap_twt_setup_req(hmac_vap_stru *hmac_vap, hmac
     ret = memcpy_s((osal_u8 *)(data + MAC_80211_FRAME_LEN), sizeof(mac_individual_twt_setup_frame_stru),
                    (osal_u8 *)&setup_frame, sizeof(mac_individual_twt_setup_frame_stru));
     if (ret == EOK) {
-        *frame_len = (MAC_80211_FRAME_LEN + sizeof(mac_individual_twt_setup_frame_stru));  /* 长度不包括FCS,安全校验 */
+        *frame_len = (MAC_80211_FRAME_LEN + (osal_u16)sizeof(mac_individual_twt_setup_frame_stru));  /* 长度不包括FCS,安全校验 */
         return OAL_SUCC;
     } else {
         oam_error_log0(0, OAM_SF_11AX, "{hmac_mgmt_encap_twt_setup_req::memcpy error}");
@@ -489,9 +489,9 @@ OSAL_STATIC osal_void hmac_mgmt_encap_twt_information_req(hmac_vap_stru *hmac_va
 
     /* next-size有0（暂停，不带twt）和3（恢复，带64bit的twt参数两种情况 */
     if (information_filed->next_twt_subfield_size == 0) {
-        information_size = sizeof(mac_twt_information_frame_stru) - 8; /* 8表示减去next-twt的8字节 */
+        information_size = (osal_u16)sizeof(mac_twt_information_frame_stru) - 8; /* 8表示减去next-twt的8字节 */
     } else {
-        information_size = sizeof(mac_twt_information_frame_stru);
+        information_size = (osal_u16)sizeof(mac_twt_information_frame_stru);
     }
 
     *frame_len = (MAC_80211_FRAME_LEN + information_size);   /* 返回的帧长度中不包括FCS */
@@ -533,7 +533,7 @@ OSAL_STATIC osal_u32 hmac_twt_fill_ctx_and_cb(hmac_vap_stru *hmac_vap, oal_netbu
     (void)memset_s(oal_netbuf_cb(twt_frame), OAL_NETBUF_CB_SIZE(), 0, OAL_NETBUF_CB_SIZE());
 
     tx_ctl = (mac_tx_ctl_stru *)oal_netbuf_cb(twt_frame);
-    tx_ctl->mpdu_payload_len = length + sizeof(hmac_ctx_action_event_stru);
+    tx_ctl->mpdu_payload_len = length + (osal_u16)sizeof(hmac_ctx_action_event_stru);
     tx_ctl->frame_type = WLAN_CB_FRAME_TYPE_ACTION;
     tx_ctl->frame_subtype = (wlan_cb_frame_subtype_enum_uint8)sub_type;
 
@@ -685,7 +685,7 @@ OSAL_STATIC osal_u32 hmac_mgmt_encap_twt_teardown_req(hmac_vap_stru *hmac_vap, h
         return OAL_FAIL;
     }
 
-    *frame_len = (MAC_80211_FRAME_LEN + sizeof(mac_twt_teardown_stru));   /* 返回的帧长度中不包括FCS */
+    *frame_len = (MAC_80211_FRAME_LEN + (osal_u16)sizeof(mac_twt_teardown_stru));   /* 返回的帧长度中不包括FCS */
     return OAL_SUCC;
 }
 

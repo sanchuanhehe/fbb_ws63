@@ -1,0 +1,665 @@
+diff -Naru LinkSDK_origin/core/sysdep/core_adapter.c LinkSDK/core/sysdep/core_adapter.c
+--- LinkSDK_origin/core/sysdep/core_adapter.c	2024-07-22 13:24:22.000000000 +0800
++++ LinkSDK/core/sysdep/core_adapter.c	2024-09-30 11:32:33.706049558 +0800
+@@ -15,7 +15,7 @@
+  *  虽然物联网平台接收TCP方式的连接, 但我们不推荐这样做, TLS是更安全的通信方式
+  *
+  */
+-#define CORE_ADAPTER_MBEDTLS_ENABLED
++//#define CORE_ADAPTER_MBEDTLS_ENABLED
+ 
+ /*
+  *  CORE_ADAPTER_DTLS_ENABLED 不是一个用户需要关心的编译开关,用于关闭DTLS相关功能
+diff -Naru LinkSDK_origin/demos/mqtt_basic_demo.c LinkSDK/demos/mqtt_basic_demo.c
+--- LinkSDK_origin/demos/mqtt_basic_demo.c	2024-07-22 13:24:22.000000000 +0800
++++ LinkSDK/demos/mqtt_basic_demo.c	2024-09-30 13:56:51.997601919 +0800
+@@ -9,18 +9,27 @@
+  */
+ #include <stdio.h>
+ #include <string.h>
+-#include <unistd.h>
+-#include <pthread.h>
+ 
++#include "osal_types.h"
++#include "osal_task.h"
++#include "osal_debug.h"
++#include "debug_print.h"
+ #include "aiot_state_api.h"
+ #include "aiot_sysdep_api.h"
+ #include "aiot_mqtt_api.h"
++#include "securec.h"
+ 
+-/* TODO: 替换为自己设备的三元组 */
+-const char *product_key       = "${YourProductKey}";
+-const char *device_name       = "${YourDeviceName}";
+-const char *device_secret     = "${YourDeviceSecret}";
+-
++#define ALILINK_KEEPALIVE_TASK_SIZE       0x1000
++#define ALILINK_KEEPALIVE_TASK_PRIO       26
++#define ALILINK_RECV_TASK_SIZE            0x1000
++#define ALILINK_RECV_TASK_PRIO            27
++#define ALILINK_TASK_SIZE                 0x1000
++#define ALILINK_TASK_PRIO                 25
++
++/* 请替换为自己设备的三元组 */
++static char *g_product_key       = "k09491MwNWT";
++static char *g_device_name       = "hi_damon";
++static char *g_device_secret     = "9e31e56acf977bdf8e878d2f6a971262";
+ /*
+     TODO: 替换为自己实例的接入点
+ 
+@@ -31,21 +40,12 @@
+     对于2021年07月30日之前（不含当日）开通的物联网平台服务下公共实例，请使用旧版接入点。
+     详情请见: https://help.aliyun.com/document_detail/147356.html
+ */
+-const char  *mqtt_host = "${YourInstanceId}.mqtt.iothub.aliyuncs.com";
+-/* 
+-    原端口：1883/443，对应的证书(GlobalSign R1),于2028年1月过期，届时可能会导致设备不能建连。
+-    (推荐)新端口：8883，将搭载新证书，由阿里云物联网平台自签证书，于2053年7月过期。
+-*/
+-const uint16_t port = 8883;
++static char *g_mqtt_host = "iot-06z00fusvxnphyj.mqtt.iothub.aliyuncs.com";
+ 
+ /* 位于portfiles/aiot_port文件夹下的系统适配函数集合 */
+ extern aiot_sysdep_portfile_t g_aiot_sysdep_portfile;
+ 
+ /* 位于external/ali_ca_cert.c中的服务器证书 */
+-extern const char *ali_ca_cert;
+-
+-static pthread_t g_mqtt_process_thread;
+-static pthread_t g_mqtt_recv_thread;
+ static uint8_t g_mqtt_process_thread_running = 0;
+ static uint8_t g_mqtt_recv_thread_running = 0;
+ 
+@@ -60,7 +60,7 @@
+ /* 日志回调函数, SDK的日志会从这里输出 */
+ int32_t demo_state_logcb(int32_t code, char *message)
+ {
+-    printf("%s", message);
++    osal_printk("%s\n", message);
+     return 0;
+ }
+ 
+@@ -70,14 +70,14 @@
+     switch (event->type) {
+         /* SDK因为用户调用了aiot_mqtt_connect()接口, 与mqtt服务器建立连接已成功 */
+         case AIOT_MQTTEVT_CONNECT: {
+-            printf("AIOT_MQTTEVT_CONNECT\n");
++            osal_printk("AIOT_MQTTEVT_CONNECT\n");
+             /* TODO: 处理SDK建连成功, 不可以在这里调用耗时较长的阻塞函数 */
+         }
+         break;
+ 
+         /* SDK因为网络状况被动断连后, 自动发起重连已成功 */
+         case AIOT_MQTTEVT_RECONNECT: {
+-            printf("AIOT_MQTTEVT_RECONNECT\n");
++            osal_printk("AIOT_MQTTEVT_RECONNECT\n");
+             /* TODO: 处理SDK重连成功, 不可以在这里调用耗时较长的阻塞函数 */
+         }
+         break;
+@@ -86,7 +86,7 @@
+         case AIOT_MQTTEVT_DISCONNECT: {
+             char *cause = (event->data.disconnect == AIOT_MQTTDISCONNEVT_NETWORK_DISCONNECT) ? ("network disconnect") :
+                           ("heartbeat disconnect");
+-            printf("AIOT_MQTTEVT_DISCONNECT: %s\n", cause);
++            osal_printk("AIOT_MQTTEVT_DISCONNECT: %s\n", cause);
+             /* TODO: 处理SDK被动断连, 不可以在这里调用耗时较长的阻塞函数 */
+         }
+         break;
+@@ -102,27 +102,27 @@
+ {
+     switch (packet->type) {
+         case AIOT_MQTTRECV_HEARTBEAT_RESPONSE: {
+-            printf("heartbeat response\n");
++            osal_printk("heartbeat response\n");
+             /* TODO: 处理服务器对心跳的回应, 一般不处理 */
+         }
+         break;
+ 
+         case AIOT_MQTTRECV_SUB_ACK: {
+-            printf("suback, res: -0x%04X, packet id: %d, max qos: %d\n",
++            osal_printk("suback, res: -0x%04X, packet id: %d, max qos: %d\n",
+                    -packet->data.sub_ack.res, packet->data.sub_ack.packet_id, packet->data.sub_ack.max_qos);
+             /* TODO: 处理服务器对订阅请求的回应, 一般不处理 */
+         }
+         break;
+ 
+         case AIOT_MQTTRECV_PUB: {
+-            printf("pub, qos: %d, topic: %.*s\n", packet->data.pub.qos, packet->data.pub.topic_len, packet->data.pub.topic);
+-            printf("pub, payload: %.*s\n", packet->data.pub.payload_len, packet->data.pub.payload);
++            osal_printk("pub, qos: %d, topic: %.*s\n", packet->data.pub.qos, packet->data.pub.topic_len, packet->data.pub.topic);
++            osal_printk("pub, payload: %.*s\n", packet->data.pub.payload_len, packet->data.pub.payload);
+             /* TODO: 处理服务器下发的业务报文 */
+         }
+         break;
+ 
+         case AIOT_MQTTRECV_PUB_ACK: {
+-            printf("puback, packet id: %d\n", packet->data.pub_ack.packet_id);
++            osal_printk("puback, packet id: %d\n", packet->data.pub_ack.packet_id);
+             /* TODO: 处理服务器对QoS1上报消息的回应, 一般不处理 */
+         }
+         break;
+@@ -134,7 +134,7 @@
+ }
+ 
+ /* 执行aiot_mqtt_process的线程, 包含心跳发送和QoS1消息重发 */
+-void *demo_mqtt_process_thread(void *args)
++int demo_mqtt_process_thread(void *args)
+ {
+     int32_t res = STATE_SUCCESS;
+ 
+@@ -143,13 +143,13 @@
+         if (res == STATE_USER_INPUT_EXEC_DISABLED) {
+             break;
+         }
+-        sleep(1);
++        osal_msleep(1000); /* 1000:睡眠1秒 */
+     }
+-    return NULL;
++    return 0;
+ }
+ 
+ /* 执行aiot_mqtt_recv的线程, 包含网络自动重连和从服务器收取MQTT消息 */
+-void *demo_mqtt_recv_thread(void *args)
++int demo_mqtt_recv_thread(void *args)
+ {
+     int32_t res = STATE_SUCCESS;
+ 
+@@ -159,16 +159,17 @@
+             if (res == STATE_USER_INPUT_EXEC_DISABLED) {
+                 break;
+             }
+-            sleep(1);
++            osal_msleep(1000); /* 1000:睡眠1秒 */
+         }
+     }
+-    return NULL;
++    return 0;
+ }
+ 
+-int main(int argc, char *argv[])
++int alilink_thread(void *data)
+ {
+     int32_t     res = STATE_SUCCESS;
+     void       *mqtt_handle = NULL;
++    uint16_t port = 443;      /* 无论设备是否使用TLS连接阿里云平台, 目的端口都是443 */
+     aiot_sysdep_network_cred_t cred; /* 安全凭据结构体, 如果要用TLS, 这个结构体中配置CA证书等参数 */
+ 
+     /* 配置SDK的底层依赖 */
+@@ -176,39 +177,31 @@
+     /* 配置SDK的日志输出 */
+     aiot_state_set_logcb(demo_state_logcb);
+ 
+-    /* 创建SDK的安全凭据, 用于建立TLS连接 */
+-    memset(&cred, 0, sizeof(aiot_sysdep_network_cred_t));
+-    cred.option = AIOT_SYSDEP_NETWORK_CRED_SVRCERT_CA;  /* 使用RSA证书校验MQTT服务端 */
+-    cred.max_tls_fragment = 16384; /* 最大的分片长度为16K, 其它可选值还有4K, 2K, 1K, 0.5K */
+-    cred.sni_enabled = 1;                               /* TLS建连时, 支持Server Name Indicator */
+-    cred.x509_server_cert = ali_ca_cert;                 /* 用来验证MQTT服务端的RSA根证书 */
+-    cred.x509_server_cert_len = strlen(ali_ca_cert);     /* 用来验证MQTT服务端的RSA根证书长度 */
+-
+     /* 创建1个MQTT客户端实例并内部初始化默认参数 */
+     mqtt_handle = aiot_mqtt_init();
+     if (mqtt_handle == NULL) {
+-        printf("aiot_mqtt_init failed\n");
++        osal_printk("aiot_mqtt_init failed\n");
+         return -1;
+     }
+ 
+     /* TODO: 如果以下代码不被注释, 则例程会用TCP而不是TLS连接云平台 */
+-    /*
++
+     {
+         memset(&cred, 0, sizeof(aiot_sysdep_network_cred_t));
+         cred.option = AIOT_SYSDEP_NETWORK_CRED_NONE;
+     }
+-    */
++
+ 
+     /* 配置MQTT服务器地址 */
+-    aiot_mqtt_setopt(mqtt_handle, AIOT_MQTTOPT_HOST, (void *)mqtt_host);
++    aiot_mqtt_setopt(mqtt_handle, AIOT_MQTTOPT_HOST, (void *)g_mqtt_host);
+     /* 配置MQTT服务器端口 */
+     aiot_mqtt_setopt(mqtt_handle, AIOT_MQTTOPT_PORT, (void *)&port);
+     /* 配置设备productKey */
+-    aiot_mqtt_setopt(mqtt_handle, AIOT_MQTTOPT_PRODUCT_KEY, (void *)product_key);
++    aiot_mqtt_setopt(mqtt_handle, AIOT_MQTTOPT_PRODUCT_KEY, (void *)g_product_key);
+     /* 配置设备deviceName */
+-    aiot_mqtt_setopt(mqtt_handle, AIOT_MQTTOPT_DEVICE_NAME, (void *)device_name);
++    aiot_mqtt_setopt(mqtt_handle, AIOT_MQTTOPT_DEVICE_NAME, (void *)g_device_name);
+     /* 配置设备deviceSecret */
+-    aiot_mqtt_setopt(mqtt_handle, AIOT_MQTTOPT_DEVICE_SECRET, (void *)device_secret);
++    aiot_mqtt_setopt(mqtt_handle, AIOT_MQTTOPT_DEVICE_SECRET, (void *)g_device_secret);
+     /* 配置网络连接的安全凭据, 上面已经创建好了 */
+     aiot_mqtt_setopt(mqtt_handle, AIOT_MQTTOPT_NETWORK_CRED, (void *)&cred);
+     /* 配置MQTT默认消息接收回调函数 */
+@@ -221,76 +214,95 @@
+     if (res < STATE_SUCCESS) {
+         /* 尝试建立连接失败, 销毁MQTT实例, 回收资源 */
+         aiot_mqtt_deinit(&mqtt_handle);
+-        printf("aiot_mqtt_connect failed: -0x%04X\n\r\n", -res);
+-        printf("please check variables like mqtt_host, produt_key, device_name, device_secret in demo\r\n");
++        osal_printk("aiot_mqtt_connect failed: -0x%04X\n\n", -res);
++        osal_printk("please check variables like g_mqtt_host, produt_key, g_device_name, g_device_secret in demo\r\n");
+         return -1;
+     }
+ 
+     /* MQTT 订阅topic功能示例, 请根据自己的业务需求进行使用 */
+-    /* {
+-        char *sub_topic = "/sys/${YourProductKey}/${YourDeviceName}/thing/event/+/post_reply";
+-
+-        res = aiot_mqtt_sub(mqtt_handle, sub_topic, NULL, 1, NULL);
+-        if (res < 0) {
+-            printf("aiot_mqtt_sub failed, res: -0x%04X\n", -res);
+-            return -1;
+-        }
+-    } */
++    char *sub_topic = "/sys/k09491MwNWT/hi_damon/thing/deviceinfo/update_reply";
++    res = aiot_mqtt_sub(mqtt_handle, sub_topic, NULL, 1, NULL);
++    if (res < STATE_SUCCESS) {
++        aiot_mqtt_deinit(&mqtt_handle);
++        osal_printk("aiot_mqtt_sub failed, res: -0x%04X\n", -res);
++        return -1;
++    }
+ 
+     /* MQTT 发布消息功能示例, 请根据自己的业务需求进行使用 */
+-    /* {
+-        char *pub_topic = "/sys/${YourProductKey}/${YourDeviceName}/thing/event/property/post";
+-        char *pub_payload = "{\"id\":\"1\",\"version\":\"1.0\",\"params\":{\"LightSwitch\":0}}";
+-
+-        res = aiot_mqtt_pub(mqtt_handle, pub_topic, (uint8_t *)pub_payload, (uint32_t)strlen(pub_payload), 0);
+-        if (res < 0) {
+-            printf("aiot_mqtt_sub failed, res: -0x%04X\n", -res);
+-            return -1;
+-        }
+-    } */
++    char *pub_topic = "/sys/k09491MwNWT/hi_damon/thing/event/property/post";
++    char *pub_payload = "{\"id\":\"1\",\"version\":\"1.0\",\"params\":{\"LLLLLightSwitch\":0}}";
++    res = aiot_mqtt_pub(mqtt_handle, pub_topic, (uint8_t *)pub_payload, (uint32_t)strlen(pub_payload), 0);
++    if (res < STATE_SUCCESS) {
++        aiot_mqtt_deinit(&mqtt_handle);
++        osal_printk("aiot_mqtt_pub failed, res: -0x%04X\n", -res);
++        return -1;
++    }
+ 
+     /* 创建一个单独的线程, 专用于执行aiot_mqtt_process, 它会自动发送心跳保活, 以及重发QoS1的未应答报文 */
+     g_mqtt_process_thread_running = 1;
+-    res = pthread_create(&g_mqtt_process_thread, NULL, demo_mqtt_process_thread, mqtt_handle);
+-    if (res < 0) {
+-        printf("pthread_create demo_mqtt_process_thread failed: %d\n", res);
+-        return -1;
++    osal_task *alink_keepalive_task = OSAL_NULL;
++    alink_keepalive_task = osal_kthread_create(demo_mqtt_process_thread, (void *)mqtt_handle, "alink_keepalive",
++        ALILINK_KEEPALIVE_TASK_SIZE);
++    if (alink_keepalive_task == OSAL_NULL) {
++        aiot_mqtt_deinit(&mqtt_handle);
++        osal_printk("Create alink keepalive kthread failed\n");
++        return OSAL_NOK;
+     }
++    osal_kthread_set_priority(alink_keepalive_task, ALILINK_KEEPALIVE_TASK_PRIO);
++    osal_printk("Create alink keepalive kthread SUCCESS!\n");
+ 
+     /* 创建一个单独的线程用于执行aiot_mqtt_recv, 它会循环收取服务器下发的MQTT消息, 并在断线时自动重连 */
+     g_mqtt_recv_thread_running = 1;
+-    res = pthread_create(&g_mqtt_recv_thread, NULL, demo_mqtt_recv_thread, mqtt_handle);
+-    if (res < 0) {
+-        printf("pthread_create demo_mqtt_recv_thread failed: %d\n", res);
+-        return -1;
++    osal_task *alink_recv_task = OSAL_NULL;
++    alink_recv_task = osal_kthread_create(demo_mqtt_recv_thread, (void *)mqtt_handle, "alink_recv",
++        ALILINK_RECV_TASK_SIZE);
++    if (alink_recv_task == OSAL_NULL) {
++        aiot_mqtt_deinit(&mqtt_handle);
++        osal_kthread_destroy(alink_keepalive_task, OSAL_TRUE);
++        osal_printk("Create alink recv kthread failed\n");
++        return OSAL_NOK;
+     }
++    osal_kthread_set_priority(alink_recv_task, ALILINK_RECV_TASK_PRIO);
++    osal_printk("Create alink recv kthread SUCCESS!\n");
+ 
+     /* 主循环进入休眠 */
+     while (1) {
+-        sleep(1);
++        osal_msleep(1000); /* 睡眠1000毫秒 */
+     }
+ 
+     /* 断开MQTT连接, 一般不会运行到这里 */
+     g_mqtt_process_thread_running = 0;
+     g_mqtt_recv_thread_running = 0;
+-    sleep(1);
+-    pthread_join(g_mqtt_process_thread, NULL);
+-    pthread_join(g_mqtt_recv_thread, NULL);
++    osal_msleep(1000); /* 睡眠1000毫秒 */
+ 
++    osal_kthread_destroy(alink_keepalive_task, OSAL_TRUE);
++    osal_kthread_destroy(alink_recv_task, OSAL_TRUE);
+     res = aiot_mqtt_disconnect(mqtt_handle);
+     if (res < STATE_SUCCESS) {
+         aiot_mqtt_deinit(&mqtt_handle);
+-        printf("aiot_mqtt_disconnect failed: -0x%04X\n", -res);
++        osal_printk("aiot_mqtt_disconnect failed: -0x%04X\n", -res);
+         return -1;
+     }
+ 
+     /* 销毁MQTT实例, 一般不会运行到这里 */
+     res = aiot_mqtt_deinit(&mqtt_handle);
+     if (res < STATE_SUCCESS) {
+-        printf("aiot_mqtt_deinit failed: -0x%04X\n", -res);
++        osal_printk("aiot_mqtt_deinit failed: -0x%04X\n", -res);
+         return -1;
+     }
+ 
+     return 0;
+ }
+ 
++int alilink_task_start(void)
++{
++    osal_task *alilink_task = OSAL_NULL;
++    alilink_task = osal_kthread_create(alilink_thread, OSAL_NULL, "alilink", ALILINK_TASK_SIZE);
++    if (alilink_task == OSAL_NULL) {
++        osal_printk("Create alilink kthread failed\n");
++        return -1;
++    }
++
++    osal_kthread_set_priority(alilink_task, ALILINK_TASK_PRIO);
++    return 0;
++}
+diff -Naru LinkSDK_origin/portfiles/aiot_port/posix_port.c LinkSDK/portfiles/aiot_port/posix_port.c
+--- LinkSDK_origin/portfiles/aiot_port/posix_port.c	2024-07-22 13:24:22.000000000 +0800
++++ LinkSDK/portfiles/aiot_port/posix_port.c	2024-09-30 11:32:33.706049558 +0800
+@@ -1,4 +1,4 @@
+-/*
++﻿/*
+  * 这个移植示例适用于`Linux`这类支持pthread的POSIX设备，它实现了移植SDK所需要的接口。
+  * 移植接口大体可以分为两类：网络接口(TCP)、系统接口(OS)
+  *
+@@ -27,6 +27,13 @@
+ #include "aiot_state_api.h"
+ #include "aiot_sysdep_api.h"
+ 
++#include "osal_addr.h"
++#include "osal_task.h"
++#include "lwip/sockets.h"
++#include "lwip/netdb.h"
++#include "soc_osal.h"
++#include "osal_debug.h"
++#include "trng.h"
+ 
+ /* socket建联时间默认最大值 */
+ #define CORE_SYSDEP_DEFAULT_CONNECT_TIMEOUT_MS (10 * 1000)
+@@ -195,7 +202,7 @@
+     struct addrinfo hints;
+     struct addrinfo *addrInfoList = NULL, *pos = NULL;
+     struct sockaddr_in loc_addr;
+-    socklen_t len = sizeof(sizeof(loc_addr));
++    socklen_t len = sizeof(loc_addr);
+     fd_set write_sets;
+     struct timeval timeselect;
+ 
+@@ -206,26 +213,20 @@
+     hints.ai_flags = 0;
+     _port_uint2str(port, service);
+ 
+-    signal(SIGPIPE, SIG_IGN);
+-
+-    res = getaddrinfo(host, service, &hints, &addrInfoList);
++    res = lwip_getaddrinfo(host, service, &hints, &addrInfoList);
+     if (res == 0) {
+         for (pos = addrInfoList; pos != NULL; pos = pos->ai_next) {
+-            fd = socket(pos->ai_family, pos->ai_socktype, pos->ai_protocol);
++            fd = lwip_socket(pos->ai_family, pos->ai_socktype, pos->ai_protocol);
+             if (fd < 0) {
+-                 _core_printf("create socket error\n");
++                _core_printf("create socket error\n");
+                 res = STATE_PORT_NETWORK_SOCKET_CREATE_FAILED;
+                 continue;
+             }
+ 
+-            res = fcntl(fd, F_GETFL);
+-            if (res != -1) {
+-                res = fcntl(fd, F_SETFL, sock_option | O_NONBLOCK);
+-            }
+-
++            res = lwip_fcntl(fd, F_SETFL, sock_option | O_NONBLOCK);
+             if (res == -1) {
+                 /* block connect */
+-                if (connect(fd, pos->ai_addr, pos->ai_addrlen) == 0) {
++                if (lwip_connect(fd, pos->ai_addr, pos->ai_addrlen) == 0) {
+                     *fd_out = fd;
+                     res = STATE_SUCCESS;
+                     break;
+@@ -240,21 +241,21 @@
+                 timeselect.tv_sec = timeout_ms / 1000;
+                 timeselect.tv_usec = timeout_ms % 1000 * 1000;
+ 
+-                if (connect(fd, pos->ai_addr, pos->ai_addrlen) == 0) {
++                if (lwip_connect(fd, pos->ai_addr, pos->ai_addrlen) == 0) {
+                     *fd_out = fd;
+                     res = STATE_SUCCESS;
+                     break;
+                 } else if (errno != EINPROGRESS) {
+                     res = STATE_PORT_NETWORK_CONNECT_FAILED;
+                 } else {
+-                    res = select(fd + 1, NULL, &write_sets, NULL, &timeselect);
++                    res = lwip_select(fd + 1, NULL, &write_sets, NULL, &timeselect);
+                     if (res == 0) {
+                         res = STATE_MQTT_LOG_CONNECT_TIMEOUT;
+                     } else if (res < 0) {
+                         res = STATE_PORT_NETWORK_CONNECT_FAILED;
+                     } else {
+                         if (FD_ISSET(fd, &write_sets)) {
+-                            res = connect(fd, pos->ai_addr, pos->ai_addrlen);
++                            res = lwip_connect(fd, pos->ai_addr, pos->ai_addrlen);
+                             if ((res != 0 && errno == EISCONN) || res == 0) {
+                                 *fd_out = fd;
+                                 res = STATE_SUCCESS;
+@@ -267,7 +268,7 @@
+                 }
+             }
+ 
+-            close(fd);
++            lwip_close(fd);
+              _core_printf("connect error, errno: %d\n", errno);
+         }
+     } else {
+@@ -289,7 +290,7 @@
+     }
+ 
+     if(addrInfoList) {
+-        freeaddrinfo(addrInfoList);
++        lwip_freeaddrinfo(addrInfoList);
+     }
+ 
+     return res;
+@@ -317,15 +318,15 @@
+     struct sockaddr_in servaddr;
+     int opt_val = 1;
+ 
+-    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
++    sockfd = lwip_socket(AF_INET, SOCK_DGRAM, 0);
+     if (sockfd < 0) {
+          _core_printf("create socket error, errno: %d, %s\n", errno, strerror(errno));
+         return STATE_PORT_NETWORK_SOCKET_CREATE_FAILED;
+     }
+ 
+-    if (0 != setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt_val, sizeof(opt_val))) {
++    if (0 != lwip_setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &opt_val, sizeof(opt_val))) {
+          _core_printf("setsockopt(SO_REUSEADDR) falied, errno: %d, %s\n", errno, strerror(errno));
+-        close(sockfd);
++        lwip_close(sockfd);
+         return STATE_PORT_NETWORK_SOCKET_CONFIG_FAILED;
+     }
+ 
+@@ -334,9 +335,9 @@
+     servaddr.sin_family = AF_INET;
+     servaddr.sin_port = htons(network_handle->port);
+ 
+-    if (-1 == bind(sockfd, (struct sockaddr *)&servaddr, sizeof(struct sockaddr_in))) {
++    if (-1 == lwip_bind(sockfd, (struct sockaddr *)&servaddr, sizeof(struct sockaddr_in))) {
+          _core_printf("bind(%d) falied, errno: %d, %s\n", (int)sockfd, errno, strerror(errno));
+-        close(sockfd);
++        lwip_close(sockfd);
+         return STATE_PORT_NETWORK_SOCKET_BIND_FAILED;
+     }
+ 
+@@ -403,6 +404,7 @@
+         }
+ 
+         timeselect_ms = timeout_ms - (timenow_ms - timestart_ms);
++        timeselect_ms = 20000ULL; /* 200000:lwip_select最多等待20秒 */
+         timeselect.tv_sec = timeselect_ms / 1000;
+         timeselect.tv_usec = timeselect_ms % 1000 * 1000;
+ 
+@@ -411,16 +413,17 @@
+             /*  _core_printf("_core_sysdep_network_recv, nwk select timeout\n"); */
+             continue;
+         } else if (res < 0) {
+-             _core_printf("_core_sysdep_network_recv, errno: %d, %s\n", errno, strerror(errno));
++            _core_printf("_core_sysdep_network_recv, fd %d\n", network_handle->fd);
+             return STATE_PORT_NETWORK_SELECT_FAILED;
+         } else {
+             if (FD_ISSET(network_handle->fd, &recv_sets)) {
+-                recv_res = recv(network_handle->fd, buffer + recv_bytes, len - recv_bytes, 0);
++                _core_printf("_core_sysdep_network_recv, network_handle->fd %d\n", network_handle->fd);
++                recv_res = lwip_recv(network_handle->fd, buffer + recv_bytes, len - recv_bytes, 0);
+                 if (recv_res == 0) {
+                      _core_printf("_core_sysdep_network_recv, nwk connection closed\n");
+                     return STATE_PORT_NETWORK_RECV_CONNECTION_CLOSED;
+                 } else if (recv_res < 0) {
+-                     _core_printf("_core_sysdep_network_recv, errno: %d, %s\n", errno, strerror(errno));
++                    _core_printf("_core_sysdep_network_recv\n");
+                     if (errno == EINTR) {
+                         continue;
+                     }
+@@ -453,7 +456,7 @@
+     FD_ZERO(&read_fds);
+     FD_SET(network_handle->fd, &read_fds);
+ 
+-    res = select(network_handle->fd + 1, &read_fds, NULL, NULL, &timeout);
++    res = lwip_select(network_handle->fd + 1, &read_fds, NULL, NULL, &timeout);
+     if (res == 0) {
+          _core_printf("select timeout\n");
+         return 0;
+@@ -536,7 +539,7 @@
+         timeselect.tv_sec = timeselect_ms / 1000;
+         timeselect.tv_usec = timeselect_ms % 1000 * 1000;
+ 
+-        res = select(network_handle->fd + 1, NULL, &send_sets, NULL, &timeselect);
++        res = lwip_select(network_handle->fd + 1, NULL, &send_sets, NULL, &timeselect);
+         if (res == 0) {
+              _core_printf("_core_sysdep_network_send, nwk select timeout\n");
+             continue;
+@@ -545,7 +548,7 @@
+             return STATE_PORT_NETWORK_SELECT_FAILED;
+         } else {
+             if (FD_ISSET(network_handle->fd, &send_sets)) {
+-                send_res = send(network_handle->fd, buffer + send_bytes, len - send_bytes, 0);
++                send_res = lwip_send(network_handle->fd, buffer + send_bytes, len - send_bytes, 0);
+                 if (send_res == 0) {
+                      _core_printf("_core_sysdep_network_send, nwk connection closed\n");
+                     return STATE_PORT_NETWORK_SEND_CONNECTION_CLOSED;
+@@ -643,8 +646,9 @@
+ {
+     /* 仅仅对正常的fd 进行close操作 */
+     if (network_handle->fd >= 0) {
+-        shutdown(network_handle->fd, 2);
+-        close(network_handle->fd);
++        osal_printk("_core_sysdep_network_tcp_disconnect! fd %d\r\n", network_handle->fd);
++        lwip_shutdown(network_handle->fd, 2); /* 2:同时关闭发送和接收 */
++        lwip_close(network_handle->fd);
+     }
+ }
+ 
+@@ -665,11 +669,11 @@
+     }
+ 
+     if (network_handle->host != NULL) {
+-        free(network_handle->host);
++        osal_kfree(network_handle->host);
+         network_handle->host = NULL;
+     }
+ 
+-    free(network_handle);
++    osal_kfree(network_handle);
+     *handle = NULL;
+ 
+     return 0;
+@@ -677,38 +681,21 @@
+ 
+ void core_sysdep_rand(uint8_t *output, uint32_t output_len)
+ {
+-    uint32_t idx = 0, bytes = 0, rand_num = 0;
+-    struct timeval time;
+-
+-    memset(&time, 0, sizeof(struct timeval));
+-    gettimeofday(&time, NULL);
+-
+-    srand((unsigned int)(time.tv_sec * 1000 + time.tv_usec / 1000) + rand());
+-
+-    for (idx = 0; idx < output_len;) {
+-        if (output_len - idx < 4) {
+-            bytes = output_len - idx;
+-        } else {
+-            bytes = 4;
+-        }
+-        rand_num = rand();
+-        while (bytes-- > 0) {
+-            output[idx++] = (uint8_t)(rand_num >> bytes * 8);
+-        }
+-    }
++    uapi_drv_cipher_trng_get_random_bytes(output, output_len);
+ }
+ 
+ void *core_sysdep_mutex_init(void)
+ {
+     int res = 0;
+-    pthread_mutex_t *mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
++    osal_mutex *mutex = (osal_mutex *)osal_kmalloc(sizeof(osal_mutex), 0);
+     if (NULL == mutex) {
+         return NULL;
+     }
+ 
+-    if (0 != (res = pthread_mutex_init(mutex, NULL))) {
++    memset_s(mutex, sizeof(osal_mutex), 0, sizeof(osal_mutex));
++    if (osal_mutex_init(mutex) != OSAL_SUCCESS) {
+          _core_printf("create mutex failed \n");
+-        free(mutex);
++        osal_kfree(mutex);
+         return NULL;
+     }
+     /*  _core_printf("init mutex: %p\n",mutex); */
+@@ -720,8 +707,8 @@
+ {
+     int res = 0;
+     if (mutex != NULL) {
+-        if (0 != (res = pthread_mutex_lock((pthread_mutex_t *)mutex))) {
+-             _core_printf("lock mutex failed: - '%s' (%d)\n", strerror(res), res);
++        if (osal_mutex_lock((osal_mutex *)mutex) != OSAL_SUCCESS) {
++            osal_printk("lock mutex failed: - '%s' (%d)\n", strerror(res), res);
+         }
+     }
+ }
+@@ -730,9 +717,7 @@
+ {
+     int res = 0;
+     if (mutex != NULL) {
+-        if (0 != (res = pthread_mutex_unlock((pthread_mutex_t *)mutex))) {
+-             _core_printf("unlock mutex failed - '%s' (%d)\n", strerror(res), res);
+-        }
++        osal_mutex_unlock((osal_mutex *)mutex);
+     }
+ }
+ 
+@@ -741,10 +726,8 @@
+     int err_num = 0;
+     if (mutex != NULL) {
+         /*  _core_printf("deinit mutex: %p\n",mutex); */
+-        if (0 != (err_num = pthread_mutex_destroy(*(pthread_mutex_t **)mutex))) {
+-             _core_printf("destroy mutex failed\n");
+-        }
+-        free(*(pthread_mutex_t **)mutex);
++        osal_mutex_destroy(*(osal_mutex **)mutex);
++        osal_kfree(*(osal_mutex **)mutex);
+         *mutex = NULL;
+     }
+ }

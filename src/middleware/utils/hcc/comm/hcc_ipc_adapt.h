@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
  * Description: the header file for hcc ipc adapt layer.
- * Author:
- * Create: 2023-02-21
  */
 #ifndef HCC_IPC_ADAPT_H
 #define HCC_IPC_ADAPT_H

@@ -1,8 +1,5 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
- * Description: Mbedtls Adaptation Layer of MQTT
- * Author: LiteOS Team
- * Create: 2020-08-10
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.
  */
 #if defined(MBEDTLS)
 

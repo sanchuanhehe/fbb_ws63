@@ -1,6 +1,5 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2019-2020. All rights reserved.
- * Description: struction of AT command and public function
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2024. All rights reserved.
  */
 #ifndef __AT_REGIST_CCPRIV_H__
 #define __AT_REGIST_CCPRIV_H__

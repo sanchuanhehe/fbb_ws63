@@ -11,7 +11,6 @@
 #include "bts_def.h"
 #include "securec.h"
 #include "errcode.h"
-#include "test_suite_uart.h"
 #include "bts_def.h"
 #include "bts_le_gap.h"
 #include "bts_gatt_stru.h"
@@ -38,8 +37,6 @@ uint8_t g_server_id = 0;
 
 #define OCTET_BIT_LEN 8
 #define UUID_LEN_2 2
-
-#define sample_at_log_print(fmt, args...) test_suite_uart_sendf(fmt, ##args)
 
 /* 将uint16的uuid数字转化为bt_uuid_t */
 void stream_data_to_uuid(uint16_t uuid_data, bt_uuid_t *out_uuid)
@@ -68,7 +65,7 @@ static void ble_uuid_server_add_descriptor_ccc(uint32_t server_id, uint32_t srvc
     bt_uuid_t ccc_uuid = {0};
     uint8_t ccc_data_val[] = {0x00, 0x00};
 
-    sample_at_log_print("[uuid server] beginning add descriptors\r\n");
+    osal_printk("[uuid server] beginning add descriptors\r\n");
     stream_data_to_uuid(BLE_UUID_CLIENT_CHARACTERISTIC_CONFIGURATION, &ccc_uuid);
     gatts_add_desc_info_t descriptor;
     descriptor.desc_uuid = ccc_uuid;
@@ -84,7 +81,7 @@ static void ble_uuid_server_add_characters_and_descriptors(uint32_t server_id, u
 {
     bt_uuid_t server_uuid = {0};
     uint8_t server_value[] = {0x12, 0x34};
-    sample_at_log_print("[uuid server] beginning add characteristic\r\n");
+    osal_printk("[uuid server] beginning add characteristic\r\n");
     stream_data_to_uuid(BLE_UUID_UUID_SERVER_REPORT, &server_uuid);
     gatts_add_chara_info_t character;
     character.chara_uuid = server_uuid;
@@ -100,19 +97,19 @@ static void ble_uuid_server_add_characters_and_descriptors(uint32_t server_id, u
 static void ble_uuid_server_service_add_cbk(uint8_t server_id, bt_uuid_t *uuid, uint16_t handle, errcode_t status)
 {
     bt_uuid_t service_uuid = {0};
-    sample_at_log_print("[uuid server] add service cbk: server: %d, status: %d, srv_handle: %d, uuid_len: %d,uuid:",
+    osal_printk("[uuid server] add service cbk: server: %d, status: %d, srv_handle: %d, uuid_len: %d,uuid:",
         server_id, status, handle, uuid->uuid_len);
     for (int8_t i = 0; i < uuid->uuid_len ; i++) {
-        sample_at_log_print("%02x", (uint8_t)uuid->uuid[i]);
+        osal_printk("%02x", (uint8_t)uuid->uuid[i]);
     }
-    sample_at_log_print("\n");
+    osal_printk("\n");
     stream_data_to_uuid(BLE_UUID_UUID_SERVER_SERVICE, &service_uuid);
     if (compare_service_uuid(uuid, &service_uuid) == ERRCODE_BT_SUCCESS) {
         ble_uuid_server_add_characters_and_descriptors(server_id, handle);
-        sample_at_log_print("[uuid server] start service\r\n");
+        osal_printk("[uuid server] start service\r\n");
         gatts_start_service(server_id, handle);
     } else {
-        sample_at_log_print("[uuid server] unknown service uuid\r\n");
+        osal_printk("[uuid server] unknown service uuid\r\n");
         return;
     }
 }
@@ -122,13 +119,13 @@ static void  ble_uuid_server_characteristic_add_cbk(uint8_t server_id, bt_uuid_t
     gatts_add_character_result_t *result, errcode_t status)
 {
     int8_t i = 0;
-    sample_at_log_print("[uuid server] add characteristic cbk: server: %d, status: %d, srv_hdl: %d "\
+    osal_printk("[uuid server] add characteristic cbk: server: %d, status: %d, srv_hdl: %d "\
         "char_hdl: %x, char_val_hdl: %x, uuid_len: %d, uuid: ",
         server_id, status, service_handle, result->handle, result->value_handle, uuid->uuid_len);
     for (i = 0; i < uuid->uuid_len ; i++) {
-        sample_at_log_print("%02x", (uint8_t)uuid->uuid[i]);
+        osal_printk("%02x", (uint8_t)uuid->uuid[i]);
     }
-    sample_at_log_print("\n");
+    osal_printk("\n");
     g_notification_characteristic_att_hdl = result->value_handle;
 }
 
@@ -137,54 +134,54 @@ static void  ble_uuid_server_descriptor_add_cbk(uint8_t server_id, bt_uuid_t *uu
     uint16_t handle, errcode_t status)
 {
     int8_t i = 0;
-    sample_at_log_print("[uuid server] add descriptor cbk : server: %d, status: %d, srv_hdl: %d, desc_hdl: %x ,"\
+    osal_printk("[uuid server] add descriptor cbk : server: %d, status: %d, srv_hdl: %d, desc_hdl: %x ,"\
         "uuid_len:%d, uuid: ", server_id, status, service_handle, handle, uuid->uuid_len);
     for (i = 0; i < uuid->uuid_len ; i++) {
-        sample_at_log_print("%02x", (uint8_t)uuid->uuid[i]);
+        osal_printk("%02x", (uint8_t)uuid->uuid[i]);
     }
-    sample_at_log_print("\n");
+    osal_printk("\n");
 }
 
 /* 开始服务回调 */
 static void ble_uuid_server_service_start_cbk(uint8_t server_id, uint16_t handle, errcode_t status)
 {
-    sample_at_log_print("[uuid server] start service cbk : server: %d status: %d srv_hdl: %d\n",
+    osal_printk("[uuid server] start service cbk : server: %d status: %d srv_hdl: %d\n",
         server_id, status, handle);
 }
 
 static void ble_uuid_server_receive_write_req_cbk(uint8_t server_id, uint16_t conn_id,
     gatts_req_write_cb_t *write_cb_para, errcode_t status)
 {
-    sample_at_log_print("[uuid server]ReceiveWriteReqCallback--server_id:%d conn_id:%d\n", server_id, conn_id);
-    sample_at_log_print("request_id:%d att_handle:%d offset:%d need_rsp:%d need_authorize:%d is_prep:%d\n",
+    osal_printk("[uuid server]ReceiveWriteReqCallback--server_id:%d conn_id:%d\n", server_id, conn_id);
+    osal_printk("request_id:%d att_handle:%d offset:%d need_rsp:%d need_authorize:%d is_prep:%d\n",
         write_cb_para->request_id, write_cb_para->handle, write_cb_para->offset, write_cb_para->need_rsp,
         write_cb_para->need_authorize, write_cb_para->is_prep);
-    sample_at_log_print("data_len:%d data:\n", write_cb_para->length);
+    osal_printk("data_len:%d data:\n", write_cb_para->length);
     for (uint8_t i = 0; i < write_cb_para->length; i++) {
-        sample_at_log_print("%02x ", write_cb_para->value[i]);
+        osal_printk("%02x ", write_cb_para->value[i]);
     }
-    sample_at_log_print("\n");
-    sample_at_log_print("status:%d\n", status);
+    osal_printk("\n");
+    osal_printk("status:%d\n", status);
 }
 
 static void ble_uuid_server_receive_read_req_cbk(uint8_t server_id, uint16_t conn_id,
     gatts_req_read_cb_t *read_cb_para, errcode_t status)
 {
-    sample_at_log_print("[uuid server]ReceiveReadReq--server_id:%d conn_id:%d\n", server_id, conn_id);
-    sample_at_log_print("request_id:%d att_handle:%d offset:%d need_rsp:%d need_authorize:%d is_long:%d\n",
+    osal_printk("[uuid server]ReceiveReadReq--server_id:%d conn_id:%d\n", server_id, conn_id);
+    osal_printk("request_id:%d att_handle:%d offset:%d need_rsp:%d need_authorize:%d is_long:%d\n",
         read_cb_para->request_id, read_cb_para->handle, read_cb_para->offset, read_cb_para->need_rsp,
         read_cb_para->need_authorize, read_cb_para->is_long);
-    sample_at_log_print("status:%d\n", status);
+    osal_printk("status:%d\n", status);
 }
 
 static void ble_uuid_server_adv_enable_cbk(uint8_t adv_id, adv_status_t status)
 {
-    sample_at_log_print("adv enable adv_id: %d, status:%d\n", adv_id, status);
+    osal_printk("adv enable adv_id: %d, status:%d\n", adv_id, status);
 }
 
 static void ble_uuid_server_adv_disable_cbk(uint8_t adv_id, adv_status_t status)
 {
-    sample_at_log_print("adv disable adv_id: %d, status:%d\n",
+    osal_printk("adv disable adv_id: %d, status:%d\n",
         adv_id, status);
 }
 
@@ -192,20 +189,24 @@ static void ble_uuid_server_adv_disable_cbk(uint8_t adv_id, adv_status_t status)
 void ble_uuid_server_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, gap_ble_conn_state_t conn_state,
     gap_ble_pair_state_t pair_state, gap_ble_disc_reason_t disc_reason)
 {
-    sample_at_log_print("connect state change conn_id: %d, status: %d, pair_status:%d, addr %x disc_reason %x\n",
+    osal_printk("connect state change conn_id: %d, status: %d, pair_status:%d, addr %x disc_reason %x\n",
         conn_id, conn_state, pair_state, addr[0], disc_reason);
     g_conn_hdl = conn_id;
+
+    if (conn_state == GAP_BLE_STATE_DISCONNECTED) {
+        gap_ble_start_adv(BTH_GAP_BLE_ADV_HANDLE_DEFAULT);
+    }
 }
 
 void ble_uuid_server_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id, uint16_t mtu_size, errcode_t status)
 {
-    sample_at_log_print("mtu change change server_id: %d, conn_id: %d, mtu_size: %d, status:%d \n",
+    osal_printk("mtu change change server_id: %d, conn_id: %d, mtu_size: %d, status:%d \n",
         server_id, conn_id, mtu_size, status);
 }
 
 void ble_uuid_server_enable_cbk(errcode_t status)
 {
-    sample_at_log_print("enable status: %d\n", status);
+    osal_printk("enable status: %d\n", status);
 }
 
 static errcode_t ble_uuid_server_register_callbacks(void)
@@ -220,7 +221,7 @@ static errcode_t ble_uuid_server_register_callbacks(void)
     gap_cb.ble_enable_cb = ble_uuid_server_enable_cbk;
     ret = gap_ble_register_callbacks(&gap_cb);
     if (ret != ERRCODE_BT_SUCCESS) {
-        sample_at_log_print("[uuid server] reg gap cbk failed\r\n");
+        osal_printk("[uuid server] reg gap cbk failed\r\n");
         return ERRCODE_BT_FAIL;
     }
 
@@ -233,7 +234,7 @@ static errcode_t ble_uuid_server_register_callbacks(void)
     service_cb.mtu_changed_cb = ble_uuid_server_mtu_changed_cbk;
     ret = gatts_register_callbacks(&service_cb);
     if (ret != ERRCODE_BT_SUCCESS) {
-        sample_at_log_print("[uuid server] reg service cbk failed\r\n");
+        osal_printk("[uuid server] reg service cbk failed\r\n");
         return ERRCODE_BT_FAIL;
     }
     return ret;
@@ -241,11 +242,11 @@ static errcode_t ble_uuid_server_register_callbacks(void)
 
 uint8_t ble_uuid_add_service(void)
 {
-    sample_at_log_print("[uuid server] ble uuid add service in\r\n");
+    osal_printk("[uuid server] ble uuid add service in\r\n");
     bt_uuid_t service_uuid = {0};
     stream_data_to_uuid(BLE_UUID_UUID_SERVER_SERVICE, &service_uuid);
     gatts_add_service(g_server_id, &service_uuid, true);
-    sample_at_log_print("[uuid server] ble uuid add service out\r\n");
+    osal_printk("[uuid server] ble uuid add service out\r\n");
     return ERRCODE_BT_SUCCESS;
 }
 
@@ -261,7 +262,7 @@ errcode_t ble_uuid_server_init(void)
     }
     gatts_register_server(&app_uuid, &g_server_id);
     ble_uuid_add_service();
-    sample_at_log_print("[uuid server] init ok\r\n");
+    osal_printk("[uuid server] init ok\r\n");
     ble_start_adv();
     return ERRCODE_BT_SUCCESS;
 }
@@ -277,11 +278,11 @@ errcode_t ble_uuid_server_send_report_by_uuid(const uint8_t *data, uint8_t len)
     param.value_len = len;
     param.value = osal_vmalloc(len);
     if (param.value == NULL) {
-        sample_at_log_print("[hid][ERROR]send report new fail\r\n");
+        osal_printk("[hid][ERROR]send report new fail\r\n");
         return ERRCODE_BT_FAIL;
     }
     if (memcpy_s(param.value, param.value_len, data, len) != EOK) {
-        sample_at_log_print("[hid][ERROR]send input report memcpy fail\r\n");
+        osal_printk("[hid][ERROR]send input report memcpy fail\r\n");
         osal_vfree(param.value);
         return ERRCODE_BT_FAIL;
     }
@@ -301,11 +302,11 @@ errcode_t ble_uuid_server_send_report_by_handle(uint16_t attr_handle, const uint
     param.value_len = len;
 
     if (param.value == NULL) {
-        sample_at_log_print("[hid][ERROR]send report new fail\r\n");
+        osal_printk("[hid][ERROR]send report new fail\r\n");
         return ERRCODE_BT_FAIL;
     }
     if (memcpy_s(param.value, param.value_len, data, len) != EOK) {
-        sample_at_log_print("[hid][ERROR]send input report memcpy fail\r\n");
+        osal_printk("[hid][ERROR]send input report memcpy fail\r\n");
         osal_vfree(param.value);
         return ERRCODE_BT_FAIL;
     }

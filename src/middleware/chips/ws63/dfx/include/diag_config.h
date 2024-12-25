@@ -1,7 +1,5 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2023. All rights reserved.
- * Description: diag usr config
- * This file should be changed only infrequently and with great care.
  */
 
 #ifndef DIAG_CONFIG_H

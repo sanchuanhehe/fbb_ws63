@@ -508,8 +508,11 @@ typedef struct ble_gattc_callbacks {
                                                                              @endif */
     gattc_write_cfm_callback write_cb;                                  /*!< @if Eng Receive write response callback.
                                                                              @else   收到写响应回调函数。 @endif */
-    gattc_mtu_changed_callback mtu_changed_cb;                          /*!< @if Eng Mtu changed callback.
-                                                                             @else   mtu改变回调函数。 @endif */
+    gattc_mtu_changed_callback mtu_changed_cb;                          /*!< @if Eng Mtu changed callback,
+                                                                                     the serverId parameter is reserved,
+                                                                                     has a fixed value of 0.
+                                                                             @else   mtu改变回调函数，serverId作为预留参数，
+                                                                                     固定为0。 @endif */
     gattc_notification_callback notification_cb;                        /*!< @if Eng Receive notification callback.
                                                                              @else   收到通知回调函数。 @endif */
     gattc_indication_callback indication_cb;                            /*!< @if Eng Receive indication callback.

@@ -143,6 +143,61 @@ typedef enum {
 
 /**
  * @if Eng
+ * @brief  filtering policies
+ * @else
+ * @brief  过滤策略
+ * @endif
+ */
+typedef enum {
+    SLE_MCS_00 = 0,                                     /*!< @if Eng MCS0:  BPSK1/4
+                                                             @else   MCS0:  BPSK1/4 @endif */
+    SLE_MCS_01,                                         /*!< @if Eng MCS1:  BPSK3/8
+                                                             @else   MCS1:  BPSK3/8 @endif */
+    SLE_MCS_02,                                         /*!< @if Eng MCS2:  QPSK1/4
+                                                             @else   MCS2:  QPSK1/4 @endif */
+    SLE_MCS_03,                                         /*!< @if Eng MCS3:  QPSK3/8
+                                                             @else   MCS3:  QPSK3/8 @endif */
+    SLE_MCS_04,                                         /*!< @if Eng MCS4:  QPSK1/2
+                                                             @else   MCS4:  QPSK1/2 @endif */
+    SLE_MCS_05,                                         /*!< @if Eng MCS5:  QPSK5/8
+                                                             @else   MCS5:  QPSK5/8 @endif */
+    SLE_MCS_06,                                         /*!< @if Eng MCS6:  QPSK3/4
+                                                             @else   MCS6:  QPSK3/4 @endif */
+    SLE_MCS_07,                                         /*!< @if Eng MCS7:  QPSK7/8
+                                                             @else   MCS7:  QPSK7/8 @endif */
+    SLE_MCS_08,                                         /*!< @if Eng MCS8:  QPSK 1
+                                                             @else   MCS8:  QPSK 1 @endif */
+    SLE_MCS_09,                                         /*!< @if Eng MCS9:  8PSK5/8
+                                                             @else   MCS9:  8PSK5/8 @endif */
+    SLE_MCS_10,                                         /*!< @if Eng MCS10: 8PSK3/4
+                                                             @else   MCS10: 8PSK3/4 @endif */
+    SLE_MCS_11,                                         /*!< @if Eng MCS11: 8PSK7/8
+                                                             @else   MCS11: 8PSK7/8 @endif */
+    SLE_MCS_12,                                         /*!< @if Eng MCS12：8PSK 1
+                                                             @else   MCS12：8PSK 1 @endif */
+    SLE_MCS_MAX,
+} sle_mcs_t;
+
+/**
+ * @if Eng
+ * @brief  filtering policies
+ * @else
+ * @brief  过滤策略
+ * @endif
+ */
+typedef enum {
+    SLE_ANNOUNCE_FLT_ANY_SEEK_ANY_CONNECT,          /*!< @if Eng accept all seek_req/conn_req
+                                                    @else   接受所有seek_req/conn_req @endif */
+    SLE_ANNOUNCE_FLT_WHITE_SEEK_ANY_CONNECT,        /*!< @if Eng only seek_req that meet the filter will be accepted
+                                                    @else   只接受符合过滤器的seek_req @endif */
+    SLE_ANNOUNCE_FLT_ANY_SEEK_WHITE_CONNECT,        /*!< @if Eng only conn_req that meet the filter will be accepted
+                                                    @else   只接受符合过滤器的conn_req @endif */
+    SLE_ANNOUNCE_FLT_WHITE_SEEK_WHITE_CONNECT       /*!< @if Eng accept seek_req/conn_req that conform to the filter
+                                                    @else   接受符合过滤器的seek_req/conn_req @endif */
+} sle_filter_policy_t;
+
+/**
+ * @if Eng
  * @brief  Connection parameter, only valid in role G.
  * @else
  * @brief  连接参数，做G时有效。
@@ -484,7 +539,8 @@ typedef void (*sle_seek_result_callback)(sle_seek_result_info_t *seek_result_dat
  * @par Callback invoked when SLE stack enable.
  * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
  * @attention 2.The memories of pointer are requested and freed by the SLE service automatically.
- * @param  [in]  status error code.
+ * @param [in] status error code.
+ * @retval #void no return value.
  * @par Dependency:
  * @li  sle_common.h
  * @see sle_connection_callbacks_t
@@ -493,7 +549,8 @@ typedef void (*sle_seek_result_callback)(sle_seek_result_info_t *seek_result_dat
  * @par    SLE协议栈使能。
  * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLE service申请内存，也由SLE service释放，回调中不应释放。
- * @param  [in]  status 执行结果错误码。
+ * @param [in] status 执行结果错误码。
+ * @retval 无返回值。
  * @par 依赖:
  * @li  sle_common.h
  * @see sle_connection_callbacks_t
@@ -507,7 +564,8 @@ typedef void (*sle_enable_callback)(errcode_t status);
  * @par Callback invoked when SLE stack disable.
  * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
  * @attention 2.The memories of pointer are requested and freed by the SLE service automatically.
- * @param  [in]  status error code.
+ * @param [in] status error code.
+ * @retval #void no return value.
  * @par Dependency:
  * @li  sle_common.h
  * @see sle_connection_callbacks_t
@@ -516,13 +574,25 @@ typedef void (*sle_enable_callback)(errcode_t status);
  * @par    SLE协议栈去使能。
  * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLE service申请内存，也由SLE service释放，回调中不应释放。
- * @param  [in]  status 执行结果错误码。
+ * @param [in] status 执行结果错误码。
+ * @retval 无返回值。
  * @par 依赖:
  * @li  sle_common.h
  * @see sle_connection_callbacks_t
  * @endif
  */
 typedef void (*sle_disable_callback)(errcode_t status);
+
+/**
+ * @if Eng
+ * @brief The callback interface for sle dfr function.
+ * @retval no return value
+ * @else
+ * @brief sle协议栈dfr流程
+ * @retval 无返回值
+ * @endif
+ */
+typedef void (*sle_dfr_callback)(void);
 
 /**
  * @if Eng
@@ -550,6 +620,8 @@ typedef struct {
                                                                  @else   扫描关闭回调函数。 @endif */
     sle_seek_result_callback seek_result_cb;                /*!< @if Eng scan result callback.
                                                                  @else   扫描结果回调函数。 @endif */
+    sle_dfr_callback sle_dfr_cb;                            /*!< @if Eng General callback for sle dfr.
+                                                                 @else dfr回调函数 @endif */
 } sle_announce_seek_callbacks_t;
 
 /**

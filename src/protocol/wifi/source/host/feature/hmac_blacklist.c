@@ -97,7 +97,7 @@ OAL_STATIC osal_u32 hmac_blacklist_mac_is_bcast(const osal_u8 *mac_addr)
 /* 黑白名单开启初始化g_blacklist_info */
 OAL_STATIC osal_void hmac_blacklist_info_init(hmac_vap_stru *hmac_vap)
 {
-    osal_u32 len = 0;
+    size_t len = 0;
     if (g_blacklist_info != OSAL_NULL) {
         oam_warning_log0(0, OAM_SF_ANY, "{hmac_blacklist_info_init::g_blacklist_info != OSAL_NULL}\r\n");
         return;

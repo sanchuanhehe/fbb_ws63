@@ -373,6 +373,7 @@ static int32 drv_soc_send_mlme(void *priv, const uint8 *data, size_t data_len,
 	(void)csa_offs;
 	(void)csa_offs_len;
 	(void)noack;
+
 	if ((priv == NULL) || (data == NULL))
 		return -EXT_EFAIL;
 	mlme_data = os_zalloc(sizeof(ext_mlme_data_stru));
@@ -2484,31 +2485,6 @@ static int32 drv_soc_set_ap_wps_p2p_ie(void *priv, const struct wpabuf *beacon,
 }
 #endif
 
-static int drv_soc_sta_deauth(void *priv, const u8 *own_addr, const u8 *addr, u16 reason)
-{
-	struct i802_bss *bss = priv;
-	struct ieee80211_mgmt mgmt;
-	errno_t rc;
-
-	if ((priv == NULL) || (own_addr == NULL) || (addr == NULL))
-		return -EXT_EFAIL;
-
-	(void)memset_s(&mgmt, sizeof(mgmt), 0, sizeof(mgmt));
-	mgmt.frame_control = IEEE80211_FC(WLAN_FC_TYPE_MGMT, WLAN_FC_STYPE_DEAUTH);
-	rc = memcpy_s(mgmt.da, ETH_ALEN, addr, ETH_ALEN);
-	if (rc != EOK)
-		return -EXT_EFAIL;
-	rc = memcpy_s(mgmt.sa, ETH_ALEN, own_addr, ETH_ALEN);
-	if (rc != EOK)
-		return -EXT_EFAIL;
-	rc = memcpy_s(mgmt.bssid, ETH_ALEN, own_addr, ETH_ALEN);
-	if (rc != EOK)
-		return -EXT_EFAIL;
-
-	mgmt.u.deauth.reason_code = host_to_le16(reason);
-	return drv_soc_send_mlme(bss, (u8 *) &mgmt, IEEE80211_HDRLEN + sizeof(mgmt.u.deauth), 0, 0, NULL, 0);
-}
-
 static int drv_soc_deinit_ap(void *priv)
 {
 	ext_driver_data_stru *drv = priv;
@@ -2877,6 +2853,31 @@ cleanup:
 	return ret;
 }
 
+static int drv_soc_sta_deauth(void *priv, const u8 *own_addr, const u8 *addr, u16 reason)
+{
+	struct i802_bss *bss = priv;
+	struct ieee80211_mgmt mgmt;
+	errno_t rc;
+
+	if ((priv == NULL) || (own_addr == NULL) || (addr == NULL))
+		return -EXT_EFAIL;
+
+	(void)memset_s(&mgmt, sizeof(mgmt), 0, sizeof(mgmt));
+	mgmt.frame_control = IEEE80211_FC(WLAN_FC_TYPE_MGMT, WLAN_FC_STYPE_DEAUTH);
+	rc = memcpy_s(mgmt.da, ETH_ALEN, addr, ETH_ALEN);
+	if (rc != EOK)
+		return -EXT_EFAIL;
+	rc = memcpy_s(mgmt.sa, ETH_ALEN, own_addr, ETH_ALEN);
+	if (rc != EOK)
+		return -EXT_EFAIL;
+	rc = memcpy_s(mgmt.bssid, ETH_ALEN, own_addr, ETH_ALEN);
+	if (rc != EOK)
+		return -EXT_EFAIL;
+
+	mgmt.u.deauth.reason_code = host_to_le16(reason);
+	return drv_soc_send_mlme(bss, (u8 *) &mgmt, IEEE80211_HDRLEN + sizeof(mgmt.u.deauth), 0, 0, NULL, 0);
+}
+
 static int32 drv_soc_sta_remove(void *priv, const uint8 *addr)
 {
 	ext_driver_data_stru *drv = EXT_PTR_NULL;
@@ -3102,6 +3103,7 @@ const struct wpa_driver_ops wpa_driver_ext_ops = {
 	.hapd_init                = drv_soc_hapd_init,
 	.hapd_deinit              = drv_soc_hapd_deinit,
 	.send_action              = drv_soc_send_action,
+	.sta_deauth               = drv_soc_sta_deauth,
 #ifdef LOS_CONFIG_P2P
 	.if_add                   = drv_soc_add_if,
 	.if_remove                = drv_soc_remove_if,
@@ -3110,7 +3112,6 @@ const struct wpa_driver_ops wpa_driver_ext_ops = {
 	.probe_req_report         = drv_soc_probe_req_report,
 	.get_p2p_mac_addr         = drv_soc_get_p2p_mac_addr,
 	.set_p2p_powersave        = drv_soc_set_p2p_powersave,
-	.sta_deauth               = drv_soc_sta_deauth,
 	.deinit_ap                = drv_soc_deinit_ap,
 	.deinit_p2p_cli           = drv_soc_deinit_p2p_cli,
 #ifdef CONFIG_WPS_AP

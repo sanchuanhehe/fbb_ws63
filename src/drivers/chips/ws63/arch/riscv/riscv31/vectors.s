@@ -1,6 +1,6 @@
 /******************************************************************************
  * @brief    RISCV31 vectors module implementation
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2023. All rights reserved.
+ * Copyright (c) 2021 HiSilicon (Shanghai) Technologies Co., Ltd.
 ******************************************************************************/
 .equ ccause, 0xFC2
 .macro push_reg

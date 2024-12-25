@@ -1,11 +1,6 @@
 /**
-* @file soc_os_stat.h
-*
-* Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2019-2019. All rights reserved.  \n
-* Description: OS status APIs.   \n
-* Author:
-* Create: 2019-12-18
-*/
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2019-2019. All rights reserved.
+ */
 
 /**
  * @defgroup os_stat OS Status

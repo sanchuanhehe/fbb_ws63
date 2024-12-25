@@ -53,7 +53,7 @@ uint32_t uart_process(uint32_t interrupt_timeout_ms);
 
 #ifdef CONFIG_LOADERBOOT_SUPPORT_SET_BUADRATE
 uart_param_stru* uart_baudrate_rcv(const uart_ctx *ctx);
-uint32_t serial_port_set_baudrate(uart_param_stru *uart);
+uint32_t serial_port_set_baudrate(const uart_param_stru *uart);
 #endif
 
 #endif

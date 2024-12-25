@@ -6,8 +6,6 @@ set(COMPONENT_NAME "pm_port_ws63")
 
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/pm_porting.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/test_pm_port.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/pm_pwr_dbg.c
 )
 
 set(PUBLIC_HEADER

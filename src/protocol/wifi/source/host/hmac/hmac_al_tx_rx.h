@@ -31,7 +31,8 @@ osal_u8 hmac_get_al_tx_frame_type_switch(osal_void);
 osal_u32 hmac_get_al_tx_mcs(osal_void);
 osal_u8 hmac_get_al_tx_protocol(osal_void);
 osal_s32 hmac_config_get_rx_ppdu_info(hmac_vap_stru *hmac_vap, frw_msg *msg);
-
+osal_void hmac_set_al_tx_duty_rate(osal_u8 val);
+osal_u8 hmac_get_al_tx_duty_rate(osal_void);
 #ifdef __cplusplus
 #if __cplusplus
 }

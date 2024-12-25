@@ -28,13 +28,13 @@
                 },
                 "stack analysis": {
                     "analysis_elf_path": "./output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf",
-                    "analysis_compiler_path": "./tools/bin/compiler/riscv/cc_riscv32_musl_100/cc_riscv32_musl_fp_win/bin",
+                    "analysis_compiler_path": "./tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl_fp_win/bin",
                     "build_config_path": ""
                 },
                 "image analysis": {
                     "analysis_elf_path": "./output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf",
                     "analysis_map_path": "./output/ws63/acore/ws63-liteos-app/ws63-liteos-app.map",
-                    "analysis_compiler_path": "./tools/bin/compiler/riscv/cc_riscv32_musl_100/cc_riscv32_musl_fp_win/bin",
+                    "analysis_compiler_path": "./tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl_fp_win/bin",
                     "build_config_path": ""
                 },
                 "upload": {

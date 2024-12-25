@@ -146,7 +146,7 @@ class BuildNv:
         for chip in self.nv_ver_dict:
             chip_dict = self.nv_ver_dict[chip]
             for target in chip_dict:
-                # scons in chip dir or nv_config dir? etypes path depends on scons path
+                # TODO: scons in chip dir or nv_config dir? etypes path depends on scons path
                 nv_tmp_dir = os.path.join(self.tmp_path, target)
                 etypes_path = os.path.join(nv_tmp_dir, "%s.etypes" % target) # 中间文件xxx.etypes路径
                 if os.path.exists(etypes_path) is not True: # 判断中间文件是否存在，如果不在说明该模块没有被编译，需要加入到编译链接中
@@ -315,7 +315,7 @@ class BuildNv:
             ver_bin = chip_bins[core].get(ver)
             flash_bin, start_addr = self._append_file_to_stream(flash_bin, start_addr, chip, core, ver_bin)
             chip_ver_bin_file = os.path.join(self.nv_output_dir, self.nv_output_name)
-        # 目前只考虑单核场景去除 NV bin 末尾的无用 FF
+        # TODO: 目前只考虑单核场景去除 NV bin 末尾的无用 FF
         return self._write_binary_to_file(chip_ver_bin_file, flash_bin[0 : start_addr])
 
     def _append_file_to_stream(self, flash_bin, start_addr, chip, core, ver_bin):
@@ -428,7 +428,7 @@ class BuildNv:
         nv_key_st.key_id = key_id
 
         nv_key_st.version = 65535
-        nv_key_st.enc_key = 0 # 目前不支持加密，且nv加密部分不由nv脚本做，可能放到初始化？
+        nv_key_st.enc_key = 0 # TODO: 目前不支持加密，且nv加密部分不由nv脚本做，可能放到初始化？
         tail_addr = key_item_start_addr + sizeof(KeyHead)
         nv_bin[key_item_start_addr : tail_addr] = nv_key_st
         return nv_bin, tail_addr

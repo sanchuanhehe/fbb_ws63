@@ -9,7 +9,7 @@ import time
 import re
 
 from utils.build_utils import root_path, script_path, target_config_path, output_root
-from utils.build_utils import pkg_tools_path, jlink_tools_path, lzma_tools_path, sign_tools_path, derived_tools_path
+from utils.build_utils import pkg_tools_path, jlink_tools_path, lzma_tools_path, sign_tools_path, derived_tools_path, radar_tools_path
 from utils.build_utils import CopyModule, exec_shell, cmp_file, rm_pyc, rm_all, fn_get_subdirs
 from enviroment import TargetEnvironment
 from sdk_generator.target_config_genarator import genarate_reserve_config
@@ -23,6 +23,7 @@ sdk_copy_common_files = [
     os.path.join(lzma_tools_path),
     os.path.join(sign_tools_path),
     os.path.join(derived_tools_path),
+    os.path.join(radar_tools_path),
 ]
 
 sdk_close_components = [
@@ -245,7 +246,6 @@ class SdkGenerator:
                 sdk_build_cmd.append("-nhso")
             if build_level == 'release':
                 sdk_build_cmd.append("-release")
-
             ret_code = exec_shell(sdk_build_cmd)
             if ret_code:
                 sys.exit(1)
@@ -270,7 +270,7 @@ class SdkGenerator:
             config_content = re.sub(r"'defines'\s?:\s?\[", r"'defines': [" + "'SDK_NOT_MEM_LIMIT', ", config_content)
             f.write(config_content)
         return
-
+ 
     def change_sdk_version(self):
         sdk_version_cmd_define = ""
         for build_def in self.env.config.get("defines", []):
@@ -283,7 +283,7 @@ class SdkGenerator:
         chip_config_path = os.path.join('build', 'config', 'target_config', self.env.get('chip'), 'target_config.py')
         with open(chip_config_path, "r") as f:
             config_content = f.read()
-            print(config_content)
+            print(config_content)        
         print(f"change defines: {sdk_version_cmd_define}, change the version of sdk")
         with open(chip_config_path, "w") as f:
             sdk_version_cmd_define = sdk_version_cmd_define.replace("\"", "\\\"")

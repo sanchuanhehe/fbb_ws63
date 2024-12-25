@@ -23,11 +23,6 @@ typedef struct {
 
 typedef struct {
     uint32_t                para_map;
-    uint32_t                run_region;
-} absetrun_args_t;
-
-typedef struct {
-    uint32_t                para_map;
     const uint8_t           *mac_addr; /* Optional.   Length: 17 */
     int32_t                 mac_type;
 } efusemac_args_t;
@@ -80,7 +75,6 @@ typedef struct {
 typedef union {
     nvread_args_t   nvread;
     nvwrite_args_t  nvwrite;
-    absetrun_args_t absetrun;
     efusemac_args_t efusemac;
     reboot_args_t   reboot;
     mfgflag_args_t  mfgflag;
@@ -163,14 +157,16 @@ typedef struct {
     const uint8_t           *license; /*    Length: 4096 */
 } license_args_t;
 
+typedef struct {
+    uint32_t                para_map;
+    uint16_t                acccode;
+} acccode_args_t;
+
 /* AT Command */
 at_ret_t plt_nv_read(const nvread_args_t *args);
 
 /* AT Command */
 at_ret_t plt_nv_write(const nvwrite_args_t *args);
-
-/* SET AB RUN REGION */
-at_ret_t upg_ab_set_run_region(const absetrun_args_t *args);
 
 /* SET MAC ADDR */
 at_ret_t get_efuse_mac_addr(void);
@@ -266,6 +262,9 @@ at_ret_t plt_flash_write(const flashwrite_args_t *args);
 /* AT+LICENSE */
 at_ret_t save_license(const license_args_t *args);
 
+/* AT+WRITEACCC */
+at_ret_t at_write_acccode(const acccode_args_t *args);
+
 const at_para_parse_syntax_t nvread_syntax[] = {
     {
         .type = AT_SYNTAX_TYPE_INT,
@@ -310,22 +309,8 @@ const at_para_parse_syntax_t nvwrite_syntax[] = {
     },
 };
 
-const int32_t absetrun_run_region_values[] = {
-    0, 1, 2
-};
-
-const at_para_parse_syntax_t absetrun_syntax[] = {
-    {
-        .type = AT_SYNTAX_TYPE_INT,
-        .last = true,
-        .attribute = AT_SYNTAX_ATTR_LIST_VALUE,
-        .entry.int_list = {3, absetrun_run_region_values},
-        .offset = offsetof(absetrun_args_t, run_region)
-    },
-};
-
 const int32_t efusemac_mac_type_values[] = {
-    0, 1, 2
+    0, 1, 2, 3
 };
 const at_para_parse_syntax_t efusemac_syntax[] = {
     {
@@ -588,6 +573,17 @@ const at_para_parse_syntax_t license_syntax[] = {
     },
 };
 
+const at_para_parse_syntax_t acccode_syntax[] = {
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .last = true,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 65535,
+        .offset = offsetof(acccode_args_t, acccode)
+    },
+};
+
 const at_cmd_entry_t at_plt_cmd_parse_table[] = {
     {
         "NVREAD",
@@ -606,16 +602,6 @@ const at_cmd_entry_t at_plt_cmd_parse_table[] = {
         nvwrite_syntax,
         NULL,
         (at_set_func_t)plt_nv_write,
-        NULL,
-        NULL,
-    },
-    {
-        "ABSETRUN",
-        2,
-        0,
-        absetrun_syntax,
-        NULL,
-        (at_set_func_t)upg_ab_set_run_region,
         NULL,
         NULL,
     },
@@ -714,7 +700,7 @@ const at_cmd_entry_t at_plt_cmd_parse_table[] = {
         8,
         0,
         sleepmode_syntax,
-        at_get_sleep_mode,
+        NULL,
         (at_set_func_t)at_set_sleep_mode,
         NULL,
         NULL,
@@ -907,6 +893,16 @@ const at_cmd_entry_t at_plt_cmd_parse_table[] = {
         license_syntax,
         NULL,
         (at_set_func_t)save_license,
+        NULL,
+        NULL,
+    },
+    {
+        "WRITEACCC",
+        2,
+        0,
+        acccode_syntax,
+        NULL,
+        (at_set_func_t)at_write_acccode,
         NULL,
         NULL,
     },

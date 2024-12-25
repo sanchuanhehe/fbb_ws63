@@ -537,6 +537,10 @@ static int ecdsa_verify_restartable( mbedtls_ecp_group *grp,
     unsigned char s_buf[MAX_ECC_SIZE];
     unsigned char pub_x[MAX_ECC_SIZE];
     unsigned char pub_y[MAX_ECC_SIZE];
+    mbedtls_alt_ecp_point pub_key = {.x = pub_x, .y = pub_y, .length = MAX_ECC_SIZE};
+    mbedtls_alt_ecp_data hash_data = {.data = (unsigned char *)buf, .length = blen};
+    mbedtls_alt_ecp_data r_data = {0};
+    mbedtls_alt_ecp_data s_data = {0};
     (void)rs_ctx;
 
     get_curve_type(grp->id, &curve_type, &klen);
@@ -569,7 +573,12 @@ static int ecdsa_verify_restartable( mbedtls_ecp_group *grp,
         return ret;
     }
 
-    ret = mbedtls_alt_ecdsa_verify(curve_type, buf, blen, pub_x, pub_y, r_buf, s_buf, klen);
+    pub_key.length = klen;
+    r_data.data = r_buf;
+    r_data.length = klen;
+    s_data.data = s_buf;
+    s_data.length = klen;
+    ret = mbedtls_alt_ecdsa_verify(curve_type, &pub_key, &hash_data, &r_data, &s_data);
 
     return ret;
 }

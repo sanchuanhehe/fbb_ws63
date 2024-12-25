@@ -8,10 +8,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "osal_addr.h"
+#include "osal_debug.h"
 #include "bts_def.h"
 #include "securec.h"
 #include "errcode.h"
-#include "test_suite_uart.h"
 #include "bts_def.h"
 #include "bts_le_gap.h"
 #include "bts_gatt_stru.h"
@@ -67,8 +67,6 @@ uint16_t g_conn_handle = 0;
 #define BLE_WIFI_CFG_CHARACTER_VALUE_INDICATE_0 0X00
 #define BLE_WIFI_CFG_CHARACTER_VALUE_INDICATE_2 0X02
 
-#define sample_at_log_print(fmt, args...) test_suite_uart_sendf(fmt, ##args)
-
 extern void set_wifi_cfg_info(uint8_t *info, uint16_t info_len);
 extern int bgwc_wifi_list_resp_send(uint16_t handle);
 
@@ -96,23 +94,23 @@ errcode_t service_uuid_compare(bt_uuid_t *uuid1, bt_uuid_t *uuid2)
 /* 开始服务回调 */
 static void ble_wifi_cfg_server_service_start_cbk(uint8_t server_id, uint16_t handle, errcode_t status)
 {
-    sample_at_log_print("[wifi_cfg_server] start service cbk : server: %d status: %d srv_hdl: %d\n", server_id, status,
+    osal_printk("[wifi_cfg_server] start service cbk : server: %d status: %d srv_hdl: %d\n", server_id, status,
         handle);
 }
 
 static void ble_wifi_cfg_server_receive_write_req_cbk(uint8_t server_id, uint16_t conn_id,
     gatts_req_write_cb_t *write_cb_para, errcode_t status)
 {
-    sample_at_log_print("[wifi_cfg_server]ReceiveWriteReqCallback--server_id:%d conn_id:%d\n", server_id, conn_id);
-    sample_at_log_print("request_id:%d att_handle:%d offset:%d need_rsp:%d need_authorize:%d is_prep:%d\n",
+    osal_printk("[wifi_cfg_server]ReceiveWriteReqCallback--server_id:%d conn_id:%d\n", server_id, conn_id);
+    osal_printk("request_id:%d att_handle:%d offset:%d need_rsp:%d need_authorize:%d is_prep:%d\n",
         write_cb_para->request_id, write_cb_para->handle, write_cb_para->offset, write_cb_para->need_rsp,
         write_cb_para->need_authorize, write_cb_para->is_prep);
-    sample_at_log_print("data_len:%d data:\n", write_cb_para->length);
+    osal_printk("data_len:%d data:\n", write_cb_para->length);
     for (uint8_t i = 0; i < write_cb_para->length; i++) {
-        sample_at_log_print("%02x ", write_cb_para->value[i]);
+        osal_printk("%02x ", write_cb_para->value[i]);
     }
-    sample_at_log_print("\n");
-    sample_at_log_print("status:%d\n", status);
+    osal_printk("\n");
+    osal_printk("status:%d\n", status);
 
     if (write_cb_para->handle == g_chara_cfg_hdl) {
         set_wifi_cfg_info(write_cb_para->value, write_cb_para->length);
@@ -125,40 +123,40 @@ static void ble_wifi_cfg_server_receive_write_req_cbk(uint8_t server_id, uint16_
 static void ble_wifi_cfg_server_receive_read_req_cbk(uint8_t server_id, uint16_t conn_id,
     gatts_req_read_cb_t *read_cb_para, errcode_t status)
 {
-    sample_at_log_print("[wifi_cfg_server]ReceiveReadReq--server_id:%d conn_id:%d\n", server_id, conn_id);
-    sample_at_log_print("request_id:%d att_handle:%d offset:%d need_rsp:%d need_authorize:%d is_long:%d\n",
+    osal_printk("[wifi_cfg_server]ReceiveReadReq--server_id:%d conn_id:%d\n", server_id, conn_id);
+    osal_printk("request_id:%d att_handle:%d offset:%d need_rsp:%d need_authorize:%d is_long:%d\n",
         read_cb_para->request_id, read_cb_para->handle, read_cb_para->offset, read_cb_para->need_rsp,
         read_cb_para->need_authorize, read_cb_para->is_long);
-    sample_at_log_print("status:%d\n", status);
+    osal_printk("status:%d\n", status);
 }
 
 static void ble_wifi_cfg_server_adv_enable_cbk(uint8_t adv_id, adv_status_t status)
 {
-    sample_at_log_print("adv enable adv_id: %d, status:%d\n", adv_id, status);
+    osal_printk("adv enable adv_id: %d, status:%d\n", adv_id, status);
 }
 
 static void ble_wifi_cfg_server_adv_disable_cbk(uint8_t adv_id, adv_status_t status)
 {
-    sample_at_log_print("adv disable adv_id: %d, status:%d\n", adv_id, status);
+    osal_printk("adv disable adv_id: %d, status:%d\n", adv_id, status);
 }
 
 void ble_wifi_cfg_server_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, gap_ble_conn_state_t conn_state,
     gap_ble_pair_state_t pair_state, gap_ble_disc_reason_t disc_reason)
 {
-    sample_at_log_print("connect state change conn_id: %d, status: %d, pair_status:%d, addr %x disc_reason %x\n",
+    osal_printk("connect state change conn_id: %d, status: %d, pair_status:%d, addr %x disc_reason %x\n",
         conn_id, conn_state, pair_state, addr[0], disc_reason);
     g_conn_handle = conn_id;
 }
 
 void ble_wifi_cfg_server_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id, uint16_t mtu_size, errcode_t status)
 {
-    sample_at_log_print("mtu change change server_id: %d, conn_id: %d, mtu_size: %d, status:%d \n", server_id, conn_id,
+    osal_printk("mtu change change server_id: %d, conn_id: %d, mtu_size: %d, status:%d \n", server_id, conn_id,
         mtu_size, status);
 }
 
 void ble_wifi_cfg_server_enable_cbk(errcode_t status)
 {
-    sample_at_log_print("enable status: %d\n", status);
+    osal_printk("enable status: %d\n", status);
 }
 
 static errcode_t ble_wifi_cfg_server_register_callbacks(void)
@@ -173,7 +171,7 @@ static errcode_t ble_wifi_cfg_server_register_callbacks(void)
     gap_cb.ble_enable_cb = ble_wifi_cfg_server_enable_cbk;
     ret = gap_ble_register_callbacks(&gap_cb);
     if (ret != ERRCODE_BT_SUCCESS) {
-        sample_at_log_print("[wifi_cfg_server] reg gap cbk failed\r\n");
+        osal_printk("[wifi_cfg_server] reg gap cbk failed\r\n");
         return ERRCODE_BT_FAIL;
     }
 
@@ -183,7 +181,7 @@ static errcode_t ble_wifi_cfg_server_register_callbacks(void)
     service_cb.mtu_changed_cb = ble_wifi_cfg_server_mtu_changed_cbk;
     ret = gatts_register_callbacks(&service_cb);
     if (ret != ERRCODE_BT_SUCCESS) {
-        sample_at_log_print("[wifi_cfg_server] reg service cbk failed\r\n");
+        osal_printk("[wifi_cfg_server] reg service cbk failed\r\n");
         return ERRCODE_BT_FAIL;
     }
     return ret;
@@ -267,14 +265,14 @@ static void wifi_cfg_add_character_req_report(uint8_t server_id, uint16_t srvc_h
 errcode_t wifi_cfg_server_service(void)
 {
     errcode_t ret;
-    sample_at_log_print("[wifi_cfg_server] ble uuid add service in\r\n");
+    osal_printk("[wifi_cfg_server] ble uuid add service in\r\n");
 
     /* Add Wifi Configure Service */
     bt_uuid_t service_uuid = { 0 };
     streams_data_to_uuid(BLE_WIFI_CFG_SERVICE, &service_uuid);
     ret = gatts_add_service_sync(BLE_WIFI_CFG_SERVER_ID, &service_uuid, true, &g_service_hdl);
     if (ret != ERRCODE_BT_SUCCESS) {
-        sample_at_log_print("[wifi_cfg_server_service] reg service failed, ret=%x\r\n", ret);
+        osal_printk("[wifi_cfg_server_service] reg service failed, ret=%x\r\n", ret);
         return ret;
     }
 
@@ -286,7 +284,7 @@ errcode_t wifi_cfg_server_service(void)
     wifi_cfg_add_character_req_report(BLE_WIFI_CFG_SERVER_ID, g_service_hdl);
 
     gatts_start_service(BLE_WIFI_CFG_SERVER_ID, g_service_hdl);
-    sample_at_log_print("[wifi_cfg_server] ble uuid add service out\r\n");
+    osal_printk("[wifi_cfg_server] ble uuid add service out\r\n");
     return ERRCODE_BT_SUCCESS;
 }
 
@@ -299,7 +297,7 @@ errcode_t ble_wifi_gatts_register_server(void)
         return ERRCODE_BT_FAIL;
     }
 
-    sample_at_log_print("[wifi_cfg_server] gatts_register_server begin\r\n");
+    osal_printk("[wifi_cfg_server] gatts_register_server begin\r\n");
     return gatts_register_server(&app_uuid, &server_handle);
 }
 
@@ -312,9 +310,9 @@ errcode_t ble_wifi_cfg_server_init(void)
     ret |= ble_wifi_gatts_register_server();
     ret |= wifi_cfg_server_service();
     if (ret != ERRCODE_BT_SUCCESS) {
-        sample_at_log_print("[wifi_cfg_server] init fail.\r\n");
+        osal_printk("[wifi_cfg_server] init fail.\r\n");
     } else {
-        sample_at_log_print("[wifi_cfg_server] init ok\r\n");
+        osal_printk("[wifi_cfg_server] init ok\r\n");
     }
     return ret;
 }
@@ -331,11 +329,11 @@ errcode_t ble_wifi_cfg_server_send_report_by_uuid(const uint8_t *data, uint32_t 
     param.value = osal_vmalloc(len);
 
     if (param.value == NULL) {
-        sample_at_log_print("[hid][ERROR]send report new fail\r\n");
+        osal_printk("[hid][ERROR]send report new fail\r\n");
         return ERRCODE_BT_FAIL;
     }
     if (memcpy_s(param.value, param.value_len, data, len) != EOK) {
-        sample_at_log_print("[hid][ERROR]send input report memcpy fail\r\n");
+        osal_printk("[hid][ERROR]send input report memcpy fail\r\n");
         osal_vfree(param.value);
         return ERRCODE_BT_FAIL;
     }
@@ -355,11 +353,11 @@ errcode_t ble_wifi_cfg_server_send_report_by_handle(uint16_t attr_handle, const 
     param.value_len = len;
 
     if (param.value == NULL) {
-        sample_at_log_print("[hid][ERROR]send report new fail\r\n");
+        osal_printk("[hid][ERROR]send report new fail\r\n");
         return ERRCODE_BT_FAIL;
     }
     if (memcpy_s(param.value, param.value_len, data, len) != EOK) {
-        sample_at_log_print("[hid][ERROR]send input report memcpy fail\r\n");
+        osal_printk("[hid][ERROR]send input report memcpy fail\r\n");
         osal_vfree(param.value);
         return ERRCODE_BT_FAIL;
     }

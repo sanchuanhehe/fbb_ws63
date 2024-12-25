@@ -1,7 +1,6 @@
 /**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021. All rights reserved.
- * Description: header file for diag api.
- */
+* Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021. All rights reserved.
+*/
 
 #ifndef SOC_ZDIAG_H
 #define SOC_ZDIAG_H

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2020-2021. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2021. All rights reserved.
  * Description: Header files shared by wlan_types.h and wlan_types_rom.h.
  * Author:
  * Create: 2021-09-18

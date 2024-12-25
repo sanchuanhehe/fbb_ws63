@@ -1,7 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
  * Description: message for capturing data between core a and the dsp.
- * Author:
  */
 
 #ifndef __ZDIAG_AUDIO_HOOK_H__

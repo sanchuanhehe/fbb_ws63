@@ -25,12 +25,15 @@
 #define WIFI_INIT_WAIT_TIME              500 // 5s
 #define WIFI_START_STA_DELAY             100 // 1s
 
-#define RADAR_STATUS_CALI_ISO            4
+#define RADAR_STATUS_START               1
 #define RADAR_STATUS_QUERY_DELAY         1000 // 10s
+#define RADAR_QUIT_DELAY_TIME            12 // 12s
 
+#define RADAR_DEFAULT_TIMES 0
 #define RADAR_DEFAULT_LOOP 8
+#define RADAR_DEFAULT_ANT 0
 #define RADAR_DEFAULT_PERIOD 5000
-#define RADAR_DEFAULT_DBG_TYPE 1
+#define RADAR_DEFAULT_DBG_TYPE 3
 #define RADAR_DEFAULT_WAVE 2
 
 #define RADAR_API_NO_HUMAN 0
@@ -38,6 +41,9 @@
 #define RADAR_API_RANGE_NEAR 100
 #define RADAR_API_RANGE_MEDIUM 200
 #define RADAR_API_RANGE_FAR 600
+
+#define RADAR_DBG_INFO_RPT_COEF 100
+#define RADAR_DBG_INFO_LEN 16
 
 // led档位控制参数
 typedef enum {
@@ -139,35 +145,67 @@ static void radar_print_res(radar_result_t *res)
     radar_ctrl_led(res);
 }
 
+// 维测信息依次为:
+// 1.告知上层是否需要写入flash
+// 2.LNA * 10 + VGA
+// 3.原始回波峰值
+// 4.过去period帧的平均MO1底噪
+// 5.过去period帧的平均MO2底噪
+// 6.过去period帧的平均DP底噪
+// 7.过去period帧的平均帧间隔
+// 8.过去period帧中帧间隔超过Xms的帧数
+// 9.过去period帧中bitmap数量超过X门限的帧数
+// 10.过去period帧中bitmap比例超过X门限的帧数
+// 11.过去period帧中是在参与统计的帧数
+// 12.过去period帧中帧间隔最大值
+// 13.过去period帧中帧间隔最大值下标
+// 14.当前所使用的算法参数MO1门限
+// 15.当前所使用的算法参数MO2门限
+// 16.当前所使用的算法参数DP门限
+static void radar_print_dbg_info(int16_t *arr, uint8_t len)
+{
+    if (len > RADAR_DBG_INFO_LEN || len == 0) {
+        return;
+    }
+
+    PRINT("dbg_info: %d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\r\n",
+        arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10],
+        arr[11], arr[12], arr[13], arr[14], arr[15]);
+}
+
 static void radar_init_para(void)
 {
     radar_dbg_para_t dbg_para;
-    dbg_para.times = 0;
+    dbg_para.times = RADAR_DEFAULT_TIMES;
     dbg_para.loop = RADAR_DEFAULT_LOOP;
-    dbg_para.ant = 0;
+    dbg_para.ant = RADAR_DEFAULT_ANT;
     dbg_para.wave = RADAR_DEFAULT_WAVE;
     dbg_para.dbg_type = RADAR_DEFAULT_DBG_TYPE;
     dbg_para.period = RADAR_DEFAULT_PERIOD;
     uapi_radar_set_debug_para(&dbg_para);
- 
+
     radar_sel_para_t sel_para;
-    sel_para.height = 0;
-    sel_para.scenario = 0;
-    sel_para.material = 2;
-    sel_para.fusion_track = 1;
-    sel_para.fusion_ai = 1;
+    sel_para.height = RADAR_HEIGHT_2M;
+    sel_para.scenario = RADAR_SCENARIO_TYPE_HOME;
+    sel_para.material = RADAR_MATERIAL_SINGLE;
+    sel_para.fusion_track = true;
+    sel_para.fusion_ai = true;
     uapi_radar_select_alg_para(&sel_para);
- 
+
+    // 算法门限, 前三个使用tools/bin/radar_tool/radar_para_gen_tool工具标定, 后面五个使用本sample给出的默认值即可
     radar_alg_para_t alg_para;
     alg_para.d_th_1m = 32;
-    alg_para.d_th_2m = 27;
-    alg_para.p_th = 30;
+    alg_para.d_th_2m = 25;
+    alg_para.p_th = 25;
     alg_para.t_th_1m = 13;
     alg_para.t_th_2m = 26;
-    alg_para.b_th_ratio = 50;
-    alg_para.b_th_cnt = 15;
+    alg_para.b_th_ratio = 20;
+    alg_para.b_th_cnt = 4;
     alg_para.a_th = 70;
     uapi_radar_set_alg_para(&alg_para, 0);
+
+    int16_t dly_time = RADAR_QUIT_DELAY_TIME;
+    uapi_radar_set_delay_time(dly_time);
 }
 
 int radar_demo_init(void *param)
@@ -177,21 +215,26 @@ int radar_demo_init(void *param)
     radar_led_init();
     radar_start_sta();
     uapi_radar_register_result_cb(radar_print_res);
+    uapi_radar_register_debug_info_cb(radar_print_dbg_info, RADAR_DBG_INFO_RPT_COEF);
     radar_init_para();
-    // 遍历1~13信道隔离度, 选取最佳隔离度进行雷达探测
+    // 启动雷达
     (void)osDelay(WIFI_START_STA_DELAY);
-    uapi_radar_set_status(RADAR_STATUS_CALI_ISO);
+    uapi_radar_set_status(RADAR_STATUS_START);
 
     for (;;) {
         (void)osDelay(RADAR_STATUS_QUERY_DELAY);
         uint8_t sts;
         uapi_radar_get_status(&sts);
+        uapi_radar_get_hardware_status(&sts);
         uint16_t time;
         uapi_radar_get_delay_time(&time);
         uint16_t iso;
         uapi_radar_get_isolation(&iso);
         radar_result_t res = {0};
         uapi_radar_get_result(&res);
+        int16_t arr[RADAR_DBG_INFO_LEN] = {0};
+        uapi_radar_get_debug_info(arr, RADAR_DBG_INFO_LEN);
+        radar_print_dbg_info(arr, RADAR_DBG_INFO_LEN);
     }
 
     return 0;

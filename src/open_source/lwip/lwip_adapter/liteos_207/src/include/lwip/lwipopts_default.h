@@ -603,7 +603,11 @@ extern "C" {
 #ifdef _PRE_WLAN_FEATURE_WS53
 #define TCP_WND            (TCP_SND_BUF / 3)
 #else
+#ifdef WIFI_TCM_OPTIMIZE
 #define TCP_WND            (98304)
+#else
+#define TCP_WND            TCP_SND_BUF
+#endif
 #endif
 #endif
 

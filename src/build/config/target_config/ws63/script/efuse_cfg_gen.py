@@ -5,7 +5,7 @@ import csv
 import struct
 import hashlib
 import os
-import sys
+import re
 from sys import version_info
 
 def str_to_hex(s):
@@ -26,12 +26,107 @@ csv_dir = os.path.split(os.path.realpath(__file__))[0]
 csv_path = os.path.join(csv_dir, "efuse.csv")
 bin_path = os.path.join(csv_dir + "/../../../../../output/ws63/acore/ws63-liteos-app/", 'efuse_cfg.bin')
 
+def get_flash_key_param():
+    cfg_file = os.path.join(csv_dir + "/../", 'sign_config', 'encry_config.cfg')
+    file1 = open(cfg_file)
+    omrk1=""
+    for line in file1:
+        rs = re.search("Omrk1=", line)
+        if rs:
+            omrk1 = line[6:-1]
+    if omrk1 == "":
+        raise Exception("ERR: get_flash_key_param err, omrk1 is null", cfg_file)
+    result = ""
+    for i in range(0, len(omrk1), 4):
+        result += (" " + omrk1[i:i+4])
+    line = ''.join(result[1:].split(" ")[::-1])
+    result = ""
+    for i in range(0, len(line), 8):
+        result += (" 0x" + line[i+4:i+8] + line[i:i+4])
+    file1.close()
+    return result[1:]
+
+def get_root_key_hash():
+    cfg_file = os.path.join(csv_dir + "/../", 'sign_config', 'root_pubk.bin.hash')
+    file1 = open(cfg_file)
+    line = file1.readline()
+    if line == "":
+        raise Exception("ERR: get_root_key_hash err, hash is null", cfg_file)
+    result = ""
+    for i in range(0, len(line), 8):
+        result += (" 0x" + line[i+6:i+8] + line[i+4:i+6] + line[i+2:i+4] + line[i:i+2])
+    file1.close()
+    return result[1:]
+
+def del_old_csv_key():
+    with open(csv_path, 'r') as file1:
+        lines = list(csv.reader(file1))
+        for line in lines[::-1]:
+            if 'sec_verify_enable' in line:
+                lines.remove(line)
+            elif 'otp_oem_mrk' in line:
+                lines.remove(line)
+            elif 'root_key_hash' in line:
+                lines.remove(line)
+    with open(csv_path, 'w') as file2:
+        writer = csv.writer(file2)
+        writer.writerows(lines)
+
+def read_cfg_value(cfg_file, key):
+    with open(cfg_file) as f:
+        for line in f:
+            if not line.startswith('#') and '=' in line:
+                k, v = line.split('=')
+                if k.strip() == key:
+                    return v.strip()
+    return None
+
+def set_new_csv_key():
+    efuse_file = open(csv_path, 'a+', newline='')
+    root_pubk = os.path.join(csv_dir + "/../", 'sign_config', 'root_pubk.bin.hash')
+    cfg_file = os.path.join(csv_dir + "/../", 'sign_config', 'flash_bin_ecc.cfg')
+    sen_en = read_cfg_value(cfg_file, 'SignSuite')
+    # 安全启动开关&根公钥hash
+    if os.path.exists(root_pubk) and sen_en == '0':
+        sec_en = "\n1,sec_verify_enable,960,1,0x1,PG0"
+        root_key_hash = "\n1,root_key_hash,672,256,", get_root_key_hash() ,",PG5"
+        efuse_file.writelines(sec_en)
+        efuse_file.writelines(root_key_hash)
+
+    cfg_file = os.path.join(csv_dir + "/../", 'sign_config', 'liteos_app_bin_ecc.cfg')
+    encry_en = read_cfg_value(cfg_file, 'SignSuite')
+    PlainKey = read_cfg_value(cfg_file, 'PlainKey')
+    demo = '8ABDA082DB74753577FF2D1E7D79DAC7'
+    # flash加密秘钥
+    if encry_en == '1' and PlainKey != demo:
+        flash_key = "\n1,otp_oem_mrk,352,128,", get_flash_key_param() ,",PG3"
+        efuse_file.writelines(flash_key)
+    efuse_file.close()
+
+def del_null_rows():
+    with open(csv_path, 'r') as file1:
+        reader = csv.reader(file1)
+        rows = [row for row in reader]
+        rows = [row for row in rows if any(row)]
+    with open(csv_path, 'w', newline='') as file2:
+        writer = csv.writer(file2)
+        writer.writerows(rows)
+
+def set_key_to_eufse():
+    if os.path.exists(csv_path):
+        del_old_csv_key()
+        set_new_csv_key()
+        del_null_rows()
+
+
+set_key_to_eufse()
+
 # 用reader读取csv文件
 #Use the reader to read the CSV file.
 with open(csv_path, 'r') as csvFile:
     reader = csv.reader(csvFile)
     for line in reader:
-        if(line[0] == "1"):
+        if line and (line[0] == "1"):
             size = int(line[3])
             if (size <= 32):
                 value_len = 4

@@ -673,7 +673,7 @@ uint8_t spi_port_rx_data_level_get(spi_bus_t bus)
 
 void spi_porting_clock_init(uint32_t bus_clk)
 {
-    uint8_t div = PLL_CLK480M / (bus_clk / 1000000);  // 1000000: div 1M,covert hz to mhz
+    uint8_t div = (uint8_t)(PLL_CLK480M / (bus_clk / 1000000));  // 1000000: div 1M,covert hz to mhz
     reg_clrbit(CLDO_CRG_DIV_CTL3, 0, POS_10);
     reg32_setbits(CLDO_CRG_DIV_CTL3, POS_5, SPI_DIV_LEN, div);
     reg32_setbits(CLDO_CRG_DIV_CTL3, POS_0, SPI_DIV_LEN, 1);

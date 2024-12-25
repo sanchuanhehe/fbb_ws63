@@ -288,7 +288,7 @@ if os.path.isfile(os.path.join(out_put, "param_bin", "params.bin")):
 if os.path.isfile(os.path.join(out_put, "nv_bin", "ws63_all_nv.bin")):
     shutil.copy(os.path.join(out_put, "nv_bin", "ws63_all_nv.bin"), pktbin)
 
-if os.path.isfile(os.path.join(out_put, "nv_bin", "ws63_all_nv_backup.bin")):
-    shutil.copy(os.path.join(out_put, "nv_bin", "ws63_all_nv_backup.bin"), pktbin)
+if os.path.isfile(os.path.join(out_put, "nv_bin", "ws63_all_nv_factory.bin")):
+    shutil.copy(os.path.join(out_put, "nv_bin", "ws63_all_nv_factory.bin"), pktbin)
 
 os.chdir(current_path)

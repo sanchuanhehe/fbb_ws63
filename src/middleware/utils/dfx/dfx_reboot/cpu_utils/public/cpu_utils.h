@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description: BT CPU UTILS Module Header
- * Author:
- * Create:
  */
 #ifndef CPU_UTILS_H
 #define CPU_UTILS_H

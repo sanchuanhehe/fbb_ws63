@@ -72,6 +72,12 @@ config SAMPLE_SUPPORT_BLINKY
     help
         This option means support BLINKY Sample.
 
+if SAMPLE_SUPPORT_BLINKY
+menu "Blinky Sample Configuration"
+    osource "application/samples/peripheral/blinky/Kconfig"
+endmenu
+endif
+
 config SAMPLE_SUPPORT_BUTTON
     bool
     prompt "Support BUTTON Sample."

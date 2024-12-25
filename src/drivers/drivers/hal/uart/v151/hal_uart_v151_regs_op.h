@@ -80,6 +80,15 @@ typedef enum {
     HAL_UART_INTERRUPT_IDLE
 } hal_uart_interrupt_t;
 
+/** Uart receiver line error interrupt types */
+typedef enum {
+    HAL_UART_RX_FIFO_ERR = 0x1,
+    HAL_UART_FRAME_ERR = 0x2,
+    HAL_UART_PARITY_ERR = 0x4,
+    HAL_UART_OVERRUN_ERR = 0x8,
+    HAL_UART_BREAK_INTR = 0x10,
+} hal_uart_line_error_interrupt_t;
+
 /* Uart stop bits modes available */
 typedef enum {
     UART_STOP_BITS_1 = 0, /* !< 1 Stop bit */

@@ -1,8 +1,7 @@
 /**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved. \n
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
  *
- * Description: At register header \n
- * Author:
+ * Description: At register header
  */
 
 #ifndef AT_RADAR_CMD_REGISTER_H

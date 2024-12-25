@@ -1,6 +1,5 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
- * Description:  common logging producer interface - need to change name of log.h in all the protocol core files
  */
 
 #ifndef _LOG_DEF_PF_H_
