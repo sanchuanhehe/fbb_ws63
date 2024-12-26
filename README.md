@@ -6,10 +6,10 @@
 
 ## 购买渠道
 
-|     片名称     | 硬件资料                                                     | 介绍          |
+|      名称      | 硬件资料                                                     | 介绍          |
 | :------------: | ------------------------------------------------------------ | ------------- |
 | Q3553333N1100  | [购买链接](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html) | ws63解决方案  |
-| Q3553333N1100E | [购买链接](https://search.ickey.cn/?keyword=Q353333N1100E&bom_ab=null) | ws63E解决方案 |
+| Q3553333N1100E | [购买链接](https://www.ickey.cn/detail/1003001013187551/Q353333N1100E.html) | ws63E解决方案 |
 
 ## 支持的开发板
 
@@ -201,6 +201,17 @@ HiHope_NearLink_DK3863E_V03提供了以下Demo供开发参考：
   <td ></td>
   <td ></td>
  </tr>
+  <tr height="18" style='height:13.50pt;'>
+  <td width="140" align="center" rowspan="1" style='height:27.00pt' x:str>
+<strong>端云协同</strong></td>
+  <td x:str><strong>MQTT</strong></td>
+  <td x:str><a href="https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/HiHope_NearLink_DK_WS63E_V03/demo/mqtt">华为云与开发板通过MQTT实现订阅、发布</a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td width="170" x:str><a href=""></a></td>
+  <td ></td>
+  <td ></td>
+  <td ></td>
+ </tr>
  <tr height="18" style='height:13.50pt;'>
   <td width="140" align="center" rowspan="4" style='height:27.00pt' x:str>
 <strong>行业解决方案</strong></td>
@@ -246,6 +257,7 @@ HiHope_NearLink_DK3863E_V03提供了以下Demo供开发参考：
    </tr>
   <![endif]>
 </table>
+
 
 BearPi-Pico H3863提供了以下Demo供开发参考：
 
