@@ -179,6 +179,8 @@
 
   ![image-20241226114822725](../../../../docs/pic/mqtt_demo/image-20241226114822725.png)
 
+  ![image-20250107160907323](../../../../docs/pic/mqtt_demo/image-20250107160907323.png)
+
 * 步骤15：在xxx\src\application\samples\peripheral\Kconfig文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加，可以在最后一行添加）。
 
   ![image-20241226114849158](../../../../docs/pic/mqtt_demo/image-20241226114849158.png)

@@ -18,7 +18,6 @@
 #include "soc_osal.h"
 #include "gpio.h"
 #include "hal_gpio.h"
-#include "test_suite_log.h"
 #include "app_init.h"
 
 #define BLINKY_TASK_STACK_SIZE 0x1000
