@@ -67,8 +67,8 @@ static unsigned char g_data[PKT_DATA_LEN];
 void encode2byte_little(uint8_t* _ptr, uint16_t data)
 {
     do {
-        *(uint8_t *)((_ptr) + 1) = (uint8_t)((data) >> 8);
-        *(uint8_t *)(_ptr) = (uint8_t)(data);
+        *(uint8_t *)((_ptr) + 1) = (uint8_t)((data) >> 8); //将 data 的高字节（高 8 位）存储到 _ptr 指向的内存偏移量 1 处
+        *(uint8_t *)(_ptr) = (uint8_t)(data); // 将 data 的低字节（低 8 位）存储到 _ptr 指向的内存处
     } while (0);
 }
 
@@ -85,7 +85,7 @@ static void sle_uuid_setu2(uint16_t u2, sle_uuid_t *out)
 {
     sle_uuid_set_base(out);
     out->len = UUID_LEN_2;
-    encode2byte_little(&out->uuid[14], u2);
+    encode2byte_little(&out->uuid[14], u2); // 14位代表uuid第15位
 }
 
 static void ssaps_read_request_cbk(uint8_t server_id,
