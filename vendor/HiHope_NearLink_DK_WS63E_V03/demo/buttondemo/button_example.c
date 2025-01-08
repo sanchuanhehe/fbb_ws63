@@ -18,13 +18,11 @@
 #include "soc_osal.h"
 #include "gpio.h"
 #include "hal_gpio.h"
-#include "test_suite_log.h"
 #include "watchdog.h"
 #include "app_init.h"
 
 #define BSP_LED 7      // RED
 #define BUTTON_GPIO 12 // 按键
-#define GPIO5_MODE 0
 #define BUTTON_TASK_STACK_SIZE 0x1000
 #define BUTTON_TASK_PRIO 17
 

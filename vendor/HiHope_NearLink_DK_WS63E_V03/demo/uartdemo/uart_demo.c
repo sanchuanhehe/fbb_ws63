@@ -129,7 +129,7 @@ void *uart_task(const char *arg)
 #endif
 #if defined(CONFIG_UART_INT_TRANSFER_MODE)
         while (g_app_uart_int_rx_flag != 1) {
-            osDelay(CONFIG_UART_INT_WAIT_MS);
+            osal_mdelay(CONFIG_UART_INT_WAIT_MS);
         }
         g_app_uart_int_rx_flag = 0;
         osal_printk("uart%d int mode send back!\r\n", CONFIG_UART1_BUS_ID);
