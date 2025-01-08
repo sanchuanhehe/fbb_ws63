@@ -10,6 +10,11 @@ config SAMPLE_SUPPORT_SLE_SERVER_SPEED
     help
         This option means support SLE_SERVER_SPEED Sample.
 
+config LARGE_THROUGHPUT_SERVER
+    bool "server large throughput."
+    default y
+    depends on SAMPLE_SUPPORT_SLE_SERVER_SPEED
+
 config SAMPLE_SUPPORT_SLE_CLIENT_SPEED
     bool
     prompt "Support SLE_CLIENT_SPEED  Sample."
@@ -17,3 +22,8 @@ config SAMPLE_SUPPORT_SLE_CLIENT_SPEED
     depends on SAMPLE_SUPPORT_SLE_THROUGHPUT
     help
         This option means support SLE_CLIENT_SPEED Sample.
+
+config LARGE_THROUGHPUT_CLIENT
+    bool "client large throughput."
+    default y
+    depends on SAMPLE_SUPPORT_SLE_CLIENT_SPEED

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) @CompanyNameMagicTag. 2023. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023. All rights reserved.
  *
  * Description: SLE ADV Config.
  */
@@ -12,6 +12,9 @@
 
 #ifndef SLE_SERVER_ADV_H
 #define SLE_SERVER_ADV_H
+
+/* 广播ID */
+#define SLE_ADV_HANDLE_DEFAULT                    1
 
 /**
  * @if Eng

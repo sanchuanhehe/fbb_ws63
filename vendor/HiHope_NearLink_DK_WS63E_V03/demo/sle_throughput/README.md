@@ -26,7 +26,7 @@
 
 ## 1.3 效果预览
 
-![image-20240430101512067](../../../../docs/pic/sle_throughput/image-20240430101512067.png)
+![image-20250108110940305](../../../../docs/pic/sle_throughput/image-20250108110940305.png)
 
 ## 1.4 接口介绍
 
@@ -105,15 +105,21 @@ Grant Node： 步骤 1 调用 enable_sle，打开 SLE 开关。
 * 步骤一：在xxx\src\application\samples\peripheral文件夹新建一个sample文件夹，在peripheral上右键选择“新建文件夹”，创建Sample文件夹，例如名称”sle_throughput“。
 
   ![image-70551992](../../../../docs/pic/beep/image-20240801170551992.png)
+  
 * 步骤二：将xxx\vendor\HiHope_NearLink_DK_WS63E_V03\sle_throughput文件里面内容拷贝到**步骤一创建的Sample文件夹中”sle_throughput“**下。
 
-  ![image-20240430101008080](../../../../docs/pic/sle_throughput/image-20240430101008080.png)
+  ![image-20250108111044491](../../../../docs/pic/sle_throughput/image-20250108111044491.png)
+  
 * 步骤三：在xxx\src\application\samples\peripheral\CMakeLists.txt文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加的，可以在“set(SOURCES "${SOURCES}" PARENT_SCOPE)”上面一行添加）。
 
-  ![image-20240805141835480](../../../../docs/pic/sle_throughput/image-20240805141835480.png)
+  ![image-20250108111018986](../../../../docs/pic/sle_throughput/image-20250108111018986.png)
+  
+  
+  
 * 步骤四：在xxx\src\application\samples\peripheral\Kconfig文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加，可以在最后一行添加）。
 
   ![image-20240805141845260](../../../../docs/pic/sle_throughput/image-20240805141845260.png)
+  
 * 步骤五：点击如下图标，选择KConfig，具体选择路径“Application/Enable Sample ”，如果选择编译sle_server_speed，在弹出框中选择“support  SLE_SERVER_SPEED Sample”，点击Save，关闭弹窗；如果选择编译sle_client_speed，在弹出框中选择“support SLE_CLIENT_SPEED Sample”，点击Save，，关闭弹窗。（需要准备两块开发板，选择不同的编译选项，烧录不同的镜像）
 
   <img src="../../../../docs/pic/oled/image-20240801171406113-17228233697402.png" alt="image-20240801171406113" style="zoom: 50%;" /><img src="../../../../docs/pic/sle_throughput/image-20240205105234692-17119401758316.png" alt="image-20240205105234692" style="zoom: 50%;" /><img src="../../../../docs/pic/sle_throughput/image-20240805142108787.png" alt="image-20240805142108787" style="zoom:50%;" />
@@ -136,4 +142,4 @@ Grant Node： 步骤 1 调用 enable_sle，打开 SLE 开关。
 
 * 步骤十一：先复位client端，在复位server端（注意这里板子需要离的较近）。
 
-![image-20240430101512067](../../../../docs/pic/sle_throughput/image-20240430101512067.png)
+![image-20250108110948061](../../../../docs/pic/sle_throughput/image-20250108110948061.png)
