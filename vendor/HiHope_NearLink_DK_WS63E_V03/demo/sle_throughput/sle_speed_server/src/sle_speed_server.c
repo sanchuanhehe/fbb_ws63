@@ -25,16 +25,11 @@
 #include "sle_speed_server.h"
 
 #define OCTET_BIT_LEN 8
-#define UUID_LEN_2     2
-#define BT_INDEX_4     4
-#define BT_INDEX_5     5
-#define BT_INDEX_0     0
+#define UUID_LEN_2 2
+#define BT_INDEX_4 4
+#define BT_INDEX_5 5
+#define BT_INDEX_0 0
 extern void send_data_thread_function(void);
-#define encode2byte_little(_ptr, data) \
-    do { \
-        *(uint8_t *)((_ptr) + 1) = (uint8_t)((data) >> 8); \
-        *(uint8_t *)(_ptr) = (uint8_t)(data); \
-    } while (0)
 
 /* sle server app uuid for test */
 static char g_sle_uuid_app_uuid[UUID_LEN_2] = {0x0, 0x0};
@@ -49,7 +44,7 @@ static uint16_t g_service_handle = 0;
 /* sle ntf property handle */
 static uint16_t g_property_handle = 0;
 #ifdef SLE_QOS_FLOWCTRL_FUNCTION_SWITCH
-static sle_link_qos_state_t g_sle_link_state = 0;  /* sle link state */
+static sle_link_qos_state_t g_sle_link_state = 0; /* sle link state */
 #endif
 
 #ifdef CONFIG_LARGE_THROUGHPUT_SERVER
@@ -67,10 +62,18 @@ static sle_link_qos_state_t g_sle_link_state = 0;  /* sle link state */
 #define SPEED_DEFAULT_TIMEOUT_MULTIPLIER 0x1f4
 #define SPEED_DEFAULT_SCAN_INTERVAL 400
 #define SPEED_DEFAULT_SCAN_WINDOW 20
-static unsigned char data[PKT_DATA_LEN];
+static unsigned char g_data[PKT_DATA_LEN];
 
-static uint8_t sle_uuid_base[] = { 0x37, 0xBE, 0xA8, 0x80, 0xFC, 0x70, 0x11, 0xEA, \
-    0xB7, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+void encode2byte_little(uint8_t* _ptr, uint16_t data)
+{
+    do {
+        *(uint8_t *)((_ptr) + 1) = (uint8_t)((data) >> 8);
+        *(uint8_t *)(_ptr) = (uint8_t)(data);
+    } while (0);
+}
+
+static uint8_t sle_uuid_base[] = {0x37, 0xBE, 0xA8, 0x80, 0xFC, 0x70, 0x11, 0xEA,
+                                  0xB7, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 static void sle_uuid_set_base(sle_uuid_t *out)
 {
@@ -85,15 +88,17 @@ static void sle_uuid_setu2(uint16_t u2, sle_uuid_t *out)
     encode2byte_little(&out->uuid[14], u2);
 }
 
-static void ssaps_read_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_read_cb_t *read_cb_para,
-    errcode_t status)
+static void ssaps_read_request_cbk(uint8_t server_id,
+                                   uint16_t conn_id,
+                                   ssaps_req_read_cb_t *read_cb_para,
+                                   errcode_t status)
 {
-    osal_printk("[speed server] ssaps read request cbk server_id:%x, conn_id:%x, handle:%x, status:%x\r\n",
-        server_id, conn_id, read_cb_para->handle, status);
+    osal_printk("[speed server] ssaps read request cbk server_id:%x, conn_id:%x, handle:%x, status:%x\r\n", server_id,
+                conn_id, read_cb_para->handle, status);
     osal_task *task_handle = NULL;
     osal_kthread_lock();
-    task_handle = osal_kthread_create((osal_kthread_handler)send_data_thread_function,
-        0, "RadarTask", SPEED_DEFAULT_KTHREAD_SIZE);
+    task_handle = osal_kthread_create((osal_kthread_handler)send_data_thread_function, 0, "RadarTask",
+                                      SPEED_DEFAULT_KTHREAD_SIZE);
     osal_kthread_set_priority(task_handle, SPEED_DEFAULT_KTHREAD_PROI + 1);
     if (task_handle != NULL) {
         osal_kfree(task_handle);
@@ -102,24 +107,24 @@ static void ssaps_read_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_re
     printf("kthread success\r\n");
 }
 
-static void ssaps_write_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_write_cb_t *write_cb_para,
-    errcode_t status)
+static void ssaps_write_request_cbk(uint8_t server_id,
+                                    uint16_t conn_id,
+                                    ssaps_req_write_cb_t *write_cb_para,
+                                    errcode_t status)
 {
-    osal_printk("[speed server] ssaps write request cbk server_id:%d, conn_id:%d, handle:%d, status:%d\r\n",
-        server_id, conn_id, write_cb_para->handle, status);
+    osal_printk("[speed server] ssaps write request cbk server_id:%d, conn_id:%d, handle:%d, status:%d\r\n", server_id,
+                conn_id, write_cb_para->handle, status);
 }
 
-static void ssaps_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id,  ssap_exchange_info_t *mtu_size,
-    errcode_t status)
+static void ssaps_mtu_changed_cbk(uint8_t server_id, uint16_t conn_id, ssap_exchange_info_t *mtu_size, errcode_t status)
 {
     osal_printk("[speed server] ssaps write request cbk server_id:%d, conn_id:%d, mtu_size:%d, status:%d\r\n",
-        server_id, conn_id, mtu_size->mtu_size, status);
+                server_id, conn_id, mtu_size->mtu_size, status);
 }
 
 static void ssaps_start_service_cbk(uint8_t server_id, uint16_t handle, errcode_t status)
 {
-    osal_printk("[speed server] start service cbk server_id:%d, handle:%d, status:%d\r\n",
-        server_id, handle, status);
+    osal_printk("[speed server] start service cbk server_id:%d, handle:%d, status:%d\r\n", server_id, handle, status);
 }
 
 static void sle_ssaps_register_cbks(void)
@@ -195,12 +200,12 @@ void send_data_thread_function(void)
     while (1) {
         if (sle_flow_ctrl_flag() > 0) {
             i++;
-            data[0] = (i >> 8) & 0xFF;  /* offset 8bits */
-            data[1] = i & 0xFF;
-            sle_uuid_server_send_report_by_handle_id(data, PKT_DATA_LEN, g_sle_conn_hdl);
+            g_data[0] = (i >> 8) & 0xFF; /* offset 8bits */
+            g_data[1] = i & 0xFF;
+            sle_uuid_server_send_report_by_handle_id(g_data, PKT_DATA_LEN, g_sle_conn_hdl);
         }
 #ifndef CONFIG_LARGE_THROUGHPUT_SERVER
-        osal_msleep(1000);      /* sleep 1000ms */
+        osal_msleep(1000); /* sleep 1000ms */
         i = 0;
 #endif
     }
@@ -234,13 +239,13 @@ static errcode_t sle_uuid_server_property_add(void)
         osal_printk("[speed server] sle property mem fail\r\n");
         return ERRCODE_SLE_FAIL;
     }
-    if (memcpy_s(property.value, sizeof(g_sle_property_value), g_sle_property_value,
-        sizeof(g_sle_property_value)) != EOK) {
+    if (memcpy_s(property.value, sizeof(g_sle_property_value), g_sle_property_value, sizeof(g_sle_property_value)) !=
+        EOK) {
         osal_vfree(property.value);
         osal_printk("[speed server] sle property mem cpy fail\r\n");
         return ERRCODE_SLE_FAIL;
     }
-    ret = ssaps_add_property_sync(g_server_id, g_service_handle, &property,  &g_property_handle);
+    ret = ssaps_add_property_sync(g_server_id, g_service_handle, &property, &g_property_handle);
     if (ret != ERRCODE_SLE_SUCCESS) {
         osal_printk("[speed server] sle uuid add property fail, ret:%x\r\n", ret);
         osal_vfree(property.value);
@@ -284,7 +289,7 @@ static errcode_t sle_uuid_server_add(void)
         return ERRCODE_SLE_FAIL;
     }
     osal_printk("[speed server] sle uuid add service, server_id:%x, service_handle:%x, property_handle:%x\r\n",
-        g_server_id, g_service_handle, g_property_handle);
+                g_server_id, g_service_handle, g_property_handle);
     ret = ssaps_start_service(g_server_id, g_service_handle);
     if (ret != ERRCODE_SLE_SUCCESS) {
         osal_printk("[speed server] sle uuid add service fail, ret:%x\r\n", ret);
@@ -294,13 +299,18 @@ static errcode_t sle_uuid_server_add(void)
     return ERRCODE_SLE_SUCCESS;
 }
 
-static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *addr,
-    sle_acb_state_t conn_state, sle_pair_state_t pair_state, sle_disc_reason_t disc_reason)
+static void sle_connect_state_changed_cbk(uint16_t conn_id,
+                                          const sle_addr_t *addr,
+                                          sle_acb_state_t conn_state,
+                                          sle_pair_state_t pair_state,
+                                          sle_disc_reason_t disc_reason)
 {
-    osal_printk("[speed server] connect state changed conn_id:0x%02x, conn_state:0x%x, pair_state:0x%x, \
-        disc_reason:0x%x\r\n", conn_id, conn_state, pair_state, disc_reason);
-    osal_printk("[speed server] connect state changed addr:%02x:**:**:**:%02x:%02x\r\n",
-        addr->addr[BT_INDEX_0], addr->addr[BT_INDEX_4], addr->addr[BT_INDEX_5]);
+    osal_printk(
+        "[speed server] connect state changed conn_id:0x%02x, conn_state:0x%x, pair_state:0x%x, \
+        disc_reason:0x%x\r\n",
+        conn_id, conn_state, pair_state, disc_reason);
+    osal_printk("[speed server] connect state changed addr:%02x:**:**:**:%02x:%02x\r\n", addr->addr[BT_INDEX_0],
+                addr->addr[BT_INDEX_4], addr->addr[BT_INDEX_5]);
     g_sle_conn_hdl = conn_id;
     sle_connection_param_update_t parame = {0};
     parame.conn_id = conn_id;
@@ -308,7 +318,7 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
     parame.interval_max = SPEED_DEFAULT_CONN_INTERVAL;
     parame.max_latency = 0;
     parame.supervision_timeout = SPEED_DEFAULT_TIMEOUT_MULTIPLIER;
-    if (conn_state ==  SLE_ACB_STATE_CONNECTED) {
+    if (conn_state == SLE_ACB_STATE_CONNECTED) {
         sle_update_connect_param(&parame);
     } else if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
         sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
@@ -317,10 +327,9 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
 
 static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errcode_t status)
 {
-    osal_printk("[speed server] pair complete conn_id:%02x, status:%x\r\n",
-        conn_id, status);
-    osal_printk("[speed server] pair complete addr:%02x:**:**:**:%02x:%02x\r\n",
-        addr->addr[BT_INDEX_0], addr->addr[BT_INDEX_4], addr->addr[BT_INDEX_5]);
+    osal_printk("[speed server] pair complete conn_id:%02x, status:%x\r\n", conn_id, status);
+    osal_printk("[speed server] pair complete addr:%02x:**:**:**:%02x:%02x\r\n", addr->addr[BT_INDEX_0],
+                addr->addr[BT_INDEX_4], addr->addr[BT_INDEX_5]);
 }
 
 void sle_sample_update_cbk(uint16_t conn_id, errcode_t status, const sle_connection_param_update_evt_t *param)
@@ -333,8 +342,8 @@ void sle_sample_update_req_cbk(uint16_t conn_id, errcode_t status, const sle_con
 {
     unused(conn_id);
     unused(status);
-    osal_printk("[ssap server] sle_sample_update_req_cbk interval_min:%02x, interval_max:%02x\n",
-        param->interval_min, param->interval_max);
+    osal_printk("[ssap server] sle_sample_update_req_cbk interval_min:%02x, interval_max:%02x\n", param->interval_min,
+                param->interval_max);
 }
 
 void sle_sample_rssi_cbk(uint16_t conn_id, int8_t rssi, errcode_t status)
@@ -389,8 +398,8 @@ void sle_speed_server_set_nv(void)
     uint16_t nv_value_len = 0;
     uint8_t nv_value = 0;
     uapi_nv_read(0x20A0, sizeof(uint16_t), &nv_value_len, &nv_value);
-    if (nv_value != 7) {     // 7:btc功率档位
-        nv_value = 7;       // 7:btc功率档位
+    if (nv_value != 7) { // 7:btc功率档位
+        nv_value = 7;    // 7:btc功率档位
         uapi_nv_write(0x20A0, (uint8_t *)&(nv_value), sizeof(nv_value));
     }
     osal_printk("[speed server] The value of nv is set to %d.\r\n", nv_value);
@@ -420,10 +429,10 @@ errcode_t sle_speed_server_init(void)
 int sle_speed_init(void)
 {
     for (int i = 0; i < PKT_DATA_LEN; i++) {
-        data[i] = 'A';
-        data[PKT_DATA_LEN - 1] = '\0';
+        g_data[i] = 'A';
+        g_data[PKT_DATA_LEN - 1] = '\0';
     }
-    osal_msleep(1000);  /* sleep 1000ms */
+    osal_msleep(1000); /* sleep 1000ms */
     sle_speed_server_init();
     return 0;
 }
@@ -432,7 +441,7 @@ static void sle_speed_entry(void)
 {
     osal_task *task_handle1 = NULL;
     osal_kthread_lock();
-    task_handle1= osal_kthread_create((osal_kthread_handler)sle_speed_init, 0, "speed", SPEED_DEFAULT_KTHREAD_SIZE);
+    task_handle1 = osal_kthread_create((osal_kthread_handler)sle_speed_init, 0, "speed", SPEED_DEFAULT_KTHREAD_SIZE);
     if (task_handle1 != NULL) {
         osal_kthread_set_priority(task_handle1, SPEED_DEFAULT_KTHREAD_PROI);
         osal_kfree(task_handle1);
@@ -442,4 +451,3 @@ static void sle_speed_entry(void)
 
 /* Run the blinky_entry. */
 app_run(sle_speed_entry);
-
