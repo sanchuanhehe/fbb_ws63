@@ -2,7 +2,7 @@
   "name": "ws63devcon",
   "context": "..",
   "dockerFile": "Dockerfile",
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/workspace/src",
   "remoteUser": "root",
   "mounts": [
     "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
