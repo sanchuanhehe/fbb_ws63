@@ -1,0 +1,4 @@
+# pyc
+*.pyc
+interim_binary/ws63/libs
+output
