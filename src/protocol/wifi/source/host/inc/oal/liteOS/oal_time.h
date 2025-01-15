@@ -108,7 +108,7 @@ static inline osal_u64 oal_get_us(oal_time_us_stru *usec)
 *****************************************************************************/
 static inline td_u32 oal_time_after(osal_u64 time_a, osal_u64 time_b)
 {
-    return (td_u32)((osal_s64)((osal_s64)(time_b) - (time_a)) < 0);
+    return (td_u32)((osal_s64)((osal_s64)(time_b) - (osal_s64)(time_a)) < 0);
 }
 
 /*****************************************************************************
@@ -122,7 +122,7 @@ static inline td_u32 oal_time_is_before(osal_u64 time)
 
 static inline td_u32 oal_time_before(td_u32 time_a, td_u32 time_b)
 {
-    return (td_u32)((osal_s64)((osal_s64)(time_a) - (time_b)) < 0);
+    return (td_u32)((osal_s64)((osal_s64)(time_a) - (osal_s64)(time_b)) < 0);
 }
 
 static inline td_void oal_get_real_time(oal_time_stru* pst_tm)

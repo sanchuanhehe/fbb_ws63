@@ -181,7 +181,7 @@ static int fs_adapt_path_format(const char* path)
     if (dir == NULL || strlen(path) == strlen(dir)) {
         return LFS_ERR_OK;
     }
-    uint32_t len = strlen(path) - strlen(dir);
+    uint32_t len = (uint32_t)(strlen(path) - strlen(dir));
     char *dir_str = (char *)malloc(len + 1);
     if (dir_str == NULL) {
         lfs_debug_print_error("dir string malloc failed\r\n");
@@ -426,7 +426,7 @@ void lfs_test(void)
     }
 }
 
-#ifdef LFS_NEED_LIB_STDIO
+#ifdef CONFIG_LFS_SUPPORT_POSIX
 int open(const char *path, int oflags, ...)
 {
     return fs_adapt_open(path, oflags);

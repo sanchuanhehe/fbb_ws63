@@ -47,7 +47,7 @@ errcode_t uapi_diag_report_packet(uint16_t cmd_id, diag_option_t *option, const 
 
     dfx_log_debug("uapi_diag_report_packet in\r\n");
     if (zdiag_is_enable() == false) {
-        dfx_log_err("diag_unconnect\r\n");
+        dfx_log_info("diag_unconnect\r\n");
         return ERRCODE_FAIL;
     }
 
@@ -96,7 +96,7 @@ STATIC errcode_t zdiag_report_packets(uint16_t cmd_id, diag_option_t *option, di
 
     dfx_log_debug("%s in\r\n", __func__);
     if (zdiag_is_enable() == false) {
-        dfx_log_err("diag_unconnect\r\n");
+        dfx_log_info("diag_unconnect\r\n");
         return ERRCODE_FAIL;
     }
 

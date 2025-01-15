@@ -83,23 +83,34 @@ int mbedtls_alt_rsa_public_verify(const mbedtls_rsa_context *ctx, const unsigned
 /* ECP. */
 typedef int (*mbedtls_alt_ecp_mul_func)(mbedtls_alt_ecp_curve_type curve_type, const mbedtls_alt_ecp_data *k,
     const mbedtls_alt_ecp_point *p, const mbedtls_alt_ecp_point *r);
+
+typedef int (*mbedtls_alt_ecdsa_sign_func)(mbedtls_alt_ecp_curve_type curve_type, const mbedtls_alt_ecp_data *priv_key,
+    const mbedtls_alt_ecp_data *hash_data, const mbedtls_alt_ecp_data *r_data, const mbedtls_alt_ecp_data *s_data);
+
 typedef int (*mbedtls_alt_ecdsa_verify_func)(mbedtls_alt_ecp_curve_type curve_type,
-    const unsigned char *hash, unsigned int hash_len,
-    const unsigned char *pub_x, const unsigned char *pub_y,
-    const unsigned char *sig_r, const unsigned char *sig_s, unsigned klen);
+    const mbedtls_alt_ecp_point *pub_key, const mbedtls_alt_ecp_data *hash_data,
+    const mbedtls_alt_ecp_data *r_data, const mbedtls_alt_ecp_data *s_data);
+
+typedef int (*mbedtls_alt_ecdh_compute_shared_func)(mbedtls_alt_ecp_curve_type curve_type,
+    const mbedtls_alt_ecp_point *input_pub_key,
+    const mbedtls_alt_ecp_data *input_priv_key, const mbedtls_alt_ecp_data *output_shared_key);
+
+typedef int (*mbedtls_alt_ecdsa_genkey_func)(mbedtls_alt_ecp_curve_type curve_type,
+    const mbedtls_alt_ecp_data *output_priv_key, const mbedtls_alt_ecp_point *output_pub_key);
 
 typedef struct {
     mbedtls_alt_ecp_mul_func ecp_mul;
+    mbedtls_alt_ecdsa_sign_func ecdsa_sign;
     mbedtls_alt_ecdsa_verify_func ecdsa_verify;
+    mbedtls_alt_ecdh_compute_shared_func ecdh_compute_shared;
+    mbedtls_alt_ecdsa_genkey_func ecdsa_genkey;
 } mbedtls_alt_ecp_harden_func;
 
 int mbedtls_alt_ecp_mul(mbedtls_alt_ecp_curve_type curve_type, const mbedtls_alt_ecp_data *k,
     const mbedtls_alt_ecp_point *p, const mbedtls_alt_ecp_point *r);
 
-int mbedtls_alt_ecdsa_verify(mbedtls_alt_ecp_curve_type curve_type,
-    const unsigned char *hash, unsigned int hash_len,
-    const unsigned char *pub_x, const unsigned char *pub_y,
-    const unsigned char *sig_r, const unsigned char *sig_s, unsigned klen);
+int mbedtls_alt_ecdsa_verify(mbedtls_alt_ecp_curve_type curve_type, const mbedtls_alt_ecp_point *pub_key,
+    const mbedtls_alt_ecp_data *hash_data, const mbedtls_alt_ecp_data *r_data, const mbedtls_alt_ecp_data *s_data);
 
 void mbedtls_alt_ecp_register(const mbedtls_alt_ecp_harden_func *aes_func);
 

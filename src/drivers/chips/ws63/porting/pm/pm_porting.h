@@ -47,7 +47,7 @@ typedef enum {
 } pm_srv_type;
 
 errcode_t pm_porting_init(void);
-errcode_t pm_set_srv_mode(pm_srv_type svr, pm_srv_mode mode);
+errcode_t pm_set_srv_mode(pm_srv_type svr, pm_srv_mode mode); // 投票接口
 #endif
 
 typedef void (*pm_hook_cb_t)(void);
@@ -93,6 +93,14 @@ void pm_port_enter_lowpower(void);
 void pm_port_exit_lowpower(void);
 
 void pm_porting_wait_exit_lowpower(void);
+
+typedef enum {
+    PM_NO_SLEEP,    /** 不睡模式 */
+    PM_LIGHT_SLEEP, /** 浅睡模式 */
+    PM_DEEP_SLEEP,  /** 深睡模式     */
+} pm_lpc_type;
+
+errcode_t pm_port_set_sleep_mode(int32_t type);
 
 #ifdef __cplusplus
 #if __cplusplus

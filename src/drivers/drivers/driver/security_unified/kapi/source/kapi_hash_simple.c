@@ -82,9 +82,9 @@ exit_unlock:
 static int inner_kapi_free_hash_ctx(td_handle hash_handle)
 {
     unsigned int idx = kapi_get_ctx_idx(hash_handle);
-    if (inner_kapi_hash_handle_check(hash_handle) != TD_SUCCESS) {
-        return HASH_COMPAT_ERRNO(ERROR_INVALID_HANDLE);
-    }
+    crypto_chk_return(inner_kapi_hash_handle_check(hash_handle) != TD_SUCCESS,
+        HASH_COMPAT_ERRNO(ERROR_INVALID_HANDLE), "inner_kapi_hash_handle_check failed");
+
     kapi_hash_lock();
     g_hash_ctx_used[idx] = TD_FALSE;
     if (g_hash_ctx[idx] != NULL) {
@@ -360,6 +360,15 @@ td_s32 kapi_cipher_hash_destroy(td_handle kapi_hash_handle)
 {
     int ret;
     crypto_kapi_func_enter();
+    kapi_hash_context *hash_ctx = NULL;
+    hash_ctx = inner_kapi_get_hash_ctx(kapi_hash_handle);
+    crypto_chk_return(hash_ctx == NULL, CRYPTO_SUCCESS);
+
+    kapi_hash_lock();
+    if (hash_ctx->is_keyslot == TD_TRUE) {
+        drv_cipher_hash_destroy(hash_ctx->drv_hash_handle);
+    }
+    kapi_hash_unlock();
     ret = inner_kapi_free_hash_ctx(kapi_hash_handle);
     crypto_kapi_func_exit();
     return ret;

@@ -1,7 +1,5 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
- * Description: dfx resource id
- * This file should be changed only infrequently and with great care.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. All rights reserved.
  */
 #ifndef DFX_RESOURCE_ID
 #define DFX_RESOURCE_ID

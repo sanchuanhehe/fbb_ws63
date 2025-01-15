@@ -69,7 +69,9 @@
 #ifdef __NetBSD__
 #include <net/if_ether.h>
 #elif !defined(__CYGWIN__) && !defined(CONFIG_NATIVE_WINDOWS)
+#ifndef __USING_RTOS__
 #include <net/ethernet.h>
+#endif
 #endif
 
 struct p2p_user_cfg_pos {

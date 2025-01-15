@@ -23,7 +23,10 @@
 #if defined(CONFIG_SPI_SUPPORT_DMA) && !(defined(CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH))
 #define SPI_DMA_WIDTH                   2
 #endif
-
+#if defined(CONFIG_SPI_MASTER_SUPPORT_QSPI)
+#define QSPI_WRITE_CMD                  0x38
+#define QSPI_WRITE_ADDR                 0x123
+#endif
 #define SPI_TASK_DURATION_MS            500
 #define SPI_TASK_PRIO                   24
 #define SPI_TASK_STACK_SIZE             0x1000
@@ -34,6 +37,10 @@ static void app_spi_init_pin(void)
     uapi_pin_set_mode(CONFIG_SPI_DO_MASTER_PIN, CONFIG_SPI_MASTER_PIN_MODE);
     uapi_pin_set_mode(CONFIG_SPI_CLK_MASTER_PIN, CONFIG_SPI_MASTER_PIN_MODE);
     uapi_pin_set_mode(CONFIG_SPI_CS_MASTER_PIN, CONFIG_SPI_MASTER_PIN_MODE);
+#if defined(CONFIG_SPI_MASTER_SUPPORT_QSPI)
+    uapi_pin_set_mode(CONFIG_SPI_MASTER_D2_PIN, CONFIG_SPI_MASTER_D2_PIN_MODE);
+    uapi_pin_set_mode(CONFIG_SPI_MASTER_D3_PIN, CONFIG_SPI_MASTER_D3_PIN_MODE);
+#endif
 }
 
 #if defined(CONFIG_SPI_SUPPORT_INTERRUPT) && (CONFIG_SPI_SUPPORT_INTERRUPT == 1)
@@ -78,9 +85,18 @@ static void app_spi_master_init_config(void)
     config.spi_frame_format = HAL_SPI_FRAME_FORMAT_STANDARD;
     config.frame_size = SPI_FRAME_SIZE_8;
     config.tmod = SPI_TMOD;
-    config.sste = 1;
+    config.sste = 0;
 
     ext_config.qspi_param.wait_cycles = SPI_WAIT_CYCLES;
+#if defined(CONFIG_SPI_MASTER_SUPPORT_QSPI)
+    config.tmod = HAL_SPI_TRANS_MODE_TX;
+    config.sste = 0;
+    config.spi_frame_format = HAL_SPI_FRAME_FORMAT_QUAD;
+    ext_config.qspi_param.trans_type = HAL_SPI_TRANS_TYPE_INST_S_ADDR_Q;
+    ext_config.qspi_param.inst_len = HAL_SPI_INST_LEN_8;
+    ext_config.qspi_param.addr_len = HAL_SPI_ADDR_LEN_24;
+    ext_config.qspi_param.wait_cycles = 0;
+#endif
 
     uapi_spi_init(CONFIG_SPI_MASTER_BUS_ID, &config, &ext_config);
 #if defined(CONFIG_SPI_SUPPORT_DMA) && (CONFIG_SPI_SUPPORT_DMA == 1)
@@ -127,6 +143,10 @@ static void *spi_master_task(const char *arg)
         .tx_bytes = CONFIG_SPI_TRANSFER_LEN,
         .rx_buff = rx_data,
         .rx_bytes = CONFIG_SPI_TRANSFER_LEN,
+#if defined(CONFIG_SPI_MASTER_SUPPORT_QSPI)
+        .cmd = QSPI_WRITE_CMD,
+        .addr = QSPI_WRITE_ADDR,
+#endif
     };
 
     while (1) {

@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description:  log module id define
- * Author:
- * Create:
  */
 
 #ifndef LOG_MODULE_ID_H

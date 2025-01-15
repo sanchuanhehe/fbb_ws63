@@ -17,7 +17,7 @@
 #define OEM_ROOT_PUBLIC_KEY_IMAGE_ID 0x4BA5C31E
 #define PROVISION_KEY_AREA_IMAGE_ID  0x4BD2F01E
 #define PROVISION_CODE_INFO_IMAGE_ID 0x4BD2F02D
-#define PARAMS_KET_AREA_IMAGE_ID     0x4B87A51E
+#define PARAMS_KEY_AREA_IMAGE_ID     0x4B87A51E
 #define PARAMS_AREA_INFO_IMAGE_ID    0x4B87A52D
 #define PARAMS_AREA_IMAGE_ID         0x4B87A54B
 #define FLASHBOOT_KEY_AREA_IMAGE_ID  0x4B1E3C1E
@@ -99,12 +99,12 @@ static verify_table_item_t g_verify_table[] = {
 
     {
         .image_type = PARAMS_BOOT_TYPE, .erea_type = PARAMS_KEY_AREA_TYPE,
-        .image_id = PARAMS_KET_AREA_IMAGE_ID,
+        .image_id = PARAMS_KEY_AREA_IMAGE_ID,
         .efuse_type = EFUSE_PARAMS_VER_ID
     },
 
     {
-        .image_type = PARAMS_BOOT_TYPE, .erea_type = PARAMS_AREA_IOFO_TYPE,
+        .image_type = PARAMS_BOOT_TYPE, .erea_type = PARAMS_AREA_INFO_TYPE,
         .image_id = PARAMS_AREA_INFO_IMAGE_ID,
         .efuse_type = EFUSE_PARAMS_VER_ID
     },
@@ -400,7 +400,7 @@ static errcode_t verify_params_area_info(const params_area_info_t *area_info, co
     }
 
     /* check image id */
-    ret = check_image_id(PARAMS_BOOT_TYPE, PARAMS_AREA_IOFO_TYPE, area_info->image_id);
+    ret = check_image_id(PARAMS_BOOT_TYPE, PARAMS_AREA_INFO_TYPE, area_info->image_id);
     if (ret != ERRCODE_SUCC) {
         boot_msg0("verify_params_area_info image id error!");
         return ERRCODE_BOOT_VERIFY_INVALID_IMAGE_ID;

@@ -5,7 +5,6 @@
 
 #ifndef __PMP_CFG_H__
 #define __PMP_CFG_H__
-#include "errcode.h"
 
 void pmp_enable(void);
 

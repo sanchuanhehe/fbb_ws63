@@ -3,17 +3,10 @@
  * Description: UPG backup image functions for different chip
  */
 
-#include <stddef.h>
-#include <stdint.h>
 #include "errcode.h"
-#include "securec.h"
-#include "common_def.h"
 #include "partition.h"
-#include "main.h"
-
 #include "upg_definitions.h"
 #include "upg_porting.h"
-#include "upg_alloc.h"
 #include "upg_debug.h"
 #include "upg_common_porting.h"
 

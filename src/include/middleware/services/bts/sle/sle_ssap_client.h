@@ -252,6 +252,7 @@ typedef void (*ssapc_find_structure_complete_callback)(uint8_t client_id, uint16
  * @par Callback invoked when receive read response.
  * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
  * @attention 2.The memories of pointer are requested and freed by the SLE service automatically.
+ * @attention 3.The handle and type of the current read_data are reserved parameters.
  * @param  [in]  client_id client ID.
  * @param  [in]  conn_id   connection ID.
  * @param  [in]  read_data read data.
@@ -264,6 +265,7 @@ typedef void (*ssapc_find_structure_complete_callback)(uint8_t client_id, uint16
  * @par    收到读响应的回调函数。
  * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
  * @attention  2. pointer由SLE service申请内存，也由SLE service释放，回调中不应释放。
+ * @attention  3. 当前read_data的handle和type作为预留参数。
  * @param  [in]  client_id 客户端 ID。
  * @param  [in]  conn_id   连接 ID。
  * @param  [in]  read_data 读取到的数据。

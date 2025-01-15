@@ -23,6 +23,10 @@ int mbedtls_alt_hash_update_impl(mbedtls_alt_hash_clone_ctx *clone_ctx,
 
 int mbedtls_alt_hash_finish_impl(mbedtls_alt_hash_clone_ctx *clone_ctx, unsigned char *out, unsigned int out_len);
 
+int mbedtls_alt_pkcs5_pbkdf2_hmac_impl(mbedtls_alt_hash_type hmac_type, const unsigned char *password,
+    unsigned int plen, const unsigned char *salt, unsigned int slen, unsigned int iteration_count,
+    unsigned int key_length, unsigned char *output);
+
 int mbedtls_alt_hash_init(void);
 
 int mbedtls_alt_hash_deinit(void);

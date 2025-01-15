@@ -100,6 +100,8 @@ void sio_porting_i2s_pinmux(void)
     uapi_pin_set_mode(S_MGPIO10, PIN_MODE_4);
     uapi_pin_set_mode(S_MGPIO11, PIN_MODE_4);
     uapi_pin_set_mode(S_MGPIO12, PIN_MODE_4);
+    uapi_pin_set_pull(S_MGPIO11, PIN_PULL_TYPE_DISABLE);
+    uapi_pin_set_pull(S_MGPIO12, PIN_PULL_TYPE_DISABLE);
     return;
 }
 

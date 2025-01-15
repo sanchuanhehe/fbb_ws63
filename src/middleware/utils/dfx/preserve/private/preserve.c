@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description:PRESERVE INTERFACE for security core
- * Author:
- * Create:
  */
 #include "preserve.h"
 #include "securec.h"

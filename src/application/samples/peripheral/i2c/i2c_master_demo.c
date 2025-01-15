@@ -15,8 +15,7 @@
 #endif
 
 #define I2C_MASTER_ADDR                   0x0
-#define I2C_SLAVE_ADDR                    0x8
-#define I2C_SET_BAUDRATE                  500000
+#define I2C_SET_BAUDRATE                  400000
 #define I2C_TASK_DURATION_MS              500
 #if defined(CONFIG_I2C_SUPPORT_INT) && (CONFIG_I2C_SUPPORT_INT == 1)
 #define I2C_INT_TRANSFER_DELAY_MS         800
@@ -39,7 +38,7 @@ static void *i2c_master_task(const char *arg)
 
     uint32_t baudrate = I2C_SET_BAUDRATE;
     uint8_t hscode = I2C_MASTER_ADDR;
-    uint16_t dev_addr = I2C_SLAVE_ADDR;
+    uint16_t dev_addr = CONFIG_I2C_SLAVE_ADDR;
 
 #if defined(CONFIG_I2C_SUPPORT_DMA) && (CONFIG_I2C_SUPPORT_DMA == 1)
     uapi_dma_init();

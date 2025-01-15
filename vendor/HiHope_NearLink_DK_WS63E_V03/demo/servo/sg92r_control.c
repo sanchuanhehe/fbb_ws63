@@ -21,7 +21,6 @@
 #include "gpio.h"
 #include "hal_gpio.h"
 #include "systick.h"
-#include "test_suite_log.h"
 #include "watchdog.h"
 #include "app_init.h"
 

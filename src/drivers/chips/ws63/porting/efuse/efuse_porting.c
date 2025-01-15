@@ -48,6 +48,7 @@ static efuse_stru g_efuse_cfg[EFUSE_IDX_MAX] = {
     { 1135, 1,   EFUSE_IDX_RW }, // code to valtage s
     { 1120, 15,  EFUSE_IDX_RW }, // code to valtage b
     { 1136, 16,  EFUSE_IDX_RW }, // code to valtage k
+    { 1904, 48,  EFUSE_IDX_RW }, // mac_sle_addr
 };
 
 void efuse_port_register_hal_funcs(void)
@@ -185,7 +186,7 @@ uint32_t efuse_read_mac(uint8_t *data, uint16_t data_len, uint8_t *left_time)
             return ret;
         }
     }
-    if (index == (EFUSE_MAC_NUM - 1)) {
+    if (index == EFUSE_MAC_NUM) {
         *left_time = EFUSE_MAC_NUM;
         ret = uapi_efuse_read_buffer(data, (mac_bit / BIT_TO_BYTE), data_len);
         return ret;

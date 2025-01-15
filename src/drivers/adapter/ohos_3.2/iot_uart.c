@@ -147,6 +147,7 @@ int IoTUartRead(unsigned int id, unsigned char *data, unsigned int dataLen)
 
 unsigned int IoTUartSetFlowCtrl(unsigned int id, IotFlowCtrl flowCtrl)
 {
+    // todo
     unused(id);
     unused(flowCtrl);
     return IOT_SUCCESS;

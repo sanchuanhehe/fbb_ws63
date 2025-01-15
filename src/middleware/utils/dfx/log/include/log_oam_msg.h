@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description:  LOG oam message recv MODULE
- * Author:
- * Create:
  */
 
 #ifndef LOG_OAM_MSG_H

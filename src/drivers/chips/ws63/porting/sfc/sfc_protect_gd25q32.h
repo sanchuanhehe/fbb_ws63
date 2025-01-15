@@ -9,6 +9,8 @@
 #ifndef SFC_PROTECT_GD25Q32_H
 #define SFC_PROTECT_GD25Q32_H
 
+#include "errcode.h"
+
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {

@@ -1,8 +1,7 @@
 /**
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved. \n
  *
- * Description: At radar header \n
- * Author:
+ * Description: At radar header
  */
 
 #ifndef AT_RADAR_H

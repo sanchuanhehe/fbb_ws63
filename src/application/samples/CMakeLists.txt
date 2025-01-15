@@ -58,6 +58,7 @@ set(MAIN_COMPONENT
 install_sdk("${CMAKE_CURRENT_SOURCE_DIR}/peripheral" "*")
 install_sdk("${CMAKE_CURRENT_SOURCE_DIR}/products" "*")
 install_sdk("${CMAKE_CURRENT_SOURCE_DIR}/wifi/sta_sample" "*")
+install_sdk("${CMAKE_CURRENT_SOURCE_DIR}/wifi/alilink_sample" "*")
 install_sdk("${CMAKE_CURRENT_SOURCE_DIR}/wifi/softap_sample" "*")
 install_sdk("${CMAKE_CURRENT_SOURCE_DIR}/wifi/ohos_connect" "*")
 install_sdk("${CMAKE_CURRENT_SOURCE_DIR}/wifi/hilink_indie_upgrade" "*")

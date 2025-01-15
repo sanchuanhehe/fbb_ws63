@@ -49,14 +49,27 @@ static void hal_adc_reg_scan_ch_set(adc_channel_t channel, adc_ctrl_data_t *data
     data->d32 = ch_set.d32;
 }
 
+typedef enum hal_adc_sample_mode {
+    AVERAGE_OF_ONE_SAMPLE = 0,              /*  一次平均采样模式  */
+
+    AVERAGE_OF_TWO_SAMPLES,                 /*  两次平均采样模式  */
+
+    AVERAGE_OF_FOUR_SAMPLES,                /*  四次平均采样模式  */
+
+    AVERAGE_OF_EIGHT_SAMPLES,               /*  八次平均采样模式  */
+
+    SAMPLE_MODE_MAX_NUM
+} hal_adc_sample_mode_t;
+
 void hal_adc_auto_scan_mode_set(adc_channel_t ch, bool en)
 {
     adc_ctrl_data_t data;
+    hal_adc_sample_mode_t mode = AVERAGE_OF_EIGHT_SAMPLES;
     data.d32 = g_adc_regs->lsadc_ctrl_0;
     uint32_t status = (uint32_t)en;
     hal_adc_reg_scan_ch_set(ch, &data, status);
     if (en) {
-        data.b.equ_model_sel = 0x2;
+        data.b.equ_model_sel = mode;
         data.b.sample_cnt = 0x8;
         data.b.satrt_cnt = 0x18;
         data.b.cast_cnt = 0x0;

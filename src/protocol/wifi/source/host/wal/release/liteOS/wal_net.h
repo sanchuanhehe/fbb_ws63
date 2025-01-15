@@ -99,6 +99,7 @@ td_void wal_set_delay_report_config(td_u8 enable, td_u16 timeout);
 td_u32 wal_check_auto_conn_status(oal_net_device_stru *netdev, td_u8 auto_reconn, td_u8 *bssid);
 td_u32 hwal_lwip_register(oal_net_device_stru *netdev, oal_ip_addr_t *ip, oal_ip_addr_t *netmask, oal_ip_addr_t *gw);
 td_void hwal_lwip_unregister_netdev(oal_net_device_stru *netdev);
+oal_lwip_buf *hwal_netbuf_2_pbuf(const oal_netbuf_stru *drv_buf);
 
 #ifdef __cplusplus
 #if __cplusplus

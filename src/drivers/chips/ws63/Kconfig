@@ -18,7 +18,7 @@ config BGLE_RAM_SIZE_64K
 endchoice
 
 
-# 这里应该 depends on WiFi的radar特性宏
+# TODO: 这里应该 depends on WiFi的radar特性宏
 choice
     prompt "CONFIG_RADAR_SENSOR_RX_MEM_SIZE_8/16/24/32K, choose one of them"
 
@@ -77,7 +77,6 @@ config DEBUG_UART_BAUDRATE
     default UART0_BAUDRATE if DEBUG_UART = 0
     default UART1_BAUDRATE if DEBUG_UART = 1
     default UART2_BAUDRATE if DEBUG_UART = 2
-    depends on DEBUG_UART < 3
 
 config LOG_UART
     int
@@ -91,7 +90,6 @@ config LOG_UART_BAUDRATE
     default UART0_BAUDRATE if LOG_UART = 0
     default UART1_BAUDRATE if LOG_UART = 1
     default UART2_BAUDRATE if LOG_UART = 2
-    depends on LOG_UART < 3
 
 config AT_UART
     int
@@ -105,7 +103,6 @@ config AT_UART_BAUDRATE
     default UART0_BAUDRATE if AT_UART = 0
     default UART1_BAUDRATE if AT_UART = 1
     default UART2_BAUDRATE if AT_UART = 2
-    depends on AT_UART < 3
 
 config WVT_UART
     int
@@ -119,7 +116,6 @@ config WVT_UART_BAUDRATE
     default UART0_BAUDRATE if WVT_UART = 0
     default UART1_BAUDRATE if WVT_UART = 1
     default UART2_BAUDRATE if WVT_UART = 2
-    depends on WVT_UART < 3
 
 config TESTSUIT_UART
     int
@@ -133,9 +129,13 @@ config TESTSUIT_UART_BAUDRATE
     default UART0_BAUDRATE if TESTSUIT_UART = 0
     default UART1_BAUDRATE if TESTSUIT_UART = 1
     default UART2_BAUDRATE if TESTSUIT_UART = 2
-    default 0 if TESTSUIT_UART = 3
-    depends on TESTSUIT_UART < 3
 
+config DYNAMIC_UART_ID_BINDDING
+    bool
+    prompt "support specify uart bus id in runtime(may apply after reboot)"
+    depends on MIDDLEWARE_SUPPORT_NV
+    default n
+	
 config REG_WHITELIST
     bool
     prompt "access to registers in the whitelist"

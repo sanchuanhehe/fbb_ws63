@@ -2314,9 +2314,15 @@ struct eapol_sm *eapol_sm_init(struct eapol_ctx *ctx)
 
 	os_memset(&conf, 0, sizeof(conf));
 #ifndef EXT_EAP_TRIM
+#ifndef CONFIG_OPENSC_ENGINE_PATH
 	conf.opensc_engine_path = ctx->opensc_engine_path;
+#endif /* CONFIG_OPENSC_ENGINE_PATH */
+#ifndef CONFIG_PKCS11_ENGINE_PATH
 	conf.pkcs11_engine_path = ctx->pkcs11_engine_path;
+#endif /* CONFIG_PKCS11_ENGINE_PATH */
+#ifndef CONFIG_PKCS11_MODULE_PATH
 	conf.pkcs11_module_path = ctx->pkcs11_module_path;
+#endif /* CONFIG_PKCS11_MODULE_PATH */
 	conf.openssl_ciphers = ctx->openssl_ciphers;
 #endif /* EXT_EAP_TRIM */
 	conf.wps = ctx->wps;

@@ -35,11 +35,15 @@
 
 #ifndef CONFIG_NATIVE_WINDOWS
 #include <sys/socket.h>
+#ifndef __USING_RTOS__
 #include <netinet/in.h>
+#endif
 #include <arpa/inet.h>
 #ifndef __vxworks
+#ifndef __USING_RTOS__
 #include <sys/uio.h>
 #include <sys/time.h>
+#endif
 #endif /* __vxworks */
 #endif /* CONFIG_NATIVE_WINDOWS */
 

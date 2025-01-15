@@ -6,6 +6,10 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_STA_SAMPLE)
     add_subdirectory_if_exist(sta_sample)
 endif()
 
+if(DEFINED CONFIG_SAMPLE_SUPPORT_ALILINK_SAMPLE)
+    add_subdirectory_if_exist(alilink_sample)
+endif()
+
 if(DEFINED CONFIG_SAMPLE_SUPPORT_SOFTAP_SAMPLE)
     add_subdirectory_if_exist(softap_sample)
 endif()

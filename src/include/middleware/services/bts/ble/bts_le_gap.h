@@ -297,6 +297,15 @@ typedef struct {
                                    @else   扫描响应数据 @endif */
 } gap_ble_config_adv_data_t;
 
+typedef struct {
+    uint8_t *filter_key;        /*!< @if Eng the filter key for adv data of scan result, maximum length is 128 bytes
+                                     @else  扫描结果广播数据过滤键值,键值最大长度128字节 @endif */
+    uint8_t filter_key_len;     /*!< @if Eng length of one filter key for adv data of scan result
+                                     @else  扫描结果广播数据过滤键值数据长度 @endif */
+    uint8_t filter_key_offset;  /*!< @if Eng offset of one filter key for adv data of scan result.0xFF is invalid
+                                     @else  扫描结果广播数据过滤键值在广播数据中的偏移位置，无效设置为0xFF @endif */
+} gap_ble_adv_data_filter_t;
+
 /**
  * @if Eng
  * @brief Struct of BLE advertising parameters.
@@ -1231,6 +1240,43 @@ errcode_t gap_ble_set_scan_parameters(const gap_ble_scan_params_t *param);
  * @endif
  */
 errcode_t gap_ble_set_scan_extern_parameters(const gap_ble_extern_scan_params_t *param);
+
+/**
+ * @if Eng
+ * @brief Set conditions for filtering adv data in scan results and maximum of 5 keys can be set.
+ * @par   Set conditions for filtering adv data in scan results and maximum of 5 keys can be set.
+ * @param  [in] filter_count Number of filtered conditions
+ * @param  [in] filter_key filtered conditions values in the scanning result.
+ * @retval error code.
+ * @par Dependency:
+ * @li  bts_def.h
+ * @else
+ * @brief  设置对扫描结果中的广播数据进行过滤的条件。
+ * @par    扫描结果过滤的条件的个数和条件的数值，最多设置5个过滤条件。
+ * @param  [in] filter_count 过滤条件的个数。
+ * @param  [in] filter_key 过滤条件的数值.
+ * @retval 执行结果错误码。
+ * @par 依赖:
+ * @li  bts_def.h
+ * @endif
+ */
+errcode_t gap_ble_set_adv_data_filter(uint8_t filter_count, gap_ble_adv_data_filter_t *filter_key);
+ 
+/**
+ * @if Eng
+ * @brief Use this funtion to clean filter conditions for filtering scan results.
+ * @par   Use this funtion to clean filter conditions for filtering scan results.
+ * @retval error code.
+ * @par Dependency:
+ * @li  bts_def.h
+ * @else
+ * @brief  清理对扫描结果中的广播数据进行过滤的条件。
+ * @retval 执行结果错误码。
+ * @par 依赖:
+ * @li  bts_def.h
+ * @endif
+ */
+errcode_t gap_ble_clean_adv_data_filter(void);
 
 /**
  * @if Eng

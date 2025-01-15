@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2017-2024. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2017-2024. All rights reserved.
  * 文 件 名   : hmac_11k.c
  * 生成日期   : 2017年3月15日
  * 功能描述   : 11K

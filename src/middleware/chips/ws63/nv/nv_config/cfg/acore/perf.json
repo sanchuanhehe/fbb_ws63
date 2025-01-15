@@ -5,7 +5,14 @@
             "key_id": "0x5",
             "key_status": "alive",
             "structure_type": "mac_type_t",
-            "attributions": 1,
+            "attributions": 4,
+            "value": [[0,0,0,0,0,0]]
+        },
+        "sle_mac":{
+            "key_id": "0x8",
+            "key_status": "alive",
+            "structure_type": "mac_type_t",
+            "attributions": 4,
             "value": [[0,0,0,0,0,0]]
         },
         "update_mode":{

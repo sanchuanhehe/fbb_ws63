@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021. All rights reserved.
  * Description: hcc adapt SDIO completion.
- * Author:
- * Create: 2021-07-26
  */
 
 #ifndef HCC_ADAPT_SDIO_HEADER

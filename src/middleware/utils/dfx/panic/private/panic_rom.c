@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2020. All rights reserved.
  * Description:   PANIC module to rom implementation
- * Author:
- * Create: 2020-4-16
  */
 
 #include "panic.h"

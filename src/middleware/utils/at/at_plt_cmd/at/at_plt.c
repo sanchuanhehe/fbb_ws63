@@ -17,6 +17,7 @@
 #include "factory.h"
 #include "sfc.h"
 #include "xo_trim_porting.h"
+extern errcode_t write_acccode(uint16_t vendor_code);
 #endif
 #ifdef CONFIG_DRIVER_SUPPORT_TSENSOR
 #include "tsensor.h"
@@ -36,10 +37,6 @@
 
 #ifdef CONFIG_MIDDLEWARE_SUPPORT_NV
 #include "nv.h"
-#endif
-#ifdef CONFIG_MIDDLEWARE_SUPPORT_UPG_AB
-#include "upg_porting.h"
-#include "upg_ab.h"
 #endif
 #include "efuse.h"
 #include "efuse_porting.h"
@@ -221,61 +218,76 @@ at_ret_t plt_nv_write(const nvwrite_args_t *args)
     return AT_RET_OK;
 }
 
-#ifdef CONFIG_MIDDLEWARE_SUPPORT_UPG_AB
-#define UPG_AB_REGION_CFG_ADDR 0x3FF000
-#define UPG_AB_REGION_CFG_SIZE 0x1000
-#define UPG_AB_CONFIG_CHECK 0x70746C6C
-typedef struct {
-    uint32_t  check_num;    /* check number */
-    uint32_t  run_region;   /* run region */
-} upg_ab_config_t;
-#endif
-at_ret_t upg_ab_set_run_region(const absetrun_args_t *args)
-{
-#ifdef CONFIG_MIDDLEWARE_SUPPORT_UPG_AB
-    errcode_t ret  = ws63_upg_init();
-    if (ret != ERRCODE_SUCC && ret != ERRCODE_UPG_ALREADY_INIT) {
-        print_str("ab upg set run region init failed, ret : 0x%x\r\n", ret);
-    }
-    upg_ab_config_t config = {0};
-    ret = upg_flash_read(UPG_AB_REGION_CFG_ADDR, sizeof(upg_ab_config_t), (uint8_t *)&config);
-    if (ret != ERRCODE_SUCC || config.check_num != UPG_AB_CONFIG_CHECK) {
-        print_str("ab upg set run region read failed, ret : 0x%x\r\n", ret);
-        return AT_RET_PROGRESS_BLOCK;
-    }
-    config.run_region = args->run_region;
-    ret = upg_flash_write(UPG_AB_REGION_CFG_ADDR, sizeof(upg_ab_config_t), (const uint8_t *)&config, true);
-    if (ret != ERRCODE_SUCC) {
-        print_str("ab upg set run region write failed, ret : 0x%x\r\n", ret);
-        return ret;
-    }
-#else
-    unused(args);
-#endif
-    return AT_RET_OK;
-}
-
 #define MAC_ADDR_EFUSE 0
 #define MAC_ADDR_NV 1
-#define SLE_MAC_ADDR 2
+#define SLE_MAC_ADDR_EFUSE 2
+#define SLE_MAC_ADDR_NV 3
 #define SET_EFUSE_MAC_PARAM_CNT 2
-#ifndef WIFI_MAC_LEN
-#define WIFI_MAC_LEN 6
+#ifndef MAC_LEN
+#define MAC_LEN 6
 #endif
 
 /*****************************************************************************
- 功能描述  :设置efuse mac地址
+ 功能描述  :设置efuse和nv mac地址
 *****************************************************************************/
+static td_u32 set_mac_addr_with_type(td_s32 mac_type, td_uchar *mac_addr, td_u16 addr_len)
+{
+    td_u32 ret;
+    switch (mac_type) {
+        case MAC_ADDR_EFUSE:
+            ret = efuse_write_mac(mac_addr, addr_len);
+            if (ret != ERRCODE_SUCC) {
+                osal_printk("SET EFUSE MAC ERROR, ret : 0x%x\r\n", ret);
+                return ret;
+            }
+            break;
+        case SLE_MAC_ADDR_EFUSE:
+            ret = efuse_write_sle_mac(mac_addr, addr_len);
+            if (ret != ERRCODE_SUCC) {
+                osal_printk("SET EFUSE SLE MAC ERROR, ret : 0x%x\r\n", ret);
+                return ret;
+            }
+            break;
+        case MAC_ADDR_NV:
+#if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
+            ret = uapi_nv_write(NV_ID_SYSTEM_FACTORY_MAC, mac_addr, addr_len);
+            if (ret != ERRCODE_SUCC) {
+                osal_printk("SET NV MAC ERROR, ret : 0x%x\r\n", ret);
+                return ret;
+            }
+#else
+            return ERRCODE_FAIL;
+#endif
+            break;
+        case SLE_MAC_ADDR_NV:
+#if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
+            ret = uapi_nv_write(NV_ID_SYSTEM_FACTORY_SLE_MAC, mac_addr, addr_len);
+            if (ret != ERRCODE_SUCC) {
+                osal_printk("SET NV SLE MAC ERROR, ret : 0x%x\r\n", ret);
+                return ret;
+            }
+#else
+            return ERRCODE_FAIL;
+#endif
+            break;
+        default:
+            return ERRCODE_FAIL;
+            break;
+    }
+    return ERRCODE_SUCC;
+}
+
+
 at_ret_t set_efuse_mac_addr(const efusemac_args_t *args)
 {
     td_s32 argc = at_plt_convert_bin_to_dec((td_s32)args->para_map);
-    td_uchar mac_addr[WIFI_MAC_LEN] = {0};
+    td_uchar mac_addr[MAC_LEN] = {0};
 
     if (argc != SET_EFUSE_MAC_PARAM_CNT || strlen((const char *)args->mac_addr) != 17) { /* 17 mac string len */
         return AT_RET_SYNTAX_ERROR;
     }
 
-    td_u32 ret = at_plt_cmd_strtoaddr((const char *)args->mac_addr, mac_addr, WIFI_MAC_LEN);
+    td_u32 ret = at_plt_cmd_strtoaddr((const char *)args->mac_addr, mac_addr, MAC_LEN);
     if (ret != EXT_ERR_SUCCESS) {
         return AT_RET_SYNTAX_ERROR;
     }
@@ -283,35 +295,9 @@ at_ret_t set_efuse_mac_addr(const efusemac_args_t *args)
         osal_printk("set mac error: multicast mac addr not aviable!!\r\n");
         return AT_RET_SYNTAX_ERROR;
     }
-    switch (args->mac_type) {
-        case MAC_ADDR_EFUSE:
-            ret = efuse_write_mac(mac_addr, WIFI_MAC_LEN);
-            if (ret != ERRCODE_SUCC) {
-                osal_printk("SET EFUSE MAC ERROR, ret : 0x%x\r\n", ret);
-                return AT_RET_CMD_PARA_ERROR;
-            }
-            break;
-        case SLE_MAC_ADDR:
-            ret = efuse_write_sle_mac(mac_addr, WIFI_MAC_LEN);
-            if (ret != ERRCODE_SUCC) {
-                osal_printk("SET SLE EFUSE MAC ERROR, ret : 0x%x\r\n", ret);
-                return AT_RET_CMD_PARA_ERROR;
-            }
-            break;
-        case MAC_ADDR_NV:
-#if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
-            ret = uapi_nv_write(NV_ID_SYSTEM_FACTORY_MAC, mac_addr, WIFI_MAC_LEN);
-            if (ret != ERRCODE_SUCC) {
-                osal_printk("SET NV MAC ERROR, ret : 0x%x\r\n", ret);
-                return AT_RET_CMD_PARA_ERROR;
-            }
-#else
-            return AT_RET_CMD_PARA_ERROR;
-#endif
-            break;
-        default:
-            return AT_RET_CMD_PARA_ERROR;
-            break;
+
+    if (set_mac_addr_with_type(args->mac_type, mac_addr, MAC_LEN) != ERRCODE_SUCC) {
+        return AT_RET_CMD_PARA_ERROR;
     }
 
     osal_printk("OK\r\n");
@@ -323,20 +309,20 @@ at_ret_t set_efuse_mac_addr(const efusemac_args_t *args)
 *****************************************************************************/
 at_ret_t get_efuse_mac_addr(void)
 {
-    td_uchar mac_addr[WIFI_MAC_LEN] = {0};
-    td_uchar null_mac_addr[WIFI_MAC_LEN] = {0};
+    td_uchar mac_addr[MAC_LEN] = {0};
+    td_uchar null_mac_addr[MAC_LEN] = {0};
     td_uchar efuse_left_count = 0;
     errcode_t ret;
 
 #if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
     uint16_t nv_mac_length;
-    ret = uapi_nv_read(NV_ID_SYSTEM_FACTORY_MAC, WIFI_MAC_LEN, &nv_mac_length, mac_addr);
-    if (ret != ERRCODE_SUCC || nv_mac_length != WIFI_MAC_LEN) {
+    ret = uapi_nv_read(NV_ID_SYSTEM_FACTORY_MAC, MAC_LEN, &nv_mac_length, mac_addr);
+    if (ret != ERRCODE_SUCC || nv_mac_length != MAC_LEN) {
         osal_printk("GET NV MAC ERROR, ret : 0x%x\r\n", ret);
     }
     osal_printk("+EFUSEMAC: NV MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
 #endif
-    ret = efuse_read_mac(mac_addr, WIFI_MAC_LEN, &efuse_left_count);
+    ret = efuse_read_mac(mac_addr, MAC_LEN, &efuse_left_count);
     if (ret == ERRCODE_SUCC) {
         osal_printk("+EFUSEMAC: EFUSE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
     } else {
@@ -344,12 +330,19 @@ at_ret_t get_efuse_mac_addr(void)
     }
     osal_printk("+EFUSEMAC: Efuse mac chance(s) left: %d times.\r\n", efuse_left_count);
 
-    ret = efuse_read_sle_mac(mac_addr, WIFI_MAC_LEN);
+    ret = efuse_read_sle_mac(mac_addr, MAC_LEN);
     if (ret == ERRCODE_SUCC) {
         osal_printk("+EFUSEMAC: EFUSE SLE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
     } else {
         osal_printk("+EFUSEMAC: EFUSE SLE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(null_mac_addr));
     }
+#if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
+    ret = uapi_nv_read(NV_ID_SYSTEM_FACTORY_SLE_MAC, MAC_LEN, &nv_mac_length, mac_addr);
+    if (ret != ERRCODE_SUCC || nv_mac_length != MAC_LEN) {
+        osal_printk("GET NV SLE MAC ERROR, ret : 0x%x\r\n", ret);
+    }
+    osal_printk("+EFUSEMAC: NV SLE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
+#endif
     osal_printk("OK\r\n");
 
     return AT_RET_OK;
@@ -531,7 +524,6 @@ at_ret_t at_factory_mode_switch(const factory_mode_args_t *args)
     return AT_RET_OK;
 }
 
-#ifdef _PRE_WLAN_FEATURE_MFG_TEST
 // start of at cmd: uart log level
 
 static td_u32 at_setup_loglevel_cmd(td_s32 argc, const loglevel_args_t *args)
@@ -560,130 +552,115 @@ static td_u32 at_setup_loglevel_cmd(td_s32 argc, const loglevel_args_t *args)
 #endif
     return AT_RET_OK;
 }
-#endif
 
 at_ret_t at_get_log_level(void)
 {
-#ifdef _PRE_WLAN_FEATURE_MFG_TEST
     if (at_setup_loglevel_cmd(0, NULL) != AT_RET_OK) {
         return AT_RET_SYNTAX_ERROR;
     }
-#endif
     return AT_RET_OK;
 }
 
 at_ret_t at_set_log_level(const loglevel_args_t *args)
 {
-#ifdef _PRE_WLAN_FEATURE_MFG_TEST
     td_s32 argc = at_plt_convert_bin_to_dec((td_s32)args->para_map);
     if (at_setup_loglevel_cmd(argc, args) != AT_RET_OK) {
         return AT_RET_SYNTAX_ERROR;
     }
-#else
-    unused(args);
-#endif
 
     return AT_RET_OK;
 }
 
-#ifdef _PRE_WLAN_FEATURE_MFG_TEST
 #define UAPI_MAX_SLEEP_MODE 2
-
-td_u8 g_sleep_mode;
-
-static errcode_t uapi_set_sleep_mode(td_u8 sleep_mode)
+errcode_t __attribute__((weak)) pm_port_set_sleep_mode(int32_t type)
 {
-    g_sleep_mode = sleep_mode;
-#if defined(ENABLE_LOW_POWER) && (ENABLE_LOW_POWER == YES)
-    bool open_pm = (g_sleep_mode == 0) ? false : true;
-    idle_set_open_pm(open_pm);
-#endif
-    return ERRCODE_SUCC;
+    unused(type);
+    return ERRCODE_FAIL;
 }
 
-static td_u8 uapi_get_sleep_mode(td_void)
+#if defined(ENABLE_LOW_POWER) && (ENABLE_LOW_POWER == NO)
+static uint32_t at_setup_sleepmode_cmd(td_s32 argc, const sleepmode_args_t *args)
 {
-    return g_sleep_mode;
-}
-
-static td_u32 at_setup_sleepmode_cmd(td_s32 argc, const sleepmode_args_t *args)
-{
-    td_u8 sleep_mode;
-    td_u32 ret;
+    uint8_t sleep_mode;
+    uint32_t ret;
 
     if (argc != 1) { /* argc 2 */
-        osal_printk("+SLP:%d\r\n", uapi_get_sleep_mode());
-        return AT_RET_OK;
+        return AT_RET_CMD_PARA_ERROR;
     }
 
-    sleep_mode = (td_u8)(args->para1);
+    sleep_mode = (uint8_t)(args->para1);
     if (sleep_mode > UAPI_MAX_SLEEP_MODE) {
         return AT_RET_SYNTAX_ERROR;
     }
 
-    ret = uapi_set_sleep_mode(sleep_mode);
-    if (ret != EXT_ERR_SUCCESS) {
+    ret = pm_port_set_sleep_mode(sleep_mode);
+    if (ret != ERRCODE_SUCC) {
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("+SLP:%d\r\n", sleep_mode);
-
     return AT_RET_OK;
 }
 #endif
-
-at_ret_t at_get_sleep_mode(void)
-{
-#ifdef _PRE_WLAN_FEATURE_MFG_TEST
-    if (at_setup_sleepmode_cmd(0, NULL) != AT_RET_OK) {
-        return AT_RET_SYNTAX_ERROR;
-    }
-#endif
-    return AT_RET_OK;
-}
 
 at_ret_t at_set_sleep_mode(const sleepmode_args_t *args)
 {
-#ifdef _PRE_WLAN_FEATURE_MFG_TEST
+#if defined(ENABLE_LOW_POWER) && (ENABLE_LOW_POWER == NO)
     td_s32 argc = at_plt_convert_bin_to_dec((td_s32)args->para_map);
     if (at_setup_sleepmode_cmd(argc, args) != AT_RET_OK) {
         return AT_RET_SYNTAX_ERROR;
     }
+#elif defined(ENABLE_LOW_POWER) && (ENABLE_LOW_POWER == YES)
+    if (uapi_lpc_set_type(args->para1) != EXT_ERR_SUCCESS) {
+        return AT_RET_SYNTAX_ERROR;
+    }
 #else
     unused(args);
 #endif
-
     return AT_RET_OK;
 }
 
+
 #define UAPI_UART_PORT_MAX 2
 #define UAPI_UART_PORT_NUM 3
+static errcode_t at_uart_check_bus_id(int32_t dbg_uart_bus, int32_t at_uart_bus, int32_t hso_uart_bus)
+{
+    if ((at_uart_bus >= UART_BUS_MAX_NUMBER) ||
+        (dbg_uart_bus >= UART_BUS_MAX_NUMBER) ||
+        (hso_uart_bus >= UART_BUS_MAX_NUMBER)) {
+            return ERRCODE_INVALID_PARAM;
+    }
+
+    if ((at_uart_bus == hso_uart_bus) || (hso_uart_bus == dbg_uart_bus)) {
+        return ERRCODE_NOT_SUPPORT;
+    }
+
+    return ERRCODE_SUCC;
+}
+
+extern errcode_t uart_port_save_bus_id(int32_t dbg_uart_bus, int32_t at_uart_bus, int32_t hso_uart_bus);
+errcode_t __attribute__((weak)) uart_port_save_bus_id(int32_t dbg_uart_bus, int32_t at_uart_bus, int32_t hso_uart_bus)
+{
+    unused(dbg_uart_bus);
+    unused(at_uart_bus);
+    unused(hso_uart_bus);
+    return ERRCODE_NOT_SUPPORT;
+}
 
 at_ret_t at_set_uart_port(const uartport_args_t *args)
 {
-#ifdef _PRE_WLAN_FEATURE_MFG_TEST
+    errcode_t err = ERRCODE_SUCC;
     td_s32 argc = at_plt_convert_bin_to_dec((td_s32)args->para_map);
-
-    osal_printk("+SETUART :%d\r\n", argc);
     if (argc != UAPI_UART_PORT_NUM) { /* argc 3 */
         return AT_RET_SYNTAX_ERROR;
     }
 
-    if (args->para1 > UAPI_UART_PORT_MAX) {
+    if (at_uart_check_bus_id(args->para1, args->para2, args->para3) != ERRCODE_SUCC) {
         return AT_RET_SYNTAX_ERROR;
     }
 
-    if (args->para2 > UAPI_UART_PORT_MAX) {
-        return AT_RET_SYNTAX_ERROR;
+    err = uart_port_save_bus_id(args->para1, args->para2, args->para3);
+    if (err != ERRCODE_SUCC) {
+        return AT_RET_MEM_API_ERROR;
     }
-
-    if (args->para3 > UAPI_UART_PORT_MAX) {
-        return AT_RET_SYNTAX_ERROR;
-    }
-    osal_printk("+SETUART:%d,%d,%d\r\n", args->para1, args->para2, args->para3);
-#else
-    unused(args);
-#endif
-
     return AT_RET_OK;
 }
 
@@ -693,7 +670,6 @@ static td_u32 at_setup_gpiodir_cmd(td_s32 argc, const gpiodir_args_t *args)
 {
     pin_t io_num;
     gpio_direction_t io_dir;
-    pin_mode_t io_mode;
     td_u32 ret;
 
     if (argc != 2) { /* argc 2 */
@@ -704,11 +680,6 @@ static td_u32 at_setup_gpiodir_cmd(td_s32 argc, const gpiodir_args_t *args)
     if (io_num > PIN_NONE) {
         osal_printk("+RDGPIO:invalid io,%d\r\n", io_num);
         return AT_RET_SYNTAX_ERROR;
-    }
-
-    io_mode = uapi_pin_get_mode(io_num);
-    if (io_mode != 0) {
-        return ERRCODE_PIN_INVALID_PARAMETER;
     }
 
     io_dir = (gpio_direction_t)(args->para2);
@@ -1210,7 +1181,7 @@ at_ret_t cmd_set_customer_rsvd_efuse(const customer_rsvd_efuse_args_t *args)
         return AT_RET_CMD_PARA_ERROR;
     }
  
-    len = strlen((char *)(args->para1 + 2)); /* 2:偏移2个字符 */
+    len = (td_u32)strlen((char *)(args->para1 + 2)); /* 2:偏移2个字符 */
     if (len != CUSTOM_RESVED_EFUSE_BYTE_LEN * 2) { /* 2:乘2 */
         return AT_RET_CMD_PARA_ERROR;
     }
@@ -1238,7 +1209,7 @@ at_ret_t cmd_get_customer_rsvd_efuse(void)
 #ifdef _PRE_WLAN_FEATURE_MFG_TEST
     errcode_t ret;
     td_u8 key[CUSTOM_RESVED_EFUSE_BYTE_LEN];
-    td_u32 index;
+    size_t index;
  
     memset_s(key, CUSTOM_RESVED_EFUSE_BYTE_LEN, 0, CUSTOM_RESVED_EFUSE_BYTE_LEN);
     ret = efuse_read_item(EFUSE_CUSTOM_RESVED_ID, key, sizeof(key));
@@ -1299,7 +1270,7 @@ at_ret_t cmd_set_hash_root_public_key(const pubkey_args_t *args)
         return AT_RET_CMD_PARA_ERROR;
     }
 
-    len = strlen((char *)(args->para1 + 2)); /* 2:偏移2个字符 */
+    len = (td_u32)strlen((char *)(args->para1 + 2)); /* 2:偏移2个字符 */
     if (len != HASH_ROOT_PUBLIC_KEY_LEN * 2) { /* 2:乘2 */
         return AT_RET_CMD_PARA_ERROR;
     }
@@ -1406,7 +1377,7 @@ at_ret_t plt_flash_write(const flashwrite_args_t *args)
 {
 #ifdef _PRE_WLAN_FEATURE_MFG_TEST
     errcode_t ret;
-    td_u32 len = 0;
+    size_t len = 0;
     td_u32 left = 0;
     td_u8 *data = TD_NULL;
 
@@ -1445,14 +1416,30 @@ at_ret_t save_license(const license_args_t *args)
     partition_information_t info;
     errcode_t ret_val = uapi_partition_get_info(PARTITION_CUSTOMER_FACTORY, &info);
     if (ret_val != ERRCODE_SUCC || info.part_info.addr_info.size == 0) {
+        osal_kfree(tmp);
         return AT_RET_SYNTAX_ERROR;
     }
     ret_val = uapi_sfc_reg_erase(info.part_info.addr_info.addr, info.part_info.addr_info.size);
     if (ret_val != ERRCODE_SUCC) {
+        osal_kfree(tmp);
         return AT_RET_SYNTAX_ERROR;
     }
     ret_val = uapi_sfc_reg_write(info.part_info.addr_info.addr, (uint8_t *)tmp, value_length);
     if (ret_val != ERRCODE_SUCC) {
+        osal_kfree(tmp);
+        return AT_RET_SYNTAX_ERROR;
+    }
+    osal_kfree(tmp);
+#else
+    unused(args);
+#endif
+    return AT_RET_OK;
+}
+
+at_ret_t at_write_acccode(const acccode_args_t *args)
+{
+#ifdef _PRE_WLAN_FEATURE_MFG_TEST
+    if (write_acccode(args->acccode) != ERRCODE_SUCC) {
         return AT_RET_SYNTAX_ERROR;
     }
 #else

@@ -758,49 +758,40 @@ td_s32 drv_cipher_hash_destroy(td_handle drv_hash_handle)
     return ret;
 }
 
+typedef struct {
+    crypto_hash_type hash_type;
+    td_u32 iv_size;
+    const td_u8 *state_val;
+} hash_state_item_t;
+
+static const hash_state_item_t hash_state_table[] = {
+    {CRYPTO_HASH_TYPE_SHA1, sizeof(g_sha1_ival), g_sha1_ival},
+    {CRYPTO_HASH_TYPE_SHA224, sizeof(g_sha224_ival), g_sha224_ival},
+    {CRYPTO_HASH_TYPE_SHA256, sizeof(g_sha256_ival), g_sha256_ival},
+    {CRYPTO_HASH_TYPE_SHA384, sizeof(g_sha384_ival), g_sha384_ival},
+    {CRYPTO_HASH_TYPE_SHA512, sizeof(g_sha512_ival), g_sha512_ival},
+    {CRYPTO_HASH_TYPE_SM3, sizeof(g_sm3_ival), g_sm3_ival},
+    {CRYPTO_HASH_TYPE_HMAC_SHA1, sizeof(g_sha1_ival), g_sha1_ival},
+    {CRYPTO_HASH_TYPE_HMAC_SHA224, sizeof(g_sha224_ival), g_sha224_ival},
+    {CRYPTO_HASH_TYPE_HMAC_SHA256, sizeof(g_sha256_ival), g_sha256_ival},
+    {CRYPTO_HASH_TYPE_HMAC_SHA384, sizeof(g_sha384_ival), g_sha384_ival},
+    {CRYPTO_HASH_TYPE_HMAC_SHA512, sizeof(g_sha512_ival), g_sha512_ival},
+    {CRYPTO_HASH_TYPE_HMAC_SM3, sizeof(g_sm3_ival), g_sm3_ival},
+};
+
 const td_u32 *drv_hash_get_state_iv(crypto_hash_type hash_type, td_u32 *iv_size)
 {
-    const td_u8 *state_val = TD_NULL;
-    td_u32 hash_alg = crypto_hash_get_alg(hash_type);
-    td_u32 hash_mode = crypto_hash_get_mode(hash_type);
-
+    td_u32 i = 0;
     crypto_chk_return(iv_size == TD_NULL, TD_NULL, "iv_size is NULL!\n");
 
-    switch (hash_mode) {
-        case CRYPTO_HASH_MODE_UNDEF:
-            state_val = g_sha1_ival;
-            *iv_size = (td_u32)sizeof(g_sha1_ival);
-            break;
-        case CRYPTO_HASH_MODE_224:
-            state_val = g_sha224_ival;
-            *iv_size = (td_u32)sizeof(g_sha224_ival);
-            break;
-        case CRYPTO_HASH_MODE_256: {
-            if (hash_alg == CRYPTO_HASH_ALG_SHA2) {
-                state_val = g_sha256_ival;
-                *iv_size = (td_u32)sizeof(g_sha256_ival);
-            } else if (hash_alg == CRYPTO_HASH_ALG_SM3) {
-                state_val = g_sm3_ival;
-                *iv_size = (td_u32)sizeof(g_sm3_ival);
-            }
-            break;
-        }
-        case CRYPTO_HASH_MODE_384: {
-            state_val = g_sha384_ival;
-            *iv_size = (td_u32)sizeof(g_sha384_ival);
-            break;
-        }
-        case CRYPTO_HASH_MODE_512: {
-            state_val = g_sha512_ival;
-            *iv_size = (td_u32)sizeof(g_sha512_ival);
-            break;
-        }
-        default: {
-            crypto_log_err("Invalid Hash Mode!\n");
-            break;
+    for (; i < sizeof(hash_state_table) / sizeof(hash_state_item_t); i++) {
+        if (hash_state_table[i].hash_type == hash_type) {
+            *iv_size = hash_state_table[i].iv_size;
+            return (const td_u32 *)hash_state_table[i].state_val;
         }
     }
-    return (const td_u32 *)state_val;
+    crypto_log_err("Invalid Hash Stype!\n");
+    return TD_NULL;
 }
 
 td_s32 inner_hash_drv_handle_chk(td_handle hash_handle)

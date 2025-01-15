@@ -74,9 +74,9 @@ int32_t drv_rom_cipher_symc_init(void)
     spacc_reg_write(SPACC_SYM_CHN_LOCK, 0x10);  // 0x10: use bit[7:4], which is channel 1, 0x1 means tee cpu lock.
 
     /* 2. set channel node start addr & node depth. */
-    spacc_reg_write(IN_SYM_CHN_NODE_START_ADDR_L(g_symc_chn), (uint32_t)(g_entry_in));
+    spacc_reg_write(IN_SYM_CHN_NODE_START_ADDR_L(g_symc_chn), (uint32_t)(uintptr_t)(g_entry_in));
     spacc_reg_write(IN_SYM_CHN_NODE_LENGTH(g_symc_chn), SYMC_NODE_DEPTH);
-    spacc_reg_write(OUT_SYM_CHN_NODE_START_ADDR_L(g_symc_chn), (uint32_t)(g_entry_out));
+    spacc_reg_write(OUT_SYM_CHN_NODE_START_ADDR_L(g_symc_chn), (uint32_t)(uintptr_t)(g_entry_out));
     spacc_reg_write(OUT_SYM_CHN_NODE_LENGTH(g_symc_chn), SYMC_NODE_DEPTH);
 
     /* 3. set the chn ctrl. */

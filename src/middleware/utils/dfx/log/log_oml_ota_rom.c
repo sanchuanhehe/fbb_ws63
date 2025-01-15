@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2020. All rights reserved.
  * Description:  log oml ota module to rom implementation
- * Author:
- * Create: 2020-4-17
  */
 
 #include "non_os.h"

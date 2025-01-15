@@ -16,6 +16,9 @@
 #include "hmac_tx_data.h"
 #include "hmac_hook.h"
 #endif
+#ifdef _PRE_WLAN_FEATURE_SLE_BRIDGE
+#include "wal_net.h"
+#endif
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {
@@ -41,6 +44,13 @@ OSAL_STATIC osal_void hmac_bridge_control_show_bridge(const osal_char *param);
 hmac_brctl_stru g_bridge_ctrl;
 #endif
 
+#ifdef _PRE_WLAN_FEATURE_SLE_BRIDGE
+wifi_tx_sle_pbuf_t wifi_tx_sle_netbuf_cb = OSAL_NULL;
+WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_rx_process_sle(const oal_netbuf_stru *netbuf);
+extern osal_void sle_wifi_bridge_register(wifi_tx_sle_pbuf_t *wifi_tx_sle_func_ptr,
+    sle_tx_wifi_pbuf_t sle_tx_wifi, uint8_t type);
+#endif
+
 #define hmac_bridge_loop_all_node_safe(head_loop, pos, n, head)  \
     for ((head_loop) = 0; (head_loop) < osal_array_size(head); (head_loop)++) \
         osal_list_for_each_safe((pos), (n), &(head)[(head_loop)])
@@ -52,12 +62,16 @@ hmac_brctl_stru g_bridge_ctrl;
 
 static osal_void debug_mac_addr(const osal_char *addr_str, const osal_u8 *addr)
 {
+    unref_param(addr_str);
+    unref_param(addr);
     wifi_printf("\r\n%s=[%x:%x:%x:%x:**:**]\r\n", addr_str,
         addr[0], addr[1], addr[2], addr[3]);  /* 打印mac地址第0 1 2 3位 */
 }
 
 static osal_void debug_ip_addr(const osal_char *addr_str, const osal_u8 *addr)
 {
+    unref_param(addr_str);
+    unref_param(addr);
     wifi_printf("\r\n%s=[%d.%d.%d.**]\r\n", addr_str, addr[0], addr[1], addr[2]); /* 打印ip地址第0 1 2位 */
 }
 
@@ -196,7 +210,7 @@ static osal_u32 hmac_bridge_find_unknow_mac(hmac_vap_bridge_stru *vap_bridge, os
 static osal_u32 hmac_bridge_rx_unknow_addr_replace(const hmac_vap_stru *hmac_vap,
     mac_ether_header_stru *ether_header, osal_u32 pkt_len)
 {
-    osal_u32 contig_len = sizeof(mac_ether_header_stru);
+    osal_u32 contig_len = (osal_u32)sizeof(mac_ether_header_stru);
     /* 获取以太网的目的MAC和数据段 */
     osal_u8 *des_mac = ether_header->ether_dhost;
     /* 获取以太网帧目的地址是否为多播地址 */
@@ -286,7 +300,7 @@ static osal_u32 hmac_bridge_rx_arp_addr_replace(const hmac_vap_stru *hmac_vap,
     /*                                                                          */
     /****************************************************************************/
 
-    osal_u32 contig_len = sizeof(mac_ether_header_stru);
+    osal_u32 contig_len = (osal_u32)sizeof(mac_ether_header_stru);
     /* 获取以太网的目的MAC和数据段 */
     osal_u8 *des_mac = ether_header->ether_dhost;
     osal_u8 *eth_body = (osal_u8 *)(ether_header + 1);
@@ -300,7 +314,7 @@ static osal_u32 hmac_bridge_rx_arp_addr_replace(const hmac_vap_stru *hmac_vap,
         debug_arp_addr(hmac_vap, ether_header, arp_package);
     }
 
-    contig_len += sizeof(oal_eth_arphdr_stru);
+    contig_len += (osal_u32)sizeof(oal_eth_arphdr_stru);
     if (pkt_len < contig_len) {
         oam_error_log0(0, OAM_SF_PROXYSTA, "{hmac_bridge_rx_arp_addr_replace::The length of buf is invalid.}");
         return OSAL_FAILURE;
@@ -346,7 +360,7 @@ static osal_void hmac_bridge_dhcp_checksum(mac_udp_header_stru *udp_header, dhcp
 static osal_u32 hmac_bridge_rx_ip_addr_replace(const hmac_vap_stru *hmac_vap,
     mac_ether_header_stru *ether_header, osal_u32 pkt_len)
 {
-    osal_u32 contig_len = sizeof(mac_ether_header_stru);
+    osal_u32 contig_len = (osal_u32)sizeof(mac_ether_header_stru);
     /* 获取以太网的目的MAC和数据段 */
     osal_u8 *des_mac = ether_header->ether_dhost;
     oal_ip_header_stru *ip_header = (oal_ip_header_stru *)(ether_header + 1);
@@ -366,7 +380,7 @@ static osal_u32 hmac_bridge_rx_ip_addr_replace(const hmac_vap_stru *hmac_vap,
     /* | 1      |  1 (17为UDP)| 2         | 4              | 4               */
     /* --------------------------------------------------------------------- */
     /*************************************************************************/
-    contig_len += sizeof(oal_ip_header_stru);
+    contig_len += (osal_u32)sizeof(oal_ip_header_stru);
     if (pkt_len < contig_len) {
         return OSAL_FAILURE;
     }
@@ -374,7 +388,7 @@ static osal_u32 hmac_bridge_rx_ip_addr_replace(const hmac_vap_stru *hmac_vap,
     /* 如果是UDP包，并且是DHCP协议的报文处理 */
     if (ip_header->protocol == OAL_IPPROTO_UDP) {
         mac_udp_header_stru *udp_header = (mac_udp_header_stru *)(ip_header + 1);
-        contig_len += sizeof(mac_udp_header_stru);
+        contig_len += (osal_u32)sizeof(mac_udp_header_stru);
         if (pkt_len < contig_len) {
             return OSAL_FAILURE;
         }
@@ -391,7 +405,7 @@ static osal_u32 hmac_bridge_rx_ip_addr_replace(const hmac_vap_stru *hmac_vap,
         /* Repeater STA接收的DHCP应答报文不会是单播报文 故不区分单播报文 */
         if (oal_host2net_short(udp_header->des_port) == DHCP_PORT_BOOTPC) {
             dhcp_message_stru *dhcp_package = (dhcp_message_stru *)(udp_header + 1);
-            contig_len += (sizeof(dhcp_message_stru) - DHCP_OPTION_LEN);
+            contig_len += ((osal_u32)sizeof(dhcp_message_stru) - DHCP_OPTION_LEN);
             if (pkt_len < contig_len) {
                 return OSAL_FAILURE;
             }
@@ -432,39 +446,17 @@ static osal_u32 hmac_bridge_rx_ip_addr_replace(const hmac_vap_stru *hmac_vap,
     return OSAL_SUCCESS;
 }
 
-
 /*****************************************************************************
- 函 数 名  : hmac_bridge_rx_process
+ 函 数 名  : hmac_bridge_rx_process_inner
  功能描述  : ARP、DHCP等包，上报网桥前地址转换函数
              目前已知需要转换地址的报文有 IP:0X0800  ARP: 0X0806
 *****************************************************************************/
-WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_rx_process(const oal_netbuf_stru *netbuf,
+WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_rx_process_inner(const oal_netbuf_stru *netbuf,
     const hmac_vap_stru *hmac_vap)
 {
     mac_ether_header_stru *ether_header = OSAL_NULL;
     osal_u32 pkt_len;
     osal_u16 ether_type;
-    hmac_vap_stru *mac_vap_temp = OSAL_NULL;
-    hmac_device_stru *hmac_device = OSAL_NULL;
-
-    if (netbuf == OSAL_NULL || hmac_vap == OSAL_NULL) {
-        oam_error_log0(0, OAM_SF_PROXYSTA, "{hmac_bridge_rx_process:null param}");
-        return OSAL_FAILURE;
-    }
-
-    /* ap与sta不能同时存在的时候都不进入到repeater流程中，g_single_proxysta.vap_id记录的是sta的vap_id */
-    hmac_device = hmac_res_get_mac_dev_etc(hmac_vap->device_id);
-    if (mac_device_find_up_ap_etc(hmac_device, &mac_vap_temp) != OAL_SUCC) {
-        return  OSAL_SUCCESS;
-    }
-
-    if (hmac_vap->vap_id != g_single_proxysta.vap_id) {
-        return OSAL_SUCCESS;
-    }
-
-    if (!is_legacy_vap(mac_vap_temp)) {
-        return OSAL_SUCCESS;
-    }
 
     ether_header = (mac_ether_header_stru *)oal_netbuf_data((oal_netbuf_stru *)netbuf);
     if (ether_header == OSAL_NULL) {
@@ -509,6 +501,54 @@ WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_rx_process(con
         /* 其他未知类型的地址替换 */
         return hmac_bridge_rx_unknow_addr_replace(hmac_vap, ether_header, pkt_len);
     }
+}
+
+/*****************************************************************************
+ 函 数 名  : hmac_bridge_rx_process_normal
+ 功能描述  : 普通流程处理
+*****************************************************************************/
+WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_rx_process_normal(const oal_netbuf_stru *netbuf,
+    const hmac_vap_stru *hmac_vap)
+{
+    hmac_vap_stru *mac_vap_temp = OSAL_NULL;
+    hmac_device_stru *hmac_device = OSAL_NULL;
+
+    if (netbuf == OSAL_NULL || hmac_vap == OSAL_NULL) {
+        oam_error_log0(0, OAM_SF_PROXYSTA, "{hmac_bridge_rx_process:null param}");
+        return OSAL_FAILURE;
+    }
+
+    /* ap与sta不能同时存在的时候都不进入到repeater流程中，g_single_proxysta.vap_id记录的是sta的vap_id */
+    hmac_device = hmac_res_get_mac_dev_etc(hmac_vap->device_id);
+    if (mac_device_find_up_ap_etc(hmac_device, &mac_vap_temp) != OAL_SUCC) {
+        return  OSAL_SUCCESS;
+    }
+
+    if (hmac_vap->vap_id != g_single_proxysta.vap_id) {
+        return OSAL_SUCCESS;
+    }
+
+    if (!is_legacy_vap(mac_vap_temp)) {
+        return OSAL_SUCCESS;
+    }
+
+    hmac_bridge_rx_process_inner(netbuf, hmac_vap);
+    return OSAL_SUCCESS;
+}
+
+WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_rx_process(const oal_netbuf_stru *netbuf,
+    const hmac_vap_stru *hmac_vap)
+{
+#ifdef _PRE_WLAN_FEATURE_SLE_BRIDGE
+    if (wifi_tx_sle_netbuf_cb != OSAL_NULL) {
+        return hmac_bridge_rx_process_sle(netbuf);
+    } else {
+#endif
+        hmac_bridge_rx_process_normal(netbuf, hmac_vap);
+        return OAL_CONTINUE;
+#ifdef _PRE_WLAN_FEATURE_SLE_BRIDGE
+    }
+#endif
 }
 
 static osal_u32 hmac_bridge_insert_unknow_mac(hmac_vap_bridge_stru *vap_bridge, osal_u16 protocol, osal_u8 *src_mac,
@@ -602,7 +642,7 @@ OSAL_STATIC osal_u32 hmac_bridge_tx_unknow_addr_insert(hmac_vap_stru *hmac_vap,
     osal_u8 *bsta_mac = hmac_vap->mib_info->wlan_mib_sta_config.dot11_station_id;
     /* 获取以太网源MAC和数据段 */
     osal_u8 *src_mac = ether_header->ether_shost;
-    osal_u32 contig_len = sizeof(mac_ether_header_stru);
+    osal_u32 contig_len = (osal_u32)sizeof(mac_ether_header_stru);
     if (pkt_len < contig_len) {
         oam_error_log0(g_single_proxysta.vap_id, OAM_SF_PROXYSTA,
                        "{hmac_bridge_tx_unknow_addr_insert::The length of buf is invalid.}");
@@ -730,7 +770,7 @@ OSAL_STATIC osal_u32 hmac_bridge_tx_arp_addr_insert(hmac_vap_stru *hmac_vap, mac
     /****************************************************************************/
     /* bridge sta 自身的MAC地址 */
     osal_u8 *bsta_mac = hmac_vap->mib_info->wlan_mib_sta_config.dot11_station_id;
-    osal_u32 contig_len = sizeof(mac_ether_header_stru);
+    osal_u32 contig_len = (osal_u32)sizeof(mac_ether_header_stru);
 
     /* 获取以太网源MAC和数据段 */
     osal_u8 *src_mac = ether_header->ether_shost;
@@ -743,7 +783,7 @@ OSAL_STATIC osal_u32 hmac_bridge_tx_arp_addr_insert(hmac_vap_stru *hmac_vap, mac
         debug_arp_addr(hmac_vap, ether_header, arp_package);
     }
 
-    contig_len += sizeof(oal_eth_arphdr_stru);
+    contig_len += (osal_u32)sizeof(oal_eth_arphdr_stru);
     if (pkt_len < contig_len) {
         oam_error_log0(g_single_proxysta.vap_id, OAM_SF_PROXYSTA,
                        "{hmac_bridge_tx_arp_addr_insert::The length of buf is invalid.}");
@@ -797,7 +837,7 @@ OSAL_STATIC osal_u32 hmac_bridge_tx_ip_addr_insert(hmac_vap_stru *hmac_vap,
     mac_ether_header_stru *ether_header, osal_u32 pkt_len)
 {
     osal_u8 *bsta_mac = hmac_vap->mib_info->wlan_mib_sta_config.dot11_station_id; /* bridge sta 自身的MAC地址 */
-    osal_u32 contig_len = sizeof(mac_ether_header_stru);
+    osal_u32 contig_len = (osal_u32)sizeof(mac_ether_header_stru);
     osal_u8 *src_mac = ether_header->ether_shost;
     oal_ip_header_stru *ip_header = (oal_ip_header_stru *)(ether_header + 1);
     osal_u8 *ip_addr = OSAL_NULL;
@@ -815,7 +855,7 @@ OSAL_STATIC osal_u32 hmac_bridge_tx_ip_addr_insert(hmac_vap_stru *hmac_vap,
     /* | 1      |  1 (17为UDP)| 2         | 4              | 4               */
     /* --------------------------------------------------------------------- */
     /*************************************************************************/
-    contig_len += sizeof(oal_ip_header_stru);
+    contig_len += (osal_u32)sizeof(oal_ip_header_stru);
     if (pkt_len < contig_len) {
         wifi_printf("hmac_bridge_tx_ip_addr_insert:: pkg_len[%d] contig_len[%d]\n", pkt_len, contig_len);
         return OSAL_FAILURE;
@@ -823,7 +863,7 @@ OSAL_STATIC osal_u32 hmac_bridge_tx_ip_addr_insert(hmac_vap_stru *hmac_vap,
 
     if (ip_header->protocol == OAL_IPPROTO_UDP) {
         mac_udp_header_stru *udp_header = (mac_udp_header_stru *)(ip_header + 1);
-        contig_len += sizeof(mac_udp_header_stru);
+        contig_len += (osal_u32)sizeof(mac_udp_header_stru);
         if (pkt_len < contig_len) {
             wifi_printf("hmac_bridge_tx_ip_addr_insert:: pkg_len[%d] contig_len[%d]\n", pkt_len, contig_len);
             return OSAL_FAILURE;
@@ -842,7 +882,7 @@ OSAL_STATIC osal_u32 hmac_bridge_tx_ip_addr_insert(hmac_vap_stru *hmac_vap,
         /* 经由REPEATER发送的DHCP应答报文不会是单播报文 故不区分单播报文 */
         if (oal_host2net_short(udp_header->des_port) == DHCP_PORT_BOOTPS) {
             dhcp_message_stru *dhcp_package = (dhcp_message_stru *)(udp_header + 1);
-            contig_len += (sizeof(dhcp_message_stru) - DHCP_OPTION_LEN);
+            contig_len += ((osal_u32)sizeof(dhcp_message_stru) - DHCP_OPTION_LEN);
             if (pkt_len < contig_len) {
                 wifi_printf("hmac_bridge_tx_ip_addr_insert:: pkg_len[%d] contig_len[%d]\n", pkt_len, contig_len);
                 return OSAL_FAILURE;
@@ -886,35 +926,15 @@ OSAL_STATIC osal_u32 hmac_bridge_tx_ip_addr_insert(hmac_vap_stru *hmac_vap,
 }
 
 /*****************************************************************************
- 函 数 名  : hmac_bridge_tx_process
+ 函 数 名  : hmac_bridge_tx_process_inner
  功能描述  : 处理发送报文的源MAC地址替换
 *****************************************************************************/
-WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_tx_process(const oal_netbuf_stru *netbuf,
+WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_tx_process_inner(const oal_netbuf_stru *netbuf,
     hmac_vap_stru *hmac_vap)
 {
     mac_ether_header_stru *ether_header = OSAL_NULL;
     osal_u32 pkt_len;
     osal_u16 ether_type;
-    hmac_vap_stru *mac_vap_temp = OSAL_NULL;
-    hmac_device_stru *hmac_device = OSAL_NULL;
-
-    if (netbuf == OSAL_NULL || hmac_vap == OSAL_NULL) {
-        oam_error_log0(0, OAM_SF_PROXYSTA, "{hmac_bridge_tx_process::null param.}");
-        return OSAL_FAILURE;
-    }
-
-    /* ap与sta不能同时存在的时候都不进入到repeater流程中，g_single_proxysta.vap_id记录的是sta的vap_id */
-    hmac_device = hmac_res_get_mac_dev_etc(hmac_vap->device_id);
-    if (mac_device_find_up_ap_etc(hmac_device, &mac_vap_temp) != OAL_SUCC) {
-        return OSAL_SUCCESS;
-    }
-    if (!is_legacy_vap(mac_vap_temp)) {
-        return OSAL_SUCCESS;
-    }
-
-    if (hmac_vap->vap_id != g_single_proxysta.vap_id) {
-        return OSAL_SUCCESS;
-    }
 
     ether_header = (mac_ether_header_stru *)oal_netbuf_header(netbuf);
     pkt_len = oal_netbuf_get_len((oal_netbuf_stru *)netbuf);
@@ -941,6 +961,37 @@ WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_tx_process(con
         /* 其他未知类型的地址替换 */
         return hmac_bridge_tx_unknow_addr_insert(hmac_vap, ether_header, pkt_len);
     }
+}
+
+/*****************************************************************************
+ 函 数 名  : hmac_bridge_tx_process
+ 功能描述  : 处理发送报文的源MAC地址替换
+*****************************************************************************/
+WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_tx_process(const oal_netbuf_stru *netbuf,
+    hmac_vap_stru *hmac_vap)
+{
+    hmac_vap_stru *mac_vap_temp = OSAL_NULL;
+    hmac_device_stru *hmac_device = OSAL_NULL;
+
+    if (netbuf == OSAL_NULL || hmac_vap == OSAL_NULL) {
+        oam_error_log0(0, OAM_SF_PROXYSTA, "{hmac_bridge_tx_process::null param.}");
+        return OSAL_FAILURE;
+    }
+
+        /* ap与sta不能同时存在的时候都不进入到repeater流程中，g_single_proxysta.vap_id记录的是sta的vap_id */
+    hmac_device = hmac_res_get_mac_dev_etc(hmac_vap->device_id);
+    if (mac_device_find_up_ap_etc(hmac_device, &mac_vap_temp) != OAL_SUCC) {
+        return OSAL_SUCCESS;
+    }
+    if (!is_legacy_vap(mac_vap_temp)) {
+        return OSAL_SUCCESS;
+    }
+
+    if (hmac_vap->vap_id != g_single_proxysta.vap_id) {
+        return OSAL_SUCCESS;
+    }
+
+    return hmac_bridge_tx_process_inner(netbuf, hmac_vap);
 }
 
 /*****************************************************************************
@@ -990,38 +1041,19 @@ OSAL_STATIC osal_u32 hmac_bridge_map_aging_timer(osal_void *param)
     return OSAL_SUCCESS;
 }
 
-OSAL_STATIC osal_bool hmac_single_proxysta_vap_start(osal_void *notify_data)
+OSAL_STATIC osal_void hmac_single_proxysta_bridge_init(osal_void)
 {
-    hmac_vap_stru *hmac_vap = (hmac_vap_stru *)notify_data;
     hmac_vap_bridge_stru *vap_bridge = OSAL_NULL;
     osal_u8 i;
-    hmac_vap_stru *mac_vap_temp = OSAL_NULL;
-    hmac_device_stru *hmac_device = OSAL_NULL;
-
-    hmac_device = hmac_res_get_mac_dev_etc(hmac_vap->device_id);
-    /* 只有sta vap都启动的时候，才会尝试去初始化proxysta，并且记录sta_vap的vapid */
-    if (is_legacy_sta(hmac_vap)) {
-        if ((mac_device_find_up_ap_etc(hmac_device, &mac_vap_temp) != OAL_SUCC) || (!is_legacy_vap(mac_vap_temp))) {
-            return OSAL_TRUE;
-        }
-        g_single_proxysta.vap_id = hmac_vap->vap_id;
-    } else if (is_legacy_ap(hmac_vap)) {
-        if ((mac_device_find_up_sta_etc(hmac_device, &mac_vap_temp)  != OAL_SUCC) || (!is_legacy_vap(mac_vap_temp))) {
-            return OSAL_TRUE;
-        }
-        g_single_proxysta.vap_id = mac_vap_temp->vap_id;
-    } else {
-        return OSAL_TRUE;
-    }
 
     if (g_single_proxysta.vap_bridge != OSAL_NULL) {    /* 防止重复创建 */
-        return OSAL_TRUE;
+        return;
     }
 
     vap_bridge = (hmac_vap_bridge_stru *)oal_memalloc(sizeof(hmac_vap_bridge_stru));
     if (vap_bridge == OSAL_NULL) {
         oam_error_log0(g_single_proxysta.vap_id, OAM_SF_PROXYSTA, "hmac_single_proxysta_vap_add malloc error");
-        return OSAL_FALSE;   // single proxy失败,但需要继续其它
+        return;   // single proxy失败,但需要继续其它
     }
     memset_s(vap_bridge, sizeof(hmac_vap_bridge_stru), 0, sizeof(hmac_vap_bridge_stru));
 
@@ -1043,6 +1075,31 @@ OSAL_STATIC osal_bool hmac_single_proxysta_vap_start(osal_void *notify_data)
         frw_create_timer_entry(&(g_single_proxysta.st_bridge_map_timer), hmac_bridge_map_aging_timer,
             HMAC_BRIDGE_MAP_AGING_TRIGGER_TIME, g_single_proxysta.vap_bridge, OAL_TRUE);
     }
+}
+
+OSAL_STATIC osal_bool hmac_single_proxysta_vap_start(osal_void *notify_data)
+{
+    hmac_vap_stru *hmac_vap = (hmac_vap_stru *)notify_data;
+    hmac_vap_stru *mac_vap_temp = OSAL_NULL;
+    hmac_device_stru *hmac_device = OSAL_NULL;
+
+    hmac_device = hmac_res_get_mac_dev_etc(hmac_vap->device_id);
+    /* 只有sta vap都启动的时候，才会尝试去初始化proxysta，并且记录sta_vap的vapid */
+    if (is_legacy_sta(hmac_vap)) {
+        if ((mac_device_find_up_ap_etc(hmac_device, &mac_vap_temp) != OAL_SUCC) || (!is_legacy_vap(mac_vap_temp))) {
+            return OSAL_TRUE;
+        }
+        g_single_proxysta.vap_id = hmac_vap->vap_id;
+    } else if (is_legacy_ap(hmac_vap)) {
+        if ((mac_device_find_up_sta_etc(hmac_device, &mac_vap_temp)  != OAL_SUCC) || (!is_legacy_vap(mac_vap_temp))) {
+            return OSAL_TRUE;
+        }
+        g_single_proxysta.vap_id = mac_vap_temp->vap_id;
+    } else {
+        return OSAL_TRUE;
+    }
+
+    hmac_single_proxysta_bridge_init();
 
     return OSAL_TRUE;
 }
@@ -1072,6 +1129,25 @@ OSAL_STATIC osal_void hmac_single_proxysta_flush_list(hmac_vap_bridge_stru *vap_
     oal_free(vap_bridge);
 }
 
+OSAL_STATIC osal_bool hmac_single_proxysta_bridge_deinit(osal_void)
+{
+    if (g_single_proxysta.vap_bridge == OSAL_NULL) {    /* 防止重复释放 */
+        return OSAL_FALSE;
+    }
+
+    /* 关闭超时定时器 */
+    if (g_single_proxysta.st_bridge_map_timer.is_registerd) {
+        frw_destroy_timer_entry(&(g_single_proxysta.st_bridge_map_timer));
+    }
+
+    /* 删除链表并且释放内存 */
+    hmac_single_proxysta_flush_list(g_single_proxysta.vap_bridge);
+    g_single_proxysta.vap_bridge = OSAL_NULL;
+    g_single_proxysta.vap_id = 0;
+
+    return OSAL_TRUE;
+}
+
 OSAL_STATIC osal_bool hmac_single_proxysta_vap_down(osal_void *notify_data)
 {
     hmac_vap_stru *hmac_vap = (hmac_vap_stru *)notify_data;
@@ -1093,17 +1169,7 @@ OSAL_STATIC osal_bool hmac_single_proxysta_vap_down(osal_void *notify_data)
         return OSAL_TRUE;
     }
 
-    /* 关闭超时定时器 */
-    if (g_single_proxysta.st_bridge_map_timer.is_registerd) {
-        frw_destroy_timer_entry(&(g_single_proxysta.st_bridge_map_timer));
-    }
-
-    /* 删除链表并且释放内存 */
-    hmac_single_proxysta_flush_list(g_single_proxysta.vap_bridge);
-    g_single_proxysta.vap_bridge = OSAL_NULL;
-    g_single_proxysta.vap_id = 0;
-
-    return OSAL_TRUE;
+    return hmac_single_proxysta_bridge_deinit();
 }
 
 static osal_u32 hmac_bridge_map_debug(osal_void)
@@ -1114,6 +1180,9 @@ static osal_u32 hmac_bridge_map_debug(osal_void)
     struct osal_list_head *temp = OSAL_NULL;
     hmac_bridge_ipv4_hash_stru *hash_ipv4 = OSAL_NULL;
     hmac_bridge_unknow_hash_stru *hash_unknow = OSAL_NULL;
+
+    unref_param(hash_unknow);
+    unref_param(hash_ipv4);
 
     if (vap_bridge == OSAL_NULL) {
         return OSAL_FALSE;
@@ -1361,6 +1430,129 @@ WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_rx_data_proces
 }
 #endif
 
+#ifdef _PRE_WLAN_FEATURE_SLE_BRIDGE
+WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_void hmac_bridge_rx_copy_tx_sle(const oal_netbuf_stru *netbuf)
+{
+    oal_lwip_buf *lwip_buf_copy;
+    oal_netbuf_stru *netbuf_src = (oal_netbuf_stru *)netbuf;
+    osal_u32 len = OAL_NETBUF_LEN(netbuf);
+
+    lwip_buf_copy = pbuf_alloc(PBUF_RAW, (osal_u16)len, PBUF_RAM);
+    if (lwip_buf_copy == NULL) {
+        return;
+    }
+    (void)memcpy_s(lwip_buf_copy->payload, len, oal_netbuf_data(netbuf_src), OAL_NETBUF_LEN(netbuf_src));
+    lwip_buf_copy->tot_len = (osal_u16)len;
+    lwip_buf_copy->len     = (osal_u16)len;
+
+    wifi_tx_sle_netbuf_cb(lwip_buf_copy);
+    pbuf_free(lwip_buf_copy);
+}
+ 
+WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_u32 hmac_bridge_rx_process_sle(const oal_netbuf_stru *netbuf)
+{
+    mac_ether_header_stru *ether_header = OSAL_NULL;
+    hmac_vap_stru    *vap_up = OSAL_NULL;
+    hmac_device_stru *hmac_device = hmac_res_get_mac_dev_etc(0);
+    oal_netbuf_stru *netbuf_src = (oal_netbuf_stru *)netbuf;
+    oal_lwip_buf *lwip_buf = OSAL_NULL;
+
+    ether_header = (mac_ether_header_stru *)oal_netbuf_data((oal_netbuf_stru *)netbuf_src);
+    if (ether_header == OSAL_NULL) {
+        oam_error_log0(0, OAM_SF_PROXYSTA, "{hmac_bridge_rx_process:null param.}");
+        return OSAL_FAILURE;
+    }
+
+    mac_device_find_up_sta_etc(hmac_device, &vap_up);
+    hmac_bridge_rx_process_inner(netbuf_src, vap_up);
+
+    if (ether_is_multicast(ether_header->ether_dhost) == OSAL_TRUE) {
+        /* 组播数据拷贝 */
+        hmac_bridge_rx_copy_tx_sle(netbuf_src);
+        return OAL_CONTINUE;
+    } else if (memcmp(ether_header->ether_dhost, mac_mib_get_station_id(vap_up), WLAN_MAC_ADDR_LEN) != 0) {
+        /* 其他报文转发repeater另一个端口 */
+        lwip_buf = hwal_netbuf_2_pbuf(netbuf_src);
+        if (lwip_buf == OSAL_NULL) { /* 一般无法进入，否则会造成内存泄露 */
+            oam_error_log0(0, OAM_SF_PROXYSTA, "{hmac_bridge_rx_process_sle:lwip_buf NULL.}");
+            return OAL_SUCC;
+        }
+        wifi_tx_sle_netbuf_cb(lwip_buf);
+        pbuf_free(lwip_buf);
+        return OAL_SUCC;
+    } else {
+        /* 发给本机单播报文上报，不需要复制 */
+        return OAL_CONTINUE;
+    }
+}
+
+/*****************************************************************************
+ 函 数 名  : hmac_bridge_tx_process_sle
+ 功能描述  : 提供给sle调用，提供sle repeater
+*****************************************************************************/
+WIFI_HMAC_TCM_TEXT WIFI_TCM_TEXT OSAL_STATIC osal_void hmac_bridge_tx_process_sle(const oal_netbuf_stru *netbuf)
+{
+    hmac_vap_stru    *vap_up = OSAL_NULL;
+    hmac_device_stru *hmac_device = hmac_res_get_mac_dev_etc(0);
+    oal_netbuf_stru *netbuf_skb = (oal_netbuf_stru *)netbuf;
+ 
+    if (mac_device_find_up_sta_etc(hmac_device, &vap_up) != OAL_SUCC) {
+        oal_netbuf_free(netbuf_skb);
+        return;
+    }
+    hmac_bridge_tx_process_inner(netbuf_skb, vap_up);
+    frw_host_post_data(FRW_NETBUF_W2H_DATA_FRAME, vap_up->vap_id, netbuf_skb);
+}
+
+/* 与sle约定， 发送这必须判定并处理组播/单播的复制场景，发送过来的报文一定是需要repeater转发的 */
+OSAL_STATIC osal_u32 sle_tx_wifi_pbuf(oal_lwip_buf *lwip_buf)
+{
+    oal_netbuf_stru *converted_skb = OSAL_NULL;
+
+    /* HCC发送成功之前,Lwip重传包不做再次下放,直接返回,避免对内存重复操作 */
+    if (lwip_buf->ref >= 2) { /* 2 不再下方，直接返回 */
+        return OSAL_SUCCESS;
+    }
+    converted_skb = hwal_skb_struct_alloc();
+    if (converted_skb == OSAL_NULL) {
+        return OSAL_SUCCESS;
+    }
+    if (hwal_pbuf_convert_2_skb(lwip_buf, converted_skb) != OAL_SUCC) {
+        oal_netbuf_free(converted_skb);
+        return OSAL_SUCCESS;
+    }
+
+    hmac_bridge_tx_process_sle(converted_skb);
+
+    return OSAL_SUCCESS;
+}
+
+OSAL_STATIC osal_s32 hmac_ccpriv_wifi_sle_repeater_enable(hmac_vap_stru *hmac_vap, const osal_s8 *param)
+{
+    osal_s8 name[CCPRIV_CMD_NAME_MAX_LEN];
+    osal_u8 register_enable;
+    osal_s32 ret;
+
+    unref_param(hmac_vap);
+
+    ret = hmac_ccpriv_get_one_arg(&param, name, OAL_SIZEOF(name));
+    if (ret != OAL_SUCC) {
+        oam_warning_log1(0, OAM_SF_ROAM, "hmac_ccpriv_wifi_sle_repeater_enable ret return err_code [%d]", ret);
+        return ret;
+    }
+    register_enable = (osal_u8)oal_atoi((const osal_s8 *)name);
+    sle_wifi_bridge_register(&wifi_tx_sle_netbuf_cb, sle_tx_wifi_pbuf, register_enable);
+
+    if (wifi_tx_sle_netbuf_cb != OSAL_NULL) {
+        hmac_single_proxysta_bridge_init();
+    } else if (hmac_single_proxysta_bridge_deinit() != OSAL_TRUE) {
+        return OAL_ERR_CODE_INVALID_CONFIG;
+    }
+
+    return OAL_SUCC;
+}
+#endif
+
 osal_u32 hmac_single_proxysta_init(osal_void)
 {
     /* 注册vap监听 */
@@ -1372,6 +1564,9 @@ osal_u32 hmac_single_proxysta_init(osal_void)
     hmac_feature_hook_register(HMAC_FHOOK_REPEATER_BRIDGE_TX_PROCESS, hmac_bridge_tx_process);
     hmac_feature_hook_register(HMAC_FHOOK_REPEATER_BRIDGE_RX_PROCESS, hmac_bridge_rx_process);
     hmac_ccpriv_register((const osal_s8 *)"single_proxysta_debug", hmac_ccpriv_single_proxysta_debug);
+#ifdef _PRE_WLAN_FEATURE_SLE_BRIDGE
+    hmac_ccpriv_register((const osal_s8 *)"wifi_sle_repeater_enable", hmac_ccpriv_wifi_sle_repeater_enable);
+#endif
 #ifdef _PRE_WLAN_FEATURE_LOCAL_BRIDGE
     frw_msg_hook_register(WLAN_MSG_W2H_CFG_SET_BRCTL, hmac_config_bridge_control);
 #endif
@@ -1389,6 +1584,9 @@ osal_void hmac_single_proxysta_deinit(osal_void)
     hmac_feature_hook_unregister(HMAC_FHOOK_REPEATER_BRIDGE_TX_PROCESS);
     hmac_feature_hook_unregister(HMAC_FHOOK_REPEATER_BRIDGE_RX_PROCESS);
     hmac_ccpriv_unregister((const osal_s8 *)"single_proxysta_debug");
+#ifdef _PRE_WLAN_FEATURE_SLE_BRIDGE
+    hmac_ccpriv_unregister((const osal_s8 *)"wifi_sle_repeater_enable");
+#endif
 #ifdef _PRE_WLAN_FEATURE_LOCAL_BRIDGE
     frw_msg_hook_unregister(WLAN_MSG_W2H_CFG_SET_BRCTL);
 #endif

@@ -1204,7 +1204,7 @@ TD_PRV td_u32 ip_creat_ip_task(td_void)
 {
 #ifdef __LITEOS__
     TSK_INIT_PARAM_S start_ip_task;
-    if (g_ip_taskid > 0) {
+    if (g_ip_taskid != -1) {
         return EXT_ERR_SUCCESS;
     }
     start_ip_task.pfnTaskEntry = (TSK_ENTRY_FUNC)ip_monitor;

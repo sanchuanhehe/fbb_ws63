@@ -44,7 +44,9 @@ target = {
             'CONFIG_UART_SUPPORT_LPM',
             "_PRE_RADAR_CCA_SW_OPT",
             "MBEDTLS_CONFIG_FILE=\"config-ws-iot.h\"",
-            "CONFIG_NO_VERIFY_TLS_TIME"
+            "CONFIG_NO_VERIFY_TLS_TIME",
+            "CHBA_SUPPORT",
+            "_PRE_WLAN_FEATURE_SLE_BRIDGE",
         ],
         'ram_component': [
             'ws63_liteos_app',
@@ -52,19 +54,17 @@ target = {
             'liteos_port',
             'irmalloc',
             'non_os',
-            '-:rtc',
             'arch_port',
             'board_config', # 被 pinctrl 组件依赖
             'lpm', # 被 pwm 组件依赖
             'chip_ws63', 'pmp_cfg_ws63',
             'reboot', 'hal_reboot', 'reboot_port', 'cpu_utils', 'hal_cpu_core',
-            'testsuite',
             'gpio','hal_gpio_v150','gpio_port',
             "dfx_port_ws63", "algorithm", "cmn_header", "lwip", "lwip_tcm", "wifi_service", "mbedtls", "wpa_supplicant",
             "at", "wifi_driver_hmac", "wifi_driver_dmac", "wifi_driver_tcm", "wifi_at", "wifi_csa", "wifi_frag", "wifi_alg_txbf", "wifi_alg_temp_protect", "wifi_tx_amsdu",
             "wifi_auto_adjust_freq", "wifi_alg_anti_interference", "wifi_alg_edca_opt", "wifi_alg_cca_opt", "wifi_radar_sensor",
             'wifi_btcoex', "wifi_uapsd_ap", 'sio_port', 'i2s', 'hal_sio',
-            'liteos_208_5_0', 'rtc_unified', 'hal_rtc_unified', 'rtc_unified_port',
+            'liteos_208_5_0',
             'nv', 'nv_ws63', 'nv_zdiag_ws63', 'plt_at', 'dfx_printer',
             'update_common', 'update_common_ws63', 'update_ab_ws63', 'factory_ws63', 'update_storage', 'update_storage_ws63',
             'pm_port_ws63',
@@ -87,7 +87,8 @@ target = {
             "cjson",
             'xo_trim_port',
             "mqtt",
-            "coap"
+            "coap",
+            "sle_chba_user","sle_netdev"
         ],
         'ccflags': [
             "-DBOARD_ASIC", '-DPRE_ASIC',
@@ -135,6 +136,37 @@ target = {
         'os': 'non-os',
         'application': 'flashboot',
         'bin_name': 'flashboot'
+    },
+    'ws63-loaderboot': {
+        'base_target_name': 'target_ws63_boot_template',
+        'CONFIG_TIMER_USING_V150': 'y',
+        'defines': [
+            "WS63_PRODUCT_NONE",
+            "CONFIG_TIMER_MAX_NUM=3",
+            "CONFIG_TIMER_CLOCK_VALUE=24000000",
+            "CONFIG_TIMER_0_WIDTH_64=0",
+            "SW_UART_DEBUG",
+            "CONFIG_UART_SUPPORT_RX",
+            "CONFIG_UART_SUPPORT_TX",
+            "BUILD_APPLICATION_ROM",
+            "EFUSE_BIT_OPERATION",
+            "PROVISION_WRITE_WITH_INTERFACE",
+            "FLASH_REGION_CFG_LOADERBOOT",
+            "BUILD_NOOSAL"
+        ],
+        'ram_component': [
+            "loaderboot_common", "common_boot", "ws63_loaderboot_lds", "dfx_preserve",
+            "libboundscheck", "chip_ws63", "ws63_mem_config", "common_headers","non_os",
+            "sfc_port_ws63", "sfc_flash_config_ws63", "sfc_boot", "hal_sfc",
+            "cmn_header", "arch_port", "osal", "dfx_panic", "dfx_exception","cpu_utils",
+            '-:rtc', '-:hal_rtc', "common_boot_libc",'soc_port', 'nonos_malloc', 'nonos_malloc_port', 'boot_port_malloc',
+            "error_code", "board_config", "chip_boot_port", "chip_boot_config",
+             '-:hal_systick','efuse_port', 'hal_efuse_v151', 'efuse',
+        ],
+        'ram_component_set': ['uart', "time_set", "cpu", "pinctrl", "watchdog", "security_unified"],
+        'os': 'non-os',
+        'application': 'loaderboot',
+        'bin_name': 'loaderboot'
     },
     'ws63-liteos-xts': {
         'base_target_name': 'target_ws63_xts_rom_template',
@@ -190,7 +222,6 @@ target = {
             'lpm', # 被 pwm 组件依赖
             'chip_ws63', 'pmp_cfg_ws63',
             'reboot', 'hal_reboot', 'reboot_port', 'cpu_utils', 'hal_cpu_core',
-            'testsuite',
             'gpio','hal_gpio_v150','gpio_port',
             "dfx_port_ws63", "algorithm", "cmn_header", "lwip", "lwip_tcm", "wifi_service", "mbedtls", "wpa_supplicant",
             "at", "wifi_driver_hmac", "wifi_driver_dmac", "wifi_driver_tcm", "wifi_at", "wifi_csa", "wifi_alg_txbf", "wifi_alg_temp_protect", "wifi_tx_amsdu", "wifi_sdp",

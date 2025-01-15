@@ -15,7 +15,7 @@
 #define NV_ID_SYSTEM_FACTORY_MAC           0x0005 /* Not a real key_id , just used for region determination. */
 #define NV_ID_SYSTEM_XO_TRIM_TEMP_SW       0x0006 /* Temp comp switch for xo trim. */
 #define NV_ID_SYSTEM_XO_TRIM_TEMP_PARAM    0x0007 /* Temp comp fine code for xo trim. */
-
+#define NV_ID_SYSTEM_FACTORY_SLE_MAC       0x0008 /* SLE MAC NV KEY ID. */
 /* user factory key_id [0x1000,0x2000) */
 #define NV_ID_USER_FACTORY_AREA_START      0x1000 /* Not a real key_id , just used for region determination. */
 
@@ -100,6 +100,9 @@
 #define NV_ID_HILINK_CONNECT_INFO          0x2151 /* hilink connect info */
 /* system stable key_id [0x3000,0x4000) */
 #define NV_ID_SYSTEM_STABLE_AREA_START     0x3000 /* Not a real key_id , just used for region determination. */
+#define NV_ID_DBG_UART_BUS_ID              0x3001 /* dbg uart bus id */
+#define NV_ID_AT_UART_BUS_ID               0x3002 /* at uart bus id */
+#define NV_ID_HSO_UART_BUS_ID              0x3003 /* hso uart bus id */
 
 /* user stable key_id [0x4000,0x5000) */
 #define NV_ID_USER_STABLE_AREA_START       0x4000 /* Not a real key_id , just used for region determination. */

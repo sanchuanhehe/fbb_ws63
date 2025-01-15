@@ -16,11 +16,11 @@ extern "C" {
 /* efuse读取失败时,设定的默认值 */
 #define CALI_RF_DEFAULT_R_CODE 0x0
 #define CALI_RF_DEFAULT_RC_CODE 0x2C
-#define CALI_RF_DEFAULT_IPA_CURRENT 0x4
 
 #define LOCK_BIT_PG9_TO_PG22_BYTE 38
 #define R_CODE_BYTE 126
 #define WIFI_IPA_I_CAL_BYTE 128
+#define EFUSE_IDDQ_BYTE 17
 
 osal_void hal_rf_set_abb98_d_wb_rf_tx_ppa_cap_sw(osal_u16 d_wb_rf_tx_ppa_cap_sw);
 osal_u32 hal_rf_get_reg_base(osal_u8 rf_id);

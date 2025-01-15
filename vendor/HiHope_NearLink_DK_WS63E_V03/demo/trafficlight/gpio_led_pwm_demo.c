@@ -18,7 +18,6 @@
 #include "hal_gpio.h"
 #include "watchdog.h"
 #include "pwm.h"
-#include "test_suite_log.h"
 #include "soc_osal.h"
 #include "app_init.h"
 

@@ -241,7 +241,6 @@ static void patch_init(void)
     riscv_patch_init(patch_cfg);
 }
 
-static uint32_t g_at_uart_recv_cnt = 0;
 #ifndef CHIP_EDA
 static void app_main(const void *unused)
 {
@@ -253,7 +252,14 @@ static void app_main(const void *unused)
         (void)osDelay(APP_MAIN_DELAY_TIME);
         LOS_MemInfoGet(m_aucSysMem0, &status);
         PRINT("[SYS INFO] mem: used:%u, free:%u; log: drop/all[%u/%u], at_recv %u.\r\n", status.uwTotalUsedSize,
-            status.uwTotalFreeSize, log_get_missed_messages_count(), log_get_all_messages_count(), g_at_uart_recv_cnt);
+            status.uwTotalFreeSize, log_get_missed_messages_count(), log_get_all_messages_count(),
+            at_uart_get_rcv_cnt());
+
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD)
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD_DEBUG)
+        uart_rx_thread_debug_print();
+#endif
+#endif
     }
 }
 #endif
@@ -275,16 +281,16 @@ static void main_initialise(const void *unused1, uint32_t unused2)
     osal_kthread_lock();
     for (uint32_t i = 0; i < (sizeof(g_app_tasks) / sizeof(g_app_tasks[0])); i++) {
         if (g_app_tasks[i].func == NULL) {
-            PRINT("WARNING: main_initialise::thread[%d] func is null\r\n", i);
+            PRINT("thread[%d] func null\r\n", i);
             continue;
         }
         task_handle = osal_kthread_create(g_app_tasks[i].func, NULL, g_app_tasks[i].name, g_app_tasks[i].stack_size);
         if (task_handle == NULL) {
-            PRINT("ERROR: main_initialise::osal_kthread_create[%d] [%s] failed\r\n", i, g_app_tasks[i].name);
+            PRINT("create[%d] [%s] failed\r\n", i, g_app_tasks[i].name);
             continue;
         }
         if (osal_kthread_set_priority(task_handle, g_app_tasks[i].priority) != OSAL_SUCCESS) {
-            PRINT("ERROR: main_initialise::osal_kthread_set_priority[%d] failed\r\n", i);
+            PRINT("set_priority[%d] failed\r\n", i);
         }
     }
     osal_kthread_unlock();
@@ -370,6 +376,17 @@ static void systick_cali_xclk_bottom_half(void)
     systick_clock_set(cali_clock);
 }
 
+static void neg_vol_gpio_cfg(void)               /* 负压产生芯片复位排查，GPIO配置 */
+{
+    uint32_t data;
+    uapi_reg_read(0x4400d82c, data);
+    data = data | 0x600;
+    uapi_reg_write(0x4400d82c, data);         /* 配置GPIO11上拉 */
+    uapi_reg_read(0x4400d830, data);
+    data = data | 0x600;
+    uapi_reg_write(0x4400d830, data);         /* 配置GPIO12上拉 */
+}
+
 static void hw_init(void)
 {
 #ifdef BOARD_ASIC
@@ -377,11 +394,12 @@ static void hw_init(void)
     switch_clock();
     bypass_uart_auto_gate();
 #endif
+    neg_vol_gpio_cfg();
     uapi_pin_init();
     uapi_gpio_init();
-#ifdef SW_UART_DEBUG
+#if defined(SW_UART_DEBUG)
     sw_debug_uart_init(CONFIG_DEBUG_UART_BAUDRATE);
-    PRINT("Debug uart init succ.\r\n");
+    PRINT("dbg uart init ok.\n");
 #endif
     uapi_timer_init();
     uapi_timer_adapter(1, TIMER_1_IRQN, irq_prio(TIMER_1_IRQN));
@@ -397,6 +415,14 @@ static void hw_init(void)
 
     uapi_sfc_init((sfc_flash_config_t *)&sfc_cfg);
 
+#if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
+    uapi_nv_init();
+#endif
+
+#if defined(SW_UART_DEBUG) && defined(CONFIG_DYNAMIC_UART_ID_BINDDING)
+    sw_debug_uart_reinit(CONFIG_DEBUG_UART_BAUDRATE);
+#endif
+
 #if defined(CONFIG_PM_SUPPORT_POWER_EXCEPTION_DEBUG) && (CONFIG_PM_SUPPORT_POWER_EXCEPTION_DEBUG == 1)
     pm_pwr_dbg_init();
 #endif
@@ -405,14 +431,11 @@ static void hw_init(void)
     // 默认采样周期为 0xFFFF 个32K时钟
     uapi_tsensor_start_inquire_mode(TSENSOR_SAMP_MODE_AVERAGE_CYCLE, 0xFFFF);
     uapi_drv_cipher_env_init();
-#ifdef CONFIG_MIDDLEWARE_SUPPORT_NV
-    uapi_nv_init();
-#if defined(CONFIG_OTA_UPDATE_SUPPORT)
+#if defined(CONFIG_MIDDLEWARE_SUPPORT_NV) && defined(CONFIG_OTA_UPDATE_SUPPORT)
 #if (defined(CONFIG_NV_SUPPORT_OTA_UPDATE) && (defined(NV_YES)) && (CONFIG_NV_SUPPORT_OTA_UPDATE == NV_YES))
     (void)ws63_upg_init();
     (void)uapi_drv_cipher_hash_init();
     (void)nv_upg_upgrade_task_process();
-#endif
 #endif
 #endif
 #ifdef WIFI_TASK_EXIST
@@ -426,68 +449,6 @@ static void hw_init(void)
 }
 
 #ifdef AT_COMMAND
-#define CRLF_STR                      "\r\n"
-#define CR_ASIC_II					0xD
-#define AT_RX_BUFFER_SIZE 16
-
-static uint8_t g_at_test_uart_rx_buffer_test[AT_RX_BUFFER_SIZE];
-
-static void at_write_func(const char *data)
-{
-    uapi_uart_write(AT_UART_BUS, (const uint8_t *)data, strlen(data), 0);
-}
-static uint8_t g_at_pre_char = 0;
-static void at_uart_rx_callback(const void *buffer, uint16_t length, bool error)
-{
-    errcode_t ret;
-    const uint8_t *data = (const uint8_t *)buffer;
-    if (error) {
-        osal_printk("*******uart error*******\r\n");
-    }
-#ifndef CHIP_EDA
-    if (length == 0) {
-        panic(PANIC_TESTSUIT, __LINE__);
-    }
-#endif
-    g_at_uart_recv_cnt += length;
-    if (((char *)buffer)[0] == CR_ASIC_II) {
-        uapi_uart_write(AT_UART_BUS, (uint8_t *)CRLF_STR, (uint16_t)strlen(CRLF_STR), 0);
-    } else {
-        uapi_uart_write(AT_UART_BUS, (const uint8_t *)buffer, (uint32_t)length, 0);
-    }
-    ret = uapi_at_channel_data_recv(AT_UART_PORT, (uint8_t *)buffer, (uint32_t)length);
-    if (ret != ERRCODE_SUCC) {
-        /* 前一个字符为'\r'时单独一个'\n'导致的CHANNEL_BUSY不打印 */
-        if (g_at_pre_char != '\r' || length != 1 || data[0] != '\n' || ret != ERRCODE_AT_CHANNEL_BUSY) {
-            osal_printk("\r\nat_uart_rx_callback fail:0x%x\r\n", ret);
-        }
-    }
-    g_at_pre_char = data[length - 1];
-}
-
-void at_uart_init(void)
-{
-    uart_buffer_config_t uart_buffer_config;
-    uart_pin_config_t uart_pin_config = {
-        .tx_pin = 0,
-        .rx_pin = 0,
-        .cts_pin = PIN_NONE,
-        .rts_pin = PIN_NONE
-    };
-    uart_attr_t uart_line_config = {
-        .baud_rate = CONFIG_AT_UART_BAUDRATE,
-        .data_bits = UART_DATA_BIT_8,
-        .stop_bits = UART_STOP_BIT_1,
-        .parity = UART_PARITY_NONE
-    };
-    uart_buffer_config.rx_buffer_size = AT_RX_BUFFER_SIZE;
-    uart_buffer_config.rx_buffer = g_at_test_uart_rx_buffer_test;
-    uapi_uart_deinit(AT_UART_BUS);
-    (void)uapi_uart_init(AT_UART_BUS, &uart_pin_config, &uart_line_config, NULL, &uart_buffer_config);
-    (void)uapi_uart_register_rx_callback(AT_UART_BUS, UART_RX_CONDITION_FULL_OR_SUFFICIENT_DATA_OR_IDLE,
-                                         AT_RX_BUFFER_SIZE, at_uart_rx_callback);
-}
-
 static void at_base_api_queue_create(uint32_t msg_count, uint32_t msg_size, unsigned long *queue_id)
 {
     osal_msg_queue_create(NULL, (uint16_t)msg_count, queue_id, 0, (uint16_t)msg_size);
@@ -548,7 +509,7 @@ static void cpu_cache_init(void)
 uint32_t *g_hso_buff = NULL;
 uint32_t get_hso_buff(void)
 {
-    return (uint32_t)g_hso_buff;
+    return (uint32_t)(uintptr_t)g_hso_buff;
 }
 #endif
 
@@ -572,17 +533,17 @@ static void do_at_cmd_register(void)
     at_plt_cmd_register();
 #endif
 #ifdef WIFI_TASK_EXIST
-    if (at_sys_cmd_register_weakref != NULL) {
+    if ((void *)at_sys_cmd_register_weakref != NULL) {
         at_sys_cmd_register_weakref();
     }
 #endif
 #ifdef BTH_TASK_EXIST
-    if (at_bt_cmd_register_weakref != NULL) {
+    if ((void *)at_bt_cmd_register_weakref != NULL) {
         at_bt_cmd_register_weakref();
     }
 #endif
 #ifdef CONFIG_RADAR_SERVICE
-    if (at_radar_cmd_register_weakref != NULL) {
+    if ((void *)at_radar_cmd_register_weakref != NULL) {
         at_radar_cmd_register_weakref();
     }
 #endif
@@ -628,9 +589,7 @@ LITE_OS_SEC_TEXT_INIT int main(void)
 #endif
 #ifdef AT_COMMAND
     at_uart_init();
-    PRINT("AT uart init succ.\r\n");
     at_base_api_register();
-    uapi_at_channel_write_register(AT_UART_PORT, at_write_func);
 #ifdef CONFIG_AT_SUPPORT_ZDIAG
     zdiag_at_init();
 #endif
@@ -644,8 +603,6 @@ LITE_OS_SEC_TEXT_INIT int main(void)
     log_oam_status_store_init();
     log_uart_init_after_rtos();
     log_uart_port_init();
-    const uint8_t str2[] = "HSO UART INIT SUCC!\r\n";
-    uapi_uart_write(LOG_UART_BUS, str2, sizeof(str2), 0);
 #endif
 #ifdef HSO_SUPPORT
     dfx_system_init();

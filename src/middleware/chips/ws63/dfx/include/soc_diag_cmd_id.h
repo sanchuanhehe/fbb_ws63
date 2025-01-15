@@ -1,6 +1,5 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2022. All rights reserved.
- * Description: DIAG - cmd id.
  */
 
 #ifndef SOC_DIAG_CMD_ID_H

@@ -131,7 +131,7 @@ errcode_t uapi_tsensor_get_current_temp(int8_t *temp)
 
     g_hal_funcs->refresh_temp();
 
-    if (!g_hal_funcs->get_temp((volatile int8_t *)temp)) {
+    if (!g_hal_funcs->get_temp((int8_t *)temp)) {
         return ERRCODE_TSENSOR_GET_TEMP_INVALID;
     }
 

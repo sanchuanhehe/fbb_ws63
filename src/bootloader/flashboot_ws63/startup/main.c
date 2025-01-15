@@ -26,7 +26,6 @@
 #include "upg_porting.h"
 #include "upg_common.h"
 #include "upg_alloc.h"
-#include "upg_config.h"
 #include "soc_porting.h"
 #include "drv_flashboot_cipher.h"
 #ifdef CONFIG_MIDDLEWARE_SUPPORT_UPG_AB
@@ -155,7 +154,8 @@ static void ws63_flashboot_recovery(void)
         boot_msg1("flashboot recovery erase failed!! ret = ", ret);
     }
     ret = uapi_sfc_reg_write(dst_img_info.part_info.addr_info.addr,
-        (uint8_t *)(src_img_info.part_info.addr_info.addr + FLASH_START), src_img_info.part_info.addr_info.size);
+        (uint8_t *)(uintptr_t)(src_img_info.part_info.addr_info.addr + FLASH_START),
+        src_img_info.part_info.addr_info.size);
     if (ret != ERRCODE_SUCC) {
         boot_msg1("flashboot recovery write failed!! ret = ", ret);
     }
@@ -282,6 +282,61 @@ static void ws63_upg_check(void)
     }
 }
 
+#define PMU_CMU_CTL_POC_COEX 0x40003238
+#define RG_POC_SEL_SW_MODE 0x2
+#define PMU_VDD_FLAG_3V3 0
+#define POC_SEL_SW_MODE  1
+#define POC_VALUE_3V3    0
+
+#define LEVEL_3V3 0x33
+#define LEVEL_1V8 0x18
+
+typedef union {
+    struct {
+        uint32_t rg_poc_value : 1;     /* [0] */
+        uint32_t rg_poc_sel : 1;       /* [1] */
+        uint32_t pmu_vdd3318_flag : 1; /* [2] */
+        uint32_t ms1c : 1;             /* [3] */
+        uint32_t rsv : 28;             /* [31:4] */
+    } bits;
+    uint32_t u32;
+} u_poc_coex;
+
+static void fix_io_level(void)
+{
+    u_poc_coex poc_coex = {0};
+
+    poc_coex.u32 = readl(PMU_CMU_CTL_POC_COEX);
+    if (poc_coex.bits.ms1c == poc_coex.bits.pmu_vdd3318_flag) {
+        return;
+    }
+
+    if (poc_coex.bits.pmu_vdd3318_flag != PMU_VDD_FLAG_3V3) {
+        return;
+    }
+
+    poc_coex.bits.rg_poc_value = POC_VALUE_3V3;
+    poc_coex.bits.rg_poc_sel = POC_SEL_SW_MODE;
+    writel(PMU_CMU_CTL_POC_COEX, poc_coex.u32);
+}
+
+static void dump_io_level(void)
+{
+    u_poc_coex poc_coex = {0};
+    uint32_t chip_level = LEVEL_3V3;
+    uint32_t sw_level = LEVEL_3V3;
+
+    poc_coex.u32 = readl(PMU_CMU_CTL_POC_COEX);
+    if (poc_coex.bits.rg_poc_sel == POC_SEL_SW_MODE) {
+        sw_level   = (poc_coex.bits.rg_poc_value == POC_VALUE_3V3) ? LEVEL_3V3 : LEVEL_1V8;
+        chip_level = (poc_coex.bits.ms1c == POC_VALUE_3V3) ? LEVEL_3V3 : LEVEL_1V8;
+        boot_msg2("io level work in sw mode, level[sw:chip]:", sw_level, chip_level);
+    } else {
+        chip_level = (poc_coex.bits.ms1c == POC_VALUE_3V3) ? LEVEL_3V3 : LEVEL_1V8;
+        boot_msg1("io level work in hw mode, level[chip]:", chip_level);
+    }
+}
+
 static uint32_t ws63_flashboot_init(void)
 {
     errcode_t err;
@@ -298,6 +353,7 @@ static uint32_t ws63_flashboot_init(void)
     if (err != ERRCODE_SUCC) {
         boot_msg1("SFC fix SR ret =", err);
     }
+    dump_io_level();
     print_str("flashboot version : %s\r\n", SDK_VERSION);
     return 0;
 }
@@ -307,7 +363,7 @@ static errcode_t ws63_verify_app(uint32_t addr)
     errcode_t ret = ERRCODE_SUCC;
     image_key_area_t *flashboot_key_area = (image_key_area_t *)(FLASHBOOT_RAM_ADDR);
 
-    ret = verify_image_head(APP_BOOT_TYPE, (uint32_t)flashboot_key_area->ext_pulic_key_area, addr);
+    ret = verify_image_head(APP_BOOT_TYPE, (uint32_t)(uintptr_t)flashboot_key_area->ext_pulic_key_area, addr);
     if (ret != ERRCODE_SUCC) {
         boot_msg1("flashboot verify_image_app_head failed!! ret = ", ret);
         return ret;
@@ -385,7 +441,7 @@ static uint32_t ws63_ftm_mode_init(uint32_t image_addr)
     }
     jump_addr = mfg_factory_cfg.factory_addr_start;
     image_size = mfg_factory_cfg.factory_size;
-    image_key_area_t *mfg_key_area = (image_key_area_t *)(jump_addr);
+    image_key_area_t *mfg_key_area = (image_key_area_t *)(uintptr_t)(jump_addr);
 
     if (mfg_key_area->image_id == FACTORYBOOT_KEY_AREA_IMAGE_ID && mfg_factory_cfg.factory_valid == MFG_FACTORY_VALID) {
         dmmu_set(image_addr, image_addr + image_size, jump_addr, 0);
@@ -401,6 +457,7 @@ void start_fastboot(void)
     uint32_t image_size = 0;
     errcode_t err;
 
+    fix_io_level();
     // 关闭CMU假负载
     uapi_reg_setbits(REG_CMU_CFG0, 3, 3, 0x7);  // 0x7 -> 0x40003408 bit 5:3 (3 bits)
 
@@ -427,7 +484,10 @@ void start_fastboot(void)
     ws63_flash_encrypt_config(jump_addr, image_size); // flash在线加解密配置
     ws63_verify_app_handle(jump_addr); // A/B验签
     if (image_addr != jump_addr) {
-        dmmu_set(image_addr, image_addr + image_size, jump_addr, 0);
+        // 0x1000: dmmu配置都是闭区间，且需要是4K对齐的地址, 0: 第0组dmmu配置
+        dmmu_set(image_addr, image_addr + image_size - 0x1000, jump_addr, 0);
+        // 0x1000: dmmu配置都是闭区间，且需要是4K对齐的地址, 1: 第1组dmmu配置
+        dmmu_set(jump_addr, jump_addr + image_size - 0x1000, image_addr, 1);
     }
 #else // 压缩
     ws63_flash_encrypt_config(image_addr, image_size); // flash在线加解密配置

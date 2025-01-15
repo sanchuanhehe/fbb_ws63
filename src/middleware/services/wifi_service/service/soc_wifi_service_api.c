@@ -101,7 +101,7 @@ int                  g_csi_enable_flag = 0;
 /* 上一次扫描上报的时间 */
 static uint64_t g_sta_last_scan_time_stamp_ms = 0;
 /* 这是否是一个由关联触发的扫描 */
-OAL_STATIC int g_sta_conn_req_flag = 0;
+static int g_sta_conn_req_flag = 0;
 /* 关联请求信息 */
 static wifi_sta_config_stru g_sta_conn_config = {0};
 #if defined(LWIP_IPV4) && defined(LWIP_IPV6) && (LWIP_IPV4) && (LWIP_IPV6)
@@ -114,11 +114,11 @@ static errcode_t wifi_sta_connect_part2(void);
 static uint32_t service_check_api_cb(uint32_t line_num)
 {
     if (g_api_cb_init == 0) {
-        service_error_log1(SERVICE_ERROR, "Srv:%d:cd is not init", line_num);
+        service_error_log1(SERVICE_ERROR, "Srv:%u:cd is not init", line_num);
         return ERRCODE_FAIL;
     }
     if (list_empty(&g_api_cb_node) == 1) {
-        service_error_log1(SERVICE_ERROR, "Srv:%d:cb list is null", line_num);
+        service_error_log1(SERVICE_ERROR, "Srv:%u:cb list is null", line_num);
         return ERRCODE_FAIL;
     }
     return ERRCODE_SUCC;
@@ -336,14 +336,14 @@ OSAL_STATIC void send_broadcast_connected(const event_wifi_connected *wifi_conne
 /* 转换reason code, 如果是被对端断开的, bit 15置为1 */
 OSAL_STATIC int32_t wifi_convert_disconnect_reason_code(const event_wifi_disconnected *wifi_disconnected)
 {
-    int32_t reason_code = wifi_disconnected->reason_code;
+    uint32_t reason_code = wifi_disconnected->reason_code;
 
     if ((wifi_disconnected->locally_generated == 1) || (reason_code >= WIFI_MAC_REPORT_DISCONNECT_OFFSET)) {
-        return reason_code;
+        return (int32_t)reason_code;
     }
     /* 对端主动断开的, bit 15置为1 */
-    reason_code |= (int32_t)(1 << 15);
-    return reason_code;
+    reason_code |= (uint32_t)((uint32_t)1 << (uint32_t)15);
+    return (int32_t)reason_code;
 }
 
 OSAL_STATIC void send_broadcast_disconnected(const event_wifi_disconnected *wifi_disconnected)
@@ -364,7 +364,7 @@ OSAL_STATIC void send_broadcast_disconnected(const event_wifi_disconnected *wifi
             return;
         }
         disconnect_para.conn_state = WIFI_DISCONNECTED;
-        disconnect_para.wpa_state = wifi_disconnected->wpa_state;
+        disconnect_para.wpa_state = (int8_t)wifi_disconnected->wpa_state;
         send_broadcast_connected_change_for_sta(WIFI_STATE_NOT_AVALIABLE, &disconnect_para,
             wifi_convert_disconnect_reason_code(wifi_disconnected));
 #ifdef CONFIG_P2P_SUPPORT
@@ -395,11 +395,11 @@ OSAL_STATIC void send_broadcast_ap_state_change(const char *ifname, int state)
 OSAL_STATIC void send_broadcast_sta_connected(const event_ap_sta_connected *ap_sta_connected)
 {
     wifi_sta_info_stru sta_info[WIFI_DEFAULT_MAX_NUM_STA] = {0};
-    int sta_num = WIFI_DEFAULT_MAX_NUM_STA;
-    int i;
+    uint32_t sta_num = WIFI_DEFAULT_MAX_NUM_STA;
+    uint32_t i;
 #ifdef CONFIG_P2P_SUPPORT
     p2p_client_info_stru gc_info[SERVICE_P2P_MAX_GC_NUM] = {0};
-    int p2p_num = SERVICE_P2P_MAX_GC_NUM;
+    uint32_t p2p_num = SERVICE_P2P_MAX_GC_NUM;
 #endif /* CONFIG_P2P_SUPPORT */
     if (memcmp(ap_sta_connected->ifname, g_hotspot_ifname, strlen(ap_sta_connected->ifname)) == 0) {
         wifi_softap_get_sta_list(sta_info, &sta_num);
@@ -545,9 +545,10 @@ OSAL_STATIC void wpa_event_cb_handle(const ext_wifi_event *event)
         service_error_log1(SERVICE_ERROR, "Srv:%d:input event is null", __LINE__);
         return;
     }
-    service_error_log2(SERVICE_ERROR, "Srv:%d:recive event = %d", __LINE__, event->event);
+    service_error_log2(SERVICE_ERROR, "Srv:%d:receive event = %d", __LINE__, event->event);
     switch (event->event) {
         case EXT_WIFI_EVT_SCAN_DONE:
+        case EXT_WIFI_EVT_STA_NO_NETWORK:
             send_broadcast_scan_done(WIFI_STATE_AVALIABLE, &event->info.wifi_scan_done);
             break;
         case EXT_WIFI_EVT_CONNECTED:
@@ -797,7 +798,7 @@ static wifi_return_code service_hex_to_asic(const unsigned char* hex, unsigned c
 
 static wifi_return_code service_check_wep_key(const char *pre_shared_key, int8_t wifi_psk_type, char *wep_key)
 {
-    uint32_t key_len = strlen(pre_shared_key);
+    size_t key_len = strlen(pre_shared_key);
     int32_t  ret;
     if (wifi_psk_type == 0) {
         // WEP的5byte和13byte固定是ascii码模式
@@ -822,7 +823,7 @@ static wifi_return_code service_check_wep_key(const char *pre_shared_key, int8_t
 
 static wifi_return_code service_check_wpa_key(const char *pre_shared_key, int8_t wifi_psk_type)
 {
-    unsigned long  key_len = strlen(pre_shared_key);
+    size_t key_len = strlen(pre_shared_key);
     if (wifi_psk_type == 0) {
         // wpa、wpa2、wpa/wpa2、wpa2/wpa3个人级认证,8~63byte默认是ASCII
         if (key_len < 8 || key_len > 63) {
@@ -841,7 +842,7 @@ static wifi_return_code service_check_wpa_key(const char *pre_shared_key, int8_t
 
 static wifi_return_code service_check_sae_key(const char *pre_shared_key, int8_t wifi_psk_type)
 {
-    unsigned long  key_len = strlen(pre_shared_key);
+    size_t key_len = strlen(pre_shared_key);
     if (wifi_psk_type == 0) {
         // SAE个人级认证：8~64byte默认是ASCII
         if (key_len < 8 || key_len > 64) {
@@ -857,7 +858,7 @@ static wifi_return_code service_check_sae_key(const char *pre_shared_key, int8_t
 
 static wifi_return_code service_check_wapi_key(const char *pre_shared_key, int8_t wifi_psk_type)
 {
-    unsigned long  key_len = strlen(pre_shared_key);
+    size_t key_len = strlen(pre_shared_key);
     if (wifi_psk_type == 0) {
         if (key_len < 8 || key_len > 64) {  /* wapi个人级认证：ASCII默认长度为8-64byte */
             service_error_log1(SERVICE_ERROR, "Srv:%d: wapi key invalid", __LINE__);
@@ -1118,7 +1119,7 @@ static wifi_return_code service_set_ip(const wifi_sta_config_stru *config)
 static wifi_return_code service_set_assoc_config(const wifi_sta_config_stru *config, ext_wifi_assoc_request *req,
     const char *wep_key)
 {
-    uint32_t len;
+    size_t len;
     if (strlen(config->ssid) != 0 && strlen(config->ssid) <= EXT_WIFI_MAX_SSID_LEN) {
         if ((memcpy_s(req->ssid, EXT_WIFI_MAX_SSID_LEN + 1, config->ssid, strlen(config->ssid) + 1)) != EOK) {
             service_error_log1(SERVICE_ERROR, "Srv:%d:memcpy_s failed", __LINE__);
@@ -1270,7 +1271,7 @@ static wifi_return_code service_set_softap_protocol(protocol_mode_enum protocol_
 #ifdef CONFIG_WPS_SUPPORT
 static wifi_return_code service_pbc_pin_connect(wifi_wps_config  *wps_config)
 {
-    unsigned int   spin_len;
+    size_t spin_len;
     int ret = 0;
     if (wps_config->wps_method == WIFI_WPS_PBC) {
         if (strlen(wps_config->bssid) == 0) {
@@ -1285,7 +1286,7 @@ static wifi_return_code service_pbc_pin_connect(wifi_wps_config  *wps_config)
             return ERROR_WIFI_UNKNOWN;
         }
 
-        for (int i = 0; i < spin_len; i++) {
+        for (uint32_t i = 0; i < spin_len; i++) {
             if ((wps_config->wps_pin[i] < '0') || (wps_config->wps_pin[i] > '9')) {
                 service_error_log1(SERVICE_ERROR, "Srv:%d: wps_config.wpsPin is invalid", __LINE__);
                 return ERROR_WIFI_UNKNOWN;
@@ -1490,7 +1491,7 @@ int32_t wifi_is_sta_enabled(void)
 
 wifi_dev_t *wifi_get_dev(wifi_iftype_t iftype)
 {
-    return (wifi_dev_t *)wifi_dev_get(iftype);
+    return (wifi_dev_t *)(uintptr_t)wifi_dev_get(iftype);
 }
 
 errcode_t wifi_sta_set_protocol_mode(protocol_mode_enum mode)
@@ -1588,7 +1589,7 @@ errcode_t wifi_raw_scan(wifi_scan_params_stru *scan_param, wifi_scan_no_save_cb 
         sp.scan_type = EXT_WIFI_CHANNEL_SCAN;
         sp.chan_num = 1;
     } else if (scan_param->scan_type == WIFI_SSID_SCAN || scan_param->scan_type == WIFI_SSID_PREFIX_SCAN) {
-        uint32_t len = strlen(scan_param->ssid);
+        size_t len = strlen(scan_param->ssid);
         if (scan_param->ssid_len == 0 || scan_param->ssid_len > EXT_WIFI_MAX_SSID_LEN || scan_param->ssid_len != len) {
             service_error_log1(SERVICE_ERROR, "Srv:%d: scan ssid is invalid", __LINE__);
             return ERRCODE_FAIL;
@@ -1659,7 +1660,7 @@ errcode_t wifi_sta_scan_advance(const wifi_scan_params_stru *scan_param)
         sp.scan_type = EXT_WIFI_CHANNEL_SCAN;
         sp.chan_num = 1;
     } else if (scan_param->scan_type == WIFI_SSID_SCAN || scan_param->scan_type == WIFI_SSID_PREFIX_SCAN) {
-        uint32_t len = strlen(scan_param->ssid);
+        size_t len = strlen(scan_param->ssid);
         if (scan_param->ssid_len == 0 || scan_param->ssid_len > EXT_WIFI_MAX_SSID_LEN || scan_param->ssid_len != len) {
             service_error_log1(SERVICE_ERROR, "Srv:%d: ssid is invalid", __LINE__);
             return ERRCODE_FAIL;
@@ -1720,9 +1721,9 @@ errcode_t wifi_sta_get_scan_info(wifi_scan_info_stru *result, uint32_t *size)
         return ERRCODE_FAIL;
     }
 
-    service_error_log2(SERVICE_ERROR, "Srv:%d:sta_scan_results cnt %d", __LINE__, *size);
+    service_error_log2(SERVICE_ERROR, "Srv:%d:sta_scan_results cnt %u", __LINE__, *size);
     for (uint32_t i = 0; i < *size; i++) {
-        uint32_t ssid_len = strlen(ap_list[i].ssid);
+        size_t ssid_len = strlen(ap_list[i].ssid);
         if ((memcpy_s(result[i].ssid, WIFI_MAX_SSID_LEN, ap_list[i].ssid, ssid_len + 1)) != EOK) {
             service_error_log1(SERVICE_ERROR, "Srv:%d:memcpy_s failed", __LINE__);
             free(ap_list);
@@ -1814,45 +1815,60 @@ errcode_t wifi_sta_wnm_bss_query(int32_t reason_code, int32_t candidate_list)
         service_error_log1(SERVICE_ERROR, "Srv:%d:wifi_sta_wnm_bss_query failed", __LINE__);
         return ret;
     }
-    if (uapi_wifi_wnm_bss_query(reason_code, candidate_list) != EXT_WIFI_OK) {
+
+    return uapi_wifi_wnm_bss_query(reason_code, candidate_list) != EXT_WIFI_OK ? ERRCODE_FAIL : ERRCODE_SUCC;
+}
+
+errcode_t wifi_sta_wnm_notify(const char *param, uint32_t len)
+{
+    uint32_t ret = service_wifi_and_sta_check();
+    if (ret != ERRCODE_SUCC) {
+        service_error_log1(SERVICE_ERROR, "Srv:%d:wifi_sta_wnm_notify failed", __LINE__);
+        return ret;
+    }
+
+    if (param == NULL || len <= 0) {
+        service_error_log1(SERVICE_ERROR, "Srv:%d:wifi_sta_wnm_notify param error", __LINE__);
         return ERRCODE_FAIL;
     }
-    return ERRCODE_SUCC;
+
+    return uapi_wifi_wnm_notify(param, len) != EXT_WIFI_OK ? ERRCODE_FAIL : ERRCODE_SUCC;
 }
 #endif
 
-/* 根据认证方式, 设置pkt_type ;WEP 通过长度判断:5/13 为ascii 10/26为hex */
-OSAL_STATIC int32_t wifi_conn_filter_sta_key(wifi_sta_config_stru *assoc_req)
+OSAL_STATIC void wifi_try_refill_psk_type(wifi_sta_config_stru *assoc_req)
 {
-    uint32_t key_len = strlen(assoc_req->pre_shared_key);
+    size_t key_len = strlen(assoc_req->pre_shared_key);
 
     if (assoc_req->security_type == WIFI_SEC_TYPE_WPA2PSK ||
         assoc_req->security_type == WIFI_SEC_TYPE_WPA2_WPA_PSK_MIX ||
         assoc_req->security_type == WIFI_SEC_TYPE_WPAPSK) {
-        if (assoc_req->wifi_psk_type == 0 && key_len == 64) {   /* 64位密钥长度不能设置psk_type为0 */
-            service_error_log1(SERVICE_ERROR, "Srv:%d:WPA/WPA2/WPA-WPA2 psk_type invalid.", __LINE__);
-            return ERRCODE_FAIL;
+        if (key_len == 64) {       /* 密钥长度=64位，psk_type为HEX */
+            assoc_req->wifi_psk_type = 1;
+        } else if (key_len >= 8 && key_len < 64) {  /* 密钥长度范围[8,64)，psk_type为ASCII */
+            assoc_req->wifi_psk_type = 0;
         }
-        /* 8-63位密钥长度不能设置psk_type为1,64位为HEX类型密钥 */
-        if (assoc_req->wifi_psk_type == 1 && key_len >= 8 && key_len < 64) {
-            service_error_log1(SERVICE_ERROR, "Srv:%d:WPA/WPA2/WPA-WPA2 psk_type invalid.", __LINE__);
-            return ERRCODE_FAIL;
+        return;
+    }
+
+    if (assoc_req->security_type == WIFI_SEC_TYPE_WEP || assoc_req->security_type == WIFI_SEC_TYPE_WEP_OPEN) {
+        if (key_len == 10 || key_len == 26) {    /* WEP密钥长度为10/26表示HEX类型 */
+            assoc_req->wifi_psk_type = 1;
+            return;
+        }
+        if (key_len == 5 || key_len == 13) {     /* WEP密钥长度为5/13表示ASCII类型 */
+            assoc_req->wifi_psk_type = 0;
+            return;
         }
     }
 
-    if (assoc_req->security_type == WIFI_SEC_TYPE_WEP) {
-        if (assoc_req->wifi_psk_type == 0 && (key_len == 10 || key_len == 26)) {    /* WEP密钥长度为10/26表示HEX类型 */
-            service_error_log1(SERVICE_ERROR, "Srv:%d:WEP psk_type invalid.", __LINE__);
-            return ERRCODE_FAIL;
-        }
-        if (assoc_req->wifi_psk_type == 1 && (key_len == 5 || key_len == 13)) {     /* WEP密钥长度为5/13表示ASCII类型 */
-            service_error_log1(SERVICE_ERROR, "Srv:%d:WEP psk_type invalid.", __LINE__);
-            return ERRCODE_FAIL;
-        }
+    if (assoc_req->security_type == WIFI_SEC_TYPE_SAE || assoc_req->security_type == WIFI_SEC_TYPE_WPA3_WPA2_PSK_MIX) {
+        assoc_req->wifi_psk_type = 0;
     }
 
-    return ERRCODE_SUCC;
+    return;
 }
+
 
 /* 检查关联请求信息与扫描结果是否匹配不匹配返回0, 匹配返回1 */
 OSAL_STATIC int32_t wifi_conn_scan_result_cmp(wifi_sta_config_stru *conn_config, ext_wifi_ap_info *ap_list)
@@ -1901,7 +1917,7 @@ OSAL_STATIC void wifi_sta_connect_fill_security_type(ext_wifi_assoc_request *req
     }
 
     /* 根据SSID匹配认证方式 */
-    for (int32_t i = 0; (i < num) && (i < WIFI_SCAN_AP_LIMIT); i++) {
+    for (uint32_t i = 0; (i < num) && (i < WIFI_SCAN_AP_LIMIT); i++) {
         if ((wifi_conn_scan_result_cmp(&g_sta_conn_config, &ap_list[i]) == 0) ||
             (g_sta_conn_config.channel != 0 && ap_list[i].channel != g_sta_conn_config.channel)) {
             continue;
@@ -1917,7 +1933,7 @@ OSAL_STATIC void wifi_sta_connect_fill_security_type(ext_wifi_assoc_request *req
                 free(ap_list);
                 return;
             }
-            service_error_log4(SERVICE_ERROR, "Srv:find ssid[%s] auth type[%d] pairwise[%d] ft_flag[%d]",
+            service_error_log4(SERVICE_ERROR, "Srv:find ssid[%s] auth type[%d] pairwise[%d] ft_flag[%u]",
                 g_sta_conn_config.ssid, security_type, pairwise, ft_flag);
         }
     }
@@ -1930,7 +1946,7 @@ OSAL_STATIC void wifi_sta_connect_fill_security_type(ext_wifi_assoc_request *req
 }
 
 /* 校验关联参数中的密码与加密类型是否匹配 */
-OAL_STATIC osal_u8 wifi_sta_pre_check_key(wifi_sta_config_stru *sta_conn_config)
+static osal_u8 wifi_sta_pre_check_key(wifi_sta_config_stru *sta_conn_config)
 {
     if (sta_conn_config == OSAL_NULL) {
         return OSAL_FALSE;
@@ -1951,7 +1967,7 @@ OAL_STATIC osal_u8 wifi_sta_pre_check_key(wifi_sta_config_stru *sta_conn_config)
 }
 
 /* 关联下半段 */
-OAL_STATIC errcode_t wifi_sta_connect_part2(void)
+static errcode_t wifi_sta_connect_part2(void)
 {
     ext_wifi_assoc_request req = {0};
     event_wifi_disconnected wifi_disconnected = {0};
@@ -1962,7 +1978,8 @@ OAL_STATIC errcode_t wifi_sta_connect_part2(void)
     /* 根据扫描结果查询认证方式 */
     wifi_sta_connect_fill_security_type(&req);
 
-    if (g_sta_conn_config.security_type == WIFI_SEC_TYPE_INVALID || wifi_sta_pre_check_key(&g_sta_conn_config) == OSAL_FALSE) {
+    if (g_sta_conn_config.security_type == WIFI_SEC_TYPE_INVALID ||
+        wifi_sta_pre_check_key(&g_sta_conn_config) == OSAL_FALSE) {
         /* 未扫到对应AP的情况下,上报错误码 */
         wifi_disconnected.reason_code = WIFI_NETWORK_NOT_FOUND_ERROR;
         wifi_disconnected.locally_generated = 1;
@@ -1976,7 +1993,7 @@ OAL_STATIC errcode_t wifi_sta_connect_part2(void)
     }
     /* 如果找到了, 走完关联下半段 */
     if (wifi_is_need_psk(g_sta_conn_config.security_type) == 1) {
-        wifi_conn_filter_sta_key(&g_sta_conn_config);
+        wifi_try_refill_psk_type(&g_sta_conn_config);
     }
 
     uint32_t ret = service_check_pre_shared_key(g_sta_conn_config.pre_shared_key, g_sta_conn_config.security_type,
@@ -2014,11 +2031,14 @@ static void wifi_sta_connect_fill_scan_param(const wifi_sta_config_stru *config,
 
     /* 设置SSID */
     if (strlen(config->ssid) > 0) {
-        service_error_log0(SERVICE_ERROR, "wifi_sta_connect_fill_scan_param:: Specifying an SSID for scanning");
         scan_param->scan_type = WIFI_SSID_SCAN;
         (void)memcpy_s(scan_param->ssid, WIFI_MAX_SSID_LEN, config->ssid, WIFI_MAX_SSID_LEN);
         scan_param->ssid_len = (int8_t)strlen(config->ssid);
+    } else if (service_addr_precheck(config->bssid) == ERRCODE_SUCC) {
+        scan_param->scan_type = WIFI_BSSID_SCAN;
+        (void)memcpy_s(scan_param->bssid, sizeof(scan_param->bssid), config->bssid, sizeof(config->bssid));
     }
+    service_error_log2(SERVICE_ERROR, "Srv:%d:: scan type[%u]", __LINE__, scan_param->scan_type);
 }
 
 /* 关联上半段, 如果5s内没扫描过,触发扫描,在扫描结果上报时走完下半段 */
@@ -2203,7 +2223,7 @@ errcode_t wifi_set_promis_mode(wifi_if_type_enum iftype,
         service_error_log1(SERVICE_ERROR, "Srv:%d:vap is not enabled or iftype is invalid", __LINE__);
         return ERRCODE_FAIL;
     }
-    if (uapi_wifi_promis_enable(ifname, enable, (const ext_wifi_ptype_filter_stru *)filter) != 0) {
+    if (uapi_wifi_promis_enable(ifname, enable, (const ext_wifi_ptype_filter_stru *)(uintptr_t)filter) != 0) {
         service_error_log1(SERVICE_ERROR, "Srv:%d:uapi_wifi_promis_enable failed", __LINE__);
         return ERRCODE_FAIL;
     }
@@ -2213,7 +2233,7 @@ errcode_t wifi_set_promis_mode(wifi_if_type_enum iftype,
 static errcode_t wifi_set_sdp_mode_config(wifi_if_type_enum iftype, char **ifname, uint32_t line_num)
 {
     if (iftype >= IFTYPES_BUTT) {
-        service_error_log1(SERVICE_ERROR, "Srv:%d:iftype is invalid", line_num);
+        service_error_log1(SERVICE_ERROR, "Srv:%u:iftype is invalid", line_num);
         return ERRCODE_FAIL;
     }
     if (iftype == IFTYPE_STA && g_sta_enble_flag == 1) {
@@ -2223,7 +2243,7 @@ static errcode_t wifi_set_sdp_mode_config(wifi_if_type_enum iftype, char **ifnam
     } else if (iftype >= IFTYPE_P2P_CLIENT && iftype <= IFTYPE_P2P_DEVICE && g_p2p_enable_flag == 1) {
         *ifname = g_p2p_ifname;
     } else {
-        service_error_log1(SERVICE_ERROR, "Srv:%d:vap is not enabled or iftype is invalid", line_num);
+        service_error_log1(SERVICE_ERROR, "Srv:%u:vap is not enabled or iftype is invalid", line_num);
         return ERRCODE_FAIL;
     }
     return ERRCODE_SUCC;
@@ -2238,7 +2258,7 @@ errcode_t wifi_set_sdp_mode(wifi_if_type_enum iftype, int32_t enable, int32_t ra
     }
 
     if (uapi_wifi_sdp_enable(ifname, enable, ratio) != 0) {
-        service_error_log1(SERVICE_ERROR, "Srv:%d:uapi_wifi_promis_enable failed", __LINE__);
+        service_error_log1(SERVICE_ERROR, "Srv:%d:wifi_set_sdp_mode failed", __LINE__);
         return ERRCODE_FAIL;
     }
     return ERRCODE_SUCC;
@@ -2253,7 +2273,7 @@ errcode_t wifi_set_sdp_subscribe(wifi_if_type_enum iftype, char *sdp_subscribe, 
     }
 
     if (uapi_wifi_sdp_subscribe(ifname, sdp_subscribe, local_handle) != 0) {
-        service_error_log1(SERVICE_ERROR, "Srv:%d:uapi_wifi_promis_enable failed", __LINE__);
+        service_error_log1(SERVICE_ERROR, "Srv:%d:wifi_set_sdp_subscribe failed", __LINE__);
         return ERRCODE_FAIL;
     }
     return ERRCODE_SUCC;
@@ -2465,7 +2485,7 @@ errcode_t wifi_set_csi_config(const int8_t *ifname, const csi_config_stru *confi
     if (wifi_is_wifi_inited() == 0) {
         return ERROR_WIFI_NOT_STARTED;
     }
-    uapi_wifi_csi_set_config(ifname, (const ext_csi_config *)config);
+    uapi_wifi_csi_set_config(ifname, (const ext_csi_config *)(uintptr_t)config);
     return ERRCODE_SUCC;
 }
 
@@ -2778,7 +2798,7 @@ errcode_t wifi_softap_get_sta_list(wifi_sta_info_stru *result, uint32_t *size)
     int ret = uapi_wifi_softap_get_connected_sta(sta_list, &sta_num);
 
     if (sta_num < *size) {
-        service_error_log2(SERVICE_ERROR, "Srv:%d:sta_num[%d]!!", __LINE__, sta_num);
+        service_error_log2(SERVICE_ERROR, "Srv:%d:sta_num[%u]!!", __LINE__, sta_num);
         *size = sta_num;
     }
 
@@ -2972,7 +2992,7 @@ errcode_t wifi_get_country_code(int8_t *country_code, uint8_t *len)
         service_error_log1(SERVICE_ERROR, "Srv:%d:get_country failed", __LINE__);
         return ERRCODE_FAIL;
     }
-    service_error_log2(SERVICE_ERROR, "Srv:GetCountryCode[%s][%d]", country_code, *len);
+    service_error_log2(SERVICE_ERROR, "Srv:GetCountryCode[%s][%u]", country_code, *len);
     return ERRCODE_SUCC;
 }
 
@@ -3655,7 +3675,7 @@ errcode_t wifi_set_psd_mode(ext_psd_option_param *psd_option)
         return ERROR_WIFI_UNKNOWN;
     }
 
-    ret = uapi_wifi_set_psd_enable((psd_option_param *)psd_option);
+    ret = uapi_wifi_set_psd_enable((psd_option_param *)(uintptr_t)psd_option);
     if (ret != WIFI_SUCCESS) {
         service_error_log2(SERVICE_ERROR, "Srv:%d: fail ret [%d]", __LINE__, ret);
         return ERROR_WIFI_UNKNOWN;
@@ -3741,7 +3761,7 @@ errcode_t wifi_set_fixed_tx_rate(unsigned char auto_rate, alg_param_stru *alg_pa
         return ERROR_WIFI_INVALID_ARGS;
     }
 
-    ret = uapi_wifi_set_phy_txrate(auto_rate, (ext_alg_param_stru *)alg_param);
+    ret = uapi_wifi_set_phy_txrate(auto_rate, (ext_alg_param_stru *)(uintptr_t)alg_param);
     if (ret == 0) {
         return ERRCODE_SUCC;
     } else {
@@ -3819,7 +3839,7 @@ errcode_t wifi_set_linkloss_config(linkloss_paras_stru *linkloss_paras)
         proberequest_ratio > SERVICE_LINKLOSS_PROBEREQ_RATIO_MAX ||
         linkloss_threshold < SERVICE_LINKLOSS_THRESHOLD_MIN || linkloss_threshold > SERVICE_LINKLOSS_THRESHOLD_MAX) {
         service_error_log3(SERVICE_ERROR,
-            "Srv:%d:paraments out of rangle Ratio[%d] threshold[%d]", __LINE__,
+            "Srv:%d:paraments out of rangle Ratio[%u] threshold[%u]", __LINE__,
             proberequest_ratio, linkloss_threshold);
     }
     ret = uapi_wifi_set_linkloss_paras(proberequest_ratio, linkloss_threshold);

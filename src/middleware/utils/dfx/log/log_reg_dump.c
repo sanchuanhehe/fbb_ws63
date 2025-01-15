@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2020. All rights reserved.
  * Description:   LOG REG DUMP MODULE
- * Author:
- * Create: 2020-09-15
  */
 
 #include "log_reg_dump.h"

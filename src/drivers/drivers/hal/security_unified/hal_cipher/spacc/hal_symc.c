@@ -440,7 +440,7 @@ td_s32 hal_cipher_symc_set_iv(td_u32 chn_num, const td_u8 *iv, td_u32 iv_len)
     hard_ctx = &g_symc_hard_context[chn_num];
     idx = hard_ctx->idx_in;
     entry_in = &hard_ctx->entry_in[idx];
-
+    (void)memset_s(entry_in->iv, sizeof(entry_in->iv), 0, sizeof(entry_in->iv));
     ret = memcpy_s(entry_in->iv, sizeof(entry_in->iv), iv, iv_len);
     if (ret != TD_SUCCESS) {
         crypto_log_err("memcpy_s failed, ret is 0x%x\n", ret);

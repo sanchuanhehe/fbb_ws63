@@ -729,10 +729,10 @@ static void crashinfo_back_trace_save(uint32_t addr, uint32_t sp)
     uint32_t ptr = addr;
 
     while (back_sp != 0) {
-        if (is_valid_txt_addr(*((uint32_t *)(back_sp)))) {
-            ptr += sizeof(uint32_t);
+        if (is_valid_txt_addr(*((uint32_t *)(uintptr_t)(back_sp)))) {
+            ptr += (uint32_t)sizeof(uint32_t);
             uapi_sfc_reg_write(ptr, (uint8_t *)(uintptr_t)&back_sp, sizeof(uint32_t));
-            ptr += sizeof(uint32_t);
+            ptr += (uint32_t)sizeof(uint32_t);
             uapi_sfc_reg_write(ptr, (uint8_t *)(uintptr_t)back_sp, sizeof(uint32_t));
             if (++count == STACK_SAVE_DEPTH) {
                 break;
@@ -755,9 +755,9 @@ static void crashinfo_back_trace_print(uint32_t addr)
     uint32_t sp_content = 0;
     uapi_sfc_reg_read(ptr, (uint8_t *)(uintptr_t)&count, sizeof(uint32_t));
     while (count-- > 0) {
-        ptr += sizeof(uint32_t);
+        ptr += (uint32_t)sizeof(uint32_t);
         uapi_sfc_reg_read(ptr, (uint8_t *)(uintptr_t)&back_sp, sizeof(uint32_t));
-        ptr += sizeof(uint32_t);
+        ptr += (uint32_t)sizeof(uint32_t);
         uapi_sfc_reg_read(ptr, (uint8_t *)(uintptr_t)&sp_content, sizeof(uint32_t));
         PRINT("sp addr= 0x%x    sp content= 0x%x\r\n", back_sp, sp_content);
         if (++max_trace_count == STACK_SAVE_DEPTH) {
@@ -770,7 +770,7 @@ static uint32_t crashinfo_taskinfo_get_size(const LosTaskCB *all_task_array)
 {
     const LosTaskCB *task_cb = NULL;
     uint32_t loop;
-    uint32_t save_size = sizeof(uint32_t);
+    size_t save_size = sizeof(uint32_t);
     for (loop = 0; loop < g_taskMaxNum; ++loop) {
         task_cb = all_task_array + loop;
         if ((task_cb->taskStatus & OS_TASK_STATUS_UNUSED) != 0) {
@@ -780,20 +780,20 @@ static uint32_t crashinfo_taskinfo_get_size(const LosTaskCB *all_task_array)
         save_size += sizeof(uint32_t);
         save_size += strlen(task_cb->taskName) + 1;
     }
-    return save_size;
+    return (uint32_t)save_size;
 }
 
 static uint32_t crashinfo_taskinfo_get_size_from_flash(uint32_t flash_save_offset)
 {
     uint32_t loop;
     uint32_t task_name_len = 0;
-    uint32_t save_size = sizeof(uint32_t);
+    uint32_t save_size = (uint32_t)sizeof(uint32_t);
     uint32_t cnt = 0;
     uapi_sfc_reg_read(flash_save_offset, (uint8_t *)(uintptr_t)&cnt, sizeof(uint32_t));
     for (loop = 0; loop < cnt; ++loop) {
-        save_size += sizeof(uint32_t);
+        save_size += (uint32_t)sizeof(uint32_t);
         uapi_sfc_reg_read(flash_save_offset + save_size, (uint8_t *)(uintptr_t)&task_name_len, sizeof(uint32_t));
-        save_size += sizeof(uint32_t);
+        save_size += (uint32_t)sizeof(uint32_t);
         save_size += task_name_len + 1;
     }
     return save_size;
@@ -804,8 +804,12 @@ static void crashinfo_taskinfo_save(uint32_t flash_save_offset, const LosTaskCB 
     const LosTaskCB *task_cb = NULL;
     uint32_t loop;
     uint32_t semid = 0;
-    uint32_t save_offset = flash_save_offset + sizeof(uint32_t);
-    uint32_t task_name_size[g_taskMaxNum];
+    uint32_t save_offset = (uint32_t)(flash_save_offset + sizeof(uint32_t));
+    uint32_t *task_name_size = (uint32_t*)malloc(sizeof(uint32_t) * g_taskMaxNum);
+    if (task_name_size == NULL) {
+        PRINT("Malloc failed!\r\n");
+        return;
+    }
     uint32_t cnt = 0;
     memset_s(task_name_size, sizeof(uint32_t) * g_taskMaxNum, 0, sizeof(uint32_t) * g_taskMaxNum);
     for (loop = 0; loop < g_taskMaxNum; ++loop) {
@@ -815,14 +819,15 @@ static void crashinfo_taskinfo_save(uint32_t flash_save_offset, const LosTaskCB 
         }
         semid = (task_cb->taskSem != NULL) ? ((LosSemCB *)task_cb->taskSem)->semId : INVALID_SEM_ID;
         uapi_sfc_reg_write(save_offset, (uint8_t *)(uintptr_t)&semid, sizeof(uint32_t));
-        save_offset += sizeof(uint32_t);
-        task_name_size[task_cb->taskId] = strlen(task_cb->taskName);
+        save_offset += (uint32_t)sizeof(uint32_t);
+        task_name_size[task_cb->taskId] = (uint32_t)strlen(task_cb->taskName);
         uapi_sfc_reg_write(save_offset, (uint8_t *)(uintptr_t)&(task_name_size[task_cb->taskId]), sizeof(uint32_t));
-        save_offset += sizeof(uint32_t);
+        save_offset += (uint32_t)sizeof(uint32_t);
         uapi_sfc_reg_write(save_offset, (uint8_t *)(uintptr_t)(task_cb->taskName), strlen(task_cb->taskName) + 1);
-        save_offset += strlen(task_cb->taskName) + 1;
+        save_offset += (uint32_t)strlen(task_cb->taskName) + 1;
         cnt++;
     }
+    free(task_name_size);
     uapi_sfc_reg_write(flash_save_offset, (uint8_t *)(uintptr_t)&cnt, sizeof(uint32_t));
 }
 
@@ -835,26 +840,26 @@ static errcode_t crashinfo_size_check(uint32_t flash_save_size, uint32_t *crashi
     char *task_name = OsCurTaskNameGetExt();
     OsTaskWaterLineArrayGet(&waterline_addr, &waterline_len);
     OsTaskCBArrayGet(&cbarray_addr, &cbarray_len);
-    uint32_t task_info_size = crashinfo_taskinfo_get_size((LosTaskCB *)cbarray_addr);
-    uint32_t need_space = sizeof(uint32_t) + sizeof(uint32_t) + sizeof(uint32_t) * CRASHINFO_GROUP_CNT +
+    uint32_t task_info_size = crashinfo_taskinfo_get_size((LosTaskCB *)(uintptr_t)cbarray_addr);
+    uint32_t need_space = (uint32_t)(sizeof(uint32_t) + sizeof(uint32_t) + sizeof(uint32_t) * CRASHINFO_GROUP_CNT +
         sizeof(uint32_t) + strlen(task_name) + 1 + sizeof(g_excInfo) + sizeof(exc_context_t) + STACK_SAVE_SIZE +
-        waterline_len + task_info_size + sizeof(uint32_t) + cbarray_len;
-    *left_size = flash_save_size - (sizeof(uint32_t) + sizeof(uint32_t) + sizeof(uint32_t) * CRASHINFO_GROUP_CNT +
-        sizeof(uint32_t) + strlen(task_name) + 1 + sizeof(g_excInfo) + sizeof(exc_context_t) + STACK_SAVE_SIZE +
-        waterline_len + task_info_size + sizeof(uint32_t));
+        waterline_len + task_info_size + sizeof(uint32_t) + cbarray_len);
+    *left_size = (uint32_t)(flash_save_size - (sizeof(uint32_t) + sizeof(uint32_t) +
+        sizeof(uint32_t) * CRASHINFO_GROUP_CNT + sizeof(uint32_t) + strlen(task_name) + 1 + sizeof(g_excInfo) +
+        sizeof(exc_context_t) + STACK_SAVE_SIZE + waterline_len + task_info_size + sizeof(uint32_t)));
     if (need_space > flash_save_size) {
         PRINT("No Space to Save the whole Crash Info\r\n");
         return ERRCODE_FAIL;
     }
     uint32_t crashinfo_group_index = 0;
-    crashinfo_group_size[crashinfo_group_index++] = strlen(task_name) + 1;
-    crashinfo_group_size[crashinfo_group_index++] = sizeof(g_excInfo);
-    crashinfo_group_size[crashinfo_group_index++] = sizeof(exc_context_t);
+    crashinfo_group_size[crashinfo_group_index++] = (uint32_t)strlen(task_name) + 1;
+    crashinfo_group_size[crashinfo_group_index++] = (uint32_t)sizeof(g_excInfo);
+    crashinfo_group_size[crashinfo_group_index++] = (uint32_t)sizeof(exc_context_t);
     crashinfo_group_size[crashinfo_group_index++] = STACK_SAVE_SIZE;
     crashinfo_group_size[crashinfo_group_index++] = waterline_len;
     crashinfo_group_size[crashinfo_group_index++] = task_info_size;
     crashinfo_group_size[crashinfo_group_index++] = cbarray_len;
-    crashinfo_group_size[crashinfo_group_index++] = sizeof(LosTaskCB);
+    crashinfo_group_size[crashinfo_group_index++] = (uint32_t)sizeof(LosTaskCB);
     return ERRCODE_SUCC;
 }
 
@@ -870,44 +875,44 @@ void crashinfo_save(exc_context_t *exc_buf_addr)
     }
     char *task_name = OsCurTaskNameGetExt();
     uint32_t waterline_addr = 0, waterline_len = 0, cbarray_addr = 0, cbarray_len = 0;
-    uint32_t task_name_len = strlen(task_name);
+    uint32_t task_name_len = (uint32_t)strlen(task_name);
 
     OsTaskWaterLineArrayGet(&waterline_addr, &waterline_len);
     OsTaskCBArrayGet(&cbarray_addr, &cbarray_len);
     if (crashinfo_size_check(flash_save_size, crashinfo_group_size, &left_size) != ERRCODE_SUCC) {
-        cbarray_len = left_size / sizeof(LosTaskCB) * sizeof(LosTaskCB);
+        cbarray_len = (uint32_t)(left_size / sizeof(LosTaskCB) * sizeof(LosTaskCB));
     }
-    uint32_t task_num = cbarray_len / sizeof(LosTaskCB);
-    uint32_t task_info_size = crashinfo_taskinfo_get_size((LosTaskCB *)cbarray_addr);
+    uint32_t task_num = (uint32_t)(cbarray_len / sizeof(LosTaskCB));
+    uint32_t task_info_size = crashinfo_taskinfo_get_size((LosTaskCB *)(uintptr_t)cbarray_addr);
 
     flash_save_offset = flash_save_addr;
     if (uapi_sfc_reg_erase(flash_save_offset, flash_save_size) != ERRCODE_SUCC) {
         PRINT("Erase Flash Failed\r\n");
         return;
     }
-    flash_save_offset += sizeof(uint32_t);
+    flash_save_offset += (uint32_t)sizeof(uint32_t);
     uapi_sfc_reg_write(flash_save_offset, (uint8_t *)(uintptr_t)&crashinfo_group_cnt, sizeof(uint32_t));
-    flash_save_offset += sizeof(uint32_t);
+    flash_save_offset += (uint32_t)sizeof(uint32_t);
     uapi_sfc_reg_write(flash_save_offset, (uint8_t *)(uintptr_t)&crashinfo_group_size, sizeof(uint32_t) *
         CRASHINFO_GROUP_CNT);
-    flash_save_offset += sizeof(uint32_t) * CRASHINFO_GROUP_CNT;
+    flash_save_offset += (uint32_t)sizeof(uint32_t) * CRASHINFO_GROUP_CNT;
     uapi_sfc_reg_write(flash_save_offset, (uint8_t *)(uintptr_t)&task_name_len, sizeof(uint32_t));
-    flash_save_offset += sizeof(uint32_t);
+    flash_save_offset += (uint32_t)sizeof(uint32_t);
     uapi_sfc_reg_write(flash_save_offset, (uint8_t *)(uintptr_t)task_name, task_name_len + 1);
     flash_save_offset += task_name_len + 1;
     uapi_sfc_reg_write(flash_save_offset, (uint8_t *)(uintptr_t)&g_excInfo, sizeof(g_excInfo));
-    flash_save_offset += sizeof(g_excInfo);
+    flash_save_offset += (uint32_t)sizeof(g_excInfo);
 
     uapi_sfc_reg_write(flash_save_offset, (uint8_t *)(uintptr_t)exc_buf_addr, sizeof(exc_context_t));
-    flash_save_offset += sizeof(exc_context_t);
-    uint32_t backtrace_sp = ((ExcContext *)exc_buf_addr)->taskContext.sp;
+    flash_save_offset += (uint32_t)sizeof(exc_context_t);
+    uint32_t backtrace_sp = ((ExcContext *)(uintptr_t)exc_buf_addr)->taskContext.sp;
     crashinfo_back_trace_save(flash_save_offset, backtrace_sp);
     flash_save_offset += STACK_SAVE_SIZE;
     uapi_sfc_reg_write(flash_save_offset, (uint8_t *)(uintptr_t)&task_num, sizeof(uint32_t));
-    flash_save_offset += sizeof(uint32_t);
+    flash_save_offset += (uint32_t)sizeof(uint32_t);
     uapi_sfc_reg_write(flash_save_offset, (uint8_t *)(uintptr_t)waterline_addr, waterline_len);
     flash_save_offset += waterline_len;
-    crashinfo_taskinfo_save(flash_save_offset, (const LosTaskCB *)cbarray_addr);
+    crashinfo_taskinfo_save(flash_save_offset, (const LosTaskCB *)(uintptr_t)cbarray_addr);
     flash_save_offset += task_info_size;
     uapi_sfc_reg_write(flash_save_offset, (uint8_t *)(uintptr_t)cbarray_addr, cbarray_len);
     uapi_sfc_reg_write(flash_save_addr, (uint8_t *)(uintptr_t)&g_crashinfo_flag, sizeof(uint32_t));
@@ -964,12 +969,12 @@ void crashinfo_dump(void)
     OsTaskWaterLineArrayGet(&waterline_addr, &waterline_len);
     OsTaskCBArrayGet(&cbarray_addr, &cbarray_len);
     PRINT("--------------Last Crash info dump--------------\r\n");
-    flash_save_offset += sizeof(uint32_t);
-    flash_save_offset += sizeof(uint32_t);
-    flash_save_offset += sizeof(uint32_t) * CRASHINFO_GROUP_CNT;
+    flash_save_offset += (uint32_t)sizeof(uint32_t);
+    flash_save_offset += (uint32_t)sizeof(uint32_t);
+    flash_save_offset += (uint32_t)(sizeof(uint32_t) * CRASHINFO_GROUP_CNT);
 
     uapi_sfc_reg_read(flash_save_offset, (uint8_t *)(uintptr_t)&task_name_len, sizeof(uint32_t));
-    flash_save_offset += sizeof(uint32_t);
+    flash_save_offset += (uint32_t)sizeof(uint32_t);
     uapi_sfc_reg_read(flash_save_offset, (uint8_t *)(uintptr_t)task_name, task_name_len + 1);
     flash_save_offset += task_name_len + 1;
 
@@ -977,25 +982,25 @@ void crashinfo_dump(void)
     uapi_sfc_reg_read(flash_save_offset, (uint8_t *)(uintptr_t)&exc_info, sizeof(ExcInfo));
     PRINT("task:%s\n""thrdPid:0x%x\n""type:0x%x\n""nestCnt:%u\n""phase:%s\n",
         task_name, exc_info.thrdPid, exc_info.type, exc_info.nestCnt, g_exc_occur_stage[exc_info.phase]);
-    flash_save_offset += sizeof(ExcInfo);
+    flash_save_offset += (uint32_t)sizeof(ExcInfo);
 
     exc_context_t exc_context_buffer = {0};
     uapi_sfc_reg_read(flash_save_offset, (uint8_t *)(uintptr_t)&exc_context_buffer, sizeof(exc_context_t));
-    exc_info.context = (ExcContext *)(&exc_context_buffer);
+    exc_info.context = (ExcContext *)(uintptr_t)(&exc_context_buffer);
     OsExcInfoDisplayContextExt(&exc_info);
-    flash_save_offset += sizeof(exc_context_t);
+    flash_save_offset += (uint32_t)sizeof(exc_context_t);
     crashinfo_back_trace_print(flash_save_offset);
 
     flash_save_offset += STACK_SAVE_SIZE;
     uint32_t task_num = 0;
     uapi_sfc_reg_read(flash_save_offset, (uint8_t *)(uintptr_t)&task_num, sizeof(uint32_t));
-    flash_save_offset += sizeof(uint32_t);
+    flash_save_offset += (uint32_t)sizeof(uint32_t);
     waterline_addr = flash_save_offset + BASE_ADDR;
     uint32_t taskinfo_size = crashinfo_taskinfo_get_size_from_flash(flash_save_offset + waterline_len);
     cbarray_addr = waterline_addr + waterline_len + taskinfo_size;
     crashinfo_taskinfo_title_print();
-    crashinfo_taskinfo_print((LosTaskCB *)cbarray_addr, (UINT32 *)waterline_addr, flash_save_offset + waterline_len,
-        task_num);
+    crashinfo_taskinfo_print((LosTaskCB *)(uintptr_t)cbarray_addr, (UINT32 *)(uintptr_t)waterline_addr,
+        flash_save_offset + waterline_len, task_num);
     PRINT("--------------Last Crash info dump end--------------\r\n");
 }
 #endif

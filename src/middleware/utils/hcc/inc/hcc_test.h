@@ -1,7 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2023. All rights reserved.
  * Description: HCC TEST
- * Author:
  */
 
 #ifndef HCC_TEST_HEADER

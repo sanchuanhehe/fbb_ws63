@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2019-2021. All rights reserved.
  * Description: audio circle buffer function
- * Author:
- * Create: 2019-05-30
  */
 
 #ifndef __CIRC_BUF_H__

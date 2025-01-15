@@ -291,7 +291,7 @@ static inline void hal_adc_fifo_waterline_set(void)
 {
     adc_fifo_data_t data;
     data.d32 = g_adc_regs->lsadc_ctrl_1;
-    data.b.rxintsize = 0x7;
+    data.b.rxintsize = 0x6;
     g_adc_regs->lsadc_ctrl_1 = data.d32;
 }
 

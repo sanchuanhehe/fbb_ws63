@@ -46,7 +46,7 @@ int drv_rom_hash(crypto_hash_type hash_type, const unsigned char *data, unsigned
     td_s32 ret = TD_SUCCESS;
     td_u8 state[MAX_HASH_RESULT_SIZE] = {0};
     td_u8 padding[HASH_BLOCK_SIZE * 2] = {0};   /* 2: two blocks for padding. */
-    td_u32 padding_len = sizeof(padding);
+    td_u32 padding_len = (td_u32)sizeof(padding);
     td_u32 processing_padding_len = HASH_BLOCK_SIZE;
     td_u32 length = 0;
     const td_u32 *init_val = (const td_u32 *)g_sha256_ival;

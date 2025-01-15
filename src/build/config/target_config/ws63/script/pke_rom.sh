@@ -5,8 +5,8 @@ set -e
 root_dir=$1
 out_dir=${root_dir}/output/ws63/acore/pke_rom
 create_hex_py=${root_dir}/build/script/utils/create_hex.py
-objcopy_tool=${root_dir}/tools/bin/compiler/riscv/cc_riscv32_musl_100/cc_riscv32_musl/bin/riscv32-linux-musl-objcopy
-gcc_tool=${root_dir}/tools/bin/compiler/riscv/cc_riscv32_musl_100/cc_riscv32_musl/bin/riscv32-linux-musl-gcc
+objcopy_tool=${root_dir}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl/bin/riscv32-linux-musl-objcopy
+gcc_tool=${root_dir}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl/bin/riscv32-linux-musl-gcc
 rom_lib_c=${root_dir}/drivers/chips/ws63/rom/rom_boot/drivers/drivers/hal/security_unified/hal_cipher/pke/rom_lib.c
 td_type_h=${root_dir}/drivers/chips/ws63/rom/rom_boot/middleware/utils/common_headers/native/td_type.h
 

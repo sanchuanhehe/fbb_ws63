@@ -277,7 +277,7 @@ typedef void (*hal_tsensor_refresh_temp_t)(void);
  * @retval false 错：温度无效，获取传感器温度失败。
  * @endif
  */
-typedef bool (*hal_tsensor_get_temp_t)(volatile int8_t *data);
+typedef bool (*hal_tsensor_get_temp_t)(int8_t *data);
 
 /**
  * @if Eng

@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description:  log OAM logger producer interface
- * Author:
- * Create:
  */
 
 #ifndef LOG_OAM_LOGGER_H

@@ -7,7 +7,7 @@ TARGET_NAME=$2
 BIN_NAME=$3
  
 ELF_PATH=${ROOT_PATH}/output/ws63/acore/${TARGET_NAME}/${BIN_NAME}.elf
-TOOLCHAIN=${ROOT_PATH}/tools/bin/compiler/riscv/cc_riscv32_musl_100/cc_riscv32_musl_fp/bin/riscv32-linux-musl-
+TOOLCHAIN=${ROOT_PATH}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl_fp/bin/riscv32-linux-musl-
 WORK_DIR=${ROOT_PATH}/output/ws63/mem_bins
 MEMFILE=${ROOT_PATH}/output/ws63/acore/${TARGET_NAME}/${BIN_NAME}.mem
 SRAM_PKT_RAM=${ROOT_PATH}/output/ws63/mem_bins/sram_pkt_ram.bin

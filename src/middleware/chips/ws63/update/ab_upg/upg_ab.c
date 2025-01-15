@@ -9,7 +9,9 @@
 #include "common_def.h"
 #include "sfc.h"
 #include "partition.h"
+#include "upg.h"
 #include "upg_debug.h"
+#include "upg_verify.h"
 #include "upg_porting.h"
 #include "upg_ab.h"
 
@@ -297,7 +299,7 @@ errcode_t upg_region_erase(upg_region_index region)
     uint32_t size = upg_get_region_size(region);
     upg_log_info("[UPG] erase region addr:0x%08x, size:0x%08x\r\n", addr, size);
 
-    if ((addr & UPG_SIZE_4K_ALIGN) || (size % UPG_SIZE_4K)) {
+    if (((addr & UPG_SIZE_4K_ALIGN) != 0) || ((size % UPG_SIZE_4K) != 0)) {
         upg_log_err("[UPG] region addr:0x%08x or size:0x%08x is not 4K aligned\r\n", addr, size);
         return ERRCODE_INVALID_PARAM;
     }
@@ -305,6 +307,63 @@ errcode_t upg_region_erase(upg_region_index region)
         upg_log_err("[UPG] erase region failed\r\n");
         return ERRCODE_FAIL;
     }
+    return ERRCODE_SUCC;
+}
+
+#define IMAGE_KEY_AREA_LEN 0x100
+#define IMAGE_HEADER_LEN 0x300
+/**
+ * @brief 校验待升级的镜像区
+ *    当从B分区启动时，DMMU配置如下：
+ *       访问A的地址时，实际访问的是B；
+ *       访问B的地址时，实际访问的是A；
+ *    而从A分区启动时，没有配置DMMU。
+ *    所以，calc_hash函数传入的地址总是B分区的地址。
+ *                  ┌─────────────┐
+ *         src start│             │dst start
+ *                  │             │
+ *   ┌─────         │   Image A   │        ◄─────┐
+ *   │              │             │              │
+ *   │     src end  │             │              │
+ *   │              ├─────────────┤              │
+ *   │     dst start│             │src start     │
+ *   │              │             │              │
+ *   └─────►        │   Image B   │         ─────┘
+ *                  │             │
+ *                  │             │src end
+ *                  └─────────────┘
+ * @param region 待校验的镜像区域，UPG_REGION_A/UPG_REGION_B。
+ * @return 成功返回ERRCODE_SUCC，失败返回错误码。
+ */
+errcode_t upg_region_verify(upg_region_index region)
+{
+    errcode_t ret;
+    uint8_t hash_result[SHA_256_LENGTH];
+    const upg_fota_info_data_t *code_info;
+    uint32_t region_b_addr;
+
+    region_b_addr = upg_get_region_addr(UPG_REGION_B);
+    if (region_b_addr == 0) {
+        upg_log_err("[UPG] verify region addr err\r\n");
+        return ERRCODE_FAIL;
+    }
+
+    code_info = (upg_fota_info_data_t *)(uintptr_t)(region_b_addr + FLASH_START + IMAGE_KEY_AREA_LEN);
+    if (code_info == NULL) {
+        upg_log_err("[UPG] verify header err\r\n");
+        return ERRCODE_FAIL;
+    }
+    ret = calc_hash(region_b_addr + FLASH_START + IMAGE_HEADER_LEN, code_info->image_hash_table_length,
+                    hash_result, SHA_256_LENGTH);
+    if (ret != ERRCODE_SUCC) {
+        return ret;
+    }
+
+    ret = verify_hash_cmp(code_info->image_hash_table_hash, hash_result, SHA_256_LENGTH);
+    if (ret != ERRCODE_SUCC) {
+        return ret;
+    }
+    upg_log_err("[UPG] upg_region_verify region %d succ.\r\n", region);
     return ERRCODE_SUCC;
 }
 

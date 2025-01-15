@@ -8,6 +8,9 @@
 #ifndef BOOT_ERASE_H
 #define BOOT_ERASE_H
 
+#include <bits/alltypes.h>
+#include "boot_uart_auth.h"
+
 #define FLASH_CHIP_ERASE_SIZE 0xffffffff
 #define FLASH_CHIP_ERASE_FILE_LEN 0
 

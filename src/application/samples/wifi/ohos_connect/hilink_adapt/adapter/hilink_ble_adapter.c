@@ -9,11 +9,12 @@
 
 #include "osal_list.h"
 #include "securec.h"
-#include "test_suite_uart.h"
 #include "bts_le_gap.h"
 #include "bts_gatt_client.h"
 #include "bts_gatt_server.h"
 #include "cmsis_os2.h"
+#include "hilink_sal_defines.h"
+#include "mac_addr.h"
 
 #include "ohos_bt_gatt.h"
 #include "ohos_bt_def.h"
@@ -73,7 +74,7 @@ BleGattServiceRead get_chara_read_func(int conn_id, int attr_handle)
             return g_charas_func[i].read;
         }
     }
-    printf("get_chara_read_func Not Found! \n");
+    HILINK_SAL_DEBUG("get_chara_read_func Not Found! \n");
     return NULL;
 }
 
@@ -84,7 +85,7 @@ BleGattServiceWrite get_chara_write_func(int conn_id, int attr_handle)
             return g_charas_func[i].write;
         }
     }
-    printf("get_chara_write_func Not Found! \n");
+    HILINK_SAL_DEBUG("get_chara_write_func Not Found! \n");
     return NULL;
 }
 
@@ -95,7 +96,7 @@ BleGattServiceIndicate get_chara_ind_func(int conn_id, int attr_handle)
             return g_charas_func[i].write;
         }
     }
-    printf("get_chara_ind_func Not Found! \n");
+    HILINK_SAL_DEBUG("get_chara_ind_func Not Found! \n");
     return NULL;
 }
 
@@ -122,7 +123,7 @@ static uint32_t perm_bt_to_bluez(uint32_t permissions)
         perm |= (GATT_ATTRIBUTE_PERMISSION_WRITE |
             GATT_ATTRIBUTE_PERMISSION_ENCRYPTION_NEED | GATT_ATTRIBUTE_PERMISSION_MITM_NEED);
     }
-    printf("convert %04x to %04x.\n", permissions, perm);
+    HILINK_SAL_DEBUG("convert %04x to %04x.\n", permissions, perm);
     return perm;
 }
 
@@ -152,7 +153,7 @@ bool DisableBt(void)
  */
 BdAddr* GetLocalAddress(void)
 {
-    printf("%s GetLocalAddress enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s GetLocalAddress enter.\n", BLE_HILINK_SERVER_LOG);
     return NULL;
 }
 
@@ -164,7 +165,7 @@ BdAddr* GetLocalAddress(void)
  */
 bool GetLocalName(unsigned char *localName, unsigned char *length)
 {
-    printf("%s GetLocalName enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s GetLocalName enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -177,7 +178,7 @@ bool GetLocalName(unsigned char *localName, unsigned char *length)
  */
 bool SetLocalName(unsigned char *localName, unsigned char length)
 {
-    printf("%s SetLocalName enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s SetLocalName enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -222,7 +223,7 @@ bool SetBtScanMode(int mode, int duration)
  */
 int ReadBtMacAddr(unsigned char *mac, unsigned int len)
 {
-    printf("%s ReadBtMacAddr enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s ReadBtMacAddr enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -236,7 +237,7 @@ int ReadBtMacAddr(unsigned char *mac, unsigned int len)
  */
 bool GetPariedDevicesNum(unsigned int *number)
 {
-    printf("%s GetPariedDevicesNum enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s GetPariedDevicesNum enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -247,7 +248,7 @@ bool GetPariedDevicesNum(unsigned int *number)
  */
 int GetPairState(void)
 {
-    printf("%s GetPairState enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s GetPairState enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -259,7 +260,7 @@ int GetPairState(void)
  */
 bool RemovePair(const BdAddr addr)
 {
-    printf("%s RemovePair enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s RemovePair enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -270,7 +271,7 @@ bool RemovePair(const BdAddr addr)
  */
 bool RemoveAllPairs(void)
 {
-    printf("%s RemoveAllPairs enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s RemoveAllPairs enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -284,7 +285,7 @@ bool RemoveAllPairs(void)
  */
 bool ReadRemoteRssiValue(const BdAddr *bdAddr, int transport)
 {
-    printf("%s ReadRemoteRssiValue enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s ReadRemoteRssiValue enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -296,7 +297,7 @@ bool ReadRemoteRssiValue(const BdAddr *bdAddr, int transport)
  */
 bool IsAclConnected(BdAddr *addr)
 {
-    printf("%s IsAclConnected enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s IsAclConnected enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -308,7 +309,7 @@ bool IsAclConnected(BdAddr *addr)
  */
 bool DisconnectRemoteDevice(BdAddr *addr)
 {
-    printf("%s DisconnectRemoteDevice enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s DisconnectRemoteDevice enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -320,7 +321,7 @@ bool DisconnectRemoteDevice(BdAddr *addr)
  */
 bool ConnectRemoteDevice(BdAddr *addr)
 {
-    printf("%s ConnectRemoteDevice enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s ConnectRemoteDevice enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -331,7 +332,7 @@ bool ConnectRemoteDevice(BdAddr *addr)
  */
 int InitBtStack(void)
 {
-    printf("%s InitBtStack enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s InitBtStack enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -342,11 +343,11 @@ int InitBtStack(void)
  */
 int EnableBtStack(void)
 {
-    printf("%s EnableBtStack enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s EnableBtStack enter.\n", BLE_HILINK_SERVER_LOG);
     errcode_t ret = ERRCODE_BT_SUCCESS;
     ret |= enable_ble();
     if (ret != ERRCODE_BT_SUCCESS) {
-        printf("%s EnableBtStack fail, ret:%d.\n", BLE_HILINK_SERVER_LOG, ret);
+        HILINK_SAL_DEBUG("%s EnableBtStack fail, ret:%d.\n", BLE_HILINK_SERVER_LOG, ret);
         return -1;
     }
     return 0;
@@ -359,11 +360,11 @@ int EnableBtStack(void)
  */
 int DisableBtStack(void)
 {
-    printf("%s DisableBtStack enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s DisableBtStack enter.\n", BLE_HILINK_SERVER_LOG);
     errcode_t ret = ERRCODE_BT_SUCCESS;
     ret |= disable_ble();
     if (ret != ERRCODE_BT_SUCCESS) {
-        printf("%s DisableBtStack fail, ret:%d.\n", BLE_HILINK_SERVER_LOG, ret);
+        HILINK_SAL_DEBUG("%s DisableBtStack fail, ret:%d.\n", BLE_HILINK_SERVER_LOG, ret);
         return -1;
     }
     return 0;
@@ -377,7 +378,7 @@ int DisableBtStack(void)
  */
 int SetDeviceName(const char *name, unsigned int len)
 {
-    printf("%s SetDeviceName enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s SetDeviceName enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -389,7 +390,7 @@ int SetDeviceName(const char *name, unsigned int len)
  */
 int BleSetAdvData(int advId, const BleConfigAdvData *data)
 {
-    printf("%s BleSetAdvData enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleSetAdvData enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -401,7 +402,7 @@ int BleSetAdvData(int advId, const BleConfigAdvData *data)
  */
 int BleStartAdv(int advId, const BleAdvParams *param)
 {
-    printf("%s BleStartAdv enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleStartAdv enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -412,13 +413,14 @@ int BleStartAdv(int advId, const BleAdvParams *param)
  */
 int BleStopAdv(int advId)
 {
-    printf("%s BleStopAdv enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleStopAdv enter.\n", BLE_HILINK_SERVER_LOG);
 
     errcode_t ret = gap_ble_stop_adv(BLE_ADV_HANDLE_DEFAULT);
     if (ret != ERRCODE_BT_SUCCESS) {
-        printf("%s BleStopAdv gap_ble_stop_adv error.\n", BLE_HILINK_SERVER_LOG);
+        HILINK_SAL_DEBUG("%s BleStopAdv gap_ble_stop_adv error.\n", BLE_HILINK_SERVER_LOG);
         return ERRCODE_BT_FAIL;
     }
+    g_adv_status = 0;
 
     return 0;
 }
@@ -431,7 +433,7 @@ int BleStopAdv(int advId)
  */
 int BleUpdateAdv(int advId, const BleAdvParams *param)
 {
-    printf("%s BleUpdateAdv enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleUpdateAdv enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -442,7 +444,7 @@ int BleUpdateAdv(int advId, const BleAdvParams *param)
  */
 int BleSetSecurityIoCap(BleIoCapMode mode)
 {
-    printf("%s BleSetSecurityIoCap enter, io_mod:%d.\n", BLE_HILINK_SERVER_LOG, mode);
+    HILINK_SAL_DEBUG("%s BleSetSecurityIoCap enter, io_mod:%d.\n", BLE_HILINK_SERVER_LOG, mode);
     g_io_cap_mode = mode;
     return 0;
 }
@@ -454,7 +456,7 @@ int BleSetSecurityIoCap(BleIoCapMode mode)
  */
 int BleSetSecurityAuthReq(BleAuthReqMode mode)
 {
-    printf("%s BleSetSecurityAuthReq enter sc_mode:%d.\n", BLE_HILINK_SERVER_LOG, mode);
+    HILINK_SAL_DEBUG("%s BleSetSecurityAuthReq enter sc_mode:%d.\n", BLE_HILINK_SERVER_LOG, mode);
     g_sc_mode = mode;
     return 0;
 }
@@ -467,7 +469,7 @@ int BleSetSecurityAuthReq(BleAuthReqMode mode)
  */
 int BleGattSecurityRsp(BdAddr bdAddr, bool accept)
 {
-    printf("%s BleGattSecurityRsp enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattSecurityRsp enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -478,7 +480,7 @@ int BleGattSecurityRsp(BdAddr bdAddr, bool accept)
  */
 int BleScanFilterParamSetup(BleAdvScanFilterParam *param)
 {
-    printf("%s BleScanFilterParamSetup enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleScanFilterParamSetup enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -489,7 +491,7 @@ int BleScanFilterParamSetup(BleAdvScanFilterParam *param)
  */
 int BleScanFilterAddRemove(BleAdvScanFilterCondition *param)
 {
-    printf("%s BleScanFilterAddRemove enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleScanFilterAddRemove enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -501,7 +503,7 @@ int BleScanFilterAddRemove(BleAdvScanFilterCondition *param)
  */
 int BleScanFilterClear(int clientId, int filterIndex)
 {
-    printf("%s BleScanFilterClear enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleScanFilterClear enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -513,7 +515,7 @@ int BleScanFilterClear(int clientId, int filterIndex)
  */
 int BleScanFilterEnable(int clientId, bool enable)
 {
-    printf("%s BleScanFilterEnable enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleScanFilterEnable enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -525,7 +527,7 @@ int BleScanFilterEnable(int clientId, bool enable)
  */
 int BleSetScanParameters(int clientId, BleScanParams *param)
 {
-    printf("%s BleSetScanParameters enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleSetScanParameters enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -535,7 +537,7 @@ int BleSetScanParameters(int clientId, BleScanParams *param)
  */
 int BleStartScan(void)
 {
-    printf("%s BleStartScan enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleStartScan enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -545,78 +547,78 @@ int BleStartScan(void)
  */
 int BleStopScan(void)
 {
-    printf("%s BleStopScan enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleStopScan enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
 static void ble_enable_cb_adapt(errcode_t status)
 {
-    printf("%s ble_enable_cb_adapt status: %d.\n", BLE_HILINK_SERVER_LOG, status);
+    HILINK_SAL_DEBUG("%s ble_enable_cb_adapt status: %d.\n", BLE_HILINK_SERVER_LOG, status);
     return;
 }
 
 static void ble_disable_cb_adapt(errcode_t status)
 {
-    printf("%s ble_disenable_cb_adapt status: %d.\n", BLE_HILINK_SERVER_LOG, status);
+    HILINK_SAL_DEBUG("%s ble_disenable_cb_adapt status: %d.\n", BLE_HILINK_SERVER_LOG, status);
     return;
 }
 
 static void set_adv_data_cb_adapt(uint8_t adv_id, errcode_t status)
 {
-    printf("%s set_adv_data_cb_adapt status: %d.\n", BLE_HILINK_SERVER_LOG, status);
+    HILINK_SAL_DEBUG("%s set_adv_data_cb_adapt status: %d.\n", BLE_HILINK_SERVER_LOG, status);
     return;
 }
 
 static void set_adv_param_cb_adapt(uint8_t adv_id, errcode_t status)
 {
-    printf("%s set_adv_param_cb_adapt status: %d.\n", BLE_HILINK_SERVER_LOG, status);
+    HILINK_SAL_DEBUG("%s set_adv_param_cb_adapt status: %d.\n", BLE_HILINK_SERVER_LOG, status);
     return;
 }
 
 static void set_scan_param_cb_adapt(errcode_t status)
 {
-    printf("%s set_scan_param_cb_adapt status: %d.\n", BLE_HILINK_SERVER_LOG, status);
+    HILINK_SAL_DEBUG("%s set_scan_param_cb_adapt status: %d.\n", BLE_HILINK_SERVER_LOG, status);
     return;
 }
 
 static void start_adv_cb_adapt(uint8_t adv_id, adv_status_t status)
 {
-    printf("%s start_adv_cb_adapt enter adv_id:%d, status: %d.\n", BLE_HILINK_SERVER_LOG, adv_id, status);
+    HILINK_SAL_DEBUG("%s start_adv_cb_adapt enter adv_id:%d, status: %d.\n", BLE_HILINK_SERVER_LOG, adv_id, status);
     g_ble_gap_cb->advEnableCb(adv_id, 0);
     return;
 }
 
 static void stop_adv_cb_adapt(uint8_t adv_id, adv_status_t status)
 {
-    printf("%s stop_adv_cb_adapt enter status: %d.\n", BLE_HILINK_SERVER_LOG, status);
+    HILINK_SAL_DEBUG("%s stop_adv_cb_adapt enter status: %d.\n", BLE_HILINK_SERVER_LOG, status);
     g_ble_gap_cb->advDisableCb(adv_id, 0);
     return;
 }
 
 static void scan_result_cb_adapt(gap_scan_result_data_t *scan_result_data)
 {
-    printf("%s scan_result_cb_adapt enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s scan_result_cb_adapt enter.\n", BLE_HILINK_SERVER_LOG);
     return;
 }
 
 static void conn_state_change_cb_adapt(uint16_t conn_id, bd_addr_t *addr,
     gap_ble_conn_state_t conn_state, gap_ble_pair_state_t pair_state, gap_ble_disc_reason_t disc_reason)
 {
-    printf("%s connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason %x\n",
+    HILINK_SAL_DEBUG("%s connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason %x\n",
         BLE_HILINK_SERVER_LOG, conn_id, conn_state, pair_state, disc_reason);
 
     BdAddr bd_addr = {0};
     if (conn_state == GAP_BLE_STATE_CONNECTED) {
-        printf("%s conn_state_change_cb_adapt conn succ.\n", BLE_HILINK_SERVER_LOG);
+        HILINK_SAL_DEBUG("%s conn_state_change_cb_adapt conn succ.\n", BLE_HILINK_SERVER_LOG);
         (void)memcpy_s(bd_addr.addr, BD_ADDR_LEN, addr->addr, BD_ADDR_LEN);
         if (g_ble_gatts_cb->connectServerCb) {
             g_ble_gatts_cb->connectServerCb(conn_id, g_server_id, &bd_addr);
         }
     } else if (conn_state == GAP_BLE_STATE_DISCONNECTED) {
-        printf("%s conn_state_change_cb_adapt disconnect.\n", BLE_HILINK_SERVER_LOG);
+        HILINK_SAL_DEBUG("%s conn_state_change_cb_adapt disconnect.\n", BLE_HILINK_SERVER_LOG);
         errcode_t ret = gap_ble_start_adv(BLE_ADV_HANDLE_DEFAULT);
         if (ret != ERRCODE_BT_SUCCESS) {
-            printf("%s conn_state_change_cb_adapt gap_ble_start_adv error.\n", BLE_HILINK_SERVER_LOG);
+            HILINK_SAL_DEBUG("%s conn_state_change_cb_adapt gap_ble_start_adv error.\n", BLE_HILINK_SERVER_LOG);
             return;
         }
         g_adv_status = 1;
@@ -642,18 +644,35 @@ gap_ble_callbacks_t g_gap_callback = {
  */
 int BleGattRegisterCallbacks(BtGattCallbacks *func)
 {
-    printf("%s BleGattRegisterCallbacks enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattRegisterCallbacks enter.\n", BLE_HILINK_SERVER_LOG);
     errcode_t ret = ERRCODE_BT_FAIL;
     if (func != NULL) {
         g_ble_gap_cb = func;
         ret = gap_ble_register_callbacks(&g_gap_callback);
         if (ret != ERRCODE_BT_SUCCESS) {
-            printf("%s gap_ble_register_callbacks fail.\n", BLE_HILINK_SERVER_LOG);
+            HILINK_SAL_DEBUG("%s gap_ble_register_callbacks fail.\n", BLE_HILINK_SERVER_LOG);
             return ERRCODE_BT_FAIL;
         }
     }
 
     return 0;
+}
+
+static int set_own_addr_from_nv(bd_addr_t *own_addr)
+{
+    uint8_t efuse_mac[BD_ADDR_LEN] = {0};
+    if (get_dev_addr(efuse_mac, BD_ADDR_LEN, IFTYPE_BLE) != ERRCODE_SUCC) {
+        HILINK_SAL_DEBUG("get device macaddr from efuse fail.\r\n");
+        return -1;
+    }
+
+    own_addr->type = 0;
+    if (memcpy_s(own_addr->addr, BD_ADDR_LEN, efuse_mac, BD_ADDR_LEN) != EOK) {
+        HILINK_SAL_DEBUG("memcpy_s error set_ble_mac \r\n");
+        return -1;
+    }
+
+    return gap_ble_set_local_addr(own_addr);
 }
 
 /*
@@ -663,9 +682,10 @@ int BleGattRegisterCallbacks(BtGattCallbacks *func)
  */
 int BleStartAdvEx(int *advId, const StartAdvRawData rawData, BleAdvParams advParam)
 {
-    printf("%s BleStartAdvEx enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleStartAdvEx enter.\n", BLE_HILINK_SERVER_LOG);
     errcode_t ret = ERRCODE_BT_FAIL;
     gap_ble_adv_params_t cfg_adv_params = {0};
+    bd_addr_t own_addr = {0};
 
     if (g_adv_status == 0) {
         *advId = BLE_ADV_HANDLE_DEFAULT;
@@ -678,11 +698,13 @@ int BleStartAdvEx(int *advId, const StartAdvRawData rawData, BleAdvParams advPar
         cfg_adv_params.peer_addr.type       = advParam.peerAddrType;
         cfg_adv_params.own_addr.type        = advParam.ownAddrType;
         cfg_adv_params.tx_power             = advParam.txPower;
+        set_own_addr_from_nv(&own_addr);
         (void)memcpy_s(&cfg_adv_params.peer_addr.addr, BD_ADDR_LEN, advParam.peerAddr.addr, BD_ADDR_LEN);
-        (void)memset_s(&cfg_adv_params.own_addr.addr, BD_ADDR_LEN, 0, BD_ADDR_LEN);
+        (void)memcpy_s(&cfg_adv_params.own_addr.addr, BD_ADDR_LEN, own_addr.addr, BD_ADDR_LEN);
+        
         ret = gap_ble_set_adv_param(BLE_ADV_HANDLE_DEFAULT, &cfg_adv_params);
         if (ret != ERRCODE_BT_SUCCESS) {
-            printf("%s BleStartAdvEx gap_ble_set_adv_param error.\n", BLE_HILINK_SERVER_LOG);
+            HILINK_SAL_DEBUG("%s BleStartAdvEx gap_ble_set_adv_param error.\n", BLE_HILINK_SERVER_LOG);
             return -1;
         }
 
@@ -693,18 +715,18 @@ int BleStartAdvEx(int *advId, const StartAdvRawData rawData, BleAdvParams advPar
         cfg_adv_data.scan_rsp_data      = rawData.rspData;      /* set scan response data */
         ret = gap_ble_set_adv_data(BLE_ADV_HANDLE_DEFAULT, &cfg_adv_data);
         if (ret != ERRCODE_BT_SUCCESS) {
-            printf("%s BleStartAdvEx gap_ble_set_adv_data error.\n", BLE_HILINK_SERVER_LOG);
+            HILINK_SAL_DEBUG("%s BleStartAdvEx gap_ble_set_adv_data error.\n", BLE_HILINK_SERVER_LOG);
             return -1;
         }
 
         ret = gap_ble_start_adv(BLE_ADV_HANDLE_DEFAULT);
         if (ret != ERRCODE_BT_SUCCESS) {
-            printf("%s BleStartAdvEx gap_ble_start_adv error.\n", BLE_HILINK_SERVER_LOG);
+            HILINK_SAL_DEBUG("%s BleStartAdvEx gap_ble_start_adv error.\n", BLE_HILINK_SERVER_LOG);
             return -1;
         }
         g_adv_status = 1;
     } else {
-        printf("%s BleStartAdvEx already adv.\n", BLE_HILINK_SERVER_LOG);
+        HILINK_SAL_DEBUG("%s BleStartAdvEx already adv.\n", BLE_HILINK_SERVER_LOG);
         return -1;
     }
     return 0;
@@ -717,7 +739,7 @@ int BleStartAdvEx(int *advId, const StartAdvRawData rawData, BleAdvParams advPar
  */
 int BleGattsRegister(BtUuid appUuid)
 {
-    printf("%s BleGattsRegister enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattsRegister enter.\n", BLE_HILINK_SERVER_LOG);
     bt_uuid_t app_uuid = {0};
     app_uuid.uuid_len = appUuid.uuidLen;
     if (memcpy_s(app_uuid.uuid, app_uuid.uuid_len, appUuid.uuid, appUuid.uuidLen) != EOK) {
@@ -734,7 +756,7 @@ int BleGattsRegister(BtUuid appUuid)
  */
 int BleGattsUnRegister(int serverId)
 {
-    printf("%s BleGattsUnRegister enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattsUnRegister enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -747,7 +769,7 @@ int BleGattsUnRegister(int serverId)
  */
 int BleGattsDisconnect(int serverId, BdAddr bdAddr, int connId)
 {
-    printf("%s BleGattsDisconnect enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattsDisconnect enter.\n", BLE_HILINK_SERVER_LOG);
     bd_addr_t bd_addr = { 0 };
     bd_addr.type = BT_ADDRESS_TYPE_PUBLIC_DEVICE_ADDRESS;
     memcpy_s(bd_addr.addr, BD_ADDR_LEN, bdAddr.addr, BD_ADDR_LEN);
@@ -764,7 +786,7 @@ int BleGattsDisconnect(int serverId, BdAddr bdAddr, int connId)
  */
 int BleGattsAddService(int serverId, BtUuid srvcUuid, bool isPrimary, int number)
 {
-    printf("%s BleGattsAddService enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattsAddService enter.\n", BLE_HILINK_SERVER_LOG);
     errcode_t ret = 0;
     bt_uuid_t service_uuid = {0};
     uint16_t service_handle = 0;
@@ -778,13 +800,14 @@ int BleGattsAddService(int serverId, BtUuid srvcUuid, bool isPrimary, int number
             ret = gatts_add_service_sync(g_server_id, &service_uuid, 1, &service_handle);
             g_service_flag = 1;
             if (ret != ERRCODE_BT_SUCCESS) {
-                printf("%s BleGattsStartServiceEx Add Service Fail, ret:%x !!!\n", BLE_HILINK_SERVER_LOG, ret);
+                HILINK_SAL_DEBUG("%s BleGattsStartServiceEx Add Service Fail, ret:%x !!!\n",
+                    BLE_HILINK_SERVER_LOG, ret);
             }
             break;
         }
     }
     g_srvc_handle = service_handle;
-    printf("%s BleGattsAddService end, srvcHandle:%d.\n", BLE_HILINK_SERVER_LOG, g_srvc_handle);
+    HILINK_SAL_DEBUG("%s BleGattsAddService end, srvcHandle:%d.\n", BLE_HILINK_SERVER_LOG, g_srvc_handle);
 
     return ret;
 }
@@ -801,7 +824,7 @@ int BleGattsAddService(int serverId, BtUuid srvcUuid, bool isPrimary, int number
 int BleGattsAddCharacteristic(int serverId, int srvcHandle, BtUuid characUuid,
                               int properties, int permissions)
 {
-    printf("%s BleGattsAddCharacteristic enter, srvcHandle:%d.\n", BLE_HILINK_SERVER_LOG, srvcHandle);
+    HILINK_SAL_DEBUG("%s BleGattsAddCharacteristic enter, srvcHandle:%d.\n", BLE_HILINK_SERVER_LOG, srvcHandle);
     bt_uuid_t chara_uuid = {0};
     gatts_add_chara_info_t chara_info = {0};
     gatts_add_character_result_t chara_result = {0};
@@ -814,7 +837,7 @@ int BleGattsAddCharacteristic(int serverId, int srvcHandle, BtUuid characUuid,
     chara_info.value_len    = sizeof(g_chara_val);
     chara_info.value        = g_chara_val;
     int ret = gatts_add_characteristic_sync(g_server_id, srvcHandle, &chara_info, &chara_result);
-    printf("%s BleGattsAddCharacteristic ret:%d handle:%d, value_handle:%d.\n",
+    HILINK_SAL_DEBUG("%s BleGattsAddCharacteristic ret:%d handle:%d, value_handle:%d.\n",
         BLE_HILINK_SERVER_LOG, ret, chara_result.handle, chara_result.value_handle);
 
     g_cb_chara_handle = chara_result.value_handle;
@@ -831,7 +854,7 @@ int BleGattsAddCharacteristic(int serverId, int srvcHandle, BtUuid characUuid,
  */
 int BleGattsAddDescriptor(int serverId, int srvcHandle, BtUuid descUuid, int permissions)
 {
-    printf("%s BleGattsAddDescriptor enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattsAddDescriptor enter.\n", BLE_HILINK_SERVER_LOG);
     bt_uuid_t desc_uuid = {0};
     gatts_add_desc_info_t descriptor = {0};
     uint16_t desc_handle = 0;
@@ -846,7 +869,7 @@ int BleGattsAddDescriptor(int serverId, int srvcHandle, BtUuid descUuid, int per
 
     int ret = gatts_add_descriptor_sync(g_server_id, srvcHandle, &descriptor, &desc_handle);
     g_cb_desc_handle = desc_handle;
-    printf("%s BleGattsAddDescriptor ret:%d desc_handle:%d.\n", BLE_HILINK_SERVER_LOG, ret, desc_handle);
+    HILINK_SAL_DEBUG("%s BleGattsAddDescriptor ret:%d desc_handle:%d.\n", BLE_HILINK_SERVER_LOG, ret, desc_handle);
     return ret;
 }
 
@@ -858,7 +881,7 @@ int BleGattsAddDescriptor(int serverId, int srvcHandle, BtUuid descUuid, int per
  */
 int BleGattsStartService(int serverId, int srvcHandle)
 {
-    printf("%s BleGattsStartService enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattsStartService enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -870,7 +893,7 @@ int BleGattsStartService(int serverId, int srvcHandle)
  */
 int BleGattsStopService(int serverId, int srvcHandle)
 {
-    printf("%s BleGattsStopService enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattsStopService enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -882,7 +905,7 @@ int BleGattsStopService(int serverId, int srvcHandle)
  */
 int BleGattsDeleteService(int serverId, int srvcHandle)
 {
-    printf("%s BleGattsDeleteService enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattsDeleteService enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -893,7 +916,7 @@ int BleGattsDeleteService(int serverId, int srvcHandle)
  */
 int BleGattsClearServices(int serverId)
 {
-    printf("%s BleGattsClearServices enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattsClearServices enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }
 
@@ -905,7 +928,7 @@ int BleGattsClearServices(int serverId)
  */
 int BleGattsSendResponse(int serverId, GattsSendRspParam *param)
 {
-    printf("%s BleGattsSendResponse enter, handle:%d.\n", BLE_HILINK_SERVER_LOG, param->attrHandle);
+    HILINK_SAL_DEBUG("%s BleGattsSendResponse enter, handle:%d.\n", BLE_HILINK_SERVER_LOG, param->attrHandle);
     int ret = 0;
     gatts_send_rsp_t rsp_param = {0};
     rsp_param.request_id = g_server_request_id;
@@ -916,10 +939,10 @@ int BleGattsSendResponse(int serverId, GattsSendRspParam *param)
 
     if (g_gatt_write_flag) {
         ret = gatts_send_response(g_server_id, param->connectId, &rsp_param);
-        printf("%s BleGattsSendResponse send write resp, ret:%x.\n", BLE_HILINK_SERVER_LOG, ret);
+        HILINK_SAL_DEBUG("%s BleGattsSendResponse send write resp, ret:%x.\n", BLE_HILINK_SERVER_LOG, ret);
     } else {
         ret = gatts_send_response(g_server_id, param->connectId, &rsp_param);
-        printf("%s BleGattsSendResponse send read resp, ret:%x.\n", BLE_HILINK_SERVER_LOG, ret);
+        HILINK_SAL_DEBUG("%s BleGattsSendResponse send read resp, ret:%x.\n", BLE_HILINK_SERVER_LOG, ret);
     }
 
     return ret;
@@ -933,7 +956,7 @@ int BleGattsSendResponse(int serverId, GattsSendRspParam *param)
  */
 int BleGattsSendIndication(int serverId, GattsSendIndParam *param)
 {
-    printf("%s BleGattsSendIndication enter, handle:%d.\n", BLE_HILINK_SERVER_LOG, param->attrHandle);
+    HILINK_SAL_DEBUG("%s BleGattsSendIndication enter, handle:%d.\n", BLE_HILINK_SERVER_LOG, param->attrHandle);
 
     int ret = 0;
     gatts_ntf_ind_t ntf_param = {0};
@@ -942,12 +965,12 @@ int BleGattsSendIndication(int serverId, GattsSendIndParam *param)
     ntf_param.value         = (uint8_t *)param->value;
     ret = gatts_notify_indicate(g_server_id, param->connectId, &ntf_param);
     if (ret != 0) {
-        printf("%s gatts_notify_indicate fail, ret:%x.\n", BLE_HILINK_SERVER_LOG, ret);
+        HILINK_SAL_DEBUG("%s gatts_notify_indicate fail, ret:%x.\n", BLE_HILINK_SERVER_LOG, ret);
     }
 
     int yet = ret ? 0 : -1;
     if (g_ble_gatts_cb->indicationSentCb != NULL) {
-        printf("%s indicationSentCb form Hilink.\n", BLE_HILINK_SERVER_LOG);
+        HILINK_SAL_DEBUG("%s indicationSentCb form Hilink.\n", BLE_HILINK_SERVER_LOG);
         g_ble_gatts_cb->indicationSentCb(param->connectId, yet);
     }
 
@@ -955,7 +978,7 @@ int BleGattsSendIndication(int serverId, GattsSendIndParam *param)
     if (indicate_func != NULL) {
         ret = indicate_func(ntf_param.value, ntf_param.value_len);
         if (ret != 0) {
-            printf("indicateFunc fail %d.\n", ret);
+            HILINK_SAL_DEBUG("indicateFunc fail %d.\n", ret);
         }
     }
     return ret;
@@ -969,7 +992,7 @@ int BleGattsSendIndication(int serverId, GattsSendIndParam *param)
  */
 int BleGattsSetEncryption(BdAddr bdAddr, BleSecAct secAct)
 {
-    printf("%s BleGattsSetEncryption enter, secAct:%d.\n", BLE_HILINK_SERVER_LOG, secAct);
+    HILINK_SAL_DEBUG("%s BleGattsSetEncryption enter, secAct:%d.\n", BLE_HILINK_SERVER_LOG, secAct);
 
     gap_ble_sec_params_t sec_params = {0};
     sec_params.bondable = 1;
@@ -978,21 +1001,22 @@ int BleGattsSetEncryption(BdAddr bdAddr, BleSecAct secAct)
     sec_params.sc_mode = secAct;
     int ret = gap_ble_set_sec_param(&sec_params);
     if (ret != 0) {
-        printf("%s gap_ble_set_sec_param fail, ret:%d.\n", BLE_HILINK_SERVER_LOG, ret);
+        HILINK_SAL_DEBUG("%s gap_ble_set_sec_param fail, ret:%d.\n", BLE_HILINK_SERVER_LOG, ret);
     }
     return 0;
 }
 
 void add_service_cb_adapt(uint8_t server_id, bt_uuid_t *uuid, uint16_t handle, errcode_t status)
 {
-    printf("%s add_service_cb server_id:%d, handle:%d, status:%d.\n", BLE_HILINK_SERVER_LOG, server_id, handle, status);
+    HILINK_SAL_DEBUG("%s add_service_cb server_id:%d, handle:%d, status:%d.\n",
+        BLE_HILINK_SERVER_LOG, server_id, handle, status);
     return;
 }
 
 void add_characteristic_cb_adapt(uint8_t server_id, bt_uuid_t *uuid, uint16_t service_handle,
     gatts_add_character_result_t *result, errcode_t status)
 {
-    printf("%s add_characteristic_cb server: %d srvc_hdl: %d char_hdl: %d char_val_hdl: %d uuid_len: %d \n",
+    HILINK_SAL_DEBUG("%s add_characteristic_cb server: %d srvc_hdl: %d char_hdl: %d char_val_hdl: %d uuid_len: %d \n",
         BLE_HILINK_SERVER_LOG, server_id, service_handle, result->handle, result->value_handle, uuid->uuid_len);
     return;
 }
@@ -1000,14 +1024,15 @@ void add_characteristic_cb_adapt(uint8_t server_id, bt_uuid_t *uuid, uint16_t se
 void add_descriptor_cb_adapt(uint8_t server_id, bt_uuid_t *uuid, uint16_t service_handle,
     uint16_t handle, errcode_t status)
 {
-    printf("%s add_descriptor_cb server: %d srv_hdl: %d desc_hdl: %d uuid_len:%d.\n",
+    HILINK_SAL_DEBUG("%s add_descriptor_cb server: %d srv_hdl: %d desc_hdl: %d uuid_len:%d.\n",
         BLE_HILINK_SERVER_LOG, server_id, service_handle, handle, uuid->uuid_len);
     return;
 }
 
 void start_service_cb_adapt(uint8_t server_id, uint16_t handle, errcode_t status)
 {
-    printf("%s start_service_cb server: %d srv_hdl: %d status: %d\n", BLE_HILINK_SERVER_LOG, server_id, handle, status);
+    HILINK_SAL_DEBUG("%s start_service_cb server: %d srv_hdl: %d status: %d\n",
+        BLE_HILINK_SERVER_LOG, server_id, handle, status);
 
     g_service_flag = 0;
     if (g_ble_gatts_cb->serviceStartCb) {
@@ -1018,7 +1043,7 @@ void start_service_cb_adapt(uint8_t server_id, uint16_t handle, errcode_t status
 
 void stop_service_cb_adapt(uint8_t server_id, uint16_t handle, errcode_t status)
 {
-    printf("%s stop_service_cb server: %d srv_hdl: %d status: %d\n",
+    HILINK_SAL_DEBUG("%s stop_service_cb server: %d srv_hdl: %d status: %d\n",
         BLE_HILINK_SERVER_LOG, server_id, handle, status);
     if (g_ble_gatts_cb->serviceStopCb) {
         g_ble_gatts_cb->serviceStopCb(status, server_id, handle);
@@ -1028,7 +1053,7 @@ void stop_service_cb_adapt(uint8_t server_id, uint16_t handle, errcode_t status)
 
 void delete_service_cb_adapt(uint8_t server_id, errcode_t status)
 {
-    printf("%s stop_service_cb server: %d srv_hdl: %d status: %d\n",
+    HILINK_SAL_DEBUG("%s stop_service_cb server: %d srv_hdl: %d status: %d\n",
         BLE_HILINK_SERVER_LOG, server_id, status);
     return;
 }
@@ -1036,7 +1061,7 @@ void delete_service_cb_adapt(uint8_t server_id, errcode_t status)
 void read_request_cb_adapt(uint8_t server_id, uint16_t conn_id, gatts_req_read_cb_t *read_cb_para,
     errcode_t status)
 {
-    printf("%s read_request_cb_adapt--server_id:%d conn_id:%d status:%d\n",
+    HILINK_SAL_DEBUG("%s read_request_cb_adapt--server_id:%d conn_id:%d status:%d\n",
         BLE_HILINK_SERVER_LOG, server_id, conn_id, status);
 
     char buff[MAX_READ_REQ_LEN] = {0};
@@ -1047,7 +1072,7 @@ void read_request_cb_adapt(uint8_t server_id, uint16_t conn_id, gatts_req_read_c
     if (read_func != NULL) {
         ret = read_func((uint8_t *)buff, &length);
         if (ret != ERRCODE_BT_SUCCESS) {
-            printf("read_func fail %d.\n", ret);
+            HILINK_SAL_DEBUG("read_func fail %d.\n", ret);
             length = 0;
         }
     }
@@ -1074,14 +1099,14 @@ void read_request_cb_adapt(uint8_t server_id, uint16_t conn_id, gatts_req_read_c
 void write_request_cb_adapt(uint8_t server_id, uint16_t conn_id, gatts_req_write_cb_t *write_cb_para,
     errcode_t status)
 {
-    printf("%s write_request_cb_adapt--request_id:%d att_handle:%d data_len:%d\n",
+    HILINK_SAL_DEBUG("%s write_request_cb_adapt--request_id:%d att_handle:%d data_len:%d\n",
         BLE_HILINK_SERVER_LOG, write_cb_para->request_id, write_cb_para->handle, write_cb_para->length);
 
     BleGattServiceWrite write_func = get_chara_write_func(conn_id, write_cb_para->handle);
     if (write_func != NULL) {
         int ret = write_func(write_cb_para->value, write_cb_para->length);
         if (ret != 0) {
-            printf("write_func fail %d.\n", ret);
+            HILINK_SAL_DEBUG("write_func fail %d.\n", ret);
         }
     }
 
@@ -1099,14 +1124,14 @@ void write_request_cb_adapt(uint8_t server_id, uint16_t conn_id, gatts_req_write
 
         int ret = BleGattsSendResponse(g_server_id, &rsp);
         if (ret != ERRCODE_BT_SUCCESS) {
-            printf("BleGattsSendResponse fail %d.\n", ret);
+            HILINK_SAL_DEBUG("BleGattsSendResponse fail %d.\n", ret);
         }
     }
 }
 
 void mtu_changed_cb_adapt(uint8_t server_id, uint16_t conn_id, uint16_t mtu_size, errcode_t status)
 {
-    printf("%s mtu_changed_cb server_id:%d conn_id:%d mtu_size: %d status: %d\n",
+    HILINK_SAL_DEBUG("%s mtu_changed_cb server_id:%d conn_id:%d mtu_size: %d status: %d\n",
         BLE_HILINK_SERVER_LOG, server_id, conn_id, mtu_size, status);
 
     g_ble_gatts_cb->mtuChangeCb(conn_id, mtu_size);
@@ -1131,13 +1156,13 @@ gatts_callbacks_t g_gatt_callback = {
  */
 int BleGattsRegisterCallbacks(BtGattServerCallbacks *func)
 {
-    printf("%s BleGattsRegisterCallbacks enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattsRegisterCallbacks enter.\n", BLE_HILINK_SERVER_LOG);
     errcode_t ret = ERRCODE_BT_FAIL;
     if (func != NULL) {
         g_ble_gatts_cb = func;
         ret = gatts_register_callbacks(&g_gatt_callback);
         if (ret != ERRCODE_BT_SUCCESS) {
-            printf("%s gatts_register_callbacks fail, ret:%d.\n", BLE_HILINK_SERVER_LOG, ret);
+            HILINK_SAL_DEBUG("%s gatts_register_callbacks fail, ret:%d.\n", BLE_HILINK_SERVER_LOG, ret);
             return ERRCODE_BT_FAIL;
         }
     }
@@ -1157,7 +1182,7 @@ static errcode_t ble_uuid_server_init(void)
     }
     ret |= gatts_register_server(&app_uuid, &g_server_id);
     if (ret != ERRCODE_BT_SUCCESS) {
-        printf("%s gatts_register_server fail.\n", BLE_HILINK_SERVER_LOG);
+        HILINK_SAL_DEBUG("%s gatts_register_server fail.\n", BLE_HILINK_SERVER_LOG);
         return -1;
     }
     return ret;
@@ -1212,7 +1237,7 @@ static void convert_uuid(uint8_t *uuid_input, UuidType type, BtUuid *uuid_output
     uuid_output->uuid = (char *)uuid_input;
     ret = memcpy_s(temp_uuid, OHOS_BLE_UUID_MAX_LEN, g_hilink_group_uuid[g_hilink_group_cnt], OHOS_BLE_UUID_MAX_LEN);
     if (ret != 0) {
-        printf("%s convert_uuid memcpy_s fail.\n", BLE_HILINK_SERVER_LOG);
+        HILINK_SAL_DEBUG("%s convert_uuid memcpy_s fail.\n", BLE_HILINK_SERVER_LOG);
         return;
     }
     reverse_uuid(temp_uuid, uuid_output->uuid, uuid_output->uuidLen);
@@ -1239,7 +1264,7 @@ static void set_chara_func(BleGattAttr *attr, uint8_t is_indicate)
 
 int BleGattsStartServiceEx(int *srvcHandle, BleGattService *srvcInfo)
 {
-    printf("%s BleGattsStartServiceEx enter srvHandle:%d.\n", BLE_HILINK_SERVER_LOG, *srvcHandle);
+    HILINK_SAL_DEBUG("%s BleGattsStartServiceEx enter srvHandle:%d.\n", BLE_HILINK_SERVER_LOG, *srvcHandle);
     errcode_t ret = ERRCODE_BT_SUCCESS;
     uint8_t is_indicate = 0;
     BtUuid ble_uuid = {0};
@@ -1247,28 +1272,29 @@ int BleGattsStartServiceEx(int *srvcHandle, BleGattService *srvcInfo)
 
     if (g_server_id == INVALID_SERVER_ID) {
         if (ble_uuid_server_init() != ERRCODE_BT_SUCCESS) {
-            printf("%s gatts_register_server fail.\n", BLE_HILINK_SERVER_LOG);
+            HILINK_SAL_DEBUG("%s gatts_register_server fail.\n", BLE_HILINK_SERVER_LOG);
             return -1;
         }
     }
 
+    BleGattAttr attr = {0};
     for (unsigned int i = 0; i < srvcInfo->attrNum; i++) {
-        BleGattAttr *attr = &(srvcInfo->attrList[i]);
-        convert_uuid(attr->uuid, attr->uuidType, &ble_uuid);
+        memcpy_s(&attr, sizeof(BleGattAttr), &(srvcInfo->attrList[i]), sizeof(BleGattAttr));
+        convert_uuid(attr.uuid, attr.uuidType, &ble_uuid);
 
-        switch (attr->attrType) {
+        switch (attr.attrType) {
             case OHOS_BLE_ATTRIB_TYPE_SERVICE:
                 ret = BleGattsAddService(g_server_id, ble_uuid, 1, srvcInfo->attrNum);
                 if (ret != ERRCODE_BT_SUCCESS) {
-                    printf("%s BleGattsAddService failed, ret:0x%x\r\n", BLE_HILINK_SERVER_LOG, ret);
+                    HILINK_SAL_DEBUG("%s BleGattsAddService failed, ret:0x%x\r\n", BLE_HILINK_SERVER_LOG, ret);
                 }
                 hilnk_group_add();
                 break;
             case OHOS_BLE_ATTRIB_TYPE_CHAR:
                 ret = BleGattsAddCharacteristic(g_server_id, g_srvc_handle,
-                    ble_uuid, attr->properties, attr->permission);
+                    ble_uuid, attr.properties, attr.permission);
                 if (ret != ERRCODE_BT_SUCCESS) {
-                    printf("%s BleGattsAddCharacteristic failed, ret:0x%x\r\n", BLE_HILINK_SERVER_LOG, ret);
+                    HILINK_SAL_DEBUG("%s BleGattsAddCharacteristic failed, ret:0x%x\r\n", BLE_HILINK_SERVER_LOG, ret);
                 }
                 hilnk_group_add();
                 break;
@@ -1277,22 +1303,22 @@ int BleGattsStartServiceEx(int *srvcHandle, BleGattService *srvcInfo)
             case OHOS_BLE_ATTRIB_TYPE_CHAR_CLIENT_CONFIG:
                 break;
             case OHOS_BLE_ATTRIB_TYPE_CHAR_USER_DESCR:
-                ret = BleGattsAddDescriptor(g_server_id, g_srvc_handle, ble_uuid, attr->permission);
+                ret = BleGattsAddDescriptor(g_server_id, g_srvc_handle, ble_uuid, attr.permission);
                 if (ret != ERRCODE_BT_SUCCESS) {
-                    printf("%s BleGattsAddDescriptor failed:%x.\n", BLE_HILINK_SERVER_LOG, ret);
+                    HILINK_SAL_DEBUG("%s BleGattsAddDescriptor failed:%x.\n", BLE_HILINK_SERVER_LOG, ret);
                 }
                 hilnk_group_add();
                 break;
             default:
-                printf("Unknown\n");
+                HILINK_SAL_DEBUG("Unknown\n");
         }
 
-        if ((attr->attrType == OHOS_BLE_ATTRIB_TYPE_CHAR_USER_DESCR) || (attr->attrType == OHOS_BLE_ATTRIB_TYPE_CHAR)) {
-            set_chara_func(attr, 0);
+        if ((attr.attrType == OHOS_BLE_ATTRIB_TYPE_CHAR_USER_DESCR) || (attr.attrType == OHOS_BLE_ATTRIB_TYPE_CHAR)) {
+            set_chara_func(&attr, 0);
         }
 
-        if ((attr->properties & OHOS_GATT_CHARACTER_PROPERTY_BIT_INDICATE) ||
-            (attr->properties & OHOS_GATT_CHARACTER_PROPERTY_BIT_NOTIFY)) {
+        if ((attr.properties & OHOS_GATT_CHARACTER_PROPERTY_BIT_INDICATE) ||
+            (attr.properties & OHOS_GATT_CHARACTER_PROPERTY_BIT_NOTIFY)) {
             is_indicate = 1;
             g_indicate_handle = g_cb_chara_handle;
         }
@@ -1323,6 +1349,6 @@ int BleGattsStartServiceEx(int *srvcHandle, BleGattService *srvcInfo)
  */
 int BleGattsStopServiceEx(int srvcHandle)
 {
-    printf("%s BleGattsStopServiceEx enter.\n", BLE_HILINK_SERVER_LOG);
+    HILINK_SAL_DEBUG("%s BleGattsStopServiceEx enter.\n", BLE_HILINK_SERVER_LOG);
     return 0;
 }

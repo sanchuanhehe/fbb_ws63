@@ -137,6 +137,8 @@ if __name__ == '__main__':
     info = upg_base_info()
     conf = get_parameters()
     input_param = conf.pkt.split(",")
+    if "boot" not in input_param:
+        input_param.append("boot")
 
     conf.app_name        = "update"
     conf.upg_format_path = info.fota_format_path

@@ -70,19 +70,19 @@ typedef struct {
  * 配置必须按照放开写区间的大小，从小到大手动排序
  */
 #if defined FLASH_REGION_CFG_LOADERBOOT
-static const sfc_protect_cfg_t g_sfc_protect_cfg[] ={
+static const sfc_protect_cfg_t g_sfc_protect_cfg[] = {
     {0x02, 0x28, FLASH_CHIP_PROTECT_128K, FLASH_CHIP_PROTECT_END}, // 保护前两个Block 0&1
     {0x02, 0x78, FLASH_CHIP_PROTECT_32K, FLASH_CHIP_PROTECT_END}, // 保护前32K
     {0x02, 0x00, 0x0, FLASH_CHIP_PROTECT_END}, // 全片放开, 烧录时需要写前32K
 };
 
 #elif defined FLASH_REGION_CFG_FLASHBOOT
-static const sfc_protect_cfg_t g_sfc_protect_cfg[] ={
+static const sfc_protect_cfg_t g_sfc_protect_cfg[] = {
     {0x02, 0x28, FLASH_CHIP_PROTECT_128K, FLASH_CHIP_PROTECT_END}, // 保护前两个Block 0&1
 };
 
 #else // APP
-static const sfc_protect_cfg_t g_sfc_protect_cfg[] ={
+static const sfc_protect_cfg_t g_sfc_protect_cfg[] = {
 #ifdef _PRE_WLAN_FEATURE_MFG_TEST
     {0x02, 0x28, FLASH_CHIP_PROTECT_128K, FLASH_CHIP_PROTECT_END}, // 保护前两个Block 0&1
     {0x02, 0x78, FLASH_CHIP_PROTECT_32K, FLASH_CHIP_PROTECT_END}, // 保护前32K
@@ -113,7 +113,7 @@ static sfc_protect_cfg_t const *sfc_port_find_addr_protect_cfg(uint32_t start_ad
 
 #ifdef BUILD_NOOSAL
 // 该接口在 hal_sfc_v150.c 是 STATIC
-errcode_t hal_sfc_regs_wait_ready(uint8_t wip_bit)
+static errcode_t hal_sfc_regs_wait_ready(uint8_t wip_bit)
 {
     uint32_t dead_line = 0;
     uint32_t timeout = sfc_port_get_delay_times();
@@ -230,7 +230,7 @@ void sfc_port_write_sr(bool is_volatile, uint8_t cmd, uint8_t data)
  */
 uint32_t sfc_port_read_sr(uint32_t cmd)
 {
-    hal_spi_opreation_t hal_opreation;
+    hal_spi_opreation_t hal_opreation = {0};
     hal_opreation.opt.cmd = cmd;
     hal_opreation.opt.iftype = STANDARD_SPI;
     hal_opreation.data_size = 1;

@@ -103,6 +103,7 @@ typedef enum {
     EFUSE_GET_S_ID = 15,
     EFUSE_GET_B_ID = 16,
     EFUSE_GET_K_ID = 17,
+    EFUSE_MAC_SLE_ADDR_ID = 18,
     EFUSE_IDX_MAX,
 } efuse_idx;
 

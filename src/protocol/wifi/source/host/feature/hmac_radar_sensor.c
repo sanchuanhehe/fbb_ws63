@@ -403,7 +403,7 @@ OSAL_STATIC osal_u32 hmac_radar_sensor_config_freq(osal_void)
     }
 
     msg.data = &channel_num;
-    msg.data_len = sizeof(osal_u8);
+    msg.data_len = (osal_u16)sizeof(osal_u8);
     hmac_config_set_freq_etc(hmac_vap, &msg);
     /* 初始化发送功率 */
     hmac_pow_set_vap_tx_power(hmac_vap, HAL_POW_SET_TYPE_INIT);
@@ -519,7 +519,7 @@ osal_void hmac_radar_sensor_config_ch_num(osal_u8 ch_num)
     debug_info->ch_num = ch_num;
 }
 
-osal_u8 hmac_radar_sensor_get_work_ch_num(osal_void)
+OSAL_STATIC osal_u8 hmac_radar_sensor_get_work_ch_num(osal_void)
 {
     hmac_radar_sensor_debug_stru *debug_info = hmac_radar_sensor_get_debug_info();
     hmac_radar_sensor_info_stru *radar_sensor_info = hmac_radar_sensor_get_info();
@@ -750,6 +750,36 @@ osal_void hmac_radar_sensor_one_subframe_start(osal_void)
         return;
     }
     hal_radar_sensing_one_sub_frame_start();
+}
+
+OSAL_STATIC osal_bool hmac_radar_sensor_scan_begin(osal_void *notify_data)
+{
+    hmac_radar_sensor_info_stru *radar_sensor_info = hmac_radar_sensor_get_info();
+ 
+    unref_param(notify_data);
+ 
+    if (radar_sensor_info->probe_enable != OSAL_TRUE) {
+        return OSAL_TRUE;
+    }
+ 
+    report_radar_sensor_disable_reason(RADAR_SENSOR_WIFI_SCAN_BEGIN);
+ 
+    return OSAL_TRUE;
+}
+
+OSAL_STATIC osal_bool hmac_radar_sensor_scan_end(osal_void *notify_data)
+{
+    hmac_radar_sensor_info_stru *radar_sensor_info = hmac_radar_sensor_get_info();
+ 
+    unref_param(notify_data);
+ 
+    if (radar_sensor_info->probe_enable != OSAL_TRUE) {
+        return OSAL_TRUE;
+    }
+ 
+    report_radar_sensor_disable_reason(RADAR_SENSOR_WIFI_SCAN_END);
+ 
+    return OSAL_TRUE;
 }
 
 #ifdef _PRE_WLAN_SUPPORT_CCPRIV_CMD
@@ -1045,6 +1075,8 @@ osal_u32 hmac_radar_sensor_init(osal_void)
     /* 对外接口注册 */
     hmac_feature_hook_register(HMAC_FHOOK_RADAR_SENSOR_GET_WORK_CHAN, hmac_radar_sensor_get_work_ch_num);
     hmac_feature_hook_register(HMAC_FHOOK_RADAR_SENSOR_DEL_VAP_NOTIFY, hmac_radar_sensor_del_vap);
+    frw_util_notifier_register(WLAN_UTIL_NOTIFIER_EVENT_SCAN_BEGIN, hmac_radar_sensor_scan_begin);
+    frw_util_notifier_register(WLAN_UTIL_NOTIFIER_EVENT_SCAN_END, hmac_radar_sensor_scan_end);
 
 #ifdef _PRE_WLAN_SUPPORT_CCPRIV_CMD
     /* ccpriv命令注册 */
@@ -1065,6 +1097,9 @@ osal_void hmac_radar_sensor_deinit(osal_void)
     /* 对外接口去注册 */
     hmac_feature_hook_unregister(HMAC_FHOOK_RADAR_SENSOR_GET_WORK_CHAN);
     hmac_feature_hook_unregister(HMAC_FHOOK_RADAR_SENSOR_DEL_VAP_NOTIFY);
+    frw_util_notifier_unregister(WLAN_UTIL_NOTIFIER_EVENT_SCAN_BEGIN, hmac_radar_sensor_scan_begin);
+    frw_util_notifier_unregister(WLAN_UTIL_NOTIFIER_EVENT_SCAN_END, hmac_radar_sensor_scan_end);
+
 #ifdef _PRE_WLAN_SUPPORT_CCPRIV_CMD
     /* ccpriv命令去注册 */
     hmac_ccpriv_unregister((const osal_s8 *)"radar_sensor_enable");

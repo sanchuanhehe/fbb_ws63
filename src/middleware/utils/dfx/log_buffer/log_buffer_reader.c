@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description:  LOG BUFFER READER MODULE.
- * Author:
- * Create:  2018-10-15
  */
 #include "panic.h"
 #include "securec.h"

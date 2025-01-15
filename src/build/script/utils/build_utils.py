@@ -30,6 +30,7 @@ jlink_tools_path = os.path.join(root_path, 'tools', 'bin', 'jlink_tool')
 lzma_tools_path = os.path.join(root_path, 'tools', 'bin', 'lzma_tool')
 sign_tools_path = os.path.join(root_path, 'tools', 'bin', 'sign_tool')
 derived_tools_path = os.path.join(root_path, 'tools', 'bin', 'derived_key_tool')
+radar_tools_path = os.path.join(root_path, 'tools', 'bin', 'radar_tool')
 
 """
 Colors defines. To highlight important output.

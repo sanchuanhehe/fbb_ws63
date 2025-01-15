@@ -78,7 +78,7 @@ static void app_spi_slave_init_config(void)
     config.spi_frame_format = HAL_SPI_FRAME_FORMAT_STANDARD;
     config.frame_size = SPI_FRAME_SIZE_8;
     config.tmod = SPI_TMOD;
-    config.sste = 1;
+    config.sste = 0;
 
     ext_config.qspi_param.wait_cycles = SPI_WAIT_CYCLES;
 

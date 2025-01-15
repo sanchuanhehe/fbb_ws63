@@ -6,7 +6,7 @@
  * History: \n
  * 2023-04-03, Create file. \n
  */
-#include "boards.h"
+
 #include "pinctrl.h"
 #include "gpio.h"
 #include "soc_osal.h"
@@ -21,14 +21,14 @@ static int blinky_task(const char *arg)
 {
     unused(arg);
 
-    uapi_pin_set_mode(BSP_LED_0, HAL_PIO_FUNC_GPIO);
+    uapi_pin_set_mode(CONFIG_BLINKY_PIN, HAL_PIO_FUNC_GPIO);
 
-    uapi_gpio_set_dir(BSP_LED_0, GPIO_DIRECTION_OUTPUT);
-    uapi_gpio_set_val(BSP_LED_0, GPIO_LEVEL_LOW);
+    uapi_gpio_set_dir(CONFIG_BLINKY_PIN, GPIO_DIRECTION_OUTPUT);
+    uapi_gpio_set_val(CONFIG_BLINKY_PIN, GPIO_LEVEL_LOW);
 
     while (1) {
         osal_msleep(BLINKY_DURATION_MS);
-        uapi_gpio_toggle(BSP_LED_0);
+        uapi_gpio_toggle(CONFIG_BLINKY_PIN);
         osal_printk("Blinky working.\r\n");
     }
 

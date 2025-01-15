@@ -1,7 +1,6 @@
 /**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021. All rights reserved. \n
- * Description: SOC lOG \n
- * Author:
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021. All rights reserved.
+ * Description: SOC lOG
  */
 
 /**

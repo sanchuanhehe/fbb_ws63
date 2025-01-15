@@ -8,6 +8,9 @@ choice
 config SAMPLE_SUPPORT_STA_SAMPLE
     bool "Support WIFI STA Sample"
 
+config SAMPLE_SUPPORT_ALILINK_SAMPLE
+    bool "Support ALILINK Sample"
+
 config SAMPLE_SUPPORT_SOFTAP_SAMPLE
     bool "Support WIFI SoftAP Sample."
 

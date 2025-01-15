@@ -92,7 +92,7 @@ LITE_OS_SEC_TEXT_INIT void HalClockStart(void)
     lock_int_save = LOS_IntLock();
     ret = osal_irq_request(MACHINE_INT_NUM, (osal_irq_handler)HalTickEntry, NULL, NULL, NULL);
     if (ret != OSAL_SUCCESS) {
-        PRINT_ERR("%s %d: osal_irq_request ret:0x%x\n", __FUNCTION__, __LINE__, ret);
+        PRINT_ERR("%s err:0x%x\n", __FUNCTION__, ret);
     }
     osal_irq_enable(MACHINE_INT_NUM);
     machine_timer_init();

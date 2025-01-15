@@ -12,7 +12,6 @@
 #endif
 #include "debug_print.h"
 #include "hal_sfc_v150_regs_op.h"
-#include "osal_interrupt.h"
 #include "securec.h"
 #include "tcxo.h"
 #include "sfc.h"

@@ -13,6 +13,7 @@
 #include "platform_core.h"
 #include "std_def.h"
 #include "debug_print.h"
+#include "errcode.h"
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -142,6 +143,23 @@ void log_uart_port_init(void);
 void uart2_init(uint32_t baud_rate);
 #endif
 
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD)
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD_DEBUG)
+void uart_rx_thread_debug_print(void);
+#endif
+#endif
+
+#if defined(AT_COMMAND)
+void at_uart_init(void);
+#endif
+
+uint32_t at_uart_get_rcv_cnt(void);
+void log_uart_port_write(const uint8_t *buffer, uint32_t length);
+errcode_t uart_port_save_bus_id(int32_t dbg_uart_bus, int32_t at_uart_bus, int32_t hso_uart_bus);
+
+#if defined(SW_UART_DEBUG)
+void sw_debug_uart_reinit(uint32_t baud_rate);
+#endif
 /**
  * @}
  */

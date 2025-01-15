@@ -4,11 +4,13 @@
 
 ## HiSpark Studio安装
 
-*  下载并安装Windows版本的[HiSpark studio工具包](https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/HiSparkStudio.exe)。
+* 登录[上海海思开发者网站](https://developer.hisilicon.com/devCenter/index?id=9dfafc50-7189-4fb4-a)获取IDE工具，需要注册账号下载。
 
-* 下载完成后，双击"HiSparkStudio.exe"安装。
+*  ![image-20241231144129850](../docs/pic/tools/image-20241231144129850.png)
 
-   ![image-20240808155329000](../docs/pic/tools/image-20240808155329000.png)
+* 下载完成后，双击"HiSparkStudio1.0.0.8.exe"安装。
+
+   ![image-20241231144623342](../docs/pic/tools/image-20241231144623342.png)
 
 * 安装界面如下，选择“我同意此协议”，点击“下一步”。
 

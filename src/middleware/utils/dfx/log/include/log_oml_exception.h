@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description:  log OML exception producer interface
- * Author:
- * Create:
  */
 
 #ifndef LOG_OML_EXCEPTION_H

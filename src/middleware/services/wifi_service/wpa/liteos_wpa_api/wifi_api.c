@@ -1833,6 +1833,38 @@ int uapi_wifi_wnm_bss_query(int reason_code, int candidate_list)
 
     return EXT_WIFI_OK;
 }
+
+int uapi_wifi_wnm_notify(const char *param, unsigned int len)
+{
+    struct ext_wifi_dev *wifi_dev = wifi_dev_get(EXT_WIFI_IFTYPE_STATION);
+    char buf[WPA_CMD_BUF_SIZE] = { 0 };
+
+    if ((wifi_dev == NULL) || (wifi_dev->priv == NULL) ||
+        (wifi_dev->iftype == EXT_WIFI_IFTYPE_AP) ||
+        (wifi_dev->iftype >= EXT_WIFI_IFTYPE_P2P_CLIENT)) {
+        wpa_error_log0(MSG_ERROR, "uapi_wifi_wnm_notify: get wifi dev failed\n");
+        return EXT_WIFI_FAIL;
+    }
+
+    if (memcpy_s(buf, sizeof(buf), param, len + 1) != EOK) {
+        wpa_error_log0(MSG_ERROR, "uapi_wifi_wnm_notify:: memcpy_s faild");
+        return EXT_WIFI_FAIL;
+    }
+
+    printf("uapi_wifi_wnm_notify::send_wnm_notify[%s], len[%d]\r\n", buf, len);
+    (void)os_event_clear(g_wpa_event, ~(unsigned int)WPA_EVENT_STA_WNM_NOTIFY);
+    if (wpa_cli_wnm_notify((struct wpa_supplicant *)(wifi_dev->priv), buf, len) != EXT_WIFI_OK) {
+        wpa_error_log0(MSG_ERROR, "uapi_wifi_wnm_notify: wpa_cli_cmd_wnm_bss_query failed.");
+        return EXT_WIFI_FAIL;
+    }
+
+    wpa_error_log0(MSG_ERROR, "os_event_read WPA_EVENT_STA_WNM_NOTIFY");
+    unsigned int ret_val;
+    (void)os_event_read(g_wpa_event, WPA_EVENT_STA_WNM_NOTIFY, &ret_val,
+                        WIFI_WAITMODE_OR | WIFI_WAITMODE_CLR, WIFI_EVENT_DELAY_5S);
+
+    return EXT_WIFI_OK;
+}
 #endif
 
 int uapi_wifi_csi_check_param(const ext_csi_config *config)

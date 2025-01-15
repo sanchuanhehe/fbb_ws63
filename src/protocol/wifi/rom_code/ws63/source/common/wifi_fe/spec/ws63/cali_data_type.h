@@ -82,7 +82,8 @@ typedef struct {
 
 typedef struct {
     osal_u8 bias_comp;
-    osal_u8 reserve[3];
+    osal_u16 efuse_iddq;
+    osal_u8 reserve;
 } cali_ipa_current_param_stru;
 struct hh503_cali_param_tag {
     cali_param_2g_stru cali_param_2g;

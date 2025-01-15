@@ -29,7 +29,7 @@ static int32_t diag_channel_uart_output(void *fd, dfx_data_type_t data_type, uin
     unused(fd);
     unused(data_type);
     for (uint8_t i = 0; i < cnt; i++) {
-        log_uart_send_buffer(data[i], len[i]);
+        log_uart_port_write(data[i], len[i]);
     }
     return ERRCODE_SUCC;
 }

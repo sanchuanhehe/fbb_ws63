@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2023. All rights reserved.
  * Description: hcc channel.
- * Author:
- * Create: 2021-09-23
  */
 
 #ifndef HCC_CHANNEL_HEADER

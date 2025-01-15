@@ -12,13 +12,13 @@
 #include "kapi_pke_cal.h"
 #include "kapi_symc.h"
 #include "kapi_trng.h"
-
+ 
 #include "hash_harden_impl.h"
 #include "aes_harden_impl.h"
 #include "ecp_harden_impl.h"
-
+ 
 #define MALLOC_BOUNDARY 32
-
+ 
 typedef enum {
     KM_KEYSLOT_ENGINE_AES = 0,
     KM_KEYSLOT_ENGINE_SM4,
@@ -29,7 +29,7 @@ typedef enum {
     KM_KEYSLOT_ENGINE_HMAC_SHA512,
     KM_KEYSLOT_ENGINE_HMAC_SM3,
 } km_keyslot_engine;
-
+ 
 /* HASH */
 typedef int32_t (*func_hash_init)(void);
 typedef int32_t (*func_hash_deinit)(void);
@@ -39,19 +39,19 @@ typedef int32_t (*func_hash_get)(uint32_t uapi_hash_handle, crypto_hash_clone_ct
 typedef int32_t (*func_hash_set)(uint32_t uapi_hash_handle, const crypto_hash_clone_ctx *hash_clone_ctx);
 typedef int32_t (*func_hash_destroy)(uint32_t uapi_hash_handle);
 typedef int32_t (*func_hash_finish)(uint32_t uapi_hash_handle, uint8_t *out, uint32_t *out_len);
-
+ 
 /* HKDF */
 typedef int32_t (*func_hkdf)(crypto_hkdf_t *hkdf_param, uint8_t *okm, uint32_t okm_length);
 typedef int32_t (*func_hkdf_extract)(crypto_hkdf_extract_t *extract_param, uint8_t *prk, uint32_t *prk_length);
 typedef int32_t (*func_hkdf_expand)(const crypto_hkdf_expand_t *expand_param, uint8_t *okm, uint32_t okm_length);
-
+ 
 /* TRNG */
 typedef int32_t (*func_trng_get_random)(uint32_t *randnum);
 typedef int32_t (*func_trng_get_multi_random)(uint32_t size, uint8_t *randnum);
-
+ 
 /* PBKDF2 */
 typedef int32_t (*func_pbkdf2)(const crypto_kdf_pbkdf2_param *param, uint8_t *out, const uint32_t out_len);
-
+ 
 /* SYMC */
 typedef int32_t (*func_symc_init)(void);
 typedef int32_t (*func_symc_deinit)(void);
@@ -68,7 +68,7 @@ typedef int32_t (*func_symc_get_tag)(uint32_t symc_handle, uint8_t *tag, uint32_
 typedef int32_t (*func_symc_mac_start)(uint32_t *symc_handle, const crypto_symc_mac_attr *mac_attr);
 typedef int32_t (*func_symc_mac_update)(uint32_t symc_handle, const crypto_buf_attr *src_buf, uint32_t length);
 typedef int32_t (*func_symc_mac_finish)(uint32_t symc_handle, uint8_t *mac, uint32_t *mac_length);
-
+ 
 /* PKE */
 typedef int32_t (*func_pke_init)(void);
 typedef int32_t (*func_pke_deinit)(void);
@@ -100,7 +100,7 @@ typedef int32_t (*func_pke_rsa_public_encrypt)(drv_pke_rsa_scheme scheme, drv_pk
 typedef int32_t (*func_pke_rsa_private_decrypt)(drv_pke_rsa_scheme scheme, drv_pke_hash_type hash_type,
     const drv_pke_rsa_priv_key *priv_key, const drv_pke_data *input, const drv_pke_data *label,
     drv_pke_data *output);
-
+ 
 /* KM */
 typedef int32_t (*func_km_init)(void);
 typedef int32_t (*func_km_deinit)(void);
@@ -108,12 +108,12 @@ typedef int32_t (*func_km_create_keyslot)(uint32_t *keyslot_handle, km_keyslot_e
 typedef void (*func_km_destroy_keyslot)(uint32_t keyslot_handle);
 typedef int32_t (*func_km_set_clear_key)(uint32_t keyslot_handle, uint8_t *key, uint32_t keylen,
     km_keyslot_engine key_engine);
-
+ 
 /* MEM */
 typedef int32_t (*func_alloc_phys_buf)(crypto_buf_attr *buf_attr, void **virt_addr, uint32_t size);
 typedef void (*func_free_phys_buf)(crypto_buf_attr *buf_attr, void *virt_addr, uint32_t size);
 typedef int32_t (*func_get_phys_mem_addr)(const void *virt_addr, uintptr_t *phys_addr);
-
+ 
 typedef struct {
     func_hash_init harden_hash_init;
     func_hash_deinit harden_hash_deinit;
@@ -158,19 +158,19 @@ typedef struct {
     func_pke_rsa_public_encrypt harden_pke_rsa_public_encrypt;
     func_pke_rsa_private_decrypt harden_pke_rsa_private_decrypt;
 } mbedtls_harden_cipher_func;
-
+ 
 void mbedtls_cipher_adapt_register_func(mbedtls_harden_cipher_func *harden_cipher_func);
-
+ 
 static int32_t init_adapt_func(void)
 {
     return 0;
 }
-
+ 
 static int32_t deinit_adapt_func(void)
 {
     return 0;
 }
-
+ 
 static mbedtls_harden_cipher_func harden_cipher_func = {
     .harden_hash_init = kapi_cipher_hash_init,
     .harden_hash_deinit = kapi_cipher_hash_deinit,
@@ -205,20 +205,20 @@ static mbedtls_harden_cipher_func harden_cipher_func = {
     .harden_pke_mod = kapi_pke_mod,
     .harden_pke_exp_mod = kapi_pke_exp_mod,
 #endif
-#ifdef CONFIG_CONFIG_PKE_SUPPORT_ECC_GEN_KEY
+#ifdef CONFIG_PKE_SUPPORT_ECC_GEN_KEY
     .harden_pke_ecc_gen_key = kapi_pke_ecc_gen_key,
 #endif
-#ifdef CONFIG_CONFIG_PKE_SUPPORT_ECC_SIGN
+#ifdef CONFIG_PKE_SUPPORT_ECC_SIGN
     .harden_pke_ecdsa_sign = kapi_pke_ecdsa_sign,
 #endif
-#ifdef CONFIG_CONFIG_PKE_SUPPORT_ECC_VERIFY
+#ifdef CONFIG_PKE_SUPPORT_ECC_VERIFY
     .harden_pke_ecdsa_verify = kapi_pke_ecdsa_verify,
 #endif
 #ifdef CONFIG_PKE_SUPPORT_EDWARD
     .harden_pke_eddsa_sign = kapi_pke_eddsa_sign,
     .harden_pke_eddsa_verify = kapi_pke_eddsa_verify,
 #endif
-#ifdef CONFIG_CONFIG_PKE_SUPPORT_ECC_ECDH
+#ifdef CONFIG_PKE_SUPPORT_ECC_ECDH
     .harden_pke_gen_ecdh_key = kapi_pke_ecc_gen_ecdh_key,
 #endif
 #ifdef CONFIG_PKE_SUPPORT_ECC_CAL
@@ -231,11 +231,11 @@ static mbedtls_harden_cipher_func harden_cipher_func = {
     .harden_pke_rsa_private_decrypt = kapi_pke_rsa_private_decrypt,
 #endif
 };
-
+ 
 int32_t mbedtls_adapt_register_func(void)
 {
     mbedtls_cipher_adapt_register_func(&harden_cipher_func);
-
+ 
     mbedtls_alt_hash_init();
     mbedtls_alt_aes_init();
     mbedtls_alt_ecp_init();

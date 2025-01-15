@@ -46,6 +46,36 @@ config SPI_MASTER_PIN_MODE
     depends on SAMPLE_SUPPORT_SPI_MASTER
     default 1
 
+config SPI_MASTER_SUPPORT_QSPI
+    bool
+    prompt "SPI master support QSPI."
+    depends on SAMPLE_SUPPORT_SPI_MASTER
+    default n
+
+config SPI_MASTER_D3_PIN_MODE
+    int
+    prompt "Choose QSPI master D3 pin mode."
+    depends on SPI_MASTER_SUPPORT_QSPI
+    default 1
+
+config SPI_MASTER_D2_PIN_MODE
+    int
+    prompt "Choose QSPI master D2 pin mode."
+    depends on SPI_MASTER_SUPPORT_QSPI
+    default 1
+
+config SPI_MASTER_D3_PIN
+    int
+    prompt "Choose QSPI master D3 pin."
+    depends on SPI_MASTER_SUPPORT_QSPI
+    default 40
+
+config SPI_MASTER_D2_PIN
+    int
+    prompt "Choose QSPI master D2 pin."
+    depends on SPI_MASTER_SUPPORT_QSPI
+    default 41
+
 config SAMPLE_SUPPORT_SPI_SLAVE
     bool
     prompt "Support SPI Slave Sample."

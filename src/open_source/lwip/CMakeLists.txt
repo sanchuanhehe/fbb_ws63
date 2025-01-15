@@ -85,9 +85,8 @@ set(SOURCES
 )
 
 set(PUBLIC_HEADER
-    ${CMAKE_LWIP_SOURCE_DIR}/src/include
-    ${CMAKE_LWIP_ADAPTER_DIR}/src/include/lwip
     ${CMAKE_LWIP_ADAPTER_DIR}/src/include
+    ${CMAKE_LWIP_SOURCE_DIR}/src/include
 )
 
 set(PRIVATE_HEADER

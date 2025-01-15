@@ -15,7 +15,17 @@ config SAMPLE_SUPPORT_SLE_UUID_CLIENT_SAMPLE
 config SAMPLE_SUPPORT_SLE_SPEED_SERVER_SAMPLE
     bool "Support SLE Throughput Server Sample."
 
+config LARGE_THROUGHPUT_SERVER
+    bool "server large throughput."
+    default y
+    depends on SAMPLE_SUPPORT_SLE_SPEED_SERVER_SAMPLE
+
 config SAMPLE_SUPPORT_SLE_SPEED_CLIENT_SAMPLE
     bool "Support SLE Throughput Client Sample."
+
+config LARGE_THROUGHPUT_CLIENT
+    bool "client large throughput."
+    default y
+    depends on SAMPLE_SUPPORT_SLE_SPEED_CLIENT_SAMPLE
 
 endchoice

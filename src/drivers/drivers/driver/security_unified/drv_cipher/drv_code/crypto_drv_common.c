@@ -147,6 +147,10 @@ void crypto_dump_data(const char *name, const td_u8 *data, td_u32 data_len)
     crypto_unused(name);
     crypto_unused(data);
     crypto_print("%s(addr is 0x%x, size is %d Bytes):\r\n", name, (uintptr_t)data, data_len);
+    if (data == TD_NULL) {
+        crypto_print("NULL\r\n");
+        return;
+    }
 
     if (dump_length > MAX_DUMP_LENGHT) {
         dump_length = MAX_DUMP_LENGHT;

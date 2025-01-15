@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2023. All rights reserved.
  * Description: hcc flow ctrl module completion.
- * Author:
- * Create: 2021-06-30
  */
 
 #ifndef HCC_FLOW_CTRL_HEADER

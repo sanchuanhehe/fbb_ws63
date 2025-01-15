@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2015-2024. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2015-2024. All rights reserved.
  * 文 件 名   : hmac_roam_main.c
  * 生成日期   : 2015年3月18日
  * 功能描述   : 漫游模块主要对其他模块接口实现
@@ -44,6 +44,7 @@
 #if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
 #include "nv.h"
 #endif
+#include "hmac_beacon.h"
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -1702,6 +1703,8 @@ OAL_STATIC osal_u32  hmac_roam_to_new_bss(hmac_roam_info_stru *roam_info, osal_v
             "vap_id[%d] {hmac_roam_to_new_bss::hmac_fsm_call_func_sta_etc fail! erro code is %u}",
             hmac_vap->vap_id, ul_ret);
     }
+    /* 清理掉linkloss计数 */
+    hmac_vap_linkloss_clean(hmac_vap);
 
     hmac_vap->roam_scan_valid_rslt = OAL_TRUE;
     hmac_vap->wpa3_roaming = OSAL_FALSE;
@@ -2229,6 +2232,7 @@ OAL_STATIC osal_void hmac_roam_reset_ba(hmac_vap_stru *hmac_vap, hmac_user_stru 
 
     if (hmac_vap == OSAL_NULL) {
         oam_warning_log0(0, OAM_SF_ANY, "{hmac_roam_reset_ba::hmac_vap is NULL.}");
+        return;
     }
 
     /* 抛事件至Device侧DMAC，同步重置BA */

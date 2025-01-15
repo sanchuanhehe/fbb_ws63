@@ -19,6 +19,7 @@ uint32_t upg_ab_image_read(upg_region_index upg_region, uint32_t offset, uint8_t
 uint32_t upg_ab_image_write(upg_region_index upg_region, uint32_t offset, uint8_t *buf, size_t len);
 errcode_t upg_set_run_region(upg_region_index upg_region);
 errcode_t upg_region_erase(upg_region_index region);
+errcode_t upg_region_verify(upg_region_index region);
 errcode_t upg_ab_start(upg_region_index upg_region);
 
 #endif /* UPG_AB_H */

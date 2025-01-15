@@ -9,8 +9,6 @@
 #ifndef SFC_PORTING_H
 #define SFC_PORTING_H
 
-#include <stdbool.h>
-
 #include "errcode.h"
 #include "flash_config_info.h"
 #include "sfc_protect.h"

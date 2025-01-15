@@ -19,10 +19,18 @@ extern "C" {
 int mbedtls_alt_ecp_mul_impl(mbedtls_alt_ecp_curve_type curve_type, const mbedtls_alt_ecp_data *k,
     const mbedtls_alt_ecp_point *p, const mbedtls_alt_ecp_point *r);
 
-int mbedtls_alt_ecdsa_verify_impl(mbedtls_alt_ecp_curve_type curve_type,
-    const unsigned char *hash, unsigned int hash_len,
-    const unsigned char *pub_x, const unsigned char *pub_y,
-    const unsigned char *sig_r, const unsigned char *sig_s, unsigned klen);
+int mbedtls_alt_ecdh_compute_shared_impl(mbedtls_alt_ecp_curve_type curve_type,
+    const mbedtls_alt_ecp_point *input_pub_key,
+    const mbedtls_alt_ecp_data *input_priv_key, const mbedtls_alt_ecp_data *output_shared_key);
+
+int mbedtls_alt_ecdsa_sign_impl(mbedtls_alt_ecp_curve_type curve_type, const mbedtls_alt_ecp_data *priv_key,
+    const mbedtls_alt_ecp_data *hash_data, const mbedtls_alt_ecp_data *r_data, const mbedtls_alt_ecp_data *s_data);
+
+int mbedtls_alt_ecdsa_verify_impl(mbedtls_alt_ecp_curve_type curve_type, const mbedtls_alt_ecp_point *pub_key,
+    const mbedtls_alt_ecp_data *hash_data, const mbedtls_alt_ecp_data *r_data, const mbedtls_alt_ecp_data *s_data);
+
+int mbedtls_alt_ecdsa_genkey_impl(mbedtls_alt_ecp_curve_type curve_type,
+    const mbedtls_alt_ecp_data *output_priv_key, const mbedtls_alt_ecp_point *output_pub_key);
 
 int mbedtls_alt_ecp_init(void);
 

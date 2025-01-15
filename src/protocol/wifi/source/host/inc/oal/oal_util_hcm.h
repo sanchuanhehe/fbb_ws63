@@ -340,8 +340,8 @@ static inline void oal_random_ether_addr(osal_u8 *addr, osal_u8 len)
     /* 防止秒级种子为0 */
     tv1.tv_sec += 2; /* 加2 */
 
-    tv2.tv_sec = (osal_slong)((td_u32)((td_u64)tv1.tv_sec * tv1.tv_sec) * (td_u64)tv1.tv_usec);
-    tv2.tv_usec = (osal_slong)((td_u32)((td_u64)tv1.tv_sec * tv1.tv_usec) * (td_u64)tv1.tv_usec);
+    tv2.tv_sec = (osal_slong)((td_u32)((td_u64)tv1.tv_sec * (td_u64)tv1.tv_sec) * (td_u64)tv1.tv_usec);
+    tv2.tv_usec = (osal_slong)((td_u32)((td_u64)tv1.tv_sec * (td_u64)tv1.tv_usec) * (td_u64)tv1.tv_usec);
 
     /* 生成随机的mac地址 */
     addr[0] = ((td_u32)tv2.tv_sec & 0xff) & 0xfe;

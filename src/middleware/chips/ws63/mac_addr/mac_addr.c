@@ -54,6 +54,7 @@ typedef enum {
     ADDR_IDX_AP = 2,
     ADDR_IDX_P2P = 3,
     ADDR_IDX_GLE = 4,
+    ADDR_IDX_SLE = 5,
     ADDR_IDX_BUTT
 }addr_idx;
 
@@ -62,10 +63,11 @@ typedef struct {
     uint16_t  us_status;
 }dev_addr_stru;
 
-dev_addr_stru g_mac_addr = {0};
-dev_addr_stru g_ap_dev_addr = {0};
-dev_addr_stru g_p2p_dev_addr = {0};
-mac_derivation_ptr g_mac_derivation_ptr = NULL;
+static dev_addr_stru g_mac_addr = {0};
+static dev_addr_stru g_ap_dev_addr = {0};
+static dev_addr_stru g_p2p_dev_addr = {0};
+static dev_addr_stru g_sle_mac_addr = {0};
+static mac_derivation_ptr g_mac_derivation_ptr = NULL;
 
 void set_mac_derivation_ptr(mac_derivation_ptr ptr)
 {
@@ -196,6 +198,16 @@ uint32_t get_dev_addr(uint8_t *pc_addr, uint8_t addr_len, uint8_t type)
         return ERRCODE_FAIL;
     }
 
+    if (type == IFTYPE_SLE) {
+        if (mac_addr_is_zero(g_sle_mac_addr.ac_addr) == 0) {
+            for (tmp = 0; tmp < WLAN_MAC_ADDR_LEN; tmp++) {
+                pc_addr[tmp] = g_sle_mac_addr.ac_addr[tmp];
+            }
+            return ERRCODE_SUCC;
+        }
+        return ERRCODE_FAIL;
+    }
+
     if ((type == SERVICE_NL80211_IFTYPE_AP) && (memcmp(g_ap_dev_addr.ac_addr, zero_mac, WLAN_MAC_ADDR_LEN) != 0)) {
         for (tmp = 0; tmp < WLAN_MAC_ADDR_LEN; tmp++) {
             pc_addr[tmp] = g_ap_dev_addr.ac_addr[tmp];
@@ -205,7 +217,7 @@ uint32_t get_dev_addr(uint8_t *pc_addr, uint8_t addr_len, uint8_t type)
 
     if (((type == SERVICE_NL80211_IFTYPE_MESH_POINT) || (type == SERVICE_NL80211_IFTYPE_P2P_CLIENT) ||
         (type == SERVICE_NL80211_IFTYPE_P2P_GO) || (type == SERVICE_NL80211_IFTYPE_P2P_DEVICE)) &&
-        (memcmp(g_p2p_dev_addr.ac_addr, zero_mac, WLAN_MAC_ADDR_LEN) != 0)) {
+        (mac_addr_is_zero(g_p2p_dev_addr.ac_addr) == 0)) {
         for (tmp = 0; tmp < WLAN_MAC_ADDR_LEN; tmp++) {
             pc_addr[tmp] = g_p2p_dev_addr.ac_addr[tmp];
         }
@@ -272,6 +284,39 @@ uint32_t set_dev_addr(const uint8_t *pc_addr, uint8_t mac_len, uint8_t type)
     }
 }
 
+static uint32_t init_sle_mac(void)
+{
+#if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
+    uint16_t nv_mac_length;
+    uapi_nv_read(NV_ID_SYSTEM_FACTORY_SLE_MAC, WLAN_MAC_ADDR_LEN, &nv_mac_length, &(g_sle_mac_addr.ac_addr[0]));
+    if (mac_addr_nv_check(&(g_sle_mac_addr.ac_addr[0])) == ERRCODE_SUCC) {
+        return ERRCODE_SUCC;
+    }
+#endif
+
+#if defined(CONFIG_DRIVER_SUPPORT_EFUSE)
+    if (efuse_read_item(EFUSE_MAC_SLE_ADDR_ID, g_sle_mac_addr.ac_addr, WLAN_MAC_ADDR_LEN) == ERRCODE_SUCC) {
+        if (mac_addr_is_zero(g_sle_mac_addr.ac_addr) == ERRCODE_SUCC) {
+            return ERRCODE_SUCC;
+        }
+    }
+#endif
+    PRINT("init_sle_mac failed!!! \r\n");
+    return ERRCODE_FAIL;
+}
+
+static void print_mac_addr(uint8_t *mac)
+{
+    uint8_t index;
+    for (index = 0; index < WLAN_MAC_ADDR_LEN - WLAN_MAC_MASK_LEN; index++) {
+        print_str("0x%2x,", mac[index]);
+    }
+    for (index = WLAN_MAC_ADDR_LEN - WLAN_MAC_MASK_LEN; index < WLAN_MAC_ADDR_LEN; index++) {
+        print_str("0x**,");
+    }
+    print_str("\r\n");
+}
+
 /*****************************************************************************
  功能描述  : 随机化初始mac地址 让单板启动时携带默认mac
  获取优先级：配置文件-->读efuse-->随机生成
@@ -280,9 +325,12 @@ uint32_t set_dev_addr(const uint8_t *pc_addr, uint8_t mac_len, uint8_t type)
 #define RANDOM_DEFOURT_MAC2 0x73
 void init_dev_addr(void)
 {
-    uint8_t index;
     errcode_t get_mac_res = ERRCODE_FAIL;
 
+    if (init_sle_mac() == ERRCODE_SUCC) {
+        PRINT("init_sle_mac, mac_addr:");
+        print_mac_addr(g_sle_mac_addr.ac_addr);
+    }
 #if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
     uint16_t nv_mac_length;
     if (mac_addr_is_zero(g_mac_addr.ac_addr) != 0) {
@@ -306,13 +354,7 @@ void init_dev_addr(void)
     }
 
     PRINT("init_dev_addr, mac_addr:");
-    for (index = 0; index < WLAN_MAC_ADDR_LEN - WLAN_MAC_MASK_LEN; index++) {
-        print_str("0x%2x,", g_mac_addr.ac_addr[index]);
-    }
-    for (index = WLAN_MAC_ADDR_LEN - WLAN_MAC_MASK_LEN; index < WLAN_MAC_ADDR_LEN; index++) {
-        print_str("0x**,", g_mac_addr.ac_addr[index]);
-    }
-    print_str("\r\n");
+    print_mac_addr(g_mac_addr.ac_addr);
 }
 
 #ifdef __cplusplus

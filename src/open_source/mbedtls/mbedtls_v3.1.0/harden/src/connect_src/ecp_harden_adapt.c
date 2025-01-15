@@ -25,10 +25,8 @@ int mbedtls_alt_ecp_mul(mbedtls_alt_ecp_curve_type curve_type, const mbedtls_alt
     return ret;
 }
 
-int mbedtls_alt_ecdsa_verify(mbedtls_alt_ecp_curve_type curve_type,
-    const unsigned char *hash, unsigned int hash_len,
-    const unsigned char *pub_x, const unsigned char *pub_y,
-    const unsigned char *sig_r, const unsigned char *sig_s, unsigned klen)
+int mbedtls_alt_ecdsa_verify(mbedtls_alt_ecp_curve_type curve_type, const mbedtls_alt_ecp_point *pub_key,
+    const mbedtls_alt_ecp_data *hash_data, const mbedtls_alt_ecp_data *r_data, const mbedtls_alt_ecp_data *s_data)
 {
     int ret = -1;
     mbedtls_harden_log_func_enter();
@@ -36,7 +34,7 @@ int mbedtls_alt_ecdsa_verify(mbedtls_alt_ecp_curve_type curve_type,
         mbedtls_printf("Error: ecdsa_verify unregister!\n");
         return -1;
     }
-    ret = g_ecp_func.ecdsa_verify(curve_type, hash, hash_len, pub_x, pub_y, sig_r, sig_s, klen);
+    ret = g_ecp_func.ecdsa_verify(curve_type, pub_key, hash_data, r_data, s_data);
     mbedtls_harden_log_func_exit();
     return ret;
 }

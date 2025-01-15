@@ -61,6 +61,20 @@ typedef enum {
 
 /**
  * @if Eng
+ * @brief  radar hardware status.
+ * @else
+ * @brief  雷达硬件状态。
+ * @endif
+ */
+typedef enum {
+    RADAR_STATUS_HW_FAULT = 0,  /*!< @if Eng radar hardware status: fault
+                                @else   雷达硬件状态故障 @endif */
+    RADAR_STATUS_HW_NORMAL,   /*!< @if Eng radar hardware status: normal
+                                @else   雷达硬件状态正常 @endif */
+} radar_get_hardware_sts_t;
+
+/**
+ * @if Eng
  * @brief  radar result.
  * @else
  * @brief  雷达结果。
@@ -81,13 +95,13 @@ typedef struct {
 /**
  * @if Eng
  * @brief Callback invoked when the radar detection is complete and the result changes.
- * @par Callback invoked when the radar detection is complete and the result changes.
+ * @par Description: Callback invoked when the radar detection is complete and the result changes.
  * @attention This callback function runs on the radar feature thread.
  * @attention It cannot be blocked or wait for a long time or use a large stack space.
  * @param [in] res radar detect result.
  * @else
  * @brief  雷达检测完成并且结果出现变化时的回调函数。
- * @par    雷达检测完成并且结果出现变化时的回调函数。
+ * @par Description: 雷达检测完成并且结果出现变化时的回调函数。
  * @attention  该回调函数运行于radar feature线程, 不能阻塞或长时间等待, 不能使用较大栈空间。
  * @param [in] res 雷达检测结果。
  * @endif
@@ -199,6 +213,8 @@ typedef enum {
                             @else   塑料或无遮挡物 @endif */
     RADAR_MATERIAL_PCB,       /*!< @if Eng PCB or metal
                             @else   PCB或金属 @endif */
+    RADAR_MATERIAL_SINGLE,    /*!< @if Eng Single module
+                            @else   单模组 @endif */
     RADAR_MATERIAL_BUTT,
 } radar_material_type_t;
 
@@ -257,13 +273,13 @@ typedef struct {
 /**
  * @if Eng
  * @brief Callback function when radar echo reception is complete.
- * @par Callback function when radar echo reception is complete.
+ * @par Description: Callback function when radar echo reception is complete.
  * @attention This callback function runs on the radar driver thread.
  * @attention It cannot be blocked or wait for a long time or use a large stack space.
  * @param [in] res radar detect raw data.
  * @else
  * @brief  雷达回波接收完成时的回调函数。
- * @par    雷达回波接收完成时的回调函数。
+ * @par Description: 雷达回波接收完成时的回调函数。
  * @attention  该回调函数运行于radar driver线程, 不能阻塞或长时间等待, 不能使用较大栈空间。
  * @param [in] res 雷达检测原始数据。
  * @endif
@@ -288,17 +304,32 @@ errcode_t uapi_radar_set_status(uint8_t sts);
 /**
  * @if Eng
  * @brief  Get status of radar.
- * @par Description: Get status of radar.
- * @param [in] *sts status of radar, see @ref radar_get_sts_t.
+ * @par Description: Get software status of radar.
+ * @param [in] *sts software status of radar, see @ref radar_get_sts_t.
  * @retval error code.
  * @else
  * @brief  获取雷达状态。
- * @par Description: 获取雷达状态。
- * @param [in] *sts 雷达状态。
+ * @par Description: 获取雷达软件状态。
+ * @param [in] *sts 雷达软件状态。
  * @retval 执行结果错误码。
  * @endif
  */
 errcode_t uapi_radar_get_status(uint8_t *sts);
+
+/**
+ * @if Eng
+ * @brief  Get hardware status of radar.
+ * @par Description: Get hardware status of radar.
+ * @param [in] *sts hardware status of radar, see @ref radar_get_hardware_sts_t.
+ * @retval error code.
+ * @else
+ * @brief  获取雷达硬件状态。
+ * @par Description: 获取雷达硬件状态。
+ * @param [in] *sts 雷达硬件状态。
+ * @retval 执行结果错误码。
+ * @endif
+ */
+errcode_t uapi_radar_get_hardware_status(uint8_t *sts);
 
 /**
  * @if Eng
@@ -436,6 +467,93 @@ errcode_t uapi_radar_select_alg_para(radar_sel_para_t *para);
  * @endif
  */
 errcode_t uapi_radar_set_alg_para(radar_alg_para_t *para, uint8_t write_to_flash);
+
+/**
+ * @if Eng
+ * @brief  Radar static maintenance and measurement data query function.
+ * @par Description: Radar static maintenance and measurement data query function.
+ * @param [in] *arr Address of maintance and measurement data storage array.
+ * @param [in] len Length of maintance and measurement data storage array, the length cannot exceed 16.
+ * @retval error code.
+ * @else
+ * @brief  雷达维测数据查询函数。
+ * @par Description: 雷达维测数据查询函数。
+ * @param [in] *arr 雷达维测数据存储数组地址。
+ * @param [in] len 雷达维测数据存储数组长度，长度不超过16。
+ * @retval 执行结果错误码。
+ * @endif
+ */
+errcode_t uapi_radar_get_debug_info(int16_t *arr, uint8_t len);
+
+/**
+ * @if Eng
+ * @brief Callback function after radar maintenance and measurement data is collected.
+ * @par Description: Callback function after radar maintenance and measurement data is collected.
+ * @attention This callback function runs on the radar feature thread.
+ * @attention It cannot be blocked or wait for a long time or use a large stack space.
+ * @param [in] *arr Address of maintance and measurement data storage array.
+ * @param [in] len Length of maintance and measurement data storage array, the length cannot exceed 16.
+ * @attention The maintenance and measurement information is as follows:
+ * @attention 1.Instructs the upper layer whether to write data to the flash memory.
+ * @attention 2.LNA * 10 + VGA.
+ * @attention 3.The peak of raw echo wave.
+ * @attention 4.Indicates the average MO1 noise floor of frames in the past period.
+ * @attention The default period is 100 frames. You can set the period by registering the callback function.
+ * @attention 5.Indicates the average MO2 noise floor of frames in the past period.
+ * @attention 6.Indicates the average DP noise floor of frames in the past period.
+ * @attention 7.Indicates the average interval of frame in the past past period.
+ * @attention 8.Indicates the number of frames whose interval is longer than X ms in the past period frames.
+ * @attention 9.Indicates the number of frames whose bitmap quantity in the past period frames exceeds the X threshold.
+ * @attention 10.Indicates the number of frames whose bitmap ratio exceeds the X threshold in the past period frames.
+ * @attention 11.Indicates the number of frames in the past period.
+ * @attention 12.Maximum Interframe Interval in Past Period Frames
+ * @attention 13.Maximum subscript of the frame interval in the past period frame
+ * @attention 14.Threshold of the currently used algorithm parameter MO1
+ * @attention 15.Threshold of the currently used algorithm parameter MO2
+ * @attention 16.Threshold of the currently used algorithm parameter DP
+ * @else
+ * @brief  雷达维测数据收集完成时的回调函数。
+ * @par Description: 雷达维测数据收集完成时的回调函数。
+ * @attention  该回调函数运行于radar feature线程, 不能阻塞或长时间等待, 不能使用较大栈空间。
+ * @param [in] *arr 雷达动态维测数据存储数组地址。
+ * @param [in] len 雷达动态维测数据存储数组长度，长度不超过16。
+ * @attention 维测信息依次为:
+ * @attention 1.告知上层是否需要写入flash。
+ * @attention 2.LNA * 10 + VGA。
+ * @attention 3.原始回波峰值。
+ * @attention 4.过去period帧的平均MO1底噪，period默认为100帧，通过注册回调函数设置。
+ * @attention 5.过去period帧的平均MO2底噪。
+ * @attention 6.过去period帧的平均DP底噪。
+ * @attention 7.过去period帧的平均帧间隔。
+ * @attention 8.过去period帧中帧间隔超过Xms的帧数。
+ * @attention 9.过去period帧中bitmap数量超过X门限的帧数。
+ * @attention 10.过去period帧中bitmap比例超过X门限的帧数。
+ * @attention 11.过去period帧中是在参与统计的帧数。
+ * @attention 12.过去period帧中帧间隔最大值。
+ * @attention 13.过去period帧中帧间隔最大值下标。
+ * @attention 14.当前所使用的算法参数MO1门限。
+ * @attention 15.当前所使用的算法参数MO2门限。
+ * @attention 16.当前所使用的算法参数DP门限。
+ * @endif
+ */
+typedef void (*radar_debug_info_cb_t)(int16_t *arr, uint8_t len);
+
+/**
+ * @if Eng
+ * @brief  Radar maintenance and measurement data callback registration function.
+ * @par Description: Radar maintenance and measurement data callback registration function.
+ * @param [in] cb callback function.
+ * @param [in] period Statistical period frame number, the value ranges from 0 to 32768.
+ * @retval error code.
+ * @else
+ * @brief  雷达维测数据回调注册函数。
+ * @par Description: 雷达维测数据回调注册函数。
+ * @param [in] cb 回调函数。
+ * @param [in] period 雷达维测数据统计周期帧数，范围大于0，小于32768。
+ * @retval 执行结果错误码。
+ * @endif
+ */
+errcode_t uapi_radar_register_debug_info_cb(radar_debug_info_cb_t cb, uint16_t period);
 
 #ifdef __cplusplus
 }

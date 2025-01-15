@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description:  error_code_e module interface
- * Author:
- * Create: 2018-10-15
  */
 #ifndef LIB_ERROR_CODE_H
 #define LIB_ERROR_CODE_H

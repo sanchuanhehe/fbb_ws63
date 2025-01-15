@@ -36,6 +36,23 @@
 #endif
 #endif
 
+#ifdef AT_COMMAND
+#include "at_config.h"
+#include "at_product.h"
+#endif
+
+#ifdef LOG_SUPPORT
+#include "log_memory_region.h"
+#include "log_common.h"
+#include "log_uart.h"
+#include "log_oam_logger.h"
+#include "log_oml_exception.h"
+#endif
+
+#if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
+#include "nv.h"
+#endif
+
 #define UART_BUS_0_BASE_ADDR (UART0_BASE - 4)
 #define UART_BUS_1_BASE_ADDR (UART1_BASE - 4)
 #define UART_BUS_2_BASE_ADDR (UART2_BASE - 4)
@@ -136,13 +153,9 @@ void uart_port_config_pinmux(uart_bus_t bus)
     return;
 #else
     if (bus == UART_BUS_2) {
-        writel(GPIO_05_SEL, UART_2_MODE);
-        writel(GPIO_06_SEL, UART_2_MODE);
         writel(GPIO_07_SEL, UART_2_MODE);
         writel(GPIO_08_SEL, UART_2_MODE);
     } else if (bus == UART_BUS_1) {
-        writel(GPIO_13_SEL, UART_1_MODE);
-        writel(GPIO_14_SEL, UART_1_MODE);
         writel(UART1_TXD_SEL, UART_1_MODE);
         writel(UART1_RXD_SEL, UART_1_MODE);
     } else if (bus == UART_BUS_0) {
@@ -204,10 +217,114 @@ void uart_port_unregister_irq(uart_bus_t bus)
 }
 #endif
 
+static uint32_t g_at_uart_recv_cnt = 0;
+#if defined(AT_COMMAND)
+#define CRLF_STR                      "\r\n"
+#define CR_ASIC_II					0xD
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD)
+#define AT_RX_BUFFER_SIZE 32
+#else
+#define AT_RX_BUFFER_SIZE 16
+#endif
+
+static uint8_t g_at_uart_rx_buffer[AT_RX_BUFFER_SIZE];
+static uart_bus_t g_at_uart_bus_id;
+
+static uart_bus_t at_uart_get_bus_id(void)
+{
+#if defined CONFIG_DYNAMIC_UART_ID_BINDDING
+    errcode_t ret;
+    uint8_t uart_bus_id = 0;
+    uint16_t uart_bus_id_len = 1;
+    ret = uapi_nv_read(NV_ID_AT_UART_BUS_ID, uart_bus_id_len, &uart_bus_id_len, &uart_bus_id);
+    if (ret != ERRCODE_SUCC) {
+        uart_bus_id = AT_UART_BUS;
+    }
+    return (uart_bus_t)uart_bus_id;
+#else
+    return AT_UART_BUS;
+#endif
+}
+
+static void at_write_func(const char *data)
+{
+    uapi_uart_write(g_at_uart_bus_id, (const uint8_t *)data, strlen(data), 0);
+}
+static uint8_t g_at_pre_char = 0;
+static void at_uart_rx_callback(const void *buffer, uint16_t length, bool error)
+{
+    errcode_t ret;
+    const uint8_t *data = (const uint8_t *)buffer;
+    if (error) {
+        osal_printk("*******uart error*******\r\n");
+    }
+#ifndef CHIP_EDA
+    if (length == 0) {
+        panic(PANIC_TESTSUIT, __LINE__);
+    }
+#endif
+    g_at_uart_recv_cnt += length;
+    if (((char *)buffer)[0] == CR_ASIC_II) {
+        uapi_uart_write(g_at_uart_bus_id, (uint8_t *)CRLF_STR, (uint16_t)strlen(CRLF_STR), 0);
+    } else {
+        uapi_uart_write(g_at_uart_bus_id, (const uint8_t *)buffer, (uint32_t)length, 0);
+    }
+    ret = uapi_at_channel_data_recv(AT_UART_PORT, (uint8_t *)buffer, (uint32_t)length);
+    if (ret != ERRCODE_SUCC) {
+        /* 前一个字符为'\r'时单独一个'\n'导致的CHANNEL_BUSY不打印 */
+        if (g_at_pre_char != '\r' || length != 1 || data[0] != '\n' || ret != ERRCODE_AT_CHANNEL_BUSY) {
+            osal_printk("\r\nat_uart_rx_callback fail:0x%x\r\n", ret);
+        }
+    }
+    g_at_pre_char = data[length - 1];
+}
+
+void at_uart_init(void)
+{
+    uart_buffer_config_t uart_buffer_config;
+    uart_pin_config_t uart_pin_config = {
+        .tx_pin = 0,
+        .rx_pin = 0,
+        .cts_pin = PIN_NONE,
+        .rts_pin = PIN_NONE
+    };
+    uart_attr_t uart_line_config = {
+        .baud_rate = CONFIG_AT_UART_BAUDRATE,
+        .data_bits = UART_DATA_BIT_8,
+        .stop_bits = UART_STOP_BIT_1,
+        .parity = UART_PARITY_NONE
+    };
+    uart_buffer_config.rx_buffer_size = AT_RX_BUFFER_SIZE;
+    uart_buffer_config.rx_buffer = g_at_uart_rx_buffer;
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD)
+    uart_extra_attr_t uart_extra_config = {
+        .tx_int_threshold = UART_FIFO_INT_TX_LEVEL_EQ_2_CHARACTER,
+        .rx_int_threshold = UART_FIFO_INT_RX_LEVEL_1_2,
+        .rx_thread_enable = true,
+    };
+#endif
+    g_at_uart_bus_id = at_uart_get_bus_id();
+    uapi_uart_deinit(g_at_uart_bus_id);
+#if defined(CONFIG_UART_SUPPORT_RX_THREAD)
+    (void)uapi_uart_init(g_at_uart_bus_id, &uart_pin_config, &uart_line_config,
+        &uart_extra_config, &uart_buffer_config);
+#else
+    (void)uapi_uart_init(g_at_uart_bus_id, &uart_pin_config, &uart_line_config, NULL, &uart_buffer_config);
+#endif
+    (void)uapi_uart_register_rx_callback(g_at_uart_bus_id, UART_RX_CONDITION_FULL_OR_SUFFICIENT_DATA_OR_IDLE,
+                                         AT_RX_BUFFER_SIZE, at_uart_rx_callback);
+    uapi_at_channel_write_register(AT_UART_PORT, at_write_func);
+}
+#endif
+
+uint32_t at_uart_get_rcv_cnt(void)
+{
+    return g_at_uart_recv_cnt;
+}
+
 #ifdef SW_UART_DEBUG
 #define DEBUG_UART_RX_BUFFER_SIZE 1
-STATIC uart_bus_t g_sw_debug_uart;
-static bool g_sw_debug_uart_enabled = false;
+static uart_bus_t g_sw_debug_uart = SW_DEBUG_UART_BUS;
 STATIC uint8_t g_uart_rx_buffer[DEBUG_UART_RX_BUFFER_SIZE];
 
 static void uart_rx_callback(const void *buf, uint16_t buf_len, bool remaining);
@@ -215,10 +332,23 @@ static void uart_rx_callback(const void *buf, uint16_t buf_len, bool remaining);
 void uart_rx_callback(const void *buf, uint16_t buf_len, bool remaining)
 {
     UNUSED(remaining);
-    if (!g_sw_debug_uart_enabled) {
-        return;
+    uapi_uart_write(g_sw_debug_uart, (const void *)buf, buf_len, 0);
+}
+
+static uart_bus_t debug_uart_get_bus_id(void)
+{
+#if defined(CONFIG_DYNAMIC_UART_ID_BINDDING)
+    errcode_t ret;
+    uint8_t uart_bus_id = 0;
+    uint16_t uart_bus_id_len = 1;
+    ret = uapi_nv_read(NV_ID_DBG_UART_BUS_ID, uart_bus_id_len, &uart_bus_id_len, &uart_bus_id);
+    if (ret != ERRCODE_SUCC) {
+        uart_bus_id = SW_DEBUG_UART_BUS;
     }
-    uapi_uart_write(SW_DEBUG_UART_BUS, (const void *)buf, buf_len, 0);
+    return (uart_bus_t)uart_bus_id;
+#else
+    return SW_DEBUG_UART_BUS;
+#endif
 }
 
 void sw_debug_uart_init(uint32_t baud_rate)
@@ -227,7 +357,6 @@ void sw_debug_uart_init(uint32_t baud_rate)
     uart_attr_t uart_line_config;
     uart_buffer_config_t uart_buffer_config;
 
-    g_sw_debug_uart = SW_DEBUG_UART_BUS;
     // TX configuration
     uart_pins.tx_pin = CHIP_FIXED_TX_PIN;
     uart_pins.rts_pin = PIN_NONE;
@@ -244,11 +373,23 @@ void sw_debug_uart_init(uint32_t baud_rate)
     uart_buffer_config.rx_buffer_size = DEBUG_UART_RX_BUFFER_SIZE;
     uart_buffer_config.rx_buffer = g_uart_rx_buffer;
 
-    (void)uapi_uart_init(SW_DEBUG_UART_BUS, &uart_pins, &uart_line_config, NULL, &uart_buffer_config);
-    uapi_uart_register_rx_callback(SW_DEBUG_UART_BUS, UART_RX_CONDITION_FULL_OR_SUFFICIENT_DATA_OR_IDLE,
+    (void)uapi_uart_init(g_sw_debug_uart, &uart_pins, &uart_line_config, NULL, &uart_buffer_config);
+    uapi_uart_register_rx_callback(g_sw_debug_uart, UART_RX_CONDITION_FULL_OR_SUFFICIENT_DATA_OR_IDLE,
                                    DEBUG_UART_RX_BUFFER_SIZE, uart_rx_callback);
+}
 
-    g_sw_debug_uart_enabled = true;
+void sw_debug_uart_reinit(uint32_t baud_rate)
+{
+    uart_bus_t bus = debug_uart_get_bus_id();
+    if (bus == g_sw_debug_uart) {
+        return;
+    }
+
+    uapi_uart_deinit(g_sw_debug_uart);
+    g_sw_debug_uart = bus;
+    sw_debug_uart_init(baud_rate);
+    PRINT("dbg uart reinit succ.\r\n");
+    return;
 }
 #ifdef ASIC_SMOKE_TEST
 STATIC uart_bus_t g_uart2;
@@ -303,7 +444,7 @@ void UartPuts(const char *s, uint32_t len, bool is_lock)
 
     UNUSED(is_lock);
 #ifdef SW_UART_DEBUG
-    uapi_uart_write(SW_DEBUG_UART_BUS, (const void *)s, len, 0);
+    uapi_uart_write(g_sw_debug_uart, (const void *)s, len, 0);
 #elif defined(TEST_SUITE)
     test_suite_uart_send(s);
 #elif defined(SW_RTT_DEBUG)
@@ -339,7 +480,7 @@ static void print_str_inner(const char *fmt, va_list ap)
         buflen = buflen << 1;
         tmp_buf = (char *)osal_kmalloc(buflen, OSAL_GFP_KERNEL);
         if (tmp_buf == NULL) {
-            uapi_uart_write(SW_DEBUG_UART_BUS, (const uint8_t *)errmsgmalloc, (uint32_t)strlen(errmsgmalloc), 0);
+            uapi_uart_write(g_sw_debug_uart, (const uint8_t *)errmsgmalloc, (uint32_t)strlen(errmsgmalloc), 0);
             return;
         }
         len = vsnprintf_s(tmp_buf, buflen, buflen - 1, fmt, ap);
@@ -351,7 +492,7 @@ static void print_str_inner(const char *fmt, va_list ap)
     }
 #endif
     *(tmp_buf + len) = '\0';
-    uapi_uart_write(SW_DEBUG_UART_BUS, (const uint8_t *)tmp_buf, len, 0);
+    uapi_uart_write(g_sw_debug_uart, (const uint8_t *)tmp_buf, (uint32_t)len, 0);
 #ifdef CONFIG_PRINTF_BUFFER_DYNAMIC
     if (buflen != UART_TRANS_LEN_MAX) {
         osal_kfree(tmp_buf);
@@ -369,13 +510,30 @@ void print_str(const char *str, ...)
     print_str_inner(str, args);
     va_end(args);
 }
-
 #endif
 
 #ifdef LOG_SUPPORT
 /** UART Settings. Define these in the C file to avoid pulling in the UART header in the header file. */
 #define LOG_UART_RX_MAX_BUFFER_SIZE 16
 static uint8_t g_uart_log_rx_buffer[LOG_UART_RX_MAX_BUFFER_SIZE];
+static uart_bus_t g_hso_uart;
+
+static uart_bus_t hso_uart_get_bus_id(void)
+{
+#if defined CONFIG_DYNAMIC_UART_ID_BINDDING
+    errcode_t ret;
+    uint8_t uart_bus_id = 0;
+    uint16_t uart_bus_id_len = 1;
+    ret = uapi_nv_read(NV_ID_HSO_UART_BUS_ID, uart_bus_id_len, &uart_bus_id_len, &uart_bus_id);
+    if (ret != ERRCODE_SUCC) {
+        uart_bus_id = LOG_UART_BUS;
+    }
+    return (uart_bus_t)uart_bus_id;
+#else
+    return LOG_UART_BUS;
+#endif
+}
+
 void log_uart_port_init(void)
 {
     uart_pin_config_t log_uart_pins = {
@@ -393,17 +551,45 @@ void log_uart_port_init(void)
     };
     uart_buffer_config_t uart_buffer_config;
 
+    g_hso_uart = hso_uart_get_bus_id();
     uart_buffer_config.rx_buffer_size = LOG_UART_RX_MAX_BUFFER_SIZE;
     uart_buffer_config.rx_buffer = g_uart_log_rx_buffer;
 
-    (void)uapi_uart_init(LOG_UART_BUS, &log_uart_pins, &uart_line_config, NULL, &uart_buffer_config);
+    (void)uapi_uart_init(g_hso_uart, &log_uart_pins, &uart_line_config, NULL, &uart_buffer_config);
 
 #if SYS_DEBUG_MODE_ENABLE == YES
-    uapi_uart_register_rx_callback(LOG_UART_BUS, UART_RX_CONDITION_FULL_OR_SUFFICIENT_DATA_OR_IDLE,
+    uapi_uart_register_rx_callback(g_hso_uart, UART_RX_CONDITION_FULL_OR_SUFFICIENT_DATA_OR_IDLE,
                                    LOG_UART_RX_MAX_BUFFER_SIZE, log_uart_rx_callback);
 #endif
 }
+
+void log_uart_port_write(const uint8_t *buffer, uint32_t length)
+{
+    uapi_uart_write(g_hso_uart, buffer, length, 0);
+}
 #endif
+
+errcode_t uart_port_save_bus_id(int32_t dbg_uart_bus, int32_t at_uart_bus, int32_t hso_uart_bus)
+{
+#define UART_PORT_BUS_NUM 3
+    errcode_t err = ERRCODE_SUCC;
+#if defined(CONFIG_DYNAMIC_UART_ID_BINDDING)
+    uint16_t key[UART_PORT_BUS_NUM] = {NV_ID_DBG_UART_BUS_ID, NV_ID_AT_UART_BUS_ID, NV_ID_HSO_UART_BUS_ID};
+    uint8_t bus[UART_PORT_BUS_NUM] = {(uint8_t)dbg_uart_bus, (uint8_t)at_uart_bus, (uint8_t)hso_uart_bus};
+
+    for (uint8_t i = 0; i < UART_PORT_BUS_NUM; i++) {
+        err = uapi_nv_write(key[i], &bus[i], sizeof(bus[i]));
+        if (err != ERRCODE_SUCC) {
+            break;
+        }
+    }
+#else
+    unused(dbg_uart_bus);
+    unused(at_uart_bus);
+    unused(hso_uart_bus);
+#endif
+    return err;
+}
 
 #ifdef CONFIG_UART_SUPPORT_PORTTING_IRQ
 void hal_uart_clear_pending(uart_bus_t uart)

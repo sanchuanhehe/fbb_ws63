@@ -14,8 +14,8 @@ endif
 
 config SAMPLE_SUPPORT_SLE_SAMPLE
     bool "Support SLE Sample."
-endchoice
 
 if SAMPLE_SUPPORT_SLE_SAMPLE
 osource "application/samples/bt/sle/Kconfig"
 endif
+endchoice

@@ -24,6 +24,8 @@
 static uintptr_t g_adc_base_addr =  (uintptr_t)ADC_BASE_ADDR;
 static uintptr_t g_cldo_cfg_addr =  (uintptr_t)CLDO_BASE_ADDR;
 
+uint16_t g_voltage = 0;
+
 uintptr_t adc_porting_base_addr_get(void)
 {
     return g_adc_base_addr;
@@ -110,4 +112,32 @@ errcode_t adc_port_get_cali_param(uint8_t *data_s, uint8_t *data_b, uint8_t *dat
         return res;
     }
     return res;
+}
+
+static void adc_port_callback(uint8_t ch, uint32_t *buffer, uint32_t length, bool *next)
+{
+    unused(next);
+    unused(ch);
+    g_voltage = (uint16_t)buffer[length - 1];
+}
+
+errcode_t adc_port_read(uint8_t channel, uint16_t *data)
+{
+    uapi_adc_power_en(AFE_GADC_MODE, true);
+
+#if defined(CONFIG_ADC_SUPPORT_AUTO_SCAN)
+    errcode_t ret;
+    adc_scan_config_t config = {0};
+    ret = uapi_adc_auto_scan_ch_enable(channel, config, adc_port_callback);
+    if (ret != ERRCODE_SUCC) {
+        return ret;
+    }
+    ret = uapi_adc_auto_scan_ch_disable(channel);
+    if (ret != ERRCODE_SUCC) {
+        return ret;
+    }
+    *data = g_voltage;
+#endif
+    uapi_adc_power_en(AFE_GADC_MODE, false);
+    return ERRCODE_SUCC;
 }

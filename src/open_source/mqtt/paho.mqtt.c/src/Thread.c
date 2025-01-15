@@ -55,7 +55,7 @@
 #if defined (IOT_LITEOS_ADAPT)
 #include "los_task.h"
 #define MQTT_TASK_PRIO  10
-#define MQTT_TASK_STACK_SIZE  0x800
+#define MQTT_TASK_STACK_SIZE  0x1000
 #endif
 /**
  * Start a new thread

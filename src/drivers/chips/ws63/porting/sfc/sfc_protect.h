@@ -9,6 +9,10 @@
 #ifndef SFC_PROTECT_H
 #define SFC_PROTECT_H
 
+#include <stdbool.h>
+#include <bits/alltypes.h>
+#include "errcode.h"
+
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {

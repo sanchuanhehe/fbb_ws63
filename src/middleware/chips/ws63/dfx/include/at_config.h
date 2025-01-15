@@ -1,10 +1,5 @@
 /**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved. \n
- *
- * Description: Provides at product config header \n
- * Author:
- * History: \n
- * 2022-09-02, Create file. \n
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
  */
 
 #ifndef    AT_CONFIG_H

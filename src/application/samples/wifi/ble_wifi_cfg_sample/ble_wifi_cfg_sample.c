@@ -475,7 +475,7 @@ EXIT:
     return NULL;
 }
 
-#define BGWC_TASK_PRIO (osPriority_t)(13)
+#define BGWC_TASK_PRIO (osPriority_t)(26)
 #define BGWC_TASK_STACK_SIZE 0x1000
 
 static void bgle_wifi_cfg_entry(void)

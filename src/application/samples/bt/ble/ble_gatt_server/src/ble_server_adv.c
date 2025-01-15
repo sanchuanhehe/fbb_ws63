@@ -166,6 +166,9 @@ uint8_t ble_start_adv(void)
 {
     errcode_t n_ret = 0;
     gap_ble_adv_params_t adv_para = {0};
+
+    ble_set_adv_data();
+
     int adv_id = BTH_GAP_BLE_ADV_HANDLE_DEFAULT;
 
     adv_para.min_interval = BLE_ADV_MIN_INTERVAL;

@@ -14,10 +14,10 @@ static hal_tsensor_callback_t g_hal_tsensor_callbacks[HAL_TSENSOR_INTERRIPT_TYPE
 static hal_tsensor_calibration_point_t g_hal_tsensor_points[HAL_TSENSOR_CALIBRATION_NUM_MAX] = {0};
 static int g_hal_tsensor_calibration_type = 0;
 
-static inline int8_t hal_tsensor_reg_tempcode_transto_temp(uint16_t temp_code)
+static inline int16_t hal_tsensor_reg_tempcode_transto_temp(uint16_t temp_code)
 {
     /* temperature(℃) = (temp_code - 114) / (896 - 114) * [125 - (-40)] + (-40) */
-    return (int8_t)((temp_code - TEMP_CODE_MIN) * (TEMP_VAL_MAX - TEMP_VAL_MIN) / (TEMP_CODE_MAX - TEMP_CODE_MIN) +
+    return (int16_t)((temp_code - TEMP_CODE_MIN) * (TEMP_VAL_MAX - TEMP_VAL_MIN) / (TEMP_CODE_MAX - TEMP_CODE_MIN) +
            TEMP_VAL_MIN);
 }
 
@@ -191,7 +191,7 @@ static void hal_tsensor_v151_refresh_temp(void)
     hal_tsensor_v151_reg_set_start();
 }
 
-static bool hal_tsensor_v151_get_temp(volatile int8_t *data)
+static bool hal_tsensor_v151_get_temp(int8_t *data)
 {
     int16_t temp;
     uint16_t temp_code;
@@ -208,17 +208,10 @@ static bool hal_tsensor_v151_get_temp(volatile int8_t *data)
     temp_code = hal_tsensor_v151_reg_get_data();
     temp = hal_tsensor_reg_tempcode_transto_temp(temp_code);
 
-    tsensor_v151_calibration_juction_to_environment((int16_t *)&temp);
-
-    if (temp < HAL_TSENSOR_TEMP_THRESHOLD_L_MAX) {
-        *data = HAL_TSENSOR_TEMP_THRESHOLD_L_MAX;
-        return false;
-    }
+    tsensor_v151_calibration_juction_to_environment(&temp);
     if (temp > HAL_TSENSOR_TEMP_THRESHOLD_H_MAX) {
-        *data = HAL_TSENSOR_TEMP_THRESHOLD_H_MAX;
-        return false;
+        temp = HAL_TSENSOR_TEMP_THRESHOLD_H_MAX;
     }
-
     *data = temp;
     return true;
 }

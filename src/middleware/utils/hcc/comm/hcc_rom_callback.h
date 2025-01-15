@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
  * Description: hcc rom patch callback function.
- * Author:
- * Create: 2023-05-18
  */
 
 #ifndef HCC_ROM_CALLBACK_H

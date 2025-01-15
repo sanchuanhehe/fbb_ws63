@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2023. All rights reserved.
  * Description: the header file of hcc private interfacer.
- * Author:
- * Create: 2021-05-13
  */
 
 #ifndef HCC_ADAPT_HEADER

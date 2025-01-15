@@ -7,25 +7,23 @@ set(MODULE_NAME "wifi")
 set(AUTO_DEF_FILE_ID FALSE)
 
 set(SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/radar_service.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/radar_driver_mgr.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/radar_feature_mgr.c
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/radar_fft.c
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/radar_utils.c
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/radar_interpolation.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_driver_mgr_spec.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_service.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_feature_mgr.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_driver_mgr.c
     ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_event.c
     ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_mips.c
     ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_tcxo.c
     ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_uart.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_dfx.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_dfx_ctrl.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_dfx_info.c
     ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_tsensor.c
     ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_alg_param.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_industry_info.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/spec/ws63/radar_feature_mgr_spec.c
     ${CMAKE_CURRENT_SOURCE_DIR}/mfg/radar_mfg.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../preproc/hal/ws63/hal_radar_sensor_one_rx_ant.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../preproc/hal/ws63/hal_radar_sensor_rx_gain_cali.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../preproc/hal/ws63/hal_radar_cali.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../preproc/hal/ws63/hal_radar_subframe_data_pool_mgr.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../preproc/hal/ws63/hal_radar_wave.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/ppl/radar_ppl_cali_inv.c
@@ -35,21 +33,23 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/ppl/radar_ppl_utils.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/ppl/radar_trx_delay_comp.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/proximity/radar_proximity_detection.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/presence/radar_doppler_detection.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/presence/radar_presence_detection.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/target_track/radar_cfar.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/target_track/radar_plot_extraction.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/target_track/radar_bitmap_proc.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/radar_spl_mgr.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/radar_res_proc.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/radar_cfar.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/radar_plot_extraction.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/radar_bitmap_proc.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/radar_fpl_mgr.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/target_track/radar_confirmer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/target_track/radar_clean_cluster.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/target_track/radar_kalman_tracker.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/target_track/radar_multi_target_mgr.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/target_track/radar_target_mgr.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/target_track/radar_target_fsm.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/radar_track_proximity_detection.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/radar_adl_mgr.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/radar_fpl_mgr.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/ws63/proximity/radar_proximity_fusion_res.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/ws63/presence/radar_presence_fusion_res.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/ws63/target_track/radar_track_fusion_res.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/ws63/radar_adl_mgr.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/ws63/radar_adl_rpt_res.c
 )
 
 set(PUBLIC_HEADER
@@ -60,6 +60,7 @@ set(PUBLIC_HEADER
     ${CMAKE_SOURCE_DIR}/include/middleware/services/radar/
     ${CMAKE_SOURCE_DIR}/kernel/osal/include/debug/
     ${CMAKE_SOURCE_DIR}/protocol/wifi/source/host/feature/
+    ${CMAKE_SOURCE_DIR}/protocol/wifi/source/host/inc/liteOS/
     ${CMAKE_SOURCE_DIR}/protocol/wifi/rom_code/ws63/source/inc/romable/
     ${CMAKE_SOURCE_DIR}/protocol/wifi/rom_code/ws63/source/device/forward/
     ${CMAKE_SOURCE_DIR}/drivers/chips/ws63/porting/arch/riscv/
@@ -77,22 +78,24 @@ set(PRIVATE_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/proximity/
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/presence/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/target_track/
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/target_track/
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/ws63/proximity/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/ws63/presence/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/ws63/target_track/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/adl/ws63/
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/spec/ws63/
 )
 
 set(PRIVATE_DEFINES
     _PRE_USED_LIB_QSORT
-    _PRE_USED_OPTIMIZED_FSM_API
     _PRE_FILE_ID_DEFINED
     _PRE_RADAR_PRINTK
     _PRE_RADAR_NEW_WAVE
-    _PRE_RADAR_CALI_DC
-    _PRE_RADAR_CALI_INV_PHASE
-    _PRE_RADAR_SMOOTH_DATA
     _PRE_RADAR_BITMAP_CHECK
+    CONFIG_RADAR_DBG
+    CONFIG_RADAR_SERVICE_PROXIMITY_PRESENCE
 )
 
 set(PUBLIC_DEFINES

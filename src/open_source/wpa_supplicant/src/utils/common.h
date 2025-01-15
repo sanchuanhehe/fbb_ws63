@@ -11,6 +11,12 @@
 
 #include "os.h"
 
+#ifdef __USING_RTOS__
+#include <machine/endian.h>
+#define __BYTE_ORDER _BYTE_ORDER
+#define __LITTLE_ENDIAN _LITTLE_ENDIAN
+#define __BIG_ENDIAN _BIG_ENDIAN
+#endif
 #define EXT_WIFI_OK         0
 #define EXT_WIFI_FAIL       (-1)
 #define WPA_FLAG_ON     1

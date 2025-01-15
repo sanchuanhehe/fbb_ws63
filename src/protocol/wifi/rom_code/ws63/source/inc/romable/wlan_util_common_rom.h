@@ -203,7 +203,8 @@ static INLINE__ osal_s32 oal_round(osal_s32 fix_num, osal_s32 fract_bits)
 
 static INLINE__ osal_s32 oal_pow(osal_s32 x, osal_u32 n)
 {
-    osal_s32 result = 1, pow_n = n, pow_x = x;
+    osal_s32 result = 1, pow_x = x;
+    osal_u32 pow_n = n;
     while (pow_n != 0) {
         if ((pow_n & 0x1) != 0) {
             result *= pow_x;

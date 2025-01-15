@@ -130,6 +130,13 @@ config LFS_ADAPT_ERROR
     default y
     help
         This option means support little file system error print.
+config LFS_SUPPORT_POSIX
+    bool
+    depends on MIDDLEWARE_SUPPORT_LFS
+    prompt "littlefs support posix interface"
+    default n
+    help
+        This option means support little file system posix.
 config SUPPORT_CRASHINFO_SAVE_TO_FLASH
     bool
     prompt "save crash info into flash"

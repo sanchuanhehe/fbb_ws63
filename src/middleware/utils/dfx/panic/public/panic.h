@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
  * Description:  PANIC module interface
- * Author:
- * Create:
  */
 
 #ifndef LIB_PANIC_PANIC_H

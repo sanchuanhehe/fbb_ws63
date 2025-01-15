@@ -1,8 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
  * Description: hcc product configuration.
- * Author:
- * Create: 2023-02-13
  */
 
 #ifndef __HCC_CFG_H__

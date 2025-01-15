@@ -1,6 +1,5 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2023. All rights reserved.
- * Description: diag print log
  */
 
 #ifndef SOC_DIAG_UTIL_H

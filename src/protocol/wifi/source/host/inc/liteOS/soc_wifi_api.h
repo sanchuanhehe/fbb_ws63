@@ -1628,6 +1628,25 @@ int uapi_wifi_wnm_bss_query(int reason_code, int candidate_list);
 
 /**
 * @ingroup  soc_wifi_basic
+* @brief  Clear sta scan result.CNcomment:发送wnm notify query报文.CNend
+*
+* @par Description:
+*           Clear sta scan result.CNcomment:发送wnm notify query报文.CNend
+*
+* @attention  1. This is a blocking function.CNcomment:1．此函数为阻塞函数.CNend
+* @param  NULL
+*
+* @retval #EXT_WIFI_OK        Execute successfully.
+* @retval #EXT_WIFI_FAIL      Execute failed.
+* @par Dependency:
+*            @li soc_wifi_api.h: WiFi API
+* @see  NULL
+* @since
+*/
+int uapi_wifi_wnm_notify(const char *param, unsigned int len);
+
+/**
+* @ingroup  soc_wifi_basic
 * @brief  sta start connect.CNcomment:station进行连接网络.CNend
 *
 * @par Description:

@@ -8,13 +8,35 @@
 #ifndef CRYPTO_CURVE_PARAM_H
 #define CRYPTO_CURVE_PARAM_H
 
+#include "crypto_pke_struct.h"
+
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
-td_void crypto_curve_param_init(td_void);
+void crypto_curve_param_init(void);
+
+const drv_pke_ecc_curve *secp192r1_curve(void);
+
+const drv_pke_ecc_curve *secp224r1_curve(void);
+
+const drv_pke_ecc_curve *secp256r1_curve(void);
+
+const drv_pke_ecc_curve *secp384r1_curve(void);
+
+const drv_pke_ecc_curve *secp521r1_curve(void);
+
+const drv_pke_ecc_curve *brainpoolP256r1_curve(void);
+
+const drv_pke_ecc_curve *brainpoolP384r1_curve(void);
+
+const drv_pke_ecc_curve *brainpoolP512r1_curve(void);
+
+const drv_pke_ecc_curve *curve25519_curve(void);
+
+const drv_pke_ecc_curve *curve448_curve(void);
 
 #ifdef __cplusplus
 #if __cplusplus

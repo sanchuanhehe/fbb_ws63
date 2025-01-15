@@ -178,7 +178,9 @@ u8 * hostapd_eid_ext_supp_rates(struct hostapd_data *hapd, u8 *eid)
 {
 	u8 *pos = eid;
 	int i, num, count;
+#ifndef EXT_CODE_CROP
 	int h2e_required;
+#endif /* EXT_CODE_CROP */
 
 	if (hapd->iface->current_rates == NULL)
 		return eid;
@@ -225,12 +227,13 @@ u8 * hostapd_eid_ext_supp_rates(struct hostapd_data *hapd, u8 *eid)
 		if (count > 8)
 			*pos++ = 0x80 | BSS_MEMBERSHIP_SELECTOR_VHT_PHY;
 	}
-#endif /* EXT_CODE_CROP */
+
 	if (h2e_required) {
 		count++;
 		if (count > 8)
 			*pos++ = 0x80 | BSS_MEMBERSHIP_SELECTOR_SAE_H2E_ONLY;
 	}
+#endif /* EXT_CODE_CROP */
 
 	return pos;
 }

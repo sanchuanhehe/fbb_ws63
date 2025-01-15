@@ -7,6 +7,7 @@
 
 #include "hash_harden_impl.h"
 
+#include "kapi_hash.h"
 #include "drv_hash.h"
 
 #include "crypto_drv_common.h"
@@ -86,6 +87,22 @@ exit_mutex_unlock:
     return 0;
 }
 
+int mbedtls_alt_pkcs5_pbkdf2_hmac_impl(mbedtls_alt_hash_type hmac_type, const unsigned char *password,
+    unsigned int plen, const unsigned char *salt, unsigned int slen, unsigned int iteration_count,
+    unsigned int key_length, unsigned char *output)
+{
+    crypto_kdf_pbkdf2_param param = {
+        .hash_type = hmac_type,
+        .password = (unsigned char *)password,
+        .plen = plen,
+        .salt = (unsigned char *)salt,
+        .slen = slen,
+        .count = iteration_count,
+    };
+
+    return kapi_cipher_pbkdf2(&param, output, key_length);
+}
+
 void __attribute__((weak)) mbedtls_alt_hash_register(const mbedtls_alt_hash_harden_func *hash_func)
 {
     crypto_unused(hash_func);
@@ -99,7 +116,8 @@ int mbedtls_alt_hash_init(void)
     mbedtls_alt_hash_harden_func func = {
         .start = mbedtls_alt_hash_start_impl,
         .update = mbedtls_alt_hash_update_impl,
-        .finish = mbedtls_alt_hash_finish_impl
+        .finish = mbedtls_alt_hash_finish_impl,
+        .pkcs5_pbkdf2_hmac = mbedtls_alt_pkcs5_pbkdf2_hmac_impl
     };
 
     if (g_mbedtls_hash_handle == INVALID_HANDLE) {

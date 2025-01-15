@@ -278,7 +278,7 @@ uint32_t mfg_get_ftm_run_region(mfg_factory_config_t *mfg_factory_cfg)
     }
 
     factory_addr = img_info.part_info.addr_info.addr + FLASH_START;
-    image_key_area_t *image_code_info = (image_key_area_t *)(factory_addr);
+    image_key_area_t *image_code_info = (image_key_area_t *)(uintptr_t)(factory_addr);
     if (mfg_factory_cfg->check_num != MFG_FACTORY_CONFIG_CHECK &&
         image_code_info->image_id == FACTORYBOOT_KEY_AREA_IMAGE_ID &&
         image_code_info->structure_length == sizeof(image_key_area_t)) {

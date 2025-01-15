@@ -775,7 +775,7 @@ OSAL_STATIC osal_u16 hmac_encap_color_collision(hmac_vap_stru *hmac_vap, hmac_us
     rpt_elements = (hmac_color_event_rpt_elements_stru *)(payload_addr + index);
     /* 设置Event Report */
     rpt_elements->eid = MAC_EID_EVENT_REPORT; /* 79:代表是event report */
-    rpt_elements->length = sizeof(hmac_color_event_rpt_elements_stru) - MAC_IE_HDR_LEN; /* 19:代表ie长度 */
+    rpt_elements->length = (osal_u8)sizeof(hmac_color_event_rpt_elements_stru) - MAC_IE_HDR_LEN; /* 19:代表ie长度 */
     rpt_elements->event_token = 0;
     rpt_elements->event_type = 4; /* 4:代表type是report */
     rpt_elements->event_report_status = 0;
@@ -783,7 +783,7 @@ OSAL_STATIC osal_u16 hmac_encap_color_collision(hmac_vap_stru *hmac_vap, hmac_us
     rpt_elements->event_tsf = (rpt_elements->event_tsf << 0x20) + dth_color_area->tsf_l;
     rpt_elements->event_report = dth_color_area->bss_color_bitmap_h;
     rpt_elements->event_report = dth_color_area->bss_color_bitmap_l + (rpt_elements->event_report << 0x20);
-    index += sizeof(hmac_color_event_rpt_elements_stru);
+    index += (osal_u8)sizeof(hmac_color_event_rpt_elements_stru);
 
     return (osal_u16)(index + MAC_80211_FRAME_LEN);
 }

@@ -66,15 +66,15 @@ build_component()
 set(COMPONENT_NAME "gmssl_hmac_sha256")
 
 set(PUBLIC_HEADER
-    ${CMAKE_DIR}/open_source/ # 改private 开源软件需要调用stdio, 芯片无法提供, 强制插入替代定义
+    ${CMAKE_DIR}/open_source/ # TODO 改private 开源软件需要调用stdio, 芯片无法提供, 强制插入替代定义
 )
 
 set(PUBLIC_DEFINES
-    "GMSSL_ERROR_H" # 改private 开源软件需要调用stdio, 芯片无法提供, cmake定义开源软件的保护宏强制跳过
+    "GMSSL_ERROR_H" # TODO 改private 开源软件需要调用stdio, 芯片无法提供, cmake定义开源软件的保护宏强制跳过
 )
 
 set(COMPONENT_PUBLIC_CCFLAGS
-    "--includegmssl_stdio_adapter.h" # 改private 开源软件需要调用stdio, 芯片无法提供, 强制插入替代定义
+    "--includegmssl_stdio_adapter.h" # TODO 改private 开源软件需要调用stdio, 芯片无法提供, 强制插入替代定义
 )
 
 set(SOURCES
