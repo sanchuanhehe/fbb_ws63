@@ -4,3 +4,4 @@ interim_binary/ws63/libs
 output
 .cache
 compile_commands.json
+*.config.old
