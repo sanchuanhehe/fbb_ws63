@@ -22,6 +22,7 @@
 #define TIMER_TASK_PRIO 17           // 任务的优先级，数值越小优先级越高
 #define TIMER_INDEX 1                // 定时器索引
 #define TIMER_PRIO 1                 // 定时器优先级
+#define BLINKY_DURATION_US BLINKY_DURATION_MS*1000 //LED闪烁间隔时间，单位为微秒
 
 static timer_handle_t timer_handle = NULL; // 定时器句柄
 
@@ -38,7 +39,7 @@ void TimerCallback(uintptr_t data)
     osal_printk("LED toggled.\r\n");     // 打印调试信息，表示LED状态已切换
 
     // 重新启动定时器，实现周期性闪烁
-    uapi_timer_start(timer_handle, BLINKY_DURATION_MS * 1000, TimerCallback, 0);
+    uapi_timer_start(timer_handle, BLINKY_DURATION_US, TimerCallback, 0);
 }
 
 /**
@@ -63,7 +64,7 @@ static void *blinky_timer_task(const char *arg)
     uapi_timer_create(TIMER_INDEX, &timer_handle); // 创建定时器，并获取定时器句柄
 
     // 启动定时器
-    uapi_timer_start(timer_handle, BLINKY_DURATION_MS * 1000, TimerCallback, 0); // 启动定时器，设置触发时间和回调函数
+    uapi_timer_start(timer_handle, BLINKY_DURATION_US, TimerCallback, 0); // 启动定时器，设置触发时间和回调函数
 
     return NULL; // 任务函数返回
 }

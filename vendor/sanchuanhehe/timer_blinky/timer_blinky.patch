@@ -35,6 +35,7 @@ index 0d68cf0..5819f84 100755
 +#define TIMER_TASK_PRIO 17           // 任务的优先级，数值越小优先级越高
 +#define TIMER_INDEX 1                // 定时器索引
 +#define TIMER_PRIO 1                 // 定时器优先级
++#define BLINKY_DURATION_US BLINKY_DURATION_MS*1000 //LED闪烁间隔时间，单位为微秒
  
 -#define BLINKY_TASK_PRIO          24
 -#define BLINKY_TASK_STACK_SIZE    0x1000
@@ -58,7 +59,7 @@ index 0d68cf0..5819f84 100755
 -    uapi_gpio_set_dir(CONFIG_BLINKY_PIN, GPIO_DIRECTION_OUTPUT);
 -    uapi_gpio_set_val(CONFIG_BLINKY_PIN, GPIO_LEVEL_LOW);
 +    // 重新启动定时器，实现周期性闪烁
-+    uapi_timer_start(timer_handle, BLINKY_DURATION_MS * 1000, TimerCallback, 0);
++    uapi_timer_start(timer_handle, BLINKY_DURATION_US, TimerCallback, 0);
 +}
  
 -    while (1) {
@@ -89,7 +90,7 @@ index 0d68cf0..5819f84 100755
 +    uapi_timer_create(TIMER_INDEX, &timer_handle); // 创建定时器，并获取定时器句柄
 +
 +    // 启动定时器
-+    uapi_timer_start(timer_handle, BLINKY_DURATION_MS * 1000, TimerCallback, 0); // 启动定时器，设置触发时间和回调函数
++    uapi_timer_start(timer_handle, BLINKY_DURATION_US, TimerCallback, 0); // 启动定时器，设置触发时间和回调函数
 +
 +    return NULL; // 任务函数返回
  }
