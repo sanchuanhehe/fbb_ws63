@@ -26,7 +26,8 @@
         "KylinIDETeam.cmake-intellisence",
         "xaver.clang-format",
         "MS-CEINTL.vscode-language-pack-zh-hans",
-        "GitHub.copilot-chat"
+        "GitHub.copilot-chat",
+        "DavidAnson.vscode-markdownlint"
       ]
     }
   }
