@@ -24,7 +24,9 @@
         "ms-vscode.vscode-serial-monitor",
         "Gruntfuggly.todo-tree",
         "KylinIDETeam.cmake-intellisence",
-        "xaver.clang-format"
+        "xaver.clang-format",
+        "MS-CEINTL.vscode-language-pack-zh-hans",
+        "GitHub.copilot-chat"
       ]
     }
   }
