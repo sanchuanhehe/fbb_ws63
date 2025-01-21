@@ -1,0 +1,12 @@
+[
+    {
+      "buildTarget": "ws63-liteos-app",
+      "relativePath": "demo/timer_blinky",
+      "chip": "WS63",
+      "buildDef": "",
+      "needSmoke": "false",
+      "key":"1",
+      "name":"beep",
+      "description":"蜂鸣器鸣响"
+    }
+]
