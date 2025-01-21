@@ -22,7 +22,7 @@
 #define TIMER_TASK_PRIO 17           // 任务的优先级，数值越小优先级越高
 #define TIMER_INDEX 1                // 定时器索引
 #define TIMER_PRIO 1                 // 定时器优先级
-#define BLINKY_DURATION_US BLINKY_DURATION_MS*1000 //LED闪烁间隔时间，单位为微秒
+#define BLINKY_DURATION_US (BLINKY_DURATION_MS*1000) //LED闪烁间隔时间，单位为微秒
 
 static timer_handle_t timer_handle = NULL; // 定时器句柄
 
