@@ -23,6 +23,10 @@
 #define TIMER_INDEX 1                                  // 定时器索引
 #define TIMER_PRIO 1                                   // 定时器优先级
 #define BLINKY_DURATION_US (BLINKY_DURATION_MS * 1000) // LED闪烁间隔时间，单位为微秒
+#ifndef CONFIG_BLINKY_PIN
+#define CONFIG_BLINKY_PIN 7 // LED控制引脚
+#endif
+
 
 static timer_handle_t timer_handle = NULL; // 定时器句柄
 
