@@ -1,5 +1,8 @@
 # 硬件 timer
 
+## 案例提供者
+
+[@ sanchuanhehe}](https://github.com/sanchuanhehe)
 ## 案例设计
 
 本案例旨在帮助开发者了解如何使用硬件定时器功能
