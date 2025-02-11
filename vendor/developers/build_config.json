@@ -1,0 +1,12 @@
+[
+    {
+      "buildTarget": "ws63-liteos-app",
+      "relativePath": "demo/timer_blinky",
+      "chip": "WS63",
+      "buildDef": "",
+      "needSmoke": "false",
+      "key":"1",
+      "name":"timer_blinky",
+      "description":"定时器控制的LED闪烁"
+    }
+]
