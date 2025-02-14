@@ -27,16 +27,10 @@ typedef struct {
 #define MASK_IL 0x08
 #define MASK_TNF 0x07
 
-#define TEXT_RECORD_LEN  7
-#define URI_RECORD_LEN  5
+#define TEXT_RECORD_LEN 7
+#define URI_RECORD_LEN 5
 
-typedef enum {
-    HEADER,
-    TYPE_LENGTH,
-    PALOAD_LENGTH,
-    TYPE_CODE,
-    TYPE_PAYLOAD
-}I2CMsgNum;
+typedef enum { HEADER, TYPE_LENGTH, PALOAD_LENGTH, TYPE_CODE, TYPE_PAYLOAD } I2CMsgNum;
 
 typedef struct {
     uint8_t header;

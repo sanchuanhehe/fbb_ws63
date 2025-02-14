@@ -42,8 +42,7 @@ uint32_t get_NDEFDataPackage(uint8_t *dataBuff, const uint16_t dataBuff_MaxSize)
         userMemoryPageNum = 1; // 1页
     } else {
         // 需要访问多少页
-        userMemoryPageNum = (dataBuff_MaxSize / NFC_PAGE_SIZE) + \
-                            ((dataBuff_MaxSize % NFC_PAGE_SIZE) >= 0 ? 1 : 0);
+        userMemoryPageNum = (dataBuff_MaxSize / NFC_PAGE_SIZE) + ((dataBuff_MaxSize % NFC_PAGE_SIZE) >= 0 ? 1 : 0);
     }
 
     // 内存拷贝
@@ -56,8 +55,7 @@ uint32_t get_NDEFDataPackage(uint8_t *dataBuff, const uint16_t dataBuff_MaxSize)
     // 读取数据
     for (int i = 0; i < userMemoryPageNum; i++) {
         if (NT3HReadUserData(i) == true) {
-            memcpy_s(p_buff + i * NFC_PAGE_SIZE, userMemoryPageNum * NFC_PAGE_SIZE,
-                     nfcPageBuffer, NFC_PAGE_SIZE);
+            memcpy_s(p_buff + i * NFC_PAGE_SIZE, userMemoryPageNum * NFC_PAGE_SIZE, nfcPageBuffer, NFC_PAGE_SIZE);
         }
     }
 
@@ -80,10 +78,10 @@ uint32_t nfc_Init(void)
     uint32_t baudrate = NFC_I2C_SPEED;
     uint32_t hscode = I2C_MASTER_ADDR;
     uapi_pin_set_mode(I2C_SCL_MASTER_PIN, CONFIG_PIN_MODE);
-    uapi_pin_set_mode(I2C_SDA_MASTER_PIN, CONFIG_PIN_MODE);       
+    uapi_pin_set_mode(I2C_SDA_MASTER_PIN, CONFIG_PIN_MODE);
     uapi_pin_set_pull(I2C_SCL_MASTER_PIN, PIN_PULL_TYPE_UP);
     uapi_pin_set_pull(I2C_SDA_MASTER_PIN, PIN_PULL_TYPE_UP);
-   
+
     result = uapi_i2c_master_init(NFC_I2C_IDX, baudrate, hscode);
     if (result != ERRCODE_SUCC) {
         printf("I2C Init status is 0x%x!!!\r\n", result);

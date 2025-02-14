@@ -34,7 +34,7 @@ void Task1(void)
     uint8_t hour = 10, min = 30, sec = 0;
     printf("SSD1306_Init!\n");
     SSD1306_Init(); // OLED 显示屏初始化
-    SSD1306_CLS(); // 清屏
+    SSD1306_CLS();  // 清屏
     SSD1306_ShowStr(OLED_TEXT16_COLUMN_0, OLED_TEXT16_LINE_0, "  Analog Clock ", TEXT_SIZE_16);
     SSD1306_ShowStr(OLED_TEXT16_COLUMN_0, OLED_TEXT16_LINE_3, "   2025-01-01  ", TEXT_SIZE_16);
 
@@ -61,15 +61,15 @@ void Task1(void)
 static void base_ssd1306_demo(void)
 {
     printf("Enter base_sdd1306_demo()!\r\n");
-  
+
     osThreadAttr_t attr;
-    attr.name       = "Task1";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "Task1";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = 0x2000;
-    attr.priority   = osPriorityNormal;
+    attr.priority = osPriorityNormal;
 
     Task1_ID = osThreadNew((osThreadFunc_t)Task1, NULL, &attr);
     if (Task1_ID != NULL) {

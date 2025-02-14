@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2024 Beijing HuaQingYuanJian Education Technology Co., Ltd.
+ * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,12 +24,12 @@
 #include "bts_le_gap.h"
 #include "ble_server_adv.h"
 #include "osal_debug.h"
-#define  NAME_MAX_LENGTH 15
+#define NAME_MAX_LENGTH 15
 #define EXT_ADV_OR_SCAN_RSP_DATA_LEN 251
-#define u16_low_u8(val)  ((uint8_t)((uint16_t)(val) & 0xff))
+#define u16_low_u8(val) ((uint8_t)((uint16_t)(val) & 0xff))
 #define u16_high_u8(val) ((uint8_t)(((uint16_t)(val) >> 8) & 0xff))
 
-uint8_t g_local_name[ NAME_MAX_LENGTH] = { 'b', 'l', 'e', '_', 'h', 'q', 'y', 'j', '_', 's','e', 'r', 'v', 'e', 'r' };
+uint8_t g_local_name[NAME_MAX_LENGTH] = {'b', 'l', 'e', '_', 'h', 'q', 'y', 'j', '_', 's', 'e', 'r', 'v', 'e', 'r'};
 /* 设置广播标志 */
 static uint8_t ble_set_adv_flag_data(uint8_t *set_adv_data_position, uint8_t max_len)
 {
@@ -53,7 +53,7 @@ static uint8_t ble_set_adv_appearance(uint8_t *set_adv_data_position, uint8_t ma
     ble_appearance_st adv_appearance_data = {
         .length = BLE_ADV_APPEARANCE_LENGTH - BLE_GENERAL_BYTE_1,
         .adv_data_type = BLE_ADV_APPEARANCE_DATA_TYPE,
-        .catogory_id = { u16_low_u8(BLE_ADV_CATEGORY_KEYBOARD_VALUE), u16_high_u8(BLE_ADV_CATEGORY_KEYBOARD_VALUE) },
+        .catogory_id = {u16_low_u8(BLE_ADV_CATEGORY_KEYBOARD_VALUE), u16_high_u8(BLE_ADV_CATEGORY_KEYBOARD_VALUE)},
     };
     n_ret = memcpy_s(set_adv_data_position, max_len, &adv_appearance_data, BLE_ADV_APPEARANCE_LENGTH);
     if (n_ret != EOK) {
@@ -66,7 +66,7 @@ static uint8_t ble_set_adv_name(uint8_t *set_adv_data_position, uint8_t max_len)
 {
     errno_t n_ret;
     uint8_t len;
-    ble_local_name_st adv_local_name_data = { 0 };
+    ble_local_name_st adv_local_name_data = {0};
     adv_local_name_data.length = (uint8_t)(BLE_ADV_PARAM_DATATYPE_LENGTH + sizeof(g_local_name));
     adv_local_name_data.adv_data_type = BLE_ADV_LOCAL_NAME_DATA_TYPE;
     len = BLE_ADV_PARAM_DATATYPE_LENGTH + BLE_ADV_PARAM_DATATYPE_LENGTH;
@@ -146,8 +146,8 @@ uint8_t ble_set_adv_data(void)
     errcode_t n_ret = 0;
     uint16_t adv_data_len;
     uint16_t scan_rsp_data_len;
-    uint8_t set_adv_data[EXT_ADV_OR_SCAN_RSP_DATA_LEN] = { 0 };
-    uint8_t set_scan_rsp_data[EXT_ADV_OR_SCAN_RSP_DATA_LEN] = { 0 };
+    uint8_t set_adv_data[EXT_ADV_OR_SCAN_RSP_DATA_LEN] = {0};
+    uint8_t set_scan_rsp_data[EXT_ADV_OR_SCAN_RSP_DATA_LEN] = {0};
     gap_ble_config_adv_data_t cfg_adv_data;
 
     adv_data_len = ble_uuid_server_set_adv_data(set_adv_data, EXT_ADV_OR_SCAN_RSP_DATA_LEN);
@@ -164,9 +164,9 @@ uint8_t ble_set_adv_data(void)
 
     cfg_adv_data.scan_rsp_data = set_scan_rsp_data;
     cfg_adv_data.scan_rsp_length = scan_rsp_data_len;
-    osal_printk(" [ ble_set_adv_data ] adv_handle %d, len:%d, data:%s\n",
-                 BTH_GAP_BLE_ADV_HANDLE_DEFAULT, adv_data_len, set_adv_data);
-    n_ret =  gap_ble_set_adv_data(BTH_GAP_BLE_ADV_HANDLE_DEFAULT, &cfg_adv_data);
+    osal_printk(" [ ble_set_adv_data ] adv_handle %d, len:%d, data:%s\n", BTH_GAP_BLE_ADV_HANDLE_DEFAULT, adv_data_len,
+                set_adv_data);
+    n_ret = gap_ble_set_adv_data(BTH_GAP_BLE_ADV_HANDLE_DEFAULT, &cfg_adv_data);
     if (n_ret != 0) {
         return 0;
     }
@@ -182,7 +182,7 @@ uint8_t ble_start_adv(void)
     adv_para.min_interval = BLE_ADV_MIN_INTERVAL;
     adv_para.max_interval = BLE_ADV_MAX_INTERVAL;
     adv_para.duration = BTH_GAP_BLE_ADV_FOREVER_DURATION;
-    adv_para.peer_addr.type = BLE_PUBLIC_DEVICE_ADDRESS;   /* 设置本地设备地址类型 */
+    adv_para.peer_addr.type = BLE_PUBLIC_DEVICE_ADDRESS; /* 设置本地设备地址类型 */
     /* 广播通道选择bitMap, 可参考BleAdvChannelMap */
     adv_para.channel_map = BLE_ADV_CHANNEL_MAP_CH_DEFAULT;
     adv_para.adv_type = BLE_ADV_TYPE_CONNECTABLE_UNDIRECTED;

@@ -29,7 +29,6 @@
 #define DHCP_BOUND_STATUS_MAX_GET_TIMES 20 /* 启动DHCP Client端功能之后，判断是否绑定成功的最大尝试次数 */
 #define WIFI_STA_IP_MAX_GET_TIMES 5 /* 判断是否获取到IP的最大尝试次数 */
 
-
 /*****************************************************************************
   STA 扫描-关联 sample用例
 *****************************************************************************/
@@ -91,14 +90,14 @@ errcode_t wifi_connect(void)
     char ifname[WIFI_IFNAME_MAX_SIZE + 1] = "wlan0"; /* WiFi STA 网络设备名 */
     wifi_sta_config_stru expected_bss = {0};         /* 连接请求信息 */
     const char expected_ssid[] = CONFIG_WIFI_SSID;
-    const char key[] =CONFIG_WIFI_PWD; /* 待连接的网络接入密码 */
+    const char key[] = CONFIG_WIFI_PWD; /* 待连接的网络接入密码 */
     struct netif *netif_p = NULL;
     wifi_linked_info_stru wifi_status;
     uint8_t index = 0;
 
-     /* 等待wifi初始化完成 */
+    /* 等待wifi初始化完成 */
     while (wifi_is_wifi_inited() == 0) {
-        (void)osDelay(10); 
+        (void)osDelay(10);
     }
     /* 创建STA */
     if (wifi_sta_enable() != ERRCODE_SUCC) {
@@ -164,13 +163,13 @@ errcode_t wifi_connect(void)
     }
 
     for (uint8_t i = 0; i < WIFI_STA_IP_MAX_GET_TIMES; i++) {
-        osal_msleep(10); 
+        osal_msleep(10);
         if (netif_p->ip_addr.u_addr.ip4.addr != 0) {
             PRINT("STA IP %u.%u.%u.%u\r\n", (netif_p->ip_addr.u_addr.ip4.addr & 0x000000ff),
-                                    (netif_p->ip_addr.u_addr.ip4.addr & 0x0000ff00) >> 8,
-                                    (netif_p->ip_addr.u_addr.ip4.addr & 0x00ff0000) >> 16,
-                                    (netif_p->ip_addr.u_addr.ip4.addr & 0xff000000) >> 24);
-          
+                  (netif_p->ip_addr.u_addr.ip4.addr & 0x0000ff00) >> 8,
+                  (netif_p->ip_addr.u_addr.ip4.addr & 0x00ff0000) >> 16,
+                  (netif_p->ip_addr.u_addr.ip4.addr & 0xff000000) >> 24);
+
             /* 连接成功 */
             PRINT("STA connect success.\r\n");
             return ERRCODE_SUCC;

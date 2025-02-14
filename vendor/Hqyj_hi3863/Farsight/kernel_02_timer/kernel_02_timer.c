@@ -18,21 +18,20 @@
 #include "cmsis_os2.h"
 #include "common_def.h"
 #include <stdio.h>
-osThreadId_t Task1_ID;   //  任务1 ID
-osThreadId_t Timer_ID;   // 定时器ID
+osThreadId_t Task1_ID; //  任务1 ID
+osThreadId_t Timer_ID; // 定时器ID
 
 /**
  * @description: 任务1
  * @param {*}
  * @return {*}
  */
-void Task1(void *argument) 
+void Task1(const char *argument)
 {
     unused(argument);
-    while (1)
-    {
+    while (1) {
         printf("enter Task 1.......\n");
-        osDelay(100);  
+        osDelay(100);
     }
 }
 /**
@@ -40,7 +39,7 @@ void Task1(void *argument)
  * @param {*}
  * @return {*}
  */
-void timer1_Callback(void *argument)
+void timer1_Callback(const char *argument)
 {
     unused(argument);
     printf("enter timer1_Callback.......\n");
@@ -49,26 +48,25 @@ void timer1_Callback(void *argument)
 static void kernel_timer_example(void)
 {
     osThreadAttr_t attr;
-    attr.name       = "Task1";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "Task1";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = 0X2000;
-    attr.priority   = osPriorityNormal;
-    
-    Task1_ID=osThreadNew((osThreadFunc_t)Task1, NULL, &attr); // 创建任务1
-    if(Task1_ID != NULL) {
-        printf("ID = %d, Create Task1_ID is OK!\n", Task1_ID);      
-    }
-    Timer_ID=osTimerNew(timer1_Callback, osTimerPeriodic, NULL, NULL);       // 创建定时器
-    if (Timer_ID != NULL)
-    {
-        printf("ID = %d, Create Timer_ID is OK!\n", Timer_ID);      
+    attr.priority = osPriorityNormal;
 
-        osStatus_t timerStatus = osTimerStart(Timer_ID, 300U);      // 开始定时器， 并赋予定时器的定时值（在Hi3863中，1U=10ms，100U=1S）
-        if (timerStatus != osOK)
-        {
+    Task1_ID = osThreadNew((osThreadFunc_t)Task1, NULL, &attr); // 创建任务1
+    if (Task1_ID != NULL) {
+        printf("ID = %d, Create Task1_ID is OK!\n", Task1_ID);
+    }
+    Timer_ID = osTimerNew(timer1_Callback, osTimerPeriodic, NULL, NULL); // 创建定时器
+    if (Timer_ID != NULL) {
+        printf("ID = %d, Create Timer_ID is OK!\n", Timer_ID);
+
+        osStatus_t timerStatus =
+            osTimerStart(Timer_ID, 300U); // 开始定时器， 并赋予定时器的定时值（在Hi3863中，1U=10ms，100U=1S）
+        if (timerStatus != osOK) {
             printf("timer is not startRun !\n");
         }
     }

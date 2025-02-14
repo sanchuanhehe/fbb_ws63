@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2024 Beijing HuaQingYuanJian Education Technology Co., Ltd.
+ * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,8 +58,6 @@ errcode_t ble_gatt_client_init(void);
  * @endif
  */
 errcode_t ble_gatt_client_discover_all_service(uint16_t conn_id);
-
-void ble_uart_client_read_handler(const void *buffer, uint16_t length, bool error);
 
 void app_uart_init_config(void);
 

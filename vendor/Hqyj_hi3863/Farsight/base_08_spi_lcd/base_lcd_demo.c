@@ -27,32 +27,31 @@ osThreadId_t Task1_ID; // 任务1设置为低优先级任务
 void Task1(void)
 {
     osDelay(TASK_DELAY_TIME);
-    char str[]="1234567890*#&| ABCD abcd !";
     app_spi_init_pin();
     app_spi_master_init_config();
     printf("Enter ILI9341_Init()!\n");
-    ILI9341_Init();  
-
-    while (1) 
-    {
-        LCD_DrawPicture( 0, 0,240, 320, (uint8_t *)gImage_1);
-        LCD_ShowString(0, 24, strlen(str), 24,  (uint8_t*)str);
+    ILI9341_Init();
+    while (1) {
+        ILI9341_Clear(BLUE);
+        osDelay(TASK_DELAY_TIME);
+        ILI9341_Clear(WHITE);
+        osDelay(TASK_DELAY_TIME);
+        ILI9341_Clear(RED);
         osDelay(TASK_DELAY_TIME);
     }
-   
 }
 static void base_lcd_demo(void)
 {
     printf("Enter base_lcd_demo()!\r\n");
 
     osThreadAttr_t attr;
-    attr.name       = "Task1";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "Task1";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = 0x3000;
-    attr.priority   = osPriorityNormal;
+    attr.priority = osPriorityNormal;
 
     Task1_ID = osThreadNew((osThreadFunc_t)Task1, NULL, &attr);
     if (Task1_ID != NULL) {

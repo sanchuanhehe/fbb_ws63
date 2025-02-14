@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2024 Beijing HuaQingYuanJian Education Technology Co., Ltd.
+ * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -183,12 +183,12 @@ static errcode_t example_sta_function(void)
     return ERRCODE_FAIL;
 }
 
-int sta_sample_init(void *argument)
+int sta_sample_init(const char *argument)
 {
     argument = argument;
     /* 等待wifi初始化完成 */
     while (wifi_is_wifi_inited() == 0) {
-        (void)osDelay(10); 
+        (void)osDelay(10);
     }
     example_sta_function();
     return 0;
@@ -197,13 +197,13 @@ int sta_sample_init(void *argument)
 static void sta_sample(void)
 {
     osThreadAttr_t attr;
-    attr.name       = "sta_sample_task";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "sta_sample_task";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = 0x1000;
-    attr.priority   = osPriorityNormal;
+    attr.priority = osPriorityNormal;
     if (osThreadNew((osThreadFunc_t)sta_sample_init, NULL, &attr) == NULL) {
         printf("Create sta_sample_task fail.\r\n");
     }

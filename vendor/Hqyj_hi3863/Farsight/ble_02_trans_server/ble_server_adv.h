@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2024 Beijing HuaQingYuanJian Education Technology Co., Ltd.
+ * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,7 +40,7 @@
 /* Ble name adv name type */
 #define BLE_ADV_LOCAL_NAME_DATA_TYPE 0x09
 /* Ble name adv tx power type */
-#define BLE_ADV_TX_POWER_LEVEL       0x0A
+#define BLE_ADV_TX_POWER_LEVEL 0x0A
 /* Ble name adv tx power response type */
 #define BLE_SCAN_RSP_TX_POWER_LEVEL_LEN 0x03
 /* Ble adv flag data */
@@ -54,9 +54,9 @@
  * @endif
  */
 typedef struct {
-    uint8_t length;         /* 广播数据类型长度 */
-    uint8_t adv_data_type;  /* 广播数据类型 */
-    uint8_t flags;          /* 广播数据标志 */
+    uint8_t length;        /* 广播数据类型长度 */
+    uint8_t adv_data_type; /* 广播数据类型 */
+    uint8_t flags;         /* 广播数据标志 */
 } ble_adv_flag;
 
 /**
@@ -67,9 +67,9 @@ typedef struct {
  * @endif
  */
 typedef struct {
-  uint8_t length;                             /* 设备外观数据类型长度 */
-    uint8_t adv_data_type;                      /* 设备外观数据类型 */
-    uint8_t catogory_id[BLE_ADV_CATEGORY_LEN];  /* 设备外观数据 */
+    uint8_t length;                            /* 设备外观数据类型长度 */
+    uint8_t adv_data_type;                     /* 设备外观数据类型 */
+    uint8_t catogory_id[BLE_ADV_CATEGORY_LEN]; /* 设备外观数据 */
 } ble_appearance_st;
 
 /**
@@ -80,9 +80,9 @@ typedef struct {
  * @endif
  */
 typedef struct {
-    uint8_t length;             /* 广播设备名称类型长度 */
-    uint8_t adv_data_type;      /* 设备名称类型 */
-    int8_t *name;               /* 设备名称数据指针 */
+    uint8_t length;        /* 广播设备名称类型长度 */
+    uint8_t adv_data_type; /* 设备名称类型 */
+    int8_t *name;          /* 设备名称数据指针 */
 } ble_local_name_st;
 
 /**
@@ -93,9 +93,9 @@ typedef struct {
  * @endif
  */
 typedef struct {
-   uint8_t length;             /* 广播发送功率长度 */
-    uint8_t adv_data_type;      /* 广播发送数据类型 */
-    uint8_t tx_power_value;     /* 广播发送数据 */
+    uint8_t length;         /* 广播发送功率长度 */
+    uint8_t adv_data_type;  /* 广播发送数据类型 */
+    uint8_t tx_power_value; /* 广播发送数据 */
 } ble_tx_power_level_st;
 
 /**
@@ -106,10 +106,10 @@ typedef struct {
  * @endif
  */
 typedef enum ble_adv_filter_policy {
-    BLE_ADV_FILTER_POLICY_SCAN_ANY_CONNECT_ANY =                     0x00,
-    BLE_ADV_FILTER_POLICY_SCAN_WHITE_LIST_CONNECT_ANY =              0x01,
-    BLE_ADV_FILTER_POLICY_SCAN_ANY_CONNECT_WHITE_LIST =              0x02,
-    BLE_ADV_FILTER_POLICY_SCAN_WHITE_LIST_CONNECT_WHITE_LIST =       0x03
+    BLE_ADV_FILTER_POLICY_SCAN_ANY_CONNECT_ANY = 0x00,
+    BLE_ADV_FILTER_POLICY_SCAN_WHITE_LIST_CONNECT_ANY = 0x01,
+    BLE_ADV_FILTER_POLICY_SCAN_ANY_CONNECT_WHITE_LIST = 0x02,
+    BLE_ADV_FILTER_POLICY_SCAN_WHITE_LIST_CONNECT_WHITE_LIST = 0x03
 } ble_adv_filter_policy_t;
 
 /**
@@ -120,13 +120,12 @@ typedef enum ble_adv_filter_policy {
  * @endif
  */
 typedef enum ble_adverting_type {
-    BLE_ADV_TYPE_CONNECTABLE_UNDIRECTED =                            0x00,
-    BLE_ADV_TYPE_CONNECTABLE_HIGH_DUTY_CYCLE_DIRECTED =              0x01,
-    BLE_ADV_TYPE_SCANNABLE_UNDIRECTED =                              0x02,
-    BLE_ADV_TYPE_NON_CONNECTABLE_UNDIRECTED =                        0x03,
-    BLE_ADV_TYPE_CONNECTABLE_LOW_DUTY_CYCLE_DIRECTED =               0x04
+    BLE_ADV_TYPE_CONNECTABLE_UNDIRECTED = 0x00,
+    BLE_ADV_TYPE_CONNECTABLE_HIGH_DUTY_CYCLE_DIRECTED = 0x01,
+    BLE_ADV_TYPE_SCANNABLE_UNDIRECTED = 0x02,
+    BLE_ADV_TYPE_NON_CONNECTABLE_UNDIRECTED = 0x03,
+    BLE_ADV_TYPE_CONNECTABLE_LOW_DUTY_CYCLE_DIRECTED = 0x04
 } ble_adverting_type_t;
-
 
 /**
  * @if Eng
@@ -136,13 +135,13 @@ typedef enum ble_adverting_type {
  * @endif
  */
 typedef enum ble_adv_channel_map {
-    BLE_ADV_CHANNEL_MAP_CH_37 =                      0x01,
-    BLE_ADV_CHANNEL_MAP_CH_38 =                      0x02,
-    BLE_ADV_CHANNEL_MAP_CH_39 =                      0x04,
-    BLE_ADV_CHANNEL_MAP_CH_37_CH_38 =                0x03,
-    BLE_ADV_CHANNEL_MAP_CH_37_CH_39 =                0x05,
-    BLE_ADV_CHANNEL_MAP_CH_38_CH_39 =                0x06,
-    BLE_ADV_CHANNEL_MAP_CH_DEFAULT =                 0x07
+    BLE_ADV_CHANNEL_MAP_CH_37 = 0x01,
+    BLE_ADV_CHANNEL_MAP_CH_38 = 0x02,
+    BLE_ADV_CHANNEL_MAP_CH_39 = 0x04,
+    BLE_ADV_CHANNEL_MAP_CH_37_CH_38 = 0x03,
+    BLE_ADV_CHANNEL_MAP_CH_37_CH_39 = 0x05,
+    BLE_ADV_CHANNEL_MAP_CH_38_CH_39 = 0x06,
+    BLE_ADV_CHANNEL_MAP_CH_DEFAULT = 0x07
 } ble_adv_channel_map_t;
 
 /**
@@ -153,10 +152,10 @@ typedef enum ble_adv_channel_map {
  * @endif
  */
 typedef enum {
-    BLE_PUBLIC_DEVICE_ADDRESS =                             0x00,
-    BLE_RANDOM_DEVICE_ADDRESS =                             0x01,
-    BLE_PUBLIC_IDENTITY_ADDRESS =                           0x02,
-    BLE_RANDOM_STATIC_IDENTITY_ADDRESS =                    0x03
+    BLE_PUBLIC_DEVICE_ADDRESS = 0x00,
+    BLE_RANDOM_DEVICE_ADDRESS = 0x01,
+    BLE_PUBLIC_IDENTITY_ADDRESS = 0x02,
+    BLE_RANDOM_STATIC_IDENTITY_ADDRESS = 0x03
 } ble_address_type;
 
 /* Ble adv min interval */
@@ -206,4 +205,3 @@ uint8_t ble_start_adv(void);
  */
 uint8_t ble_set_adv_data(void);
 #endif
-

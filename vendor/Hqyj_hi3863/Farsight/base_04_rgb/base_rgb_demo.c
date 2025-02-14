@@ -31,9 +31,8 @@ void Task1(void)
     AW2013_Control_Red(RGB_OFF);
     AW2013_Control_Green(RGB_OFF);
     AW2013_Control_Blue(RGB_OFF);
-  
-    while (1) 
-    {
+
+    while (1) {
         AW2013_Control_Red(RGB_ON);
         AW2013_Control_Green(RGB_OFF);
         AW2013_Control_Blue(RGB_OFF);
@@ -55,13 +54,13 @@ static void base_rgb_demo(void)
     printf("Enter base_rgb_demo()!\r\n");
 
     osThreadAttr_t attr;
-    attr.name       = "Task1";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "Task1";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = 0x2000;
-    attr.priority   = osPriorityNormal;
+    attr.priority = osPriorityNormal;
 
     Task1_ID = osThreadNew((osThreadFunc_t)Task1, NULL, &attr);
     if (Task1_ID != NULL) {

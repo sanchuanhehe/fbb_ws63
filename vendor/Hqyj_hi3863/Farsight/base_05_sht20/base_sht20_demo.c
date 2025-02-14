@@ -30,11 +30,10 @@ void Task1(void)
     float temperature = 0, humidity = 0;
     SHT20_Init(); // SHT20初始化
 
-    while (1) 
-    {
+    while (1) {
         SHT20_ReadData(&temperature, &humidity);
 
-        printf("temperature = %d  humidity = %d\r\n",(int)temperature,(int)humidity);
+        printf("temperature = %d  humidity = %d\r\n", (int)temperature, (int)humidity);
         osDelay(100);
     }
 }
@@ -43,13 +42,13 @@ static void base_sht20_demo(void)
     printf("Enter base_sht20_demo()!\r\n");
 
     osThreadAttr_t attr;
-    attr.name       = "Task1";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "Task1";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = 0x2000;
-    attr.priority   = osPriorityNormal;
+    attr.priority = osPriorityNormal;
 
     Task1_ID = osThreadNew((osThreadFunc_t)Task1, NULL, &attr);
     if (Task1_ID != NULL) {

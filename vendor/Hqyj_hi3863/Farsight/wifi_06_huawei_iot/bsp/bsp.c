@@ -25,10 +25,10 @@ void my_gpio_init(pin_t gpio)
 
 gpio_level_t my_io_readval(pin_t gpio)
 {
-   return uapi_gpio_get_output_val(gpio);
+    return uapi_gpio_get_output_val(gpio);
 }
 
 void my_io_setval(pin_t gpio, gpio_level_t level)
 {
-  uapi_gpio_set_val(gpio, level);
+    uapi_gpio_set_val(gpio, level);
 }

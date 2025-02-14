@@ -29,8 +29,7 @@ void Task1(void)
 {
     uint16_t ir = 0, als = 0, ps = 0; // 人体红外传感器 接近传感器 光照强度传感器
     AP3216C_Init();
-    while (1) 
-    {
+    while (1) {
         AP3216C_ReadData(&ir, &als, &ps);
         printf("ir = %d    als = %d    ps = %d\r\n", ir, als, ps);
         osDelay(100);
@@ -41,13 +40,13 @@ static void base_ap3216_demo(void)
     printf("Enter base_ap3216_demo()!\r\n");
 
     osThreadAttr_t attr;
-    attr.name       = "Task1";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "Task1";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = 0x2000;
-    attr.priority   = osPriorityNormal;
+    attr.priority = osPriorityNormal;
 
     Task1_ID = osThreadNew((osThreadFunc_t)Task1, NULL, &attr);
     if (Task1_ID != NULL) {

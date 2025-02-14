@@ -32,7 +32,7 @@ static bool writeTimeout(uint8_t *data, uint8_t dataSend)
     nt3h1101_i2c_data1.send_buf = data;
     nt3h1101_i2c_data1.send_len = dataSend;
 
-    status = uapi_i2c_master_write(1, NT3H1X_SLAVE_ADDRESS   , &nt3h1101_i2c_data1);
+    status = uapi_i2c_master_write(1, NT3H1X_SLAVE_ADDRESS, &nt3h1101_i2c_data1);
     if (status != 0) {
         printf("===== Error: I2C write status1 = 0x%x! =====\r\n", status);
         return 0;
@@ -41,7 +41,7 @@ static bool writeTimeout(uint8_t *data, uint8_t dataSend)
     return 1;
 }
 
-static bool  readTimeout(uint8_t address, uint8_t *block_data)
+static bool readTimeout(uint8_t address, uint8_t *block_data)
 {
     uint32_t status = 0;
     i2c_data_t nt3h1101_i2c_data = {0};
@@ -50,13 +50,13 @@ static bool  readTimeout(uint8_t address, uint8_t *block_data)
     nt3h1101_i2c_data.send_len = 1;
     nt3h1101_i2c_data.receive_buf = block_data;
     nt3h1101_i2c_data.receive_len = NFC_PAGE_SIZE;
-    
-    status = uapi_i2c_master_write(1, NT3H1X_SLAVE_ADDRESS  , &nt3h1101_i2c_data);
+
+    status = uapi_i2c_master_write(1, NT3H1X_SLAVE_ADDRESS, &nt3h1101_i2c_data);
     if (status != 0) {
         printf("===== Error: I2C write status1 = 0x%x! =====\r\n", status);
         return 0;
     }
-    status = uapi_i2c_master_read(1,NT3H1X_SLAVE_ADDRESS , &nt3h1101_i2c_data);
+    status = uapi_i2c_master_read(1, NT3H1X_SLAVE_ADDRESS, &nt3h1101_i2c_data);
     if (status != 0) {
         printf("===== Error: I2C read status = 0x%x! =====\r\n", status);
         return 0;
@@ -73,8 +73,7 @@ bool NT3HReadHeaderNfc(uint8_t *endRecordsPtr, uint8_t *ndefHeader)
     if (ret == true) {
         // if the first byte is equals to NDEF_START_BYTE there are some records
         // store theend of that
-        if ((NDEF_START_BYTE == nfcPageBuffer[INDEX_NDEF_START]) &&
-            (NTAG_ERASED != nfcPageBuffer[INDEX_NDEF_HEADER])) {
+        if ((nfcPageBuffer[INDEX_NDEF_START] == NDEF_START_BYTE) && (nfcPageBuffer[INDEX_NDEF_HEADER] != NTAG_ERASED)) {
             *endRecordsPtr = nfcPageBuffer[INDEX_END_RECORD];
             *ndefHeader = nfcPageBuffer[INDEX_NDEF_HEADER];
             return true;
@@ -177,8 +176,7 @@ bool NT3HReadSram(void)
     bool ret = false;
     int i = 0, j = 0;
 
-    for (i = SRAM_START_REG, j = 0; i <= SRAM_END_REG; i++, j++)
-    {
+    for (i = SRAM_START_REG, j = 0; i <= SRAM_END_REG; i++, j++) {
         ret = readTimeout(i, nfcPageBuffer);
         if (ret == false) {
             return ret;
@@ -186,10 +184,9 @@ bool NT3HReadSram(void)
 
         printf("[page=%d]: ", i);
         for (j = 0; j < NFC_PAGE_SIZE; j++) {
-           // printf("0x%x ", nfcPageBuffer[i]);
+            // printf("0x%x ", nfcPageBuffer[i]);
         }
         printf("\n");
-      
     }
     return ret;
 }

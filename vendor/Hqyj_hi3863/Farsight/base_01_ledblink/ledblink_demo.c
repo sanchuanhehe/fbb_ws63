@@ -24,18 +24,18 @@ osThreadId_t Task1_ID; // 任务1
 static int blink_task(const char *arg)
 {
     unused(arg);
-    //配置引脚为普通GPIO模式
+    // 配置引脚为普通GPIO模式
     uapi_pin_set_mode(GPIO_10, HAL_PIO_FUNC_GPIO);
     uapi_pin_set_mode(GPIO_13, HAL_PIO_FUNC_GPIO);
-    //配置GPIO为输出模式 低电平
+    // 配置GPIO为输出模式 低电平
     uapi_gpio_set_dir(GPIO_10, GPIO_DIRECTION_OUTPUT);
     uapi_gpio_set_val(GPIO_10, GPIO_LEVEL_LOW);
-    //配置GPIO为输出模式 高电平
+    // 配置GPIO为输出模式 高电平
     uapi_gpio_set_dir(GPIO_13, GPIO_DIRECTION_OUTPUT);
     uapi_gpio_set_val(GPIO_13, GPIO_LEVEL_HIGH);
     while (1) {
-        osDelay(50);    //延时5s
-        uapi_gpio_toggle(GPIO_10); //电平反转
+        osDelay(50);               // 延时5s
+        uapi_gpio_toggle(GPIO_10); // 电平反转
         uapi_gpio_toggle(GPIO_13);
         printf("gpio toggle.\n");
     }
@@ -46,15 +46,15 @@ static int blink_task(const char *arg)
 static void blink_entry(void)
 {
     printf("Enter blink_entry()!\r\n");
-  
+
     osThreadAttr_t attr;
-    attr.name       = "Task1";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "Task1";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = 0x1000;
-    attr.priority   = osPriorityNormal;
+    attr.priority = osPriorityNormal;
 
     Task1_ID = osThreadNew((osThreadFunc_t)blink_task, NULL, &attr);
     if (Task1_ID != NULL) {

@@ -25,7 +25,6 @@ osThreadId_t Task1_ID; // 任务1设置为低优先级任务
 
 #define TASK_DELAY_TIME 100
 
-
 void Task1(void)
 {
     osDelay(TASK_DELAY_TIME);
@@ -33,32 +32,30 @@ void Task1(void)
     app_spi_init_pin();
     app_spi_master_init_config();
     printf("Enter ILI9341_Init()!\r\n");
-    ILI9341_Init();  
+    ILI9341_Init();
 
     while (1) {
-       
 #if (TOUCH_INT)
         osDelay(10);
 #else
-        FT6336_scan(); //FT6336 触摸点读取
+        FT6336_scan(); // FT6336 触摸点读取
         osDelay(10);
 #endif
-
     }
-   
 }
+
 static void base_lcd_demo(void)
 {
     printf("Enter base_lcd_demo()!\r\n");
 
     osThreadAttr_t attr;
-    attr.name       = "Task1";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "Task1";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = 0x3000;
-    attr.priority   = osPriorityNormal;
+    attr.priority = osPriorityNormal;
 
     Task1_ID = osThreadNew((osThreadFunc_t)Task1, NULL, &attr);
     if (Task1_ID != NULL) {

@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2024 Beijing HuaQingYuanJian Education Technology Co., Ltd.
+ * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -33,10 +33,10 @@
 #define DHCP_BOUND_STATUS_MAX_GET_TIMES 20 /* 启动DHCP Client端功能之后，判断是否绑定成功的最大尝试次数 */
 #define WIFI_STA_IP_MAX_GET_TIMES 5 /* 判断是否获取到IP的最大尝试次数 */
 
-#define CONFIG_WIFI_SSID            "HQYJ_H3863"                       // 要连接的WiFi 热点账号
-#define CONFIG_WIFI_PWD             "123456789"                        // 要连接的WiFi 热点密码
-#define CONFIG_SERVER_IP            "192.168.184.230"                  // 要连接的服务器IP
-#define CONFIG_SERVER_PORT          6789                               // 要连接的服务器端口
+#define CONFIG_WIFI_SSID "HQYJ_H3863"      // 要连接的WiFi 热点账号
+#define CONFIG_WIFI_PWD "123456789"        // 要连接的WiFi 热点密码
+#define CONFIG_SERVER_IP "192.168.184.230" // 要连接的服务器IP
+#define CONFIG_SERVER_PORT 6789            // 要连接的服务器端口
 
 static const char *send_data = "UDP Test!\r\n";
 
@@ -51,8 +51,8 @@ static void wifi_connection_changed(td_s32 state, const wifi_linked_info_stru *i
 {
     UNUSED(reason_code);
 
-    if (state == WIFI_STATE_AVALIABLE) 
-         printf("[WiFi]:%s, [RSSI]:%d\r\n", info->ssid,info->rssi);
+    if (state == WIFI_STATE_AVALIABLE)
+        printf("[WiFi]:%s, [RSSI]:%d\r\n", info->ssid, info->rssi);
 }
 /*****************************************************************************
   STA 扫描-关联 sample用例
@@ -184,13 +184,13 @@ static errcode_t wifi_connect(void)
     }
 
     for (uint8_t i = 0; i < WIFI_STA_IP_MAX_GET_TIMES; i++) {
-        osDelay(1); 
+        osDelay(1);
         if (netif_p->ip_addr.u_addr.ip4.addr != 0) {
             printf("STA IP %u.%u.%u.%u\r\n", (netif_p->ip_addr.u_addr.ip4.addr & 0x000000ff),
-                                    (netif_p->ip_addr.u_addr.ip4.addr & 0x0000ff00) >> 8,
-                                    (netif_p->ip_addr.u_addr.ip4.addr & 0x00ff0000) >> 16,
-                                    (netif_p->ip_addr.u_addr.ip4.addr & 0xff000000) >> 24);
-          
+                   (netif_p->ip_addr.u_addr.ip4.addr & 0x0000ff00) >> 8,
+                   (netif_p->ip_addr.u_addr.ip4.addr & 0x00ff0000) >> 16,
+                   (netif_p->ip_addr.u_addr.ip4.addr & 0xff000000) >> 24);
+
             /* 连接成功 */
             printf("STA connect success.\r\n");
             return ERRCODE_SUCC;
@@ -200,7 +200,7 @@ static errcode_t wifi_connect(void)
     return ERRCODE_FAIL;
 }
 
-int sta_sample_init(void *argument)
+int sta_sample_init(const char *argument)
 {
     argument = argument;
     int sock_fd;
@@ -209,11 +209,11 @@ int sta_sample_init(void *argument)
     socklen_t addr_length = sizeof(send_addr);
     char recvBuf[512];
 
-    wifi_event_stru wifi_event_cb = { 0 };
+    wifi_event_stru wifi_event_cb = {0};
 
     wifi_event_cb.wifi_event_scan_state_changed = wifi_scan_state_changed;
     wifi_event_cb.wifi_event_connection_changed = wifi_connection_changed;
-     /* 注册事件回调 */
+    /* 注册事件回调 */
     if (wifi_register_event_cb(&wifi_event_cb) != 0) {
         printf("wifi_event_cb register fail.\r\n");
         return -1;
@@ -222,12 +222,12 @@ int sta_sample_init(void *argument)
 
     /* 等待wifi初始化完成 */
     while (wifi_is_wifi_inited() == 0) {
-        (void)osDelay(10); 
+        (void)osDelay(10);
     }
     wifi_connect();
 
     printf("create socket start! \r\n");
-     if ((sock_fd = socket(AF_INET, SOCK_DGRAM, 0)) != ERRCODE_SUCC) {
+    if ((sock_fd = socket(AF_INET, SOCK_DGRAM, 0)) != ERRCODE_SUCC) {
         printf("create socket failed!\r\n");
         return 0;
     }
@@ -238,17 +238,16 @@ int sta_sample_init(void *argument)
     send_addr.sin_port = htons(CONFIG_SERVER_PORT);
     send_addr.sin_addr.s_addr = inet_addr(CONFIG_SERVER_IP);
     addr_length = sizeof(send_addr);
-   // osDelay(100);
     while (1) {
         memset(recvBuf, 0, sizeof(recvBuf));
         /* 发送数据到服务远端 */
         printf("sendto...\r\n");
         sendto(sock_fd, send_data, strlen(send_data), 0, (struct sockaddr *)&send_addr, addr_length);
-         osDelay(100);
+        osDelay(100);
 
         /* 接收服务端返回的字符串 */
         recvfrom(sock_fd, recvBuf, sizeof(recvBuf), 0, (struct sockaddr *)&send_addr, &addr_length);
-       printf("recvfrom:%s\n", recvBuf);
+        printf("recvfrom:%s\n", recvBuf);
     }
     lwip_close(sock_fd);
     return 0;
@@ -257,13 +256,13 @@ int sta_sample_init(void *argument)
 static void sta_sample(void)
 {
     osThreadAttr_t attr;
-    attr.name       = "sta_sample_task";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "sta_sample_task";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = WIFI_TASK_STACK_SIZE;
-    attr.priority   = osPriorityNormal;
+    attr.priority = osPriorityNormal;
     if (osThreadNew((osThreadFunc_t)sta_sample_init, NULL, &attr) == NULL) {
         printf("Create sta_sample_task fail.\r\n");
     }
