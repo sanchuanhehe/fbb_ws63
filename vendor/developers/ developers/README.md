@@ -192,7 +192,7 @@ flowchart TD
 或使用在仓库根目录下使用命令
 
 ```bash
-git apply vendor/sanchuanhehe/timer_blinky/timer_blinky.patch 
+git apply vendor/developers/timer_blinky/timer_blinky.patch 
 ```
 
 安装例程代码
