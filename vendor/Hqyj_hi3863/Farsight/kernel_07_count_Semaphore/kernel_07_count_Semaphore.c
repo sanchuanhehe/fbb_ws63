@@ -54,9 +54,8 @@ void task1(const char *argument)
 void task2(const char *argument)
 {
     unused(argument);
-    while (1) {
-        if (osSemaphoreRelease(Semaphore_ID) == osOK) // 信号量 +1
-        {
+    while (1) { // 信号量 +1
+        if (osSemaphoreRelease(Semaphore_ID) == osOK) {
             printf("[出去1辆车, 剩余停车场容量: %d] 信号量+1.\n", osSemaphoreGetCount(Semaphore_ID));
         } else {
             printf("[出停车场失败]\n");

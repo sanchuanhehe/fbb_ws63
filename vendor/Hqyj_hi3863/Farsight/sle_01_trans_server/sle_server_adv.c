@@ -49,14 +49,14 @@
 /* 广播发射功率 */
 #define ANNOUNCE_TX_POWER_DEFAULT 18
 /* 广播名称 */
-static uint8_t sle_local_name[NAME_MAX_LENGTH] = "sle_uart_server";
+static uint8_t g_sle_local_name[NAME_MAX_LENGTH] = "sle_uart_server";
 static uint16_t sle_set_adv_local_name(uint8_t *adv_data, uint16_t max_len)
 {
     errno_t ret;
     uint8_t index = 0;
 
-    uint8_t *local_name = sle_local_name;
-    uint8_t local_name_len = sizeof(sle_local_name) - 1;
+    uint8_t *local_name = g_sle_local_name;
+    uint8_t local_name_len = sizeof(g_sle_local_name) - 1;
     printf("[%s] local_name_len = %d\r\n", __FUNCTION__, local_name_len);
     printf("[%s] local_name: ", __FUNCTION__);
     for (uint8_t i = 0; i < local_name_len; i++) {

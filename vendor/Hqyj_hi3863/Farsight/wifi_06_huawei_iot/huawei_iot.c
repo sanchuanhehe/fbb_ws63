@@ -115,9 +115,9 @@ int messageArrived(void *context, char *topicName, int topicLen, MQTTClient_mess
     printf("[Message]: %s\n", (char *)message->payload);
     // 进行传感器控制
     if (strstr((char *)message->payload, "true") != NULL)
-        my_io_setval(sensor_io, GPIO_LEVEL_HIGH);
+        my_io_setval(SENSOR_IO, GPIO_LEVEL_HIGH);
     else
-        my_io_setval(sensor_io, GPIO_LEVEL_LOW);
+        my_io_setval(SENSOR_IO, GPIO_LEVEL_LOW);
     // 解析命令id
     parseAfterEqual(topicName, g_responseId);
     g_cmdFlag = 1;
@@ -171,7 +171,7 @@ static errcode_t mqtt_connect(void)
         osDelay(DELAY_TIME_MS);
         memset(g_sendBuffer, 0, sizeof(g_sendBuffer) / sizeof(g_sendBuffer[0]));
         sprintf(g_sendBuffer, MQTT_DATA_SEND, DATA_SEVER_NAME, DATA_ATTR_NAME,
-                my_io_readval(sensor_io) ? "true" : "false");
+                my_io_readval(SENSOR_IO) ? "true" : "false");
         mqtt_publish(MQTT_DATATOPIC_PUB, g_sendBuffer);
         memset(g_sendBuffer, 0, sizeof(g_sendBuffer) / sizeof(g_sendBuffer[0]));
     }
@@ -181,7 +181,7 @@ static errcode_t mqtt_connect(void)
 void mqtt_init_task(const char *argument)
 {
     unused(argument);
-    my_gpio_init(sensor_io);
+    my_gpio_init(SENSOR_IO);
     wifi_connect();
     osDelay(DELAY_TIME_MS);
     mqtt_connect();

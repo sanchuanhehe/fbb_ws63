@@ -37,13 +37,13 @@ unsigned long g_msg_queue = 0;
 unsigned int msg_rev_size = sizeof(msg_data_t);
 /* ble connect state */
 uint8_t g_connection_state = 0;
-/* 任务相关*/
+/* 任务相关 */
 #define BLE_SERVER_TASK_PRIO 24
 #define BLE_SERVER_STACK_SIZE 0x2000
-/*串口接收缓冲区大小*/
+/*串口接收缓冲区大小 */
 #define UART_RX_MAX 512
 uint8_t uart_rx_buffer[UART_RX_MAX];
-/* 串口接收io*/
+/* 串口接收io */
 #define CONFIG_UART0_TXD_PIN 17
 #define CONFIG_UART0_RXD_PIN 18
 #define CONFIG_UART0_PIN_MODE 1
@@ -179,7 +179,7 @@ static void ble_server_service_start_cbk(uint8_t server_id, uint16_t handle, err
     osal_printk("[ble_server_service_start_cbk] Start service cbk : server: %d status: %d srv_hdl: %d\n", server_id,
                 handle, status);
 }
-/* 写特征值请求回调*/
+/* 写特征值请求回调 */
 static void ble_server_receive_write_req_cbk(uint8_t server_id,
                                              uint16_t conn_id,
                                              gatts_req_write_cb_t *write_cb_para,
@@ -193,7 +193,7 @@ static void ble_server_receive_write_req_cbk(uint8_t server_id,
     }
     osal_printk("\n");
 }
-/* 读特征值请求回调*/
+/* 读特征值请求回调 */
 static void ble_server_receive_read_req_cbk(uint8_t server_id,
                                             uint16_t conn_id,
                                             gatts_req_read_cb_t *read_cb_para,

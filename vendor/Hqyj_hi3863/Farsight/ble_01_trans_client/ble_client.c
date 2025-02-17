@@ -32,14 +32,14 @@ typedef struct {
 /* 消息队列结构体 */
 unsigned long g_msg_queue = 0;
 unsigned int msg_rev_size = sizeof(msg_data_t);
-/*串口接收缓冲区大小*/
+/*串口接收缓冲区大小 */
 #define UART_RX_MAX 512
 uint8_t uart_rx_buffer[UART_RX_MAX];
-/* 串口接收io*/
+/* 串口接收io */
 #define CONFIG_UART1_TXD_PIN 17
 #define CONFIG_UART1_RXD_PIN 18
 #define CONFIG_UART1_PIN_MODE 1
-/* 任务相关*/
+/* 任务相关 */
 #define BLE_UUID_CLIENT_TASK_PRIO 24
 #define BLE_UUID_CLIENT_STACK_SIZE 0x2000
 /* octets of 16 bits uart */
@@ -200,7 +200,7 @@ errcode_t ble_client_write_cmd(uint8_t *data, uint16_t len, uint16_t handle)
     }
     return ERRCODE_BT_SUCCESS;
 }
-/* 收到写响应回调函数。*/
+/* 收到写响应回调函数 */
 static void ble_client_write_cfm_cbk(uint8_t client_id, uint16_t conn_id, uint16_t handle, gatt_status_t status)
 {
     osal_printk("[GATTClient]Write result----client:%d conn_id:%d handle:%d\n", client_id, conn_id, handle);
@@ -327,7 +327,7 @@ errcode_t ble_gatt_client_callback_register(void)
     }
     return ret;
 }
-/* 扫描设置并开启*/
+/* 扫描设置并开启 */
 errcode_t ble_cliant_start_scan(void)
 {
     errcode_t ret = ERRCODE_BT_SUCCESS;
@@ -420,7 +420,7 @@ void ble_uart_client_read_handler(const void *buffer, uint16_t length, bool erro
     }
 }
 
-/* 串口初始化配置*/
+/* 串口初始化配置 */
 void app_uart_init_config(void)
 {
     uart_buffer_config_t uart_buffer_config;

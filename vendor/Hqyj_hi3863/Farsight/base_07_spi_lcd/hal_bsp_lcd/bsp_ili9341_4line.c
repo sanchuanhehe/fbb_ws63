@@ -39,11 +39,6 @@
 
 #define HIGH_BYTE_SHIFT 8
 #define LOW_BYTE_SHIFT 0xff
-#define SCAN_SDIRECTION_L2R_U2D ((0 << 7) | (0 << 6) | (0 << 5))
-#define SCAN_SDIRECTION_R2L_D2U ((1 << 7) | (1 << 6) | (0 << 5))
-
-#define SCAN_HDIRECTION_L2R_U2D ((0 << 7) | (1 << 6) | (1 << 5))
-#define SCAN_HDIRECTION_R2L_D2U ((1 << 7) | (0 << 6) | (1 << 5))
 
 #define ILI9341_WIDTH 320
 #define ILI9341_HEIGHT 240
@@ -263,8 +258,7 @@ void ili9341_DisplayDir(ScreenShowDir ShowDIR)
     uint16_t regval = 0x08; // RGB-BGR Order不能改变
     uint8_t dirreg = 0;
 
-    if (ShowDIR == ScanVertical) // 竖屏
-    {
+    if (ShowDIR == ScanVertical) { // 竖屏
         ili9341dev.width = ILI9341_HEIGHT;
         ili9341dev.height = ILI9341_WIDTH;
 
@@ -274,18 +268,16 @@ void ili9341_DisplayDir(ScreenShowDir ShowDIR)
         DFT_SCAN_DIR = L2R_U2D;
 
         switch (DFT_SCAN_DIR) {
-            case L2R_U2D: // 从左到右,从上到下  //竖屏
-                regval |= SCAN_SDIRECTION_L2R_U2D;
+            case L2R_U2D: // 从左到右,从上到下 竖屏
+                regval |= (0 << 7) | (0 << 6) | (0 << 5);
                 break;
-            case R2L_D2U: // 从右到左,从下到上   //竖屏
-                regval |= SCAN_SDIRECTION_R2L_D2U;
+            case R2L_D2U: // 从右到左,从下到上 竖屏
+                regval |= (1 << 7) | (1 << 6) | (0 << 5);
                 break;
             default: // 缺省分支
-
                 break;
         }
-    } else // 横屏
-    {
+    } else { // 横屏
         ili9341dev.width = ILI9341_WIDTH;
         ili9341dev.height = ILI9341_HEIGHT;
 
@@ -295,14 +287,13 @@ void ili9341_DisplayDir(ScreenShowDir ShowDIR)
         DFT_SCAN_DIR = D2U_L2R;
 
         switch (DFT_SCAN_DIR) {
-            case U2D_R2L: // 从上到下,从右到左  //横屏
-                regval |= SCAN_HDIRECTION_L2R_U2D;
+            case U2D_R2L: // 从上到下,从右到左 横屏
+                regval |= (0 << 7) | (1 << 6) | (1 << 5);
                 break;
-            case D2U_L2R: // 从下到上,从左到右  //横屏
-                regval |= SCAN_HDIRECTION_R2L_D2U;
+            case D2U_L2R: // 从下到上,从左到右 横屏
+                regval |= (1 << 7) | (0 << 6) | (1 << 5);
                 break;
             default: // 缺省分支
-
                 break;
         }
     }
@@ -567,9 +558,8 @@ void ili9341_DrawLine(uint16_t _usX1, uint16_t _usY1, uint16_t _usX2, uint16_t _
     } else {
         dy = _usY1 - _usY2;
     }
-
-    if (dx < dy) /* 如果dy为计长方向，则交换纵横坐标。 */
-    {
+    /* 如果dy为计长方向，则交换纵横坐标。 */
+    if (dx < dy) {
         uint16_t temp;
         iTag = 1;
         temp = _usX1;
@@ -590,8 +580,8 @@ void ili9341_DrawLine(uint16_t _usX1, uint16_t _usY1, uint16_t _usX2, uint16_t _
     inc1 = 2 * dy;
     inc2 = 2 * (dy - dx);
     d = inc1 - dx;
-    while (x != _usX2) /* 循环画点 */
-    {
+    /* 循环画点 */
+    while (x != _usX2) {
         if (d < 0) {
             d += inc1;
         } else {
@@ -684,28 +674,40 @@ uint32_t LCD_ShowChar(uint16_t x, uint16_t y, uint8_t num, uint8_t size, uint8_t
     uint8_t csize = (size / 8 + ((size % 8) ? 1 : 0)) * (size / 2); // 得到字体一个字符对应点阵集所占的字节数
     num = num - ' '; // 得到偏移后的值（ASCII字库是从空格开始取模，所以-' '就是对应字符的字库）
     for (t = 0; t < csize; t++) {
-        if (size == 12)
-            temp = asc2_1206[num][t]; // 调用1206字体
-        else if (size == 16)
-            temp = asc2_1608[num][t]; // 调用1608字体
-        else if (size == 24)
-            temp = asc2_2412[num][t]; // 调用2412字体
-        else
-            return 1; // 没有的字库
+        // 调用1206字体
+        if (size == 12) {
+            temp = asc2_1206[num][t];
+        }
+        // 调用1608字体
+        else if (size == 16) {
+            temp = asc2_1608[num][t];
+        }
+        // 调用2412字体
+        else if (size == 24) {
+            temp = asc2_2412[num][t];
+        }
+        // 没有的字库
+        else {
+            return 1;
+        }
+
         for (t1 = 0; t1 < 8; t1++) {
-            if (temp & 0x80)
+            if (temp & 0x80) {
                 ili9341_DrawPoint(x, y, POINT_COLOR);
-            else if (mode == 0)
+            } else if (mode == 0) {
                 ili9341_DrawPoint(x, y, BACK_COLOR);
+            }
             temp <<= 1;
             y++;
-            if (y >= ili9341dev.height)
+            if (y >= ili9341dev.height) {
                 return 1; // 超区域了
+            }
             if ((y - y0) == size) {
                 y = y0;
                 x++;
-                if (x >= ili9341dev.width)
+                if (x >= ili9341dev.width) {
                     return 1; // 超区域了
+                }
                 break;
             }
         }
@@ -726,17 +728,20 @@ uint32_t LCD_ShowChar(uint16_t x, uint16_t y, uint8_t num, uint8_t size, uint8_t
 void LCD_ShowString(uint16_t x, uint16_t y, uint16_t len, uint8_t size, uint8_t *p)
 {
     uint16_t i = 0;
-    uint16_t width = 240, height = 320, x0;
+    uint16_t width = 240;
+    uint16_t height = 320;
+    uint16_t x0;
     x0 = x;
-    while ((i < len) && (*p <= '~') && (*p >= ' ')) // 判断是不是非法字符!
-    {
+    // 判断是不是非法字符!
+    while ((i < len) && (*p <= '~') && (*p >= ' ')) {
         i++;
         if (x >= width) {
             x = x0;
             y += size;
         }
-        if (y >= height)
+        if (y >= height) {
             break; // 退出
+        }
         LCD_ShowChar(x, y, *p, size, 1);
         x += size / 2;
         p++;
@@ -766,7 +771,8 @@ void LCD_DrawPointPic(uint16_t x, uint16_t y, uint16_t color)
 ****************************************************************************/
 void LCD_DrawPicture(uint16_t StartX, uint16_t StartY, uint16_t Xend, uint16_t Yend, uint8_t *pic)
 {
-    static uint16_t i = 0, j = 0;
+    static uint16_t i = 0;
+    static uint16_t j = 0;
     uint16_t *bitmap = (uint16_t *)pic;
     for (j = 0; j < Yend - StartY; j++) {
         for (i = 0; i < Xend - StartX; i++)

@@ -20,7 +20,7 @@
 #include "gpio.h"
 #include "platform_core_rom.h"
 
-#define sensor_io GPIO_10
+#define SENSOR_IO GPIO_10
 
 void my_gpio_init(pin_t gpio);
 

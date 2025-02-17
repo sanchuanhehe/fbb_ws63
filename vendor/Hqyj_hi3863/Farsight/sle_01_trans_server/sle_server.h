@@ -25,7 +25,7 @@
 extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
-/* 任务相关*/
+/* 任务相关 */
 #define SLE_SERVER_TASK_PRIO 24
 #define SLE_SERVER_STACK_SIZE 0x2000
 /* 串口接收数据结构体 */
@@ -33,7 +33,7 @@ typedef struct {
     uint8_t *value;
     uint16_t value_len;
 } msg_data_t;
-/* 串口接收io*/
+/* 串口接收io */
 #define CONFIG_UART_TXD_PIN 17
 #define CONFIG_UART_RXD_PIN 18
 #define CONFIG_UART_PIN_MODE 1

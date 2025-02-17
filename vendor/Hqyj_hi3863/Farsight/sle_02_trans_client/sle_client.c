@@ -34,7 +34,7 @@
 
 unsigned long g_msg_queue = 0;
 unsigned int msg_rev_size = sizeof(msg_data_t);
-/*串口接收缓冲区大小*/
+/*串口接收缓冲区大小 */
 #define UART_RX_MAX 1024
 uint8_t uart_rx_buffer[UART_RX_MAX];
 
@@ -321,7 +321,7 @@ void sle_uart_client_read_handler(const void *buffer, uint16_t length, bool erro
     msg_data.value_len = length;
     osal_msg_queue_write_copy(g_msg_queue, (void *)&msg_data, msg_rev_size, 0);
 }
-/* 串口初始化配置*/
+/* 串口初始化配置 */
 void app_uart_init_config(void)
 {
     uart_buffer_config_t uart_buffer_config;
