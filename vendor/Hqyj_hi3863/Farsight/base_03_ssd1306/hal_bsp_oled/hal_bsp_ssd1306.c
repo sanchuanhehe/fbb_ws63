@@ -36,7 +36,7 @@
 #define OFFSET_16 16
 
 /************************************6*8的点阵************************************/
-const unsigned char f6x8[][6] = {
+const unsigned char F6X8[][6] = {
     {0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, // sp
     {0x00, 0x00, 0x00, 0x2f, 0x00, 0x00}, // !
     {0x00, 0x00, 0x07, 0x00, 0x07, 0x00}, // "
@@ -131,7 +131,7 @@ const unsigned char f6x8[][6] = {
     {0x14, 0x14, 0x14, 0x14, 0x14, 0x14},
 };
 /****************************************8*16的点阵************************************/
-const unsigned char f8x16[] = {
+const unsigned char F8X16[] = {
     /* 0 */
     0x00,
     0x00,
@@ -1904,7 +1904,7 @@ void SSD1306_ShowStr(uint8_t x, uint8_t y, char *ch, uint8_t TextSize)
                 }
                 SSD1306_SetPosition(pos_x, pos_y);
                 for (i = 0; i < number_of_letter_lattice; i++) {
-                    SSD1306_WiteData(f6x8[c][i]);
+                    SSD1306_WiteData(F6X8[c][i]);
                 }
                 pos_x += TEXT_SIZE_8_WIDTH_6;
                 j++;

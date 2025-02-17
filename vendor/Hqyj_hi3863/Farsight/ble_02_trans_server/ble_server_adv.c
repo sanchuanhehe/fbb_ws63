@@ -26,8 +26,6 @@
 #include "osal_debug.h"
 #define NAME_MAX_LENGTH 15
 #define EXT_ADV_OR_SCAN_RSP_DATA_LEN 251
-#define u16_low_u8(val) ((uint8_t)((uint16_t)(val) & 0xff))
-#define u16_high_u8(val) ((uint8_t)(((uint16_t)(val) >> 8) & 0xff))
 
 uint8_t g_local_name[NAME_MAX_LENGTH] = {'b', 'l', 'e', '_', 'h', 'q', 'y', 'j', '_', 's', 'e', 'r', 'v', 'e', 'r'};
 /* 设置广播标志 */
@@ -45,6 +43,14 @@ static uint8_t ble_set_adv_flag_data(uint8_t *set_adv_data_position, uint8_t max
         return 0;
     }
     return BLE_ADV_FLAG_LEN;
+}
+uint8_t u16_high_u8(uint16_t val)
+{
+    return (uint8_t)((val >> 8) & 0xff);
+}
+uint8_t u16_low_u8(uint16_t val)
+{
+    return (uint8_t)(val & 0xff);
 }
 /* 设置广播类型 */
 static uint8_t ble_set_adv_appearance(uint8_t *set_adv_data_position, uint8_t max_len)

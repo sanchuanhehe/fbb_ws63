@@ -48,9 +48,9 @@ char *g_username = "my_beep";
 char *g_password = "aa4ad03b63e27dae214ff7032165d2422e2b720067a004cf2375face533d5778";
 #endif
 
-char g_sendBuffer[512] = {0};   // 发布数据缓冲区
-char g_responseId[100] = {0};  // 保存命令id缓冲区
-char g_responseBuf[] =
+char g_send_buffer[512] = {0};   // 发布数据缓冲区
+char g_response_id[100] = {0};  // 保存命令id缓冲区
+char g_response_buf[] =
     "{\"result_code\": 0,\"response_name\": \"beep\",\"paras\": {\"result\": \"success\"}}"; // 响应json
 uint8_t g_cmdFlag;
 MQTTClient client;
@@ -98,7 +98,7 @@ void delivered(void *context, MQTTClient_deliveryToken dt)
     deliveredToken = dt;
 }
 // 解析字符串并保存到数组中
-void parseAfterEqual(const char *input, char *output)
+void parse_after_equal(const char *input, char *output)
 {
     const char *equalsign = strchr(input, '=');
     if (equalsign != NULL) {
@@ -107,11 +107,11 @@ void parseAfterEqual(const char *input, char *output)
     }
 }
 /* 回调函数，处理接收到的消息 */
-int messageArrived(void *context, char *topicName, int topicLen, MQTTClient_message *message)
+int messageArrived(void *context, char *topic_name, int topic_len, MQTTClient_message *message)
 {
     unused(context);
-    unused(topicLen);
-    printf("[Message recv topic]: %s\n", topicName);
+    unused(topic_len);
+    printf("[Message recv topic]: %s\n", topic_name);
     printf("[Message]: %s\n", (char *)message->payload);
     // 进行传感器控制
     if (strstr((char *)message->payload, "true") != NULL)
@@ -119,7 +119,7 @@ int messageArrived(void *context, char *topicName, int topicLen, MQTTClient_mess
     else
         my_io_setval(SENSOR_IO, GPIO_LEVEL_LOW);
     // 解析命令id
-    parseAfterEqual(topicName, g_responseId);
+    parse_after_equal(topic_name, g_response_id);
     g_cmdFlag = 1;
     memset((char *)message->payload, 0, message->payloadlen);
 
@@ -161,19 +161,19 @@ static errcode_t mqtt_connect(void)
         // 响应平台命令部分
         osDelay(DELAY_TIME_MS); // 需要延时 否则会发布失败
         if (g_cmdFlag) {
-            sprintf(g_sendBuffer, MQTT_CLIENT_RESPONSE, g_responseId);
+            sprintf(g_send_buffer, MQTT_CLIENT_RESPONSE, g_response_id);
             // 设备响应命令
-            mqtt_publish(g_sendBuffer, g_responseBuf);
+            mqtt_publish(g_send_buffer, g_response_buf);
             g_cmdFlag = 0;
-            memset(g_responseId, 0, sizeof(g_responseId) / sizeof(g_responseId[0]));
+            memset(g_response_id, 0, sizeof(g_response_id) / sizeof(g_response_id[0]));
         }
         // 属性上报部分
         osDelay(DELAY_TIME_MS);
-        memset(g_sendBuffer, 0, sizeof(g_sendBuffer) / sizeof(g_sendBuffer[0]));
-        sprintf(g_sendBuffer, MQTT_DATA_SEND, DATA_SEVER_NAME, DATA_ATTR_NAME,
+        memset(g_send_buffer, 0, sizeof(g_send_buffer) / sizeof(g_send_buffer[0]));
+        sprintf(g_send_buffer, MQTT_DATA_SEND, DATA_SEVER_NAME, DATA_ATTR_NAME,
                 my_io_readval(SENSOR_IO) ? "true" : "false");
-        mqtt_publish(MQTT_DATATOPIC_PUB, g_sendBuffer);
-        memset(g_sendBuffer, 0, sizeof(g_sendBuffer) / sizeof(g_sendBuffer[0]));
+        mqtt_publish(MQTT_DATATOPIC_PUB, g_send_buffer);
+        memset(g_send_buffer, 0, sizeof(g_send_buffer) / sizeof(g_send_buffer[0]));
     }
     return ERRCODE_SUCC;
 }

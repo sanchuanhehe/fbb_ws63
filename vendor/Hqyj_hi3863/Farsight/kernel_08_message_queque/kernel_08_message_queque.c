@@ -28,8 +28,8 @@ typedef struct {
     uint8_t id;  // ID
     uint8_t age; // 年龄
     char *name;  // 名字
-} MessagePeople;
-MessagePeople msgPeople;
+} message_people;
+message_people g_msgPeople;
 
 /**
  * @description: 任务1 发送消息
@@ -44,10 +44,10 @@ void task1(const char *argument)
     static uint8_t j = 0;
     while (1) {
         printf("enter Task 1.......\n");
-        msgPeople.id = i++;
-        msgPeople.age = j++;
-        msgPeople.name = "xiao_ming";
-        msgStatus = osMessageQueuePut(MsgQueue_ID, &msgPeople, 0, 100);
+        g_msgPeople.id = i++;
+        g_msgPeople.age = j++;
+        g_msgPeople.name = "xiao_ming";
+        msgStatus = osMessageQueuePut(MsgQueue_ID, &g_msgPeople, 0, 100);
         if (msgStatus == osOK) {
             printf("osMessageQueuePut is ok.\n");
         }
@@ -65,10 +65,10 @@ void task2(const char *argument)
     osStatus_t msgStatus;
     while (1) {
         printf("enter Task 2.......\n");
-        msgStatus = osMessageQueueGet(MsgQueue_ID, &msgPeople, 0, 100);
+        msgStatus = osMessageQueueGet(MsgQueue_ID, &g_msgPeople, 0, 100);
         if (msgStatus == osOK) {
             printf("osMessageQueueGet is ok.\n");
-            printf("Recv: id = %d, age = %d, name = %s\n", msgPeople.id, msgPeople.age, msgPeople.name);
+            printf("Recv: id = %d, age = %d, name = %s\n", g_msgPeople.id, g_msgPeople.age, g_msgPeople.name);
         }
     }
 }

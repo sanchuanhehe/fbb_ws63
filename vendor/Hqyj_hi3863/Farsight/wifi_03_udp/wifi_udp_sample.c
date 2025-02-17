@@ -38,7 +38,7 @@
 #define CONFIG_SERVER_IP "192.168.184.230" // 要连接的服务器IP
 #define CONFIG_SERVER_PORT 6789            // 要连接的服务器端口
 
-static const char *send_data = "UDP Test!\r\n";
+static const char *SEND_DATA = "UDP Test!\r\n";
 
 static void wifi_scan_state_changed(td_s32 state, td_s32 size)
 {
@@ -207,7 +207,7 @@ int sta_sample_init(const char *argument)
     // 服务器的地址信息
     struct sockaddr_in send_addr;
     socklen_t addr_length = sizeof(send_addr);
-    char recvBuf[512];
+    char recv_buf[512];
 
     wifi_event_stru wifi_event_cb = {0};
 
@@ -239,15 +239,15 @@ int sta_sample_init(const char *argument)
     send_addr.sin_addr.s_addr = inet_addr(CONFIG_SERVER_IP);
     addr_length = sizeof(send_addr);
     while (1) {
-        memset(recvBuf, 0, sizeof(recvBuf));
+        memset(recv_buf, 0, sizeof(recv_buf));
         /* 发送数据到服务远端 */
         printf("sendto...\r\n");
-        sendto(sock_fd, send_data, strlen(send_data), 0, (struct sockaddr *)&send_addr, addr_length);
+        sendto(sock_fd, SEND_DATA, strlen(SEND_DATA), 0, (struct sockaddr *)&send_addr, addr_length);
         osDelay(100);
 
         /* 接收服务端返回的字符串 */
-        recvfrom(sock_fd, recvBuf, sizeof(recvBuf), 0, (struct sockaddr *)&send_addr, &addr_length);
-        printf("recvfrom:%s\n", recvBuf);
+        recvfrom(sock_fd, recv_buf, sizeof(recv_buf), 0, (struct sockaddr *)&send_addr, &addr_length);
+        printf("recvfrom:%s\n", recv_buf);
     }
     lwip_close(sock_fd);
     return 0;

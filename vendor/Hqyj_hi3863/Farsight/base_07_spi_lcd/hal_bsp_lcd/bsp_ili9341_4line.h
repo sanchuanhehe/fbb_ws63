@@ -35,7 +35,7 @@ typedef struct {
     uint8_t wramcmd; // 开始写gram指令
     uint8_t setxcmd; // 设置x坐标指令
     uint8_t setycmd; // 设置y坐标指令
-} ILI9341_Dev;
+} ILI9341_DEV;
 // 扫描方向定义
 #define L2R_U2D 0 // 从左到右,从上到下
 #define L2R_D2U 1 // 从左到右,从下到上
@@ -49,8 +49,8 @@ typedef struct {
 
 // 屏幕显示方式
 typedef enum {
-    ScanVertical  = 0U, // 竖屏
-    ScanHorizontal     // 横屏
+    SCANVERTICAL = 0U, // 竖屏
+    SCANHORIZONTAL    // 横屏
 } ScreenShowDir;
 // 画笔颜色
 #define WHITE 0xFFFF

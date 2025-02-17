@@ -47,7 +47,7 @@ uint16_t POINT_COLOR = BLACK; // 画笔颜色
 uint16_t BACK_COLOR = WHITE;  // 背景色
 static uint8_t DFT_SCAN_DIR;  // 扫描方向
 // 管理ili9341重要参数
-static ILI9341_Dev ili9341dev;
+static ILI9341_DEV ili9341dev;
 
 void app_spi_init_pin(void)
 {
@@ -258,7 +258,7 @@ void ili9341_DisplayDir(ScreenShowDir ShowDIR)
     uint16_t regval = 0x08; // RGB-BGR Order不能改变
     uint8_t dirreg = 0;
 
-    if (ShowDIR == ScanVertical) { // 竖屏
+    if (ShowDIR == SCANVERTICAL) { // 竖屏
         ili9341dev.width = ILI9341_HEIGHT;
         ili9341dev.height = ILI9341_WIDTH;
 
@@ -443,7 +443,7 @@ void ili9341_Init(void)
     ili9341_WriteReg(0x21); // Display Inversion ON
 
     ili9341_WriteReg(0x29);           // display on
-    ili9341_DisplayDir(ScanVertical); // 竖屏显示
+    ili9341_DisplayDir(SCANVERTICAL); // 竖屏显示
     ili9341_Clear(WHITE);
 }
 /*

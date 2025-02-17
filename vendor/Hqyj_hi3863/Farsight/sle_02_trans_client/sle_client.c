@@ -33,7 +33,7 @@
 #define SLE_UART_SERVER_NAME "sle_uart_server"
 
 unsigned long g_msg_queue = 0;
-unsigned int msg_rev_size = sizeof(msg_data_t);
+unsigned int g_msg_rev_size = sizeof(msg_data_t);
 /* 串口接收缓冲区大小 */
 #define UART_RX_MAX 1024
 uint8_t uart_rx_buffer[UART_RX_MAX];
@@ -270,7 +270,7 @@ static void *sle_client_task(char *arg)
     sle_client_init();
     while (1) {
         msg_data_t msg_data = {0};
-        int msg_ret = osal_msg_queue_read_copy(g_msg_queue, &msg_data, &msg_rev_size, OSAL_WAIT_FOREVER);
+        int msg_ret = osal_msg_queue_read_copy(g_msg_queue, &msg_data, &g_msg_rev_size, OSAL_WAIT_FOREVER);
         if (msg_ret != OSAL_SUCCESS) {
             printf("msg queue read copy fail.");
             if (msg_data.value != NULL) {
@@ -290,7 +290,7 @@ static void sle_client_entry(void)
 {
     osal_task *task_handle = NULL;
     osal_kthread_lock();
-    int ret = osal_msg_queue_create("sle_msg", msg_rev_size, &g_msg_queue, 0, msg_rev_size);
+    int ret = osal_msg_queue_create("sle_msg", g_msg_rev_size, &g_msg_queue, 0, g_msg_rev_size);
     if (ret != OSAL_SUCCESS) {
         printf("create queue failure!,error:%x\n", ret);
     }
@@ -319,7 +319,7 @@ void sle_uart_client_read_handler(const void *buffer, uint16_t length, bool erro
     }
     msg_data.value = (uint8_t *)buffer_cpy;
     msg_data.value_len = length;
-    osal_msg_queue_write_copy(g_msg_queue, (void *)&msg_data, msg_rev_size, 0);
+    osal_msg_queue_write_copy(g_msg_queue, (void *)&msg_data, g_msg_rev_size, 0);
 }
 /* 串口初始化配置 */
 void app_uart_init_config(void)

@@ -32,7 +32,7 @@
 
 #define DELAY_TIME_MS 100
 
-static const char *send_data = "TCP Test!\r\n";
+static const char *SEND_DATA = "TCP Test!\r\n";
 
 static void wifi_scan_state_changed(td_s32 state, td_s32 size)
 {
@@ -56,7 +56,7 @@ int sta_sample_init(const char *argument)
     int sock_fd;
     // 服务器的地址信息
     struct sockaddr_in send_addr;
-    char recvBuf[512];
+    char recv_buf[512];
     wifi_event_stru wifi_event_cb = {0};
 
     wifi_event_cb.wifi_event_scan_state_changed = wifi_scan_state_changed;
@@ -93,15 +93,15 @@ int sta_sample_init(const char *argument)
     send_addr.sin_addr.s_addr = inet_addr(CONFIG_SERVER_IP);
 
     while (1) {
-        memset(recvBuf, 0, sizeof(recvBuf));
+        memset(recv_buf, 0, sizeof(recv_buf));
         /* 发送数据到服务远端 */
         printf("sendto...\r\n");
-        send(sock_fd, send_data, strlen(send_data), 0);
+        send(sock_fd, SEND_DATA, strlen(SEND_DATA), 0);
         osDelay(DELAY_TIME_MS);
 
         /* 接收服务端返回的字符串 */
-        recv(sock_fd, recvBuf, sizeof(recvBuf), 0);
-        printf("recvfrom:%s\n", recvBuf);
+        recv(sock_fd, recv_buf, sizeof(recv_buf), 0);
+        printf("recvfrom:%s\n", recv_buf);
     }
     lwip_close(sock_fd);
     return 0;

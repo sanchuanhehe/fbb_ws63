@@ -31,7 +31,7 @@ osThreadId_t task1_ID; // 任务1
 
 void task1(void)
 {
-    char displayBuffer[20] = {0};
+    char display_buffer[20] = {0};
     uint8_t hour = 10;
     uint8_t min = 30;
     uint8_t sec = 0;
@@ -54,9 +54,9 @@ void task1(void)
         if (hour > (HOUR_MAX - 1)) {
             hour = 0;
         }
-        memset_s(displayBuffer, sizeof(displayBuffer), 0, sizeof(displayBuffer));
-        if (sprintf_s(displayBuffer, sizeof(displayBuffer), "    %02d:%02d:%02d   ", hour, min, sec) > 0) {
-            SSD1306_ShowStr(OLED_TEXT16_COLUMN_0, OLED_TEXT16_LINE_2, displayBuffer, TEXT_SIZE_16);
+        memset_s(display_buffer, sizeof(display_buffer), 0, sizeof(display_buffer));
+        if (sprintf_s(display_buffer, sizeof(display_buffer), "    %02d:%02d:%02d   ", hour, min, sec) > 0) {
+            SSD1306_ShowStr(OLED_TEXT16_COLUMN_0, OLED_TEXT16_LINE_2, display_buffer, TEXT_SIZE_16);
         }
         osDelay(DELAY_TIME_MS);
     }

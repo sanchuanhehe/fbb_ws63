@@ -27,7 +27,7 @@
 #include "sle_server.h"
 unsigned long g_msg_queue = 0;
 unsigned int g_msg_rev_size = sizeof(msg_data_t);
-/*串口接收缓冲区大小 */
+/* 串口接收缓冲区大小 */
 #define UART_RX_MAX 512
 uint8_t g_uart_rx_buffer[UART_RX_MAX];
 
@@ -59,10 +59,10 @@ static uint16_t g_property_handle = 0;
 static uint8_t g_sle_uart_base[] = {0x73, 0x6c, 0x65, 0x5f, 0x73, 0x65, 0x72, 0x76,
                                     0x65, 0x72, 0x5f, 0x74, 0x65, 0x73, 0x74};
 
-static void encode2byte_little(uint8_t *_ptr, uint16_t data)
+static void encode2byte_little(uint8_t *ptr, uint16_t data)
 {
-    *(uint8_t *)((_ptr) + 1) = (uint8_t)((data) >> 0x8);
-    *(uint8_t *)(_ptr) = (uint8_t)(data);
+    *(uint8_t *)((ptr) + 1) = (uint8_t)((data) >> 0x8);
+    *(uint8_t *)(ptr) = (uint8_t)(data);
 }
 
 static void sle_uuid_set_base(sle_uuid_t *out)

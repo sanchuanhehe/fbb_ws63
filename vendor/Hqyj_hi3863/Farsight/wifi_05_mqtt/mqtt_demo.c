@@ -34,7 +34,7 @@ osThreadId_t mqtt_init_task_id; // mqtt订阅数据任务
 #define MQTT_TOPIC_SUB "subTopic"
 #define MQTT_TOPIC_PUB "pubTopic"
 
-char *msg = "hello!";
+char *g_msg = "hello!";
 MQTTClient client;
 volatile MQTTClient_deliveryToken deliveredToken;
 extern int MQTTClient_init(void);
@@ -47,11 +47,11 @@ void delivered(void *context, MQTTClient_deliveryToken dt)
 }
 
 /* 回调函数，处理接收到的消息 */
-int messageArrived(void *context, char *topicName, int topicLen, MQTTClient_message *message)
+int messageArrived(void *context, char *topicname, int topiclen, MQTTClient_message *message)
 {
     unused(context);
-    unused(topicLen);
-    printf("Message arrived on topic: %s\n", topicName);
+    unused(topiclen);
+    printf("Message arrived on topic: %s\n", topicname);
     printf("Message: %.*s\n", message->payloadlen, (char *)message->payload);
     return 1; // 表示消息已被处理
 }
@@ -70,20 +70,20 @@ int mqtt_subscribe(const char *topic)
     return 0;
 }
 
-int mqtt_publish(const char *topic, char *msg)
+int mqtt_publish(const char *topic, char *g_msg)
 {
     MQTTClient_message pubmsg = MQTTClient_message_initializer;
     MQTTClient_deliveryToken token;
     int ret = 0;
-    pubmsg.payload = msg;
-    pubmsg.payloadlen = (int)strlen(msg);
+    pubmsg.payload = g_msg;
+    pubmsg.payloadlen = (int)strlen(g_msg);
     pubmsg.qos = 1;
     pubmsg.retained = 0;
     ret = MQTTClient_publishMessage(client, topic, &pubmsg, &token);
     if (ret != MQTTCLIENT_SUCCESS) {
         printf("mqtt_publish failed\r\n");
     }
-    printf("mqtt_publish(), the payload is %s, the topic is %s\r\n", msg, topic);
+    printf("mqtt_publish(), the payload is %s, the topic is %s\r\n", g_msg, topic);
     return ret;
 }
 static errcode_t mqtt_connect(void)
@@ -115,7 +115,7 @@ static errcode_t mqtt_connect(void)
     mqtt_subscribe(MQTT_TOPIC_SUB);
     while (1) {
         osDelay(100); // 等待连接成功
-        mqtt_publish(MQTT_TOPIC_PUB, msg);
+        mqtt_publish(MQTT_TOPIC_PUB, g_msg);
     }
 
     return ERRCODE_SUCC;

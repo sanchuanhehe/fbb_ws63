@@ -80,7 +80,7 @@ typedef enum {
     OLED_TEXT8_LINE_5,
     OLED_TEXT8_LINE_6,
     OLED_TEXT8_LINE_7,
-} TeOledText8Line;
+} te_oled_text8_line;
 
 // OLED行坐标 - 字体大小为16
 typedef enum {
@@ -89,7 +89,7 @@ typedef enum {
     OLED_TEXT16_LINE_1,
     OLED_TEXT16_LINE_2,
     OLED_TEXT16_LINE_3,
-} TeOledText16Line;
+} te_oled_text16_line;
 
 /**
  * @brief SSD1306 初始化

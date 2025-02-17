@@ -34,7 +34,7 @@ typedef struct {
 } msg_data_t;
 /* 消息队列结构体 */
 unsigned long g_msg_queue = 0;
-unsigned int msg_rev_size = sizeof(msg_data_t);
+unsigned int g_msg_rev_size = sizeof(msg_data_t);
 /* ble connect state */
 uint8_t g_connection_state = 0;
 /* 任务相关 */
@@ -42,7 +42,7 @@ uint8_t g_connection_state = 0;
 #define BLE_SERVER_STACK_SIZE 0x2000
 /* 串口接收缓冲区大小 */
 #define UART_RX_MAX 512
-uint8_t uart_rx_buffer[UART_RX_MAX];
+uint8_t g_uart_rx_buffer[UART_RX_MAX];
 /* 串口接收io */
 #define CONFIG_UART0_TXD_PIN 17
 #define CONFIG_UART0_RXD_PIN 18
@@ -326,14 +326,14 @@ void ble_server_init(void)
     ble_start_adv();
 }
 
-void ble_main_task(void *argument)
+void ble_main_task(const char *arg)
 {
     argument = argument;
     ble_server_init();
     app_uart_init_config();
     while (1) {
         msg_data_t msg_data = {0};
-        int msg_ret = osal_msg_queue_read_copy(g_msg_queue, &msg_data, &msg_rev_size, OSAL_WAIT_FOREVER);
+        int msg_ret = osal_msg_queue_read_copy(g_msg_queue, &msg_data, &g_msg_rev_size, OSAL_WAIT_FOREVER);
         if (msg_ret != OSAL_SUCCESS) {
             osal_printk("msg queue read copy fail.");
             if (msg_data.value != NULL) {
@@ -351,7 +351,7 @@ static void ble_server_entry(void)
 {
     osal_task *task_handle = NULL;
     osal_kthread_lock();
-    int ret = osal_msg_queue_create("ble_msg", msg_rev_size, &g_msg_queue, 0, msg_rev_size);
+    int ret = osal_msg_queue_create("ble_msg", g_msg_rev_size, &g_msg_queue, 0, g_msg_rev_size);
     if (ret != OSAL_SUCCESS) {
         osal_printk("create queue failure!,error:%x\n", ret);
     }
@@ -380,7 +380,7 @@ void ble_uart_server_read_handler(const void *buffer, uint16_t length, bool erro
         }
         msg_data.value = (uint8_t *)buffer_cpy;
         msg_data.value_len = length;
-        osal_msg_queue_write_copy(g_msg_queue, (void *)&msg_data, msg_rev_size, 0);
+        osal_msg_queue_write_copy(g_msg_queue, (void *)&msg_data, g_msg_rev_size, 0);
     }
 }
 void app_uart_init_config(void)
@@ -391,7 +391,7 @@ void app_uart_init_config(void)
     uart_attr_t attr = {
         .baud_rate = 115200, .data_bits = UART_DATA_BIT_8, .stop_bits = UART_STOP_BIT_1, .parity = UART_PARITY_NONE};
     uart_buffer_config.rx_buffer_size = UART_RX_MAX;
-    uart_buffer_config.rx_buffer = uart_rx_buffer;
+    uart_buffer_config.rx_buffer = g_uart_rx_buffer;
     uart_pin_config_t pin_config = {.tx_pin = S_MGPIO0, .rx_pin = S_MGPIO1, .cts_pin = PIN_NONE, .rts_pin = PIN_NONE};
     uapi_uart_deinit(UART_BUS_0); // 重点，UART初始化之前需要去初始化，否则会报0x80001044
     int res = uapi_uart_init(UART_BUS_0, &pin_config, &attr, NULL, &uart_buffer_config);
