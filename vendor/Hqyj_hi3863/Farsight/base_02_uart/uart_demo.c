@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2024 Beijing HuaQingYuanJian Education Technology Co., Ltd.
+ * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,106 +15,122 @@
 
 #include "pinctrl.h"
 #include "uart.h"
+#include "watchdog.h"
 #include "osal_debug.h"
 #include "soc_osal.h"
 #include "app_init.h"
+#include "watchdog.h"
 #include "string.h"
-#include "cmsis_os2.h"
-osThreadId_t Task1_ID; // 任务1 ID
+#define UART_BAUDRATE 115200
+#define UART_DATA_BITS 3
+#define UART_STOP_BITS 1
+#define UART_PARITY_BIT 0
+#define UART_TRANSFER_SIZE 20
+#define CONFIG_UART1_TXD_PIN 17
+#define CONFIG_UART1_RXD_PIN 18
+#define CONFIG_UART1_PIN_MODE 1
+#define CONFIG_UART_INT_WAIT_MS 5
 
-#define UART_RECV_SIZE 10
+#define UART_TASK_STACK_SIZE 0x1000
+#define UART_TASK_DURATION_MS 1000
+#define UART_TASK_PRIO 17
 
-uint8_t uart_recv[UART_RECV_SIZE] = {0};
+static uint8_t g_app_uart_rx_buff[UART_TRANSFER_SIZE] = {0};
 
-#define UART_INT_MODE 1
-#if (UART_INT_MODE)
-static uint8_t uart_rx_flag = 0;
+#define UART_INT_MODE 0
+#if(UART_INT_MODE)
+static uint8_t g_app_uart_int_rx_flag = 0;
 #endif
-uart_buffer_config_t g_app_uart_buffer_config = {.rx_buffer = uart_recv,
-                                                        .rx_buffer_size = UART_RECV_SIZE};
+static uart_buffer_config_t g_app_uart_buffer_config = {
+                .rx_buffer = g_app_uart_rx_buff,
+                .rx_buffer_size = UART_TRANSFER_SIZE};
 
-void uart_gpio_init(void)
+static void app_uart_init_pin(void)
 {
-    uapi_pin_set_mode(GPIO_17, PIN_MODE_1);
-    uapi_pin_set_mode(GPIO_18, PIN_MODE_1);
+    uapi_pin_set_mode(CONFIG_UART1_TXD_PIN, CONFIG_UART1_PIN_MODE);
+    uapi_pin_set_mode(CONFIG_UART1_RXD_PIN, CONFIG_UART1_PIN_MODE);
 }
 
-void uart_init_config(void)
+static void app_uart_init_config(void)
 {
-    uart_attr_t attr = {.baud_rate = 115200,
-                        .data_bits = UART_DATA_BIT_8,
-                        .stop_bits = UART_STOP_BIT_1,
-                        .parity = UART_PARITY_NONE};
+    uart_attr_t attr = {.baud_rate = UART_BAUDRATE,
+                        .data_bits = UART_DATA_BITS,
+                        .stop_bits = UART_STOP_BITS,
+                        .parity = UART_PARITY_BIT};
 
     uart_pin_config_t pin_config = {.tx_pin = S_MGPIO0, .rx_pin = S_MGPIO1, .cts_pin = PIN_NONE, .rts_pin = PIN_NONE};
-    uapi_uart_deinit(UART_BUS_0); 
-    int ret = uapi_uart_init(UART_BUS_0, &pin_config, &attr, NULL, &g_app_uart_buffer_config);
-    if (ret != 0) {
-        printf("uart init failed ret = %02x\n", ret);
+    uapi_uart_deinit(UART_BUS_0); // 重点，UART初始化之前需要去初始化，否则会报0x80001044
+    int res = uapi_uart_init(UART_BUS_0, &pin_config, &attr, NULL, &g_app_uart_buffer_config);
+    if (res != 0) {
+        printf("uart init failed res = %02x\r\n", res);
     }
 }
 
-#if (UART_INT_MODE)
-void uart_read_handler(const void *buffer, uint16_t length, bool error)
+#if(UART_INT_MODE)
+static void app_uart_read_int_handler(const void *buffer, uint16_t length, bool error)
 {
     unused(error);
     if (buffer == NULL || length == 0) {
+        osal_printk("uart%d int mode transfer illegal data!\r\n", UART_BUS_0);
         return;
     }
-    if (memcpy_s(uart_recv, length, buffer, length) != EOK) {
+    if (memcpy_s(g_app_uart_rx_buff, length, buffer, length) != EOK) {
+        osal_printk("uart%d int mode data copy fail!\r\n", UART_BUS_0);
         return;
     }
-    uart_rx_flag = 1;
+   
+    g_app_uart_int_rx_flag = 1;
 }
 #endif
+
 
 void *uart_task(const char *arg)
 {
     unused(arg);
-    uart_gpio_init();
-    uart_init_config();
+    /* UART pinmux. */
+    app_uart_init_pin();
+    /* UART init config. */
+    app_uart_init_config();
 
-#if (UART_INT_MODE)
-    // 注册串口回调函数
-    if (uapi_uart_register_rx_callback(0, UART_RX_CONDITION_MASK_IDLE, 1, uart_read_handler) == ERRCODE_SUCC) {
+#if(UART_INT_MODE)
+    osal_printk("uart%d int mode register receive callback start!\r\n", UART_BUS_0);
+    if (uapi_uart_register_rx_callback(0, UART_RX_CONDITION_MASK_IDLE, 1, app_uart_read_int_handler) == ERRCODE_SUCC) {
+        osal_printk("uart%d int mode register receive callback succ!\r\n", UART_BUS_0);
     }
 #endif
 
     while (1) {
-#if (UART_INT_MODE)
-        while (!uart_rx_flag) {
-            osDelay(1);
+#if(UART_INT_MODE)
+        while (g_app_uart_int_rx_flag != 1) {
+            osal_msleep(CONFIG_UART_INT_WAIT_MS);
         }
-        uart_rx_flag = 0;
-        printf("uart int rx = [%s]\n", uart_recv);
-        memset(uart_recv, 0, UART_RECV_SIZE);
+        g_app_uart_int_rx_flag = 0;
+        osal_printk("uart rx data = [%s]\r\n", g_app_uart_rx_buff);
+        memset(g_app_uart_rx_buff,0,UART_TRANSFER_SIZE);
 #else
-        if (uapi_uart_read(UART_BUS_0, uart_recv, UART_RECV_SIZE, 0)) {
-            printf("uart poll rx = ");
-            uapi_uart_write(UART_BUS_0, uart_recv, UART_RECV_SIZE, 0);
+        if (uapi_uart_read(UART_BUS_0, g_app_uart_rx_buff, UART_TRANSFER_SIZE, 0)) {
+            osal_printk("uart%d poll mode receive succ!\r\n", UART_BUS_0);
         }
-#endif
+        osal_printk("uart%d poll mode send back!\r\n", UART_BUS_0);
+        if (uapi_uart_write(UART_BUS_0, g_app_uart_rx_buff, UART_TRANSFER_SIZE, 0)) {
+            osal_printk("uart%d poll mode send back succ!\r\n", UART_BUS_0);
+        }
     }
+#endif
     return NULL;
 }
 
 static void uart_entry(void)
 {
-    printf("Enter uart_entry()!\r\n");
-
-    osThreadAttr_t attr;
-    attr.name = "UartTask";
-    attr.attr_bits = 0U;
-    attr.cb_mem = NULL;
-    attr.cb_size = 0U;
-    attr.stack_mem = NULL;
-    attr.stack_size = 0x1000;
-    attr.priority = osPriorityNormal;
-
-    Task1_ID = osThreadNew((osThreadFunc_t)uart_task, NULL, &attr);
-    if (Task1_ID != NULL) {
-        printf("ID = %d, Create Task1_ID is OK!\r\n", Task1_ID);
+    osal_task *task_handle = NULL;
+    uapi_watchdog_disable();
+    osal_kthread_lock();
+    task_handle = osal_kthread_create((osal_kthread_handler)uart_task, 0, "UartTask", UART_TASK_STACK_SIZE);
+    if (task_handle != NULL) {
+        osal_kthread_set_priority(task_handle, UART_TASK_PRIO);
+        osal_kfree(task_handle);
     }
+    osal_kthread_unlock();
 }
 
 /* Run the uart_entry. */

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Beijing HuaQingYuanJian Education Technology Co., Ltd.
+ * Copyright (c) 2023 Beijing HuaQing YuanJian Education Technology Co., Ltd
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,10 +18,10 @@
 
 #include "cmsis_os2.h"
 
-#define SHT20_I2C_ADDR 0x40    // 器件的I2C从机地址
+#define SHT20_I2C_ADDR 0x40  // 器件的I2C从机地址
 #define SHT20_I2C_IDX 1        // 模块的I2C总线号
 #define SHT20_I2C_SPEED 100000 // 100KHz
-#define I2C_MASTER_ADDR 0x0
+#define I2C_MASTER_ADDR              0x0    
 /* io*/
 #define I2C_SCL_MASTER_PIN 16
 #define I2C_SDA_MASTER_PIN 15
@@ -41,5 +41,5 @@ uint32_t SHT20_ReadData(float *temp, float *humi);
  *         Returns {@link IOT_FAILURE} 失败.
  */
 uint32_t SHT20_Init(void);
-uint32_t SHT20_WiteByteData(uint8_t byte);
+ uint32_t SHT20_WiteByteData(uint8_t byte);
 #endif // !__HAL_BSP_SHT20_H__

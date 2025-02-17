@@ -135,14 +135,6 @@ config SAMPLE_SUPPORT_LCD
     help
         This option means support LCD Sample.
 
-config SAMPLE_SUPPORT_LCD_TOUCH
-    bool
-    prompt "Support LCD_TOUCH Sample."
-    default n
-    depends on ENABLE_FARSIGHT_SAMPLE
-    help
-        This option means support LCD_TOUCH Sample.
-
 config SAMPLE_SUPPORT_WIFI_01_STA
     bool
     prompt "Support WIFI_01_STA Sample."

@@ -66,11 +66,6 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_LCD)
     add_subdirectory_if_exist(base_08_spi_lcd)
 endif()
 
-
-if(DEFINED CONFIG_SAMPLE_SUPPORT_LCD_TOUCH)
-    add_subdirectory_if_exist(base_09_spi_lcd_touch)
-endif()
-
 if(DEFINED CONFIG_SAMPLE_SUPPORT_WIFI_01_STA)
     add_subdirectory_if_exist(wifi_01_sta)
 endif()

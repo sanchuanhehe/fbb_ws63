@@ -1,16 +1,7 @@
 /*
- * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022. All rights reserved.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Description: BT GATT Client Moudle.
  */
 
 /**
@@ -59,8 +50,12 @@ errcode_t ble_gatt_client_init(void);
  */
 errcode_t ble_gatt_client_discover_all_service(uint16_t conn_id);
 
-void app_uart_init_config(void);
+void ble_uart_client_read_handler(const void *buffer, uint16_t length, bool error);
 
+void app_uart_init_config(void);
+/**
+ * @}
+ */
 #ifdef __cplusplus
 }
 #endif

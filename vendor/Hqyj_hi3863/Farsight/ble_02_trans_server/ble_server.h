@@ -1,16 +1,7 @@
 /*
- * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022. All rights reserved.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Description: BLE UUID Server module.
  */
 
 /**
@@ -22,20 +13,17 @@
 #define BLE_UUID_SERVER_H
 
 #include "bts_def.h"
-#include <stdint.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
-#include "uart.h"
-#include "pinctrl.h"
+
 /* Service UUID */
-#define BLE_UUID_UUID_SERVER_SERVICE 0xABCD
+#define BLE_UUID_UUID_SERVER_SERVICE                 0xABCD
 /* Characteristic UUID */
-#define BLE_UUID_UUID_SERVER_REPORT 0xCDEF
+#define BLE_UUID_UUID_SERVER_REPORT                  0xCDEF
 /* Client Characteristic Configuration UUID */
 #define BLE_UUID_CLIENT_CHARACTERISTIC_CONFIGURATION 0x2902
 /* Server ID */
 #define BLE_UUID_SERVER_ID 1
+
+ 
 
 /**
  * @if Eng
@@ -59,3 +47,4 @@ errcode_t ble_uuid_server_init(void);
 void app_uart_init_config(void);
 
 #endif
+

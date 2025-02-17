@@ -8,7 +8,7 @@ uint8_t addRtdText(RtdTextTypeStr *typeStr)
     typeStr->language[0] = 'e';
     typeStr->language[1] = 'n';
 
-    return sizeof(typeStr->status) + sizeof(typeStr->language);
+    return sizeof(typeStr->status)+sizeof(typeStr->language);
 }
 
 void prepareText(NDEFDataStr *data, RecordPosEnu position, uint8_t *text)

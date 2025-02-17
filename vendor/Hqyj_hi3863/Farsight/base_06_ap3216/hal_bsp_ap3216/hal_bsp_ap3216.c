@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Beijing HuaQingYuanJian Education Technology Co., Ltd.
+ * Copyright (c) 2023 Beijing HuaQing YuanJian Education Technology Co., Ltd
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,6 +18,7 @@
 #include "pinctrl.h"
 #include "gpio.h"
 #include "i2c.h"
+#include "osal_task.h"
 #include "securec.h"
 
 #define AP3216C_SYSTEM_ADDR 0x00
@@ -28,7 +29,7 @@
 #define AP3216C_PS_L_ADDR 0x0E
 #define AP3216C_PS_H_ADDR 0x0F
 
-#define AP3216C_RESET_TIME 50
+#define AP3216C_RESET_TIME 500
 #define LEFT_SHIFT_2 2
 #define LEFT_SHIFT_4 4
 #define LEFT_SHIFT_8 8
@@ -152,16 +153,17 @@ uint32_t AP3216C_Init(void)
     uint32_t baudrate = AP3216C_I2C_SPEED;
     uint32_t hscode = I2C_MASTER_ADDR;
     uapi_pin_set_mode(I2C_SCL_MASTER_PIN, CONFIG_PIN_MODE);
-    uapi_pin_set_mode(I2C_SDA_MASTER_PIN, CONFIG_PIN_MODE);
+    uapi_pin_set_mode(I2C_SDA_MASTER_PIN, CONFIG_PIN_MODE);       
     uapi_pin_set_pull(I2C_SCL_MASTER_PIN, PIN_PULL_TYPE_UP);
     uapi_pin_set_pull(I2C_SDA_MASTER_PIN, PIN_PULL_TYPE_UP);
-
+   
     result = uapi_i2c_master_init(AP3216C_I2C_IDX, baudrate, hscode);
     if (result != ERRCODE_SUCC) {
         printf("I2C Init status is 0x%x!!!\r\n", result);
         return result;
     }
-    osDelay(10);
+     osal_msleep(100);
+  
 
     // 复位芯片
     result = AP3216C_WiteCmdByteData(AP3216C_SYSTEM_ADDR, 0x04);
@@ -170,7 +172,7 @@ uint32_t AP3216C_Init(void)
         return result;
     }
 
-    osDelay(AP3216C_RESET_TIME);
+    osal_msleep(AP3216C_RESET_TIME);
 
     // 开启ALS\PS\IR
     result = AP3216C_WiteCmdByteData(AP3216C_SYSTEM_ADDR, 0x03);

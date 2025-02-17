@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 #include "lwip/netifapi.h"
 #include "wifi_hotspot.h"
 #include "wifi_hotspot_config.h"
@@ -28,6 +13,7 @@
 #define WIFI_CONN_STATUS_MAX_GET_TIMES 5 /* 启动连接之后，判断是否连接成功的最大尝试次数 */
 #define DHCP_BOUND_STATUS_MAX_GET_TIMES 20 /* 启动DHCP Client端功能之后，判断是否绑定成功的最大尝试次数 */
 #define WIFI_STA_IP_MAX_GET_TIMES 5 /* 判断是否获取到IP的最大尝试次数 */
+
 
 /*****************************************************************************
   STA 扫描-关联 sample用例
@@ -90,14 +76,14 @@ errcode_t wifi_connect(void)
     char ifname[WIFI_IFNAME_MAX_SIZE + 1] = "wlan0"; /* WiFi STA 网络设备名 */
     wifi_sta_config_stru expected_bss = {0};         /* 连接请求信息 */
     const char expected_ssid[] = CONFIG_WIFI_SSID;
-    const char key[] = CONFIG_WIFI_PWD; /* 待连接的网络接入密码 */
+    const char key[] =CONFIG_WIFI_PWD; /* 待连接的网络接入密码 */
     struct netif *netif_p = NULL;
     wifi_linked_info_stru wifi_status;
     uint8_t index = 0;
 
-    /* 等待wifi初始化完成 */
+     /* 等待wifi初始化完成 */
     while (wifi_is_wifi_inited() == 0) {
-        (void)osDelay(10);
+        (void)osDelay(10); 
     }
     /* 创建STA */
     if (wifi_sta_enable() != ERRCODE_SUCC) {
@@ -106,14 +92,14 @@ errcode_t wifi_connect(void)
     }
     do {
         printf("Start Scan !\r\n");
-        (void)osDelay(100); /* 每次触发扫描至少间隔1s */
+        (void)osal_msleep(1000); /* 每次触发扫描至少间隔1s */
         /* 启动STA扫描 */
         if (wifi_sta_scan() != ERRCODE_SUCC) {
             printf("STA scan fail, try again !\r\n");
             continue;
         }
 
-        (void)osDelay(300); /* 延时3s, 等待扫描完成 */
+        (void)osal_msleep(3000); /* 延时3s, 等待扫描完成 */
 
         /* 获取待连接的网络 */
         if (example_get_match_network(expected_ssid, key, &expected_bss) != ERRCODE_SUCC) {
@@ -129,7 +115,7 @@ errcode_t wifi_connect(void)
 
         /* 检查网络是否连接成功 */
         for (index = 0; index < WIFI_CONN_STATUS_MAX_GET_TIMES; index++) {
-            (void)osDelay(50); /* 延时500ms */
+            (void)osal_msleep(500); /* 延时500ms */
             memset_s(&wifi_status, sizeof(wifi_linked_info_stru), 0, sizeof(wifi_linked_info_stru));
             if (wifi_sta_get_ap_info(&wifi_status) != ERRCODE_SUCC) {
                 continue;
@@ -155,7 +141,7 @@ errcode_t wifi_connect(void)
     }
 
     for (uint8_t i = 0; i < DHCP_BOUND_STATUS_MAX_GET_TIMES; i++) {
-        (void)osDelay(50); /* 延时500ms */
+        (void)osal_msleep(500); /* 延时500ms */
         if (netifapi_dhcp_is_bound(netif_p) == ERR_OK) {
             printf("STA DHCP bound success.\r\n");
             break;
@@ -163,13 +149,13 @@ errcode_t wifi_connect(void)
     }
 
     for (uint8_t i = 0; i < WIFI_STA_IP_MAX_GET_TIMES; i++) {
-        osDelay(1);
+        osal_msleep(10); 
         if (netif_p->ip_addr.u_addr.ip4.addr != 0) {
             printf("STA IP %u.%u.%u.%u\r\n", (netif_p->ip_addr.u_addr.ip4.addr & 0x000000ff),
-                   (netif_p->ip_addr.u_addr.ip4.addr & 0x0000ff00) >> 8,
-                   (netif_p->ip_addr.u_addr.ip4.addr & 0x00ff0000) >> 16,
-                   (netif_p->ip_addr.u_addr.ip4.addr & 0xff000000) >> 24);
-
+                                    (netif_p->ip_addr.u_addr.ip4.addr & 0x0000ff00) >> 8,
+                                    (netif_p->ip_addr.u_addr.ip4.addr & 0x00ff0000) >> 16,
+                                    (netif_p->ip_addr.u_addr.ip4.addr & 0xff000000) >> 24);
+          
             /* 连接成功 */
             printf("STA connect success.\r\n");
             return ERRCODE_SUCC;

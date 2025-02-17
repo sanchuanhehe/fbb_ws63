@@ -1,16 +1,10 @@
-/*
- * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+/**
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * Description: SLE uart server Config. \n
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * History: \n
+ * 2023-07-17, Create file. \n
  */
 
 #ifndef SLE_UART_SERVER_H
@@ -39,19 +33,19 @@ typedef struct {
 #define CONFIG_UART_PIN_MODE 1
 #define CONFIG_UART_ID UART_BUS_0
 /* Service UUID */
-#define SLE_UUID_SERVER_SERVICE 0x2222
+#define SLE_UUID_SERVER_SERVICE        0x2222
 
 /* Property UUID */
-#define SLE_UUID_SERVER_NTF_REPORT 0x2323
+#define SLE_UUID_SERVER_NTF_REPORT     0x2323
 
 /* Property Property */
-#define SLE_UUID_TEST_PROPERTIES (SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE)
+#define SLE_UUID_TEST_PROPERTIES  (SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE)
 
 /* Operation indication */
-#define SLE_UUID_TEST_OPERATION_INDICATION (SSAP_OPERATE_INDICATION_BIT_READ | SSAP_OPERATE_INDICATION_BIT_WRITE)
+#define SLE_UUID_TEST_OPERATION_INDICATION  (SSAP_OPERATE_INDICATION_BIT_READ | SSAP_OPERATE_INDICATION_BIT_WRITE)
 
 /* Descriptor Property */
-#define SLE_UUID_TEST_DESCRIPTOR (SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE)
+#define SLE_UUID_TEST_DESCRIPTOR   (SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE)
 
 errcode_t sle_server_init(void);
 

@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 #include "lwip/netifapi.h"
 #include "wifi_hotspot.h"
 #include "wifi_hotspot_config.h"
@@ -23,6 +8,7 @@
 #include "app_init.h"
 #include "cmsis_os2.h"
 #include <stdio.h>
+#define WIFI_TASK_STACK_SIZE 0x2000
 
 #define WIFI_SCAN_AP_LIMIT 64
 #define WIFI_CONN_STATUS_MAX_GET_TIMES 5 /* 启动连接之后，判断是否连接成功的最大尝试次数 */
@@ -103,14 +89,14 @@ static errcode_t example_sta_function(void)
     printf("STA enable succ.\r\n");
     do {
         printf("Start Scan !\r\n");
-        (void)osDelay(100); /* 每次触发扫描至少间隔1s */
+        (void)osal_msleep(1000); /* 每次触发扫描至少间隔1s */
         /* 启动STA扫描 */
         if (wifi_sta_scan() != ERRCODE_SUCC) {
             printf("STA scan fail, try again !\r\n");
             continue;
         }
 
-        (void)osDelay(300); /* 延时3s, 等待扫描完成 */
+        (void)osal_msleep(3000); /* 延时3s, 等待扫描完成 */
 
         /* 获取待连接的网络 */
         if (example_get_match_network(expected_ssid, key, &expected_bss) != ERRCODE_SUCC) {
@@ -126,7 +112,7 @@ static errcode_t example_sta_function(void)
 
         /* 检查网络是否连接成功 */
         for (index = 0; index < WIFI_CONN_STATUS_MAX_GET_TIMES; index++) {
-            (void)osDelay(50); /* 延时500ms */
+            (void)osal_msleep(500); /* 延时500ms */
             memset_s(&wifi_status, sizeof(wifi_linked_info_stru), 0, sizeof(wifi_linked_info_stru));
             if (wifi_sta_get_ap_info(&wifi_status) != ERRCODE_SUCC) {
                 continue;
@@ -153,7 +139,7 @@ static errcode_t example_sta_function(void)
     }
 
     for (uint8_t i = 0; i < DHCP_BOUND_STATUS_MAX_GET_TIMES; i++) {
-        (void)osDelay(50); /* 延时500ms */
+        (void)osal_msleep(500); /* 延时500ms */
         if (netifapi_dhcp_is_bound(netif_p) == ERR_OK) {
             printf("STA DHCP bound success.\r\n");
             break;
@@ -161,7 +147,7 @@ static errcode_t example_sta_function(void)
     }
 
     for (uint8_t i = 0; i < WIFI_STA_IP_MAX_GET_TIMES; i++) {
-        (void)osDelay(1); /* 延时10ms */
+        (void)osal_msleep(10); /* 延时10ms */
         if (netif_p->ip_addr.u_addr.ip4.addr != 0) {
             printf("STA IP %u.%u.%u.%u\r\n", (netif_p->ip_addr.u_addr.ip4.addr & 0x000000ff),
                    (netif_p->ip_addr.u_addr.ip4.addr & 0x0000ff00) >> 8,
@@ -183,12 +169,12 @@ static errcode_t example_sta_function(void)
     return ERRCODE_FAIL;
 }
 
-int sta_sample_init(const char *argument)
+int sta_sample_init(void *argument)
 {
     argument = argument;
     /* 等待wifi初始化完成 */
     while (wifi_is_wifi_inited() == 0) {
-        (void)osDelay(10);
+        (void)osDelay(10); 
     }
     example_sta_function();
     return 0;
@@ -197,13 +183,13 @@ int sta_sample_init(const char *argument)
 static void sta_sample(void)
 {
     osThreadAttr_t attr;
-    attr.name = "sta_sample_task";
-    attr.attr_bits = 0U;
-    attr.cb_mem = NULL;
-    attr.cb_size = 0U;
-    attr.stack_mem = NULL;
-    attr.stack_size = 0x1000;
-    attr.priority = osPriorityNormal;
+    attr.name       = "sta_sample_task";
+    attr.attr_bits  = 0U;
+    attr.cb_mem     = NULL;
+    attr.cb_size    = 0U;
+    attr.stack_mem  = NULL;
+    attr.stack_size = WIFI_TASK_STACK_SIZE;
+    attr.priority   = osPriorityNormal;
     if (osThreadNew((osThreadFunc_t)sta_sample_init, NULL, &attr) == NULL) {
         printf("Create sta_sample_task fail.\r\n");
     }

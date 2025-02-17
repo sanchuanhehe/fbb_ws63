@@ -1,19 +1,8 @@
 /*
- * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022. All rights reserved.
  */
-
 #include "osal_list.h"
+#include "test_suite_uart.h"
 #include "bts_le_gap.h"
 #include "bts_gatt_client.h"
 #include "soc_osal.h"
@@ -51,7 +40,7 @@ uint8_t g_client_id = 0;
 /* ble connect id */
 uint8_t g_conn_id = 0;
 /* ble connect state */
-uint8_t g_connection_state = 0;
+uint8_t g_connection_state=0;
 /* characteristic handle */
 static uint16_t g_ble_chara_hanle_write_value = 0;
 /* max transport unit, default is 512 */
@@ -59,7 +48,7 @@ static uint16_t g_uart_mtu = 512;
 /* client app uuid for test */
 static bt_uuid_t g_client_app_uuid = {UUID16_LEN, {0}};
 
-// uint16_t g_app_uart_int_rx_flag=0;
+//uint16_t g_app_uart_int_rx_flag=0;
 errcode_t ble_gatt_client_discover_all_service(uint16_t conn_id)
 {
     errcode_t ret = ERRCODE_BT_SUCCESS;
@@ -69,15 +58,13 @@ errcode_t ble_gatt_client_discover_all_service(uint16_t conn_id)
     return ret;
 }
 /* 发现服务回调函数 */
-static void ble_client_discover_service_cbk(uint8_t client_id,
-                                            uint16_t conn_id,
-                                            gattc_discovery_service_result_t *service,
-                                            errcode_t status)
+static void ble_client_discover_service_cbk(uint8_t client_id, uint16_t conn_id,
+    gattc_discovery_service_result_t *service, errcode_t status)
 {
     gattc_discovery_character_param_t param = {0};
     osal_printk("[GATTClient]Discovery service----client:%d conn_id:%d\n", client_id, conn_id);
-    osal_printk("            start handle:%d end handle:%d uuid_len:%d\n            uuid:", service->start_hdl,
-                service->end_hdl, service->uuid.uuid_len);
+    osal_printk("            start handle:%d end handle:%d uuid_len:%d\n            uuid:",
+        service->start_hdl, service->end_hdl, service->uuid.uuid_len);
     for (uint8_t i = 0; i < service->uuid.uuid_len; i++) {
         osal_printk("%02x", service->uuid.uuid[i]);
     }
@@ -87,31 +74,27 @@ static void ble_client_discover_service_cbk(uint8_t client_id,
     gattc_discovery_character(g_client_id, conn_id, &param);
 }
 /* 发现特征回调函数 */
-static void ble_client_discover_character_cbk(uint8_t client_id,
-                                              uint16_t conn_id,
-                                              gattc_discovery_character_result_t *character,
-                                              errcode_t status)
+static void ble_client_discover_character_cbk(uint8_t client_id, uint16_t conn_id,
+    gattc_discovery_character_result_t *character, errcode_t status)
 {
-    osal_printk("[GATTClient]Discovery character----client:%d conn_id:%d uuid_len:%d\n            uuid:", client_id,
-                conn_id, character->uuid.uuid_len);
+    osal_printk("[GATTClient]Discovery character----client:%d conn_id:%d uuid_len:%d\n            uuid:",
+        client_id, conn_id, character->uuid.uuid_len);
     for (uint8_t i = 0; i < character->uuid.uuid_len; i++) {
         osal_printk("%02x", character->uuid.uuid[i]);
     }
-    osal_printk("\n            declare handle:%d value handle:%d properties:%x\n", character->declare_handle,
-                character->value_handle, character->properties);
+    osal_printk("\n            declare handle:%d value handle:%d properties:%x\n", character->declare_handle, character->value_handle, character->properties);
     osal_printk("            status:%d\n", status);
     g_ble_chara_hanle_write_value = character->value_handle;
-    osal_printk(" g_client_id:%d value_handle:%d\n", g_client_id, character->value_handle);
+     osal_printk(" g_client_id:%d value_handle:%d\n",g_client_id, character->value_handle);
     gattc_discovery_descriptor(g_client_id, conn_id, character->declare_handle);
+  
 }
 /* 发现特征描述符回调函数 */
-static void ble_client_discover_descriptor_cbk(uint8_t client_id,
-                                               uint16_t conn_id,
-                                               gattc_discovery_descriptor_result_t *descriptor,
-                                               errcode_t status)
+static void ble_client_discover_descriptor_cbk(uint8_t client_id, uint16_t conn_id,
+    gattc_discovery_descriptor_result_t *descriptor, errcode_t status)
 {
-    osal_printk("[GATTClient]Discovery descriptor----client:%d conn_id:%d uuid len:%d\n            uuid:", client_id,
-                conn_id, descriptor->uuid.uuid_len);
+    osal_printk("[GATTClient]Discovery descriptor----client:%d conn_id:%d uuid len:%d\n            uuid:",
+        client_id, conn_id, descriptor->uuid.uuid_len);
     for (uint8_t i = 0; i < descriptor->uuid.uuid_len; i++) {
         osal_printk("%02x", descriptor->uuid.uuid[i]);
     }
@@ -119,26 +102,23 @@ static void ble_client_discover_descriptor_cbk(uint8_t client_id,
     osal_printk("            status:%d\n", status);
 }
 /* 发现服务完成回调函数 */
-static void ble_client_discover_service_compl_cbk(uint8_t client_id,
-                                                  uint16_t conn_id,
-                                                  bt_uuid_t *uuid,
-                                                  errcode_t status)
+static void ble_client_discover_service_compl_cbk(uint8_t client_id, uint16_t conn_id, bt_uuid_t *uuid,
+    errcode_t status)
 {
-    osal_printk("[GATTClient]Discovery service complete----client:%d conn_id:%d uuid len:%d\n            uuid:",
-                client_id, conn_id, uuid->uuid_len);
+    osal_printk(
+        "[GATTClient]Discovery service complete----client:%d conn_id:%d uuid len:%d\n            uuid:",
+        client_id, conn_id, uuid->uuid_len);
     for (uint8_t i = 0; i < uuid->uuid_len; i++) {
         osal_printk("%02x", uuid->uuid[i]);
     }
     osal_printk("            status:%d\n", status);
 }
 /* 发现特征完成回调函数 */
-static void ble_client_discover_character_compl_cbk(uint8_t client_id,
-                                                    uint16_t conn_id,
-                                                    gattc_discovery_character_param_t *param,
-                                                    errcode_t status)
+static void ble_client_discover_character_compl_cbk(uint8_t client_id, uint16_t conn_id,gattc_discovery_character_param_t *param, errcode_t status)
 {
-    osal_printk("[GATTClient]Discovery character complete----client:%d conn_id:%d uuid len:%d\n            uuid:",
-                client_id, conn_id, param->uuid.uuid_len);
+    osal_printk(
+        "[GATTClient]Discovery character complete----client:%d conn_id:%d uuid len:%d\n            uuid:",
+        client_id, conn_id, param->uuid.uuid_len);
     for (uint8_t i = 0; i < param->uuid.uuid_len; i++) {
         osal_printk("%02x", param->uuid.uuid[i]);
     }
@@ -146,20 +126,16 @@ static void ble_client_discover_character_compl_cbk(uint8_t client_id,
     osal_printk("            status:%d\n", status);
 }
 /* 发现特征描述符完成回调函数 */
-static void ble_client_discover_descriptor_compl_cbk(uint8_t client_id,
-                                                     uint16_t conn_id,
-                                                     uint16_t character_handle,
-                                                     errcode_t status)
+static void ble_client_discover_descriptor_compl_cbk(uint8_t client_id, uint16_t conn_id,
+    uint16_t character_handle, errcode_t status)
 {
     osal_printk("[GATTClient]Discovery descriptor complete----client:%d conn_id:%d\n", client_id, conn_id);
     osal_printk("            charatcer handle:%d\n", character_handle);
     osal_printk("            status:%d\n", status);
 }
 /* 收到读响应回调函数 */
-static void ble_client_read_cfm_cbk(uint8_t client_id,
-                                    uint16_t conn_id,
-                                    gattc_handle_value_t *read_result,
-                                    gatt_status_t status)
+static void ble_client_read_cfm_cbk(uint8_t client_id, uint16_t conn_id, gattc_handle_value_t *read_result,
+    gatt_status_t status)
 {
     osal_printk("[GATTClient]Read result----client:%d conn_id:%d\n", client_id, conn_id);
     osal_printk("            handle:%d data_len:%d\ndata:", read_result->handle, read_result->data_len);
@@ -168,15 +144,12 @@ static void ble_client_read_cfm_cbk(uint8_t client_id,
     }
     osal_printk("\n            status:%d\n", status);
 }
-/* 按照uuid读取完成回调函数 */
-static void ble_client_read_compl_cbk(uint8_t client_id,
-                                      uint16_t conn_id,
-                                      gattc_read_req_by_uuid_param_t *param,
-                                      errcode_t status)
+/*  按照uuid读取完成回调函数 */
+static void ble_client_read_compl_cbk(uint8_t client_id, uint16_t conn_id, gattc_read_req_by_uuid_param_t *param, errcode_t status)
 {
     osal_printk("[GATTClient]Read by uuid complete----client:%d conn_id:%d\n", client_id, conn_id);
-    osal_printk("start handle:%d end handle:%d uuid len:%d\n            uuid:", param->start_hdl, param->end_hdl,
-                param->uuid.uuid_len);
+    osal_printk("start handle:%d end handle:%d uuid len:%d\n            uuid:",
+        param->start_hdl, param->end_hdl, param->uuid.uuid_len);
     for (uint16_t i = 0; i < param->uuid.uuid_len; i++) {
         osal_printk("%02x", param->uuid.uuid[i]);
     }
@@ -185,11 +158,11 @@ static void ble_client_read_compl_cbk(uint8_t client_id,
 /* 写特征值回调函数 */
 errcode_t ble_client_write_cmd(uint8_t *data, uint16_t len, uint16_t handle)
 {
-    gattc_handle_value_t uart_handle_value = {0};
+    gattc_handle_value_t uart_handle_value = { 0 };
     uart_handle_value.handle = handle;
     uart_handle_value.data_len = len;
     uart_handle_value.data = data;
-    osal_printk(" ble_client_write_cmd len: %d, g_client_id: %d ", len, g_client_id);
+    osal_printk(" ble_client_write_cmd len: %d, g_client_id: %d ",len, g_client_id);
     for (uint16_t i = 0; i < len; i++) {
         osal_printk("%c", data[i]);
     }
@@ -210,23 +183,23 @@ static void ble_client_write_cfm_cbk(uint8_t client_id, uint16_t conn_id, uint16
 /* mtu改变回调函数 */
 static void ble_client_mtu_changed_cbk(uint8_t client_id, uint16_t conn_id, uint16_t mtu_size, errcode_t status)
 {
-    osal_printk("[GATTClient]Mtu changed----client:%d conn_id:%d mtu size:%d\n", client_id, conn_id, mtu_size);
+    osal_printk("[GATTClient]Mtu changed----client:%d conn_id:%d mtu size:%d\n", client_id, conn_id,
+        mtu_size);
     osal_printk("            status:%d\n", status);
 }
 /* 收到通知回调函数 */
-static void ble_client_notification_cbk(uint8_t client_id,
-                                        uint16_t conn_id,
-                                        gattc_handle_value_t *data,
-                                        errcode_t status)
+static void ble_client_notification_cbk(uint8_t client_id, uint16_t conn_id, gattc_handle_value_t *data,
+    errcode_t status)
 {
-    osal_printk("[GATTClient]Receive notification----client:%d conn_id:%d status:%d\n", client_id, conn_id, status);
+    osal_printk("[GATTClient]Receive notification----client:%d conn_id:%d status:%d\n", client_id, conn_id,status);
     osal_printk("handle:%d data_len:%d data:", data->handle, data->data_len);
     for (uint16_t i = 0; i < data->data_len; i++) {
         osal_printk("%c", data->data[i]);
     }
 }
 /* 收到指示回调函数 */
-static void ble_client_indication_cbk(uint8_t client_id, uint16_t conn_id, gattc_handle_value_t *data, errcode_t status)
+static void ble_client_indication_cbk(uint8_t client_id, uint16_t conn_id, gattc_handle_value_t *data,
+    errcode_t status)
 {
     osal_printk("[GATTClient]Receive indication----client:%d conn_id:%d\n", client_id, conn_id);
     osal_printk("            handle:%d data_len:%d\ndata:", data->handle, data->data_len);
@@ -245,11 +218,11 @@ void ble_client_enable_cbk(errcode_t status)
 /* 扫描结果回调函数 */
 static void ble_client_scan_result_cbk(gap_scan_result_data_t *scan_result_data)
 {
-    uint8_t ble_mac[BD_ADDR_LEN] = {0x00, 0x90, 0x78, 0x56, 0x34, 0x12};
+    uint8_t ble_mac[BD_ADDR_LEN] = { 0x00, 0x90, 0x78, 0x56, 0x34, 0x12 };
     if (memcmp(scan_result_data->addr.addr, ble_mac, BD_ADDR_LEN) == 0) {
-        osal_printk("[%s]Find The Target Device.\n", __FUNCTION__);
+        osal_printk("[%s]Find The Target Device.\n",__FUNCTION__);
         gap_ble_stop_scan();
-        bd_addr_t client_addr = {0};
+        bd_addr_t client_addr = { 0 };
         client_addr.type = scan_result_data->addr.type;
         if (memcpy_s(client_addr.addr, BD_ADDR_LEN, scan_result_data->addr.addr, BD_ADDR_LEN) != EOK) {
             osal_printk(" add server app addr memcpy failed\r\n");
@@ -264,14 +237,10 @@ static void ble_client_scan_result_cbk(gap_scan_result_data_t *scan_result_data)
     }
 }
 /* 连接状态改变回调函数 */
-static void ble_client_conn_state_change_cbk(uint16_t conn_id,
-                                             bd_addr_t *addr,
-                                             gap_ble_conn_state_t conn_state,
-                                             gap_ble_pair_state_t pair_state,
-                                             gap_ble_disc_reason_t disc_reason)
+static void ble_client_conn_state_change_cbk(uint16_t conn_id, bd_addr_t *addr,gap_ble_conn_state_t conn_state, gap_ble_pair_state_t pair_state, gap_ble_disc_reason_t disc_reason)
 {
-    osal_printk("[%s] Connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason %x\n", __FUNCTION__,
-                conn_id, conn_state, pair_state, disc_reason);
+    osal_printk("[%s] Connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason %x\n",
+        __FUNCTION__, conn_id, conn_state, pair_state, disc_reason);
     g_conn_id = conn_id;
     g_connection_state = conn_state;
     if (conn_state == GAP_BLE_STATE_CONNECTED) {
@@ -288,9 +257,8 @@ static void ble_client_pair_result_cbk(uint16_t conn_id, const bd_addr_t *addr, 
     ble_gatt_client_discover_all_service(conn_id);
 }
 /* 连接参数更新回调函数 */
-static void ble_client_conn_param_update_cbk(uint16_t conn_id,
-                                             errcode_t status,
-                                             const gap_ble_conn_param_update_t *param)
+static void ble_client_conn_param_update_cbk(uint16_t conn_id, errcode_t status,
+    const gap_ble_conn_param_update_t *param)
 {
     osal_printk("[%s] conn_param_update conn_id: %d,status: %d \n", __FUNCTION__, conn_id, status);
     osal_printk("interval:%d latency:%d timeout:%d.\n", param->interval, param->latency, param->timeout);
@@ -332,7 +300,7 @@ errcode_t ble_gatt_client_callback_register(void)
 errcode_t ble_cliant_start_scan(void)
 {
     errcode_t ret = ERRCODE_BT_SUCCESS;
-    gap_ble_scan_params_t ble_device_scan_params = {0};
+    gap_ble_scan_params_t ble_device_scan_params = { 0 };
     ble_device_scan_params.scan_interval = DEFAULT_SCAN_INTERVAL;
     ble_device_scan_params.scan_window = DEFAULT_SCAN_INTERVAL;
     ble_device_scan_params.scan_type = 0x00;
@@ -342,6 +310,7 @@ errcode_t ble_cliant_start_scan(void)
     ret |= gap_ble_start_scan();
     return ret;
 }
+
 
 errcode_t ble_client_init(void)
 {
@@ -358,13 +327,15 @@ errcode_t ble_client_init(void)
     return ret;
 }
 
-void ble_main_task(void)
+void ble_main_task(void *argument)
 {
+    unused(argument);
     ble_client_init();
     app_uart_init_config();
 
-    while (1) {
-        msg_data_t msg_data = {0};
+    while (1)
+    {
+        msg_data_t msg_data = { 0 };
         int msg_ret = osal_msg_queue_read_copy(g_msg_queue, &msg_data, &msg_rev_size, OSAL_WAIT_FOREVER);
         if (msg_ret != OSAL_SUCCESS) {
             osal_printk("msg queue read copy fail.");
@@ -375,13 +346,14 @@ void ble_main_task(void)
         }
 
         if (msg_data.value != NULL) {
-            uint16_t write_handle = g_ble_chara_hanle_write_value;
+              uint16_t write_handle = g_ble_chara_hanle_write_value;
             //   osal_printk("uart rx data = [%s]\r\n", msg_data.value);
-            ble_client_write_cmd(msg_data.value, msg_data.value_len, write_handle);
+              ble_client_write_cmd(msg_data.value, msg_data.value_len,write_handle);
             osal_vfree(msg_data.value);
         }
     }
 }
+
 
 static void ble_client_entry(void)
 {
@@ -391,8 +363,8 @@ static void ble_client_entry(void)
     }
     osal_task *task_handle = NULL;
     osal_kthread_lock();
-    task_handle =
-        osal_kthread_create((osal_kthread_handler)ble_main_task, 0, "ble_gatt_client", BLE_UUID_CLIENT_STACK_SIZE);
+    task_handle= osal_kthread_create((osal_kthread_handler)ble_main_task, 0, "ble_gatt_client",
+        BLE_UUID_CLIENT_STACK_SIZE);
     if (task_handle != NULL) {
         osal_kthread_set_priority(task_handle, BLE_UUID_CLIENT_TASK_PRIO);
         osal_kfree(task_handle);
@@ -409,9 +381,9 @@ void ble_uart_client_read_handler(const void *buffer, uint16_t length, bool erro
     osal_printk("ble_uart_client_read_handler.\r\n");
     unused(error);
 
-    if (g_connection_state != 0) {
-        msg_data_t msg_data = {0};
-        void *buffer_cpy = osal_vmalloc(length);
+    if (  g_connection_state != 0) {
+        msg_data_t msg_data = { 0 };
+        void* buffer_cpy = osal_vmalloc(length);
         if (memcpy_s(buffer_cpy, length, buffer, length) != EOK) {
             osal_vfree(buffer_cpy);
             return;
@@ -429,7 +401,11 @@ void app_uart_init_config(void)
     uapi_pin_set_mode(CONFIG_UART1_TXD_PIN, CONFIG_UART1_PIN_MODE);
     uapi_pin_set_mode(CONFIG_UART1_RXD_PIN, CONFIG_UART1_PIN_MODE);
     uart_attr_t attr = {
-        .baud_rate = 115200, .data_bits = UART_DATA_BIT_8, .stop_bits = UART_STOP_BIT_1, .parity = UART_PARITY_NONE};
+        .baud_rate = 115200,
+        .data_bits = UART_DATA_BIT_8,
+        .stop_bits = UART_STOP_BIT_1,
+        .parity = UART_PARITY_NONE
+        };
     uart_buffer_config.rx_buffer_size = 512;
     uart_buffer_config.rx_buffer = uart_rx_buffer;
     uart_pin_config_t pin_config = {.tx_pin = S_MGPIO0, .rx_pin = S_MGPIO1, .cts_pin = PIN_NONE, .rts_pin = PIN_NONE};
@@ -438,8 +414,7 @@ void app_uart_init_config(void)
     if (res != 0) {
         printf("uart init failed res = %02x\r\n", res);
     }
-    if (uapi_uart_register_rx_callback(UART_BUS_0, UART_RX_CONDITION_MASK_IDLE, 1, ble_uart_client_read_handler) ==
-        ERRCODE_SUCC) {
+     if (uapi_uart_register_rx_callback(UART_BUS_0, UART_RX_CONDITION_MASK_IDLE, 1, ble_uart_client_read_handler) == ERRCODE_SUCC) {
         osal_printk("uart%d int mode register receive callback succ!\r\n", UART_BUS_0);
     }
 }

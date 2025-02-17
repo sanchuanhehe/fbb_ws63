@@ -14,6 +14,7 @@ static void rtdHeader(uint8_t type, NDEFRecordStr *ndefRecord, uint8_t *I2CMsg)
     I2CMsg[TYPE_CODE] = ndefRecord->type.typeCode;
 }
 
+
 uint8_t composeRtdText(const NDEFDataStr *ndef, NDEFRecordStr *ndefRecord, uint8_t *I2CMsg)
 {
     rtdHeader(RTD_TEXT, ndefRecord, I2CMsg);
@@ -25,6 +26,7 @@ uint8_t composeRtdText(const NDEFDataStr *ndef, NDEFRecordStr *ndefRecord, uint8
     I2CMsg[PALOAD_LENGTH] = ndefRecord->payloadLength;
     return TEXT_RECORD_LEN;
 }
+
 
 uint8_t composeRtdUri(const NDEFDataStr *ndef, NDEFRecordStr *ndefRecord, uint8_t *I2CMsg)
 {

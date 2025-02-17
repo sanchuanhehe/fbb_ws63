@@ -7,34 +7,34 @@
 #define NT3H1101
 
 #ifdef NT3H1201
-#define NT3H1X_SLAVE_ADDRESS 0x2a // NT3H NFC芯片的7位地址
-#define MANUFACTORING_DATA_REG 0x0
-#define USER_START_REG 0x1 // 用户可操作空间-开始地址
+    #define NT3H1X_SLAVE_ADDRESS 0x2a // NT3H NFC芯片的7位地址
+    #define MANUFACTORING_DATA_REG 0x0
+    #define USER_START_REG 0x1   // 用户可操作空间-开始地址
 
-//  NT3H1201             // for th 2K
-#define USER_END_REG 0x77 // 用户可操作空间-结束地址
-#define CONFIG_REG 0x7A
+    //  NT3H1201             // for th 2K
+    #define USER_END_REG 0x77 // 用户可操作空间-结束地址
+    #define CONFIG_REG 0x7A
 
-#define SRAM_START_REG 0xF8 // SRAM空间的-开始地址
-#define SRAM_END_REG 0xFB   // SRAM空间的-结束地址
-#define SESSION_REG 0xFE
-#define NFC_PAGE_SIZE 16 // NFC每页的字节数
+    #define SRAM_START_REG 0xF8 // SRAM空间的-开始地址
+    #define SRAM_END_REG 0xFB   // SRAM空间的-结束地址
+    #define SESSION_REG 0xFE
+    #define NFC_PAGE_SIZE 16 // NFC每页的字节数
 #endif
 
 #ifdef NT3H1101
-#define NT3H1X_SLAVE_ADDRESS 0x55 // NT3H NFC芯片的7位地址
-#define MANUFACTORING_DATA_REG 0x0
-#define USER_START_REG 0x1 // 用户可操作空间-开始地址
+    #define NT3H1X_SLAVE_ADDRESS 0x55 // NT3H NFC芯片的7位地址
+    #define MANUFACTORING_DATA_REG 0x0
+    #define USER_START_REG 0x1   // 用户可操作空间-开始地址
 
-// NT3H1101                     // for th 1K
-#define USER_END_REG 0x38 // just the first 8 bytes for th 1K
-#define CONFIG_REG 0x3A
+    // NT3H1101                     // for th 1K
+    #define USER_END_REG   0x38 // just the first 8 bytes for th 1K
+    #define CONFIG_REG	   0x3A
 
-#define SRAM_START_REG 0xF8 // SRAM空间的-开始地址
-#define SRAM_END_REG 0xFB   // SRAM空间的-结束地址
-#define SESSION_REG 0xFE
-#define NFC_PAGE_SIZE 16 // NFC每页的字节数
-#define SERIAL_NUM_LEN 6
+    #define SRAM_START_REG 0xF8 // SRAM空间的-开始地址
+    #define SRAM_END_REG 0xFB   // SRAM空间的-结束地址
+    #define SESSION_REG 0xFE
+    #define NFC_PAGE_SIZE 16 // NFC每页的字节数
+    #define SERIAL_NUM_LEN 6
 #endif
 
 // 函数返回值的状态标志位
@@ -54,7 +54,11 @@ typedef enum {
 extern uint8_t nfcPageBuffer[NFC_PAGE_SIZE];
 extern NT3HerrNo errNo;
 
-typedef enum { NDEFFirstPos, NDEFMiddlePos, NDEFLastPos } RecordPosEnu;
+typedef enum {
+    NDEFFirstPos,
+    NDEFMiddlePos,
+    NDEFLastPos
+} RecordPosEnu;
 /*
  * This strucure is used in the ADD record functionality
  * to store the last nfc page information, in order to continue from that point.
@@ -80,7 +84,7 @@ void NT3HGetNxpSerialNumber(char *buffer);
  *
  * the NT3H1201 has 119 PAges
  * the NT3H1101 has 56 PAges (but the 56th page has only 8 Bytes)
- */
+*/
 bool NT3HReadUserData(uint8_t page);
 
 /*
