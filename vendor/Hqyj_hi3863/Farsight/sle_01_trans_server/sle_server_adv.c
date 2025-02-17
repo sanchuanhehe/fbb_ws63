@@ -1,11 +1,18 @@
-/**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+/*
+ * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Description: sle adv config for sle uart server. \n
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * History: \n
- * 2023-07-17, Create file. \n
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 #include "securec.h"
 #include "errcode.h"
 #include "osal_addr.h"
@@ -22,23 +29,25 @@
 /* sle device name */
 #define NAME_MAX_LENGTH 16
 /* 连接调度间隔12.5ms，单位125us */
-#define SLE_CONN_INTV_MIN_DEFAULT                 0x64
+#define SLE_CONN_INTV_MIN_DEFAULT 0x64
 /* 连接调度间隔12.5ms，单位125us */
-#define SLE_CONN_INTV_MAX_DEFAULT                 0x64
+#define SLE_CONN_INTV_MAX_DEFAULT 0x64
 /* 连接调度间隔25ms，单位125us */
-#define SLE_ADV_INTERVAL_MIN_DEFAULT              0xC8
+#define SLE_ADV_INTERVAL_MIN_DEFAULT 0xC8
 /* 连接调度间隔25ms，单位125us */
-#define SLE_ADV_INTERVAL_MAX_DEFAULT              0xC8
+#define SLE_ADV_INTERVAL_MAX_DEFAULT 0xC8
 /* 超时时间5000ms，单位10ms */
-#define SLE_CONN_SUPERVISION_TIMEOUT_DEFAULT      0x1F4
+#define SLE_CONN_SUPERVISION_TIMEOUT_DEFAULT 0x1F4
 /* 超时时间4990ms，单位10ms */
-#define SLE_CONN_MAX_LATENCY                      0x1F3
+#define SLE_CONN_MAX_LATENCY 0x1F3
 /* 广播发送功率 */
-#define SLE_ADV_TX_POWER  10
+#define SLE_ADV_TX_POWER 10
 /* 广播ID */
-#define SLE_ADV_HANDLE_DEFAULT                    1
+#define SLE_ADV_HANDLE_DEFAULT 1
 /* 最大广播数据长度 */
-#define SLE_ADV_DATA_LEN_MAX                      251
+#define SLE_ADV_DATA_LEN_MAX 251
+/* 广播发射功率 */
+#define ANNOUNCE_TX_POWER_DEFAULT 18
 /* 广播名称 */
 static uint8_t sle_local_name[NAME_MAX_LENGTH] = "sle_uart_server";
 static uint16_t sle_set_adv_local_name(uint8_t *adv_data, uint16_t max_len)
@@ -68,7 +77,7 @@ static uint16_t sle_set_adv_data(uint8_t *adv_data)
 {
     size_t len = 0;
     uint16_t idx = 0;
-    errno_t  ret = 0;
+    errno_t ret = 0;
 
     len = sizeof(struct sle_adv_common_value);
     struct sle_adv_common_value adv_disc_level = {
@@ -127,7 +136,7 @@ static int sle_set_default_announce_param(void)
     errno_t ret;
     sle_announce_param_t param = {0};
     uint8_t index;
-    unsigned char local_addr[SLE_ADDR_LEN] = { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06 };
+    unsigned char local_addr[SLE_ADDR_LEN] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};
     param.announce_mode = SLE_ANNOUNCE_MODE_CONNECTABLE_SCANABLE;
     param.announce_handle = SLE_ADV_HANDLE_DEFAULT;
     param.announce_gt_role = SLE_ANNOUNCE_ROLE_T_CAN_NEGO;
@@ -139,7 +148,7 @@ static int sle_set_default_announce_param(void)
     param.conn_interval_max = SLE_CONN_INTV_MAX_DEFAULT;
     param.conn_max_latency = SLE_CONN_MAX_LATENCY;
     param.conn_supervision_timeout = SLE_CONN_SUPERVISION_TIMEOUT_DEFAULT;
-    param.announce_tx_power = 18;
+    param.announce_tx_power = ANNOUNCE_TX_POWER_DEFAULT;
     param.own_addr.type = 0;
     ret = memcpy_s(param.own_addr.addr, SLE_ADDR_LEN, local_addr, SLE_ADDR_LEN);
     if (ret != EOK) {
@@ -171,7 +180,7 @@ static int sle_set_default_announce_data(void)
 
     printf("[%s] data.announce_data_len = %d\r\n", __FUNCTION__, data.announce_data_len);
     printf("[%s] data.announce_data: ", __FUNCTION__);
-    for (data_index = 0; data_index<data.announce_data_len; data_index++) {
+    for (data_index = 0; data_index < data.announce_data_len; data_index++) {
         printf("0x%02x ", data.announce_data[data_index]);
     }
     printf("\r\n");
@@ -182,7 +191,7 @@ static int sle_set_default_announce_data(void)
 
     printf("[%s] data.seek_rsp_data_len = %d\r\n", __FUNCTION__, data.seek_rsp_data_len);
     printf("[%s] data.seek_rsp_data: ", __FUNCTION__);
-    for (data_index = 0; data_index<data.seek_rsp_data_len; data_index++) {
+    for (data_index = 0; data_index < data.seek_rsp_data_len; data_index++) {
         printf("0x%02x ", data.seek_rsp_data[data_index]);
     }
     printf("\r\n");
@@ -195,7 +204,6 @@ static int sle_set_default_announce_data(void)
     }
     return ERRCODE_SLE_SUCCESS;
 }
-
 
 errcode_t sle_uart_server_adv_init(void)
 {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Beijing HuaQing YuanJian Education Technology Co., Ltd
+ * Copyright (c) 2024 Beijing HuaQingYuanJian Education Technology Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,7 +18,6 @@
 #include "pinctrl.h"
 #include "gpio.h"
 #include "i2c.h"
-#include "osal_task.h"
 #include "securec.h"
 #define RSTR_REG_ADDR 0x00
 #define GCR_REG_ADDR 0x01
@@ -41,8 +40,7 @@
 #define LED2T2_REG_ADDR 0x3F
 #define IADR_REG_ADDR 0x77
 
-#define TIME_RESET  20  // 20ms
-
+#define DELAY_TIME_MS 1
 // 向aw2013的寄存器写数据
 static uint32_t aw2013_WiteByte(uint8_t regAddr, uint8_t byte)
 {
@@ -123,25 +121,23 @@ uint32_t AW2013_Init(void)
     uint32_t baudrate = AW2013_I2C_SPEED;
     uint32_t hscode = I2C_MASTER_ADDR;
     uapi_pin_set_mode(I2C_SCL_MASTER_PIN, CONFIG_PIN_MODE);
-    uapi_pin_set_mode(I2C_SDA_MASTER_PIN, CONFIG_PIN_MODE);       
+    uapi_pin_set_mode(I2C_SDA_MASTER_PIN, CONFIG_PIN_MODE);
     uapi_pin_set_pull(I2C_SCL_MASTER_PIN, PIN_PULL_TYPE_UP);
     uapi_pin_set_pull(I2C_SDA_MASTER_PIN, PIN_PULL_TYPE_UP);
-   
+
     result = uapi_i2c_master_init(AW2013_I2C_IDX, baudrate, hscode);
     if (result != ERRCODE_SUCC) {
         printf("I2C Init status is 0x%x!!!\r\n", result);
         return result;
     }
-     osal_msleep(100);
-  
+    osDelay(DELAY_TIME_MS);
+
     // 复位芯片
     result = aw2013_WiteByte(RSTR_REG_ADDR, 0x55);
     if (result != ERRCODE_SUCC) {
         printf("I2C aw2013 RSTR_REG_ADDR status = 0x%x!!!\r\n", result);
         return result;
     }
-
-    osal_msleep(TIME_RESET);
 
     // 使能全局控制器 设置为RUN模式
     result = aw2013_WiteByte(GCR_REG_ADDR, 0x01);

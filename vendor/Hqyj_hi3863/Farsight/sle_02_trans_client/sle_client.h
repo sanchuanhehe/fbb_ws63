@@ -1,13 +1,20 @@
-/**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+/*
+ * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Description: SLE UART sample of client. \n
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * History: \n
- * 2023-04-03, Create file. \n
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-#ifndef SLE_UART_CLIENT_H
-#define SLE_UART_CLIENT_H
+
+#ifndef SLE_CLIENT_H
+#define SLE_CLIENT_H
 
 #include "sle_ssap_client.h"
 /* 任务相关*/
