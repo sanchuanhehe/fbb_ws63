@@ -32,7 +32,7 @@ typedef struct {
 /* 消息队列结构体 */
 unsigned long g_msg_queue = 0;
 unsigned int msg_rev_size = sizeof(msg_data_t);
-/*串口接收缓冲区大小 */
+/* 串口接收缓冲区大小 */
 #define UART_RX_MAX 512
 uint8_t uart_rx_buffer[UART_RX_MAX];
 /* 串口接收io */

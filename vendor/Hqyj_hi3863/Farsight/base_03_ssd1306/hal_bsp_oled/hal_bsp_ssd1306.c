@@ -131,7 +131,7 @@ const unsigned char f6x8[][6] = {
     {0x14, 0x14, 0x14, 0x14, 0x14, 0x14},
 };
 /****************************************8*16的点阵************************************/
-const unsigned char f8X16[] = {
+const unsigned char f8x16[] = {
     /* 0 */
     0x00,
     0x00,
@@ -1829,24 +1829,6 @@ uint32_t SSD1306_Init(void)
 
     return result;
 }
-/**
- * @brief  垂直滚动函数
- * @retval None
- */
-void OLEDSetVerticalRol(void)
-{
-    SSD1306_WriteCmd(0x2e); // 停止滚动
-    SSD1306_WriteCmd(0xa3); //
-    SSD1306_WriteCmd(0x00);
-    SSD1306_WriteCmd(0x40);
-    SSD1306_WriteCmd(0x2a);
-    SSD1306_WriteCmd(0x00);
-    SSD1306_WriteCmd(0x00);
-    SSD1306_WriteCmd(0x01);
-    SSD1306_WriteCmd(0x00);
-    SSD1306_WriteCmd(0x04);
-    SSD1306_WriteCmd(0x2f);
-}
 
 void SSD1306_SetPosition(unsigned char x, unsigned char y) // 设置起始点坐标
 {
@@ -1964,7 +1946,7 @@ void SSD1306_ShowStr(uint8_t x, uint8_t y, char *ch, uint8_t TextSize)
  * @param  width: 宽
  * @param  height: 高
  */
-void SSD1306DrawBMP(uint8_t xmove, uint8_t ymove, uint8_t width, uint8_t height, uint8_t *bmp)
+void SSD1306_DrawBmp(uint8_t xmove, uint8_t ymove, uint8_t width, uint8_t height, uint8_t *bmp)
 {
     uint16_t j = 0;
     uint16_t x = 0;

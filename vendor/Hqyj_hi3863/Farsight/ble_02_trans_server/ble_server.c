@@ -40,7 +40,7 @@ uint8_t g_connection_state = 0;
 /* 任务相关 */
 #define BLE_SERVER_TASK_PRIO 24
 #define BLE_SERVER_STACK_SIZE 0x2000
-/*串口接收缓冲区大小 */
+/* 串口接收缓冲区大小 */
 #define UART_RX_MAX 512
 uint8_t uart_rx_buffer[UART_RX_MAX];
 /* 串口接收io */

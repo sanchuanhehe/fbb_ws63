@@ -24,7 +24,7 @@
 osThreadId_t task1_ID; // 任务1设置为低优先级任务
 
 #define TASK_DELAY_TIME 100
-void Task1(void)
+void task1(void)
 {
     osDelay(TASK_DELAY_TIME);
     app_spi_init_pin();
@@ -53,7 +53,7 @@ static void base_lcd_demo(void)
     attr.stack_size = 0x3000;
     attr.priority = osPriorityNormal;
 
-    task1_ID = osThreadNew((osThreadFunc_t)Task1, NULL, &attr);
+    task1_ID = osThreadNew((osThreadFunc_t)task1, NULL, &attr);
     if (task1_ID != NULL) {
         printf("ID = %d, Create task1_ID is OK!\r\n", task1_ID);
     }

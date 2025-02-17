@@ -80,7 +80,7 @@ typedef enum {
     OLED_TEXT8_LINE_5,
     OLED_TEXT8_LINE_6,
     OLED_TEXT8_LINE_7,
-} TeOledText8Line_t;
+} TeOledText8Line;
 
 // OLED行坐标 - 字体大小为16
 typedef enum {
@@ -89,7 +89,7 @@ typedef enum {
     OLED_TEXT16_LINE_1,
     OLED_TEXT16_LINE_2,
     OLED_TEXT16_LINE_3,
-} TeOledText16Line_t;
+} TeOledText16Line;
 
 /**
  * @brief SSD1306 初始化
@@ -142,5 +142,5 @@ void SSD1306_ShowStr(uint8_t x, uint8_t y, char *, uint8_t TextSize);
  * @param  BMP[]: 图片数组
  * @retval None
  */
-void SSD1306DrawBMP(uint8_t xmove, uint8_t ymove, uint8_t width, uint8_t height, uint8_t *bmp);
+void SSD1306_DrawBmp(uint8_t xmove, uint8_t ymove, uint8_t width, uint8_t height, uint8_t *bmp);
 #endif

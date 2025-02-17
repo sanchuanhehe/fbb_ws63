@@ -28,10 +28,10 @@
 #define SPI_FREQUENCY 10
 #define SPI_FRAME_FORMAT_STANDARD 0
 #define SPI_WAIT_CYCLES 0x10
-#define SPI_RST_MASTER_PIN 11
+#define SPI_RST_MASTER_PIN 6
 #define SPI_DO_MASTER_PIN 9
 #define SPI_CLK_MASTER_PIN 7
-#define SPI_DC_MASTER_PIN 6
+#define SPI_DC_MASTER_PIN 11
 #define SPI_MASTER_PIN_MODE 3
 #define SPI_MASTER_BUS_ID 0
 
@@ -674,20 +674,13 @@ uint32_t LCD_ShowChar(uint16_t x, uint16_t y, uint8_t num, uint8_t size, uint8_t
     uint8_t csize = (size / 8 + ((size % 8) ? 1 : 0)) * (size / 2); // 得到字体一个字符对应点阵集所占的字节数
     num = num - ' '; // 得到偏移后的值（ASCII字库是从空格开始取模，所以-' '就是对应字符的字库）
     for (t = 0; t < csize; t++) {
-        // 调用1206字体
         if (size == 12) {
             temp = asc2_1206[num][t];
-        }
-        // 调用1608字体
-        else if (size == 16) {
+        } else if (size == 16) {
             temp = asc2_1608[num][t];
-        }
-        // 调用2412字体
-        else if (size == 24) {
+        } else if (size == 24) {
             temp = asc2_2412[num][t];
-        }
-        // 没有的字库
-        else {
+        } else {
             return 1;
         }
 
