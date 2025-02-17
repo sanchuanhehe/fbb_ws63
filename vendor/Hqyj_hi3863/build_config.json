@@ -43,21 +43,7 @@
   },
   {
     "buildTarget": "ws63-liteos-app",
-    "relativePath": "Farsight/base_07_nfc",
-    "chip": "WS63",
-    "buildDef": "",
-    "needSmoke": "false"
-  },
-  {
-    "buildTarget": "ws63-liteos-app",
-    "relativePath": "Farsight/base_08_spi_lcd",
-    "chip": "WS63",
-    "buildDef": "",
-    "needSmoke": "false"
-  },
-  {
-    "buildTarget": "ws63-liteos-app",
-    "relativePath": "Farsight/base_09_spi_lcd_touch",
+    "relativePath": "Farsight/base_07_spi_lcd",
     "chip": "WS63",
     "buildDef": "",
     "needSmoke": "false"
