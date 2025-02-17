@@ -22,7 +22,7 @@
 #include "cmsis_os2.h"
 osThreadId_t task1_ID; // 任务1 ID
 
-#define DELAY_TIME_MS 1  
+#define DELAY_TIME_MS 1
 #define UART_RECV_SIZE 10
 
 uint8_t uart_recv[UART_RECV_SIZE] = {0};
@@ -31,9 +31,7 @@ uint8_t uart_recv[UART_RECV_SIZE] = {0};
 #if (UART_INT_MODE)
 static uint8_t uart_rx_flag = 0;
 #endif
-uart_buffer_config_t g_app_uart_buffer_config = {
-    .rx_buffer = uart_recv,
-    .rx_buffer_size = UART_RECV_SIZE};
+uart_buffer_config_t g_app_uart_buffer_config = {.rx_buffer = uart_recv, .rx_buffer_size = UART_RECV_SIZE};
 
 void uart_gpio_init(void)
 {
@@ -43,10 +41,8 @@ void uart_gpio_init(void)
 
 void uart_init_config(void)
 {
-    uart_attr_t attr = {.baud_rate = 115200,
-                        .data_bits = UART_DATA_BIT_8,
-                        .stop_bits = UART_STOP_BIT_1,
-                        .parity = UART_PARITY_NONE};
+    uart_attr_t attr = {
+        .baud_rate = 115200, .data_bits = UART_DATA_BIT_8, .stop_bits = UART_STOP_BIT_1, .parity = UART_PARITY_NONE};
 
     uart_pin_config_t pin_config = {.tx_pin = S_MGPIO0, .rx_pin = S_MGPIO1, .cts_pin = PIN_NONE, .rts_pin = PIN_NONE};
     uapi_uart_deinit(UART_BUS_0);

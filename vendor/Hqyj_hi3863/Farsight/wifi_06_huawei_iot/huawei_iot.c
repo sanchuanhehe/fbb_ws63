@@ -39,6 +39,8 @@ osThreadId_t mqtt_init_task_id; // mqtt订阅数据任务
 #define DATA_ATTR_NAME "beep_stat"
 #define MQTT_DATA_SEND "{\"services\": [{\"service_id\": \"%s\",\"properties\": {\"%s\": %s }}]}" // 上报数据格式
 
+#define KEEP_ALIVE_INTERVAL 120
+#define DELAY_TIME_MS 200
 #define IOT
 
 #ifdef IOT
@@ -46,8 +48,8 @@ char *g_username = "my_beep";
 char *g_password = "aa4ad03b63e27dae214ff7032165d2422e2b720067a004cf2375face533d5778";
 #endif
 
-char g_sendBuff[512] = {0};   // 发布数据缓冲区
-char g_response_Id[100] = {0}; // 保存命令id缓冲区
+char g_sendBuffer[512] = {0};   // 发布数据缓冲区
+char g_responseId[100] = {0};  // 保存命令id缓冲区
 char g_responseBuf[] =
     "{\"result_code\": 0,\"response_name\": \"beep\",\"paras\": {\"result\": \"success\"}}"; // 响应json
 uint8_t g_cmdFlag;
@@ -98,10 +100,10 @@ void delivered(void *context, MQTTClient_deliveryToken dt)
 // 解析字符串并保存到数组中
 void parseAfterEqual(const char *input, char *output)
 {
-    const char *equalSign = strchr(input, '=');
-    if (equalSign != NULL) {
+    const char *equalsign = strchr(input, '=');
+    if (equalsign != NULL) {
         // 计算等于号后面的字符串长度
-        strcpy(output, equalSign + 1);
+        strcpy(output, equalsign + 1);
     }
 }
 /* 回调函数，处理接收到的消息 */
@@ -117,12 +119,10 @@ int messageArrived(void *context, char *topicName, int topicLen, MQTTClient_mess
     else
         my_io_setval(sensor_io, GPIO_LEVEL_LOW);
     // 解析命令id
-    parseAfterEqual(topicName, g_response_Id);
+    parseAfterEqual(topicName, g_responseId);
     g_cmdFlag = 1;
     memset((char *)message->payload, 0, message->payloadlen);
 
-    // MQTTClient_freeMessage(&message);
-    // MQTTClient_free(topicName);
     return 1; // 表示消息已被处理
 }
 
@@ -138,7 +138,7 @@ static errcode_t mqtt_connect(void)
         printf("Failed to create MQTT client, return code %d\n", ret);
         return ERRCODE_FAIL;
     }
-    conn_opts.keepAliveInterval = 120;
+    conn_opts.keepAliveInterval = KEEP_ALIVE_INTERVAL;
     conn_opts.cleansession = 1;
 #ifdef IOT
     conn_opts.username = g_username;
@@ -154,26 +154,26 @@ static errcode_t mqtt_connect(void)
         return ERRCODE_FAIL;
     }
     printf("Connected to MQTT broker!\n");
-    osDelay(200);
+    osDelay(DELAY_TIME_MS);
     // 订阅MQTT主题
     mqtt_subscribe(MQTT_CMDTOPIC_SUB);
     while (1) {
         // 响应平台命令部分
-        osDelay(200); // 需要延时 否则会发布失败
+        osDelay(DELAY_TIME_MS); // 需要延时 否则会发布失败
         if (g_cmdFlag) {
-            sprintf(g_sendBuff, MQTT_CLIENT_RESPONSE, g_response_Id);
+            sprintf(g_sendBuffer, MQTT_CLIENT_RESPONSE, g_responseId);
             // 设备响应命令
-            mqtt_publish(g_sendBuff, g_responseBuf);
+            mqtt_publish(g_sendBuffer, g_responseBuf);
             g_cmdFlag = 0;
-            memset(g_response_Id, 0, sizeof(g_response_Id) / sizeof(g_response_Id[0]));
+            memset(g_responseId, 0, sizeof(g_responseId) / sizeof(g_responseId[0]));
         }
         // 属性上报部分
-        osDelay(200);
-        memset(g_sendBuff, 0, sizeof(g_sendBuff) / sizeof(g_sendBuff[0]));
-        sprintf(g_sendBuff, MQTT_DATA_SEND, DATA_SEVER_NAME, DATA_ATTR_NAME,
+        osDelay(DELAY_TIME_MS);
+        memset(g_sendBuffer, 0, sizeof(g_sendBuffer) / sizeof(g_sendBuffer[0]));
+        sprintf(g_sendBuffer, MQTT_DATA_SEND, DATA_SEVER_NAME, DATA_ATTR_NAME,
                 my_io_readval(sensor_io) ? "true" : "false");
-        mqtt_publish(MQTT_DATATOPIC_PUB, g_sendBuff);
-        memset(g_sendBuff, 0, sizeof(g_sendBuff) / sizeof(g_sendBuff[0]));
+        mqtt_publish(MQTT_DATATOPIC_PUB, g_sendBuffer);
+        memset(g_sendBuffer, 0, sizeof(g_sendBuffer) / sizeof(g_sendBuffer[0]));
     }
     return ERRCODE_SUCC;
 }
@@ -183,7 +183,7 @@ void mqtt_init_task(const char *argument)
     unused(argument);
     my_gpio_init(sensor_io);
     wifi_connect();
-    osDelay(200);
+    osDelay(DELAY_TIME_MS);
     mqtt_connect();
 }
 
@@ -197,7 +197,7 @@ static void network_wifi_mqtt_example(void)
     options.cb_mem = NULL;
     options.cb_size = 0;
     options.stack_mem = NULL;
-    options.stack_size = 10240;
+    options.stack_size = 0x2000;
     options.priority = osPriorityNormal;
 
     mqtt_init_task_id = osThreadNew((osThreadFunc_t)mqtt_init_task, NULL, &options);

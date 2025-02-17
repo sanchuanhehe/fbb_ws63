@@ -25,7 +25,7 @@
 
 osThreadId_t task1_ID; // 任务1
 
-#define DELAY_TIME_MS 100 
+#define DELAY_TIME_MS 100
 
 void task1(void)
 {

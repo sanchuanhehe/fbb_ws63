@@ -24,12 +24,12 @@ osThreadId_t Task2_ID;          //  任务2 ID
 osMessageQueueId_t MsgQueue_ID; // 消息队列的ID
 
 #define MSG_QUEUE_NUMBER 16 // 定义消息队列对象的个数
-typedef struct MessagePeople {
+typedef struct {
     uint8_t id;  // ID
     uint8_t age; // 年龄
     char *name;  // 名字
-} MsgPeople_t;
-MsgPeople_t msgPeople;
+} MessagePeople;
+MessagePeople msgPeople;
 
 /**
  * @description: 任务1 发送消息
@@ -40,7 +40,8 @@ void task1(const char *argument)
 {
     unused(argument);
     osStatus_t msgStatus;
-    static uint8_t i = 0, j = 0;
+    static uint8_t i = 0;
+    static uint8_t j = 0;
     while (1) {
         printf("enter Task 1.......\n");
         msgPeople.id = i++;

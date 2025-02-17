@@ -119,14 +119,6 @@ config SAMPLE_SUPPORT_AP3216
     help
         This option means support AP3216 Sample.
 
-config SAMPLE_SUPPORT_NFC
-    bool
-    prompt "Support NFC Sample."
-    default n
-    depends on ENABLE_FARSIGHT_SAMPLE
-    help
-        This option means support NFC Sample.
-
 config SAMPLE_SUPPORT_LCD
     bool
     prompt "Support LCD Sample."

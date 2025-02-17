@@ -142,10 +142,5 @@ void SSD1306_ShowStr(uint8_t x, uint8_t y, char *, uint8_t TextSize);
  * @param  BMP[]: 图片数组
  * @retval None
  */
-void SSD1306DrawBMP(unsigned char xmove,
-                     unsigned char ymove,
-                     unsigned char width,
-                     unsigned char height,
-                     unsigned char *bmp);
-
+void SSD1306DrawBMP(uint8_t xmove, uint8_t ymove, uint8_t width, uint8_t height, uint8_t *bmp);
 #endif

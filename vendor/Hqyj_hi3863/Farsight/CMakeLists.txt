@@ -58,12 +58,8 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_AP3216)
     add_subdirectory_if_exist(base_06_ap3216)
 endif()
 
-if(DEFINED CONFIG_SAMPLE_SUPPORT_NFC)
-    add_subdirectory_if_exist(base_07_nfc)
-endif()
-
 if(DEFINED CONFIG_SAMPLE_SUPPORT_LCD)
-    add_subdirectory_if_exist(base_08_spi_lcd)
+    add_subdirectory_if_exist(base_07_spi_lcd)
 endif()
 
 if(DEFINED CONFIG_SAMPLE_SUPPORT_WIFI_01_STA)

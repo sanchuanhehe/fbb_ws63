@@ -97,7 +97,7 @@ errcode_t wifi_connect(void)
 
     /* 等待wifi初始化完成 */
     while (wifi_is_wifi_inited() == 0) {
-        (void)osDelay(10);
+        (void)osDelay(1);
     }
     /* 创建STA */
     if (wifi_sta_enable() != ERRCODE_SUCC) {
@@ -106,14 +106,14 @@ errcode_t wifi_connect(void)
     }
     do {
         printf("Start Scan !\r\n");
-        (void)osal_msleep(1000); /* 每次触发扫描至少间隔1s */
+        (void)osDelay(100); /* 每次触发扫描至少间隔1s */
         /* 启动STA扫描 */
         if (wifi_sta_scan() != ERRCODE_SUCC) {
             printf("STA scan fail, try again !\r\n");
             continue;
         }
 
-        (void)osal_msleep(3000); /* 延时3s, 等待扫描完成 */
+        (void)osDelay(300); /* 延时3s, 等待扫描完成 */
 
         /* 获取待连接的网络 */
         if (example_get_match_network(expected_ssid, key, &expected_bss) != ERRCODE_SUCC) {
@@ -129,7 +129,7 @@ errcode_t wifi_connect(void)
 
         /* 检查网络是否连接成功 */
         for (index = 0; index < WIFI_CONN_STATUS_MAX_GET_TIMES; index++) {
-            (void)osal_msleep(500); /* 延时500ms */
+            (void)osDelay(50); /* 延时500ms */
             memset_s(&wifi_status, sizeof(wifi_linked_info_stru), 0, sizeof(wifi_linked_info_stru));
             if (wifi_sta_get_ap_info(&wifi_status) != ERRCODE_SUCC) {
                 continue;
@@ -155,7 +155,7 @@ errcode_t wifi_connect(void)
     }
 
     for (uint8_t i = 0; i < DHCP_BOUND_STATUS_MAX_GET_TIMES; i++) {
-        (void)osal_msleep(500); /* 延时500ms */
+        (void)osDelay(500); /* 延时500ms */
         if (netifapi_dhcp_is_bound(netif_p) == ERR_OK) {
             printf("STA DHCP bound success.\r\n");
             break;
@@ -163,7 +163,7 @@ errcode_t wifi_connect(void)
     }
 
     for (uint8_t i = 0; i < WIFI_STA_IP_MAX_GET_TIMES; i++) {
-        osal_msleep(10);
+        osDelay(10);
         if (netif_p->ip_addr.u_addr.ip4.addr != 0) {
             printf("STA IP %u.%u.%u.%u\r\n", (netif_p->ip_addr.u_addr.ip4.addr & 0x000000ff),
                    (netif_p->ip_addr.u_addr.ip4.addr & 0x0000ff00) >> 8,

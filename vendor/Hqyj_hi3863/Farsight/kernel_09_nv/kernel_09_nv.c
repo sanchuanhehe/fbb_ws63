@@ -29,12 +29,11 @@ uint8_t buf[ADDR_LEN6] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06};
 static int nv_write_func(void)
 {
     printf("[write data]: ");
-    for (size_t i = 0; i < sizeof(buf); i++)
-    {
+    for (size_t i = 0; i < sizeof(buf); i++) {
         /* code */
-        printf("%x ",buf[i]);
+        printf("%x ", buf[i]);
     }
-    printf("\r\n"); 
+    printf("\r\n");
     uint16_t key = KEYID;
     uint16_t key_len = sizeof(mytest_config_t);
     uint8_t *product_config = osal_vmalloc(key_len);
@@ -58,16 +57,14 @@ static int nv_read_func(void)
     int ret = uapi_nv_read(key, key_len, &real_len, read_value);
     if (ret == 0) {
         printf("[get data]: ");
-        for (size_t i = 0; i < sizeof(buf); i++)
-        {
+        for (size_t i = 0; i < sizeof(buf); i++) {
             /* code */
-            printf("%x ",read_value[i]);
+            printf("%x ", read_value[i]);
         }
-        printf("\r\n"); 
+        printf("\r\n");
         if (read_value[5] != 0) {
-            for (size_t i = 0; i < sizeof(buf); i++)
-            {
-                  buf[i] += read_value[i];
+            for (size_t i = 0; i < sizeof(buf); i++) {
+                buf[i] += read_value[i];
             }
         }
         osal_vfree(read_value);
@@ -91,20 +88,18 @@ void task1(const char *argument)
     osDelay(300); // 等待你打开串口
     printf("----------------------------------!\n");
     uint8_t ret = nv_read_func();
-    if (ret)
-    {
+    if (ret) {
         printf("nv read ok!\n");
-    }
-    else
-    {
+    } else {
         printf("nv read fail!\n");
     }
     osDelay(DELAY_TIME_MS);
     ret = nv_write_func();
-    if (ret)
+    if (ret) {
         printf("nv write ok!\n");
-    else
+    } else {
         printf("nv write fail!\n");
+    }
 }
 
 static void kernel_task_example(void)

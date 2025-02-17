@@ -282,7 +282,6 @@ static void *sle_client_task(char *arg)
             sle_uart_send_param->data_len = msg_data.value_len;
             sle_uart_send_param->data = msg_data.value;
             ssapc_write_req(0, g_sle_uart_conn_id, sle_uart_send_param);
-            // ssapc_write_cmd(0, g_sle_uart_conn_id, sle_uart_send_param);
         }
     }
     return NULL;

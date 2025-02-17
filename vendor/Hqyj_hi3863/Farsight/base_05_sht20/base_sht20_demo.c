@@ -29,7 +29,8 @@ osThreadId_t task1_ID; // 任务1
 
 void task1(void)
 {
-    float temperature = 0, humidity = 0;
+    float temperature = 0;
+    float humidity = 0;
     SHT20_Init(); // SHT20初始化
 
     while (1) {

@@ -22,7 +22,7 @@
 #include "app_init.h"
 #include "soc_osal.h"
 
-#define DELAY_TIME_MS 100 
+#define DELAY_TIME_MS 100
 
 /*****************************************************************************
   SoftAP sample用例

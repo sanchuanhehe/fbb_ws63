@@ -59,7 +59,6 @@ static uint16_t g_uart_mtu = 512;
 /* client app uuid for test */
 static bt_uuid_t g_client_app_uuid = {UUID16_LEN, {0}};
 
-// uint16_t g_app_uart_int_rx_flag=0;
 errcode_t ble_gatt_client_discover_all_service(uint16_t conn_id)
 {
     errcode_t ret = ERRCODE_BT_SUCCESS;
@@ -376,7 +375,6 @@ void ble_main_task(void)
 
         if (msg_data.value != NULL) {
             uint16_t write_handle = g_ble_chara_hanle_write_value;
-            //   osal_printk("uart rx data = [%s]\r\n", msg_data.value);
             ble_client_write_cmd(msg_data.value, msg_data.value_len, write_handle);
             osal_vfree(msg_data.value);
         }

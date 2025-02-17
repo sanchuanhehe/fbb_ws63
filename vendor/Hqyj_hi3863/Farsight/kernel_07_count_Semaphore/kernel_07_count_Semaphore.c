@@ -35,15 +35,12 @@ void task1(const char *argument)
 {
     unused(argument);
     while (1) {
-        if (osSemaphoreGetCount(Semaphore_ID)) 
-        {
-            if (osSemaphoreAcquire(Semaphore_ID, 0xff) == osOK)
-            { // 信号量 -1
-                printf("[进入%d辆车, 停车场容量: %d] 信号量-1.\n", 10 - osSemaphoreGetCount(Semaphore_ID),SEM_MAX_COUNT);
+        if (osSemaphoreGetCount(Semaphore_ID)) {
+            if (osSemaphoreAcquire(Semaphore_ID, 0xff) == osOK) { // 信号量 -1
+                printf("[进入%d辆车, 停车场容量: %d] 信号量-1.\n", 10 - osSemaphoreGetCount(Semaphore_ID),
+                       SEM_MAX_COUNT);
             }
-        } 
-        else
-        {
+        } else {
             printf("[进入停车场失败, 请等待...]\n");
         }
         osDelay(DELAY_TASK1_MS);
@@ -61,9 +58,7 @@ void task2(const char *argument)
         if (osSemaphoreRelease(Semaphore_ID) == osOK) // 信号量 +1
         {
             printf("[出去1辆车, 剩余停车场容量: %d] 信号量+1.\n", osSemaphoreGetCount(Semaphore_ID));
-        }
-        else
-        {
+        } else {
             printf("[出停车场失败]\n");
         }
         osDelay(DELAY_TASK2_MS);

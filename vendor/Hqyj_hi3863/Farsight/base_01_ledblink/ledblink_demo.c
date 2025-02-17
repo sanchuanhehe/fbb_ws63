@@ -21,7 +21,7 @@
 #include "platform_core_rom.h"
 osThreadId_t task1_ID; // 任务1
 
-#define DELAY_TIME_MS 50  // 延时时间，单位为毫秒
+#define DELAY_TIME_MS 50 // 延时时间，单位为毫秒
 static int blink_task(const char *arg)
 {
     unused(arg);
@@ -35,7 +35,7 @@ static int blink_task(const char *arg)
     uapi_gpio_set_dir(GPIO_13, GPIO_DIRECTION_OUTPUT);
     uapi_gpio_set_val(GPIO_13, GPIO_LEVEL_HIGH);
     while (1) {
-        osDelay(DELAY_TIME_MS);     // 延时5s
+        osDelay(DELAY_TIME_MS);    // 延时5s
         uapi_gpio_toggle(GPIO_10); // 电平反转
         uapi_gpio_toggle(GPIO_13);
         printf("gpio toggle.\n");
