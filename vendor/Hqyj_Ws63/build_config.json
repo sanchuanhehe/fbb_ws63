@@ -1,0 +1,177 @@
+[
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/base_01_ledblink",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/base_02_uart",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/base_03_ssd1306",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/base_04_rgb",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/base_05_sht20",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/base_06_ap3216",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/base_07_spi_lcd",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/ble_01_trans_client",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/ble_02_trans_server",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/kernel_01_task",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/kernel_02_timer",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/kernel_03_event",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/kernel_04_mutex",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/kernel_05_mutex_Semaphore",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/kernel_06_sync_Semaphore",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/kernel_07_count_Semaphore",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/kernel_08_message_queque",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/sle_01_trans_server",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/sle_02_trans_client",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/wifi_01_sta",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/wifi_02_ap",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/wifi_03_udp",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/wifi_04_tcp",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/wifi_05_mqtt",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "Farsight/wifi_06_huawei_iot",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  }
+]
