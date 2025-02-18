@@ -40,10 +40,10 @@ void task1(const char *argument)
  * @param {*}
  * @return {*}
  */
-void timer1Callback(const char *argument)
+void timer1_callback(const char *argument)
 {
     unused(argument);
-    printf("enter Timer1Callback.......\n");
+    printf("enter timer1_callback.......\n");
 }
 
 static void kernel_timer_example(void)
@@ -61,7 +61,7 @@ static void kernel_timer_example(void)
     if (Task1_ID != NULL) {
         printf("ID = %d, Create Task1_ID is OK!\n", Task1_ID);
     }
-    Timer_ID = osTimerNew(timer1Callback, osTimerPeriodic, NULL, NULL); // 创建定时器
+    Timer_ID = osTimerNew(timer1_callback, osTimerPeriodic, NULL, NULL); // 创建定时器
     if (Timer_ID != NULL) {
         printf("ID = %d, Create Timer_ID is OK!\n", Timer_ID);
 

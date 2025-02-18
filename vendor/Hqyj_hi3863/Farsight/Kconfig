@@ -62,15 +62,6 @@ config SAMPLE_SUPPORT_KERNEL_08_MESSGE_QUEQUE
     help
         This option means support KERNEL_08_MESSGE_QUEQUE Sample.
 
-config SAMPLE_SUPPORT_KERNEL_09_NV
-    bool
-    prompt "Support KERNEL_09_NV Sample."
-    default n
-    depends on ENABLE_FARSIGHT_SAMPLE
-    help
-        This option means support KERNEL_09_NV Sample.
-
-
 config SAMPLE_SUPPORT_LEDBLINK
     bool
     prompt "Support LEDBLINK Sample."

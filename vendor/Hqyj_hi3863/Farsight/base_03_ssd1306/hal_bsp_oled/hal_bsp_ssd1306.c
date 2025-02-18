@@ -1838,7 +1838,7 @@ void ssd1306_set_position(unsigned char x, unsigned char y) // 设置起始点�
     ssd1306_write_cmd((x & 0x0f) | 0x01);
 }
 
-void ssd1306_fill(unsigned char fillData) // 全屏填充
+void ssd1306_fill(unsigned char fill_data) // 全屏填充
 {
     unsigned char m;
     unsigned char n;
@@ -1850,7 +1850,7 @@ void ssd1306_fill(unsigned char fillData) // 全屏填充
         ssd1306_write_cmd(0x00);     // low column start address
         ssd1306_write_cmd(0x10);     // high column start address
         for (n = 0; n < numberOfColumns; n++) {
-            ssd1306_wite_data(fillData);
+            ssd1306_wite_data(fill_data);
         }
     }
 }
@@ -1884,7 +1884,7 @@ void ssd1306_off(void)
 /**
  * @brief  显示字符串
  */
-void ssd1306_show_str(uint8_t x, uint8_t y, char *ch, uint8_t TextSize)
+void ssd1306_show_str(uint8_t x, uint8_t y, char *ch, uint8_t text_size)
 
 {
     unsigned char c = 0;
@@ -1894,7 +1894,7 @@ void ssd1306_show_str(uint8_t x, uint8_t y, char *ch, uint8_t TextSize)
     uint8_t pos_x = x;
     uint8_t pos_y = y;
 
-    switch (TextSize) {
+    switch (text_size) {
         case TEXT_SIZE_8:
             while (ch[j] != '\0') {
                 c = ch[j] - ' ';

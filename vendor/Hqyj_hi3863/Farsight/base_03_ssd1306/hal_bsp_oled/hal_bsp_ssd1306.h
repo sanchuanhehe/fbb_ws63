@@ -108,7 +108,7 @@ void ssd1306_set_position(unsigned char x, unsigned char y);
  * @brief SSD1306 全屏填充
  * @return none
  */
-void ssd1306_fill(unsigned char fillData);
+void ssd1306_fill(unsigned char fill_data);
 /**
  * @brief SSD1306 清屏
  * @return none
@@ -130,10 +130,10 @@ void ssd1306_off(void);
  * @param x X轴坐标 0~128
  * @param y Y轴坐标 (字体大小8: 0 ~ 7)、(字体大小16: 0 ~ 3)
  * @param ch 显示的字符串
- * @param TextSize 显示的字体大小  8：6*8   16：8*16
+ * @param text_size 显示的字体大小  8：6*8   16：8*16
  * @return none
  */
-void ssd1306_show_str(uint8_t x, uint8_t y, char *, uint8_t TextSize);
+void ssd1306_show_str(uint8_t x, uint8_t y, char *, uint8_t text_size);
 
 /**
  * @brief  显示BMP图片

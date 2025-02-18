@@ -30,10 +30,6 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_KERNEL_08_MESSGE_QUEQUE)
     add_subdirectory_if_exist(kernel_08_message_queque)
 endif()
 
-if(DEFINED CONFIG_SAMPLE_SUPPORT_KERNEL_09_NV)
-    add_subdirectory_if_exist(kernel_09_nv)
-endif()
-
 if(DEFINED CONFIG_SAMPLE_SUPPORT_LEDBLINK)
     add_subdirectory_if_exist(base_01_ledblink)
 endif()
