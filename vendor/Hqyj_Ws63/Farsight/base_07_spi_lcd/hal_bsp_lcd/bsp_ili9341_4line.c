@@ -646,9 +646,9 @@ void LCD_DrawCircle(uint16_t _usX, uint16_t _usY, uint16_t _usRadius, uint16_t _
         ili9341_DrawPoint(_usX - CurY, _usY - CurX, _usColor);
 
         if (D < 0) {
-            D += (CurX << 2) + 6; /* 2: 计算坐标 */
+            D += (CurX << 2) + 6; /* 2 6: 计算坐标 */
         } else {
-            D += ((CurX - CurY) << 2) + 10; /* 2: 计算坐标 */
+            D += ((CurX - CurY) << 2) + 10; /* 2 10: 计算坐标 */
             CurY--;
         }
         CurX++;
