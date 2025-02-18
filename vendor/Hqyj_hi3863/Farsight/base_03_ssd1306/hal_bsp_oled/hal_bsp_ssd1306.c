@@ -1749,7 +1749,7 @@ const unsigned char F8X16[] = {
     0x00,
 };
 
-static uint32_t SSD1306_SendData(uint8_t *buff, size_t size)
+static uint32_t ssd1306_send_data(uint8_t *buff, size_t size)
 {
     uint16_t dev_addr = SSD1306_I2C_ADDR;
     i2c_data_t data = {0};
@@ -1764,19 +1764,19 @@ static uint32_t SSD1306_SendData(uint8_t *buff, size_t size)
 }
 
 // 写命令
-static uint32_t SSD1306_WriteCmd(uint8_t byte)
+static uint32_t ssd1306_write_cmd(uint8_t byte)
 {
     uint8_t buffer[] = {0x00, byte};
-    return SSD1306_SendData(buffer, sizeof(buffer));
+    return ssd1306_send_data(buffer, sizeof(buffer));
 }
 // 写数据
-static uint32_t SSD1306_WiteData(uint8_t byte)
+static uint32_t ssd1306_wite_data(uint8_t byte)
 {
     uint8_t buffer[] = {0x40, byte};
-    return SSD1306_SendData(buffer, sizeof(buffer));
+    return ssd1306_send_data(buffer, sizeof(buffer));
 }
 
-uint32_t SSD1306_Init(void)
+uint32_t ssd1306_init(void)
 {
     uint32_t result;
     uint32_t baudrate = SSD1306_I2C_SPEED;
@@ -1796,49 +1796,49 @@ uint32_t SSD1306_Init(void)
 
     osDelay(RESET_TIME);
 
-    SSD1306_WriteCmd(0xAE); // display off
-    SSD1306_WriteCmd(0x20); // Set Memory Addressing Mode
-    SSD1306_WriteCmd(0x10); // 10,Page Addressing Mode (RESET)
-    SSD1306_WriteCmd(0xb0); // Set Page Start Address for Page Addressing Mode,0-7
-    SSD1306_WriteCmd(0xc8); // Set COM Output Scan Direction
-    SSD1306_WriteCmd(0x00); // ---set low column address
-    SSD1306_WriteCmd(0x10); // ---set high column address
-    SSD1306_WriteCmd(0x40); // --set start line address
-    SSD1306_WriteCmd(0x81); // --set contrast control register
-    SSD1306_WriteCmd(0xff); //  亮度调节 0x00~0xff
-    SSD1306_WriteCmd(0xa1); // --set segment re-map 0 to 127
-    SSD1306_WriteCmd(0xa6); // --set normal display
-    SSD1306_WriteCmd(0xa8); // --set multiplex ratio(1 to 64)
-    SSD1306_WriteCmd(0x3F); //
-    SSD1306_WriteCmd(0xa4); // 0xa4,Output follows RAM content;0xa5,Output ignores RAM content
-    SSD1306_WriteCmd(0xd3); // -set display offset
-    SSD1306_WriteCmd(0x00); // -not offset
-    SSD1306_WriteCmd(0xd5); // --set display clock divide ratio/oscillator frequency
-    SSD1306_WriteCmd(0xf0); // --set divide ratio
-    SSD1306_WriteCmd(0xd9); // --set pre-charge period
-    SSD1306_WriteCmd(0x22); //
-    SSD1306_WriteCmd(0xda); // --set com pins hardware configuration
-    SSD1306_WriteCmd(0x12);
-    SSD1306_WriteCmd(0xdb); // --set vcomh
-    SSD1306_WriteCmd(0x20); //  0x20,0.77xVcc
-    SSD1306_WriteCmd(0x8d); // --set DC-DC enable
-    SSD1306_WriteCmd(0x14); //
-    SSD1306_WriteCmd(0xaf); // --turn on oled panel
-    SSD1306_WriteCmd(0xAF); // display ON
-    SSD1306_SetPosition(0, 0);
+    ssd1306_write_cmd(0xAE); // display off
+    ssd1306_write_cmd(0x20); // Set Memory Addressing Mode
+    ssd1306_write_cmd(0x10); // 10,Page Addressing Mode (RESET)
+    ssd1306_write_cmd(0xb0); // Set Page Start Address for Page Addressing Mode,0-7
+    ssd1306_write_cmd(0xc8); // Set COM Output Scan Direction
+    ssd1306_write_cmd(0x00); // ---set low column address
+    ssd1306_write_cmd(0x10); // ---set high column address
+    ssd1306_write_cmd(0x40); // --set start line address
+    ssd1306_write_cmd(0x81); // --set contrast control register
+    ssd1306_write_cmd(0xff); //  亮度调节 0x00~0xff
+    ssd1306_write_cmd(0xa1); // --set segment re-map 0 to 127
+    ssd1306_write_cmd(0xa6); // --set normal display
+    ssd1306_write_cmd(0xa8); // --set multiplex ratio(1 to 64)
+    ssd1306_write_cmd(0x3F); //
+    ssd1306_write_cmd(0xa4); // 0xa4,Output follows RAM content;0xa5,Output ignores RAM content
+    ssd1306_write_cmd(0xd3); // -set display offset
+    ssd1306_write_cmd(0x00); // -not offset
+    ssd1306_write_cmd(0xd5); // --set display clock divide ratio/oscillator frequency
+    ssd1306_write_cmd(0xf0); // --set divide ratio
+    ssd1306_write_cmd(0xd9); // --set pre-charge period
+    ssd1306_write_cmd(0x22); //
+    ssd1306_write_cmd(0xda); // --set com pins hardware configuration
+    ssd1306_write_cmd(0x12);
+    ssd1306_write_cmd(0xdb); // --set vcomh
+    ssd1306_write_cmd(0x20); //  0x20,0.77xVcc
+    ssd1306_write_cmd(0x8d); // --set DC-DC enable
+    ssd1306_write_cmd(0x14); //
+    ssd1306_write_cmd(0xaf); // --turn on oled panel
+    ssd1306_write_cmd(0xAF); // display ON
+    ssd1306_set_position(0, 0);
 
     return result;
 }
 
-void SSD1306_SetPosition(unsigned char x, unsigned char y) // 设置起始点坐标
+void ssd1306_set_position(unsigned char x, unsigned char y) // 设置起始点坐标
 {
     uint8_t illegalKeyword = 4; // 右移4位
-    SSD1306_WriteCmd(0xb0 + y);
-    SSD1306_WriteCmd(((x & 0xf0) >> illegalKeyword) | 0x10);
-    SSD1306_WriteCmd((x & 0x0f) | 0x01);
+    ssd1306_write_cmd(0xb0 + y);
+    ssd1306_write_cmd(((x & 0xf0) >> illegalKeyword) | 0x10);
+    ssd1306_write_cmd((x & 0x0f) | 0x01);
 }
 
-void SSD1306_Fill(unsigned char fillData) // 全屏填充
+void ssd1306_fill(unsigned char fillData) // 全屏填充
 {
     unsigned char m;
     unsigned char n;
@@ -1846,45 +1846,45 @@ void SSD1306_Fill(unsigned char fillData) // 全屏填充
     uint8_t numberOfColumns = 128;
 
     for (m = 0; m < numberOfRows; m++) {
-        SSD1306_WriteCmd(0xb0 + m); // page0-page1
-        SSD1306_WriteCmd(0x00);     // low column start address
-        SSD1306_WriteCmd(0x10);     // high column start address
+        ssd1306_write_cmd(0xb0 + m); // page0-page1
+        ssd1306_write_cmd(0x00);     // low column start address
+        ssd1306_write_cmd(0x10);     // high column start address
         for (n = 0; n < numberOfColumns; n++) {
-            SSD1306_WiteData(fillData);
+            ssd1306_wite_data(fillData);
         }
     }
 }
 
-void SSD1306_Cls(void) // 清屏
+void ssd1306_cls(void) // 清屏
 {
-    SSD1306_Fill(0x00);
+    ssd1306_fill(0x00);
 }
 
 /**
  * @brief  唤醒
  * @note  将OLED从休眠中唤醒
  */
-void SSD1306_On(void)
+void ssd1306_on(void)
 {
-    SSD1306_WriteCmd(0X8D); // 设置电荷泵
-    SSD1306_WriteCmd(0X14); // 开启电荷泵
-    SSD1306_WriteCmd(0XAF); // OLED唤醒
+    ssd1306_write_cmd(0X8D); // 设置电荷泵
+    ssd1306_write_cmd(0X14); // 开启电荷泵
+    ssd1306_write_cmd(0XAF); // OLED唤醒
 }
 /**
  * @brief  休眠
  * @note  让OLED休眠 -- 休眠模式下,OLED功耗不到10uA
  */
-void SSD1306_Off(void)
+void ssd1306_off(void)
 {
-    SSD1306_WriteCmd(0X8D); // 设置电荷泵
-    SSD1306_WriteCmd(0X10); // 关闭电荷泵
-    SSD1306_WriteCmd(0XAE); // OLED休眠
+    ssd1306_write_cmd(0X8D); // 设置电荷泵
+    ssd1306_write_cmd(0X10); // 关闭电荷泵
+    ssd1306_write_cmd(0XAE); // OLED休眠
 }
 
 /**
  * @brief  显示字符串
  */
-void SSD1306_ShowStr(uint8_t x, uint8_t y, char *ch, uint8_t TextSize)
+void ssd1306_show_str(uint8_t x, uint8_t y, char *ch, uint8_t TextSize)
 
 {
     unsigned char c = 0;
@@ -1902,9 +1902,9 @@ void SSD1306_ShowStr(uint8_t x, uint8_t y, char *ch, uint8_t TextSize)
                     pos_x = 0;
                     pos_y++;
                 }
-                SSD1306_SetPosition(pos_x, pos_y);
+                ssd1306_set_position(pos_x, pos_y);
                 for (i = 0; i < number_of_letter_lattice; i++) {
-                    SSD1306_WiteData(F6X8[c][i]);
+                    ssd1306_wite_data(F6X8[c][i]);
                 }
                 pos_x += TEXT_SIZE_8_WIDTH_6;
                 j++;
@@ -1919,14 +1919,14 @@ void SSD1306_ShowStr(uint8_t x, uint8_t y, char *ch, uint8_t TextSize)
                     pos_x = 0;
                     pos_y++;
                 }
-                SSD1306_SetPosition(pos_x, pos_y);
+                ssd1306_set_position(pos_x, pos_y);
                 for (i = 0; i < TEXT_SIZE_16_WIDTH_8; i++) {
-                    SSD1306_WiteData(f8X16[c * OFFSET_16 + i]);
+                    ssd1306_wite_data(F8X16[c * OFFSET_16 + i]);
                 }
-                SSD1306_SetPosition(pos_x, pos_y + 1);
+                ssd1306_set_position(pos_x, pos_y + 1);
 
                 for (i = 0; i < TEXT_SIZE_16_WIDTH_8; i++) {
-                    SSD1306_WiteData(f8X16[c * OFFSET_16 + i + OFFSET_8]);
+                    ssd1306_wite_data(F8X16[c * OFFSET_16 + i + OFFSET_8]);
                 }
                 pos_x += TEXT_SIZE_16_WIDTH_8;
                 j++;
@@ -1946,7 +1946,7 @@ void SSD1306_ShowStr(uint8_t x, uint8_t y, char *ch, uint8_t TextSize)
  * @param  width: 宽
  * @param  height: 高
  */
-void SSD1306_DrawBmp(uint8_t xmove, uint8_t ymove, uint8_t width, uint8_t height, uint8_t *bmp)
+void ssd1306_draw_bmp(uint8_t xmove, uint8_t ymove, uint8_t width, uint8_t height, uint8_t *bmp)
 {
     uint16_t j = 0;
     uint16_t x = 0;
@@ -1957,9 +1957,9 @@ void SSD1306_DrawBmp(uint8_t xmove, uint8_t ymove, uint8_t width, uint8_t height
     uint8_t y1 = height / 8 + y0;
 
     for (y = y0; y < y1; y++) {
-        SSD1306_SetPosition(x0, y);
+        ssd1306_set_position(x0, y);
         for (x = x0; x < x1; x++) {
-            SSD1306_WiteData(bmp[j]);
+            ssd1306_wite_data(bmp[j]);
             j++;
         }
     }

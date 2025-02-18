@@ -37,7 +37,7 @@ unsigned int g_msg_rev_size = sizeof(msg_data_t);
 /* 串口接收缓冲区大小 */
 #define UART_RX_MAX 1024
 uint8_t uart_rx_buffer[UART_RX_MAX];
-
+#define DELAY_MS 500
 static ssapc_find_service_result_t g_sle_find_service_result = {0};
 static sle_announce_seek_callbacks_t g_sle_uart_seek_cbk = {0};
 static sle_connection_callbacks_t g_sle_uart_connect_cbk = {0};
@@ -266,7 +266,7 @@ static void *sle_client_task(char *arg)
 {
     unused(arg);
     app_uart_init_config();
-    osal_msleep(500);
+    osal_msleep(DELAY_MS);
     sle_client_init();
     while (1) {
         msg_data_t msg_data = {0};
@@ -281,7 +281,7 @@ static void *sle_client_task(char *arg)
             ssapc_write_param_t *sle_uart_send_param = &g_sle_send_param;
             sle_uart_send_param->data_len = msg_data.value_len;
             sle_uart_send_param->data = msg_data.value;
-            ssapc_write_req(0, g_sle_uart_conn_id, sle_uart_send_param);
+            ssapc_write_cmd(0, g_sle_uart_conn_id, sle_uart_send_param);
         }
     }
     return NULL;

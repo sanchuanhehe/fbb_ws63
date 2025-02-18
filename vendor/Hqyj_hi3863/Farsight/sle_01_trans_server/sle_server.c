@@ -55,9 +55,11 @@ static uint16_t g_property_handle = 0;
 
 #define UUID_16BIT_LEN 2
 #define UUID_128BIT_LEN 16
+#define DELAY_MS 500
 #define SLE_MTU_SIZE_DEFAULT 512
-static uint8_t g_sle_uart_base[] = {0x73, 0x6c, 0x65, 0x5f, 0x73, 0x65, 0x72, 0x76,
-                                    0x65, 0x72, 0x5f, 0x74, 0x65, 0x73, 0x74};
+#define DEFAULT_PAYLOAD_SIZE (SLE_MTU_SIZE_DEFAULT - 12) // 设置有效载荷，否则客户端接受会有问题
+static uint8_t g_sle_uart_base[] = {0x73, 0x6c, 0x65, 0x5f, 0x75, 0x61, 0x72, 0x74,
+                                    0x5f, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72};
 
 static void encode2byte_little(uint8_t *ptr, uint16_t data)
 {
@@ -300,7 +302,7 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id,
            addr->addr[BT_INDEX_4], addr->addr[BT_INDEX_5]);
     if (conn_state == SLE_ACB_STATE_CONNECTED) {
         g_sle_conn_hdl = conn_id;
-        sle_set_data_len(conn_id, SLE_MTU_SIZE_DEFAULT - 12); // 设置有效载荷，否则客户端接受会有问题
+        sle_set_data_len(conn_id, DEFAULT_PAYLOAD_SIZE); // 设置有效载荷
     } else if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
         g_sle_conn_hdl = 0;
         sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
@@ -416,7 +418,7 @@ static void *sle_server_task(const char *arg)
 {
     unused(arg);
     app_uart_init_config();
-    osal_msleep(500);
+    osal_msleep(DELAY_MS);
     sle_server_init();
     while (1) {
         msg_data_t msg_data = {0};

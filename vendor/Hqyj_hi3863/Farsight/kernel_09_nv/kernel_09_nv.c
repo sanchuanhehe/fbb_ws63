@@ -62,10 +62,8 @@ static int nv_read_func(void)
             printf("%x ", read_value[i]);
         }
         printf("\r\n");
-        if (read_value[5] != 0) {
-            for (size_t i = 0; i < sizeof(buf); i++) {
-                buf[i] += read_value[i];
-            }
+        for (size_t i = 0; i < sizeof(buf); i++) {
+            buf[i] += read_value[i];
         }
         osal_vfree(read_value);
         read_value = NULL;
@@ -85,7 +83,7 @@ static int nv_read_func(void)
 void task1(const char *argument)
 {
     unused(argument);
-    osDelay(300); // 等待你打开串口
+    osDelay(DELAY_TIME_MS); // 等待你打开串口
     printf("----------------------------------!\n");
     uint8_t ret = nv_read_func();
     if (ret) {

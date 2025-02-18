@@ -19,6 +19,7 @@
 #include "common_def.h"
 #include <stdio.h>
 #define DELAY_TASK1_MS 100
+#define TIME_OUT 100
 osThreadId_t Task1_ID;          //  任务1 ID
 osThreadId_t Task2_ID;          //  任务2 ID
 osMessageQueueId_t MsgQueue_ID; // 消息队列的ID
@@ -29,7 +30,7 @@ typedef struct {
     uint8_t age; // 年龄
     char *name;  // 名字
 } message_people;
-message_people g_msgPeople;
+message_people g_msg_people;
 
 /**
  * @description: 任务1 发送消息
@@ -44,10 +45,10 @@ void task1(const char *argument)
     static uint8_t j = 0;
     while (1) {
         printf("enter Task 1.......\n");
-        g_msgPeople.id = i++;
-        g_msgPeople.age = j++;
-        g_msgPeople.name = "xiao_ming";
-        msgStatus = osMessageQueuePut(MsgQueue_ID, &g_msgPeople, 0, 100);
+        g_msg_people.id = i++;
+        g_msg_people.age = j++;
+        g_msg_people.name = "xiao_ming";
+        msgStatus = osMessageQueuePut(MsgQueue_ID, &g_msg_people, 0, TIME_OUT);
         if (msgStatus == osOK) {
             printf("osMessageQueuePut is ok.\n");
         }
@@ -65,10 +66,10 @@ void task2(const char *argument)
     osStatus_t msgStatus;
     while (1) {
         printf("enter Task 2.......\n");
-        msgStatus = osMessageQueueGet(MsgQueue_ID, &g_msgPeople, 0, 100);
+        msgStatus = osMessageQueueGet(MsgQueue_ID, &g_msg_people, 0, TIME_OUT);
         if (msgStatus == osOK) {
             printf("osMessageQueueGet is ok.\n");
-            printf("Recv: id = %d, age = %d, name = %s\n", g_msgPeople.id, g_msgPeople.age, g_msgPeople.name);
+            printf("Recv: id = %d, age = %d, name = %s\n", g_msg_people.id, g_msg_people.age, g_msg_people.name);
         }
     }
 }

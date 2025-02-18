@@ -35,11 +35,11 @@ void task1(void)
     uint8_t hour = 10;
     uint8_t min = 30;
     uint8_t sec = 0;
-    printf("SSD1306_Init!\n");
-    SSD1306_Init(); // OLED 显示屏初始化
-    SSD1306_Cls();  // 清屏
-    SSD1306_ShowStr(OLED_TEXT16_COLUMN_0, OLED_TEXT16_LINE_0, "  Analog Clock ", TEXT_SIZE_16);
-    SSD1306_ShowStr(OLED_TEXT16_COLUMN_0, OLED_TEXT16_LINE_3, "   2025-01-01  ", TEXT_SIZE_16);
+    printf("ssd1306_Init!\n");
+    ssd1306_init(); // OLED 显示屏初始化
+    ssd1306_cls();  // 清屏
+    ssd1306_show_str(OLED_TEXT16_COLUMN_0, OLED_TEXT16_LINE_0, "  Analog Clock ", TEXT_SIZE_16);
+    ssd1306_show_str(OLED_TEXT16_COLUMN_0, OLED_TEXT16_LINE_3, "   2025-01-01  ", TEXT_SIZE_16);
 
     while (1) {
         sec++;
@@ -56,7 +56,7 @@ void task1(void)
         }
         memset_s(display_buffer, sizeof(display_buffer), 0, sizeof(display_buffer));
         if (sprintf_s(display_buffer, sizeof(display_buffer), "    %02d:%02d:%02d   ", hour, min, sec) > 0) {
-            SSD1306_ShowStr(OLED_TEXT16_COLUMN_0, OLED_TEXT16_LINE_2, display_buffer, TEXT_SIZE_16);
+            ssd1306_show_str(OLED_TEXT16_COLUMN_0, OLED_TEXT16_LINE_2, display_buffer, TEXT_SIZE_16);
         }
         osDelay(DELAY_TIME_MS);
     }

@@ -35,7 +35,7 @@ typedef struct {
     uint8_t wramcmd; // 开始写gram指令
     uint8_t setxcmd; // 设置x坐标指令
     uint8_t setycmd; // 设置y坐标指令
-} ILI9341_DEV;
+} ili_dev;
 // 扫描方向定义
 #define L2R_U2D 0 // 从左到右,从上到下
 #define L2R_D2U 1 // 从左到右,从下到上
@@ -50,8 +50,8 @@ typedef struct {
 // 屏幕显示方式
 typedef enum {
     SCANVERTICAL = 0U, // 竖屏
-    SCANHORIZONTAL    // 横屏
-} ScreenShowDir;
+    SCANHORIZONTAL     // 横屏
+} screen_show_dir;
 // 画笔颜色
 #define WHITE 0xFFFF
 #define BLACK 0x0000
@@ -79,7 +79,7 @@ typedef enum {
 #define LGRAYBLUE 0XA651 // 浅灰蓝色(中间层颜色)
 #define LBBLUE 0X2B12    // 浅棕蓝色(选择条目的反色)
 
-void ili9341_Init(void);                                                  // 初始化
+void ili9341_init(void);                                                  // 初始化
 void ili9341_Clear(uint16_t Color);                                       // 清屏
 void ili9341_SetCursor(uint16_t xpos, uint16_t ypos);                     // 设置光标
 void ili9341_SetArea(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1); // 设置显示区域
@@ -88,9 +88,9 @@ void ili9341_WriteReg(uint8_t);
 void ili9341_WR_DATA(uint8_t);
 void ili9341_WriteDevReg(uint8_t ili9341_Reg, uint8_t ili9341_RegValue);
 
-void ili9341_WriteRAMPrepare(void);
+void ili9341_write_ram_prepare(void);
 void ili9341_WriteRam(uint16_t RGB_Code);
-void ili9341_DisplayDir(ScreenShowDir ShowDIR); // 设置屏幕显示方向
+void ili9341_display_dir(screen_show_dir show_dir); // 设置屏幕显示方向
 
 void ili9341_FillFrame(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint16_t color);
 void LCD_DrawRect(uint16_t _usX,

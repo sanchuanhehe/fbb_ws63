@@ -328,7 +328,7 @@ void ble_server_init(void)
 
 void ble_main_task(const char *arg)
 {
-    argument = argument;
+    arg = arg;
     ble_server_init();
     app_uart_init_config();
     while (1) {

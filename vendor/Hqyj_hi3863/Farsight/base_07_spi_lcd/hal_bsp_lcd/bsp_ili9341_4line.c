@@ -47,7 +47,7 @@ uint16_t POINT_COLOR = BLACK; // 画笔颜色
 uint16_t BACK_COLOR = WHITE;  // 背景色
 static uint8_t DFT_SCAN_DIR;  // 扫描方向
 // 管理ili9341重要参数
-static ILI9341_DEV ili9341dev;
+static ili_dev g_ili9341dev;
 
 void app_spi_init_pin(void)
 {
@@ -147,19 +147,19 @@ void ili9341_WriteDevReg(uint8_t ili9341_Reg, uint8_t ili9341_RegValue)
 }
 /*
 **********************************************************************
-* @fun     :ili9341_WriteRamPrepare
+* @fun     :ili9341_write_ram_prepare
 * @brief   :开始写GRAM
 * @return  :None
 **********************************************************************
 */
-void ili9341_WriteRamPrepare(void)
+void ili9341_write_ram_prepare(void)
 {
-    ili9341_WriteReg(ili9341dev.wramcmd);
+    ili9341_WriteReg(g_ili9341dev.wramcmd);
 }
 /*
 **********************************************************************
 * @fun     :ili9341_WriteRam
-* @brief   :ili9341写GRAM，SPI数据写入方式不同，功能同ili9341_WriteRamPrepare
+* @brief   :ili9341写GRAM，SPI数据写入方式不同，功能同ili9341_write_ram_prepare
 * @return  :None
 **********************************************************************
 */
@@ -182,11 +182,11 @@ void ili9341_SetCursor(uint16_t xpos, uint16_t ypos)
     uint8_t TempBufferX[2] = {xpos >> 8, xpos & 0XFF};
     uint8_t TempBufferY[2] = {ypos >> 8, ypos & 0XFF};
 
-    ili9341_WriteReg(ili9341dev.setxcmd);
+    ili9341_WriteReg(g_ili9341dev.setxcmd);
 
     hal_spi_transmit(SPI_MASTER_BUS_ID, TempBufferX, 2, SPI_TIMEOUT_VALUE);
 
-    ili9341_WriteReg(ili9341dev.setycmd);
+    ili9341_WriteReg(g_ili9341dev.setycmd);
 
     hal_spi_transmit(SPI_MASTER_BUS_ID, TempBufferY, 2, SPI_TIMEOUT_VALUE);
 }
@@ -210,7 +210,7 @@ void ili9341_SetArea(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
         arguments[2] = x1 >> HIGH_BYTE_SHIFT;
         arguments[3] = x1 & LOW_BYTE_SHIFT;
 
-        ili9341_WriteReg(ili9341dev.setxcmd);
+        ili9341_WriteReg(g_ili9341dev.setxcmd);
         hal_spi_transmit(SPI_MASTER_BUS_ID, arguments, 4, SPI_TIMEOUT_VALUE);
 
         old_x0 = x0;
@@ -223,7 +223,7 @@ void ili9341_SetArea(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
         arguments[2] = y1 >> HIGH_BYTE_SHIFT;
         arguments[3] = y1 & LOW_BYTE_SHIFT;
 
-        ili9341_WriteReg(ili9341dev.setycmd);
+        ili9341_WriteReg(g_ili9341dev.setycmd);
         hal_spi_transmit(SPI_MASTER_BUS_ID, arguments, 4, SPI_TIMEOUT_VALUE);
 
         old_y0 = y0;
@@ -232,7 +232,7 @@ void ili9341_SetArea(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
 }
 /*
 **********************************************************************
-* @fun     :ili9341_DisplayDir
+* @fun     :ili9341_display_dir
 * @brief   :设置ili9341的自动扫描方向
                             Memory Access Control (36h)
                             This command defines read/write scanning direction of the frame memory.
@@ -253,18 +253,18 @@ void ili9341_SetArea(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1)
 * @return  :None
 **********************************************************************
 */
-void ili9341_DisplayDir(ScreenShowDir ShowDIR)
+void ili9341_display_dir(screen_show_dir show_dir)
 {
     uint16_t regval = 0x08; // RGB-BGR Order不能改变
     uint8_t dirreg = 0;
 
-    if (ShowDIR == SCANVERTICAL) { // 竖屏
-        ili9341dev.width = ILI9341_HEIGHT;
-        ili9341dev.height = ILI9341_WIDTH;
+    if (show_dir == SCANVERTICAL) { // 竖屏
+        g_ili9341dev.width = ILI9341_HEIGHT;
+        g_ili9341dev.height = ILI9341_WIDTH;
 
-        ili9341dev.wramcmd = 0X2C;
-        ili9341dev.setxcmd = 0X2A;
-        ili9341dev.setycmd = 0X2B;
+        g_ili9341dev.wramcmd = 0X2C;
+        g_ili9341dev.setxcmd = 0X2A;
+        g_ili9341dev.setycmd = 0X2B;
         DFT_SCAN_DIR = L2R_U2D;
 
         switch (DFT_SCAN_DIR) {
@@ -278,12 +278,12 @@ void ili9341_DisplayDir(ScreenShowDir ShowDIR)
                 break;
         }
     } else { // 横屏
-        ili9341dev.width = ILI9341_WIDTH;
-        ili9341dev.height = ILI9341_HEIGHT;
+        g_ili9341dev.width = ILI9341_WIDTH;
+        g_ili9341dev.height = ILI9341_HEIGHT;
 
-        ili9341dev.wramcmd = 0X2C;
-        ili9341dev.setxcmd = 0X2A;
-        ili9341dev.setycmd = 0X2B;
+        g_ili9341dev.wramcmd = 0X2C;
+        g_ili9341dev.setxcmd = 0X2A;
+        g_ili9341dev.setycmd = 0X2B;
         DFT_SCAN_DIR = D2U_L2R;
 
         switch (DFT_SCAN_DIR) {
@@ -301,25 +301,25 @@ void ili9341_DisplayDir(ScreenShowDir ShowDIR)
     regval |= 0x00;
     ili9341_WriteDevReg(dirreg, regval);
     // 设置光标在原点位置
-    ili9341_WriteReg(ili9341dev.setxcmd);
+    ili9341_WriteReg(g_ili9341dev.setxcmd);
     ili9341_WriteData(0);
     ili9341_WriteData(0);
-    ili9341_WriteData((ili9341dev.width - 1) >> HIGH_BYTE_SHIFT);
-    ili9341_WriteData((ili9341dev.width - 1) & LOW_BYTE_SHIFT);
-    ili9341_WriteReg(ili9341dev.setycmd);
+    ili9341_WriteData((g_ili9341dev.width - 1) >> HIGH_BYTE_SHIFT);
+    ili9341_WriteData((g_ili9341dev.width - 1) & LOW_BYTE_SHIFT);
+    ili9341_WriteReg(g_ili9341dev.setycmd);
     ili9341_WriteData(0);
     ili9341_WriteData(0);
-    ili9341_WriteData((ili9341dev.height - 1) >> HIGH_BYTE_SHIFT);
-    ili9341_WriteData((ili9341dev.height - 1) & LOW_BYTE_SHIFT);
+    ili9341_WriteData((g_ili9341dev.height - 1) >> HIGH_BYTE_SHIFT);
+    ili9341_WriteData((g_ili9341dev.height - 1) & LOW_BYTE_SHIFT);
 }
 /*
 **********************************************************************
-* @fun     :ili9341_Init
+* @fun     :ili9341_init
 * @brief   :初始化ili9341
 * @return  :None
 **********************************************************************
 */
-void ili9341_Init(void)
+void ili9341_init(void)
 {
     // ili9341复位
     uapi_gpio_set_val(SPI_RST_MASTER_PIN, GPIO_LEVEL_LOW);
@@ -443,7 +443,7 @@ void ili9341_Init(void)
     ili9341_WriteReg(0x21); // Display Inversion ON
 
     ili9341_WriteReg(0x29);           // display on
-    ili9341_DisplayDir(SCANVERTICAL); // 竖屏显示
+    ili9341_display_dir(SCANVERTICAL); // 竖屏显示
     ili9341_Clear(WHITE);
 }
 /*
@@ -457,11 +457,11 @@ void ili9341_Clear(uint16_t color)
 {
     uint8_t TempBufferD[2] = {color >> 8, color};
     uint32_t index = 0;
-    uint32_t totalpoint = ili9341dev.width;
-    totalpoint *= ili9341dev.height; // 得到总点数
+    uint32_t totalpoint = g_ili9341dev.width;
+    totalpoint *= g_ili9341dev.height; // 得到总点数
 
     ili9341_SetCursor(0x00, 0x00); // 设置光标位置
-    ili9341_WriteRamPrepare();     // 开始写入GRAM
+    ili9341_write_ram_prepare();     // 开始写入GRAM
 
     for (index = 0; index < totalpoint; index++) {
         hal_spi_transmit(SPI_MASTER_BUS_ID, TempBufferD, 2, SPI_TIMEOUT_VALUE);
@@ -481,15 +481,15 @@ void ili9341_DrawPoint(uint16_t x, uint16_t y, uint16_t color)
     uint8_t TempBufferY[2] = {y >> 8, y & 0XFF};
     uint8_t TempBufferD[2] = {color >> 8, color};
 
-    ili9341_WriteReg(ili9341dev.setxcmd);
+    ili9341_WriteReg(g_ili9341dev.setxcmd);
 
     hal_spi_transmit(SPI_MASTER_BUS_ID, TempBufferX, 2, SPI_TIMEOUT_VALUE);
 
-    ili9341_WriteReg(ili9341dev.setycmd);
+    ili9341_WriteReg(g_ili9341dev.setycmd);
 
     hal_spi_transmit(SPI_MASTER_BUS_ID, TempBufferY, 2, SPI_TIMEOUT_VALUE);
 
-    ili9341_WriteReg(ili9341dev.wramcmd);
+    ili9341_WriteReg(g_ili9341dev.wramcmd);
 
     hal_spi_transmit(SPI_MASTER_BUS_ID, TempBufferD, 2, SPI_TIMEOUT_VALUE);
 }
@@ -512,7 +512,7 @@ void ili9341_FillFrame(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, uint1
     // 数据写入屏幕
     for (i = sy; i <= ey; i++) {
         ili9341_SetCursor(sx, i);  // 设置光标位置
-        ili9341_WriteRamPrepare(); // 开始写入GRAM
+        ili9341_write_ram_prepare(); // 开始写入GRAM
         for (j = 0; j < xlen; j++) {
             hal_spi_transmit(SPI_MASTER_BUS_ID, TempBuffer, 2, SPI_TIMEOUT_VALUE); // 点设置颜色
         }
@@ -692,13 +692,13 @@ uint32_t LCD_ShowChar(uint16_t x, uint16_t y, uint8_t num, uint8_t size, uint8_t
             }
             temp <<= 1;
             y++;
-            if (y >= ili9341dev.height) {
+            if (y >= g_ili9341dev.height) {
                 return 1; // 超区域了
             }
             if ((y - y0) == size) {
                 y = y0;
                 x++;
-                if (x >= ili9341dev.width) {
+                if (x >= g_ili9341dev.width) {
                     return 1; // 超区域了
                 }
                 break;
@@ -745,7 +745,7 @@ void LCD_DrawPointPic(uint16_t x, uint16_t y, uint16_t color)
 {
     uint8_t TempBuffer[2] = {color >> 8, color};
     ili9341_SetCursor(x, y);   // 设置光标位置
-    ili9341_WriteRamPrepare(); // 开始写入GRAM
+    ili9341_write_ram_prepare(); // 开始写入GRAM
 
     hal_spi_transmit(SPI_MASTER_BUS_ID, TempBuffer, 2, SPI_TIMEOUT_VALUE);
 }

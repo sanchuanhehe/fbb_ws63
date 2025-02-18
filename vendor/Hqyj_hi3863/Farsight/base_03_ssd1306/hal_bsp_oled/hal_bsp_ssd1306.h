@@ -92,39 +92,39 @@ typedef enum {
 } te_oled_text16_line;
 
 /**
- * @brief SSD1306 初始化
+ * @brief ssd1306 初始化
  * @return Returns {@link HI_ERR_SUCCESS} 成功;
  *         Returns {@link HI_ERR_FAILURE} 失败.
  */
-uint32_t SSD1306_Init(void);
+uint32_t ssd1306_init(void);
 /**
  * @brief SSD1306 设置坐标的起始点坐标
  * @param x X轴坐标
  * @param y Y轴坐标
  * @return none
  */
-void SSD1306_SetPosition(unsigned char x, unsigned char y);
+void ssd1306_set_position(unsigned char x, unsigned char y);
 /**
  * @brief SSD1306 全屏填充
  * @return none
  */
-void SSD1306_Fill(unsigned char fillData);
+void ssd1306_fill(unsigned char fillData);
 /**
  * @brief SSD1306 清屏
  * @return none
  */
-void SSD1306_Cls(void);
+void ssd1306_cls(void);
 /**
  * @brief SSD1306 打开OLED显示
  * @return none
  */
-void SSD1306_On(void);
+void ssd1306_on(void);
 /**
  * @brief SSD1306 关闭OLED显示
  * @return none
  *
  */
-void SSD1306_Off(void);
+void ssd1306_off(void);
 /**
  * @brief SSD1306 OLED显示屏显示字符串
  * @param x X轴坐标 0~128
@@ -133,7 +133,7 @@ void SSD1306_Off(void);
  * @param TextSize 显示的字体大小  8：6*8   16：8*16
  * @return none
  */
-void SSD1306_ShowStr(uint8_t x, uint8_t y, char *, uint8_t TextSize);
+void ssd1306_show_str(uint8_t x, uint8_t y, char *, uint8_t TextSize);
 
 /**
  * @brief  显示BMP图片
@@ -142,5 +142,5 @@ void SSD1306_ShowStr(uint8_t x, uint8_t y, char *, uint8_t TextSize);
  * @param  BMP[]: 图片数组
  * @retval None
  */
-void SSD1306_DrawBmp(uint8_t xmove, uint8_t ymove, uint8_t width, uint8_t height, uint8_t *bmp);
+void ssd1306_draw_bmp(uint8_t xmove, uint8_t ymove, uint8_t width, uint8_t height, uint8_t *bmp);
 #endif

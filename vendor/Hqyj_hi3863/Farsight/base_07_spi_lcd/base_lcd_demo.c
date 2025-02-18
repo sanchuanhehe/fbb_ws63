@@ -29,8 +29,8 @@ void task1(void)
     osDelay(TASK_DELAY_TIME);
     app_spi_init_pin();
     app_spi_master_init_config();
-    printf("Enter ILI9341_Init()!\n");
-    ili9341_Init();
+    printf("Enter ili9341_init()!\n");
+    ili9341_init();
     while (1) {
         ili9341_Clear(BLUE);
         osDelay(TASK_DELAY_TIME);
