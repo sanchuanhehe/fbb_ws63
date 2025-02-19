@@ -12,7 +12,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 #ifndef SLE_SERVER_ADV_H
 #define SLE_SERVER_ADV_H
 
@@ -49,6 +48,8 @@ typedef enum sle_adv_data {
 } sle_adv_data_type;
 
 errcode_t sle_dev_register_cbks(void);
-errcode_t sle_uart_server_adv_init(void);
+errcode_t sle_server_adv_init(void);
+
+errcode_t sle_announce_register_cbks(void);
 
 #endif

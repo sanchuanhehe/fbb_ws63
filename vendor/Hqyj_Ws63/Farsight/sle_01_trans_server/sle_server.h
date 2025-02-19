@@ -38,22 +38,14 @@ typedef struct {
 #define CONFIG_UART_RXD_PIN 18
 #define CONFIG_UART_PIN_MODE 1
 #define CONFIG_UART_ID UART_BUS_0
-/* Service UUID */
-#define SLE_UUID_SERVER_SERVICE 0x2222
-
-/* Property UUID */
-#define SLE_UUID_SERVER_NTF_REPORT 0x2323
-
-/* Property Property */
-#define SLE_UUID_TEST_PROPERTIES (SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE)
-
-/* Operation indication */
-#define SLE_UUID_TEST_OPERATION_INDICATION (SSAP_OPERATE_INDICATION_BIT_READ | SSAP_OPERATE_INDICATION_BIT_WRITE)
-
-/* Descriptor Property */
-#define SLE_UUID_TEST_DESCRIPTOR (SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE)
 
 errcode_t sle_server_init(void);
+
+errcode_t sle_server_send_report_by_uuid(msg_data_t msg_data);
+
+errcode_t sle_server_send_report_by_handle(msg_data_t msg_data);
+
+uint16_t sle_client_is_connected(void);
 
 uint16_t get_connect_id(void);
 
