@@ -1,0 +1,12 @@
+[
+    {
+      "buildTarget": "ws63-liteos-app",
+      "relativePath": "demo/pwm_blinky",
+      "chip": "WS63",
+      "buildDef": "",
+      "needSmoke": "false",
+      "key":"1",
+      "name":"pwm_blinky",
+      "description":"PWM控制的LED呼吸灯"
+    }
+]
