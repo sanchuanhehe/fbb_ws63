@@ -14,8 +14,8 @@
       "relativePath": "demo/pwm_blinky",
       "chip": "WS63",
       "buildDef": "",
-      "needSmoke": "false",
-      "key": "1",
+      "needSmoke": "true",
+      "key": "2",
       "name": "pwm_blinky",
       "description": "PWM控制的LED呼吸灯"
     }
