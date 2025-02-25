@@ -40,7 +40,7 @@ void task1(const char *argument)
  * @param {*}
  * @return {*}
  */
-void timer1_callback(const char *argument)
+void timer1_callback(void *argument)
 {
     unused(argument);
     printf("enter timer1_callback.......\n");
