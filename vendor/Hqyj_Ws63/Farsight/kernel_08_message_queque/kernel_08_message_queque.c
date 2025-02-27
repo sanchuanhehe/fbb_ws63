@@ -77,7 +77,7 @@ void task2(const char *argument)
 static void kernel_message_queue_example(void)
 {
     // 创建消息队列
-    MsgQueue_ID = osMessageQueueNew(MSG_QUEUE_NUMBER, sizeof(MsgPeople_t),
+    MsgQueue_ID = osMessageQueueNew(MSG_QUEUE_NUMBER, sizeof(message_people),
                                     NULL); // 消息队列中的消息个数，消息队列中的消息大小，属性
     if (MsgQueue_ID != NULL) {
         printf("ID = %d, Create MsgQueue_ID is OK!\n", MsgQueue_ID);
