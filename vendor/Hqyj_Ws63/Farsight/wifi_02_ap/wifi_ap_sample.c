@@ -30,7 +30,7 @@
 errcode_t example_softap_function(td_void)
 {
     /* SoftAp接口的信息 */
-    td_char ssid[WIFI_MAX_SSID_LEN] = "HQYJ_H3863";
+    td_char ssid[WIFI_MAX_SSID_LEN] = "HQYJ_HHQYJ_WS63";
     td_char pre_shared_key[WIFI_MAX_KEY_LEN] = "123456789";
     softap_config_stru hapd_conf = {0};
     softap_config_advance_stru config = {0};

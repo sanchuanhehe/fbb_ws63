@@ -86,7 +86,7 @@ static errcode_t example_sta_function(void)
 {
     char ifname[WIFI_IFNAME_MAX_SIZE + 1] = "wlan0"; /* WiFi STA 网络设备名 */
     wifi_sta_config_stru expected_bss = {0};         /* 连接请求信息 */
-    const char expected_ssid[] = "HQYJ_H3863";
+    const char expected_ssid[] = "HQYJ_HHQYJ_WS63";
     const char key[] = "123456789"; /* 待连接的网络接入密码 */
     struct netif *netif_p = NULL;
     wifi_linked_info_stru wifi_status;

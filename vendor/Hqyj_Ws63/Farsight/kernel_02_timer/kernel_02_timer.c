@@ -66,7 +66,7 @@ static void kernel_timer_example(void)
         printf("ID = %d, Create Timer_ID is OK!\n", Timer_ID);
 
         osStatus_t timerStatus =
-            osTimerStart(Timer_ID, 300U); // 开始定时器， 并赋予定时器的定时值（在Hi3863中，1U=10ms，100U=1S）
+            osTimerStart(Timer_ID, 300U); // 开始定时器， 并赋予定时器的定时值（在ws63中，1U=10ms，100U=1S）
         if (timerStatus != osOK) {
             printf("timer is not startRun !\n");
         }
