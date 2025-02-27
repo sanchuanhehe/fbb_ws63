@@ -15,7 +15,6 @@
 
 #include "soc_osal.h"
 #include "app_init.h"
-#include "mqtt_demo.h"
 #include "cmsis_os2.h"
 #include <stdio.h>
 #include <stdlib.h>
