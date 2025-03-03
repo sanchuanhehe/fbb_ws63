@@ -2,7 +2,7 @@
 
 ## 案例提供者
 
-[@ sanchuanhehe}](https://github.com/sanchuanhehe)
+[@ sanchuanhehe](https://github.com/sanchuanhehe)
 
 ## 案例设计
 
@@ -16,16 +16,16 @@
 
 ### 软件参考资料
 
-- [HiHope ws63开发板驱动开发指南](../../../docs/board/WS63V100%20%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%20%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_02.pdf)
+- [HiHope ws63开发板驱动开发指南](../../../../docs/board/WS63V100%20%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%20%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_02.pdf)
 
   - 参考文档路径: docs/board/WS63V100 设备驱动 开发指南_02.pdf
   - 参考章节: 2.GPIO 10.Timer
 
 ### 参考头文件
 
-- [timer_porting.h](../../../src/drivers/chips/ws63/rom/drivers/chips/ws63/porting/timer/timer_porting.h)
+- [timer_porting.h](../../../../src/drivers/chips/ws63/rom/drivers/chips/ws63/porting/timer/timer_porting.h)
 
-- [timer.h](../../../src/include/driver/timer.h)
+- [timer.h](../../../../src/include/driver/timer.h)
 
 ## 实验平台
 
@@ -191,7 +191,7 @@ flowchart TD
 
 ### 安装例程程序
 
-将本例程的代码放置到[//src/application/samples/peripheral/blinky/blinky_demo.c](../../../src/application/samples/peripheral/blinky/blinky_demo.c)
+将本例程的代码放置到[//src/application/samples/peripheral/blinky/blinky_demo.c](../../../../src/application/samples/peripheral/blinky/blinky_demo.c)
 
 或使用在仓库根目录下使用命令
 
