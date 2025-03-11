@@ -71,7 +71,7 @@
 
   ![image-20250310194511923](../docs/pic/tools/image-20250310194511923.png)
 
-- 安装[vscode](https://vscode.download.prss.microsoft.com/dbazure/download/stable/6609ac3d66f4eade5cf376d1cb76f13985724bcb/VSCodeUserSetup-x64-1.98.0.exe)，  安装步骤不做描述，自定义安装即可,安装成功如下图，下载链接：https://vscode.download.prss.microsoft.com/dbazure/download/stable/6609ac3d66f4eade5cf376d1cb76f13985724bcb/VSCodeUserSetup-x64-1.98.0.exe。
+- 安装[vscode](https://vscode.download.prss.microsoft.com/dbazure/download/stable/6609ac3d66f4eade5cf376d1cb76f13985724bcb/VSCodeUserSetup-x64-1.98.0.exe)，  安装步骤不做描述，自定义安装即可,安装成功如下图，下载链接：https://vscode.download.prss.microsoft.com/dbazure/download/stable/6609ac3d66f4eade5cf376d1cb76f13985724bcb/VSCodeUserSetup-x64-1.98.0.exe
 
   ![image-20250310194000292](../docs/pic/tools/image-20250310194000292.png)
 
