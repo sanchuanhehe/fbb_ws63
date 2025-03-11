@@ -2,8 +2,8 @@
 
 ## Windows系统环境搭建
 
-- [HiSpark Studio工具下载及安装](HiSpark Studio工具下载及安装.md)
-- [HiSpark Studio编译及烧录](HiSparkStudio编译及烧录.md)
+- [HiSparkStudio工具下载及安装](HiSparkStudio工具下载及安装.md)
+- [HiSparkStudio编译及烧录](HiSparkStudio编译及烧录.md)
 
 ## WSL+Ubuntu22.04系统环境搭建
 
