@@ -35,11 +35,11 @@
 
 - 在src目录下执行对应指令执行对应操作，参数及说明如下
 
-  | 参数        | 示例                                         | 说明                                                 |
-  | ----------- | -------------------------------------------- | ---------------------------------------------------- |
-  | 无          | python3 build.py ws63-liteos app             | 启动ws63-liteos-app 目标的增量编译。                 |
-  | -c          | python3 build.py -c ws63 liteos-app          | 启动ws63-liteos-app 目标的全量编译。                 |
-  | menuco nfig | python3 build.py  ws63 liteos-app menuconfig | 启动ws63-liteos-app 目标的 menuconfig 图形配置界面。 |
+  | 参数       | 示例                                           | 说明                                                 |
+  | ---------- | ---------------------------------------------- | ---------------------------------------------------- |
+  | 无         | python3 build.py ws63-liteos-app               | 启动ws63-liteos-app 目标的增量编译。                 |
+  | -c         | python3 build.py -c ws63-liteos-app            | 启动ws63-liteos-app 目标的全量编译。                 |
+  | menuconfig | python3 build.py -c ws63-liteos-app menuconfig | 启动ws63-liteos-app 目标的 menuconfig 图形配置界面。 |
 
 - Menuconfig 配置，运行“python3 build.py -c ws63-liteos-app menuconfig”脚本会启动 Menuconfig 程 序，用户可通过Menuconfig 对编译和系统功能进行配置
 
@@ -63,10 +63,10 @@
 
   ![image-20250311115322015](../docs/pic/tools/image-20250311115322015.png)
 
-- 在终端输入“python3 build.py ws63-liteos app”
+- 在终端输入“python3 build.py ws63-liteos-app”
 
   ```
-  python3 build.py ws63-liteos app
+  python3 build.py ws63-liteos-app
   ```
   
 - 等待编译完成，编译成功如下
@@ -93,7 +93,7 @@
     链接：https://gitee.com/hihope_iot/near-link/tree/master/tools
     ```
 
-- 打开烧录工具，选择对应的串口,打开烧录工具,点开Option选项,选择对应的芯 片,WS63E与WS63属于同一款系列，芯片选择WS63即可。
+- 打开烧录工具，选择对应的串口,打开烧录工具,点开Option选项,选择对应的目标即可,WS63E与WS63属于同一款系列，选择WS63即可。
 
   
 
