@@ -41,9 +41,9 @@
 
 - 重启电脑，一定要重启，不然后面会报错。
 
-- 下载fbb_ws63_wsl发行包，下载链接：https://www.123684.com/s/xzQcTd-lzx7A提取码:uPT4。
+- 下载fbb_ws63_wsl发行包，下载链接：https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/fbb_ws63_wsl.tar
 
-  ![image-20250310185537791](../docs/pic/tools/image-20250310185537791.png)
+  ![image-20250311161220485](../docs/pic/tools/image-20250311161220485.png)
 
 - 下载完成后，将压缩包放在桌面或者其他目录，这里以桌面为例（路径：C:/Users/Administrator/Desktop/fbb_ws63_wsl.tar），同时在非系统盘目录新建一个文件夹，这里在F盘新建一个ubuntu文件夹（路径：F:/ubuntu/）。
 
