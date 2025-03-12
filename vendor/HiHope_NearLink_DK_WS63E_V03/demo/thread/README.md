@@ -104,7 +104,7 @@
 
 - 步骤四：在xxx\src\application\samples\peripheral\Kconfig文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加，可以在最后一行添加）。
 
-  ![image-20240805105229940](../../../../docs/pic/thread/image-20240805105229940.png)
+  ![image-20250311161913270](../../../../docs/pic/thread/image-20250311161913270.png)
 - 步骤五：点击如下图标，选择KConfig，具体选择路径“Application/Enable the Sample of peripheral”，在弹出框中选择“support THREAD Sample”，点击Save，关闭弹窗。
 
   <img src="../../../../docs/pic/beep/image-20240801171406113.png" alt="image-20240801171406113" style="zoom: 50%;" /><img src="../../../../docs/pic/thread/image-20240205105234692-17119401758316.png" alt="image-20240205105234692" style="zoom: 50%;" /><img src="../../../../docs/pic/thread/image-20240229141207010-17134080783333.png" alt="image-20240229141207010" style="zoom: 50%;" />
