@@ -149,7 +149,7 @@ TfLiteStatus LoadQuantModelAndPerformInference() {
   return kTfLiteOk;
 }
 
-int main(int argc, char* argv[]) {
+int run_hello_test() {
   tflite::InitializeTarget();
   TF_LITE_ENSURE_STATUS(ProfileMemoryAndLatency());
   TF_LITE_ENSURE_STATUS(LoadFloatModelAndPerformInference());

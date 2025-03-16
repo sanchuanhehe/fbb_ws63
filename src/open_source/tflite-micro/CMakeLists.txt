@@ -24,7 +24,10 @@ set(SOURCES
     # ${TENSORFLOW_ROOT}/examples/micro_speech/micro_speech_test.cc
     ${TENSORFLOW_ROOT}/examples/hello_world/models/hello_world_float_model_data.cc
     ${TENSORFLOW_ROOT}/examples/hello_world/models/hello_world_int8_model_data.cc
-    # ${TENSORFLOW_ROOT}/examples/hello_world/hello_world_test.cc
+    ${TENSORFLOW_ROOT}/examples/hello_world/hello_world_test.cc
+    ${TENSORFLOW_ROOT}/adapte/debug_log.cc
+    ${TENSORFLOW_ROOT}/adapte/micro_time.cc
+    ${TENSORFLOW_ROOT}/adapte/system_setup.cc
     ${TENSORFLOW_ROOT}/signal/micro/kernels/delay.cc
     ${TENSORFLOW_ROOT}/signal/micro/kernels/energy.cc
     ${TENSORFLOW_ROOT}/signal/micro/kernels/fft_auto_scale_kernel.cc
