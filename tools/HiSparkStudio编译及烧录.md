@@ -64,7 +64,7 @@
 
 - 安装成功后，在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看。
 
-    ![image-20240801173929658](E:/fbb_ws63_10/docs/pic/tools/image-20240801173929658.png)
+    ![image-20250317173145978](../docs/pic/tools/image-20250317173145978.png)
 
 - 配置完成后，点击工具“程序加载”按钮烧录。
 
@@ -79,8 +79,8 @@
   ![image-20250307171224611](../docs/pic/tools/image-20250307171224611.png)
 
 ## FAQ
--  如果根据文档没有编译成功，请参考https://developer.hisilicon.com/postDetail?tid=02110170392979486020
--  如果根据文档编译成功，但是在编写其他代码后，导致编译失败，可以在论坛提问，论坛链接：https://developer.hisilicon.com/forum/0133146886267870001
+-  如果根据文档没有编译成功，请参考https://developers.hisilicon.com/postDetail?tid=02110170392979486020
+-  如果根据文档编译成功，但是在编写其他代码后，导致编译失败，可以在论坛提问，论坛链接：https://developers.hisilicon.com/forum/0133146886267870001
 
 
 ​    
