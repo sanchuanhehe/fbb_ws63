@@ -28,21 +28,27 @@
   ![image.png](../docs/pic/tools/2.png)
 
 - 安装界面如下，选择“我同意此协议”，点击“下一步”。
-    ![image.png](../docs/pic/tools/3.png)
+  
+  ![image.png](../docs/pic/tools/3.png)
     
-- 根据用户自身磁盘空间大小，选择对应的磁盘进行安装，选择完成后，点击下一步。（**注意如果你的用户名带中文目录，请安装到D盘、E盘等其他目录**，**这里以D盘为例**）
+- 根据用户自身磁盘空间大小，选择对应的磁盘进行安装，选择完成后，点击下一步。（**注意如果你的用户名带中文目录，请安装到D盘、E盘等其他目录**，**这里以D盘为例**）。
+  
   ![image.png](../docs/pic/tools/4.png)
 
 - 根据用户自身需要勾选附加任务，默认全部勾选，选择完成后，点击下一步。
+  
   ![image.png](../docs/pic/tools/5.png)
   
 - 点击“安装”，进行工具的安装。
+  
   ![image-20250306181441344](../docs/pic/tools/6.png)
   
 - 安装过程如下，等待安装完成。
+  
   ![image.png](../docs/pic/tools/7.png)
 
 - 如果在安装过程中弹出“python 3.11.4”会自动弹出“python”安装提示，点击“取消”即可
+  
   ![image-20250306181829205](../docs/pic/tools/10.png)
   
 - 出现如下界面代表安装完成，点击完成即可。
@@ -56,12 +62,15 @@
 ##  环境变量添加
 
 - 工具安装完成后，在电脑系统环境变量中，添加环境变量（这里以win10为例，如果是win11，可以在百度搜索如何添加环境变量），在此电脑鼠标“右键”，点击“属性”
+  
   ![image-20250307143252345](../docs/pic/tools/image-20250307143252345.png)
 
 - 弹出系统属性框，点击“环境变量”
+  
   ![image-20250307143539205](../docs/pic/tools/image-20250307143539205.png)
 
 - 在系统环境变量，选择“Path”，双击进入
+  
   ![image-20250307143625753](../docs/pic/tools/image-20250307143625753.png)
 
 - 在编辑环境变量中添加“xxx\HiSpark Studio\tools\Windows\ninja”、“xxx\HiSpark Studio\tools\Windows\gn”、“xxx\HiSpark Studio\tools\Windows\cc_riscv32_musl_fp_win\bin”在几个环境变量（xxx代表HiSpark Studio安装目录），添加完成后，点击“确定”。
@@ -69,8 +78,6 @@
   ![image-20250307142741299](../docs/pic/tools/image-20250307142741299.png)
 
   ![image-20250307145245437](../docs/pic/tools/image-20250307145245437.png)
-
-  
 
   ![image-20250307145204942](../docs/pic/tools/image-20250307145204942.png)
 
@@ -87,18 +94,23 @@
   ![image-20250307095229583](../docs/pic/tools/11.png)
 
 - 下载完成后，点击安装，安装界面勾选“ADD python.exe to PATH”，选择“Customize installation”安装
+  
   ![image-20250307095303931](../docs/pic/tools/12.png)
   
 - 点击“next”即可
+  
   ![image-20250307095731813](../docs/pic/tools/13.png)
 
 - 修改安装路径，如果电脑用户名不带中文可以默认安装，如果电脑用户名带中文，请安装其他磁盘（这里以D盘为例），选择好路径以后，点击“install”（**注意：安装目录不要带中文路径**）
+  
   ![image-20250307095922285](../docs/pic/tools/14.png)
 
 - 等待安装完成即可
+  
   ![image-20250307100139436](../docs/pic/tools/15.png)
 
 - 安装完成后，点击“close”即可
+  
   ![image-20250307100526042](../docs/pic/tools/16.png)
 
 - 打开“命令行窗口”，输入“python”，显示3.11.4即成功
