@@ -1,4 +1,4 @@
-## semaphore
+## semaphore/信号量
 
 ## 1.1 介绍
 
