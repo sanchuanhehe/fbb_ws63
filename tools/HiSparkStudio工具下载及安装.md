@@ -19,7 +19,7 @@
 
 ![image.png](../docs/pic/tools/1.png)
 
-
+- 如果无法登录开发者网站下载，可以访问此链接下载（建议在海思开发者网站下载）：https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/HiSparkStudio.exe
 
 ## HiSpark Studio安装
 
@@ -30,7 +30,7 @@
 - 安装界面如下，选择“我同意此协议”，点击“下一步”。
   
   ![image.png](../docs/pic/tools/3.png)
-    
+  
 - 根据用户自身磁盘空间大小，选择对应的磁盘进行安装，选择完成后，点击下一步。（**注意如果你的用户名带中文目录，请安装到D盘、E盘等其他目录**，**这里以D盘为例**）。
   
   ![image.png](../docs/pic/tools/4.png)
