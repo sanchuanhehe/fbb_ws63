@@ -15,15 +15,19 @@
 
 ## HiSpark Studio下载
 
-- 登录上海海思开发者网站获取IDE工具，需要注册账号下载。
+- 登录上海海思开发者网站获取IDE工具，需要注册账号下载，下载链接：https://developers.hisilicon.com/devCenter/index?id=9dfafc50-7189-4fb4-a
 
 ![image.png](../docs/pic/tools/1.png)
+
+
 
 ## HiSpark Studio安装
 
 - 下载完成后，双击"HiSparkStudio1.0.0.10.exe"安装。
 
 ![image.png](../docs/pic/tools/2.png)
+
+
 
 - 安装界面如下，选择“我同意此协议”，点击“下一步”。
   ![image.png](../docs/pic/tools/3.png)
@@ -38,9 +42,13 @@
 - 根据用户自身需要勾选附加任务，默认全部勾选，选择完成后，点击下一步。
   ![image.png](../docs/pic/tools/5.png)
 
+  
+  
 - 点击“安装”，进行工具的安装。
 
 ![image-20250306181441344](../docs/pic/tools/6.png)
+
+
 
 - 安装过程如下，等待安装完成。
   ![image.png](../docs/pic/tools/7.png)
@@ -48,6 +56,8 @@
 - 如果在安装过程中弹出“python 3.11.4”会自动弹出“python”安装提示，点击“取消”即可
 
   ![image-20250306181829205](../docs/pic/tools/10.png)
+
+  
 
 - 出现如下界面代表安装完成，点击完成即可。
 
