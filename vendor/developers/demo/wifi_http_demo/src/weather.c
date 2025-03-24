@@ -11,7 +11,8 @@
 #include "weather.h"
 #include "osal_debug.h"  
 /* 根据城市ID输出城市英文名称 */
-const char* get_city_name(const char* cityId) {
+const char* get_city_name(const char* cityId) 
+{
     if (strcmp(cityId, "CH280401") == 0) return "Meizhou";
     if (strcmp(cityId, "CH280501") == 0) return "Shantou";
     if (strcmp(cityId, "CH280601") == 0) return "Shenzhen";
@@ -20,7 +21,8 @@ const char* get_city_name(const char* cityId) {
 }
 
 /* 根据天气编码输出天气描述 */
-const char* get_weather_description(const char* numtq) {
+const char* get_weather_description(const char* numtq) 
+{
     if (strcmp(numtq, "00") == 0) return "Sunny";
     if (strcmp(numtq, "01") == 0) return "Cloudy";
     if (strcmp(numtq, "02") == 0) return "Overcast";
@@ -67,7 +69,8 @@ const char* get_weather_description(const char* numtq) {
 }
 
 /* 根据风力等级编码输出风力描述 */
-const char* get_wind_description(const char* numfl) {
+const char* get_wind_description(const char* numfl) 
+{
     if (strcmp(numfl, "0") == 0) return "Light breeze";
     if (strcmp(numfl, "1") == 0) return "3-4 level";
     if (strcmp(numfl, "2") == 0) return "4-5 level";
@@ -82,7 +85,8 @@ const char* get_wind_description(const char* numfl) {
 }
 
 /* 根据风向编码输出风向描述 */
-const char* get_wind_direction_description(const char* numfx) {
+const char* get_wind_direction_description(const char* numfx) 
+{
     if (strcmp(numfx, "0") == 0) return "No sustained wind direction";
     if (strcmp(numfx, "1") == 0) return "Northeast wind";
     if (strcmp(numfx, "2") == 0) return "East wind";
@@ -97,7 +101,8 @@ const char* get_wind_direction_description(const char* numfx) {
 }
 
 /* 解析 JSON 数据并输出天气、风力、风向、城市名称、时间和相对湿度 */
-void parse_weather_data(const char* json_data) {
+void parse_weather_data(const char* json_data) 
+{
     // 解析城市ID
     const char* cityId = strstr(json_data, "\"cityId\":\"");
     if (cityId) {
