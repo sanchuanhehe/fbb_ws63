@@ -21,7 +21,8 @@ void http_client_get(void *param)
 {
     param = param; //
     struct sockaddr_in addr = {0};
-    int s, r;
+    int s;
+    int r;
     char recv_buf[HTTPC_DEMO_RECV_BUFSIZE];
 
     osal_printk("*****Connect to WiFi: ");
