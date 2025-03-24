@@ -17,7 +17,8 @@ static const char *g_request = "GET /observe?city=CH280601&key=62w9bk1okpme4k59 
                                "\r\n";
 
 /* HTTP Get请求 */
-void http_client_get(void *param) {
+void http_client_get(void *param) 
+{
     param = param; //
     struct sockaddr_in addr = {0};
     int s, r;
@@ -88,7 +89,8 @@ void http_client_get(void *param) {
     return ;
 }
 
-static void tcp_client_sample_entry(void) {
+static void tcp_client_sample_entry(void) 
+{
     osThreadAttr_t attr;
     attr.name = "tcp_client_sample_task";
     attr.attr_bits = 0U;
