@@ -1,0 +1,45 @@
+[ 
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/breathing_light", 
+    "chip": "WS63",                         
+    "buildDef": "CONFIG_BREATHING_LIGHT_CHANNEL = 3,CONFIG_BREATHING_LIGHT_GROUP_ID = 0,CONFIG_BREATHING_LIGHT_PIN = 3,CONFIG_BREATHING_LIGHT_PIN_MODE = 1",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/at24c02", 
+    "chip": "WS63",                         
+    "buildDef": "CONFIG_I2C_AT24C02_BUS_ID = 1,CONFIG_I2C_SCL_AT24C02_PIN = 16,CONFIG_I2C_SDA_AT24C02_PIN = 15,CONFIG_I2C_AT24C02_PIN_MODE = 2,CONFIG_I2C_AT24C02_ADDR = 0x50",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/cht20", 
+    "chip": "WS63",                         
+    "buildDef": "CONFIG_I2C_CHT20_BUS_ID = 1,CONFIG_I2C_SCL_CHT20_PIN = 16,CONFIG_I2C_SDA_CHT20_PIN = 15,CONFIG_I2C_CHT20_PIN_MODE = 2,CONFIG_I2C_CHT20_SLAVE_ADDR = 0x38",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/lcd", 
+    "chip": "WS63",                         
+    "buildDef": "CONFIG_LCD_DATA = 9,CONFIG_LCD_CLK = 7,CONFIG_LCD_CS = 10,CONFIG_LCD_RST = 8,CONFIG_LCD_RS = 11,CONFIG_SPI_MASTER_BUS_ID = 0",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/sc7a20", 
+    "chip": "WS63",                         
+    "buildDef": "CONFIG_I2C_SC7A20_BUS_ID = 1,CONFIG_I2C_SCL_SC7A20_PIN = 16,CONFIG_I2C_SDA_SC7A20_PIN = 15,CONFIG_I2C_SC7A20_PIN_MODE = 2,CONFIG_I2C_SC7A20_SLAVE_ADDR = 0x19",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/ws2812b", 
+    "chip": "WS63",                         
+    "buildDef": "CONFIG_WS2812B_CHANNEL = 3,CONFIG_WS2812B_GROUP_ID = 0,CONFIG_WS2812B_PIN = 3,CONFIG_WS2812B_PIN_MODE = 1",  
+    "needSmoke": "false" 
+  }
+
+]

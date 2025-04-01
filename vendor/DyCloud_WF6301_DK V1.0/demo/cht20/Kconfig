@@ -1,0 +1,35 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+
+config I2C_CHT20_BUS_ID
+    int
+    prompt "Choose I2C CHT20 bus id."
+    depends on SAMPLE_SUPPORT_CHT20
+    default 1
+
+config I2C_SCL_CHT20_PIN
+    int
+    prompt "Choose I2C SCL CHT20 pin."
+    depends on SAMPLE_SUPPORT_CHT20
+    default 16
+
+config I2C_SDA_CHT20_PIN
+    int
+    prompt "Choose I2C SDA CHT20 pin."
+    depends on SAMPLE_SUPPORT_CHT20
+    default 15
+
+config I2C_CHT20_PIN_MODE
+    int
+    prompt "Choose I2C CHT20 pin mode."
+    depends on SAMPLE_SUPPORT_CHT20
+    default 2
+
+config I2C_CHT20_SLAVE_ADDR
+    hex
+    prompt "Choose I2C CHT20 slave addr."
+    depends on SAMPLE_SUPPORT_CHT20
+    default 0x38
+
