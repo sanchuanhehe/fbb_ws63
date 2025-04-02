@@ -22,6 +22,7 @@
 
 #define TEMP_SCALING_FACTOR 200.0f /* 温度缩放系数 */
 #define TEMP_OFFSET 50.0f          /* 温度偏移量 */
+#define DECIMAL_PRECISION 100      // 小数精度，用于保留2位小数
 
 #define I2C_TASK_PRIO 24
 #define I2C_TASK_STACK_SIZE 0x1000
@@ -158,7 +159,8 @@ static void *i2c_cht20_task(const char *arg)
         if (CHT20_Read(CONFIG_I2C_CHT20_BUS_ID, dev_addr, &temperature, &humidity)) {
             // 100:乘以100然后取100的余数,得到小数点后的数值
             osal_printk("Temperature: %d.%02dC,   Humidity: %d.%02d%%\r\n", (int)temperature,
-                        abs((int)(temperature * 100) % 100), (int)humidity, abs((int)(humidity * 100) % 100));
+                        abs((int)(temperature * DECIMAL_PRECISION) % DECIMAL_PRECISION), (int)humidity,
+                        abs((int)(humidity * DECIMAL_PRECISION) % DECIMAL_PRECISION));
         }
 
         osal_msleep(1500); // 1500:延时1500ms 读取一次温湿度
