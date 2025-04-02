@@ -21,6 +21,6 @@ extern const uint16_t LCD_SPI_JD9853_CMDLIST_LENGTH;
 
 #ifdef __cplusplus
 }
-/*extern "C"*/
+/* extern "C" */
 #endif
 #endif

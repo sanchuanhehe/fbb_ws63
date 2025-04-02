@@ -37,7 +37,7 @@ uint16_t CalculateCurveValue(float counter)
 {
     /* counter 是归一化时间（0 到 1）使用 sin 函数生成 S 形曲线，范围从 -1 到 1，并调整为 0 到 1
      公式：0.5 * (1 + sin(π * (counter - 0.5)))
-     目的：使得显示效果更佳的平滑*/
+     目的：使得显示效果更佳的平滑 */
 
     float curve_value = 0.5f * (1.0f + sinf(PI * (counter - 0.5f)));
 

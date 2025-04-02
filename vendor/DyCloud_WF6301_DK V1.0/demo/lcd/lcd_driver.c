@@ -36,9 +36,6 @@
 
 #define CONFIG_SPI_MASTER_PIN_MODE PIN_MODE_3
 
-#define LCD_CMD_MODE() uapi_gpio_set_val(CONFIG_LCD_RS, GPIO_LEVEL_LOW)
-#define LCD_DATA_MODE() uapi_gpio_set_val(CONFIG_LCD_RS, GPIO_LEVEL_HIGH)
-
 #define LCD_WIDTH (240)
 #define LCD_HEIGHT (296)
 
@@ -53,6 +50,15 @@ static spi_xfer_data_t lcd_spi_data = {
     .rx_buff = NULL,
     .rx_bytes = 0,
 };
+static inline void lcd_cmd_mode(void)
+{
+    uapi_gpio_set_val(CONFIG_LCD_RS, GPIO_LEVEL_LOW);
+}
+
+static inline void lcd_data_mode(void)
+{
+    uapi_gpio_set_val(CONFIG_LCD_RS, GPIO_LEVEL_HIGH);
+}
 
 static spi_attr_t lcd_spi_config = {0};
 static spi_extra_attr_t lcd_spi_ext_config = {0};
@@ -64,7 +70,7 @@ static void lcd_rst_pin_init(void)
     uapi_gpio_set_dir(CONFIG_LCD_RST, GPIO_DIRECTION_OUTPUT);
     uapi_gpio_set_dir(CONFIG_LCD_RS, GPIO_DIRECTION_OUTPUT);
     uapi_gpio_set_val(CONFIG_LCD_RST, GPIO_LEVEL_LOW);
-    osal_msleep(LCD_TASK_DURATION_MS / 10);
+    osal_msleep(50); // 50:延时50ms
     uapi_gpio_set_val(CONFIG_LCD_RST, GPIO_LEVEL_HIGH);
 }
 static void lcd_spi_init_pin(void)
@@ -144,9 +150,10 @@ static void lcd_spi_master_init_config(void)
 static int lcd_drv_find_begin(uint8_t *begin, uint8_t *end, int pos)
 {
     uint8_t *p = &begin[pos];
-    while ((p + 3) < end) {
+    while ((p + 3) < end) { // 3：偏移3 byte找到结束标志位
+        // 0 : 指针位置; 1 : 指针位置; 2 : 指针位置; 3 : 指针位置; 24 : 左移24位; 16 : 左移16位; 8 : 左移8位
         if (((p[0] << 24) | (p[1] << 16) | (p[2] << 8) | p[3]) == BEGIN_FLAG) {
-            return (&p[4] - begin);
+            return (&p[4] - begin); // 4 : 指针位置
         }
         p++;
     }
@@ -157,9 +164,10 @@ static int lcd_drv_find_begin(uint8_t *begin, uint8_t *end, int pos)
 static int lcd_drv_find_end(uint8_t *begin, uint8_t *end, int pos)
 {
     uint8_t *p = &begin[pos];
-    while ((p + 3) < end) {
+    while ((p + 3) < end) { // 3：偏移3 byte找到结束标志位
+        // 0 : 指针位置; 1 : 指针位置; 2 : 指针位置; 3 : 指针位置; 24 : 左移24位; 16 : 左移16位; 8 : 左移8位
         if ((uint32_t)((p[0] << 24) | (p[1] << 16) | (p[2] << 8) | p[3]) == END_FLAG) {
-            return (&p[0] - begin);
+            return (&p[0] - begin); // 0 : 指针位置
         }
         p++;
     }
@@ -186,21 +194,21 @@ void lcd_drv_cmd_list(uint8_t *cmd_list, int cmd_cnt)
         }
 
         p8 = (uint8_t *)&cmd_list[begin];
-        cnt = end - begin - 1;
-
+        cnt = end - begin - 1; // 1 : 减掉边界
+        // 0 : 指针位置; 1 : 指针位置; 2 : 指针位置; 3 : 指针位置; 24 : 左移24位; 16 : 左移16位; 8 : 左移8位
         if ((uint32_t)((p8[0] << 24) | (p8[1] << 16) | (p8[2] << 8) | p8[3]) == REGFLAG_DELAY_FLAG) {
-            osal_msleep(p8[4]);
+            osal_msleep(p8[4]); // 4 : 指针位置 休眠指定毫秒
         } else {
-            lcd_spi_data.tx_buff = &p8[0];
-            lcd_spi_data.tx_bytes = 1;
-            LCD_CMD_MODE();
+            lcd_spi_data.tx_buff = &p8[0]; // 0 : 指针位置
+            lcd_spi_data.tx_bytes = 1;     // 1 : 发送字节的数量
+            lcd_cmd_mode();
             uapi_spi_master_write(CONFIG_SPI_MASTER_BUS_ID, &lcd_spi_data, 0xFFFFFFFF);
-            lcd_spi_data.tx_buff = &p8[1];
+            lcd_spi_data.tx_buff = &p8[1]; // 1 : 指针位置
             lcd_spi_data.tx_bytes = cnt;
-            LCD_DATA_MODE();
+            lcd_data_mode();
             uapi_spi_master_write(CONFIG_SPI_MASTER_BUS_ID, &lcd_spi_data, 0xFFFFFFFF);
         }
-        i = end + 4;
+        i = end + 4; // 4 : 调整指针位置
     }
 }
 
@@ -223,24 +231,24 @@ void lcd_drv_set_zone(uint16_t x1, uint16_t x2, uint16_t y1, uint16_t y2)
 
     uint8_t cmd = 0x2a;
     lcd_spi_data.tx_buff = &cmd;
-    lcd_spi_data.tx_bytes = 1;
-    LCD_CMD_MODE();
+    lcd_spi_data.tx_bytes = 1; // 1 : 发送字节的数量
+    lcd_cmd_mode();
     uapi_spi_master_write(CONFIG_SPI_MASTER_BUS_ID, &lcd_spi_data, 0xFFFFFFFF);
 
     lcd_spi_data.tx_buff = lcd_area_cmds[0];
-    lcd_spi_data.tx_bytes = 4;
-    LCD_DATA_MODE();
+    lcd_spi_data.tx_bytes = 4; // 4 : 发送字节的数量
+    lcd_data_mode();
     uapi_spi_master_write(CONFIG_SPI_MASTER_BUS_ID, &lcd_spi_data, 0xFFFFFFFF);
 
     cmd = 0x2b;
     lcd_spi_data.tx_buff = &cmd;
-    lcd_spi_data.tx_bytes = 1;
-    LCD_CMD_MODE();
+    lcd_spi_data.tx_bytes = 1; // 1 : 发送字节的数量
+    lcd_cmd_mode();
     uapi_spi_master_write(CONFIG_SPI_MASTER_BUS_ID, &lcd_spi_data, 0xFFFFFFFF);
 
     lcd_spi_data.tx_buff = lcd_area_cmds[1];
-    lcd_spi_data.tx_bytes = 4;
-    LCD_DATA_MODE();
+    lcd_spi_data.tx_bytes = 4; // 4 : 发送字节的数量
+    lcd_data_mode();
     uapi_spi_master_write(CONFIG_SPI_MASTER_BUS_ID, &lcd_spi_data, 0xFFFFFFFF);
 }
 
@@ -248,10 +256,10 @@ void lcd_drv_draw_start(void)
 {
     uint8_t cmd = 0x2c;
     lcd_spi_data.tx_buff = &cmd;
-    lcd_spi_data.tx_bytes = 1;
-    LCD_CMD_MODE();
+    lcd_spi_data.tx_bytes = 1; // 1 : 发送字节的数量
+    lcd_cmd_mode();
     uapi_spi_master_write(CONFIG_SPI_MASTER_BUS_ID, &lcd_spi_data, 0xFFFFFFFF);
-    LCD_DATA_MODE();
+    lcd_data_mode();
 }
 
 void lcd_drv_draw_buf(uint8_t *buff, uint32_t buff_len)
@@ -266,31 +274,31 @@ void lcd_drv_open(void)
     uint8_t cmd = 0x11;
     lcd_spi_data.tx_buff = &cmd;
     lcd_spi_data.tx_bytes = 1;
-    LCD_CMD_MODE();
+    lcd_cmd_mode();
     uapi_spi_master_write(CONFIG_SPI_MASTER_BUS_ID, &lcd_spi_data, 0xFFFFFFFF);
-    osal_msleep(LCD_TASK_DURATION_MS / 10);
+    osal_msleep(50); // 50 : 延时50ms
     cmd = 0x29;
     lcd_spi_data.tx_buff = &cmd;
-    lcd_spi_data.tx_bytes = 1;
-    LCD_CMD_MODE();
+    lcd_spi_data.tx_bytes = 1; // 1 : 发送字节的数量
+    lcd_cmd_mode();
     uapi_spi_master_write(CONFIG_SPI_MASTER_BUS_ID, &lcd_spi_data, 0xFFFFFFFF);
-    LCD_DATA_MODE();
-    osal_msleep(LCD_TASK_DURATION_MS / 20);
+    lcd_data_mode();
+    osal_msleep(20); // 20 : 延时20ms
 }
 
 void lcd_drv_close(void)
 {
     uint8_t cmd = 0x28;
     lcd_spi_data.tx_buff = &cmd;
-    lcd_spi_data.tx_bytes = 1;
-    LCD_CMD_MODE();
+    lcd_spi_data.tx_bytes = 1; // 1 : 发送字节的数量
+    lcd_cmd_mode();
     uapi_spi_master_write(CONFIG_SPI_MASTER_BUS_ID, &lcd_spi_data, 0xFFFFFFFF);
     cmd = 0x10;
     lcd_spi_data.tx_buff = &cmd;
-    lcd_spi_data.tx_bytes = 1;
-    LCD_CMD_MODE();
+    lcd_spi_data.tx_bytes = 1; // 1 : 发送字节的数量
+    lcd_cmd_mode();
     uapi_spi_master_write(CONFIG_SPI_MASTER_BUS_ID, &lcd_spi_data, 0xFFFFFFFF);
-    LCD_DATA_MODE();
+    lcd_data_mode();
 }
 /**
  * @brief 分区发送屏幕数据
@@ -342,7 +350,7 @@ void lcd_drv_draw_img(uint16_t x, uint16_t y, img_dsc_t *img)
     lcd_drv_draw_start();
 
     lcd_drv_send_partitioned((uint8_t *)img->data, img->data_size);
-    osal_msleep(LCD_TASK_DURATION_MS / 10);
+    osal_msleep(50); // 50 : 延时50ms
 }
 
 void lcd_drv_init(void)

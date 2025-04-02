@@ -122,13 +122,14 @@ errcode_t SC7A20_ReadAcceleration(int16_t *x, int16_t *y, int16_t *z)
 
     // 检测3轴数据是否全部转换完成
     if ((sc7a20_acceldata[0] & 0x08)) {
+        // 6:读取6个字节长度
         if (SC7A20_Read(SC7A20_REG_X_L, sc7a20_acceldata, 6) != ERRCODE_SUCC) {
             return ERRCODE_FAIL; // 读取失败
         }
 
-        *x = ((sc7a20_acceldata[1] << 8) | sc7a20_acceldata[0]);
-        *y = ((sc7a20_acceldata[3] << 8) | sc7a20_acceldata[2]);
-        *z = ((sc7a20_acceldata[5] << 8) | sc7a20_acceldata[4]);
+        *x = ((sc7a20_acceldata[1] << 8) | sc7a20_acceldata[0]); // 8:左移8位;0:指针位置;1:指针位置
+        *y = ((sc7a20_acceldata[3] << 8) | sc7a20_acceldata[2]); // 8:左移8位;3:指针位置;2:指针位置
+        *z = ((sc7a20_acceldata[5] << 8) | sc7a20_acceldata[4]); // 8:左移8位;5:指针位置;4:指针位置
 
         twos_complement_to_int16(x);
         twos_complement_to_int16(y);
@@ -150,9 +151,10 @@ errcode_t Sc7a20Init(void)
     };
 
     // 使用while循环持续尝试写入，直到成功为止
+    // 4:读取4个字节长度
     while (SC7A20_Write(SC7A20_REG_CTRL_1, sc7a20_config, 4) != ERRCODE_SUCC) {
         osal_printk("No SC7A20 detected\r\n");
-        osal_msleep(I2C_DURATION_MS * 10);
+        osal_msleep(1000); // 1000:延时1000ms
     }
 
     osal_printk(" SC7A20_init succ\n");
@@ -185,7 +187,7 @@ static void *i2c_sc7a20_task(const char *arg)
             osal_printk("i2c%d SC7A20 x: %d,y: %d,z: %d \r\n", CONFIG_I2C_SC7A20_BUS_ID, x, y, z);
         } else {
             osal_printk("CHT20 failed to read data\r\n");
-            osal_msleep(I2C_DURATION_MS * 5);
+            osal_msleep(500); // 500:延时500ms
             continue;
         }
         osal_msleep(I2C_DURATION_MS);

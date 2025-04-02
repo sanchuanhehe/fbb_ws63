@@ -3,7 +3,7 @@
 #ifndef LCD_DRIVER_H
 #define LCD_DRIVER_H
 
-/*extern "C"*/
+/* extern "C" */
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -14,16 +14,14 @@
 #define I2C_MASTER_ADDR 0x0
 #define I2C_SET_BAUDRATE 100000
 #define I2C_TASK_DURATION_MS 1000
-#define I2C_READ_DELAY_MS 20 /* I2C 读操作后等待时间(ms)*/
+#define I2C_READ_DELAY_MS 20 /* I2C 读操作后等待时间(ms) */
 #define I2C_TRANSFER_LEN 1
 #define CHT20_DATE_LEN 6
-#define CHT20_DATA_SCALE 1048576.0f                                                       /* 数据量程 */
-#define HUMIDITY_PERCENTAGE 100.0f                                                        /* 湿度缩放系数 */
-#define CONVERT_HUMIDITY(data) ((float)((data) * HUMIDITY_PERCENTAGE / CHT20_DATA_SCALE)) /* 湿度转换公式 */
-#define TEMP_SCALING_FACTOR 200.0f                                                        /* 温度缩放系数*/
-#define TEMP_OFFSET 50.0f                                                                 /* 温度偏移量*/
-#define CONVERT_TEMPERATURE(data) \
-    ((float)((data) * TEMP_SCALING_FACTOR / CHT20_DATA_SCALE - TEMP_OFFSET)) /* 温度转换公式 [^5] */
+#define CHT20_DATA_SCALE 1048576.0f /* 数据量程 */
+#define HUMIDITY_PERCENTAGE 100.0f  /* 湿度缩放系数 */
+
+#define TEMP_SCALING_FACTOR 200.0f /* 温度缩放系数 */
+#define TEMP_OFFSET 50.0f          /* 温度偏移量 */
 
 #define I2C_TASK_PRIO 24
 #define I2C_TASK_STACK_SIZE 0x1000
@@ -43,12 +41,12 @@ bool Parse_temperature_humidity(uint8_t *data, uint32_t receive_len, float *temp
     // 提取湿度的20个bit
     uint32_t humidity_data = ((uint32_t)data[1] << 12) | ((uint32_t)data[2] << 4) | ((uint32_t)data[3] >> 4);
     // 解析湿度
-    *humidity = CONVERT_HUMIDITY(humidity_data);
+    *humidity = ((float)((humidity_data)*HUMIDITY_PERCENTAGE / CHT20_DATA_SCALE)); /*  */
 
     // 提取温度的20个bit
     uint32_t temperature_data = ((uint32_t)(data[3] & 0x0F) << 16) | ((uint32_t)data[4] << 8) | (uint32_t)data[5];
     // 解析温度
-    *temperature = CONVERT_TEMPERATURE(temperature_data);
+    *temperature = ((float)((temperature_data)*TEMP_SCALING_FACTOR / CHT20_DATA_SCALE - TEMP_OFFSET));
 
     return true; // 解析成功
 }
@@ -67,7 +65,7 @@ bool CH20_MeasureAndRead(uint8_t bus_id, uint8_t dev_addr, i2c_data_t *data)
         return false;
     }
 
-    osal_msleep(I2C_READ_DELAY_MS * 10); // 等待传感器完成测量
+    osal_msleep(200); // 200:延时200ms 等待传感器完成测量
 
     // 读取测量结果
     if (uapi_i2c_master_read(bus_id, dev_addr, data) != ERRCODE_SUCC) {
@@ -98,13 +96,13 @@ bool CHT20_Read(uint8_t bus_id, uint8_t dev_addr, float *temp, float *humidity)
 
     while (uapi_i2c_master_write(bus_id, dev_addr, &data) != ERRCODE_SUCC) {
         osal_printk("No CHT20 detected\r\n");
-        osal_msleep(I2C_READ_DELAY_MS * 25);
-        continue; // i2c发送失败
+        osal_msleep(500); // 500:延时500ms
+        continue;         // i2c发送失败
     }
 
     osal_msleep(I2C_READ_DELAY_MS);
     data.receive_buf = rx_buff;
-    data.receive_len = I2C_TRANSFER_LEN * 2;
+    data.receive_len = 2; // 2:发送两个字节长度
 
     // 1. 尝试读取设备状态
     if (uapi_i2c_master_read(bus_id, dev_addr, &data) != ERRCODE_SUCC) {
@@ -116,16 +114,16 @@ bool CHT20_Read(uint8_t bus_id, uint8_t dev_addr, float *temp, float *humidity)
     if ((data.receive_buf[0] & 0x18) != 0x18) {
         osal_printk("CHT20 not ready: %02X %02X\r\n", data.receive_buf[0], data.receive_buf[1]);
         data.send_buf = tx_buff_measure;
-        data.send_len = I2C_TRANSFER_LEN * 3;
+        data.send_len = 3; // 3:发送三个字节长度
         uapi_i2c_master_write(bus_id, dev_addr, &data);
         return false;
     }
 
     // 3. 发送测量指令并读取
     data.send_buf = tx_buff_measure;
-    data.send_len = I2C_TRANSFER_LEN * 3;
+    data.send_len = 3; // 3:发送三个字节长度
     data.receive_buf = rx_buff;
-    data.receive_len = I2C_TRANSFER_LEN * 6;
+    data.receive_len = 6; // 6:发送六个字节长度
 
     if (!(CH20_MeasureAndRead(bus_id, dev_addr, &data))) {
         return false;
@@ -158,11 +156,12 @@ static void *i2c_cht20_task(const char *arg)
 
     while (1) {
         if (CHT20_Read(CONFIG_I2C_CHT20_BUS_ID, dev_addr, &temperature, &humidity)) {
+            // 100:乘以100然后取100的余数,得到小数点后的数值
             osal_printk("Temperature: %d.%02dC,   Humidity: %d.%02d%%\r\n", (int)temperature,
                         abs((int)(temperature * 100) % 100), (int)humidity, abs((int)(humidity * 100) % 100));
         }
 
-        osal_msleep(I2C_READ_DELAY_MS * 50);
+        osal_msleep(1500); // 1500:延时1500ms 读取一次温湿度
     }
 
     return NULL;

@@ -44,7 +44,6 @@ void generate_rainbow_colors(uint32_t *colors, uint16_t time_counter)
     //  防止计数器溢出
     uint16_t safe_counter = time_counter % 60000;
     // 计算波状偏移（让 LED 像波浪流动）  多个波叠加;
-    //   加速时间流逝    增强波浪的动态范围
     float wave_offset = sin(safe_counter * 0.08f) * 50.0f + cos(safe_counter * 0.08f) * 30.0f;
 
     for (int i = 0; i < WS2812B_CNT; i++) {
@@ -55,39 +54,39 @@ void generate_rainbow_colors(uint32_t *colors, uint16_t time_counter)
         uint8_t r;
         uint8_t g;
         uint8_t b;
-        int sector = (int)h;
+        int sector = (int)h; // 用于表示 色相（Hue）所处的六分之一区间
         float f = h - sector;
-        float p = max_brightness * (1 - 1.0f); /*固定饱和度*/
+        float p = max_brightness * (1 - 1.0f); // 固定饱和度
         float q = max_brightness * (1 - 1.0f * f);
         float t = max_brightness * (1 - 1.0f * (1 - f));
 
         switch (sector) {
-            case 0:
+            case 0: // 0:色相第一个扇区 红色 → 黄色（红满，绿递增）
                 r = max_brightness;
                 g = t;
                 b = p;
                 break;
-            case 1:
+            case 1: // 1:色相第二个扇区 黄色 → 绿色（绿满，红递减）
                 r = q;
                 g = max_brightness;
                 b = p;
                 break;
-            case 2:
+            case 2: // 2:色相第三个扇区 绿色 → 青色（绿满，蓝递增）
                 r = p;
                 g = max_brightness;
                 b = t;
                 break;
-            case 3:
+            case 3: // 3:色相第四个扇区 青色 → 蓝色（蓝满，绿递减）
                 r = p;
                 g = q;
                 b = max_brightness;
                 break;
-            case 4:
+            case 4: // 4:色相第五个扇区 蓝色 → 品红（蓝满，红递增）
                 r = t;
                 g = p;
                 b = max_brightness;
                 break;
-            default:
+            default: // 5:色相第六个扇区 品红 → 红色（红满，蓝递减）
                 r = max_brightness;
                 g = p;
                 b = q;
@@ -97,7 +96,7 @@ void generate_rainbow_colors(uint32_t *colors, uint16_t time_counter)
         // 限制动态亮度范围  动态亮度调整（让灯光更像呼吸/霓虹效果）
         uint8_t brightness = fmaxf(0, fminf(255, max_brightness + sin(safe_counter * 0.15f + i * 0.5f) * 30));
 
-        // 颜色计算（Gamma校正）
+        // 颜色计算（Gamma校正） 255:满量程值;16:左移16位;8:左移8位;
         colors[i] = (((r * brightness) / 255) << 16) | (((g * brightness) / 255) << 8) | ((b * brightness) / 255);
     }
 }
@@ -114,9 +113,10 @@ void ws2812b_send_color_8(uint32_t *colors)
 
     // 首先转换所有颜色到GRB格式
     for (int i = 0; i < WS2812B_CNT; i++) {
-        uint8_t r = (colors[i] >> 16) & 0xFF;   // 红色
-        uint8_t g = (colors[i] >> 8) & 0xFF;    // 绿色
-        uint8_t b = colors[i] & 0xFF;           // 蓝色
+        uint8_t r = (colors[i] >> 16) & 0xFF; // 红色
+        uint8_t g = (colors[i] >> 8) & 0xFF;  // 绿色
+        uint8_t b = colors[i] & 0xFF;         // 蓝色
+        // 16:左移16位;8:左移8位;
         grb_data[i] = (g << 16) | (r << 8) | b; // GRB格式
     }
     // 发送所有LED的数据 (数据顺序是第一个LED到最后一个LED)
@@ -210,7 +210,7 @@ static void *ws2812b_task(const char *arg)
             offset = 0;
         }
         offset += OFFSET_INCREMENT;
-        osal_msleep(DELAY_1000MS / 100);
+        osal_msleep(10); // 10:延时10ms;
     }
 
 #ifdef CONFIG_PWM_USING_V151

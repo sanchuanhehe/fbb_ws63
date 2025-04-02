@@ -155,7 +155,7 @@ static void *i2c_at24c02_task(const char *arg)
             }
             osal_printk("\r\ni2c%d at24c02 receive succ!\r\n", CONFIG_I2C_AT24C02_BUS_ID);
         }
-        osal_msleep(I2C_TASK_DURATION_MS * 10);
+        osal_msleep(1000); // 1000:延时1000ms
     }
     return NULL;
 }
