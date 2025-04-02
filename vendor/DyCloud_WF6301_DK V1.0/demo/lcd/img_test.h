@@ -1,15 +1,17 @@
 
-#ifndef _IMG_TEST_H_
-#define _IMG_TEST_H_
+#ifndef IMG_TEST_H
+#define IMG_TEST_H
+
+#include "img.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "img.h"
-extern const img_dsc_t img1_rbg565;
-extern const img_dsc_t img2_rbg565;
+extern const img_dsc_t IMG1_RBG565;
+extern const img_dsc_t IMG2_RBG565;
 #ifdef __cplusplus
-} /*extern "C"*/
+}
+/*extern "C"*/
 #endif
 #endif

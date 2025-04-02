@@ -11,20 +11,27 @@
 #include "soc_osal.h"
 #include "app_init.h"
 
+#define I2C_MASTER_ADDR 0x0
+#define I2C_SET_BAUDRATE 100000
+#define I2C_TASK_DURATION_MS 1000
+#define I2C_READ_DELAY_MS 20 /* I2C 读操作后等待时间(ms)*/
+#define I2C_TRANSFER_LEN 1
+#define CHT20_DATE_LEN 6
+#define CHT20_DATA_SCALE 1048576.0f                                                       /* 数据量程 */
+#define HUMIDITY_PERCENTAGE 100.0f                                                        /* 湿度缩放系数 */
+#define CONVERT_HUMIDITY(data) ((float)((data) * HUMIDITY_PERCENTAGE / CHT20_DATA_SCALE)) /* 湿度转换公式 */
+#define TEMP_SCALING_FACTOR 200.0f                                                        /* 温度缩放系数*/
+#define TEMP_OFFSET 50.0f                                                                 /* 温度偏移量*/
+#define CONVERT_TEMPERATURE(data) \
+    ((float)((data) * TEMP_SCALING_FACTOR / CHT20_DATA_SCALE - TEMP_OFFSET)) /* 温度转换公式 [^5] */
 
+#define I2C_TASK_PRIO 24
+#define I2C_TASK_STACK_SIZE 0x1000
 
-#define I2C_MASTER_ADDR                   0x0
-#define I2C_SET_BAUDRATE                  100000
-#define I2C_TASK_DURATION_MS              500
-#define I2C_TRANSFER_LEN                  100
-
-#define I2C_TASK_PRIO                     24
-#define I2C_TASK_STACK_SIZE               0x1000
-
-
-bool Parse_temperature_humidity(uint8_t *data, uint32_t receive_len, float *temperature, float *humidity) {
+bool Parse_temperature_humidity(uint8_t *data, uint32_t receive_len, float *temperature, float *humidity)
+{
     // 检查数据长度是否足够
-    if (receive_len < 6) {
+    if (receive_len < CHT20_DATE_LEN) {
         return false; // 数据长度不足，无法解析
     }
 
@@ -36,14 +43,96 @@ bool Parse_temperature_humidity(uint8_t *data, uint32_t receive_len, float *temp
     // 提取湿度的20个bit
     uint32_t humidity_data = ((uint32_t)data[1] << 12) | ((uint32_t)data[2] << 4) | ((uint32_t)data[3] >> 4);
     // 解析湿度
-    *humidity = (float)(humidity_data*100 / 1048576.0f);
+    *humidity = CONVERT_HUMIDITY(humidity_data);
 
     // 提取温度的20个bit
     uint32_t temperature_data = ((uint32_t)(data[3] & 0x0F) << 16) | ((uint32_t)data[4] << 8) | (uint32_t)data[5];
     // 解析温度
-    *temperature = (float)(temperature_data * 200.0f / 1048576.0f - 50);
+    *temperature = CONVERT_TEMPERATURE(temperature_data);
 
     return true; // 解析成功
+}
+/**
+ * @brief 执行 CH20 传感器测量并读取结果
+ * @param bus_id I2C 总线标识符
+ * @param dev_addr 设备地址
+ * @param data I2C 传输数据结构体指针
+ * @return bool 操作结果 (true: 成功, false: 失败)
+ */
+bool CH20_MeasureAndRead(uint8_t bus_id, uint8_t dev_addr, i2c_data_t *data)
+{
+    // 发送测量指令
+    if (uapi_i2c_master_write(bus_id, dev_addr, data) != ERRCODE_SUCC) {
+        osal_printk("CH20 write command failed\r\n");
+        return false;
+    }
+
+    osal_msleep(I2C_READ_DELAY_MS * 10); // 等待传感器完成测量
+
+    // 读取测量结果
+    if (uapi_i2c_master_read(bus_id, dev_addr, data) != ERRCODE_SUCC) {
+        osal_printk("CH20 read data failed\r\n");
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * @brief 从 CHT20 传感器读取温湿度数据
+ * @param bus_id   I2C 总线号
+ * @param dev_addr 设备地址
+ * @param temp     输出温度值（单位：℃）
+ * @param humidity 输出湿度值（单位：%）
+ * @return bool     true: 成功，false: 失败
+ */
+bool CHT20_Read(uint8_t bus_id, uint8_t dev_addr, float *temp, float *humidity)
+{
+    i2c_data_t data = {0};
+    uint8_t tx_buff_measure[3] = {0xAC, 0x33, 0x00};
+    uint8_t tx_buff_state[1] = {0x71};
+    uint8_t rx_buff[6] = {0};
+
+    data.send_buf = tx_buff_state;
+    data.send_len = I2C_TRANSFER_LEN;
+
+    while (uapi_i2c_master_write(bus_id, dev_addr, &data) != ERRCODE_SUCC) {
+        osal_printk("No CHT20 detected\r\n");
+        osal_msleep(I2C_READ_DELAY_MS * 25);
+        continue; // i2c发送失败
+    }
+
+    osal_msleep(I2C_READ_DELAY_MS);
+    data.receive_buf = rx_buff;
+    data.receive_len = I2C_TRANSFER_LEN * 2;
+
+    // 1. 尝试读取设备状态
+    if (uapi_i2c_master_read(bus_id, dev_addr, &data) != ERRCODE_SUCC) {
+        osal_printk("CHT20 read error\r\n");
+        return false;
+    }
+
+    // 2. 检查设备是否就绪（bit[3:4] = 0x18
+    if ((data.receive_buf[0] & 0x18) != 0x18) {
+        osal_printk("CHT20 not ready: %02X %02X\r\n", data.receive_buf[0], data.receive_buf[1]);
+        data.send_buf = tx_buff_measure;
+        data.send_len = I2C_TRANSFER_LEN * 3;
+        uapi_i2c_master_write(bus_id, dev_addr, &data);
+        return false;
+    }
+
+    // 3. 发送测量指令并读取
+    data.send_buf = tx_buff_measure;
+    data.send_len = I2C_TRANSFER_LEN * 3;
+    data.receive_buf = rx_buff;
+    data.receive_len = I2C_TRANSFER_LEN * 6;
+
+    if (!(CH20_MeasureAndRead(bus_id, dev_addr, &data))) {
+        return false;
+    }
+
+    // 4. 解析温湿度
+    return Parse_temperature_humidity(data.receive_buf, data.receive_len, temp, humidity);
 }
 
 static void app_i2c_init_pin(void)
@@ -56,7 +145,6 @@ static void app_i2c_init_pin(void)
 static void *i2c_cht20_task(const char *arg)
 {
     unused(arg);
-    i2c_data_t data = { 0 };
 
     uint32_t baudrate = I2C_SET_BAUDRATE;
     uint8_t hscode = I2C_MASTER_ADDR;
@@ -68,77 +156,13 @@ static void *i2c_cht20_task(const char *arg)
     app_i2c_init_pin();
     uapi_i2c_master_init(CONFIG_I2C_CHT20_BUS_ID, baudrate, hscode);
 
-    /* I2C data config. */
-    uint8_t tx_buff[I2C_TRANSFER_LEN] = { 0x71,0 };
-    uint8_t rx_buff[I2C_TRANSFER_LEN] = { 0 };
-    data.send_buf = tx_buff;
-    data.send_len = 1;
-    data.receive_buf = rx_buff;
-    data.receive_len = 2;
-
     while (1) {
-        osal_msleep(I2C_TASK_DURATION_MS);
-        if (uapi_i2c_master_write(CONFIG_I2C_CHT20_BUS_ID, dev_addr, &data) == ERRCODE_SUCC) {
-        } 
-        else{
-            osal_printk("No CHT20 detected\r\n");
-            osal_msleep(I2C_TASK_DURATION_MS);
-            continue;                       //i2c发送失败
+        if (CHT20_Read(CONFIG_I2C_CHT20_BUS_ID, dev_addr, &temperature, &humidity)) {
+            osal_printk("Temperature: %d.%02dC,   Humidity: %d.%02d%%\r\n", (int)temperature,
+                        abs((int)(temperature * 100) % 100), (int)humidity, abs((int)(humidity * 100) % 100));
         }
-        osal_msleep(20);   
-        if (uapi_i2c_master_read(CONFIG_I2C_CHT20_BUS_ID, dev_addr, &data) == ERRCODE_SUCC) {
-        }
-        if ((data.receive_buf[0] &0x18) == 0x18)
-        {
-            tx_buff[0] = 0xAC;//发送开始测量指令
-            tx_buff[1] = 0x33;
-            tx_buff[2] = 0x00;
-            data.send_buf = tx_buff;
-            data.send_len = 3;
-            data.receive_buf = rx_buff;
-            data.receive_len = 6;
 
-            if (uapi_i2c_master_write(CONFIG_I2C_CHT20_BUS_ID, dev_addr, &data) == ERRCODE_SUCC) {
-
-            } else {
-                osal_printk("The CHT20 measurement fails to be written\r\n");
-                continue;
-            }
-            osal_msleep(200);                           
-            
-            if (uapi_i2c_master_read(CONFIG_I2C_CHT20_BUS_ID, dev_addr, &data) == ERRCODE_SUCC) {
-                osal_printk("original data is ");
-            for (uint32_t i = 0; i < data.receive_len; i++) {
-                osal_printk("%02X ", data.receive_buf[i]);
-            }
-            osal_printk("\n");
-
-            if(!Parse_temperature_humidity(data.receive_buf, data.receive_len,&temperature,&humidity)){
-                osal_printk("Parsing failure\r\n");
-                continue;    
-            }
-            osal_printk("temperature is %d.%02dC    "
-                        "humidity is %d.%02d%%\n"
-                                                ,(uint32_t)temperature,((uint32_t)(temperature*100))%100
-                                                ,(uint32_t)humidity,((uint32_t)(humidity*100))%100);
-            osal_msleep(1000);
-            }
-        }  
-        else{
-            for (uint32_t i = 0; i < 2; i++) {
-                osal_printk("%02x ", data.receive_buf[i]);
-            }
-            tx_buff[0] = 0xAC;//发送开始测量指令
-            tx_buff[1] = 0x33;
-            tx_buff[2] = 0x00;
-            data.send_buf = tx_buff;
-            data.send_len = 3;
-            data.receive_buf = rx_buff;
-            data.receive_len = 6;
-            uapi_i2c_master_write(CONFIG_I2C_CHT20_BUS_ID, dev_addr, &data);
-            osal_msleep(1000);
-        }  
-
+        osal_msleep(I2C_READ_DELAY_MS * 50);
     }
 
     return NULL;
