@@ -6,6 +6,7 @@ import time
 import stat
 import shutil
 import hashlib
+from typing import List, Dict, Union, Set, Optional
 
 #ws63编译配置
 BUILD_INFO_FILENAME = 'build_config.json'
@@ -25,48 +26,98 @@ ws63_error_h = 'src/include/errcode.h'
 ws63_error_search_string = '#define ERRCODE_SUCC                                        0UL'
 DEFAULT_BUILD_TIMEOUT = 60 * 5
 
-# 获取本次git提交目录名称
-def get_changed_folders_in_vendor():
-    folder_name= ''
-    src_folder_name= ''
-    print(f"start get_changed_folders_in_directory")
-    try:
-        # 执行git命令获取本次提交的变更文件列表,除去根目录src目录，其他目录提交都显示
-        git_command = "git diff --name-only origin/HEAD..HEAD"
-        output = subprocess.check_output(git_command, shell=True, text=True)
-        # 将输出按行分割成文件路径列表
-        changed_files = output.strip().split("\n")
-        # 初始化变量，用于记录是否有改变的文件类型
-        has_c_or_h_files = False
-        # 遍历每个文件路径
-        for file_path in changed_files:
-            if file_path.endswith(".c") or file_path.endswith(".h"):
-                has_c_or_h_files = True
-                break
-        changed_folders = set()
-        for file_path in changed_files:
-            # 提取文件夹名称
-            if '/' in file_path:
-                src_folder_name = file_path.split('/')[0]
-                if '"src' in src_folder_name or 'src' in src_folder_name:
-                    print(f"invalid modify, not allow modify src dir and build script")
-                    sys.exit(0)
-        if has_c_or_h_files:
-            for file_path in changed_files:
-                if file_path.endswith(".c") or file_path.endswith(".h"):
-                    folder_name = file_path.split('/')[1] + '+' + file_path.split('/')[2] + '+' + file_path.split('/')[3]
-                else:
-                    ''
-                if folder_name:
-                        changed_folders.add(folder_name)
-            print(f"[get_changed_folders_in_vendor] changed_folders: {changed_folders}")
-            return changed_folders
-        else:
-            print(f"not need build, only doc or readme been modified")
-            sys.exit(0)
-    except subprocess.CalledProcessError as e:
-        print(f"Error executing Git command: {e}")
+def get_local_branches() -> List[str]:
+    """获取所有本地分支列表"""
+    result = subprocess.run(
+        ["git", "branch", "--format=%(refname:short)"],
+        capture_output=True,
+        text=True
+    )
+    return result.stdout.strip().split("\n") if result.stdout else []
+
+def check_changes_and_get_folders(changed_files: List[str]) -> Optional[Set[str]]:
+    """
+    检查变更文件并返回受影响的文件夹集合
+    返回None表示不需要构建或存在非法修改
+    """
+    # 检查是否有C/H文件修改
+    has_c_or_h_files = any(f.endswith(('.c', '.h')) for f in changed_files)
+    
+    if not has_c_or_h_files:
+        print("Not need build, only non-source files modified")
         return None
+    
+    # 检查是否修改了src目录或构建脚本
+    for file_path in changed_files:
+        if '/' in file_path:
+            src_folder_name = file_path.split('/')[0]
+            if '"src' in src_folder_name or 'src' in src_folder_name:
+                print(f"invalid modify, not allow modify src dir and build script")
+                sys.exit(0)
+            # Check if it's modifying 'build_sample.py' file
+        if 'build_sample.py' in file_path:
+            print(f"invalid modify, not allow modify build_sample.py")
+            sys.exit(0)
+    # 提取三级文件夹结构
+    changed_folders = set()
+    for file_path in changed_files:
+        if file_path.endswith(('.c', '.h')):
+            parts = file_path.split('/')
+            if len(parts) >= 4:  # 确保路径深度足够
+                folder_name = '+'.join(parts[1:4])  # 取第2-4级目录
+                changed_folders.add(folder_name)
+    
+    print(f"[Changed folders]: {changed_folders}")
+    return changed_folders
+
+def compare_with_remote_master() -> Dict[str, Union[List[str], str, Set[str]]]:
+    """
+    比较所有本地分支与远程master分支的差异
+    返回字典格式: {
+        分支名: {
+            'files': 差异文件列表,
+            'folders': 受影响的文件夹集合(仅C/H文件),
+            'error': 错误信息(如果有)
+        }
+    }
+    """
+    local_branches = get_local_branches()
+    remote_master = "origin/master"
+    branch_diff = {}
+    
+    print(f"Comparing {len(local_branches)} local branches with {remote_master}\n")
+    
+    for branch in local_branches:
+        print(f"🔍 Branch [{branch}] vs {remote_master}:")
+        branch_info = {}
+        
+        # 获取差异文件列表
+        diff_result = subprocess.run(
+            ["git", "diff", "--name-only", remote_master, branch],
+            capture_output=True,
+            text=True
+        )
+        
+        if diff_result.returncode != 0:
+            error_msg = f"Error: {diff_result.stderr.strip()}"
+            print(f"{error_msg}")
+            branch_info['error'] = error_msg
+            branch_diff[branch] = branch_info
+            continue
+            
+        changed_files = diff_result.stdout.strip().split("\n") if diff_result.stdout else []
+        branch_info['files'] = changed_files
+        
+        if not changed_files:
+            print("    Identical to remote master")
+        else:
+            print(f"{len(changed_files)} changed files:")
+            for file in changed_files:
+                print(f"- {file}")
+            
+            # 检查变更并获取文件夹信息
+            changed_folders = check_changes_and_get_folders(changed_files)
+    return changed_folders
 
 
 # 获取代码仓所有build_info.json文件内容，并拼接在一起
