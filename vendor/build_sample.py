@@ -435,7 +435,7 @@ def sample_build_prepare(input_list):
 
 def main():
     print(f"start main")
-    check_list = get_changed_folders_in_vendor()
+    check_list = compare_with_remote_master()
     input_list = process_build_info_files()
     sample_name = extract_exact_match(input_list, check_list)
     result_list = sample_meunconfig_modify(sample_name)
