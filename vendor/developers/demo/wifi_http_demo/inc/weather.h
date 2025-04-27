@@ -14,6 +14,14 @@
 #include <stdio.h>
 #include <string.h>
 
+#define CITY_ID_LENGTH 10
+#define TIME_LENGTH 14
+#define HUMIDITY_LENGTH 6
+#define TEMPERATURE_LENGTH 6
+#define WEATHER_LEVEL_LENGTH 9
+#define WIND_SCALE_LENGTH 9
+#define WIND_DIRECTION_LENGTH 9
+
 const char *get_city_name(const char *cityId);
 const char *get_weather_description(const char *numtq);
 const char *get_wind_description(const char *numfl);
