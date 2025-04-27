@@ -1,4 +1,4 @@
-# thread
+# thread/线程
 
 ## 1.1 介绍
 
@@ -104,7 +104,7 @@
 
 - 步骤四：在xxx\src\application\samples\peripheral\Kconfig文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加，可以在最后一行添加）。
 
-  ![image-20240805105229940](../../../../docs/pic/thread/image-20240805105229940.png)
+  ![image-20250311161913270](../../../../docs/pic/thread/image-20250311161913270.png)
 - 步骤五：点击如下图标，选择KConfig，具体选择路径“Application/Enable the Sample of peripheral”，在弹出框中选择“support THREAD Sample”，点击Save，关闭弹窗。
 
   <img src="../../../../docs/pic/beep/image-20240801171406113.png" alt="image-20240801171406113" style="zoom: 50%;" /><img src="../../../../docs/pic/thread/image-20240205105234692-17119401758316.png" alt="image-20240205105234692" style="zoom: 50%;" /><img src="../../../../docs/pic/thread/image-20240229141207010-17134080783333.png" alt="image-20240229141207010" style="zoom: 50%;" />
@@ -116,7 +116,7 @@
   ![image-20240801165456569](../../../../docs/pic/beep/image-20240801165456569.png)
 - 步骤八：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
 
-  ![image-20240801173929658](../../../../docs/pic/beep/image-20240801173929658.png)
+  ![image-20250317173145978](../../../../docs/pic/tools/image-20250317173145978.png)
 - 步骤九：配置完成后，点击工具“程序加载”按钮烧录。
 
   ![image-20240801174117545](../../../../docs/pic/beep/image-20240801174117545.png)

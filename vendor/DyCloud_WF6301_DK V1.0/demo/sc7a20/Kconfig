@@ -1,0 +1,36 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+
+
+config I2C_SC7A20_BUS_ID
+    int
+    prompt "Choose I2C master bus id."
+    depends on SAMPLE_SUPPORT_SC7A20
+    default 1
+
+config I2C_SCL_SC7A20_PIN
+    int
+    prompt "Choose I2C SCL master pin."
+    depends on SAMPLE_SUPPORT_SC7A20
+    default 16
+
+config I2C_SDA_SC7A20_PIN
+    int
+    prompt "Choose I2C SDA master pin."
+    depends on SAMPLE_SUPPORT_SC7A20
+    default 15
+
+config I2C_SC7A20_PIN_MODE
+    int
+    prompt "Choose I2C master pin mode."
+    depends on SAMPLE_SUPPORT_SC7A20
+    default 2
+
+config I2C_SC7A20_SLAVE_ADDR
+    hex
+    prompt "Choose I2C slave addr."
+    depends on SAMPLE_SUPPORT_SC7A20
+    default 0x19
+

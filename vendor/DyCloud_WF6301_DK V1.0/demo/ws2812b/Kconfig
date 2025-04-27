@@ -1,0 +1,28 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+config WS2812B_CHANNEL
+    int
+    prompt "Choose WS2812B Test Channel."
+    depends on SAMPLE_SUPPORT_WS2812B
+    default 3
+
+config WS2812B_GROUP_ID
+    int
+    prompt "Choose WS2812B Test Group ID."
+    depends on SAMPLE_SUPPORT_WS2812B && PWM_USING_V151
+    default 0
+
+config WS2812B_PIN
+    int
+    prompt "Choose WS2812B pin."
+    depends on SAMPLE_SUPPORT_WS2812B
+    default 3
+
+config WS2812B_PIN_MODE
+    int
+    prompt "Choose WS2812B pin mode."
+    default 1
+    depends on SAMPLE_SUPPORT_WS2812B
+

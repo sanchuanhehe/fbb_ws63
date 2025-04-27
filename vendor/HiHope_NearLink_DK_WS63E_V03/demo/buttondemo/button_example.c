@@ -22,7 +22,8 @@
 #include "app_init.h"
 
 #define BSP_LED 7      // RED
-#define BUTTON_GPIO 12 // 按键
+#define BUTTON_GPIO 14 // 按键
+#define GREEN_LED 11      // GREEN
 #define BUTTON_TASK_STACK_SIZE 0x1000
 #define BUTTON_TASK_PRIO 17
 
@@ -42,6 +43,9 @@ static void *button_task(const char *arg)
     uapi_pin_set_mode(BSP_LED, HAL_PIO_FUNC_GPIO);
     uapi_gpio_set_dir(BSP_LED, GPIO_DIRECTION_OUTPUT);
     uapi_gpio_set_val(BSP_LED, GPIO_LEVEL_LOW);
+    uapi_pin_set_mode(GREEN_LED, HAL_PIO_FUNC_GPIO);
+    uapi_gpio_set_dir(GREEN_LED, GPIO_DIRECTION_OUTPUT);
+    uapi_gpio_set_val(GREEN_LED, GPIO_LEVEL_LOW);
     uapi_pin_set_mode(BUTTON_GPIO, HAL_PIO_FUNC_GPIO);
     gpio_select_core(BUTTON_GPIO, CORES_APPS_CORE);
     uapi_gpio_set_dir(BUTTON_GPIO, GPIO_DIRECTION_INPUT);
@@ -67,7 +71,7 @@ static void button_entry(void)
     // 创建任务调度
     osal_kthread_lock();
     // 创建任务1
-    taskid = osal_kthread_create((osal_kthread_handler)button_task, NULL, "led_task", BUTTON_TASK_STACK_SIZE);
+    taskid = osal_kthread_create((osal_kthread_handler)button_task, NULL, "button_task", BUTTON_TASK_STACK_SIZE);
     ret = osal_kthread_set_priority(taskid, BUTTON_TASK_PRIO);
     if (ret != OSAL_SUCCESS) {
         printf("create task1 failed .\n");

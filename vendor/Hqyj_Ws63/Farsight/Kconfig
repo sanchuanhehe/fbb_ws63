@@ -1,0 +1,200 @@
+config SAMPLE_SUPPORT_KERNEL_01_TASK
+    bool
+    prompt "Support KERNEL_01_TASK Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support KERNEL_01_TASK Sample.
+
+config SAMPLE_SUPPORT_KERNEL_02_TIMER
+    bool
+    prompt "Support KERNEL_02_TIMER Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support KERNEL_02_TIMER Sample.
+
+config SAMPLE_SUPPORT_KERNEL_03_EVENT
+    bool
+    prompt "Support KERNEL_03_EVENT Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support KERNEL_03_EVENT Sample.
+
+config SAMPLE_SUPPORT_KERNEL_04_MUTEX
+    bool
+    prompt "Support KERNEL_04_MUTEX Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support KERNEL_04_MUTEX Sample.
+
+config SAMPLE_SUPPORT_KERNEL_05_MUTEX_SEMAPHORE
+    bool
+    prompt "Support KERNEL_05_MUTEX_SEMAPHORE Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support KERNEL_05_MUTEX_SEMAPHORE Sample.
+
+config SAMPLE_SUPPORT_KERNEL_06_SYNC_SEMAPHORE
+    bool
+    prompt "Support KERNEL_06_SYNC_SEMAPHORE Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support KERNEL_06_SYNC_SEMAPHORE Sample.
+
+config SAMPLE_SUPPORT_KERNEL_07_COUNT_SEMAPHORE
+    bool
+    prompt "Support KERNEL_07_COUNT_SEMAPHORE Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support KERNEL_07_COUNT_SEMAPHORE Sample.
+
+config SAMPLE_SUPPORT_KERNEL_08_MESSGE_QUEQUE
+    bool
+    prompt "Support KERNEL_08_MESSGE_QUEQUE Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support KERNEL_08_MESSGE_QUEQUE Sample.
+
+config SAMPLE_SUPPORT_LEDBLINK
+    bool
+    prompt "Support LEDBLINK Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support LEDBLINK Sample.
+
+config SAMPLE_SUPPORT_UART
+    bool
+    prompt "Support UART Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support UART Sample.
+        
+config SAMPLE_SUPPORT_OLED_SSD1306
+    bool
+    prompt "Support OLED_SSD1306 Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support OLED_SSD1306 Sample.
+
+config SAMPLE_SUPPORT_RGB
+    bool
+    prompt "Support RGB Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support RGB Sample.
+
+config SAMPLE_SUPPORT_SHT20
+    bool
+    prompt "Support SHT20 Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support SHT20 Sample.
+
+config SAMPLE_SUPPORT_AP3216
+    bool
+    prompt "Support AP3216 Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support AP3216 Sample.
+
+config SAMPLE_SUPPORT_LCD
+    bool
+    prompt "Support LCD Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support LCD Sample.
+
+config SAMPLE_SUPPORT_WIFI_01_STA
+    bool
+    prompt "Support WIFI_01_STA Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support WIFI_01_STA Sample.
+
+config SAMPLE_SUPPORT_WIFI_02_AP
+    bool
+    prompt "Support WIFI_02_AP Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support WIFI_02_AP Sample.
+
+config SAMPLE_SUPPORT_WIFI_03_UDP
+    bool
+    prompt "Support WIFI_03_UDP Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support WIFI_03_UDP Sample.
+
+config SAMPLE_SUPPORT_WIFI_04_TCP
+    bool
+    prompt "Support WIFI_04_TCP Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support WIFI_04_TCP Sample.
+
+config SAMPLE_SUPPORT_WIFI_05_MQTT
+    bool
+    prompt "Support WIFI_05_MQTT Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support WIFI_05_MQTT Sample.
+
+config SAMPLE_SUPPORT_WIFI_06_HUAWEI_IOT
+    bool
+    prompt "Support WIFI_06_HUAWEI_IOT Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support WIFI_06_HUAWEI_IOT Sample.
+
+config SAMPLE_SUPPORT_BLE_TRANS_CLIENT
+    bool
+    prompt "Support BLE_TRANS_CLIENT Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support BLE_TRANS_CLIENT Sample.
+
+config SAMPLE_SUPPORT_BLE_TRANS_SERVER
+    bool
+    prompt "Support BLE_TRANS_SERVER Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support BLE_TRANS_SERVER Sample.
+
+config SAMPLE_SUPPORT_SLE_TRANS_SERVER
+    bool
+    prompt "Support SLE_TRANS_SERVER Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support SLE_TRANS_SERVER Sample.
+
+config SAMPLE_SUPPORT_SLE_TRANS_CLIENT
+    bool
+    prompt "Support SLE_TRANS_CLIENT Sample."
+    default n
+    depends on ENABLE_FARSIGHT_SAMPLE
+    help
+        This option means support SLE_TRANS_CLIENT Sample.
+

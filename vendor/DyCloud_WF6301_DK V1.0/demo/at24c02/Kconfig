@@ -1,0 +1,35 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+
+config I2C_AT24C02_BUS_ID
+    int
+    prompt "Choose I2C AT24C64 bus id."
+    depends on SAMPLE_SUPPORT_AT24C02
+    default 1
+
+config I2C_SCL_AT24C02_PIN
+    int
+    prompt "Choose I2C SCL AT24C64 pin."
+    depends on SAMPLE_SUPPORT_AT24C02
+    default 16
+
+config I2C_SDA_AT24C02_PIN
+    int
+    prompt "Choose I2C SDA AT24C64 pin."
+    depends on SAMPLE_SUPPORT_AT24C02
+    default 15
+
+config I2C_AT24C02_PIN_MODE
+    int
+    prompt "Choose I2C AT24C64 pin mode."
+    depends on SAMPLE_SUPPORT_AT24C02
+    default 2
+
+config I2C_AT24C02_ADDR
+    hex
+    prompt "Choose I2C AT24C64 slave addr."
+    depends on SAMPLE_SUPPORT_AT24C02
+    default 0x50
+

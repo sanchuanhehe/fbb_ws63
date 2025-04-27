@@ -1,0 +1,38 @@
+
+config LCD_DATA
+    int
+    prompt "Choose LCD DEVICE SPI DATA pin."
+    depends on SAMPLE_SUPPORT_LCD
+    default 9
+
+config LCD_CLK
+    int
+    prompt "Choose LCD DEVICE SPI CLK pin."
+    depends on SAMPLE_SUPPORT_LCD
+    default 7
+
+config LCD_CS
+    int
+    prompt "Choose LCD DEVICE CS pin."
+    depends on SAMPLE_SUPPORT_LCD
+    default 10
+
+config LCD_RST
+    int
+    prompt "Choose LCD DEVICE RST pin."
+    depends on SAMPLE_SUPPORT_LCD
+    default 8
+
+config LCD_RS
+    int
+    prompt "Choose LCD DEVICE RS pin."
+    depends on SAMPLE_SUPPORT_LCD
+    default 11
+
+config SPI_MASTER_BUS_ID
+    int
+    prompt "Choose SPI_MASTER_BUS_ID."
+    depends on SAMPLE_SUPPORT_LCD
+    default 0
+
+

@@ -10,13 +10,18 @@
 | :------------: | ------------------------------------------------------------ | ------------- |
 | 1  | [购买链接](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html) | ws63解决方案  |
 | 2 | [购买链接](https://www.ickey.cn/detail/1003001013187551/Q353333N1100E.html) | ws63E解决方案 |
+| 3 | [模组购买链接](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D821194904380) | 星闪WiFi6模组，邮票孔，无天线 |
+| 4 | [模组购买链接](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D823544936579) | 星闪WiFi6模组，12：板载天线，12E：外置天线 |
+| 5 | [模组购买链接](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D820900594332) | 星闪WiFi6模组，20：板载天线，20E：外置天线 |
+| 6 | [烧录器购买链接](https://holdiot001.feishu.cn/docx/L60wdrG7Fo314pxYyrbczZqVnSb) | 烧录器：可烧录开发板、模组等 |
 
 ## 支持的开发板
 
 |                          开发板名称                          | 硬件资料                                                     | 软件资料         | 购买链接                                                     | 开发板介绍                                                   |
 | :----------------------------------------------------------: | ------------------------------------------------------------ | :--------------- | :----------------------------------------------------------- | :----------------------------------------------------------- |
-| HiHope_NearLink_DK3863E_V03<img src="docs/pic/tools/image-20240809164437807.png" alt="image-20240809164437807" style="zoom: 50%;" /> | [扩展板硬件资料](https://gitee.com/HiSpark/fbb_ws63/tree/master/docs/hardware/HiHope_NearLink_DK_WS63E_V03) | 参考示例教程章节 | [开发板购买链接](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) | 是一款高度集成的2.4GHz Wi-Fi 6 星闪多模开发板，支持Liteos、OpenHarmony轻量系统 |
+| HiHope_NearLink_DK3863E_V03<img src="docs/pic/readme/image-20240809164437807.png" alt="image-20240809164437807" style="zoom: 50%;" /> | [扩展板硬件资料](https://gitee.com/HiSpark/fbb_ws63/tree/master/docs/hardware/HiHope_NearLink_DK_WS63E_V03) | 参考示例教程章节 | [开发板购买链接](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) | 是一款高度集成的2.4GHz Wi-Fi 6 星闪多模开发板，支持Liteos、OpenHarmony轻量系统 |
 | BearPi-Pico_H3863<img src="docs/pic/BearPi-Pico_H3863/bearpi_pico_h3863.png" alt="image-20240809164437807" style="zoom: 50%;" /> | [扩展板硬件资料](https://gitee.com/HiSpark/fbb_ws63/tree/master/docs/hardware/BearPi-Pico_H3863) | 参考示例教程章节 | [开发板购买链接](https://item.taobao.com/item.htm?id=821386760379) | 是一款高度集成的2.4GHz Wi-Fi 6 星闪多模开发板，具有灵活的数字接口，集成高性能 32bit 微处理器（MCU），硬件安全引擎以及丰富的外设接口，外设接口包括 SPI、UART、I2C、PWM、GPIO，支持 6 路 13bit 分辨率 ADC，内置 SRAM 和合封 Flash，并支持在 Flash 上运行程序支持Liteos、OpenHarmony轻量系统 |
+| <img src="vendor/Hqyj_Ws63/doc/HQYJ_WS63.png" alt="HQYJ_WS63" style="zoom:80%;" /> | [扩展板硬件资料](https://gitee.com/HiSpark/fbb_ws63/blob/master/vendor/Hqyj_Ws63/doc/FS-WS63-%E5%8E%9F%E7%90%86%E5%9B%BEV2.pdf) | 参考示例教程章节 | [开发板购买链接](https://item.taobao.com/item.htm?id=892481769813) | 专为学习者设计的WS63鸿蒙星闪开发板，支持OpenHarmony，Liteos，多模通信（WiFi/星闪/蓝牙），丰富的板载资源、项目拓展模块与学习资料，可广泛应用于个人学习、高校教学、学生毕设、创新竞赛等 |
 
 ## 目录介绍
 
@@ -259,8 +264,6 @@ HiHope_NearLink_DK3863E_V03提供了以下Demo供开发参考：
    </tr>
   <![endif]>
 </table>
-
-
 BearPi-Pico H3863提供了以下Demo供开发参考：
 
 <table  width="990" border="0" cellpadding="0" cellspacing="0" style='border-collapse:collapse;table-layout:fixed;'>
@@ -352,81 +355,27 @@ BearPi-Pico H3863提供了以下Demo供开发参考：
    </tr>
   <![endif]>
 </table>
+华清远见WS63鸿蒙星闪开发板提供了以下Demo供开发参考：
+
+| 一级分类     | 子分类             | 应用示例                                                     |                                                              |                                                              |                                                              |
+| :----------- | ------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **基础驱动** | **GPIO**           | [点亮LED灯案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/base_01_ledblink) |                                                              |                                                              |                                                              |
+|              | **UART**           | [串口轮询、中断收发案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/base_02_uart) |                                                              |                                                              |                                                              |
+|              | **I2C**            | [0.96寸OLED屏幕驱动案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/base_03_ssd1306) | [RGB灯珠驱动案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/base_04_rgb) | [SHT20传感器温湿度读取](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/base_05_sht20) | [AP3216读取光照、红外、人体接近数据](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/base_06_ap3216) |
+|              | **SPI**            | [2.8寸LCD屏驱动案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/base_07_spi_lcd) |                                                              |                                                              |                                                              |
+| **操作系统** | **Thread**         | [任务调度使用案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/kernel_01_task) |                                                              |                                                              |                                                              |
+|              | **Timer**          | [软件定时器使用案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/kernel_02_timer) |                                                              |                                                              |                                                              |
+|              | **Event**          | [事件使用案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/kernel_03_event) |                                                              |                                                              |                                                              |
+|              | **Mutex**          | [互斥锁使用案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/kernel_04_mutex) |                                                              |                                                              |                                                              |
+|              | **MutexSemaphore** | [互斥信号量使用案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/kernel_05_mutex_Semaphore) |                                                              |                                                              |                                                              |
+|              | **SyncSemaphore**  | [同步信号量使用案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/kernel_06_sync_Semaphore) |                                                              |                                                              |                                                              |
+|              | **CountSemaphore** | [计数型信号量使用案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/kernel_07_count_Semaphore) |                                                              |                                                              |                                                              |
+|              | **MessgeQueue**    | [消息队列使用案例](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/kernel_08_message_queque) |                                                              |                                                              |                                                              |
+| **WI-FI**    | **WI-FI**          | [WI-FI STA](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/wifi_01_sta) | [WI-FI AP](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/wifi_02_ap) | [WI-FI UDP通信](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/wifi_03_udp) | [Wi-Fi TCP通信](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/wifi_04_tcp) |
+| **端云协同** | **MQTT**           | [MQTT本地回环测试](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/wifi_05_mqtt) | [连接华为云实现控制板载资源](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/wifi_06_huawei_iot) |                                                              |                                                              |
+| **星闪**     | **SLE**            | [SLE串口透传](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/sle_01_trans_server) |                                                              |                                                              |                                                              |
+| **BLE**      | **BLE**            | [BLE串口透传](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/ble_02_trans_server) |                                                              |                                                              |                                                              |
 
 ## 参与贡献
 
-- 在windows/linux下安装git，并配置git账号、密码、邮箱等
-
-  git config --global user.name "Your Name" // 配置用户名
-
-  git config --global user.email "your.email@example.com" // 配置邮箱
-
-  git config –local user.password “xxxxx密码”  // 配置密码
-
-  git config –list    // 查看配置信息
-
-- fork仓库，就是把官方仓库当前时间点内容搬迁到自己账号下面，直接在网页上操作即可完成。如我们活动仓库Fork到自己账号下面。
-
-  ![image-20240807142640775](docs/pic/tools/image-20240807142640775.png)
-
-- fork之后，在我们的gitee账号就可以看到这个仓库啦。
-
-  ![image-20240805192103122](docs/pic/tools/image-20240805192103122.png)
-
-- 克隆到本地仓库，在windows/linux下打开git，点击网页上的“克隆/下载”，在本地文件夹中鼠标“右键”，选择"Open Git Bash here"，在打开的bash窗口，执行如下指令
-  
-  ```
-   git clone https://gitee.com/xxxx/fbb_ws63.git   // xxx代表gitee账号
-  ```
-  
-  ![image-20240807142514165](docs/pic/tools/image-20240807142514165.png)
-  
-  ![image-20240807142556168](docs/pic/tools/image-20240807142556168.png)
-  
-  ![image-20240807142741095](docs/pic/tools/image-20240807142741095.png)
-  
-  ![image-20240807142947621](docs/pic/tools/image-20240807142947621.png)
-  
-- 本地案例提交时，如果是厂家，则需要在vendor目录下创建自家开发板目录，目录命名规则：vendor/开发板名称/demo(存放对应开发板案例)、vendor/开发板名称/doc（存放开发板说明文档及原理图）、vendor/开发板名称/build_config.json；如果是个人开发者，则需要在vendor目录下创建others目录，目录命名规则：vendor/others/demo(存放对应开发板案例)、vendor/others/build_config.json，将案例指导文档存放在自己提交案例目录里
-
-- 案例提交后，需要在build_config.json文件中添加对应的字段，字段描述及举例如下
-
-  ```
-   {
-      "buildTarget": "ws63-liteos-app",  // 编译使用的target
-      "relativePath": "demo/sle_throughput", // 编译案例路径
-      "chip": "WS63",                         // 使用的芯片
-      "buildDef": "CONFIG_SAMPLE_SUPPORT_SLE_SERVER_SPEED = y,SLE_SERVER_LED = 1",  // 如果是cmakelist中使用的宏，则写成xxx=y,当一个cmakelsit文件控制多个案例编译时，需要单独在build_condig.json文件中添加，如果是代码中使用的宏，则写成zzz=1，camkelist文件中与代码中都用到宏控制，则中间用‘,’号隔开
-      "needSmoke": "false" // 是否冒烟
-    },
-    {
-      "buildTarget": "ws63-liteos-app",
-      "relativePath": "demo/sle_throughput",
-      "chip": "WS63",
-      "buildDef": "CONFIG_SAMPLE_SUPPORT_SLE_CLIENT_SPEED = y",
-      "needSmoke": "false"
-    }
-  ```
-
-- 修改完成后，在本地仓库修改要上传的内容，并通过git指令进行提交、推送。
-
-  ```
-  git status  // 查看修改变更后的文件
-  git add *   // 将变更文件加入到暂存区
-  git commit -s -m  "xxxxx" //将暂存区内容签名并提交到本地
-  git push origin master // 推送本地修改到账号仓库
-  ```
-
-- [创建ISSUE](https://gitee.com/HiSpark/fbb_ws63/issues)，根据提示填写对应信息。
-
-  ![image-20240805192829279](docs/pic/tools/image-20240805192829279.png)
-
-- 开始提交PR到官方仓库，在“Pull Requests”页面，点击“新建 Pull Request”，根据末班补充相关内容，点击“创建 Pull ”，在新弹出来界面评论区输入“start build”指令执行CI扫描，（Issuno为上步骤创建的issuno）
-
-  ![image-20240411201459239](docs/pic/sle_throughput/image-20240411201459239.png)
-
-  ![image-20240807143602924](docs/pic/tools/image-20240807143602924.png)
-
-  ![image-20240807144223284](docs/pic/tools/image-20240807144223284.png)
-
-- 等待扫描，根据扫描结果解决所有问题后，联系管理员合入官方仓库。
+- 参考[社区参与贡献指南](https://gitee.com/HiSpark/docs/blob/master/contribute/%E7%A4%BE%E5%8C%BA%E5%8F%82%E4%B8%8E%E8%B4%A1%E7%8C%AE%E6%8C%87%E5%8D%97.md)
