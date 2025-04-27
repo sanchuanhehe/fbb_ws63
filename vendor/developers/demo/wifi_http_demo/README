@@ -1,281 +1,31 @@
-# 前言
+一、本期案例：
+基于WiFi STA模式连接2.4GHz网络，完成HTTP Get请求天气预报，进行json格式解析。
 
-本系列旨在从嵌入式新手小白的视角，使用星闪WS63为主控作为入门开发板，提升大家的嵌入式开发水平。如果在学习过程中遇到问题，欢迎通过以下方式交流：
-- 文章留言区提问
-- 私信作者
-- 海思社区发帖讨论
 
-> **本期案例**
-> - 基于WiFi STA模式连接2.4GHz网络，完成HTTP Get请求天气预报，并进行json格式解析。
-> 
-> **系列预告**：
-> - WS63 WiFi AP案例教学
-> - WS63外设教学
-> - 星闪协议栈深度解析
+二、核心代码部分：
+1）WiFi STA案例修改建议：
+    将WiFi连接改为外部传参调用，而不是在函数内部修改变量参数调用，这样子可以更加灵活地使用WiFi连接功能，同时代码规范性更强。
+    WS63只支持连接2.4GHz频段的WiFi，不可以连接5G频段的WiFi。
+具体步骤：
+    将WiFi STA案例代码中的td_s32 example_get_match_network(wifi_sta_config_stru *expected_bss)函数中的WiFi SSID和Key改为传参调用，即添加两个参数，注释掉原先函数内部的ssid和key变量，修改后函数如下：
+td_s32 example_get_match_network(wifi_sta_config_stru *expected_bss, const char *ssid, const char *psk)。
+    在用于WiFi连接的example_sta_function函数中添加SSID和Key参数，将这两个参数传入example_get_match_network函数中。
 
----
 
-# 核心代码解析
-
-**此处仅含关键代码的解析部分，完整代码请在 gitee 上搜索 Adragon/fbb_ws63，案例代码存放在[vendor/developers/demo/wifi_http_demo](https://gitee.com/AdragonGit/fbb_ws63/tree/master/vendor/developers/demo/wifi_http_demo)。**
-
-## WiFi STA 连接模块：
-
-此部分讲解如何将[WS63的WiFi STA Sample源码](https://gitee.com/HiSpark/fbb_ws63/blob/master/src/application/samples/wifi/sta_sample/sta_sample.c)修改成一份 API 接口。
-
-### 1.API接口设计
-
-在 example_get_match_network 函数中添加 ssid 和 psk 两个参数，注释掉函数原有的 td_char ssid 和 td_char key 两个参数，并将调用到的原参数修改成函数声明中添加的 ssid 和 psk 参数。
-
-```
-/*****************************************************************************
-  STA 匹配目标 AP（参数化改造）
-*****************************************************************************/
-td_s32 example_get_match_network(wifi_sta_config_stru *expected_bss, const char *ssid, const char *psk)
-{
-    td_s32 ret;
-    td_u32 num = 64; /* 64:扫描到的Wi-Fi网络数量 */
-    // td_char ssid[] = "test";
-    // td_char key[] = "123456789"; /* 待连接的网络接入密码 */
-    td_bool find_ap = TD_FALSE;
-    td_u8 bss_index;
-    /* 获取扫描结果 */
-    td_u32 scan_len = sizeof(wifi_scan_info_stru) * WIFI_SCAN_AP_LIMIT;
-    wifi_scan_info_stru *result = osal_kmalloc(scan_len, OSAL_GFP_ATOMIC);
-    if (result == TD_NULL) {
-        return -1;
-    }
-    memset_s(result, scan_len, 0, scan_len);
-    ret = wifi_sta_get_scan_info(result, &num);
-    if (ret != 0) {
-        osal_kfree(result);
-        return -1;
-    }
-    /* 筛选扫描到的Wi-Fi网络，选择待连接的网络 */
-    for (bss_index = 0; bss_index < num; bss_index++) {
-        if (strlen(ssid) == strlen(result[bss_index].ssid)) {
-            if (memcmp(ssid, result[bss_index].ssid, strlen(ssid)) == 0) {
-                find_ap = TD_TRUE;
-                break;
-            }
-        }
-    }
-    /* 未找到待连接AP,可以继续尝试扫描或者退出 */
-    if (find_ap == TD_FALSE) {
-        osal_kfree(result);
-        return -1;
-    }
-    /* 找到网络后复制网络信息和接入密码 */
-    if (memcpy_s(expected_bss->ssid, WIFI_MAX_SSID_LEN, ssid, strlen(ssid)) != 0) {
-        osal_kfree(result);
-        return -1;
-    }
-    if (memcpy_s(expected_bss->bssid, WIFI_MAC_LEN, result[bss_index].bssid, WIFI_MAC_LEN) != 0) {
-        osal_kfree(result);
-        return -1;
-    }
-    expected_bss->security_type = result[bss_index].security_type;
-    if (memcpy_s(expected_bss->pre_shared_key, WIFI_MAX_SSID_LEN, psk, strlen(psk)) != 0) {
-        osal_kfree(result);
-        return -1;
-    }
-    expected_bss->ip_type = 1; /* 1：IP类型为动态DHCP获取 */
-    osal_kfree(result);
-    return 0;
-}
-```
-
-### 2.连接调用实例：
-
-创建 wifi_connect(const char *ssid, const char *psk)API 接口，只需要调用该函数便可以连接WiFi。
-
-```C
-/*****************************************************************************
-  连接 WiFi 的 API 函数
-*****************************************************************************/
-void wifi_connect(const char *ssid, const char *psk)
-{
-    /* 注册事件回调 */
-    if (wifi_register_event_cb(&wifi_event_cb) != 0) {
-        osal_printk("%s::wifi_event_cb register fail.\r\n", WIFI_STA_SAMPLE_LOG);
-        return -1;
-    }
-    osal_printk("%s::wifi_event_cb register succ.\r\n", WIFI_STA_SAMPLE_LOG);
-
-    /* 等待wifi初始化完成 */
-    while (wifi_is_wifi_inited() == 0) {
-        (void)osDelay(10); /* 1: 等待100ms后判断状态 */
-    }
-    osal_printk("%s::wifi init succ.\r\n", WIFI_STA_SAMPLE_LOG);
-
-    if (example_sta_function(ssid, psk) != 0) {
-        osal_printk("%s::example_sta_function fail.\r\n", WIFI_STA_SAMPLE_LOG);
-        return -1;
-    }
-    return 0;
-}
-
-#连接WiFi调用实例
-#define CONFIG_WIFI_SSID "Your_SSID"        // 要连接的WiFi 热点账号
-#define CONFIG_WIFI_PWD "Your_PWD"          // 要连接的WiFi 热点密码
-void main() {
-    wifi_connect(CONFIG_WIFI_SSID, CONFIG_WIFI_PWD);
-}
-```
-
-## HTTP 通信模块：
-此部分讲解如何解析HTTP Get请求的URL、服务器IP与端口。
-
-### 关键参数获取指南：
-1. **获取URL连接**：
-
-- 网站的API接口文档：本次请求的[天气预报网站——丫丫天气](http://www.yytianqi.com/api.html)中，便提供了API通用格式，也就是URL链接。
-  
-![丫丫天气API介绍图](https://i-blog.csdnimg.cn/img_convert/8827e5889bb2ab12bb251811ed22a7eb.png)
-- 开发者工具："Ctrl+Shift+I"或者"鼠标右键+检查"，切换到"网络"或者"元素"中，刷新页面并查看加载的资源，其中包含请求Url。
-  
-![开发者工具查找URL示意图](https://i-blog.csdnimg.cn/img_convert/69ea94ef7520bb5d7211da321430c2ec.png)
-- 获取到URL后，可以先使用Postman等工具进行测试，或者直接搜索URL进行测试，随后再写入代码中。
-
-![直接搜索URL示意图](https://i-blog.csdnimg.cn/img_convert/4752bccb7e717f885f12f4de11ed243a.png)
-
-2.**获取服务器IP**
-  - 命令行查询IP：
-  ```powershell
-   ping <服务器域名>       #持续请求服务器
-   ping -n 4 <服务器域名>  #Windows系统请求4次服务器
-   ping -c 1 <服务器域名>  #Linux/macOS系统请求1次服务器
-   如：ping api.yytianqi.com
-  ```
-  
-![](https://i-blog.csdnimg.cn/img_convert/bbf16b09b853613536cf1510d6bb75b7.png)
-
- 3.**常用端口**：
- 
- HTTP协议默认端口为80，HTTPS协议默认端口为443。
-
-### 案例代码
-```C
-#include "http.h"
-#include "weather.h"
-
-#define CONFIG_SERVER_PORT 80            // 要连接的服务器端口
-#define CONFIG_SERVER_IP "123.57.54.168" // 要连接的服务器IP
-
+2）HTTP案例使用教程：
+1.获取Url链接，并按照格式进行参数解析，如：
 //URL链接：http://api.yytianqi.com/observe?city=CH280601&key=62w9bk1okpme4k59
-static const char *g_request = "GET /observe?city=CH280601&key=62w9bk1okpme4k59 HTTP/1.1\r\n"
-                               "Host: api.yytianqi.com\r\n"
-                               "Connection: close\r\n"
-                               "\r\n";
+static const char *g_request = "GET /observe?city=CH280601&key=62w9bk1okpme4k59 HTTP/1.1\r\n"
+                               "Host: api.yytianqi.com\r\n"
+                               "Connection: close\r\n"
+                               "\r\n";
+2.获取服务器IP，可以使用Linux的命令行查询域名对应的IP，如：
+ping <服务器域名>        #持续请求服务器 
+ping -n 4 <服务器域名>    #Windows系统请求4次服务器 
+ping -c 1 <服务器域名>    #Linux/macOS系统请求1次服务器
+3.获取端口，常见协议端口如下：
+HTTP协议默认端口为80，HTTPS协议默认端口为443。
 
-/* HTTP Get请求 */
-void http_client_get(void *param) {
-    param = param; 
-    struct sockaddr_in addr = {0};
-    int s, r;
-    char recv_buf[HTTPC_DEMO_RECV_BUFSIZE];
-
-    /* wifi_connect */
-    osal_printk("*****Connect to WiFi: ");
-    osal_printk(CONFIG_WIFI_SSID);
-    osal_printk("*****\r\n");
-    wifi_connect(CONFIG_WIFI_SSID, CONFIG_WIFI_PWD);
-
-    addr.sin_family = AF_INET;
-    addr.sin_port = PP_HTONS(CONFIG_SERVER_PORT);
-    addr.sin_addr.s_addr = inet_addr(CONFIG_SERVER_IP);
-    s = socket(AF_INET, SOCK_STREAM, 0);
-    osal_printk("s = %d\r\n", s);
-    if (s < 0) {
-        return 1;
-    }
-
-    /* socket连接服务器 */ 
-    osal_printk("NO1:... allocated socket\r\n");
-    if (connect(s, (struct sockaddr *)&addr, sizeof(addr)) != 0) {
-        osal_printk("... socket connect failed errno=%d", errno);
-        lwip_close(s);
-        return 1;
-    }
-    osal_printk("NO2:... connected\r\n");
-    
-    /* 发送HTTP GET请求 */
-    if (lwip_write(s, g_request, strlen(g_request)) < 0) {
-        lwip_close(s);
-        return 1;
-    }
-    osal_printk("NO3:... socket send success\r\n");
-
-     /* 5S Timeout */
-    struct timeval receiving_timeout;
-    receiving_timeout.tv_sec = 5;
-    receiving_timeout.tv_usec = 0;
-    if (setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, &receiving_timeout, sizeof(receiving_timeout)) < 0) {
-        osal_printk("... failed to set socket receiving timeout\r\n");
-        lwip_close(s);
-        return 1;
-    }
-    osal_printk("NO4:... set socket receiving timeout success\r\n");
-
-     /* 读取 HTTP Response 内容 */
-    do {
-        (void)uapi_watchdog_kick();
-        (void)memset_s(recv_buf, sizeof(recv_buf), 0, sizeof(recv_buf));
-        r = lwip_read(s, recv_buf, sizeof(recv_buf) - 1);
-        osal_printk("r = %d\r\n", r);
-        if (r <= 0) {
-            osal_printk("lwip_read Done!\r\n");
-            break;
-        }
-
-        /* 输出 HTTP Response 内容 */
-        for (int i = 0; i < r; i++) {
-            osal_printk("%c", recv_buf[i]);
-        }
-
-        /* 解析并输出天气、风力、风向、城市名称、时间和相对湿度 */ 
-        parse_weather_data(recv_buf);
-    } while (r > 0);
-
-    osal_printk("...done reading from socket. Last read return=%d, errno=%d\r\n", r, errno);
-    lwip_close(s);
-
-    return 0;
-}
-```
-
-## Weather Json 解析
-此部分主要为解析天气预报返回的json格式数据，详情请查看[代码仓内容](https://gitee.com/AdragonGit/fbb_ws63/tree/master/vendor/developers/demo/wifi_http_demo)。
-
-## 常见问题排查
-| 现象 | 解决方案 |
-|------|----------|
-| WiFi连接超时 | 1. 确认2.4GHz网络<br>2. 检查密码长度 |
-| HTTP 404错误 | 1. 验证API拼接格式<br>2. 检查g_request参数解析格式 |
-| JSON解析失败 | 1. 打印原始数据<br>2. 使用在线JSON验证工具 |
-
----
-
-# 功能拓展
-
-本文使用了WiFi STA模式和HTTP Get请求获取天气预报，大家可以根据自己的需求利用这两个模块开发其他的功能，比如用HTTP Get请求获取其他服务器信息、数据流。
-
-# 总结
-
-通过本教程，您已完成：
-- WiFi STA 连接 ✔️
-- HTTP Get 请求 ✔️
-- Json格式数据解析 ✔️
-
-**下期聚焦**：  
-🔥 星闪WS63 WiFi AP案例教学实战  
-🔥 星闪WS63外设教学  
-🔥 星闪协议栈深度解析  
-
-> **开发箴言**：  
-> 当遇到HTTP通信问题时，牢记三个检查点：  
-> 1. 网络连接状态  
-> 2. 请求头完整性，是否需要过滤请求头  
-> 3. 服务器响应码，根据响应码进行调试 
-
-欢迎在评论区分享你的天气站创意，完整代码获取：[Gitee代码仓](https://gitee.com/AdragonGit/fbb_ws63/tree/master/vendor/developers/demo/wifi_http_demo)
+HTTP案例使用建议：
+1）HTTP Get请求返回的内容包括响应头、响应体等内容，注意跳过响应头提取响应数据；
+2）可以使用Postman等工具辅助测试HTTP Get的Url链接的可靠性，在Postman请求Url成功后再开始写代码，避免多因素影响代码成功运行。
