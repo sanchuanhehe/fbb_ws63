@@ -175,7 +175,7 @@ void parse_weather_data(const char *json_data)
     
     if (city_id)
     {
-        city_id += CITY_ID_LENGTH;              // 跳过 "city_id":""
+        city_id += CITY_ID_LENGTH;              // 跳过 "cityId":""
         const char *end = strchr(city_id, '"'); // 找到结束引号
         if (end)
         {
@@ -206,7 +206,7 @@ void parse_weather_data(const char *json_data)
     const char *humidity = strstr(json_data, "\"sd\":\"");
     if (humidity)
     {
-        humidity += HUMIDITY_LENGTH;             // 跳过 "humidity":""
+        humidity += HUMIDITY_LENGTH;             // 跳过 "sd":""
         const char *end = strchr(humidity, '"'); // 找到结束引号
         if (end)
         {
@@ -221,7 +221,7 @@ void parse_weather_data(const char *json_data)
     const char *temperature = strstr(json_data, "\"qw\":\"");
     if (temperature)
     {
-        temperature += TEMPERATURE_LENGTH;          // 跳过 "temperature":""
+        temperature += TEMPERATURE_LENGTH;          // 跳过 "qw":""
         const char *end = strchr(temperature, '"'); // 找到结束引号
         if (end)
         {
@@ -236,7 +236,7 @@ void parse_weather_data(const char *json_data)
     const char *weather_level = strstr(json_data, "\"numtq\":\"");
     if (weather_level)
     {
-        weather_level += WEATHER_LEVEL_LENGTH;        // 跳过 "weather_level":""
+        weather_level += WEATHER_LEVEL_LENGTH;        // 跳过 "numtq":""
         const char *end = strchr(weather_level, '"'); // 找到结束引号
         if (end)
         {
@@ -252,7 +252,7 @@ void parse_weather_data(const char *json_data)
     const char *wind_scale = strstr(json_data, "\"numfl\":\"");
     if (wind_scale)
     {
-        wind_scale += WIND_SCALE_LENGTH;           // 跳过 "wind_scale":""
+        wind_scale += WIND_SCALE_LENGTH;           // 跳过 "numfl":""
         const char *end = strchr(wind_scale, '"'); // 找到结束引号
         if (end)
         {
@@ -268,7 +268,7 @@ void parse_weather_data(const char *json_data)
     const char *wind_direction = strstr(json_data, "\"numfx\":\"");
     if (wind_direction)
     {
-        wind_direction += WIND_DIRECTION_LENGTH;       // 跳过 "wind_direction":""
+        wind_direction += WIND_DIRECTION_LENGTH;       // 跳过 "numfx":""
         const char *end = strchr(wind_direction, '"'); // 找到结束引号
         if (end)
         {
