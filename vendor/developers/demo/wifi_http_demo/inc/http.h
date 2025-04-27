@@ -35,6 +35,9 @@
 #define CONFIG_SERVER_IP "123.57.54.168" // 要连接的服务器IP
 #define HTTPC_DEMO_RECV_BUFSIZE 1025     // 1KB
 
+#define RECEIVE_TIMEOUT_TV_SEC 5  // 接收超时5秒
+#define RECEIVE_TIMEOUT_TV_USEC 0 // 接收超时0
+
 void http_client_get(void *param);
 
 #endif // HTTP_H
