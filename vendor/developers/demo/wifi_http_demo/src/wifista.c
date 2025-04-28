@@ -1,4 +1,6 @@
 /**
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+ *
  * Copyright (c) Adragon
  *
  * Description: WiFi STA and HTTP Get to get weather forecasts. \n
