@@ -1,0 +1,7 @@
+{
+  "buildTarget": "ws63-liteos-app",
+  "relativePath": "demo/hispark_t2_board_qc",
+  "chip": "WS63",
+  "buildDef": "",
+  "needSmoke": "false"
+}
