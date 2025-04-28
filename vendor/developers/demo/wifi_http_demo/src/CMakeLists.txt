@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file.
-# Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+# Copyright (c) Adragon
 #===============================================================================
 set(SOURCES "${SOURCES}"
     "${CMAKE_CURRENT_SOURCE_DIR}/weather.c"
