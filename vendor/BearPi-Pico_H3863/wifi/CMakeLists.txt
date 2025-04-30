@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) CompanyNameMagicTag 2023-2023. All rights reserved.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
 #===============================================================================
 if(DEFINED CONFIG_SAMPLE_SUPPORT_STA_SAMPLE)
     add_subdirectory_if_exist(sta_sample)
