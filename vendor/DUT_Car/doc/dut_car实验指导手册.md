@@ -1,4 +1,4 @@
-## hispark_t2_board_qc
+## dut_car_board_qc
 
 ### 介绍
 
@@ -12,13 +12,13 @@
 
 3. 连接用于产生电机PWM信号和用于扩展IO的两个STM8s芯片，测试电机和编码器功能。
 
-**硬件概述：** HiSpark_T2小车。
+**硬件概述：** DUT_Car小车。
 
 ###  约束与限制
 
 #### 支持应用运行的芯片和开发板
 
-本示例支持开发板：HiSpark_T2
+本示例支持开发板：DUT_car
 
 #### 支持API版本、SDK版本
 
@@ -30,16 +30,16 @@
 
 ## 实验流程
 
-- 步骤一：在xxx\src\application\samples\peripheral文件夹新建一个sample文件夹，在peripheral上右键选择“新建文件夹”，创建Sample文件夹，例如名称”hispark_t2_board_qc“。
+- 步骤一：在xxx\src\application\samples\peripheral文件夹新建一个sample文件夹，在peripheral上右键选择“新建文件夹”，创建Sample文件夹，例如名称”dut_car_board_qc“。
 
-- 步骤二：将xxx\vendor\HiSpark_T2\demo\hispark_t2_board_qc文件里面内容拷贝到**步骤一创建的Sample文件夹中“hispark_t2_board_qc”**。
+- 步骤二：将xxx\vendor\DUT_Car\demo\dut_car_board_qc文件里面内容拷贝到**步骤一创建的Sample文件夹中“dut_car_board_qc”**。
 
 
 * 步骤三：在xxx\src\application\samples\peripheral\CMakeLists.txt文件中新增编译案例。
 
 * 步骤四：在xxx\src\application\samples\peripheral\Kconfig文件中新增编译案例。
 
-- 步骤五：点击如下图标，选择”**系统配置**“，具体选择路径“Application/Enable the Sample of peripheral”，在弹出框中选择“support hispark_t2_board_qc Sample”，点击Save，关闭弹窗。
+- 步骤五：点击如下图标，选择”**系统配置**“，具体选择路径“Application/Enable the Sample of peripheral”，在弹出框中选择“support dut_car_board_qc Sample”，点击Save，关闭弹窗。
 
 - 步骤六：点击“build”或者“rebuild”编译
 

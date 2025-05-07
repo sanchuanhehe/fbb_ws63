@@ -1,10 +1,15 @@
 # 文档介绍
 
-## 一、如何获取Q353333N1100 系列用户指南
+## 一、如何获取WS63系列用户指南
 
-Q353333N1100 系列用户指南.pdf，链接: https://pan.baidu.com/s/1hRMBfib-6MyBRupPG3SCdw 提取码: 3pj9
+WS63用户指南.pdf，链接: https://pan.baidu.com/s/1hRMBfib-6MyBRupPG3SCdw 提取码: 3pj9
 
-## 二、资料介绍
+## 二、如何获取WS63系列硬件用户指南_04.pdf
+
+WS63V100系列 Wi-Fi、BLE和SLE Combo芯片 硬件用户指南_04.pdf，
+链接: https://pan.baidu.com/s/1j-DNrogAyc_L4DmQUnKFEA 提取码: myq1
+
+## 三、资料介绍
 
 | 名称                                   | 描述                                                         |
 | -------------------------------------- | ------------------------------------------------------------ |

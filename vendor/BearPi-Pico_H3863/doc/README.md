@@ -1,9 +1,6 @@
 ## 产品概述
 
-
-<img src="../../docs/pic/BearPi-Pico_H3863/bearpi_pico_h3863.png"  width="150">
-
-
+<img src="doc/media/BearPi-Pico_H3863/bearpi_pico_h3863.png"  width="150">
 
 BearPi-Pico H3863是一款基于高度集成2.4GHz Wi-Fi6 、BLE、SLE为主控芯片的核心板，具有灵活的数字接口，集成高性能 32bit 微处理器（MCU），硬件安全引擎以及丰富的外设接口，外设接口包括 SPI、UART、I2C、PWM、GPIO，支持 6 路 13bit 分辨率 ADC，内置 SRAM 和合封 Flash，并支持在 Flash 上运行程序。
 
@@ -51,8 +48,6 @@ BearPi-Pico H3863是一款基于高度集成2.4GHz Wi-Fi6 、BLE、SLE为主控�
 </tbody>
 </table>
 
-
-
 ## 产品特点
 
 
@@ -77,21 +72,16 @@ BearPi-Pico H3863是一款基于高度集成2.4GHz Wi-Fi6 、BLE、SLE为主控�
 
 ## 功能接口
 
+<img src="doc/media/BearPi-Pico_H3863/image.png" width="250" >
 
-
-
-<img src="../../docs/pic/BearPi-Pico_H3863/image.png" width="250" >
-
-| 编号 | 功能            | 说明                                                                                        |
-| :--- | :-------------- | :------------------------------------------------------------------------------------------ |
-| 1    | 2.4G 天线       | Wi-Fi、BLE 和 SLE 天线                                                                             |
+| 编号 | 功能            | 说明                                                         |
+| :--- | :-------------- | :----------------------------------------------------------- |
+| 1    | 2.4G 天线       | Wi-Fi、BLE 和 SLE 天线                                       |
 | 2    | 主控芯片 Hi3863 | RISC-V 高性能 32bit CPU，最大主频支持 240MHz，合封4MB Flash，支持WiFi、SLE、BLE多模并发。 |
-| 3    | 用户灯          | 蓝色 LED灯，用户可通过代码自定义控制                                                        |
-| 4    | USB Type-C     | 支持 5V USB 输入，具备调试烧录功能                                                          |
-| 5    | 电源灯          | 红色电源灯，正常工作时常亮                                                                  |
-| 6    | Reset Key       | 复位按键，可通过该按键复位开发板                                                            |
-| 7    | IPX 天线座      | IPX 天线座 可用于外接天线，使用前需要调整天线电阻                                           |
-
-
+| 3    | 用户灯          | 蓝色 LED灯，用户可通过代码自定义控制                         |
+| 4    | USB Type-C      | 支持 5V USB 输入，具备调试烧录功能                           |
+| 5    | 电源灯          | 红色电源灯，正常工作时常亮                                   |
+| 6    | Reset Key       | 复位按键，可通过该按键复位开发板                             |
+| 7    | IPX 天线座      | IPX 天线座 可用于外接天线，使用前需要调整天线电阻            |
 
 </div>
