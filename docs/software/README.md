@@ -6,7 +6,7 @@ WS63用户指南.pdf，链接: https://pan.baidu.com/s/1hRMBfib-6MyBRupPG3SCdw �
 
 ## 二、如何获取WS63系列硬件用户指南_04.pdf
 
-WS63V100系列 Wi-Fi、BLE和SLE Combo芯片 硬件用户指南_04.pdf，
+WS63系列硬件用户指南_04.pdf，
 链接: https://pan.baidu.com/s/1j-DNrogAyc_L4DmQUnKFEA 提取码: myq1
 
 ## 三、资料介绍

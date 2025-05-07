@@ -37,11 +37,11 @@
 
 |                          开发板名称                          |                          淘宝店购买                          |                          京东店购买                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| HiHope_NearLink_DK3863E_V03<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20240809164437807-17466091094861.png" alt="image-20240809164437807" style="zoom: 25%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) | [开发板京东店地址](https://ic-item.jd.com/10150874487392.html) |
-| BearPi-Pico_H3863<br /><img src="vendor\BearPi-Pico_H3863\doc\media\BearPi-Pico_H3863/bearpi_pico_h3863.png" alt="image-20240809164437807" style="zoom: 25%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) |                           后续提供                           |
-| 鸿蒙星闪开发板<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/HQYJ_WS63-17466092859713.png" alt="HQYJ_WS63" style="zoom: 25%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) | [开发板京东店地址](https://ic-item.jd.com/10152445103343.html) |
-| DyCloud_WF6301_DK<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20250425161456606.png" alt="image-20250425161456606" style="zoom: 25%;" /> |                           后续提供                           | [开发板京东店地址](https://ic-item.jd.com/10151635371214.html) |
-| DTU_Car<br /><img src="vendor/DUT_Car/doc/media/image-20250507183303684.png" alt="image-20250507183303684" style="zoom: 25%;" /> |                              无                              |                              无                              |
+| HiHope_NearLink_DK3863E_V03<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20240809164437807-17466091094861.png" alt="image-20240809164437807" style="zoom: 10%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) | [开发板京东店地址](https://ic-item.jd.com/10150874487392.html) |
+| BearPi-Pico_H3863<br /><img src="vendor\BearPi-Pico_H3863\doc\media\BearPi-Pico_H3863/bearpi_pico_h3863.png" alt="image-20240809164437807" style="zoom: 10%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) |                           后续提供                           |
+| 鸿蒙星闪开发板<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/HQYJ_WS63-17466092859713.png" alt="HQYJ_WS63" style="zoom: 10%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) | [开发板京东店地址](https://ic-item.jd.com/10152445103343.html) |
+| DyCloud_WF6301_DK<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20250425161456606.png" alt="image-20250425161456606" style="zoom: 10%;" /> |                           后续提供                           | [开发板京东店地址](https://ic-item.jd.com/10151635371214.html) |
+| DTU_Car<br /><img src="vendor/DUT_Car/doc/media/image-20250507183303684.png" alt="image-20250507183303684" style="zoom: 10%;" /> |                              无                              |                              无                              |
 
 ## 开发板资料
 
@@ -51,7 +51,7 @@
 |      BearPi-Pico_H3863      | [HiSparkStudio环境搭建指南](tools/README.md) |                           后续提供                           | [开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware)    |
 |       鸿蒙星闪开发板        | [HiSparkStudio环境搭建指南](tools/README.md) | [星闪案例开发指南](vendor/Hqyj_Ws63/doc/ws63实验指导手册.md) | [开发板硬件原理图](vendor/Hqyj_Ws63/doc/hardware)            |
 |      DyCloud_WF6301_DK      | [HiSparkStudio环境搭建指南](tools/README.md) |                           后续提供                           | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">开发板硬件原理图</a> |
-|           DTU_CAR           | [HiSparkStudio环境搭建指南](tools/README.md) | [星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) | [开发板硬件原理图](vendor\DUT_Car\doc\hardware)              |
+|           DTU_CAR           | [HiSparkStudio环境搭建指南](tools/README.md) | [星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) | [开发板硬件原理图](vendor/DUT_Car/doc/hardware)              |
 
 ## 开发板示例
 
