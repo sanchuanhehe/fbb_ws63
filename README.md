@@ -50,7 +50,7 @@
 | HiHope_NearLink_DK3863E_V03 | [HiSparkStudio环境搭建指南](tools/README.md) | [星闪案例开发指南](vendor/HiHope_NearLink_DK_WS63E_V03/doc/星闪实验指导手册.md) | [开发板硬件原理图](vendor/HiHope_NearLink_DK_WS63E_V03/doc/hardware) |
 |      BearPi-Pico_H3863      | [HiSparkStudio环境搭建指南](tools/README.md) |                           后续提供                           | [开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware)    |
 |       鸿蒙星闪开发板        | [HiSparkStudio环境搭建指南](tools/README.md) | [星闪案例开发指南](vendor/Hqyj_Ws63/doc/ws63实验指导手册.md) | [开发板硬件原理图](vendor/Hqyj_Ws63/doc/hardware)            |
-|      DyCloud_WF6301_DK      | [HiSparkStudio环境搭建指南](tools/README.md) |                           后续提供                           | [开发板硬件原理图](vendor/DyCloud_WF6301_DK_V1.0/doc/hardware) |
+|      DyCloud_WF6301_DK      | [HiSparkStudio环境搭建指南](tools/README.md) |                           后续提供                           | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">开发板硬件原理图</a> |
 |           DTU_CAR           | [HiSparkStudio环境搭建指南](tools/README.md) | [星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) | [开发板硬件原理图](vendor\DUT_Car\doc\hardware)              |
 
 ## 开发板示例
