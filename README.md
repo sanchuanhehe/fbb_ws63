@@ -10,17 +10,17 @@
 
 | 目录   | 介绍                                                         |
 | ------ | ------------------------------------------------------------ |
-| docs   | [存放软件资料手册、IO复用关系表、用户指南手册](docs/software/readme.md)，帮助用户快速了解WS63系列 |
+| docs   | [存放软件资料手册、IO复用关系表、用户指南手册](docs/software/README.md)，帮助用户快速了解WS63系列 |
 | src    | SDK源码目录，用户基于源码进行二次开发                        |
-| tools  | [开发工具及环境搭建指南](tools/readme.md)，帮助用户搭建开发环境 |
+| tools  | [开发工具及环境搭建指南](tools/README.md)，帮助用户搭建开发环境 |
 | vendor | 存放开发板产商案例代码、硬件原理图、指导手册                 |
 
 ## 软件资料介绍
 
 |                          名称                          |                             介绍                             |
 | :----------------------------------------------------: | :----------------------------------------------------------: |
-|    [WS63系列用户指南.pdf](docs/software/readme.md)     | 本文档主要介绍WS63系列的各项基本功能，为用户提供WS63系列的应用配置方法 |
-| [WS63系列硬件用户指南_04.pdf](docs/software/readme.md) | 本文档主要介绍 WS63系列的封装管脚信息、电气特性参数、原理图设计建议、PCB 设计建议、热设计建议、焊接工艺、潮敏参数、接口时序、注意事项等内容 |
+|    [WS63系列用户指南.pdf](docs/software/README.md)     | 本文档主要介绍WS63系列的各项基本功能，为用户提供WS63系列的应用配置方法 |
+| [WS63系列硬件用户指南_04.pdf](docs/software/README.md) | 本文档主要介绍 WS63系列的封装管脚信息、电气特性参数、原理图设计建议、PCB 设计建议、热设计建议、焊接工艺、潮敏参数、接口时序、注意事项等内容 |
 
 ## 购买渠道
 
@@ -37,21 +37,21 @@
 
 |                          开发板名称                          |                          淘宝店购买                          |                          京东店购买                          |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| HiHope_NearLink_DK3863E_V03<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20240809164437807-17466091094861.png" alt="image-20240809164437807" style="zoom: 50%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) | [开发板京东店地址](https://ic-item.jd.com/10150874487392.html) |
-| BearPi-Pico_H3863<br /><img src="vendor\BearPi-Pico_H3863\doc\media\BearPi-Pico_H3863/bearpi_pico_h3863.png" alt="image-20240809164437807" style="zoom: 50%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) |                           后续提供                           |
-| 鸿蒙星闪开发板<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/HQYJ_WS63-17466092859713.png" alt="HQYJ_WS63" style="zoom: 33%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) | [开发板京东店地址](https://ic-item.jd.com/10152445103343.html) |
-| DyCloud_WF6301_DK<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20250425161456606.png" alt="image-20250425161456606" style="zoom:33%;" /> |                           后续提供                           | [开发板京东店地址](https://ic-item.jd.com/10151635371214.html) |
-| DTU_Car<br /><img src="vendor/DUT_Car/doc/media/image-20250507183303684.png" alt="image-20250507183303684" style="zoom:33%;" /> |                              无                              |                              无                              |
+| HiHope_NearLink_DK3863E_V03<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20240809164437807-17466091094861.png" alt="image-20240809164437807" style="zoom: 25%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) | [开发板京东店地址](https://ic-item.jd.com/10150874487392.html) |
+| BearPi-Pico_H3863<br /><img src="vendor\BearPi-Pico_H3863\doc\media\BearPi-Pico_H3863/bearpi_pico_h3863.png" alt="image-20240809164437807" style="zoom: 25%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) |                           后续提供                           |
+| 鸿蒙星闪开发板<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/HQYJ_WS63-17466092859713.png" alt="HQYJ_WS63" style="zoom: 25%;" /> | [开发板淘宝店地址](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) | [开发板京东店地址](https://ic-item.jd.com/10152445103343.html) |
+| DyCloud_WF6301_DK<br /><img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20250425161456606.png" alt="image-20250425161456606" style="zoom: 25%;" /> |                           后续提供                           | [开发板京东店地址](https://ic-item.jd.com/10151635371214.html) |
+| DTU_Car<br /><img src="vendor/DUT_Car/doc/media/image-20250507183303684.png" alt="image-20250507183303684" style="zoom: 25%;" /> |                              无                              |                              无                              |
 
 ## 开发板资料
 
 |         开发板名称          |                 环境搭建指南                 |                         案例开发指南                         | 硬件指南                                                     |
 | :-------------------------: | :------------------------------------------: | :----------------------------------------------------------: | ------------------------------------------------------------ |
-| HiHope_NearLink_DK3863E_V03 | [HiSparkStudio环境搭建指南](tools/readme.md) | [星闪案例开发指南](vendor/HiHope_NearLink_DK_WS63E_V03/doc/星闪实验指导手册.md) | [开发板硬件原理图](vendor/HiHope_NearLink_DK_WS63E_V03/doc/hardware) |
-|      BearPi-Pico_H3863      | [HiSparkStudio环境搭建指南](tools/readme.md) |                           后续提供                           | [开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware)    |
-|       鸿蒙星闪开发板        | [HiSparkStudio环境搭建指南](tools/readme.md) | [星闪案例开发指南](vendor/Hqyj_Ws63/doc/ws63实验指导手册.md) | [开发板硬件原理图](vendor/Hqyj_Ws63/doc/hardware)            |
-|      DyCloud_WF6301_DK      | [HiSparkStudio环境搭建指南](tools/readme.md) |                           后续提供                           | [开发板硬件原理图](vendor/DyCloud_WF6301_DK V1.0/doc/hardware) |
-|           DTU_CAR           | [HiSparkStudio环境搭建指南](tools/readme.md) | [星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) | [开发板硬件原理图](vendor\DUT_Car\doc\hardware)              |
+| HiHope_NearLink_DK3863E_V03 | [HiSparkStudio环境搭建指南](tools/README.md) | [星闪案例开发指南](vendor/HiHope_NearLink_DK_WS63E_V03/doc/星闪实验指导手册.md) | [开发板硬件原理图](vendor/HiHope_NearLink_DK_WS63E_V03/doc/hardware) |
+|      BearPi-Pico_H3863      | [HiSparkStudio环境搭建指南](tools/README.md) |                           后续提供                           | [开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware)    |
+|       鸿蒙星闪开发板        | [HiSparkStudio环境搭建指南](tools/README.md) | [星闪案例开发指南](vendor/Hqyj_Ws63/doc/ws63实验指导手册.md) | [开发板硬件原理图](vendor/Hqyj_Ws63/doc/hardware)            |
+|      DyCloud_WF6301_DK      | [HiSparkStudio环境搭建指南](tools/README.md) |                           后续提供                           | [开发板硬件原理图](vendor/DyCloud_WF6301_DK_V1.0/doc/hardware) |
+|           DTU_CAR           | [HiSparkStudio环境搭建指南](tools/README.md) | [星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) | [开发板硬件原理图](vendor\DUT_Car\doc\hardware)              |
 
 ## 开发板示例
 
