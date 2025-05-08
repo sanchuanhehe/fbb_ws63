@@ -49,7 +49,7 @@
 |             开发板名称              |                         案例开发指南                         |                          硬件原理图                          |
 | :---------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | HiHope_NearLink_DK3863E_V03（润和） | [润和开发板星闪案例开发指南](vendor/HiHope_NearLink_DK_WS63E_V03/doc/星闪实验指导手册.md) | [HiHope_NearLink_DK3863E_V03开发板硬件原理图](vendor/HiHope_NearLink_DK_WS63E_V03/doc/hardware) |
-|     BearPi-Pico_H3863（小熊派）     |                         **后续提供**                         | [BearPi-Pico_H3863开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware) |
+|     BearPi-Pico_H3863（小熊派）     | [小熊派开发板星闪案例开发指南](vendor/BearPi-Pico_H3863/doc/README.md) | [BearPi-Pico_H3863开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware) |
 |       华清远见WS63星闪开发板        | [华清远见星闪开发板案例开发指南](vendor/Hqyj_Ws63/doc/ws63实验指导手册.md) | [华清远见WS63星闪开发板硬件原理图](vendor/Hqyj_Ws63/doc/hardware) |
 | DyCloud_WF6301_DK开发板（鼎芯物联） |                         **后续提供**                         | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">DyCloud_WF6301_DK开发板开发板硬件原理图</a> |
 |        DTU_Car(大连理工大学)        | [智能小车星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) |    [DTU_Car开发板硬件原理图](vendor/DUT_Car/doc/hardware)    |
