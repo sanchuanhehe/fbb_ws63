@@ -41,7 +41,7 @@
 | [HiHope_NearLink_DK3863E_V03（润和）](https://developers.hisilicon.com/postDetail?tid=0224176485045269005) | [润和HiHope_NearLink_DK3863E_V03开发板（淘宝）](https://e.tb.cn/h.TyIdVOFouZyhA23?tk=vPA6eoh0e0u)<br/>[润和HiHope_NearLink_DK3863E_V03开发板（京东）](https://ic-item.jd.com/10150874487392.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/image-20250508093435364.png" alt="image-20250508093435364" style="zoom:25%;" /> |
 | [BearPi-Pico_H3863（小熊派）](https://developers.hisilicon.com/postDetail?tid=0268176458526990002) | [小熊派BearPi-Pico_H3863开发板（淘宝）](https://item.taobao.com/item.htm?id=821386760379) | <img src="vendor\BearPi-Pico_H3863\doc\media\BearPi-Pico_H3863/bearpi_pico_h3863.png" alt="image-20240809164437807" style="zoom: 25%;" /> |
 | [华清远见WS63星闪开发板](https://developers.hisilicon.com/postDetail?tid=0268176456950600001) | [华清远见WS63星闪开发板（淘宝）](https://item.taobao.com/item.htm?id=892481769813)<br/>[华清远见WS63星闪开发板（京东）](https://ic-item.jd.com/10152445103343.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/HQYJ_WS63-17466092859713.png" alt="HQYJ_WS63" style="zoom: 25%;" /> |
-| DyCloud_WF6301_DK开发板（鼎云物联）                          | [DyCloud_WF6301_DK开发板（京东）](https://ic-item.jd.com/10151635371214.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20250425161456606.png" alt="image-20250425161456606" style="zoom: 25%;" /> |
+| DyCloud_WF6301_DK开发板（鼎芯物联）                          | [DyCloud_WF6301_DK开发板（京东）](https://ic-item.jd.com/10151635371214.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20250425161456606.png" alt="image-20250425161456606" style="zoom: 25%;" /> |
 | DTU_Car(大连理工大学)                                        | 暂不提供                                                     | <img src="vendor/DUT_Car/doc/media/image-20250507183303684.png" alt="image-20250507183303684" style="zoom: 25%;" /> |
 
 ## 开发板资料
@@ -51,7 +51,7 @@
 | HiHope_NearLink_DK3863E_V03（润和） | [润和开发板星闪案例开发指南](vendor/HiHope_NearLink_DK_WS63E_V03/doc/星闪实验指导手册.md) | [HiHope_NearLink_DK3863E_V03开发板硬件原理图](vendor/HiHope_NearLink_DK_WS63E_V03/doc/hardware) |
 |     BearPi-Pico_H3863（小熊派）     |                           后续提供                           | [BearPi-Pico_H3863开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware) |
 |       华清远见WS63星闪开发板        | [华清远见星闪开发板案例开发指南](vendor/Hqyj_Ws63/doc/ws63实验指导手册.md) | [华清远见WS63星闪开发板硬件原理图](vendor/Hqyj_Ws63/doc/hardware) |
-| DyCloud_WF6301_DK开发板（鼎云物联） |                           后续提供                           | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">DyCloud_WF6301_DK开发板开发板硬件原理图</a> |
+| DyCloud_WF6301_DK开发板（鼎芯物联） |                           后续提供                           | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">DyCloud_WF6301_DK开发板开发板硬件原理图</a> |
 |        DTU_Car(大连理工大学)        | [智能小车星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) |    [DTU_Car开发板硬件原理图](vendor/DUT_Car/doc/hardware)    |
 
 ## 开发板示例
@@ -394,9 +394,9 @@ BearPi-Pico H3863提供了以下Demo供开发参考：
 
 DyCloud_WF6301_DK开发板提供了以下Demo供开发参考：
 
-| [at24c02案例](vendor/DyCloud_WF6301_DK V1.0/demo/at24c02) | [breathing_light](vendor/DyCloud_WF6301_DK V1.0/demo/breathing_light) | [cht20案例](vendor/DyCloud_WF6301_DK V1.0/demo/cht20)     |
-| --------------------------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------- |
-| [lcd案例](vendor/DyCloud_WF6301_DK V1.0/demo/lcd)         | [sc7a20案例](vendor/DyCloud_WF6301_DK V1.0/demo/sc7a20)      | [ws2812b案例](vendor/DyCloud_WF6301_DK V1.0/demo/ws2812b) |
+| <a href="vendor/DyCloud_WF6301_DK V1.0/demo/at24c02">at24c02案例</a> | <a href="vendor/DyCloud_WF6301_DK V1.0/demo/breathing_light">breathing_light案例</a> | <a href="vendor/DyCloud_WF6301_DK V1.0/demo/cht20">cht20案例</a> |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <a href="vendor/DyCloud_WF6301_DK V1.0/demo/lcd">lcd案例</a> | <a href="vendor/DyCloud_WF6301_DK V1.0/demo/cht20">sc7a20案例</a> | <a href="vendor/DyCloud_WF6301_DK V1.0/demo/ws2812b">ws2812b案例</a> |
 
 ## 参与贡献
 
