@@ -2,12 +2,11 @@
 
 ## 一、如何获取WS63系列用户指南
 
-WS63用户指南.pdf，链接: https://pan.baidu.com/s/1hRMBfib-6MyBRupPG3SCdw 提取码: 3pj9
+WS63用户指南文档主要介绍WS63系列的各项基本功能，为用户提供WS63系列的功能描述、应用场景、应用配置方法等，下载链接: https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/WS63%E7%B3%BB%E5%88%97%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97.pdf
 
 ## 二、如何获取WS63系列硬件用户指南_04.pdf
 
-WS63系列硬件用户指南_04.pdf，
-链接: https://pan.baidu.com/s/1j-DNrogAyc_L4DmQUnKFEA 提取码: myq1
+WS63系列硬件用户指南_04文档主要介绍 WS63系列的封装管脚信息、电气特性参数、原理图设计建议、PCB 设计建议、热设计建议、焊接工艺、潮敏参数、接口时序、注意事项等内容，下载链接：https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/WS63%E7%B3%BB%E5%88%97%E7%A1%AC%E4%BB%B6%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97_04.pdf
 
 ## 三、资料介绍
 
