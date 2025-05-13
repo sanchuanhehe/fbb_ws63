@@ -8,6 +8,31 @@
 (3) The directories below are licensed under MIT License
 ./src/open_source/cjson
 ./src/open_source/libcoap
+./vendor/BearPi-Pico_H3863/peripheral/i2c/ssd1306_fonts.c
+./vendor/BearPi-Pico_H3863/peripheral/spi/ssd1306_fonts.c
+./vendor/DUT_Car/demo/aht20_demo/ssd1306_fonts.c
+./vendor/DUT_Car/demo/bh1750_demo/ssd1306_fonts.c
+./vendor/DUT_Car/demo/cw2015_demo/ssd1306_fonts.c
+./vendor/DUT_Car/demo/dut_car_board_qc/ssd1306_fonts.c
+./vendor/DUT_Car/demo/ins5699s_demo/ssd1306_fonts.c
+./vendor/HiHope_NearLink_DK_WS63E_V03/demo/environment/ssd1306_fonts.c
+./vendor/HiHope_NearLink_DK_WS63E_V03/demo/gyro/ssd1306_fonts.c
+./vendor/HiHope_NearLink_DK_WS63E_V03/demo/mqtt/environment/ssd1306_fonts.c
+./vendor/HiHope_NearLink_DK_WS63E_V03/demo/oled/ssd1306_fonts.c
+./vendor/HiHope_NearLink_DK_WS63E_V03/demo/ultrasonic/ssd1306_fonts.c
+./vendor/BearPi-Pico_H3863/peripheral/i2c/ssd1306_fonts.h
+./vendor/BearPi-Pico_H3863/peripheral/spi/ssd1306_fonts.h
+./vendor/DUT_Car/demo/aht20_demo/ssd1306_fonts.h
+./vendor/DUT_Car/demo/bh1750_demo/ssd1306_fonts.h
+./vendor/DUT_Car/demo/cw2015_demo/ssd1306_fonts.h
+./vendor/DUT_Car/demo/dut_car_board_qc/ssd1306_fonts.h
+./vendor/DUT_Car/demo/ins5699s_demo/ssd1306_fonts.h
+./vendor/HiHope_NearLink_DK_WS63E_V03/demo/environment/ssd1306_fonts.h
+./vendor/HiHope_NearLink_DK_WS63E_V03/demo/gyro/ssd1306_fonts.h
+./vendor/HiHope_NearLink_DK_WS63E_V03/demo/mqtt/environment/ssd1306_fonts.h
+./vendor/HiHope_NearLink_DK_WS63E_V03/demo/oled/ssd1306_fonts.h
+./vendor/HiHope_NearLink_DK_WS63E_V03/demo/ultrasonic/ssd1306_fonts.h
+
 
 (4) The directories below are licensed under BSD 3-Clause License
 ./src/open_source/wpa_supplicant
