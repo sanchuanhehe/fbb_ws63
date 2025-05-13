@@ -251,9 +251,11 @@ static errcode_t example_sle_server_property_add(void)
     }
 
     PRINT("[SLE Server] sle uuid add property property_handle: %u\r\n", g_property_handle);
-
     descriptor.permissions = SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE;
-    descriptor.value = osal_vmalloc(sizeof(ntf_value));
+    descriptor.operate_indication = SSAP_OPERATE_INDICATION_BIT_READ | SSAP_OPERATE_INDICATION_BIT_WRITE;
+    descriptor.type = SSAP_DESCRIPTOR_USER_DESCRIPTION;
+    descriptor.value = ntf_value;
+    descriptor.value_len = sizeof(ntf_value);
     if (descriptor.value == NULL) {
         PRINT("[SLE Server] sle descriptor mem fail\r\n");
         osal_vfree(property.value);
