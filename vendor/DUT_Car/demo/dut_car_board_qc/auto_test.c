@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2024 HiSilicon Technologies CO., Ltd.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- * Copyright (c) 2024/12/18  KangBohao@OurEDA， Dalian Univ of Tech
+ *
+ *    Copyright (c) 2024/12/18  KangBohao@OurEDA， Dalian Univ of Tech 
  * 
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -133,10 +133,10 @@ static void *auto_test(const char *arg){
 
         // OLED print
         ssd1306_ClearOLED();             // 清屏
-        ssd1306_printf("%05dLx %02dC %02dRH", lightness, (uint16_t)temps, (uint16_t)humis); // 显示光照/温度/湿度
-        ssd1306_printf("%04d-%02d-%02d %02d:%02d:%02d", time.year, time.month, time.day, time.hour, time.min, time.sec); // 显示时间
-        ssd1306_printf("A:%02d|%02d|%02d G:%02d|%02d|%02d", (int32_t)ax, (int32_t)ay, (int32_t)az, (int32_t)gx, (int32_t)gy, (int32_t)gz); // 显示加速度/陀螺
-        ssd1306_printf("%02d|%02d|%02d BAT:%04dmV", (int32_t)mx, (int32_t)my, (int32_t)mz, vol); // 显示磁力/电压
+        ssd1306_printf("%dLx %02dC %02d%%", lightness, (uint16_t)temps, (uint16_t)humis); // 显示光照/温度/湿度
+        ssd1306_printf("%02d-%02d-%02d %02d:%02d:%02d", time.year, time.month, time.day, time.hour, time.min, time.sec); // 显示时间
+        ssd1306_printf("%02d|%02d|%02d %02d|%02d|%02d", (int32_t)ax, (int32_t)ay, (int32_t)az, (int32_t)gx, (int32_t)gy, (int32_t)gz); // 显示加速度/陀螺
+        ssd1306_printf("%02d|%02d|%02d %04dmV", (int32_t)mx, (int32_t)my, (int32_t)mz, vol); // 显示磁力/电压
         ssd1306_UpdateScreen();          // 刷新屏幕
 
         osal_msleep(1000);               // 1000延时1s
@@ -148,7 +148,7 @@ static void *tricolored_task(const char *arg){
     UNUSED(arg);
     uapi_pin_set_mode(WS2812B_LED_0, WS2812B_LED_MODE); // 设置WS2812B数据引脚模式
     uapi_gpio_set_dir(WS2812B_LED_0, GPIO_DIRECTION_OUTPUT); // 配置为输出
-    uapi_reg_setbit(0x44028034, 5);                  // 打开时钟使能(寄存器0x44028034 bit5)
+    uapi_reg_setbit(0x44028034, 5);                  // 设置引脚寄存器位置5
     uapi_tcxo_delay_us(500);                         // 延时500µs以初始化LED
     while(1){
         for(uint8_t j = 0; j < RGB_NUM; j++){               // 循环6个LED
