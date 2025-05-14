@@ -21,16 +21,6 @@
     },
     {
       "buildTarget": "ws63-liteos-app",
-      "relativePath": "demo/hybrid_demo",
-      "chip": "WS63",
-      "buildDef": "",
-      "needSmoke": "false",
-      "key": "3",
-      "name": "hybrid_demo",
-      "description": "sle混合节点"
-    },
-    {
-      "buildTarget": "ws63-liteos-app",
       "relativePath": "demo/iot_huaweiyun",
       "chip": "WS63",
       "buildDef": "",
