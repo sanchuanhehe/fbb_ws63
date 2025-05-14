@@ -1,0 +1,75 @@
+[ 
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "peripheral/blinky", 
+    "chip": "WS63",                         
+    "buildDef": "CONFIG_BLINKY_PIN = GPIO_02",  
+    "needSmoke": "false" ,
+    "description": "闪烁灯"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "peripheral/button", 
+    "chip": "WS63",                         
+    "buildDef": "CONFIG_BLINKY_PIN = GPIO_12",  
+    "needSmoke": "false", 
+    "description": "按键"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "peripheral/dma", 
+    "chip": "WS63",                         
+    "buildDef": "UART_TXD_PIN = 26, UART_RXD_PIN = 27, UART_TXD_PIN_MODE = 1, UART_TXD_PIN_MODE = 1, CONFIG_UART_SUPPORT_DMA = 1",  
+    "needSmoke": "false",
+    "description": "串口数据传输用DMA方式"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "peripheral/pwm", 
+    "chip": "WS63",                         
+    "buildDef": "BREATHING_LIGHT_PIN = GPIO_02,BREATHING_LIGHT_PIN_MODE = 1,BREATHING_LIGHT_CHANNEL = 2,BREATHING_LIGHT_GROUP_ID = 0",  
+    "needSmoke": "false",
+    "description": "呼吸灯"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "peripheral/systick", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false",
+    "description": "用Systick做定时器"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "peripheral/timer", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false",
+    "description": "定时器例程"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "peripheral/uart", 
+    "chip": "WS63",                         
+    "buildDef": "UART_TXD_PIN = 26, UART_RXD_PIN = 27, UART_TXD_PIN_MODE = 1, UART_TXD_PIN_MODE = 1",  
+    "needSmoke": "false",
+    "description": "串口例程"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "peripheral/watchdog", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false",
+    "description": "看门狗例程"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "products/at_test", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false",
+    "description": "AT指令例程"
+  }
+
+]
