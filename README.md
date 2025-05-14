@@ -34,13 +34,15 @@
 | 5 | [模组购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D820900594332) | 星闪WiFi6模组，20：板载天线，20E：外置天线 |
 | 6 | [烧录器购买链接（小熊派）](https://holdiot001.feishu.cn/docx/L60wdrG7Fo314pxYyrbczZqVnSb) | 烧录器：可烧录开发板、模组等 |
 | 7 | [DyCloud_WF6301星闪模组（鼎芯物联）](https://ic-item.jd.com/10151639839211.html) | 星闪模组 |
-| 8 | [MYF-F63VA01 （明裕丰）](https://shop187806465.taobao.com/?spm=pc_detail.29232929.shop_block.dshopinfo.2fd27dd6T64Lbi) | 星闪模组、开发板 |
+| 8 | [WS63星闪模组（润和软件）](https://e.tb.cn/h.6LxYtgOmQL5b51S?tk=jkprVTA5bOC) | WS63星闪模组_HH-M01_Wi-Fi6 星闪多模 |
+| 9 | [WS63E星闪模组（润和软件）](https://e.tb.cn/h.6p0TonQdm3whw0i?tk=ZjcNVTAUwUG) | WS63E星闪模组_HH-M02_Wi-Fi6 星闪多模 支持雷达人体活动感知 |
+| 10 | [MYF-F63VA01 （明裕丰）](https://shop187806465.taobao.com/?spm=pc_detail.29232929.shop_block.dshopinfo.2fd27dd6T64Lbi) | 星闪模组、开发板 |
 
 ## 支持的开发板
 
 | 开发板介绍                                                   | 购买链接                                                     | 开发板图片                                                   |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | :----------------------------------------------------------- |
-| [HiHope_NearLink_DK3863E_V03（润和）](https://developers.hisilicon.com/postDetail?tid=0224176485045269005) | [润和HiHope_NearLink_DK3863E_V03开发板（淘宝）](https://e.tb.cn/h.TyIdVOFouZyhA23?tk=vPA6eoh0e0u)<br/>[润和HiHope_NearLink_DK3863E_V03开发板（京东）](https://ic-item.jd.com/10150874487392.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/HopeRun_HH-K01.png" alt="image-20250508093435364" style="zoom:25%;" /> |
+| [HiHope_NearLink_DK3863E_V03（润和软件）](https://developers.hisilicon.com/postDetail?tid=0224176485045269005) | [润和软件HiHope_NearLink_DK3863E_V03开发板（淘宝）](https://e.tb.cn/h.TyIdVOFouZyhA23?tk=vPA6eoh0e0u)<br/>[润和软件HiHope_NearLink_DK3863E_V03开发板（京东）](https://ic-item.jd.com/10150874487392.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/HopeRun_HH-K01.png" alt="HopeRun_HH-K01" style="zoom:25%;" /> |
 | [BearPi-Pico_H3863（小熊派）](https://developers.hisilicon.com/postDetail?tid=0268176458526990002) | [小熊派BearPi-Pico_H3863开发板（淘宝）](https://item.taobao.com/item.htm?id=821386760379) | <img src="vendor\BearPi-Pico_H3863\doc\media\BearPi-Pico_H3863/bearpi_pico_h3863.png" alt="image-20240809164437807" style="zoom: 25%;" /> |
 | [华清远见WS63星闪开发板](https://developers.hisilicon.com/postDetail?tid=0268176456950600001) | [华清远见WS63星闪开发板（淘宝）](https://item.taobao.com/item.htm?id=892481769813)<br/>[华清远见WS63星闪开发板（京东）](https://ic-item.jd.com/10152445103343.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/HQYJ_WS63-17466092859713.png" alt="HQYJ_WS63" style="zoom: 25%;" /> |
 | DyCloud_WF6301_DK开发板（鼎芯物联）                          | [DyCloud_WF6301_DK开发板（京东）](https://ic-item.jd.com/10151635371214.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20250425161456606.png" alt="image-20250425161456606" style="zoom: 25%;" /> |
@@ -49,14 +51,14 @@
 
 ## 开发板资料
 
-|             开发板名称              |                         案例开发指南                         |                          硬件原理图                          |
-| :---------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| HiHope_NearLink_DK3863E_V03（润和） | [润和开发板星闪案例开发指南](vendor/HiHope_NearLink_DK_WS63E_V03/doc/星闪实验指导手册.md) | [HiHope_NearLink_DK3863E_V03开发板硬件原理图](vendor/HiHope_NearLink_DK_WS63E_V03/doc/hardware) |
-|     BearPi-Pico_H3863（小熊派）     | [小熊派开发板星闪案例开发指南](vendor/BearPi-Pico_H3863/doc/README.md) | [BearPi-Pico_H3863开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware) |
-|       华清远见WS63星闪开发板        | [华清远见星闪开发板案例开发指南](vendor/Hqyj_Ws63/doc/ws63实验指导手册.md) | [华清远见WS63星闪开发板硬件原理图](vendor/Hqyj_Ws63/doc/hardware) |
-| DyCloud_WF6301_DK开发板（鼎芯物联） |                         **后续提供**                         | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">DyCloud_WF6301_DK开发板开发板硬件原理图</a> |
-|        DTU_Car(大连理工大学)        | [智能小车星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) |    [DTU_Car开发板硬件原理图](vendor/DUT_Car/doc/hardware)    |
-|      MYF-F63VA01开发板(明裕丰)      |         [MYF-F63VA01开发板指南](vendor/MYF_F63/doc)          |  [MYF-F63VA01开发板硬件原理图](vendor/MYF_F63/doc/hardware)  |
+|               开发板名称                |                         案例开发指南                         |                          硬件原理图                          |
+| :-------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| HiHope_NearLink_DK3863E_V03（润和软件） | [润和软件开发板星闪案例开发指南](vendor/HiHope_NearLink_DK_WS63E_V03/doc/星闪实验指导手册.md) | [HiHope_NearLink_DK3863E_V03开发板硬件原理图](vendor/HiHope_NearLink_DK_WS63E_V03/doc/hardware) |
+|       BearPi-Pico_H3863（小熊派）       | [小熊派开发板星闪案例开发指南](vendor/BearPi-Pico_H3863/doc/README.md) | [BearPi-Pico_H3863开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware) |
+|         华清远见WS63星闪开发板          | [华清远见星闪开发板案例开发指南](vendor/Hqyj_Ws63/doc/ws63实验指导手册.md) | [华清远见WS63星闪开发板硬件原理图](vendor/Hqyj_Ws63/doc/hardware) |
+|   DyCloud_WF6301_DK开发板（鼎芯物联）   |                         **后续提供**                         | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">DyCloud_WF6301_DK开发板开发板硬件原理图</a> |
+|          DTU_Car(大连理工大学)          | [智能小车星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) |    [DTU_Car开发板硬件原理图](vendor/DUT_Car/doc/hardware)    |
+|        MYF-F63VA01开发板(明裕丰)        |         [MYF-F63VA01开发板指南](vendor/MYF_F63/doc)          |  [MYF-F63VA01开发板硬件原理图](vendor/MYF_F63/doc/hardware)  |
 
 ## 开发板示例
 
@@ -409,9 +411,6 @@ MYF-F63VA01开发板提供了以下Demo供开发参考：
 | [PWM呼吸灯案例](vendor/MYF_F63/peripheral/pwm) | [SYSTICK案例](vendor/MYF_F63/peripheral/systick) | [定时器案例](vendor/MYF_F63/peripheral/timer) |
 | [串口案例](vendor/MYF_F63/peripheral/uart)     | [看门狗案例](vendor/MYF_F63/peripheral/watchdog) | [AT指令案例](vendor/MYF_F63/products/at_test) |
 
-
-
 ## 参与贡献
 
 - 参考[社区参与贡献指南](https://gitee.com/HiSpark/docs/blob/master/contribute/%E7%A4%BE%E5%8C%BA%E5%8F%82%E4%B8%8E%E8%B4%A1%E7%8C%AE%E6%8C%87%E5%8D%97.md)
-
