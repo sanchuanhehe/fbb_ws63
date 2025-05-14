@@ -18,5 +18,25 @@
       "key": "2",
       "name": "pwm_blinky",
       "description": "PWM控制的LED呼吸灯"
+    },
+    {
+      "buildTarget": "ws63-liteos-app",
+      "relativePath": "demo/iot_huaweiyun",
+      "chip": "WS63",
+      "buildDef": "",
+      "needSmoke": "false",
+      "key": "4",
+      "name": "iot_huaweiyun",
+      "description": "mqtt连接华为云"
+    },
+    {
+      "buildTarget": "ws63-liteos-app",
+      "relativePath": "demo/sle_gate",
+      "chip": "WS63",
+      "buildDef": "",
+      "needSmoke": "false",
+      "key": "5",
+      "name": "sle_gate",
+      "description": "星闪网关"
     }
 ]
