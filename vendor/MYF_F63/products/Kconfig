@@ -1,0 +1,29 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+#===============================================================================
+config ENABLE_ALL_PRODUCTS_SAMPLE
+    bool
+    prompt "Enable all the sample of product, it's just for build."
+    default n
+    depends on ENABLE_PRODUCTS_SAMPLE
+    select SAMPLE_SUPPORT_AT_TEST
+
+    help
+        This option means enable all the sample of product, it is just for build.
+
+
+config SAMPLE_SUPPORT_AT_TEST
+    bool
+    prompt "Support AT TEST sample."
+    default n
+    depends on ENABLE_PRODUCTS_SAMPLE
+    help
+        This option means support AT TEST Sample.
+
+if SAMPLE_SUPPORT_AT_TEST
+menu "AT_TEST Sample Configuration"
+    osource "application/samples/products/at_test/Kconfig"
+endmenu
+endif
+
