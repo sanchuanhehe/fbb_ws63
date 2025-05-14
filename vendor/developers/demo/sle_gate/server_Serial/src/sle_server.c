@@ -124,7 +124,7 @@ void time_convert(time_t *rawtime, uint8_t *send_time)
 {
     uint64_t temp = 0;
     uint8_t i = 0;
-    for (i = 0; i < 8; i++) {                           /*8: 一共个字节*/
+    for (i = 0; i < 8; i++) {                           /*8: 一共个字节 */
         temp |= (uint64_t)send_time[i] << (56 - i * 8); /*56位，一次8位 */
     }
     *rawtime = (time_t)temp;
@@ -137,33 +137,26 @@ void uart_rx_cbk(const void *buffer, uint16_t length, bool error)
     unused(error);
     unused(length);
     uint8_t *data = (uint8_t *)buffer;
-    if (data[INDEX0] == 0x53 && data[INDEX1] == 0x59) { /*53 59 帧头*/
+    if (data[INDEX0] == 0x53 && data[INDEX1] == 0x59) { /*53 59 帧头 */
         if (data[INDEX2] == 0x80)                       // 人体存在功能 0x80
         {
-            if (data[INDEX3] == 0x01) // 存在信息 0x01
-            {
+            if (data[INDEX3] == 0x01) { // 存在信息 0x01
                 existence = data[INDEX6];
             }
-            if (data[INDEX3] == 0x03) // 体动参数 0x03
-            {
+            if (data[INDEX3] == 0x03) { // 体动参数 0x03
                 kinetic = data[INDEX6];
             }
         }
-        if (data[INDEX2] == 0x85) // 心率监测 0x85
-        {
-            if (data[INDEX3] == 0x02) // 心率数值 0x02
-            {
+        if (data[INDEX2] == 0x85) { // 心率监测 0x85
+            if (data[INDEX3] == 0x02) { // 心率数值 0x02
                 heart_rate = data[INDEX6];
             }
         }
-        if (data[INDEX2] == 0x81) // 呼吸检测 0x81
-        {
-            if (data[INDEX3] == 0x01) // 呼吸信息 0x01
-            {
+        if (data[INDEX2] == 0x81) { // 呼吸检测 0x81
+            if (data[INDEX3] == 0x01) { // 呼吸信息 0x01
                 breathe_state = data[INDEX6];
             }
-            if (data[INDEX3] == 0x02) // 呼吸数值 0x02
-            {
+            if (data[INDEX3] == 0x02) { // 呼吸数值 0x02
                 breate_value = data[INDEX6];
             }
         }

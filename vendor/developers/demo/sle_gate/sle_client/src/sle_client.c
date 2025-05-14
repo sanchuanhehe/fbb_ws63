@@ -260,7 +260,7 @@ int message_arrive(void *context, char *topicName, int topicLen, MQTTClient_mess
             osal_printk("find KEY-> uuid : %d  con_id : %d", remote_addr_key[i][INDEX0], remote_addr_key[i][INDEX0]);
             param.data_len = len;
             param.data = data;
-            ssapc_write_req(0, remote_addr_key[i][INDEX0], &param); /*0 :client id*/
+            ssapc_write_req(0, remote_addr_key[i][INDEX0], &param); /*0 :client id */
             break;
         }
     }
@@ -288,7 +288,7 @@ void delivered(void *context, MQTTClient_deliveryToken dt)
 int mqtt_subscribe(const char *topic)
 {
     osal_printk("subscribe start!\r\n");
-    MQTTClient_subscribe(client, topic, 1); /*1 : qos*/
+    MQTTClient_subscribe(client, topic, 1); /*1 : qos */
     return 0;
 }
 //--------------------------------------------//

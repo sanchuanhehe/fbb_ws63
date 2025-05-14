@@ -204,7 +204,7 @@ static errcode_t mqtt_connect(void)
     mqtt_subscribe(MQTT_CMDTOPIC_SUB);
 
     while (1) {
-        adc_port_read(5, &voltage); /* 5: prot 5*/
+        adc_port_read(5, &voltage); /* 5: prot 5 */
         // 相应平台命令部分
         osDelay(DELAY_TIME_MS); // 需要延时，否则会发布失败
         if (g_cmdFlag) {

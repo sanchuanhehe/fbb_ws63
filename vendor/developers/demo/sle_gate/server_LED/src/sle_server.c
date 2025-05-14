@@ -117,8 +117,8 @@ void time_convert(time_t *rawtime, uint8_t *send_time)
 {
     uint64_t temp = 0;
     uint8_t i = 0;
-    for (i = 0; i < 8; i++) {                           /*8: 一共个字节*/
-        temp |= (uint64_t)send_time[i] << (56 - i * 8); /*一共56位，一次8位*/
+    for (i = 0; i < 8; i++) {                           /* 8: 一共个字节 */
+        temp |= (uint64_t)send_time[i] << (56 - i * 8); /* 一共56位，一次8位 */
     }
     *rawtime = (time_t)temp;
 }
@@ -177,10 +177,10 @@ static void ssaps_write_request_cbk(uint8_t server_id,
                 conn_id, write_cb_para->handle, status);
     osal_printk("write request data: %s\r\n", write_cb_para->value);
     if (osal_strstr((char *)write_cb_para->value, "true") != NULL) {
-        LED_state = 1; /*1 : led on*/
+        LED_state = 1; /*1 : led on */
         uapi_gpio_set_val(GPIO_02, LED_state);
     } else if (osal_strstr((char *)write_cb_para->value, "false") != NULL) {
-        LED_state = 0; /*0 : led off*/
+        LED_state = 0; /*0 : led off */
         uapi_gpio_set_val(GPIO_02, LED_state);
     }
     if (write_cb_para->value[INDEX0] == 0xAA && write_cb_para->value[INDEX1] == 0x33 &&
@@ -224,7 +224,7 @@ static errcode_t sle_uuid_server_service_add(void)
     errcode_t ret;
     sle_uuid_t service_uuid = {0};
     sle_uuid_setu2(SLE_UUID_SERVER_SERVICE_LED, &service_uuid);
-    ret = ssaps_add_service_sync(g_server_id, &service_uuid, 1, &g_service_handle); /* 1 : is primary*/
+    ret = ssaps_add_service_sync(g_server_id, &service_uuid, 1, &g_service_handle); /* 1 : is primary */
     if (ret != ERRCODE_SLE_SUCCESS) {
         osal_printk("[uuid server] sle uuid add service fail, ret:%x\r\n", ret);
         return ERRCODE_SLE_FAIL;
