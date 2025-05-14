@@ -28,9 +28,9 @@
 #include "wifi_connect.h"
 
 #define WIFI_SCAN_AP_LIMIT 64
-#define WIFI_CONN_STATUS_MAX_GET_TIMES 5 /* 启动连接之后，判断是否连接成功的最大尝试次数 */
+#define WIFI_CONN_STATUS_MAX_GET_TIMES 5   /* 启动连接之后，判断是否连接成功的最大尝试次数 */
 #define DHCP_BOUND_STATUS_MAX_GET_TIMES 20 /* 启动DHCP Client端功能之后，判断是否绑定成功的最大尝试次数 */
-#define WIFI_STA_IP_MAX_GET_TIMES 5 /* 判断是否获取到IP的最大尝试次数 */
+#define WIFI_STA_IP_MAX_GET_TIMES 5        /* 判断是否获取到IP的最大尝试次数 */
 
 /*****************************************************************************
   STA 扫描-关联 sample用例

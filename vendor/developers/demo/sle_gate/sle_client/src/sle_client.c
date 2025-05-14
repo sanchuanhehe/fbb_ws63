@@ -45,7 +45,7 @@
 
 #define MQTT_CMDTOPIC_SUB "$oc/devices/sle_gate/sys/commands/set/#" // 平台下发命令  订阅主题
 
-#define MQTT_DATATOPIC_PUB "$oc/devices/sle_gate/sys/properties/report" // 属性上报topic 发布主题
+#define MQTT_DATATOPIC_PUB "$oc/devices/sle_gate/sys/properties/report"                 // 属性上报topic 发布主题
 #define MQTT_CLIENT_RESPONSE "$oc/devices/sle_gate/sys/commands/response/request_id=%s" // 命令响应topic
 
 #define DATA_SEVER_NAME "Switch"
