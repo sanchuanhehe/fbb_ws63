@@ -1,44 +1,66 @@
+
+
 # fbb_ws63开发指南
 
-## 介绍
+## 代码仓介绍
 
-  fbb_ws63代码仓为支持ws63和ws63e解决方案SDK，该SDK包从统一开发平台FBB（Family Big Box，统一开发框架，统一API）构建而来，在该平台上开发的应用很容易被移植到其他星闪解决方案上，有效降低开发者门槛，缩短开发周期，支持开发者快速开发星闪产品。
+  fbb_ws63仓是星闪ws63和ws63e解决方案代码仓，搭载LiteOS系统，主要用于智慧家居、IoT网关、电子消费类等应用场景。该SDK包从统一开发平台FBB（Family Big Box，统一开发框架，统一API）构建而来，在该平台上开发的应用很容易被移植到其他星闪解决方案上，有效降低开发者门槛，缩短开发周期，支持开发者快速开发星闪产品。
+
+## 目录介绍
+
+| 目录   | 介绍                                                         |
+| ------ | ------------------------------------------------------------ |
+| docs   | 存放软件资料手册、IO复用关系表、用户指南手册，帮助用户快速了解WS63系列 |
+| src    | 开发接入SDK源码包，用户基于源码进行二次开发                  |
+| tools  | 开发工具及环境搭建指南文档，帮助用户搭建开发环境             |
+| vendor | 存放合作产商的开发板硬件和软件资料，包含案例代码、硬件原理图、案例开发指南文档 |
+
+## 软件资料介绍
+
+| 名称                                                         | 介绍                                                         |
+| :----------------------------------------------------------- | :----------------------------------------------------------- |
+| [WS63系列用户指南.pdf](https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/WS63%E7%B3%BB%E5%88%97%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97.pdf) | 本文档主要介绍WS63系列的各项基本功能，为用户提供WS63系列的功能描述、应用场景、应用配置方法等。备注：本文档来源于云汉芯城，地址：https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html# |
+| [WS63系列硬件用户指南_04.pdf](https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/WS63%E7%B3%BB%E5%88%97%E7%A1%AC%E4%BB%B6%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97_04.pdf) | 本文档主要介绍 WS63系列的封装管脚信息、电气特性参数、原理图设计建议、PCB 设计建议、热设计建议、焊接工艺、潮敏参数、接口时序、注意事项等内容。 |
+| [软件系列文档](docs/software)                                | 该系列文档主要包括IO复用关系表、 AT命令使用、 CJSON 开发流程、HTTP开发流程、MQTT 开发流程、 NV存储开发流程、设备驱动开发流程、SLE/BLE开发流程、API接口等文档，文档路径存放于docs/software |
 
 ## 购买渠道
 
 |      序号      | 硬件资料                                                     | 介绍          |
 | :------------: | ------------------------------------------------------------ | ------------- |
-| 1  | [购买链接](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html) | ws63解决方案  |
-| 2 | [购买链接](https://www.ickey.cn/detail/1003001013187551/Q353333N1100E.html) | ws63E解决方案 |
-| 3 | [模组购买链接](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D821194904380) | 星闪WiFi6模组，邮票孔，无天线 |
-| 4 | [模组购买链接](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D823544936579) | 星闪WiFi6模组，12：板载天线，12E：外置天线 |
-| 5 | [模组购买链接](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D820900594332) | 星闪WiFi6模组，20：板载天线，20E：外置天线 |
-| 6 | [烧录器购买链接](https://holdiot001.feishu.cn/docx/L60wdrG7Fo314pxYyrbczZqVnSb) | 烧录器：可烧录开发板、模组等 |
+| 1  | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html) | ws63解决方案  |
+| 2 | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187551/Q353333N1100E.html) | ws63E解决方案 |
+| 3 | [模组购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D821194904380) | 星闪WiFi6模组，邮票孔，无天线 |
+| 4 | [模组购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D823544936579) | 星闪WiFi6模组，12：板载天线，12E：外置天线 |
+| 5 | [模组购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D820900594332) | 星闪WiFi6模组，20：板载天线，20E：外置天线 |
+| 6 | [烧录器购买链接（小熊派）](https://holdiot001.feishu.cn/docx/L60wdrG7Fo314pxYyrbczZqVnSb) | 烧录器：可烧录开发板、模组等 |
+| 7 | [DyCloud_WF6301星闪模组（鼎芯物联）](https://ic-item.jd.com/10151639839211.html) | 星闪模组 |
+| 8 | [WS63星闪模组（润和软件）](https://e.tb.cn/h.6LxYtgOmQL5b51S?tk=jkprVTA5bOC) | WS63星闪模组_HH-M01_Wi-Fi6 星闪多模 |
+| 9 | [WS63E星闪模组（润和软件）](https://e.tb.cn/h.6p0TonQdm3whw0i?tk=ZjcNVTAUwUG) | WS63E星闪模组_HH-M02_Wi-Fi6 星闪多模 支持雷达人体活动感知 |
+| 10 | [MYF-F63VA01 （明裕丰）](https://shop187806465.taobao.com/?spm=pc_detail.29232929.shop_block.dshopinfo.2fd27dd6T64Lbi) | 星闪模组、开发板 |
 
 ## 支持的开发板
 
-|                          开发板名称                          | 硬件资料                                                     | 软件资料         | 购买链接                                                     | 开发板介绍                                                   |
-| :----------------------------------------------------------: | ------------------------------------------------------------ | :--------------- | :----------------------------------------------------------- | :----------------------------------------------------------- |
-| HiHope_NearLink_DK3863E_V03<img src="docs/pic/readme/image-20240809164437807.png" alt="image-20240809164437807" style="zoom: 50%;" /> | [扩展板硬件资料](https://gitee.com/HiSpark/fbb_ws63/tree/master/docs/hardware/HiHope_NearLink_DK_WS63E_V03) | 参考示例教程章节 | [开发板购买链接](https://main.m.taobao.com/security-h5-detail/home?id=808369265492&spm=a2141.7631565.tbshopmod-guess_your_like.808369265492&scm=1007.18373.317678.0&pvid=fdb854bd-99a3-4b65-955b-392bdf0c083e&fromNormal=true) | 是一款高度集成的2.4GHz Wi-Fi 6 星闪多模开发板，支持Liteos、OpenHarmony轻量系统 |
-| BearPi-Pico_H3863<img src="docs/pic/BearPi-Pico_H3863/bearpi_pico_h3863.png" alt="image-20240809164437807" style="zoom: 50%;" /> | [扩展板硬件资料](https://gitee.com/HiSpark/fbb_ws63/tree/master/docs/hardware/BearPi-Pico_H3863) | 参考示例教程章节 | [开发板购买链接](https://item.taobao.com/item.htm?id=821386760379) | 是一款高度集成的2.4GHz Wi-Fi 6 星闪多模开发板，具有灵活的数字接口，集成高性能 32bit 微处理器（MCU），硬件安全引擎以及丰富的外设接口，外设接口包括 SPI、UART、I2C、PWM、GPIO，支持 6 路 13bit 分辨率 ADC，内置 SRAM 和合封 Flash，并支持在 Flash 上运行程序支持Liteos、OpenHarmony轻量系统 |
-| <img src="vendor/Hqyj_Ws63/doc/HQYJ_WS63.png" alt="HQYJ_WS63" style="zoom:80%;" /> | [扩展板硬件资料](https://gitee.com/HiSpark/fbb_ws63/blob/master/vendor/Hqyj_Ws63/doc/FS-WS63-%E5%8E%9F%E7%90%86%E5%9B%BEV2.pdf) | 参考示例教程章节 | [开发板购买链接](https://item.taobao.com/item.htm?id=892481769813) | 专为学习者设计的WS63鸿蒙星闪开发板，支持OpenHarmony，Liteos，多模通信（WiFi/星闪/蓝牙），丰富的板载资源、项目拓展模块与学习资料，可广泛应用于个人学习、高校教学、学生毕设、创新竞赛等 |
+| 开发板介绍                                                   | 购买链接                                                     | 开发板图片                                                   |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | :----------------------------------------------------------- |
+| [HiHope_NearLink_DK3863E_V03（润和软件）](https://developers.hisilicon.com/postDetail?tid=0224176485045269005) | [润和软件HiHope_NearLink_DK3863E_V03开发板（淘宝）](https://e.tb.cn/h.TyIdVOFouZyhA23?tk=vPA6eoh0e0u)<br/>[润和软件HiHope_NearLink_DK3863E_V03开发板（京东）](https://ic-item.jd.com/10150874487392.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/HopeRun_HH-K01.png" alt="HopeRun_HH-K01" style="zoom:25%;" /> |
+| [BearPi-Pico_H3863（小熊派）](https://developers.hisilicon.com/postDetail?tid=0268176458526990002) | [小熊派BearPi-Pico_H3863开发板（淘宝）](https://item.taobao.com/item.htm?id=821386760379) | <img src="vendor\BearPi-Pico_H3863\doc\media\BearPi-Pico_H3863/bearpi_pico_h3863.png" alt="image-20240809164437807" style="zoom: 25%;" /> |
+| [华清远见WS63星闪开发板](https://developers.hisilicon.com/postDetail?tid=0268176456950600001) | [华清远见WS63星闪开发板（淘宝）](https://item.taobao.com/item.htm?id=892481769813)<br/>[华清远见WS63星闪开发板（京东）](https://ic-item.jd.com/10152445103343.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/HQYJ_WS63-17466092859713.png" alt="HQYJ_WS63" style="zoom: 25%;" /> |
+| DyCloud_WF6301_DK开发板（鼎云物联）                          | [DyCloud_WF6301_DK开发板（京东）](https://ic-item.jd.com/10151635371214.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20250425161456606.png" alt="image-20250425161456606" style="zoom: 25%;" /> |
+| DTU_Car(大连理工大学)                                        | **暂不提供**                                                 | <img src="vendor/DUT_Car/doc/media/image-20250507183303684.png" alt="image-20250507183303684" style="zoom: 25%;" /> |
+| MYF-F63VA01开发板（明裕丰）                                  | [MYF-F63VA01星闪开发板 （淘宝）](https://item.taobao.com/item.htm?id=893223665987&pisk=gY0KqOj-Xdvh363LsX-GqErLqXAGvhce6vlfr82hVAHtKRbkTyxzyYetUJq3RXYSIvcXTJxyYYHtNjdP-prkybGqpJqoyb78NbMyT8AejXlUzz9Dn8LmTXPGt7LZJMw1CfPbOgtgAPu1ecJDnEYDA1aJpKDkpMF95SFbPWZ7NfOTN7N7PuwI1CF7Z9s5RYO967N4N7N5RlT_gWa5FMwQflN7igsCAa6667y_FzaSFPOTav899R5Q9an2l8zEWdHdPagT9ltiORMSUQVUvGc3Ca9jWWe4hXwOPawYpc8o6Xvduf4E1xFmKF_KHjuZB5MXydUrQ0M7wATVEyomLqrt_n_s9yeacSg6NZwoJccbBrCWRfULpog3DEdxhfhSml3MGEzLRJiu8bfvKf3KKXutZ_s_JymTD2UXu9wojj38w4JyWxhq7AFshUpC4b0mkmrVn-FlACdO4grQ_Ib8HaXdiABQ6-AQAgSzq5PTnCINVg6WE5eDsGjP4lDd.&spm=tbpc.mytb_followshop.item.goods) | ![](vendor/MYF_F63/doc/media/MYF-F63VA01开发板.png)          |
 
-## 目录介绍
+## 开发板资料
 
-| 目录   | 介绍                                                 |
-| ------ | ---------------------------------------------------- |
-| docs   | 存放资料手册、IO复用关系表、硬件原理图、用户指南手册 |
-| src    | SDK源码目录                                          |
-| tools  | 开发工具及环境搭建指南                               |
-| vendor | 存放对应开发板案例                                   |
+|               开发板名称                |                         案例开发指南                         |                          硬件原理图                          |
+| :-------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| HiHope_NearLink_DK3863E_V03（润和软件） | [润和软件开发板星闪案例开发指南](vendor/HiHope_NearLink_DK_WS63E_V03/doc/星闪实验指导手册.md) | [HiHope_NearLink_DK3863E_V03开发板硬件原理图](vendor/HiHope_NearLink_DK_WS63E_V03/doc/hardware) |
+|       BearPi-Pico_H3863（小熊派）       | [小熊派开发板星闪案例开发指南](vendor/BearPi-Pico_H3863/doc/README.md) | [BearPi-Pico_H3863开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware) |
+|         华清远见WS63星闪开发板          | [华清远见星闪开发板案例开发指南](vendor/Hqyj_Ws63/doc/ws63实验指导手册.md) | [华清远见WS63星闪开发板硬件原理图](vendor/Hqyj_Ws63/doc/hardware) |
+|   DyCloud_WF6301_DK开发板（鼎云物联）   |                         **后续提供**                         | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">DyCloud_WF6301_DK开发板开发板硬件原理图</a> |
+|          DTU_Car(大连理工大学)          | [智能小车星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) |    [DTU_Car开发板硬件原理图](vendor/DUT_Car/doc/hardware)    |
+|        MYF-F63VA01开发板(明裕丰)        |         [MYF-F63VA01开发板指南](vendor/MYF_F63/doc)          |  [MYF-F63VA01开发板硬件原理图](vendor/MYF_F63/doc/hardware)  |
 
-## 快速上手
-
-1. 开发环境搭建[参考tools目录README](https://gitee.com/HiSpark/fbb_ws63/tree/master/tools)
-2. 资料手册、IO复用关系、用户手册指南表[参考docs/board目录README](https://gitee.com/HiSpark/fbb_ws63/tree/master/docs/board)
-3. 硬件原理图[参考docs/hardware](https://gitee.com/HiSpark/fbb_ws63/tree/master/docs/hardware)
-
-## 示例教程
+## 开发板示例
 
 HiHope_NearLink_DK3863E_V03提供了以下Demo供开发参考：
 
@@ -375,6 +397,19 @@ BearPi-Pico H3863提供了以下Demo供开发参考：
 | **端云协同** | **MQTT**           | [MQTT本地回环测试](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/wifi_05_mqtt) | [连接华为云实现控制板载资源](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/wifi_06_huawei_iot) |                                                              |                                                              |
 | **星闪**     | **SLE**            | [SLE串口透传](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/sle_01_trans_server) |                                                              |                                                              |                                                              |
 | **BLE**      | **BLE**            | [BLE串口透传](https://gitee.com/HiSpark/fbb_ws63/tree/master/vendor/Hqyj_Ws63/Farsight/ble_02_trans_server) |                                                              |                                                              |                                                              |
+
+DyCloud_WF6301_DK开发板提供了以下Demo供开发参考：
+
+| <a href="vendor/DyCloud_WF6301_DK V1.0/demo/at24c02">at24c02案例</a> | <a href="vendor/DyCloud_WF6301_DK V1.0/demo/breathing_light">breathing_light案例</a> | <a href="vendor/DyCloud_WF6301_DK V1.0/demo/cht20">cht20案例</a> |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| <a href="vendor/DyCloud_WF6301_DK V1.0/demo/lcd">lcd案例</a> | <a href="vendor/DyCloud_WF6301_DK V1.0/demo/cht20">sc7a20案例</a> | <a href="vendor/DyCloud_WF6301_DK V1.0/demo/ws2812b">ws2812b案例</a> |
+
+MYF-F63VA01开发板提供了以下Demo供开发参考：
+
+| [闪烁灯案例](vendor/MYF_F63/peripheral/blinky) | [按键案例](vendor/MYF_F63/peripheral/button)     | [DMA案例](vendor/MYF_F63/peripheral/dma)      |
+| ---------------------------------------------- | ------------------------------------------------ | --------------------------------------------- |
+| [PWM呼吸灯案例](vendor/MYF_F63/peripheral/pwm) | [SYSTICK案例](vendor/MYF_F63/peripheral/systick) | [定时器案例](vendor/MYF_F63/peripheral/timer) |
+| [串口案例](vendor/MYF_F63/peripheral/uart)     | [看门狗案例](vendor/MYF_F63/peripheral/watchdog) | [AT指令案例](vendor/MYF_F63/products/at_test) |
 
 ## 参与贡献
 

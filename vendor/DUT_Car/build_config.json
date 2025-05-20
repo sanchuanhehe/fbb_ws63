@@ -1,0 +1,44 @@
+[
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/dut_car_board_qc",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/motor_demo",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/ins5699s_demo",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/aht20_demo",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/cw2015_demo",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/bh1750_demo",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  }
+]

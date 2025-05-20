@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) CompanyNameMagicTag 2023-2023. All rights reserved.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
 #===============================================================================
 set(SOURCES_LIST
     ${CMAKE_CURRENT_SOURCE_DIR}/wifi/wifi_connect.c

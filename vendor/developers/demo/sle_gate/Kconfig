@@ -1,0 +1,31 @@
+config SAMPLE_SUPPORT_SLE_SERVER_ADC
+    bool
+    prompt "Support SLE_SERVER_ADC Sample."
+    default n
+    depends on SAMPLE_SUPPORT_SLE_GATE
+    help
+        This option means support SLE_SERVER_ADC Sample.
+
+config SAMPLE_SUPPORT_SLE_SERVER_SERIAL
+    bool
+    prompt "Support SLE_SERVER_SERIAL Sample."
+    default n
+    depends on SAMPLE_SUPPORT_SLE_GATE
+    help
+        This option means support SLE_SERVER_SERIAL Sample.
+
+config SAMPLE_SUPPORT_SLE_SERVER_LED
+    bool
+    prompt "Support SLE_SERVER_LED Sample."
+    default n
+    depends on SAMPLE_SUPPORT_SLE_GATE
+    help
+        This option means support SLE_SERVER_LED Sample.
+
+config SAMPLE_SUPPORT_SLE_CLIENT
+    bool
+    prompt "Support SLE_CLIENT Sample."
+    default n
+    depends on SAMPLE_SUPPORT_SLE_GATE
+    help
+        This option means support SLE_CLIENT Sample.
