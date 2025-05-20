@@ -6,11 +6,13 @@ on:
       - main
       - dev
       - feature*
+      - master
   pull_request:
     branches:
       - main
       - dev
       - feature*
+      - master
 
 jobs:
   build:
@@ -23,19 +25,37 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.x'
+        python-version: '3.10'
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Cache APT packages
+      uses: actions/cache@v4
+      with:
+        path: /var/cache/apt/archives
+        key: ${{ runner.os }}-apt-${{ hashFiles('config.sh') }}
+        restore-keys: |
+          ${{ runner.os }}-apt-
 
     - name: Install dependencies
       run: |
+        sudo apt-get update
         ./config.sh
 
     - name: Build and Compile
       run: |
         cd src
-        python build.py -c -ninja ws63-liteos-app
+        ./build.py -c -ninja ws63-liteos-app
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: standard-bs21e-1100e
-        path: src/output/bs21e/fwpkg/standard-bs21e-1100e
+        path: src/output/ws63/fwpkg
