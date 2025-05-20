@@ -1,6 +1,5 @@
 FROM ubuntu:24.04
 
-
 # 设置非交互模式以避免时间区选择等提示
 ENV DEBIAN_FRONTEND=noninteractive
 
