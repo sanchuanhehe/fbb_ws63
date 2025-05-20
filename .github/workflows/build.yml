@@ -57,5 +57,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: standard-bs21e-1100e
+        name: standard-ws63
         path: src/output/ws63/fwpkg
