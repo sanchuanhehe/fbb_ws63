@@ -8,6 +8,7 @@
  */
 
 #include "lwip/netifapi.h"
+#include "std_def.h"
 #include "wifi_hotspot.h"
 #include "wifi_hotspot_config.h"
 #include "td_base.h"
@@ -237,7 +238,7 @@ td_s32 example_sta_function(td_void)
 
 int websocket_sample_init(void *param)
 {
-    param = param;
+    UNUSED(param);
 
     /* 注册事件回调 */
     if (wifi_register_event_cb(&wifi_event_cb) != 0) {
