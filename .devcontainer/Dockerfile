@@ -1,5 +1,5 @@
-# 使用 Ubuntu 20.04 作为基础镜像
-FROM ubuntu:20.04
+FROM ubuntu:24.04
+
 
 # 设置非交互模式以避免时间区选择等提示
 ENV DEBIAN_FRONTEND=noninteractive

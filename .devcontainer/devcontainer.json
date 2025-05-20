@@ -2,11 +2,8 @@
   "name": "ws63devcon",
   "context": "..",
   "dockerFile": "Dockerfile",
-  "workspaceFolder": "/workspace/src",
-  "remoteUser": "root",
-  "mounts": [
-    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
-  ],
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/src",
+  "remoteUser": "ubuntu",
   "customizations": {
     "vscode": {
       "extensions": [
