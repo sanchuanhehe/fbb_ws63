@@ -33,17 +33,17 @@ RUN CLANGD_VERSION=18.1.3 && \
     cp -r clangd_$CLANGD_VERSION/lib/* /usr/local/lib/ && \
     rm -rf clangd-linux-$CLANGD_VERSION.zip clangd_$CLANGD_VERSION
 
-# 安装kconfiglib，版本大于14.1.0
-RUN pip3 install "kconfiglib>=14.1.0"
-
-# 安装其他Python依赖包，版本大于2.21
-RUN pip3 install "pycparser>=2.21"
-
-# 安装PYYAML
-RUN pip3 install pyyaml
+# 安装 Python 依赖
+RUN pip3 install "pycparser>=2.21" pyyaml "kconfiglib>=14.1.0" --break-system-packages
 
 # 设置环境变量export LC_ALL=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
-# 添加环境变量 PATH /sdk/tools/bin/compiler/riscv/cc_riscv32_musl_b090/cc_riscv32_musl_fp/bin
-ENV PATH="/sdk/tools/bin/compiler/riscv/cc_riscv32_musl_b090/cc_riscv32_musl_fp/bin:${PATH}"
+# 设置passwordless sudo
+RUN echo "ALL ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# 创建 vscode 用户（UID 1000），并设置 home 目录和 shell
+RUN useradd -m -s /bin/bash -u 1000 vscode \
+    && echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER vscode
