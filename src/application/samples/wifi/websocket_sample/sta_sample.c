@@ -22,7 +22,7 @@
 #define WIFI_MAX_SSID_LEN                33
 #define WIFI_SCAN_AP_LIMIT               64
 #define WIFI_MAC_LEN                     6
-#define WIFI_STA_SAMPLE_LOG              "[WIFI_STA_SAMPLE]"
+#define WIFI_WEBSOCKET_SAMPLE_LOG              "[WIFI_WEBSOCKET_SAMPLE]"
 #define WIFI_NOT_AVALLIABLE              0
 #define WIFI_AVALIABE                    1
 #define WIFI_GET_IP_MAX_COUNT            300
@@ -40,16 +40,16 @@ wifi_event_stru wifi_event_cb = {
 };
 
 enum {
-    WIFI_STA_SAMPLE_INIT = 0,       /* 0:初始态 */
-    WIFI_STA_SAMPLE_SCANING,        /* 1:扫描中 */
-    WIFI_STA_SAMPLE_SCAN_DONE,      /* 2:扫描完成 */
-    WIFI_STA_SAMPLE_FOUND_TARGET,   /* 3:匹配到目标AP */
-    WIFI_STA_SAMPLE_CONNECTING,     /* 4:连接中 */
-    WIFI_STA_SAMPLE_CONNECT_DONE,   /* 5:关联成功 */
-    WIFI_STA_SAMPLE_GET_IP,         /* 6:获取IP */
+    WIFI_WEBSOCKET_SAMPLE_INIT = 0,       /* 0:初始态 */
+    WIFI_WEBSOCKET_SAMPLE_SCANING,        /* 1:扫描中 */
+    WIFI_WEBSOCKET_SAMPLE_SCAN_DONE,      /* 2:扫描完成 */
+    WIFI_WEBSOCKET_SAMPLE_FOUND_TARGET,   /* 3:匹配到目标AP */
+    WIFI_WEBSOCKET_SAMPLE_CONNECTING,     /* 4:连接中 */
+    WIFI_WEBSOCKET_SAMPLE_CONNECT_DONE,   /* 5:关联成功 */
+    WIFI_WEBSOCKET_SAMPLE_GET_IP,         /* 6:获取IP */
 } wifi_state_enum;
 
-static td_u8 g_wifi_state = WIFI_STA_SAMPLE_INIT;
+static td_u8 g_wifi_state = WIFI_WEBSOCKET_SAMPLE_INIT;
 
 /*****************************************************************************
   STA 扫描事件回调函数
@@ -58,8 +58,8 @@ static td_void wifi_scan_state_changed(td_s32 state, td_s32 size)
 {
     UNUSED(state);
     UNUSED(size);
-    PRINT("%s::Scan done!.\r\n", WIFI_STA_SAMPLE_LOG);
-    g_wifi_state = WIFI_STA_SAMPLE_SCAN_DONE;
+    PRINT("%s::Scan done!.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    g_wifi_state = WIFI_WEBSOCKET_SAMPLE_SCAN_DONE;
     return;
 }
 
@@ -72,11 +72,11 @@ static td_void wifi_connection_changed(td_s32 state, const wifi_linked_info_stru
     UNUSED(reason_code);
 
     if (state == WIFI_NOT_AVALLIABLE) {
-        PRINT("%s::Connect fail!. try agin !\r\n", WIFI_STA_SAMPLE_LOG);
-        g_wifi_state = WIFI_STA_SAMPLE_INIT;
+        PRINT("%s::Connect fail!. try agin !\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+        g_wifi_state = WIFI_WEBSOCKET_SAMPLE_INIT;
     } else {
-        PRINT("%s::Connect succ!.\r\n", WIFI_STA_SAMPLE_LOG);
-        g_wifi_state = WIFI_STA_SAMPLE_CONNECT_DONE;
+        PRINT("%s::Connect succ!.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+        g_wifi_state = WIFI_WEBSOCKET_SAMPLE_CONNECT_DONE;
     }
 }
 
@@ -164,14 +164,14 @@ td_bool example_check_dhcp_status(struct netif *netif_p, td_u32 *wait_count)
 {
     if ((ip_addr_isany(&(netif_p->ip_addr)) == 0) && (*wait_count <= WIFI_GET_IP_MAX_COUNT)) {
         /* DHCP成功 */
-        PRINT("%s::STA DHCP success.\r\n", WIFI_STA_SAMPLE_LOG);
+        PRINT("%s::STA DHCP success.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
         return 0;
     }
 
     if (*wait_count > WIFI_GET_IP_MAX_COUNT) {
-        PRINT("%s::STA DHCP timeout, try again !.\r\n", WIFI_STA_SAMPLE_LOG);
+        PRINT("%s::STA DHCP timeout, try again !.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
         *wait_count = 0;
-        g_wifi_state = WIFI_STA_SAMPLE_INIT;
+        g_wifi_state = WIFI_WEBSOCKET_SAMPLE_INIT;
     }
     return -1;
 }
@@ -187,44 +187,44 @@ td_s32 example_sta_function(td_void)
     if (wifi_sta_enable() != 0) {
         return -1;
     }
-    PRINT("%s::STA enable succ.\r\n", WIFI_STA_SAMPLE_LOG);
+    PRINT("%s::STA enable succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 
     do {
         (void)osDelay(1); /* 1: 等待10ms后判断状态 */
-        if (g_wifi_state == WIFI_STA_SAMPLE_INIT) {
-            PRINT("%s::Scan start!\r\n", WIFI_STA_SAMPLE_LOG);
-            g_wifi_state = WIFI_STA_SAMPLE_SCANING;
+        if (g_wifi_state == WIFI_WEBSOCKET_SAMPLE_INIT) {
+            PRINT("%s::Scan start!\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+            g_wifi_state = WIFI_WEBSOCKET_SAMPLE_SCANING;
             /* 启动STA扫描 */
             if (wifi_sta_scan() != 0) {
-                g_wifi_state = WIFI_STA_SAMPLE_INIT;
+                g_wifi_state = WIFI_WEBSOCKET_SAMPLE_INIT;
                 continue;
             }
-        } else if (g_wifi_state == WIFI_STA_SAMPLE_SCAN_DONE) {
+        } else if (g_wifi_state == WIFI_WEBSOCKET_SAMPLE_SCAN_DONE) {
             /* 获取待连接的网络 */
             if (example_get_match_network(&expected_bss) != 0) {
-                PRINT("%s::Do not find AP, try again !\r\n", WIFI_STA_SAMPLE_LOG);
-                g_wifi_state = WIFI_STA_SAMPLE_INIT;
+                PRINT("%s::Do not find AP, try again !\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+                g_wifi_state = WIFI_WEBSOCKET_SAMPLE_INIT;
                 continue;
             }
-            g_wifi_state = WIFI_STA_SAMPLE_FOUND_TARGET;
-        } else if (g_wifi_state == WIFI_STA_SAMPLE_FOUND_TARGET) {
-            PRINT("%s::Connect start.\r\n", WIFI_STA_SAMPLE_LOG);
-            g_wifi_state = WIFI_STA_SAMPLE_CONNECTING;
+            g_wifi_state = WIFI_WEBSOCKET_SAMPLE_FOUND_TARGET;
+        } else if (g_wifi_state == WIFI_WEBSOCKET_SAMPLE_FOUND_TARGET) {
+            PRINT("%s::Connect start.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+            g_wifi_state = WIFI_WEBSOCKET_SAMPLE_CONNECTING;
             /* 启动连接 */
             if (wifi_sta_connect(&expected_bss) != 0) {
-                g_wifi_state = WIFI_STA_SAMPLE_INIT;
+                g_wifi_state = WIFI_WEBSOCKET_SAMPLE_INIT;
                 continue;
             }
-        } else if (g_wifi_state == WIFI_STA_SAMPLE_CONNECT_DONE) {
-            PRINT("%s::DHCP start.\r\n", WIFI_STA_SAMPLE_LOG);
-            g_wifi_state = WIFI_STA_SAMPLE_GET_IP;
+        } else if (g_wifi_state == WIFI_WEBSOCKET_SAMPLE_CONNECT_DONE) {
+            PRINT("%s::DHCP start.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+            g_wifi_state = WIFI_WEBSOCKET_SAMPLE_GET_IP;
             netif_p = netifapi_netif_find(ifname);
             if (netif_p == TD_NULL || netifapi_dhcp_start(netif_p) != 0) {
-                PRINT("%s::find netif or start DHCP fail, try again !\r\n", WIFI_STA_SAMPLE_LOG);
-                g_wifi_state = WIFI_STA_SAMPLE_INIT;
+                PRINT("%s::find netif or start DHCP fail, try again !\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+                g_wifi_state = WIFI_WEBSOCKET_SAMPLE_INIT;
                 continue;
             }
-        } else if (g_wifi_state == WIFI_STA_SAMPLE_GET_IP) {
+        } else if (g_wifi_state == WIFI_WEBSOCKET_SAMPLE_GET_IP) {
             if (example_check_dhcp_status(netif_p, &wait_count) == 0) {
                 break;
             }
@@ -235,45 +235,45 @@ td_s32 example_sta_function(td_void)
     return 0;
 }
 
-int sta_sample_init(void *param)
+int websocket_sample_init(void *param)
 {
     param = param;
 
     /* 注册事件回调 */
     if (wifi_register_event_cb(&wifi_event_cb) != 0) {
-        PRINT("%s::wifi_event_cb register fail.\r\n", WIFI_STA_SAMPLE_LOG);
+        PRINT("%s::wifi_event_cb register fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
         return -1;
     }
-    PRINT("%s::wifi_event_cb register succ.\r\n", WIFI_STA_SAMPLE_LOG);
+    PRINT("%s::wifi_event_cb register succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 
     /* 等待wifi初始化完成 */
     while (wifi_is_wifi_inited() == 0) {
         (void)osDelay(10); /* 1: 等待100ms后判断状态 */
     }
-    PRINT("%s::wifi init succ.\r\n", WIFI_STA_SAMPLE_LOG);
+    PRINT("%s::wifi init succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 
     if (example_sta_function() != 0) {
-        PRINT("%s::example_sta_function fail.\r\n", WIFI_STA_SAMPLE_LOG);
+        PRINT("%s::example_sta_function fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
         return -1;
     }
     return 0;
 }
 
-static void sta_sample_entry(void)
+static void websocket_sample_entry(void)
 {
     osThreadAttr_t attr;
-    attr.name       = "sta_sample_task";
+    attr.name       = "websocket_sample_task";
     attr.attr_bits  = 0U;
     attr.cb_mem     = NULL;
     attr.cb_size    = 0U;
     attr.stack_mem  = NULL;
     attr.stack_size = WIFI_TASK_STACK_SIZE;
     attr.priority   = WIFI_TASK_PRIO;
-    if (osThreadNew((osThreadFunc_t)sta_sample_init, NULL, &attr) == NULL) {
-        PRINT("%s::Create sta_sample_task fail.\r\n", WIFI_STA_SAMPLE_LOG);
+    if (osThreadNew((osThreadFunc_t)websocket_sample_init, NULL, &attr) == NULL) {
+        PRINT("%s::Create websocket_sample_task fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
     }
-    PRINT("%s::Create sta_sample_task succ.\r\n", WIFI_STA_SAMPLE_LOG);
+    PRINT("%s::Create websocket_sample_task succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 }
 
-/* Run the sta_sample_task. */
-app_run(sta_sample_entry);
+/* Run the websocket_sample_task. */
+app_run(websocket_sample_entry);
