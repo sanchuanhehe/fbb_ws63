@@ -1,0 +1,41 @@
+name: Build and Compile
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - feature*
+  pull_request:
+    branches:
+      - main
+      - dev
+      - feature*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        ./config.sh
+
+    - name: Build and Compile
+      run: |
+        cd src
+        python build.py -c -ninja
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: standard-bs21e-1100e
+        path: src/output/bs21e/fwpkg/standard-bs21e-1100e
