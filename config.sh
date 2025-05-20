@@ -40,7 +40,7 @@ pip3 install "kconfiglib>=14.1.0"
 pip3 install "pycparser>=2.21"
 
 # 安装PYYAML
-pip3 install pyyaml distutils
+pip3 install pyyaml
 
 # 设置环境变量
 export LC_ALL=C.UTF-8
