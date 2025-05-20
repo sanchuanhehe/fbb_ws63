@@ -42,8 +42,14 @@ ENV LC_ALL=C.UTF-8
 # 设置passwordless sudo
 RUN echo "ALL ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# 创建 vscode 用户（UID 1000），并设置 home 目录和 shell
-RUN useradd -m -s /bin/bash -u 1000 vscode \
-    && echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+# 如果已存在 UID 1000 用户，则改名为 vscode，否则新建
+RUN if id -u 1000 >/dev/null 2>&1; then \
+      usermod -l vscode -d /home/vscode -m $(getent passwd 1000 | cut -d: -f1) && \
+      usermod -aG sudo vscode && \
+      echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers; \
+    else \
+      useradd -m -s /bin/bash -u 1000 vscode && \
+      echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers; \
+    fi
 
 USER vscode
