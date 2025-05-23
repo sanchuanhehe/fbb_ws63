@@ -178,10 +178,10 @@ static errcode_t sle_uuid_server_property_add(void)
     errcode_t ret;
     ssaps_property_info_t property = {0};
     ssaps_desc_info_t descriptor = {0};
-    uint8_t ntf_value[] = { 0x01, 0x02 };
+    uint8_t ntf_value[] = {0x01, 0x0};
 
     property.permissions = SLE_UUID_TEST_PROPERTIES;
-    property.operate_indication = SLE_UUID_TEST_OPERATION_INDICATION;
+    property.operate_indication = SSAP_OPERATE_INDICATION_BIT_READ | SSAP_OPERATE_INDICATION_BIT_NOTIFY;
     sle_uuid_setu2(SLE_UUID_SERVER_NTF_REPORT, &property.uuid);
     property.value = (uint8_t *)osal_vmalloc(sizeof(g_sle_property_value));
     if (property.value == NULL) {
@@ -199,18 +199,10 @@ static errcode_t sle_uuid_server_property_add(void)
         return ERRCODE_SLE_FAIL;
     }
     descriptor.permissions = SLE_UUID_TEST_DESCRIPTOR;
-    descriptor.type = SSAP_DESCRIPTOR_CLIENT_CONFIGURATION;
-    descriptor.operate_indication = SLE_UUID_TEST_OPERATION_INDICATION;
-    descriptor.value = (uint8_t *)osal_vmalloc(sizeof(ntf_value));
-    if (descriptor.value == NULL) {
-        osal_vfree(property.value);
-        return ERRCODE_SLE_FAIL;
-    }
-    if (memcpy_s(descriptor.value, sizeof(ntf_value), ntf_value, sizeof(ntf_value)) != EOK) {
-        osal_vfree(property.value);
-        osal_vfree(descriptor.value);
-        return ERRCODE_SLE_FAIL;
-    }
+    descriptor.type = SSAP_DESCRIPTOR_USER_DESCRIPTION;
+    descriptor.operate_indication = SSAP_OPERATE_INDICATION_BIT_READ | SSAP_OPERATE_INDICATION_BIT_WRITE;
+    descriptor.value = ntf_value;
+    descriptor.value_len = sizeof(ntf_value);
     ret = ssaps_add_descriptor_sync(g_server_id, g_service_handle, g_property_handle, &descriptor);
     if (ret != ERRCODE_SLE_SUCCESS) {
         sample_at_log_print("%s sle uart add descriptor fail, ret:%x\r\n", SLE_UART_SERVER_LOG, ret);
@@ -219,7 +211,6 @@ static errcode_t sle_uuid_server_property_add(void)
         return ERRCODE_SLE_FAIL;
     }
     osal_vfree(property.value);
-    osal_vfree(descriptor.value);
     return ERRCODE_SLE_SUCCESS;
 }
 
