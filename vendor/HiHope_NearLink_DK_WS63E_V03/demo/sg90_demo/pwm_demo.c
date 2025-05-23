@@ -43,8 +43,8 @@
 
 void setangle(uint8_t angle)
 {
-    if (angle > 180) {
-        angle = 180;
+    if (angle > 180) { // 角度是否大于180°
+        angle = 180; // 角度默认最大为180°
     }
     // 计算 pulse (500us~2500us)
     uint32_t pulse = 500 + angle * (2000) / 180; // us
