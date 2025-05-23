@@ -29,13 +29,15 @@
 #include "pinctrl.h"
 
 #define CONFIG_WIFI_SSID "H"        // 要连接的WiFi 热点账号
-#define CONFIG_WIFI_PWD "123456789" // 要连接的WiFi 热点密码
+#define CONFIG_WIFI_PWD "12345678" // 要连接的WiFi 热点密码
 #define CONFIG_I2C_SCL_MASTER_PIN 15
 #define CONFIG_I2C_SDA_MASTER_PIN 16
 #define CONFIG_I2C_MASTER_PIN_MODE 2
 #define I2C_MASTER_ADDR 0x0
 #define I2C_SLAVE1_ADDR 0x38
 #define I2C_SET_BANDRATE 400000
+#define SNTP_TASK_SIZE 0x2000
+#define SNTP_TASK 24
 
 void app_i2c_init_pin(void)
 {
@@ -75,7 +77,7 @@ int start_sntp(void)
     }
     // 转换为UTC时间结构（不进行时区转换）
     time_t rawtime = time_local.tv_sec;
-    struct tm *utc_time = gmtime(&rawtime); // 使用gmtime而不是localtime
+    struct tm *utc_time = gmtime(&rawtime);
 
     if (utc_time == NULL) {
         printf("gmtime failed\r\n");
@@ -83,19 +85,19 @@ int start_sntp(void)
     }
     // 处理可能的溢出（超过 24 小时）
     mktime(utc_time); // 自动规范化时间（如 25:00 → 01:00）
-    ret = sprintf(year_str, "%04d-%02d-%02d", utc_time->tm_year + 1900, utc_time->tm_mon + 1, utc_time->tm_mday);
+    ret = sprintf(year_str, "%04d-%02d-%02d", utc_time->tm_year + 1900, utc_time->tm_mon + 1, utc_time->tm_mday); // 1900初始年份
     if (ret < 0) {
         printf("year_str failed\r\n");
         return ret;
     }
-    ret = sprintf(time_str, "%02d:%02d:%02d", utc_time->tm_hour + 8, utc_time->tm_min, utc_time->tm_sec);
+    ret = sprintf(time_str, "%02d:%02d:%02d", utc_time->tm_hour + 8, utc_time->tm_min, utc_time->tm_sec); // 中国时区需要+8小时
     if (ret < 0) {
         printf("time_str failed\r\n");
         return ret;
     }
-    ssd1306_SetCursor(32, 8);
+    ssd1306_SetCursor(32, 8); // 横坐标为32，纵坐标为8
     ssd1306_DrawString(year_str, Font_7x10, White);
-    ssd1306_SetCursor(35, 20);
+    ssd1306_SetCursor(35, 20); // 横坐标为35，纵坐标为20
     ssd1306_DrawString(time_str, Font_7x10, White);
     ssd1306_UpdateScreen();
     return ret;
@@ -108,7 +110,7 @@ int sntp_task(void)
     // 初始化LWIP和网络接口
     wifi_connect(CONFIG_WIFI_SSID, CONFIG_WIFI_PWD);
     while (1) {
-        osal_msleep(100);
+        osal_msleep(100); // 每100ms访问一次服务器，刷新一下时间显示
         start_sntp();
     }
 
@@ -119,9 +121,9 @@ static void sntp_entry(void)
 {
     osal_task *task_handle = NULL;
     osal_kthread_lock();
-    task_handle = osal_kthread_create((osal_kthread_handler)sntp_task, 0, "sntpTask", 0x2000);
+    task_handle = osal_kthread_create((osal_kthread_handler)sntp_task, 0, "sntpTask", SNTP_TASK_SIZE);
     if (task_handle != NULL) {
-        osal_kthread_set_priority(task_handle, 24);
+        osal_kthread_set_priority(task_handle, SNTP_TASK);
         osal_kfree(task_handle);
     }
     osal_kthread_unlock();
