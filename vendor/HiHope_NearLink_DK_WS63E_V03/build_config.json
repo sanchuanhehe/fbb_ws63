@@ -291,5 +291,23 @@
     "key":"25",
     "name":"mqtt",
     "description":"华为云与开发板通过MQTT实现订阅、发布"
+  },{
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/lwip_sntp",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },{
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/wifi_promiscuous_mode",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
+  },{
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/sg90_demo",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false"
   }
 ]
