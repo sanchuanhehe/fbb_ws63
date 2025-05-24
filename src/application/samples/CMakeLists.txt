@@ -28,9 +28,6 @@ endif()
 if(DEFINED CONFIG_ENABLE_NFC_SAMPLE)
     add_subdirectory_if_exist(nfc)
 endif()
-if(DEFINED CONFIG_ENABLE_TINYML_SAMPLE)
-    add_subdirectory_if_exist(tinyml)
-endif()
 add_subdirectory_if_exist(custom)
 
 set(PRIVATE_HEADER
