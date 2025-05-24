@@ -509,7 +509,7 @@ static void websocket_task_entry(void *arg)
             // 尝试建立WebSocket连接，添加更详细的错误处理
             PRINT("%s::调用WebSocket_connect...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 
-            rc = WebSocket_connect(&g_websocket_net, 1, url); // 1表示使用SSL
+            rc = WebSocket_connect(&g_websocket_net, 0, url);
 
             PRINT("%s::WebSocket_connect返回码: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, rc);
 
