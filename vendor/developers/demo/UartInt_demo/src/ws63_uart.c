@@ -23,7 +23,7 @@ uint8_t g_app_uart_rx_buff[1] = {0};
 uint8_t g_buff[BUFFER_SIZE] = {0};
 uint8_t g_app_uart_int_rx_buff[BUFFER_SIZE] = {0};
 uint8_t g_app_uart_tx_buff[BUFFER_SIZE] = {0};
-volatile uint8_t g_app_uart_rx_flag = 0;
+uint8_t g_app_uart_rx_flag = 0;
 uint16_t g_app_uart_int_rx_buff_len = 0;
 uint16_t g_buff_len = 0;
 
