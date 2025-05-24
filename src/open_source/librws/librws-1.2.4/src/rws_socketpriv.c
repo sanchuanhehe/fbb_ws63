@@ -180,7 +180,7 @@ rws_bool rws_socket_recv(_rws_socket * s) {
 #endif
 		if (len > 0) {
 			total_len += len;
-			if (s->received_size - s->received_len < len) {
+			if (s->received_size - s->received_len < (size_t)len) {
 				rws_socket_resize_received(s, s->received_size + len);
 			}
 			received = (char *)s->received;
@@ -206,6 +206,7 @@ _rws_frame * rws_socket_last_unfin_recvd_frame_by_opcode(_rws_socket * s, const 
 	_rws_frame * last = NULL;
 	_rws_frame * frame = NULL;
 	_rws_node * cur = s->recvd_frames;
+	(void)opcode; // Suppress unused parameter warning
 	while (cur) {
 		frame = (_rws_frame *)cur->value.object;
 		if (frame) {

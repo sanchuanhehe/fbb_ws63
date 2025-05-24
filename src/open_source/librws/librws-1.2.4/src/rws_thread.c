@@ -25,6 +25,7 @@
 #include "rws_thread.h"
 #include "rws_memory.h"
 #include "rws_common.h"
+#include "std_def.h"
 
 #include <assert.h>
 
@@ -117,6 +118,7 @@ static void * rws_thread_func_priv(void * some_pointer) {
 rws_thread rws_thread_create(rws_thread_funct thread_function, void * user_object) {
 	_rws_thread * t = NULL;
 	int res = -1;
+	UNUSED(res);
 #if !defined(RWS_OS_WINDOWS)
 	pthread_attr_t attr;
 #endif
@@ -161,6 +163,7 @@ rws_mutex rws_mutex_create_recursive(void) {
 #else
 	pthread_mutex_t * mutex = (pthread_mutex_t *)rws_malloc_zero(sizeof(pthread_mutex_t));
 	int res = -1;
+	UNUSED(res);
 	pthread_mutexattr_t attr;
 	if (pthread_mutexattr_init(&attr) == 0) {
 		if (pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE) == 0) {
