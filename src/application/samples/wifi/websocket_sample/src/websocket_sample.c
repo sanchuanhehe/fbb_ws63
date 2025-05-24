@@ -469,40 +469,158 @@ static void websocket_task_entry(void *arg)
         if (g_network_connected) {
             PRINT("%s::网络已连接，开始WebSocket连接...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 
-            // 重置WebSocket句柄
+            // 安全地重置WebSocket句柄
             memset_s(&g_websocket_net, sizeof(networkHandles), 0, sizeof(networkHandles));
-            const char *url = "wss://toolin.cn/echo";
-            int rc;
 
-            // 尝试建立WebSocket连接
+            // 初始化关键字段为安全值
+            g_websocket_net.socket = -1;   // 无效socket值
+            g_websocket_net.websocket = 0; // 未升级为WebSocket
+            g_websocket_net.websocket_key = NULL;
+            g_websocket_net.http_proxy = NULL;
+            g_websocket_net.http_proxy_auth = NULL;
+            g_websocket_net.httpHeaders = NULL;
+#if defined(OPENSSL) || defined(MBEDTLS)
+            g_websocket_net.ssl = NULL;
+            g_websocket_net.ctx = NULL;
+            g_websocket_net.https_proxy = NULL;
+            g_websocket_net.https_proxy_auth = NULL;
+#endif
+
+            // 验证URL有效性
+            const char *url = WEBSOCKET_URL;
+            if (url == NULL || strlen(url) == 0) {
+                PRINT("%s::WebSocket URL无效\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+                osDelay(5000);
+                continue;
+            }
+
+            PRINT("%s::准备连接到: %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, url);
+
+            // 添加延时，确保网络完全稳定
+            osDelay(1000);
+
+            // 再次检查网络状态
+            if (!g_network_connected) {
+                PRINT("%s::网络已断开，取消WebSocket连接\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+                continue;
+            }
+
+            int rc;
+            // 尝试建立WebSocket连接，添加更详细的错误处理
+            PRINT("%s::调用WebSocket_connect...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+
             rc = WebSocket_connect(&g_websocket_net, 1, url); // 1表示使用SSL
+
+            PRINT("%s::WebSocket_connect返回码: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, rc);
+
             if (rc != 0) {
                 PRINT("%s::建立WebSocket连接失败，错误码: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, rc);
+
+                // 根据错误码提供更详细的错误信息
+                switch (rc) {
+                    case -1:
+                        PRINT("%s::连接错误：网络不可达或连接被拒绝\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+                        break;
+                    case -2:
+                        PRINT("%s::连接错误：DNS解析失败\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+                        break;
+                    case -3:
+                        PRINT("%s::连接错误：SSL握手失败\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+                        break;
+                    case -4:
+                        PRINT("%s::连接错误：WebSocket握手失败\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+                        break;
+                    default:
+                        PRINT("%s::连接错误：未知错误 (%d)\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, rc);
+                        break;
+                }
+
+                // 安全清理可能的残留状态
+                if (g_websocket_net.socket > 0) {
+                    // 如果socket已分配，尝试关闭它
+                    PRINT("%s::清理残留socket: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, g_websocket_net.socket);
+                }
+
+                // 重新初始化句柄
+                memset_s(&g_websocket_net, sizeof(networkHandles), 0, sizeof(networkHandles));
+                g_websocket_net.socket = -1;
+
                 osDelay(5000); // 延迟5秒后重试
                 continue;
             }
 
             PRINT("%s::WebSocket连接已建立到 %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, url);
 
+            // 验证连接句柄有效性
+            if (g_websocket_net.socket <= 0) {
+                PRINT("%s::WebSocket socket无效: %d，重试连接\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, g_websocket_net.socket);
+                memset_s(&g_websocket_net, sizeof(networkHandles), 0, sizeof(networkHandles));
+                g_websocket_net.socket = -1;
+                continue;
+            }
+
+            // 验证WebSocket升级状态
+            if (g_websocket_net.websocket != 1) {
+                PRINT("%s::WebSocket未正确升级，状态: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, g_websocket_net.websocket);
+                WebSocket_close(&g_websocket_net, WebSocket_CLOSE_NORMAL, "升级失败");
+                memset_s(&g_websocket_net, sizeof(networkHandles), 0, sizeof(networkHandles));
+                g_websocket_net.socket = -1;
+                continue;
+            }
+
+            PRINT("%s::WebSocket连接验证通过，socket: %d, websocket: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG,
+                  g_websocket_net.socket, g_websocket_net.websocket);
+
             // 设置WebSocket连接状态
             g_websocket_connected = TD_TRUE;
 
             // 通知收发任务开始工作（释放两次信号量）
-            osSemaphoreRelease(g_websocket_ready_sem);
-            osSemaphoreRelease(g_websocket_ready_sem);
+            if (g_websocket_ready_sem != NULL) {
+                osSemaphoreRelease(g_websocket_ready_sem);
+                osSemaphoreRelease(g_websocket_ready_sem);
+                PRINT("%s::已通知收发任务开始工作\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+            } else {
+                PRINT("%s::警告：WebSocket信号量为空\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+            }
 
             // 监控连接状态
             while (g_network_connected && g_websocket_connected) {
                 osDelay(1000); // 每秒检查一次连接状态
+
+                // 检查socket是否仍然有效
+                if (g_websocket_net.socket <= 0) {
+                    PRINT("%s::检测到WebSocket socket异常: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, g_websocket_net.socket);
+                    g_websocket_connected = TD_FALSE;
+                    break;
+                }
+
+                // 可选：添加简单的心跳检测
+                // 这里可以发送ping帧来检测连接活性
             }
 
             // 连接断开处理
-            PRINT("%s::WebSocket连接断开\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+            PRINT("%s::WebSocket连接断开，开始清理...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
             g_websocket_connected = TD_FALSE;
 
-            // 关闭WebSocket连接
-            WebSocket_close(&g_websocket_net, WebSocket_CLOSE_NORMAL, "正常关闭");
+            // 安全关闭WebSocket连接
+            if (g_websocket_net.socket > 0 && g_websocket_net.websocket == 1) {
+                PRINT("%s::正在关闭WebSocket连接，socket: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, g_websocket_net.socket);
+                WebSocket_close(&g_websocket_net, WebSocket_CLOSE_NORMAL, "正常关闭");
+            } else {
+                PRINT("%s::跳过WebSocket关闭，socket: %d, websocket: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG,
+                      g_websocket_net.socket, g_websocket_net.websocket);
+            }
+
+            // 终止WebSocket（清理全局状态）
             WebSocket_terminate();
+
+            // 完全清理句柄
+            memset_s(&g_websocket_net, sizeof(networkHandles), 0, sizeof(networkHandles));
+            g_websocket_net.socket = -1;
+
+            PRINT("%s::WebSocket连接已完全清理\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+        } else {
+            PRINT("%s::网络未连接，等待网络恢复...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
         }
     }
 }
