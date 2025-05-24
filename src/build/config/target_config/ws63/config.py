@@ -90,6 +90,7 @@ target = {
             "coap",
             "sle_chba_user",
             "sle_netdev",
+            # "tflite-micro"
         ],
         'ccflags': [
             "-DBOARD_ASIC", '-DPRE_ASIC',
