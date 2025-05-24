@@ -27,12 +27,25 @@
 #define WIFI_NOT_AVALLIABLE 0
 #define WIFI_AVALIABE 1
 #define WIFI_GET_IP_MAX_COUNT 300
-#define WIFI_SSID "my_softAP"/**< 待连接的网络接入名称 */
+#define WIFI_SSID "my_softAP"  /**< 待连接的网络接入名称 */
 #define WIFI_PSK "my_password" /**< 待连接的网络接入密码 */
 
 #define WIFI_TASK_PRIO (osPriority_t)(13)
 #define WIFI_TASK_DURATION_MS 2000
 #define WIFI_TASK_STACK_SIZE 0x1000
+
+// WebSocket任务相关定义
+#define WEBSOCKET_TASK_STACK_SIZE 0x1000
+#define WEBSOCKET_TASK_PRIO (osPriority_t)(12) // 低于WiFi任务优先级
+
+// 网络连接状态标志
+static volatile td_bool g_network_connected = TD_FALSE;
+
+// 信号量定义
+static osSemaphoreId_t g_network_ready_sem = NULL;
+
+// WebSocket任务声明
+static void websocket_task_entry(void *arg);
 
 /**
  * @brief Wi-Fi状态机枚举定义
@@ -54,10 +67,8 @@ static td_void wifi_scan_state_changed(td_s32 state, td_s32 size);
 static td_void wifi_connection_changed(td_s32 state, const wifi_linked_info_stru *info, td_s32 reason_code);
 
 // 事件回调结构体
-wifi_event_stru wifi_event_cb = {
-    .wifi_event_connection_changed = wifi_connection_changed,
-    .wifi_event_scan_state_changed = wifi_scan_state_changed,
-};
+wifi_event_stru wifi_event_cb = {.wifi_event_connection_changed = wifi_connection_changed,
+                                 .wifi_event_scan_state_changed = wifi_scan_state_changed};
 
 /**
  * @brief STA 扫描事件回调函数
@@ -89,6 +100,8 @@ static td_void wifi_connection_changed(td_s32 state, const wifi_linked_info_stru
     if (state == WIFI_NOT_AVALLIABLE) {
         PRINT("%s::Connect fail!. try agin !\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
         g_wifi_state = WIFI_WEBSOCKET_SAMPLE_INIT;
+        // 网络断开时更新标志
+        g_network_connected = TD_FALSE;
     } else {
         PRINT("%s::Connect succ!.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
         g_wifi_state = WIFI_WEBSOCKET_SAMPLE_CONNECT_DONE;
@@ -188,6 +201,13 @@ td_bool example_check_dhcp_status(struct netif *netif_p, td_u32 *wait_count)
 {
     if ((ip_addr_isany(&(netif_p->ip_addr)) == 0) && (*wait_count <= WIFI_GET_IP_MAX_COUNT)) {
         PRINT("%s::STA DHCP success.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+
+        // 设置网络连接标志并释放信号量
+        g_network_connected = TD_TRUE;
+        if (g_network_ready_sem != NULL) {
+            osSemaphoreRelease(g_network_ready_sem);
+        }
+
         return 0;
     }
     if (*wait_count > WIFI_GET_IP_MAX_COUNT) {
@@ -275,7 +295,12 @@ td_s32 example_sta_function(td_void)
 int websocket_sample_wifi_init(void *param)
 {
     UNUSED(param);
-
+    // 创建网络就绪信号量
+    g_network_ready_sem = osSemaphoreNew(1, 0, NULL);
+    if (g_network_ready_sem == NULL) {
+        PRINT("%s::Create network semaphore fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+        return -1;
+    }
     // 注册事件回调
     if (wifi_register_event_cb(&wifi_event_cb) != 0) {
         PRINT("%s::wifi_event_cb register fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
@@ -299,25 +324,76 @@ int websocket_sample_wifi_init(void *param)
 
 /**
  * @brief websocket_sample_wifi_entry
- * @details 创建websocket_sample_task线程
+ * @details 创建websocket_sample_wifi_init线程
  */
 static void websocket_sample_wifi_entry(void)
 {
-    osThreadAttr_t attr;
-    attr.name = "websocket_sample_task";
-    attr.attr_bits = 0U;
-    attr.cb_mem = NULL;
-    attr.cb_size = 0U;
-    attr.stack_mem = NULL;
-    attr.stack_size = WIFI_TASK_STACK_SIZE;
-    attr.priority = WIFI_TASK_PRIO;
-    if (osThreadNew((osThreadFunc_t)websocket_sample_wifi_init, NULL, &attr) == NULL) {
-        PRINT("%s::Create websocket_sample_task fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    osThreadAttr_t wifi_init_attr;
+    wifi_init_attr.name = "websocket_sample_wifi_init";
+    wifi_init_attr.attr_bits = 0U;
+    wifi_init_attr.cb_mem = NULL;
+    wifi_init_attr.cb_size = 0U;
+    wifi_init_attr.stack_mem = NULL;
+    wifi_init_attr.stack_size = WIFI_TASK_STACK_SIZE;
+    wifi_init_attr.priority = WIFI_TASK_PRIO;
+    if (osThreadNew((osThreadFunc_t)websocket_sample_wifi_init, NULL, &wifi_init_attr) == NULL) {
+        PRINT("%s::Create websocket_sample_wifi_init fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
     }
-    PRINT("%s::Create websocket_sample_task succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    PRINT("%s::Create websocket_sample_wifi_init succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    osThreadAttr_t ws_task_attr;
+    // 创建WebSocket任务
+    ws_task_attr.name = "websocket_task";
+    ws_task_attr.attr_bits = 0U;
+    ws_task_attr.cb_mem = NULL;
+    ws_task_attr.cb_size = 0U;
+    ws_task_attr.stack_mem = NULL;
+    ws_task_attr.stack_size = WEBSOCKET_TASK_STACK_SIZE;
+    ws_task_attr.priority = WEBSOCKET_TASK_PRIO;
+    if (osThreadNew((osThreadFunc_t)websocket_task_entry, NULL, &ws_task_attr) == NULL) {
+        PRINT("%s::Create websocket_task fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    }
+    PRINT("%s::Create websocket_task succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 }
 
 /**
- * @brief 启动websocket_sample_task
+ * @brief WebSocket 任务实现
+ * @param arg 未使用
+ * @details 等待网络连接就绪，执行WebSocket操作，监控网络状态
+ */
+static void websocket_task_entry(void *arg)
+{
+    UNUSED(arg);
+
+    PRINT("%s::WebSocket task started, waiting for network...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+
+    while (1) {
+        // 等待网络连接就绪信号
+        osSemaphoreAcquire(g_network_ready_sem, osWaitForever);
+
+        // 确认网络已连接
+        if (g_network_connected) {
+            PRINT("%s::Network connected, starting WebSocket connection...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+
+            // TODO: 初始化WebSocket连接
+            // websocket_init();
+
+            // WebSocket工作循环
+            while (g_network_connected) {
+                // TODO: 执行WebSocket操作
+                // websocket_process();
+
+                (void)osDelay(100); // 降低CPU使用率
+            }
+
+            // 网络已断开，关闭WebSocket连接
+            PRINT("%s::Network disconnected, closing WebSocket...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+            // TODO: 关闭WebSocket连接
+            // websocket_close();
+        }
+    }
+}
+
+/**
+ * @brief 启动websocket_sample_wifi_init
  */
 app_run(websocket_sample_wifi_entry);
