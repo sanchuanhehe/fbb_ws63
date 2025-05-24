@@ -627,10 +627,6 @@ static void websocket_task_entry(void *arg)
 
 /**
  * @brief websocket_sample_wifi_entry
- * @details 创建websocket_sample_wifi_init线程
- */
-/**
- * @brief websocket_sample_wifi_entry
  * @details 创建所有WebSocket相关线程
  */
 static void websocket_sample_wifi_entry(void)
