@@ -26,7 +26,7 @@
       "buildDef": "",
       "needSmoke": "false",
       "key": "3",
-      "name": "wifi_http",
+      "name": "wifi_http_demo",
       "description": "WiFi+HTTP Get请求"
     },
     {
@@ -56,7 +56,7 @@
       "buildDef": "",
       "needSmoke": "false",
       "key": "6",
-      "name": "UartInt",
+      "name": "UartInt_demo",
       "description": "串口中断收发"
     }
 ]
