@@ -17,6 +17,7 @@
 #define BAUD_RATE 115200
 
 #define MSLEEP_TIME 5
+#define UART_REC_WAITTIME 50
 #define UART_SEND_CMD_WAITTIME 1000
 
 uint8_t g_app_uart_rx_buff[1] = {0};
@@ -230,7 +231,7 @@ void Uart_Progress_Task()
     while (1)
     {
         uapi_watchdog_kick();
-        osal_msleep(50);
+        osal_msleep(UART_REC_WAITTIME);
 
         if(WS63Uart_Rec_State.mqtt_break_flag == 1) //MQTT断开重连
         {
