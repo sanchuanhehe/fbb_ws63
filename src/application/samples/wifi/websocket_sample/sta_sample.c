@@ -266,7 +266,7 @@ td_s32 example_sta_function(td_void)
 }
 
 /**
- * @brief websocket_sample_init
+ * @brief websocket_sample_wifi_init
  * @param param 未使用
  * @retval 0 成功
  * @retval -1 失败
