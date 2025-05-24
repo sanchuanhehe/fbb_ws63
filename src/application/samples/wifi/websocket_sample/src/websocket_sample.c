@@ -38,6 +38,7 @@
 // WebSocket任务相关定义
 #define WEBSOCKET_TASK_STACK_SIZE 0x1000
 #define WEBSOCKET_TASK_PRIO (osPriority_t)(12) // 低于WiFi任务优先级
+#define WEBSOCKET_URL "wss://echo.websocket.org/"
 
 // 网络连接状态标志
 static volatile td_bool g_network_connected = TD_FALSE;
@@ -361,11 +362,16 @@ static void websocket_sample_wifi_entry(void)
  * @param arg 未使用
  * @details 等待网络连接就绪，执行WebSocket操作，监控网络状态
  */
+/**
+ * @brief WebSocket 任务实现
+ * @param arg 未使用
+ * @details 等待网络连接就绪，执行WebSocket操作，监控网络状态
+ */
 static void websocket_task_entry(void *arg)
 {
     UNUSED(arg);
 
-    PRINT("%s::WebSocket task started, waiting for network...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    PRINT("%s::WebSocket任务启动，等待网络连接...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 
     while (1) {
         // 等待网络连接就绪信号
@@ -373,23 +379,71 @@ static void websocket_task_entry(void *arg)
 
         // 确认网络已连接
         if (g_network_connected) {
-            PRINT("%s::Network connected, starting WebSocket connection...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+            PRINT("%s::网络已连接，开始WebSocket连接...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 
-            // TODO: 初始化WebSocket连接
-            // websocket_init();
+            // 声明网络句柄和WebSocket URL
+            networkHandles net = {0};
+            const char *url = WEBSOCKET_URL;
+            int rc;
 
-            // WebSocket工作循环
-            while (g_network_connected) {
-                // TODO: 执行WebSocket操作
-                // websocket_process();
-
-                (void)osDelay(100); // 降低CPU使用率
+            // 尝试建立WebSocket连接
+            rc = WebSocket_connect(&net, 1, url); // 1表示使用SSL
+            if (rc != 0) {
+                PRINT("%s::建立WebSocket连接失败，错误码: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, rc);
+                osDelay(5000); // 延迟5秒后重试
+                continue;
             }
 
-            // 网络已断开，关闭WebSocket连接
-            PRINT("%s::Network disconnected, closing WebSocket...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
-            // TODO: 关闭WebSocket连接
-            // websocket_close();
+            PRINT("%s::WebSocket连接已建立到 %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, url);
+
+            // WebSocket通信循环
+            int message_count = 1;
+            while (g_network_connected) {
+                // 创建要发送的消息
+                char message[128];
+                snprintf(message, sizeof(message), "来自IoT设备的消息 #%d", message_count++);
+
+                // 准备发送数据
+                char *send_buf = message;
+                size_t send_len = strlen(message);
+                PacketBuffers bufs = {0};
+
+                // 发送消息
+                PRINT("%s::发送: %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, message);
+                rc = WebSocket_putdatas(&net, &send_buf, &send_len, &bufs);
+                if (rc != 0) {
+                    PRINT("%s::发送消息失败，错误码: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, rc);
+                    break;
+                }
+
+                // 等待服务器响应
+                osDelay(500);
+
+                // 接收响应
+                size_t actual_len = 0;
+                char *received_data = WebSocket_getdata(&net, 256, &actual_len);
+
+                if (received_data && actual_len > 0) {
+                    // 将接收到的数据转换为可打印字符串
+                    char *echo_message = osal_kmalloc(actual_len + 1, OSAL_GFP_ATOMIC);
+                    if (echo_message) {
+                        memcpy_s(echo_message, actual_len + 1, received_data, actual_len);
+                        echo_message[actual_len] = '\0';
+                        PRINT("%s::接收: %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, echo_message);
+                        osal_kfree(echo_message);
+                    }
+                } else {
+                    PRINT("%s::未收到响应或发生错误\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+                }
+
+                // 等待5秒后发送下一条消息
+                osDelay(5000);
+            }
+
+            // 关闭WebSocket连接
+            PRINT("%s::关闭WebSocket连接\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+            WebSocket_close(&net, WebSocket_CLOSE_NORMAL, "正常关闭");
+            WebSocket_terminate();
         }
     }
 }
