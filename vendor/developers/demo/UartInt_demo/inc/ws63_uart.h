@@ -63,4 +63,11 @@ void UartInt_Send_Cmd(uint8_t *cmd, uint8_t *expect_rbk, uint8_t sent_react_time
 void Uart_Rec_Task();
 void Uart_Progress_Task();
 
+extern void UartInt_Send_Cmd(uint8_t *cmd, uint8_t *expect_rbk, uint8_t sent_react_times);
+extern void Uart_Rec_Task();
+extern void Uart_Progress_Task();
+
+extern uint8_t g_app_uart_rx_flag;
+extern WS63Uart_Rec_State_t WS63Uart_Rec_State;
+
 #endif // WS63_UART_H
