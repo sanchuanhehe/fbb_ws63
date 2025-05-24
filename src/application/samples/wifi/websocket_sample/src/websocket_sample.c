@@ -358,9 +358,38 @@ static void websocket_sample_wifi_entry(void)
 }
 
 /**
- * @brief WebSocket 任务实现
+ * @brief WebSocket消息回调函数
+ * @param net 网络句柄
+ * @param data 接收到的数据
+ * @param len 数据长度
+ * @details 安全地处理接收到的WebSocket消息，并打印日志
+ */
+static void websocket_message_callback(networkHandles *net, char *data, size_t len)
+{
+    UNUSED(net);
+    if (data != NULL && len > 0 && len <= 1024) {
+        // 安全地处理接收到的消息
+        char *echo_message = osal_kmalloc(len + 1, OSAL_GFP_ATOMIC);
+        if (echo_message) {
+            if (memcpy_s(echo_message, len + 1, data, len) == 0) {
+                echo_message[len] = '\0';
+                PRINT("%s::接收回调: %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, echo_message);
+            } else {
+                PRINT("%s::复制接收数据失败\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+            }
+            osal_kfree(echo_message);
+        } else {
+            PRINT("%s::分配内存失败\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+        }
+    } else {
+        PRINT("%s::接收到无效数据，长度: %zu\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, len);
+    }
+}
+
+/**
+ * @brief WebSocket 任务实现 - 基于事件回调
  * @param arg 未使用
- * @details 等待网络连接就绪，执行WebSocket操作，监控网络状态
+ * @details 等待网络连接就绪，建立WebSocket连接，设置回调处理消息
  */
 static void websocket_task_entry(void *arg)
 {
@@ -378,7 +407,7 @@ static void websocket_task_entry(void *arg)
 
             // 声明网络句柄和WebSocket URL
             networkHandles net = {0};
-            const char *url = "wss://toolin.cn/echo"; // 修改为指定的URL
+            const char *url = WEBSOCKET_URL;
             int rc;
 
             // 尝试建立WebSocket连接
@@ -391,7 +420,7 @@ static void websocket_task_entry(void *arg)
 
             PRINT("%s::WebSocket连接已建立到 %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, url);
 
-            // WebSocket通信循环
+            // 消息发送循环
             int message_count = 1;
             while (g_network_connected) {
                 // 创建要发送的消息
@@ -411,37 +440,20 @@ static void websocket_task_entry(void *arg)
                     break;
                 }
 
-                // 等待服务器响应
-                osDelay(500);
-
-                // 接收响应 - 增加安全检查
-                size_t actual_len = 0;
-                char *received_data = WebSocket_getdata(&net, 256, &actual_len);
-
-                if (received_data != NULL && actual_len > 0 && actual_len <= 256) {
-                    // 增加边界检查
-                    // 将接收到的数据转换为可打印字符串
-                    char *echo_message = osal_kmalloc(actual_len + 1, OSAL_GFP_ATOMIC);
-                    if (echo_message) {
-                        // 使用安全的内存操作
-                        if (memcpy_s(echo_message, actual_len + 1, received_data, actual_len) == 0) {
-                            echo_message[actual_len] = '\0';
-                            PRINT("%s::接收: %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, echo_message);
-                        } else {
-                            PRINT("%s::复制接收数据失败\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+                // 检查是否有数据可读（非阻塞检查）
+                char c;
+                while (WebSocket_getch(&net, &c) > 0) {
+                    // 触发数据处理 - 这里应该是框架调用回调
+                    // 由于WebSocket.h API限制，我们需要主动检查数据
+                    size_t frame_pos = WebSocket_framePos();
+                    if (frame_pos > 0) {
+                        size_t actual_len = 0;
+                        char *received_data = WebSocket_getdata(&net, 256, &actual_len);
+                        if (received_data != NULL && actual_len > 0) {
+                            websocket_message_callback(&net, received_data, actual_len);
                         }
-                        osal_kfree(echo_message);
-                    } else {
-                        PRINT("%s::分配内存失败\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
-                    }
-                } else {
-                    // 详细记录错误情况
-                    if (received_data == NULL) {
-                        PRINT("%s::接收数据为空\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
-                    } else if (actual_len == 0) {
-                        PRINT("%s::接收数据长度为0\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
-                    } else {
-                        PRINT("%s::接收数据长度异常: %zu\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, actual_len);
+                        // 重置帧位置
+                        WebSocket_framePosSeekTo(0);
                     }
                 }
 
