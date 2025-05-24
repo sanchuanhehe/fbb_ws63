@@ -298,10 +298,10 @@ int websocket_sample_wifi_init(void *param)
 }
 
 /**
- * @brief websocket_sample_entry
+ * @brief websocket_sample_wifi_entry
  * @details 创建websocket_sample_task线程
  */
-static void websocket_sample_entry(void)
+static void websocket_sample_wifi_entry(void)
 {
     osThreadAttr_t attr;
     attr.name = "websocket_sample_task";
@@ -320,4 +320,4 @@ static void websocket_sample_entry(void)
 /**
  * @brief 启动websocket_sample_task
  */
-app_run(websocket_sample_entry);
+app_run(websocket_sample_wifi_entry);
