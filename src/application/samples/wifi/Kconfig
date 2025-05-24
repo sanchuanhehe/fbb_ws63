@@ -8,6 +8,9 @@ choice
 config SAMPLE_SUPPORT_STA_SAMPLE
     bool "Support WIFI STA Sample"
 
+config SAMPLE_SUPPORT_WEBSOCKET_SAMPLE
+    bool "Support Websocket Sample"
+
 config SAMPLE_SUPPORT_ALILINK_SAMPLE
     bool "Support ALILINK Sample"
 
