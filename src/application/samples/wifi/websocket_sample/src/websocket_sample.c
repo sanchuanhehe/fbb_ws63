@@ -48,6 +48,13 @@ static osSemaphoreId_t g_network_ready_sem = NULL;
 
 // WebSocket任务声明
 static void websocket_task_entry(void *arg);
+static void websocket_receive_task_entry(void *arg);
+static void websocket_send_task_entry(void *arg);
+
+// 全局WebSocket句柄，用于任务间共享
+static networkHandles g_websocket_net = {0};
+static volatile td_bool g_websocket_connected = TD_FALSE;
+static osSemaphoreId_t g_websocket_ready_sem = NULL;
 
 /**
  * @brief Wi-Fi状态机枚举定义
@@ -325,39 +332,6 @@ int websocket_sample_wifi_init(void *param)
 }
 
 /**
- * @brief websocket_sample_wifi_entry
- * @details 创建websocket_sample_wifi_init线程
- */
-static void websocket_sample_wifi_entry(void)
-{
-    osThreadAttr_t wifi_init_attr;
-    wifi_init_attr.name = "websocket_sample_wifi_init";
-    wifi_init_attr.attr_bits = 0U;
-    wifi_init_attr.cb_mem = NULL;
-    wifi_init_attr.cb_size = 0U;
-    wifi_init_attr.stack_mem = NULL;
-    wifi_init_attr.stack_size = WIFI_TASK_STACK_SIZE;
-    wifi_init_attr.priority = WIFI_TASK_PRIO;
-    if (osThreadNew((osThreadFunc_t)websocket_sample_wifi_init, NULL, &wifi_init_attr) == NULL) {
-        PRINT("%s::Create websocket_sample_wifi_init fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
-    }
-    PRINT("%s::Create websocket_sample_wifi_init succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
-    osThreadAttr_t ws_task_attr;
-    // 创建WebSocket任务
-    ws_task_attr.name = "websocket_task";
-    ws_task_attr.attr_bits = 0U;
-    ws_task_attr.cb_mem = NULL;
-    ws_task_attr.cb_size = 0U;
-    ws_task_attr.stack_mem = NULL;
-    ws_task_attr.stack_size = WEBSOCKET_TASK_STACK_SIZE;
-    ws_task_attr.priority = WEBSOCKET_TASK_PRIO;
-    if (osThreadNew((osThreadFunc_t)websocket_task_entry, NULL, &ws_task_attr) == NULL) {
-        PRINT("%s::Create websocket_task fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
-    }
-    PRINT("%s::Create websocket_task succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
-}
-
-/**
  * @brief WebSocket消息回调函数
  * @param net 网络句柄
  * @param data 接收到的数据
@@ -387,15 +361,105 @@ static void websocket_message_callback(networkHandles *net, char *data, size_t l
 }
 
 /**
- * @brief WebSocket 任务实现 - 基于事件回调
+ * @brief WebSocket接收任务 - 专门处理消息接收
  * @param arg 未使用
- * @details 等待网络连接就绪，建立WebSocket连接，设置回调处理消息
+ * @details 独立任务，专门负责检查和处理WebSocket接收消息
+ */
+static void websocket_receive_task_entry(void *arg)
+{
+    UNUSED(arg);
+
+    PRINT("%s::WebSocket接收任务启动\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+
+    while (1) {
+        // 等待WebSocket连接建立
+        osSemaphoreAcquire(g_websocket_ready_sem, osWaitForever);
+
+        PRINT("%s::开始监听WebSocket消息...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+
+        // 持续监听消息
+        while (g_websocket_connected && g_network_connected) {
+            // 非阻塞检查是否有数据可读
+            char c;
+            if (WebSocket_getch(&g_websocket_net, &c) > 0) {
+                // 有数据到达，处理完整的帧
+                size_t frame_pos = WebSocket_framePos();
+                if (frame_pos > 0) {
+                    size_t actual_len = 0;
+                    char *received_data = WebSocket_getdata(&g_websocket_net, 512, &actual_len);
+                    if (received_data != NULL && actual_len > 0) {
+                        websocket_message_callback(&g_websocket_net, received_data, actual_len);
+                    }
+                    // 重置帧位置
+                    WebSocket_framePosSeekTo(0);
+                }
+            }
+
+            // 短暂延时，避免CPU占用过高
+            osDelay(10); // 10ms
+        }
+
+        PRINT("%s::WebSocket接收任务暂停\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    }
+}
+
+/**
+ * @brief WebSocket发送任务 - 专门处理消息发送
+ * @param arg 未使用
+ * @details 独立任务，专门负责定期发送WebSocket消息
+ */
+static void websocket_send_task_entry(void *arg)
+{
+    UNUSED(arg);
+
+    PRINT("%s::WebSocket发送任务启动\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+
+    int message_count = 1;
+
+    while (1) {
+        // 等待WebSocket连接建立
+        osSemaphoreAcquire(g_websocket_ready_sem, osWaitForever);
+
+        PRINT("%s::开始发送WebSocket消息...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+
+        // 持续发送消息
+        while (g_websocket_connected && g_network_connected) {
+            // 创建要发送的消息
+            char message[128];
+            snprintf(message, sizeof(message), "来自IoT设备的消息 #%d", message_count++);
+
+            // 准备发送数据
+            char *send_buf = message;
+            size_t send_len = strlen(message);
+            PacketBuffers bufs = {0};
+
+            // 发送消息
+            PRINT("%s::发送: %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, message);
+            int rc = WebSocket_putdatas(&g_websocket_net, &send_buf, &send_len, &bufs);
+            if (rc != 0) {
+                PRINT("%s::发送消息失败，错误码: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, rc);
+                g_websocket_connected = TD_FALSE;
+                break;
+            }
+
+            // 等待5秒后发送下一条消息
+            osDelay(5000);
+        }
+
+        PRINT("%s::WebSocket发送任务暂停\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    }
+}
+
+/**
+ * @brief WebSocket连接管理任务
+ * @param arg 未使用
+ * @details 负责建立和管理WebSocket连接，协调收发任务
  */
 static void websocket_task_entry(void *arg)
 {
     UNUSED(arg);
 
-    PRINT("%s::WebSocket任务启动，等待网络连接...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    PRINT("%s::WebSocket管理任务启动，等待网络连接...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 
     while (1) {
         // 等待网络连接就绪信号
@@ -405,13 +469,13 @@ static void websocket_task_entry(void *arg)
         if (g_network_connected) {
             PRINT("%s::网络已连接，开始WebSocket连接...\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 
-            // 声明网络句柄和WebSocket URL
-            networkHandles net = {0};
-            const char *url = WEBSOCKET_URL;
+            // 重置WebSocket句柄
+            memset_s(&g_websocket_net, sizeof(networkHandles), 0, sizeof(networkHandles));
+            const char *url = "wss://toolin.cn/echo";
             int rc;
 
             // 尝试建立WebSocket连接
-            rc = WebSocket_connect(&net, 1, url); // 1表示使用SSL
+            rc = WebSocket_connect(&g_websocket_net, 1, url); // 1表示使用SSL
             if (rc != 0) {
                 PRINT("%s::建立WebSocket连接失败，错误码: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, rc);
                 osDelay(5000); // 延迟5秒后重试
@@ -420,53 +484,101 @@ static void websocket_task_entry(void *arg)
 
             PRINT("%s::WebSocket连接已建立到 %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, url);
 
-            // 消息发送循环
-            int message_count = 1;
-            while (g_network_connected) {
-                // 创建要发送的消息
-                char message[128];
-                snprintf(message, sizeof(message), "来自IoT设备的消息 #%d", message_count++);
+            // 设置WebSocket连接状态
+            g_websocket_connected = TD_TRUE;
 
-                // 准备发送数据
-                char *send_buf = message;
-                size_t send_len = strlen(message);
-                PacketBuffers bufs = {0};
+            // 通知收发任务开始工作（释放两次信号量）
+            osSemaphoreRelease(g_websocket_ready_sem);
+            osSemaphoreRelease(g_websocket_ready_sem);
 
-                // 发送消息
-                PRINT("%s::发送: %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, message);
-                rc = WebSocket_putdatas(&net, &send_buf, &send_len, &bufs);
-                if (rc != 0) {
-                    PRINT("%s::发送消息失败，错误码: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, rc);
-                    break;
-                }
-
-                // 检查是否有数据可读（非阻塞检查）
-                char c;
-                while (WebSocket_getch(&net, &c) > 0) {
-                    // 触发数据处理 - 这里应该是框架调用回调
-                    // 由于WebSocket.h API限制，我们需要主动检查数据
-                    size_t frame_pos = WebSocket_framePos();
-                    if (frame_pos > 0) {
-                        size_t actual_len = 0;
-                        char *received_data = WebSocket_getdata(&net, 256, &actual_len);
-                        if (received_data != NULL && actual_len > 0) {
-                            websocket_message_callback(&net, received_data, actual_len);
-                        }
-                        // 重置帧位置
-                        WebSocket_framePosSeekTo(0);
-                    }
-                }
-
-                // 等待5秒后发送下一条消息
-                osDelay(5000);
+            // 监控连接状态
+            while (g_network_connected && g_websocket_connected) {
+                osDelay(1000); // 每秒检查一次连接状态
             }
 
+            // 连接断开处理
+            PRINT("%s::WebSocket连接断开\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+            g_websocket_connected = TD_FALSE;
+
             // 关闭WebSocket连接
-            PRINT("%s::关闭WebSocket连接\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
-            WebSocket_close(&net, WebSocket_CLOSE_NORMAL, "正常关闭");
+            WebSocket_close(&g_websocket_net, WebSocket_CLOSE_NORMAL, "正常关闭");
             WebSocket_terminate();
         }
     }
+}
+
+/**
+ * @brief websocket_sample_wifi_entry
+ * @details 创建websocket_sample_wifi_init线程
+ */
+/**
+ * @brief websocket_sample_wifi_entry
+ * @details 创建所有WebSocket相关线程
+ */
+static void websocket_sample_wifi_entry(void)
+{
+    // 创建WebSocket连接就绪信号量（初始值为2，支持两个任务等待）
+    g_websocket_ready_sem = osSemaphoreNew(2, 0, NULL);
+    if (g_websocket_ready_sem == NULL) {
+        PRINT("%s::Create websocket semaphore fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+        return;
+    }
+
+    // 创建WiFi初始化任务
+    osThreadAttr_t wifi_init_attr;
+    wifi_init_attr.name = "websocket_sample_wifi_init";
+    wifi_init_attr.attr_bits = 0U;
+    wifi_init_attr.cb_mem = NULL;
+    wifi_init_attr.cb_size = 0U;
+    wifi_init_attr.stack_mem = NULL;
+    wifi_init_attr.stack_size = WIFI_TASK_STACK_SIZE;
+    wifi_init_attr.priority = WIFI_TASK_PRIO;
+    if (osThreadNew((osThreadFunc_t)websocket_sample_wifi_init, NULL, &wifi_init_attr) == NULL) {
+        PRINT("%s::Create websocket_sample_wifi_init fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    }
+    PRINT("%s::Create websocket_sample_wifi_init succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+
+    // 创建WebSocket管理任务
+    osThreadAttr_t ws_mgr_attr;
+    ws_mgr_attr.name = "websocket_manager";
+    ws_mgr_attr.attr_bits = 0U;
+    ws_mgr_attr.cb_mem = NULL;
+    ws_mgr_attr.cb_size = 0U;
+    ws_mgr_attr.stack_mem = NULL;
+    ws_mgr_attr.stack_size = WEBSOCKET_TASK_STACK_SIZE;
+    ws_mgr_attr.priority = WEBSOCKET_TASK_PRIO;
+    if (osThreadNew((osThreadFunc_t)websocket_task_entry, NULL, &ws_mgr_attr) == NULL) {
+        PRINT("%s::Create websocket_manager fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    }
+    PRINT("%s::Create websocket_manager succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+
+    // 创建WebSocket接收任务
+    osThreadAttr_t ws_recv_attr;
+    ws_recv_attr.name = "websocket_receiver";
+    ws_recv_attr.attr_bits = 0U;
+    ws_recv_attr.cb_mem = NULL;
+    ws_recv_attr.cb_size = 0U;
+    ws_recv_attr.stack_mem = NULL;
+    ws_recv_attr.stack_size = WEBSOCKET_TASK_STACK_SIZE;
+    ws_recv_attr.priority = WEBSOCKET_TASK_PRIO - 1; // 稍高优先级
+    if (osThreadNew((osThreadFunc_t)websocket_receive_task_entry, NULL, &ws_recv_attr) == NULL) {
+        PRINT("%s::Create websocket_receiver fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    }
+    PRINT("%s::Create websocket_receiver succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+
+    // 创建WebSocket发送任务
+    osThreadAttr_t ws_send_attr;
+    ws_send_attr.name = "websocket_sender";
+    ws_send_attr.attr_bits = 0U;
+    ws_send_attr.cb_mem = NULL;
+    ws_send_attr.cb_size = 0U;
+    ws_send_attr.stack_mem = NULL;
+    ws_send_attr.stack_size = WEBSOCKET_TASK_STACK_SIZE;
+    ws_send_attr.priority = WEBSOCKET_TASK_PRIO;
+    if (osThreadNew((osThreadFunc_t)websocket_send_task_entry, NULL, &ws_send_attr) == NULL) {
+        PRINT("%s::Create websocket_sender fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
+    }
+    PRINT("%s::Create websocket_sender succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
 }
 
 /**
