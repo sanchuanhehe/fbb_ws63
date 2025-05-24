@@ -18,6 +18,7 @@
 #include "cmsis_os2.h"
 #include "app_init.h"
 #include "soc_osal.h"
+#include "WebSocket.h"
 
 #define WIFI_IFNAME_MAX_SIZE 16
 #define WIFI_MAX_SSID_LEN 33
