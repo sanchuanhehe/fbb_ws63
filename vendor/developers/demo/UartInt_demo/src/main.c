@@ -17,12 +17,9 @@
 #define UART_PROGRESS_TACK_STACK_SIZE 0x2000
 #define UART_PROGRESS_TASK_PRIO 24
 
-extern void UartInt_Send_Cmd(uint8_t *cmd, uint8_t *expect_rbk, uint8_t sent_react_times);
-extern void Uart_Rec_Task();
-extern void Uart_Progress_Task();
+#define MSLEEP_TIME 5
+#define UART_SEND_CMD_WAITTIME 1000
 
-extern uint8_t g_app_uart_rx_flag;
-extern WS63Uart_Rec_State_t WS63Uart_Rec_State;
 
 static void *Gateway_Task(void)
 {
@@ -47,7 +44,7 @@ static void *Gateway_Task(void)
     uint32_t start_time = uapi_tcxo_get_ms();   // 获取当前时间戳
     while (WS63Uart_Rec_State.L610_Init_Flag != 1)
     {
-        osal_msleep(5);
+        osal_msleep(MSLEEP_TIME);
         uapi_watchdog_kick();
         uint32_t current_time = uapi_tcxo_get_ms(); // 获取当前时间戳
         if ((current_time - start_time) >= timeout) // 检查是否超时
@@ -61,18 +58,18 @@ static void *Gateway_Task(void)
     // MQTT入网
     UartInt_Send_Cmd("ATE0\r\n", "OK", 0);
     UartInt_Send_Cmd("AT+MIPCALL=1\r\n", "OK", 1);
-    osal_msleep(1000);
+    osal_msleep(UART_SEND_CMD_WAITTIME);
     UartInt_Send_Cmd("AT+MQTTUSER=1,\"username\",\"userid\",\"password\"\r\n", "OK", 1);
     UartInt_Send_Cmd("AT+MQTTOPEN=1,\"xxx.xxx.xx.xxx\",port,0,60\r\n", "+MQTTOPEN", 0);
     UartInt_Send_Cmd("AT+MQTTSUB=1,\"v1/devices/me/rpc/request/+\",1\r\n", "OK", 0);
-    osal_msleep(1000);
+    osal_msleep(UART_SEND_CMD_WAITTIME);
     UartInt_Send_Cmd("AT+MQTTSUB=1,\"v1/devices/me/rpc/request/+\",1\r\n", "OK", 0);
     UartInt_Send_Cmd("AT+MQTTSUB=1,\"v1/devices/me/attributes/response/+\",1\r\n","OK", 0);
     UartInt_Send_Cmd("AT+MQTTSUB=1,\"v1/devices/me/attributes\",1\r\n", "OK", 0);
     osal_printk("*******************************************\r\n");
     osal_printk("Uart_MQTT_Test Init Done!\r\n");
     osal_printk("*******************************************\r\n");
-    osal_msleep(500);
+    osal_msleep(UART_SEND_CMD_WAITTIME);
 }
 
 void TaskEntry(void)
