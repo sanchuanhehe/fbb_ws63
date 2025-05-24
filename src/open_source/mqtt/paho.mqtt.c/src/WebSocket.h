@@ -60,7 +60,7 @@ int WebSocket_connect(networkHandles *net, int ssl, const char *uri);
 /* obtain data from network socket */
 int WebSocket_getch(networkHandles *net, char* c);
 char *WebSocket_getdata(networkHandles *net, size_t bytes, size_t* actual_len);
-size_t WebSocket_framePos();
+size_t WebSocket_framePos(void);
 void WebSocket_framePosSeekTo(size_t);
 
 /* send data out, in websocket format only if required */

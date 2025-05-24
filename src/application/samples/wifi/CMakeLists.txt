@@ -26,6 +26,10 @@ if(DEFINED CONFIG_SUPPORT_HILINK)
     add_subdirectory_if_exist(ohos_connect)
 endif()
 
+if(DEFINED CONFIG_SAMPLE_SUPPORT_WEBSOCKET_SAMPLE)
+    add_subdirectory_if_exist(websocket_sample)
+endif()
+
 if (DEFINES MATCHES "CONFIG_SUPPORT_HILINK_INDIE_UPGRADE")
     add_subdirectory_if_exist(hilink_indie_upgrade)
 endif()
