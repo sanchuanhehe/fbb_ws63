@@ -676,7 +676,7 @@ exit:
 	return rc;
 }
 
-size_t WebSocket_framePos()
+size_t WebSocket_framePos(void)
 {
 	if ( in_frames && in_frames->first )
 	{
