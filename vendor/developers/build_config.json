@@ -21,6 +21,16 @@
     },
     {
       "buildTarget": "ws63-liteos-app",
+      "relativePath": "demo/wifi_http_demo",
+      "chip": "WS63",
+      "buildDef": "",
+      "needSmoke": "false",
+      "key": "3",
+      "name": "wifi_http",
+      "description": "WiFi+HTTP Get请求"
+    },
+    {
+      "buildTarget": "ws63-liteos-app",
       "relativePath": "demo/iot_huaweiyun",
       "chip": "WS63",
       "buildDef": "",
