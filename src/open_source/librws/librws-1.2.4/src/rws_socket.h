@@ -50,6 +50,10 @@
 typedef SOCKET rws_socket_t;
 #define RWS_INVALID_SOCKET INVALID_SOCKET
 #define RWS_SOCK_CLOSE(sock) closesocket(sock)
+#elif defined(COMPAT_CMSIS)
+typedef int rws_socket_t;
+#define RWS_INVALID_SOCKET -1
+#define RWS_SOCK_CLOSE(sock) lwip_close(sock)
 #else
 typedef int rws_socket_t;
 #define RWS_INVALID_SOCKET -1

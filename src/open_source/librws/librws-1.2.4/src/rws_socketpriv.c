@@ -26,6 +26,38 @@
 #include "rws_memory.h"
 #include "rws_string.h"
 
+// CMSIS compatibility layer for socket API
+#if defined(COMPAT_CMSIS)
+#include "lwip/sockets.h"
+#include "lwip/netdb.h"
+
+// CMSIS-compatible wrapper functions
+static const char* rws_gai_strerror(int errcode) {
+    switch(errcode) {
+        case EAI_BADFLAGS: return "Invalid value for ai_flags";
+        case EAI_NONAME: return "hostname or servname not provided, or not known";
+        case EAI_AGAIN: return "temporary failure in name resolution";
+        case EAI_FAIL: return "non-recoverable failure in name resolution";
+        case EAI_FAMILY: return "ai_family not supported";
+        case EAI_SOCKTYPE: return "ai_socktype not supported";
+        case EAI_SERVICE: return "servname not supported for ai_socktype";
+        case EAI_MEMORY: return "memory allocation failure";
+        default: return "unknown error";
+    }
+}
+
+// Use lwip's socket functions for CMSIS
+#define rws_close(fd) lwip_close(fd)
+#define rws_fcntl(fd, cmd, arg) lwip_fcntl(fd, cmd, arg)
+#define rws_gai_strerror_func(err) rws_gai_strerror(err)
+
+#else
+// Standard POSIX implementations
+#define rws_close(fd) close(fd)
+#define rws_fcntl(fd, cmd, arg) fcntl(fd, cmd, arg)
+#define rws_gai_strerror_func(err) gai_strerror(err)
+#endif
+
 #define RWS_CONNECT_RETRY_DELAY 200
 #define RWS_CONNECT_ATTEMPS 5
 
@@ -443,7 +475,7 @@ struct addrinfo * rws_socket_connect_getaddr_info(_rws_socket * s) {
 #endif
 
 	s->error = rws_error_new_code_descr(rws_error_code_connect_to_host,
-										(last_ret > 0) ? gai_strerror(last_ret) : "Failed connect to host");
+										(last_ret > 0) ? rws_gai_strerror_func(last_ret) : "Failed connect to host");
 	s->command = COMMAND_INFORM_DISCONNECTED;
 	return NULL;
 }
@@ -477,7 +509,7 @@ void rws_socket_connect_to_host(_rws_socket * s) {
 					iMode = 1;
 					ioctlsocket(s->socket, FIONBIO, &iMode);
 #else
-					fcntl(s->socket, F_SETFL, O_NONBLOCK);
+					rws_fcntl(s->socket, F_SETFL, O_NONBLOCK);
 #endif
 					break;
 				}
