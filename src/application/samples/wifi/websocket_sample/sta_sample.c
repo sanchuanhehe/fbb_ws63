@@ -272,7 +272,7 @@ td_s32 example_sta_function(td_void)
  * @retval -1 失败
  * @details 入口函数，注册事件回调，等待WiFi初始化，启动主流程
  */
-int websocket_sample_init(void *param)
+int websocket_sample_wifi_init(void *param)
 {
     UNUSED(param);
 
@@ -311,7 +311,7 @@ static void websocket_sample_entry(void)
     attr.stack_mem = NULL;
     attr.stack_size = WIFI_TASK_STACK_SIZE;
     attr.priority = WIFI_TASK_PRIO;
-    if (osThreadNew((osThreadFunc_t)websocket_sample_init, NULL, &attr) == NULL) {
+    if (osThreadNew((osThreadFunc_t)websocket_sample_wifi_init, NULL, &attr) == NULL) {
         PRINT("%s::Create websocket_sample_task fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
     }
     PRINT("%s::Create websocket_sample_task succ.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
