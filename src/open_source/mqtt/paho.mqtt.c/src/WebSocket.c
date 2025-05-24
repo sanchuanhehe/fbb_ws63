@@ -402,6 +402,7 @@ static void WebSocket_unmaskData(size_t idx, PacketBuffers* bufs)
  */
 int WebSocket_connect( networkHandles *net, int ssl, const char *uri)
 {
+	Log(TRACE_PROTOCOL, 1, "WebSocket_connect called for %s", uri);
 	int rc;
 	char *buf = NULL;
 	char *headers_buf = NULL;
