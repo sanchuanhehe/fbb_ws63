@@ -26,7 +26,7 @@ if(DEFINED CONFIG_SUPPORT_HILINK)
     add_subdirectory_if_exist(ohos_connect)
 endif()
 
-if(DEFINED SAMPLE_SUPPORT_WEBSOCKET_SAMPLE)
+if(DEFINED CONFIG_SAMPLE_SUPPORT_WEBSOCKET_SAMPLE)
     add_subdirectory_if_exist(websocket_sample)
 endif()
 
