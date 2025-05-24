@@ -66,19 +66,8 @@ class AsyncWebSocketEchoServer:
         
         logger.info(f"收到来自 {client_info} 的消息 #{self.message_count}: {message}")
         
-        # 创建回显响应
-        echo_response = {
-            "type": "echo",
-            "original_message": message,
-            "timestamp": datetime.now().isoformat(),
-            "client": client_info,
-            "message_id": self.message_count,
-            "server_info": f"Python AsyncWebSocket Echo Server"
-        }
-        
-        # 发送回显消息
-        response_str = json.dumps(echo_response, ensure_ascii=False, indent=2)
-        await websocket.send(response_str)
+        # 原封不动回显原始消息
+        await websocket.send(message)
         logger.info(f"已回显消息给 {client_info}")
         
     async def handle_client(self, websocket: WebSocketServerProtocol):
@@ -140,20 +129,8 @@ class SyncWebSocketEchoServer:
         
         logger.info(f"收到来自 {client_info} 的消息 #{self.message_count}: {message}")
         
-        # 创建回显响应
-        echo_response = {
-            "type": "echo",
-            "original_message": message,
-            "timestamp": datetime.now().isoformat(),
-            "client": client_info,
-            "client_id": client['id'],
-            "message_id": self.message_count,
-            "server_info": "Python SyncWebSocket Echo Server"
-        }
-        
-        # 发送回显消息
-        response_str = json.dumps(echo_response, ensure_ascii=False, indent=2)
-        server.send_message(client, response_str)
+        # 原封不动回显原始消息
+        server.send_message(client, message)
         logger.info(f"已回显消息给 {client_info}")
         
     def start_server(self):
@@ -193,9 +170,9 @@ def main():
     
     print("\n可用的服务器类型:")
     if ASYNC_AVAILABLE:
-        print("  1. 异步WebSocket服务器 (推荐) - 端口 8765")
+        print("  1. 异步WebSocket服务器 - 端口 8765")
     if SYNC_AVAILABLE:
-        print("  2. 同步WebSocket服务器 - 端口 8766")
+        print("  2. 同步WebSocket服务器 (推荐) - 端口 8766")
     if not ASYNC_AVAILABLE and not SYNC_AVAILABLE:
         print("  错误: 没有可用的WebSocket库!")
         print("  请安装依赖: pip install websockets websocket-server")

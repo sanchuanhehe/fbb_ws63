@@ -38,7 +38,7 @@
 // WebSocket任务相关定义
 #define WEBSOCKET_TASK_STACK_SIZE 0x1000
 #define WEBSOCKET_TASK_PRIO (osPriority_t)(12) // 低于WiFi任务优先级
-#define WEBSOCKET_URL "ws://192.168.137.58:8765"
+#define WEBSOCKET_URL "ws://192.168.137.58:8766"
 
 // 网络连接状态标志
 static volatile td_bool g_network_connected = TD_FALSE;
