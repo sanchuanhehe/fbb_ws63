@@ -438,7 +438,12 @@ int WebSocket_connect( networkHandles *net, int ssl, const char *uri)
 #endif /* else if defined(_WIN32) || defined(_WIN64) */
 
 	hostname_len = MQTTProtocol_addressPort(uri, &port, &topic, ssl ? WSS_DEFAULT_PORT : WS_DEFAULT_PORT);
-
+	if ( hostname_len == 0 )
+	{
+		Log(TRACE_PROTOCOL, 1, "WebSocket_connect: Invalid URI %s", uri);
+		rc = SOCKET_ERROR;
+		goto exit;
+	}
 	/* if no topic, use default */
 	if ( !topic )
 		topic = "/mqtt";
