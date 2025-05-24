@@ -8,16 +8,16 @@ set(CMAKE_LIBRWS_SOURCE_DIR
     ${CMAKE_CURRENT_SOURCE_DIR}/librws-1.2.4/)
 
 set(SOURCES
-        ${CMAKE_LIBRWS_SOURCE_DIR}/src/librws.c
-        ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_common.c
-        ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_error.c
-        ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_frame.c
-        ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_list.c
-        ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_memory.c
-        ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_socketpriv.c
-        ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_socketpub.c
-        ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_string.c
-        ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_thread.c
+    ${CMAKE_LIBRWS_SOURCE_DIR}/src/librws.c
+    ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_common.c
+    ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_error.c
+    ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_frame.c
+    ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_list.c
+    ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_memory.c
+    ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_socketpriv.c
+    ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_socketpub.c
+    ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_string.c
+    ${CMAKE_LIBRWS_SOURCE_DIR}/src/rws_thread.c
 )
 
 set(PUBLIC_HEADER
@@ -27,9 +27,13 @@ set(PUBLIC_HEADER
 
 set(PRIVATE_HEADER
     ${CMAKE_LIBRWS_SOURCE_DIR}/src
+    ${ROOT_DIR}/kernel/alios/utils/libc/musl_1.2.3/include
+    ${ROOT_DIR}/kernel/alios/utils/libc/adapt/include
+    ${ROOT_DIR}/kernel/alios/utils/libc/adapt/musl_1.2.3/include
 )
 
 set(PRIVATE_DEFINES
+    COMPAT_CMSIS
 )
 
 set(PUBLIC_DEFINES
