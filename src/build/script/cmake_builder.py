@@ -219,11 +219,6 @@ class CMakeBuilder(BuildEnvironment):
         self.add_cmake_param("-DROM_CHECK=False")
         self.start(env, target_name, output_path, clean=self.need_clean, nhso=self.no_hso)
         self.rom_check(env, target_name, output_path)
-        # 如果编译完成存在 output_path/compile_commands.json,创建到项目根目录的软链接
-        if os.path.exists(os.path.join(output_path, 'compile_commands.json')):
-            if os.path.exists(os.path.join(root_path, 'compile_commands.json')):
-                os.remove(os.path.join(root_path, 'compile_commands.json'))
-            os.symlink(os.path.join(output_path, 'compile_commands.json'), os.path.join(root_path, 'compile_commands.json'))
         end_time = time.time()
         print("%s takes %f s" %  (target_name, end_time - start_time))
 
