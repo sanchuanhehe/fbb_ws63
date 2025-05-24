@@ -12,6 +12,7 @@ add_subdirectory_if_exist(littlefs)
 add_subdirectory_if_exist(huks)
 add_subdirectory_if_exist(deviceauth)
 add_subdirectory_if_exist(libcoap)
+# add_subdirectory_if_exist(tflite-micro)
 
 if (EXISTS ${ROOT_DIR}/protocol/wifi/CMakeLists.txt)
     add_subdirectory_if_exist(lwip)
