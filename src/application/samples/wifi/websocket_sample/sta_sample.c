@@ -1,7 +1,7 @@
 /**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2023. All rights reserved.
+ * Copyright (c) sanchuanhehe
  *
- * Description: Application core main function for standard \n
+ * Description: This file implements the Wi-Fi WebSocket sample for STA mode. \n
  *
  * History: \n
  * 2022-07-27, Create file. \n
@@ -19,35 +19,37 @@
 #include "app_init.h"
 #include "soc_osal.h"
 
-#define WIFI_IFNAME_MAX_SIZE             16
-#define WIFI_MAX_SSID_LEN                33
-#define WIFI_SCAN_AP_LIMIT               64
-#define WIFI_MAC_LEN                     6
-#define WIFI_WEBSOCKET_SAMPLE_LOG              "[WIFI_WEBSOCKET_SAMPLE]"
-#define WIFI_NOT_AVALLIABLE              0
-#define WIFI_AVALIABE                    1
-#define WIFI_GET_IP_MAX_COUNT            300
+#define WIFI_IFNAME_MAX_SIZE 16
+#define WIFI_MAX_SSID_LEN 33
+#define WIFI_SCAN_AP_LIMIT 64
+#define WIFI_MAC_LEN 6
+#define WIFI_WEBSOCKET_SAMPLE_LOG "[WIFI_WEBSOCKET_SAMPLE]"
+#define WIFI_NOT_AVALLIABLE 0
+#define WIFI_AVALIABE 1
+#define WIFI_GET_IP_MAX_COUNT 300
+#define WIFI_SSID "my_softAP"
+#define WIFI_PSK "my_password" /* 待连接的网络接入密码 */
 
-#define WIFI_TASK_PRIO                  (osPriority_t)(13)
-#define WIFI_TASK_DURATION_MS           2000
-#define WIFI_TASK_STACK_SIZE            0x1000
+#define WIFI_TASK_PRIO (osPriority_t)(13)
+#define WIFI_TASK_DURATION_MS 2000
+#define WIFI_TASK_STACK_SIZE 0x1000
 
 static td_void wifi_scan_state_changed(td_s32 state, td_s32 size);
 static td_void wifi_connection_changed(td_s32 state, const wifi_linked_info_stru *info, td_s32 reason_code);
 
 wifi_event_stru wifi_event_cb = {
-    .wifi_event_connection_changed      = wifi_connection_changed,
-    .wifi_event_scan_state_changed      = wifi_scan_state_changed,
+    .wifi_event_connection_changed = wifi_connection_changed,
+    .wifi_event_scan_state_changed = wifi_scan_state_changed,
 };
 
 enum {
-    WIFI_WEBSOCKET_SAMPLE_INIT = 0,       /* 0:初始态 */
-    WIFI_WEBSOCKET_SAMPLE_SCANING,        /* 1:扫描中 */
-    WIFI_WEBSOCKET_SAMPLE_SCAN_DONE,      /* 2:扫描完成 */
-    WIFI_WEBSOCKET_SAMPLE_FOUND_TARGET,   /* 3:匹配到目标AP */
-    WIFI_WEBSOCKET_SAMPLE_CONNECTING,     /* 4:连接中 */
-    WIFI_WEBSOCKET_SAMPLE_CONNECT_DONE,   /* 5:关联成功 */
-    WIFI_WEBSOCKET_SAMPLE_GET_IP,         /* 6:获取IP */
+    WIFI_WEBSOCKET_SAMPLE_INIT = 0,     /* 0:初始态 */
+    WIFI_WEBSOCKET_SAMPLE_SCANING,      /* 1:扫描中 */
+    WIFI_WEBSOCKET_SAMPLE_SCAN_DONE,    /* 2:扫描完成 */
+    WIFI_WEBSOCKET_SAMPLE_FOUND_TARGET, /* 3:匹配到目标AP */
+    WIFI_WEBSOCKET_SAMPLE_CONNECTING,   /* 4:连接中 */
+    WIFI_WEBSOCKET_SAMPLE_CONNECT_DONE, /* 5:关联成功 */
+    WIFI_WEBSOCKET_SAMPLE_GET_IP,       /* 6:获取IP */
 } wifi_state_enum;
 
 static td_u8 g_wifi_state = WIFI_WEBSOCKET_SAMPLE_INIT;
@@ -86,12 +88,12 @@ static td_void wifi_connection_changed(td_s32 state, const wifi_linked_info_stru
 *****************************************************************************/
 td_s32 example_get_match_network(wifi_sta_config_stru *expected_bss)
 {
-    td_s32  ret;
-    td_u32  num = 64; /* 64:扫描到的Wi-Fi网络数量 */
-    td_char expected_ssid[] = "my_softAP";
-    td_char key[] = "my_password"; /* 待连接的网络接入密码 */
+    td_s32 ret;
+    td_u32 num = 64; /* 64:扫描到的Wi-Fi网络数量 */
+    td_char *expected_ssid = WIFI_SSID;
+    td_char *key = WIFI_PSK; /* 待连接的网络接入密码 */
     td_bool find_ap = TD_FALSE;
-    td_u8   bss_index;
+    td_u8 bss_index;
     /* 获取扫描结果 */
     td_u32 scan_len = sizeof(wifi_scan_info_stru) * WIFI_SCAN_AP_LIMIT;
     wifi_scan_info_stru *result = osal_kmalloc(scan_len, OSAL_GFP_ATOMIC);
@@ -105,7 +107,7 @@ td_s32 example_get_match_network(wifi_sta_config_stru *expected_bss)
         return -1;
     }
     /* 筛选扫描到的Wi-Fi网络，选择待连接的网络 */
-    for (bss_index = 0; bss_index < num; bss_index ++) {
+    for (bss_index = 0; bss_index < num; bss_index++) {
         if (strlen(expected_ssid) == strlen(result[bss_index].ssid)) {
             if (memcmp(expected_ssid, result[bss_index].ssid, strlen(expected_ssid)) == 0) {
                 find_ap = TD_TRUE;
@@ -145,7 +147,7 @@ td_bool example_check_connect_status(td_void)
     td_u8 index;
     wifi_linked_info_stru wifi_status;
     /* 获取网络连接状态，共查询5次，每次间隔500ms */
-    for (index = 0; index < 5; index ++) {
+    for (index = 0; index < 5; index++) {
         (void)osDelay(50); /* 50: 延时500ms */
         memset_s(&wifi_status, sizeof(wifi_linked_info_stru), 0, sizeof(wifi_linked_info_stru));
         if (wifi_sta_get_ap_info(&wifi_status) != 0) {
@@ -180,7 +182,7 @@ td_bool example_check_dhcp_status(struct netif *netif_p, td_u32 *wait_count)
 td_s32 example_sta_function(td_void)
 {
     td_char ifname[WIFI_IFNAME_MAX_SIZE + 1] = "wlan0"; /* 创建的STA接口名 */
-    wifi_sta_config_stru expected_bss = {0}; /* 连接请求信息 */
+    wifi_sta_config_stru expected_bss = {0};            /* 连接请求信息 */
     struct netif *netif_p = TD_NULL;
     td_u32 wait_count = 0;
 
@@ -263,13 +265,13 @@ int websocket_sample_init(void *param)
 static void websocket_sample_entry(void)
 {
     osThreadAttr_t attr;
-    attr.name       = "websocket_sample_task";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "websocket_sample_task";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = WIFI_TASK_STACK_SIZE;
-    attr.priority   = WIFI_TASK_PRIO;
+    attr.priority = WIFI_TASK_PRIO;
     if (osThreadNew((osThreadFunc_t)websocket_sample_init, NULL, &attr) == NULL) {
         PRINT("%s::Create websocket_sample_task fail.\r\n", WIFI_WEBSOCKET_SAMPLE_LOG);
     }
