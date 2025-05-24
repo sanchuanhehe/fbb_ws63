@@ -516,7 +516,7 @@ static void websocket_task_entry(void *arg)
                 osDelay(5000);
                 continue;
             }            // 解析URL并设置连接参数
-            // 简单解析 wss://echo.websocket.org/
+            // 简单解析 ws://host:port/path 或 wss://host:port/path
             const char *scheme = "ws";
             char host_buffer[256] = {0};
             const char *host = host_buffer;
@@ -528,11 +528,11 @@ static void websocket_task_entry(void *arg)
             if (strncmp(url, "wss://", 6) == 0) {
                 scheme = "ws"; // librws中使用"ws"表示WebSocket，SSL通过端口判断
                 host_start = url + 6; // 跳过"wss://"
-                port = 443;
+                port = 443; // 默认HTTPS端口
             } else if (strncmp(url, "ws://", 5) == 0) {
                 scheme = "ws";
                 host_start = url + 5; // 跳过"ws://"
-                port = 80;
+                port = 80; // 默认HTTP端口
             } else {
                 PRINT("%s::不支持的URL协议: %s\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, url);
                 rws_socket_disconnect_and_release(g_websocket);
@@ -543,21 +543,63 @@ static void websocket_task_entry(void *arg)
 
             // 查找路径部分
             const char *path_start = strchr(host_start, '/');
-            if (path_start != NULL) {
-                // 复制主机名部分
-                size_t host_len = path_start - host_start;
+            
+            // 确定主机部分的结束位置（路径开始或字符串结束）
+            const char *host_end = path_start ? path_start : (host_start + strlen(host_start));
+            
+            // 查找端口分隔符
+            const char *port_start = strchr(host_start, ':');
+            
+            // 如果找到端口分隔符且它在主机部分内
+            if (port_start != NULL && port_start < host_end) {
+                // 复制主机名部分（不包括端口）
+                size_t host_len = port_start - host_start;
                 if (host_len >= sizeof(host_buffer)) {
                     host_len = sizeof(host_buffer) - 1;
                 }
                 strncpy(host_buffer, host_start, host_len);
                 host_buffer[host_len] = '\0';
+                
+                // 提取端口号
+                port_start++; // 跳过':'
+                port = 0;
+                const char *port_ptr = port_start;
+                while (port_ptr < host_end && *port_ptr >= '0' && *port_ptr <= '9') {
+                    port = port * 10 + (*port_ptr - '0');
+                    port_ptr++;
+                }
+                
+                // 验证端口号有效性
+                if (port <= 0 || port > 65535) {
+                    PRINT("%s::无效的端口号: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, port);
+                    rws_socket_disconnect_and_release(g_websocket);
+                    g_websocket = NULL;
+                    osDelay(5000);
+                    continue;
+                }
+                
+                PRINT("%s::从URL解析到端口: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, port);
+            } else {
+                // 没有指定端口，复制整个主机名部分
+                size_t host_len = host_end - host_start;
+                if (host_len >= sizeof(host_buffer)) {
+                    host_len = sizeof(host_buffer) - 1;
+                }
+                strncpy(host_buffer, host_start, host_len);
+                host_buffer[host_len] = '\0';
+                
+                PRINT("%s::使用默认端口: %d\r\n", WIFI_WEBSOCKET_SAMPLE_LOG, port);
+            }
+            
+            // 设置路径
+            if (path_start != NULL) {
                 path = path_start;
             } else {
-                // 没有路径，整个是主机名
-                strncpy(host_buffer, host_start, sizeof(host_buffer) - 1);
-                host_buffer[sizeof(host_buffer) - 1] = '\0';
                 path = "/";
             }
+
+            PRINT("%s::解析结果 - 主机: %s, 端口: %d, 路径: %s\r\n", 
+                  WIFI_WEBSOCKET_SAMPLE_LOG, host, port, path);
 
             // 设置连接参数
             rws_socket_set_url(g_websocket, scheme, host, port, path);
