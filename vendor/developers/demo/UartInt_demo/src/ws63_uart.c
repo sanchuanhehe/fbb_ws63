@@ -12,11 +12,12 @@
 
 #define UART1_TX_PIN 15
 #define UART1_RX_PIN 16
-// #define UART0_TX_PIN 17
-// #define UART0_RX_PIN 18
 #define BUFFER_SIZE 2000
 #define UART1_RX_EVENT_READ 0x01
 #define BAUD_RATE 115200
+
+#define MSLEEP_TIME 5
+#define UART_SEND_CMD_WAITTIME 1000
 
 uint8_t g_app_uart_rx_buff[1] = {0};
 uint8_t g_buff[BUFFER_SIZE] = {0};
@@ -40,7 +41,7 @@ void app_uart_write_int_handler(uint8_t *buffer, uint16_t length, uint8_t *param
     //存在AT返回码未完全接收完毕就超时的情况
     while (g_app_uart_rx_flag !=1 || g_buff_len == 0 || expect_rbk_flag != 1)
     {
-        osal_msleep(5);
+        osal_msleep(MSLEEP_TIME);
         uapi_watchdog_kick();
 
         if(strstr(g_buff, uart_write_int_param->expect_rbk) != NULL)
@@ -77,9 +78,9 @@ void app_uart_write_int_handler(uint8_t *buffer, uint16_t length, uint8_t *param
             osal_printk("Send React Times: %d\r\n", uart_write_int_param->send_react_times);
             uart_write_int_param->send_react_times--;
             // 缓冲区中无期待的返回数据，重新发送（此处存在些许Bug待修复）
-            // memset(g_buff, 0, BUFFER_SIZE);
-            // g_buff_len = 0;
-            // UartInt_Send_Cmd(uart_write_int_param->cmd, uart_write_int_param->expect_rbk, uart_write_int_param->send_react_times);
+            // 清空缓冲区：memset(g_buff, 0, BUFFER_SIZE);
+            // 清空缓冲区：g_buff_len = 0;
+            // 重新发送：  UartInt_Send_Cmd(uart_write_int_param->cmd, uart_write_int_param->expect_rbk, uart_write_int_param->send_react_times);
         }
     }
     memset(g_buff, 0, BUFFER_SIZE);
@@ -108,7 +109,7 @@ void UartInt_Send_Cmd(uint8_t *cmd, uint8_t *expect_rbk, uint8_t send_react_time
         osal_printk("uart%d int mode send cmd failed!\r\n", UART_BUS_1);
         uapi_uart_write_int(UART_BUS_1, cmd, strlen(cmd), &uart_write_int_param, app_uart_write_int_handler);
     }
-    osal_msleep(1000);
+    osal_msleep(UART_SEND_CMD_WAITTIME);
 }
 
 void app_uart_read_int_handler(const void *buffer, uint16_t length, bool error)
@@ -191,7 +192,7 @@ void Uart_Rec_Task()
        if (osal_event_read(&g_app_uart_event, UART1_RX_EVENT_READ, OSAL_WAIT_FOREVER, OSAL_WAITMODE_AND) != OSAL_FAILURE)
        {        
        loop:
-           osal_msleep(5);
+           osal_msleep(MSLEEP_TIME);
            if (osal_event_read(&g_app_uart_event, UART1_RX_EVENT_READ, OSAL_WAIT_CONDITION_TRUE, OSAL_WAITMODE_AND | OSAL_WAITMODE_CLR) != OSAL_FAILURE)
            {
                goto loop;
