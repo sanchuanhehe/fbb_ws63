@@ -438,7 +438,6 @@ int WebSocket_connect( networkHandles *net, int ssl, const char *uri)
 #endif /* else if defined(_WIN32) || defined(_WIN64) */
 
 	hostname_len = MQTTProtocol_addressPort(uri, &port, &topic, ssl ? WSS_DEFAULT_PORT : WS_DEFAULT_PORT);
-
 	/* if no topic, use default */
 	if ( !topic )
 		topic = "/mqtt";
@@ -676,7 +675,7 @@ exit:
 	return rc;
 }
 
-size_t WebSocket_framePos()
+size_t WebSocket_framePos(void)
 {
 	if ( in_frames && in_frames->first )
 	{
