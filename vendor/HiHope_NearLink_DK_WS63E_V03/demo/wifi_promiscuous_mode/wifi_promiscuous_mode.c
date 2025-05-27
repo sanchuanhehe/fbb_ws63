@@ -72,7 +72,7 @@ int32_t wifi_promis_cb2(void *recv_buf, int32_t frame_len, int8_t rssi)
     /* Filter set to 0 to disable promiscuous mode */
     g_recv_cnt++;
     printf("recv_buf: %p, len: %d, rssi: %d, cnt: %d\r\n", recv_buf, frame_len, rssi, g_recv_cnt);
-    if (g_recv_cnt == 1000) {
+    if (g_recv_cnt == 1000) { // 获取1000个包接收wifi混杂模式
         ret =  wifi_set_promis_mode(IFTYPE_STA, 0, &filter);
         wifi_sta_disable();
         if (ret != ERRCODE_SUCC) {
