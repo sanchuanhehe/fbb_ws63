@@ -36,7 +36,7 @@
 | 7 | [DyCloud_WF6301星闪模组（鼎芯物联）](https://ic-item.jd.com/10151639839211.html) | 星闪模组 |
 | 8 | [WS63星闪模组（润和软件）](https://e.tb.cn/h.6LxYtgOmQL5b51S?tk=jkprVTA5bOC) | WS63星闪模组_HH-M01_Wi-Fi6 星闪多模 |
 | 9 | [WS63E星闪模组（润和软件）](https://e.tb.cn/h.6p0TonQdm3whw0i?tk=ZjcNVTAUwUG) | WS63E星闪模组_HH-M02_Wi-Fi6 星闪多模 支持雷达人体活动感知 |
-| 10 | [MYF-F63VA01 （明裕丰）](https://shop187806465.taobao.com/?spm=pc_detail.29232929.shop_block.dshopinfo.2fd27dd6T64Lbi) | 星闪模组、开发板、星闪AI模组和开发板 |
+| 10 | [MYF-F63星闪模组、开发板链接 （明裕丰）](https://shop187806465.taobao.com/?spm=pc_detail.29232929.shop_block.dshopinfo.2fd27dd6T64Lbi) | 星闪模组、开发板、星闪AI模组和开发板 |
 
 ## 支持的开发板
 
@@ -48,7 +48,7 @@
 | DyCloud_WF6301_DK开发板（鼎云物联）                          | [DyCloud_WF6301_DK开发板（京东）](https://ic-item.jd.com/10151635371214.html) | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/doc/image-20250425161456606.png" alt="image-20250425161456606" style="zoom: 25%;" /> |
 | DTU_Car(大连理工大学)                                        | **暂不提供**                                                 | <img src="vendor/DUT_Car/doc/media/image-20250507183303684.png" alt="image-20250507183303684" style="zoom: 25%;" /> |
 | MYF-F63VA01开发板（明裕丰）                                  | [MYF-F63VA01星闪开发板 （淘宝）](https://item.taobao.com/item.htm?id=893223665987&pisk=gY0KqOj-Xdvh363LsX-GqErLqXAGvhce6vlfr82hVAHtKRbkTyxzyYetUJq3RXYSIvcXTJxyYYHtNjdP-prkybGqpJqoyb78NbMyT8AejXlUzz9Dn8LmTXPGt7LZJMw1CfPbOgtgAPu1ecJDnEYDA1aJpKDkpMF95SFbPWZ7NfOTN7N7PuwI1CF7Z9s5RYO967N4N7N5RlT_gWa5FMwQflN7igsCAa6667y_FzaSFPOTav899R5Q9an2l8zEWdHdPagT9ltiORMSUQVUvGc3Ca9jWWe4hXwOPawYpc8o6Xvduf4E1xFmKF_KHjuZB5MXydUrQ0M7wATVEyomLqrt_n_s9yeacSg6NZwoJccbBrCWRfULpog3DEdxhfhSml3MGEzLRJiu8bfvKf3KKXutZ_s_JymTD2UXu9wojj38w4JyWxhq7AFshUpC4b0mkmrVn-FlACdO4grQ_Ib8HaXdiABQ6-AQAgSzq5PTnCINVg6WE5eDsGjP4lDd.&spm=tbpc.mytb_followshop.item.goods) | ![](vendor/MYF_F63/doc/media/MYF-F63VA01开发板.png)          |
-| MYF-F63AI01开发板（明裕丰）                                  | [MYF-F63AI01星闪AI语音开发板（淘宝）](https://item.taobao.com/item.htm?id=922405424292&pisk=gjm-bfbKkIAoBfn8nY8cta2hzlJmyEDzDbk1xWVlRjhxdbNutzsCGtwUIM_QFvwQvjGHU7DBaXnLGuaErWVu9kHE6KAMjhDrUkz6sCxGye7bql57d813lowTv8MeAUhZUkrBstjBShHraRbqkawQhKe3KJ6SOyZbcSyLOJGQNr1bBRrQAXN5cowupM_QdkwXH823dMZQF-abQJX7dXZBHSN4dkwSOkMUMLFVF8IKS4r5x_TIfMsID8UXoYNjCAv3FzLIESsB1m2-_5M7MMsQ6WRxZxHkwGk04xGTIbxf2fHZ0jej1HdYYjuIOJhXb6qrSboakx81cYE8gPwscps_t03mCSEOd3MY27UsqPK9BfMxdV4xmdta2uNS-ukhBQDx2bDrDvXCluEokPn8fh57tqDtvJneTnhtQmlYhftpNgSZjcQjh1VTKa9vHw7UP-873-bao-63M-FMFz_F8y24H5vxLw_C9G2YsKkA8wzfq&spm=a21xtw.29178619.0.0) | ![](vendor/MYF_F63/doc/media/MYF-F63AI01开发板.png)          |
+| MYF-F63AI01开发板（明裕丰）                                  | [MYF-F63AI01星闪AI语音开发板（淘宝）](https://item.taobao.com/item.htm?id=922405424292&pisk=g4nmjMYvfqzfWqd8y0ZX8yE11r8RGoZ_sfIT6lFwz7P5DfEYXuWzL-PN75yN44DIsSp6lo3usblugfD6hRPZ_fVtkUKKhxZ_bBIMvHHjYF3Wfj2Nb8JaIJW2erusFujzbBdpvaBzlIEZ6N5BuT7zd7y4QP72EzyTIlW4QfPzzJydgllZ_8rzBJ5VbiyaauP7nRya_lSzUR2UQtzZ_YJuQ7PabrlZUvdvuSiZ40R8VjPaz8yZq-40TYYCbGqfvrPUh7SwT0e0OWk4ZGSat5OoMYDviMM8cYl3pjKPmXDIVb2rThAufbgZ_RcyA1EjJjiQrYTF4xq0NyyE4dSU6m0-L7qhQnkumS4EDyxHKXkoQ2Uo2p-QmoPqWoMOKIHomjHjqABNzoqxrym0YH1464HnjRm613cnd0GuUX-MgguAzw56TGwyB0715ry7EWU4j2Svt67QLLvl8da4F-NpELb6Mry7ENvkEwqbu8wc5&spm=a21xtw.29178619.0.0) | ![](vendor/MYF_F63/doc/media/MYF-F63AI01开发板.png)          |
 
 ## 开发板资料
 
