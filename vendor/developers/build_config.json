@@ -21,6 +21,16 @@
     },
     {
       "buildTarget": "ws63-liteos-app",
+      "relativePath": "demo/wifi_http_demo",
+      "chip": "WS63",
+      "buildDef": "",
+      "needSmoke": "false",
+      "key": "3",
+      "name": "wifi_http_demo",
+      "description": "WiFi+HTTP Get请求"
+    },
+    {
+      "buildTarget": "ws63-liteos-app",
       "relativePath": "demo/iot_huaweiyun",
       "chip": "WS63",
       "buildDef": "",
@@ -38,5 +48,15 @@
       "key": "5",
       "name": "sle_gate",
       "description": "星闪网关"
+    },
+    {
+      "buildTarget": "ws63-liteos-app",
+      "relativePath": "demo/UartInt_demo",
+      "chip": "WS63",
+      "buildDef": "",
+      "needSmoke": "false",
+      "key": "6",
+      "name": "UartInt_demo",
+      "description": "串口中断收发"
     }
 ]
