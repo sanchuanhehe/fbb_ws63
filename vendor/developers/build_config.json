@@ -58,5 +58,15 @@
       "key": "6",
       "name": "UartInt_demo",
       "description": "串口中断收发"
+    },
+    {
+      "buildTarget": "ws63-liteos-app",
+      "relativePath": "demo/SLEController",
+      "chip": "WS63",
+      "buildDef": "",
+      "needSmoke": "false",
+      "key": "6",
+      "name": "SLEController",
+      "description": "星闪控制器"
     }
 ]
