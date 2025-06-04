@@ -25,7 +25,8 @@
         "GitHub.copilot-chat",
         "DavidAnson.vscode-markdownlint",
         "vscode-icons-team.vscode-icons",
-        "ms-vscode.cpptools"
+        "ms-vscode.cpptools",
+        "marus25.cortex-debug"
       ]
     }
   }
