@@ -57,6 +57,11 @@ class CMakeBuilder(BuildEnvironment):
     def build(self):
         """
         """
+        # 删除 root_path/compile_commands.json
+        compile_commands_path = os.path.join(root_path, 'compile_commands.json')
+        if os.path.exists(compile_commands_path):
+            print("Cleaning compile_commands.json")
+            os.remove(compile_commands_path)
         built_targets = []
         for group in self.group_names:
             need_pack = False
@@ -219,6 +224,31 @@ class CMakeBuilder(BuildEnvironment):
         self.add_cmake_param("-DROM_CHECK=False")
         self.start(env, target_name, output_path, clean=self.need_clean, nhso=self.no_hso)
         self.rom_check(env, target_name, output_path)
+        # 如果编译完成存在 output_path/compile_commands.json,合并到 root_path/compile_commands.json
+        compile_commands_src = os.path.join(output_path, 'compile_commands.json')
+        compile_commands_dst = os.path.join(root_path, 'compile_commands.json')
+        if os.path.exists(compile_commands_src):
+            import json
+            # 读取 output_path/compile_commands.json
+            with open(compile_commands_src, 'r', encoding='utf-8') as f:
+                src_commands = json.load(f)
+            # 如果 root_path/compile_commands.json 存在，读取并合并
+            if os.path.exists(compile_commands_dst):
+                with open(compile_commands_dst, 'r', encoding='utf-8') as f:
+                    dst_commands = json.load(f)
+                # 合并并去重（以 file+command 字段为唯一标识）
+                seen = set()
+                merged = []
+                for item in dst_commands + src_commands:
+                    key = (item.get('file'), item.get('command'))
+                    if key not in seen:
+                        seen.add(key)
+                        merged.append(item)
+            else:
+                merged = src_commands
+            # 写回 root_path/compile_commands.json
+            with open(compile_commands_dst, 'w', encoding='utf-8') as f:
+                json.dump(merged, f, indent=2, ensure_ascii=False)
         end_time = time.time()
         print("%s takes %f s" %  (target_name, end_time - start_time))
 
