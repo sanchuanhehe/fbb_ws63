@@ -402,6 +402,7 @@ static void WebSocket_unmaskData(size_t idx, PacketBuffers* bufs)
  */
 int WebSocket_connect( networkHandles *net, int ssl, const char *uri)
 {
+	Log(TRACE_PROTOCOL, 1, "WebSocket_connect called for %s", uri);
 	int rc;
 	char *buf = NULL;
 	char *headers_buf = NULL;
@@ -438,7 +439,6 @@ int WebSocket_connect( networkHandles *net, int ssl, const char *uri)
 #endif /* else if defined(_WIN32) || defined(_WIN64) */
 
 	hostname_len = MQTTProtocol_addressPort(uri, &port, &topic, ssl ? WSS_DEFAULT_PORT : WS_DEFAULT_PORT);
-
 	/* if no topic, use default */
 	if ( !topic )
 		topic = "/mqtt";
@@ -676,7 +676,7 @@ exit:
 	return rc;
 }
 
-size_t WebSocket_framePos()
+size_t WebSocket_framePos(void)
 {
 	if ( in_frames && in_frames->first )
 	{

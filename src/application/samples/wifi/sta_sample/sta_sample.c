@@ -1,10 +1,13 @@
 /**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2023. All rights reserved.
+ * @file sta_sample.c
+ * @brief WiFi STA示例代码
+ * @details 实现WiFi STA模式的连接、扫描、DHCP等功能
  *
- * Description: Application core main function for standard \n
+ * @author HiSilicon (Shanghai) Technologies Co., Ltd.
+ * @date 2022-07-27
+ * @version 1.0
  *
- * History: \n
- * 2022-07-27, Create file. \n
+ * @copyright Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2023. All rights reserved.
  */
 
 #include "lwip/netifapi.h"
@@ -18,42 +21,72 @@
 #include "app_init.h"
 #include "soc_osal.h"
 
-#define WIFI_IFNAME_MAX_SIZE             16
-#define WIFI_MAX_SSID_LEN                33
-#define WIFI_SCAN_AP_LIMIT               64
-#define WIFI_MAC_LEN                     6
-#define WIFI_STA_SAMPLE_LOG              "[WIFI_STA_SAMPLE]"
-#define WIFI_NOT_AVALLIABLE              0
-#define WIFI_AVALIABE                    1
-#define WIFI_GET_IP_MAX_COUNT            300
+/** @brief WiFi接口名最大长度 */
+#define WIFI_IFNAME_MAX_SIZE 16
+/** @brief WiFi SSID最大长度 */
+#define WIFI_MAX_SSID_LEN 33
+/** @brief WiFi扫描AP数量限制 */
+#define WIFI_SCAN_AP_LIMIT 64
+/** @brief WiFi MAC地址长度 */
+#define WIFI_MAC_LEN 6
+/** @brief WiFi STA示例日志标签 */
+#define WIFI_STA_SAMPLE_LOG "[WIFI_STA_SAMPLE]"
+/** @brief WiFi不可用状态 */
+#define WIFI_NOT_AVALLIABLE 0
+/** @brief WiFi可用状态 */
+#define WIFI_AVALIABE 1
+/** @brief 获取IP最大重试次数 */
+#define WIFI_GET_IP_MAX_COUNT 300
 
-#define WIFI_TASK_PRIO                  (osPriority_t)(13)
-#define WIFI_TASK_DURATION_MS           2000
-#define WIFI_TASK_STACK_SIZE            0x1000
+/** @brief WiFi任务优先级 */
+#define WIFI_TASK_PRIO (osPriority_t)(13)
+/** @brief WiFi任务执行间隔(毫秒) */
+#define WIFI_TASK_DURATION_MS 2000
+/** @brief WiFi任务栈大小 */
+#define WIFI_TASK_STACK_SIZE 0x1000
 
+/**
+ * @brief WiFi扫描状态变化回调函数
+ * @param state 扫描状态
+ * @param size 扫描结果数量
+ */
 static td_void wifi_scan_state_changed(td_s32 state, td_s32 size);
+
+/**
+ * @brief WiFi连接状态变化回调函数
+ * @param state 连接状态
+ * @param info 连接信息
+ * @param reason_code 原因码
+ */
 static td_void wifi_connection_changed(td_s32 state, const wifi_linked_info_stru *info, td_s32 reason_code);
 
+/** @brief WiFi事件回调结构体 */
 wifi_event_stru wifi_event_cb = {
-    .wifi_event_connection_changed      = wifi_connection_changed,
-    .wifi_event_scan_state_changed      = wifi_scan_state_changed,
+    .wifi_event_connection_changed = wifi_connection_changed,
+    .wifi_event_scan_state_changed = wifi_scan_state_changed,
 };
 
+/**
+ * @brief WiFi STA状态枚举
+ */
 enum {
-    WIFI_STA_SAMPLE_INIT = 0,       /* 0:初始态 */
-    WIFI_STA_SAMPLE_SCANING,        /* 1:扫描中 */
-    WIFI_STA_SAMPLE_SCAN_DONE,      /* 2:扫描完成 */
-    WIFI_STA_SAMPLE_FOUND_TARGET,   /* 3:匹配到目标AP */
-    WIFI_STA_SAMPLE_CONNECTING,     /* 4:连接中 */
-    WIFI_STA_SAMPLE_CONNECT_DONE,   /* 5:关联成功 */
-    WIFI_STA_SAMPLE_GET_IP,         /* 6:获取IP */
+    WIFI_STA_SAMPLE_INIT = 0,     /**< 初始态 */
+    WIFI_STA_SAMPLE_SCANING,      /**< 扫描中 */
+    WIFI_STA_SAMPLE_SCAN_DONE,    /**< 扫描完成 */
+    WIFI_STA_SAMPLE_FOUND_TARGET, /**< 匹配到目标AP */
+    WIFI_STA_SAMPLE_CONNECTING,   /**< 连接中 */
+    WIFI_STA_SAMPLE_CONNECT_DONE, /**< 关联成功 */
+    WIFI_STA_SAMPLE_GET_IP,       /**< 获取IP */
 } wifi_state_enum;
 
+/** @brief WiFi当前状态 */
 static td_u8 g_wifi_state = WIFI_STA_SAMPLE_INIT;
 
-/*****************************************************************************
-  STA 扫描事件回调函数
-*****************************************************************************/
+/**
+ * @brief STA扫描事件回调函数
+ * @param state 扫描状态
+ * @param size 扫描到的AP数量
+ */
 static td_void wifi_scan_state_changed(td_s32 state, td_s32 size)
 {
     UNUSED(state);
@@ -63,9 +96,12 @@ static td_void wifi_scan_state_changed(td_s32 state, td_s32 size)
     return;
 }
 
-/*****************************************************************************
-  STA 关联事件回调函数
-*****************************************************************************/
+/**
+ * @brief STA关联事件回调函数
+ * @param state 连接状态 (WIFI_NOT_AVALLIABLE: 连接失败, WIFI_AVALIABE: 连接成功)
+ * @param info 连接信息结构体指针
+ * @param reason_code 连接失败原因码
+ */
 static td_void wifi_connection_changed(td_s32 state, const wifi_linked_info_stru *info, td_s32 reason_code)
 {
     UNUSED(info);
@@ -80,17 +116,22 @@ static td_void wifi_connection_changed(td_s32 state, const wifi_linked_info_stru
     }
 }
 
-/*****************************************************************************
-  STA 匹配目标AP
-*****************************************************************************/
+/**
+ * @brief STA匹配目标AP
+ * @details 扫描WiFi网络，查找指定SSID的AP并配置连接参数
+ * @param expected_bss 输出参数，匹配到的网络配置信息
+ * @return td_s32
+ * @retval 0 成功找到目标AP
+ * @retval -1 未找到目标AP或操作失败
+ */
 td_s32 example_get_match_network(wifi_sta_config_stru *expected_bss)
 {
-    td_s32  ret;
-    td_u32  num = 64; /* 64:扫描到的Wi-Fi网络数量 */
+    td_s32 ret;
+    td_u32 num = 64; /* 扫描到的Wi-Fi网络数量 */
     td_char expected_ssid[] = "my_softAP";
     td_char key[] = "my_password"; /* 待连接的网络接入密码 */
     td_bool find_ap = TD_FALSE;
-    td_u8   bss_index;
+    td_u8 bss_index;
     /* 获取扫描结果 */
     td_u32 scan_len = sizeof(wifi_scan_info_stru) * WIFI_SCAN_AP_LIMIT;
     wifi_scan_info_stru *result = osal_kmalloc(scan_len, OSAL_GFP_ATOMIC);
@@ -104,7 +145,7 @@ td_s32 example_get_match_network(wifi_sta_config_stru *expected_bss)
         return -1;
     }
     /* 筛选扫描到的Wi-Fi网络，选择待连接的网络 */
-    for (bss_index = 0; bss_index < num; bss_index ++) {
+    for (bss_index = 0; bss_index < num; bss_index++) {
         if (strlen(expected_ssid) == strlen(result[bss_index].ssid)) {
             if (memcmp(expected_ssid, result[bss_index].ssid, strlen(expected_ssid)) == 0) {
                 find_ap = TD_TRUE;
@@ -136,16 +177,20 @@ td_s32 example_get_match_network(wifi_sta_config_stru *expected_bss)
     return 0;
 }
 
-/*****************************************************************************
-  STA 关联状态查询
-*****************************************************************************/
+/**
+ * @brief STA关联状态查询
+ * @details 查询WiFi连接状态，最多查询5次，每次间隔500ms
+ * @return td_bool
+ * @retval 0 连接成功
+ * @retval -1 连接失败或超时
+ */
 td_bool example_check_connect_status(td_void)
 {
     td_u8 index;
     wifi_linked_info_stru wifi_status;
     /* 获取网络连接状态，共查询5次，每次间隔500ms */
-    for (index = 0; index < 5; index ++) {
-        (void)osDelay(50); /* 50: 延时500ms */
+    for (index = 0; index < 5; index++) {
+        (void)osDelay(50); /* 延时500ms */
         memset_s(&wifi_status, sizeof(wifi_linked_info_stru), 0, sizeof(wifi_linked_info_stru));
         if (wifi_sta_get_ap_info(&wifi_status) != 0) {
             continue;
@@ -157,9 +202,15 @@ td_bool example_check_connect_status(td_void)
     return -1;
 }
 
-/*****************************************************************************
-  STA DHCP状态查询
-*****************************************************************************/
+/**
+ * @brief STA DHCP状态查询
+ * @details 检查DHCP是否成功获取IP地址，处理超时情况
+ * @param netif_p 网络接口指针
+ * @param wait_count 等待计数器指针
+ * @return td_bool
+ * @retval 0 DHCP成功
+ * @retval -1 DHCP进行中或超时
+ */
 td_bool example_check_dhcp_status(struct netif *netif_p, td_u32 *wait_count)
 {
     if ((ip_addr_isany(&(netif_p->ip_addr)) == 0) && (*wait_count <= WIFI_GET_IP_MAX_COUNT)) {
@@ -176,10 +227,17 @@ td_bool example_check_dhcp_status(struct netif *netif_p, td_u32 *wait_count)
     return -1;
 }
 
+/**
+ * @brief STA功能主函数
+ * @details 实现完整的WiFi STA连接流程：扫描->匹配->连接->获取IP
+ * @return td_s32
+ * @retval 0 STA连接成功并获取IP
+ * @retval -1 STA初始化失败
+ */
 td_s32 example_sta_function(td_void)
 {
     td_char ifname[WIFI_IFNAME_MAX_SIZE + 1] = "wlan0"; /* 创建的STA接口名 */
-    wifi_sta_config_stru expected_bss = {0}; /* 连接请求信息 */
+    wifi_sta_config_stru expected_bss = {0};            /* 连接请求信息 */
     struct netif *netif_p = TD_NULL;
     td_u32 wait_count = 0;
 
@@ -235,6 +293,14 @@ td_s32 example_sta_function(td_void)
     return 0;
 }
 
+/**
+ * @brief STA示例初始化函数
+ * @details 注册WiFi事件回调，等待WiFi初始化完成，启动STA功能
+ * @param param 初始化参数（未使用）
+ * @return int
+ * @retval 0 初始化成功
+ * @retval -1 初始化失败
+ */
 int sta_sample_init(void *param)
 {
     param = param;
@@ -248,7 +314,7 @@ int sta_sample_init(void *param)
 
     /* 等待wifi初始化完成 */
     while (wifi_is_wifi_inited() == 0) {
-        (void)osDelay(10); /* 1: 等待100ms后判断状态 */
+        (void)osDelay(10); /* 等待100ms后判断状态 */
     }
     PRINT("%s::wifi init succ.\r\n", WIFI_STA_SAMPLE_LOG);
 
@@ -259,16 +325,20 @@ int sta_sample_init(void *param)
     return 0;
 }
 
+/**
+ * @brief STA示例入口函数
+ * @details 创建STA示例任务
+ */
 static void sta_sample_entry(void)
 {
     osThreadAttr_t attr;
-    attr.name       = "sta_sample_task";
-    attr.attr_bits  = 0U;
-    attr.cb_mem     = NULL;
-    attr.cb_size    = 0U;
-    attr.stack_mem  = NULL;
+    attr.name = "sta_sample_task";
+    attr.attr_bits = 0U;
+    attr.cb_mem = NULL;
+    attr.cb_size = 0U;
+    attr.stack_mem = NULL;
     attr.stack_size = WIFI_TASK_STACK_SIZE;
-    attr.priority   = WIFI_TASK_PRIO;
+    attr.priority = WIFI_TASK_PRIO;
     if (osThreadNew((osThreadFunc_t)sta_sample_init, NULL, &attr) == NULL) {
         PRINT("%s::Create sta_sample_task fail.\r\n", WIFI_STA_SAMPLE_LOG);
     }
