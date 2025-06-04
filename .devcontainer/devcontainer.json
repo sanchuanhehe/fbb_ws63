@@ -10,7 +10,6 @@
         "llvm-vs-code-extensions.vscode-clangd",
         "GitHub.copilot",
         "twxs.cmake",
-        "ms-vscode.cpptools",
         "cschlosser.doxdocgen",
         "vinirossa.vscode-gitandgithub-pack",
         "ms-python.debugpy",
