@@ -24,7 +24,8 @@
         "MS-CEINTL.vscode-language-pack-zh-hans",
         "GitHub.copilot-chat",
         "DavidAnson.vscode-markdownlint",
-        "vscode-icons-team.vscode-icons"
+        "vscode-icons-team.vscode-icons",
+        "ms-vscode.cpptools"
       ]
     }
   }
