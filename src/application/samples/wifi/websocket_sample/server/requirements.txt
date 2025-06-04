@@ -1,0 +1,10 @@
+# WebSocket服务端和客户端依赖
+
+# 异步版本 (server.py, client.py)
+websockets>=11.0
+
+# 同步版本服务端 (server.py)
+websocket-server>=0.4
+
+# 同步版本客户端 (simple_client.py) 
+websocket-client>=1.6.0
