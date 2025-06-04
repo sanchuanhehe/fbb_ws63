@@ -55,7 +55,7 @@
 void WebSocket_close(networkHandles *net, int status_code, const char *reason);
 
 /* sends upgrade request */
-int WebSocket_connect(networkHandles *net, int ssl, const char *uri);
+int WebSocket_connect(networkHandles *net, int ssl, const char *uri, bool is_mqtt);
 
 /* obtain data from network socket */
 int WebSocket_getch(networkHandles *net, char* c);
