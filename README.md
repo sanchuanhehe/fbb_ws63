@@ -37,6 +37,7 @@
 | 8 | [WS63星闪模组（润和软件）](https://e.tb.cn/h.6LxYtgOmQL5b51S?tk=jkprVTA5bOC) | WS63星闪模组_HH-M01_Wi-Fi6 星闪多模 |
 | 9 | [WS63E星闪模组（润和软件）](https://e.tb.cn/h.6p0TonQdm3whw0i?tk=ZjcNVTAUwUG) | WS63E星闪模组_HH-M02_Wi-Fi6 星闪多模 支持雷达人体活动感知 |
 | 10 | [MYF-F63星闪模组、开发板链接 （明裕丰）](https://shop187806465.taobao.com/?spm=pc_detail.29232929.shop_block.dshopinfo.2fd27dd6T64Lbi) | 星闪模组、开发板、星闪AI模组和开发板 |
+| 11 | [KHM-3863A 星闪模组购买链接 （深开鸿）](https://mall.kaihong.com/productDetail?skuId=1839224386385612801&goodsId=1839224386133954561) | 星闪、WiFi、蓝牙三模SoC通信模组，支持AT指令及OpenCPU二次开发，支持KaihongOS Lite版本及星闪链路软总线特性等 |
 
 ## 支持的开发板
 
@@ -49,6 +50,7 @@
 | DTU_Car(大连理工大学)                                        | **暂不提供**                                                 | <img src="vendor/DUT_Car/doc/media/image-20250507183303684.png" alt="image-20250507183303684" style="zoom: 25%;" /> |
 | MYF-F63VA01开发板（明裕丰）                                  | [MYF-F63VA01星闪开发板 （淘宝）](https://item.taobao.com/item.htm?id=893223665987&pisk=gY0KqOj-Xdvh363LsX-GqErLqXAGvhce6vlfr82hVAHtKRbkTyxzyYetUJq3RXYSIvcXTJxyYYHtNjdP-prkybGqpJqoyb78NbMyT8AejXlUzz9Dn8LmTXPGt7LZJMw1CfPbOgtgAPu1ecJDnEYDA1aJpKDkpMF95SFbPWZ7NfOTN7N7PuwI1CF7Z9s5RYO967N4N7N5RlT_gWa5FMwQflN7igsCAa6667y_FzaSFPOTav899R5Q9an2l8zEWdHdPagT9ltiORMSUQVUvGc3Ca9jWWe4hXwOPawYpc8o6Xvduf4E1xFmKF_KHjuZB5MXydUrQ0M7wATVEyomLqrt_n_s9yeacSg6NZwoJccbBrCWRfULpog3DEdxhfhSml3MGEzLRJiu8bfvKf3KKXutZ_s_JymTD2UXu9wojj38w4JyWxhq7AFshUpC4b0mkmrVn-FlACdO4grQ_Ib8HaXdiABQ6-AQAgSzq5PTnCINVg6WE5eDsGjP4lDd.&spm=tbpc.mytb_followshop.item.goods) | ![](vendor/MYF_F63/doc/media/MYF-F63VA01开发板.png)          |
 | MYF-F63AI01开发板（明裕丰）                                  | [MYF-F63AI01星闪AI语音开发板（淘宝）](https://item.taobao.com/item.htm?id=922405424292&pisk=g4nmjMYvfqzfWqd8y0ZX8yE11r8RGoZ_sfIT6lFwz7P5DfEYXuWzL-PN75yN44DIsSp6lo3usblugfD6hRPZ_fVtkUKKhxZ_bBIMvHHjYF3Wfj2Nb8JaIJW2erusFujzbBdpvaBzlIEZ6N5BuT7zd7y4QP72EzyTIlW4QfPzzJydgllZ_8rzBJ5VbiyaauP7nRya_lSzUR2UQtzZ_YJuQ7PabrlZUvdvuSiZ40R8VjPaz8yZq-40TYYCbGqfvrPUh7SwT0e0OWk4ZGSat5OoMYDviMM8cYl3pjKPmXDIVb2rThAufbgZ_RcyA1EjJjiQrYTF4xq0NyyE4dSU6m0-L7qhQnkumS4EDyxHKXkoQ2Uo2p-QmoPqWoMOKIHomjHjqABNzoqxrym0YH1464HnjRm613cnd0GuUX-MgguAzw56TGwyB0715ry7EWU4j2Svt67QLLvl8da4F-NpELb6Mry7ENvkEwqbu8wc5&spm=a21xtw.29178619.0.0) | ![](vendor/MYF_F63/doc/media/MYF-F63AI01开发板.png)          |
+| [KHD-3863B 星闪开发板（深开鸿）](https://mall.kaihong.com/productDetail?skuId=1839195267891466241&goodsId=1839195267383955458) | [KHD-3863B星闪开发板（开鸿商城）](https://mall.kaihong.com/productDetail?skuId=1839195267891466241&goodsId=1839195267383955458) | <img src="vendor/Kaihong_KHD-3863B/doc/media/KHD-3863B.png" alt="KHD-3863B" style="zoom: 75%;" /> |
 
 ## 开发板资料
 
@@ -60,6 +62,7 @@
 |   DyCloud_WF6301_DK开发板（鼎云物联）   |                         **后续提供**                         | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">DyCloud_WF6301_DK开发板开发板硬件原理图</a> |
 |          DTU_Car(大连理工大学)          | [智能小车星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) |    [DTU_Car开发板硬件原理图](vendor/DUT_Car/doc/hardware)    |
 |        MYF-F63VA01开发板(明裕丰)        |         [MYF-F63VA01开发板指南](vendor/MYF_F63/doc)          |  [MYF-F63VA01开发板硬件原理图](vendor/MYF_F63/doc/hardware)  |
+|        KHD-3863B星闪开发板(深开鸿)        |         [KHD-3863B星闪开发板介绍](vendor/Kaihong_KHD-3863B/doc/README.md)          |  [KHD-3863B星闪开发板硬件原理图](vendor/Kaihong_KHD-3863B/doc/hardware/开鸿KHD-3863B星闪开发板.pdf)  |
 
 ## 开发板示例
 
