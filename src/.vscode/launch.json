@@ -2,20 +2,19 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "RISC-V via external GDB Server",
+      "name": "RISC-V WS63 Debug",
       "type": "cortex-debug",
       "request": "launch",
       "servertype": "external",
       "gdbTarget": "host.docker.internal:3333",
       "executable": "${workspaceFolder}/output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf",
       "gdbPath": "${workspaceFolder}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl/bin/riscv32-linux-musl-gdb",
-      "device": "RISC-V",
+      "device": "WS63",
       "interface": "swd",
       "cwd": "${workspaceFolder}",
       "toolchainPrefix": "riscv32-linux-musl",
+      "armToolchainPath": "${workspaceFolder}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl/bin",
       "postLaunchCommands": [
-        "monitor halt",
-        "monitor reset",
         "monitor halt"
       ],
       "postRestartCommands": [
@@ -24,11 +23,7 @@
       "postResetCommands": [
         "-enable-pretty-printing"
       ],
-      "preResetCommands": [
-        "monitor halt"
-      ],
       "runToEntryPoint": "main",
-      "stopAtEntry": true,
       "showDevDebugOutput": "both",
       "swoConfig": {
         "enabled": false
