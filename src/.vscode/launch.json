@@ -5,17 +5,37 @@
       "name": "RISC-V via external GDB Server",
       "type": "cortex-debug",
       "request": "launch",
-      "servertype": "jlink", 
-      "gdbTarget": "localhost:2331",
+      "servertype": "external",
+      "gdbTarget": "host.docker.internal:3333",
       "executable": "${workspaceFolder}/output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf",
       "gdbPath": "${workspaceFolder}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl/bin/riscv32-linux-musl-gdb",
       "device": "RISC-V",
+      "interface": "swd",
       "cwd": "${workspaceFolder}",
-      "postRestartCommands": [
-        "-enable-pretty-printing",
-        "-gdb-set disassembly-flavor intel"
+      "toolchainPrefix": "riscv32-linux-musl",
+      "postLaunchCommands": [
+        "monitor halt",
+        "monitor reset",
+        "monitor halt"
       ],
-      "showDevDebugOutput": "both" 
+      "postRestartCommands": [
+        "-enable-pretty-printing"
+      ],
+      "postResetCommands": [
+        "-enable-pretty-printing"
+      ],
+      "preResetCommands": [
+        "monitor halt"
+      ],
+      "runToEntryPoint": "main",
+      "stopAtEntry": true,
+      "showDevDebugOutput": "both",
+      "swoConfig": {
+        "enabled": false
+      },
+      "rttConfig": {
+        "enabled": false
+      }
     }
   ]
 }
