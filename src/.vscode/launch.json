@@ -3,34 +3,22 @@
   "configurations": [
     {
       "name": "RISC-V WS63 Debug",
-      "type": "cortex-debug",
+      "type": "gdb",
       "request": "launch",
-      "servertype": "external",
-      "gdbTarget": "host.docker.internal:3333",
-      "executable": "${workspaceFolder}/output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf",
-      "gdbPath": "${workspaceFolder}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl/bin/riscv32-linux-musl-gdb",
-      "device": "WS63",
-      "interface": "swd",
+      "target": "${workspaceFolder}/output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf",
+      "gdbpath": "${workspaceFolder}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl/bin/riscv32-linux-musl-gdb",
       "cwd": "${workspaceFolder}",
-      "toolchainPrefix": "riscv32-linux-musl",
-      "armToolchainPath": "${workspaceFolder}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl/bin",
-      "postLaunchCommands": [
-        "monitor halt"
+      "debugger_args": [
+        "-ex", "file ${workspaceFolder}/output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf",
+        "-ex", "set arch riscv:rv32",
+        "-ex", "target extended-remote host.docker.internal:3333",
+        "-ex", "monitor halt",
+        "-ex", "monitor reset halt",
+        "-ex", "load"
       ],
-      "postRestartCommands": [
-        "-enable-pretty-printing"
-      ],
-      "postResetCommands": [
-        "-enable-pretty-printing"
-      ],
-      "runToEntryPoint": "main",
-      "showDevDebugOutput": "both",
-      "swoConfig": {
-        "enabled": false
-      },
-      "rttConfig": {
-        "enabled": false
-      }
+      "stopAtEntry": true,
+      "printCalls": false,
+      "showDevDebugOutput": true
     }
   ]
 }
