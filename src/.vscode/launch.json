@@ -2,23 +2,27 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "RISC-V WS63 Debug",
-      "type": "gdb",
+      "name": "RISC-V WS63 Debug (Cortex-Debug)",
+      "type": "cortex-debug",
       "request": "launch",
-      "target": "${workspaceFolder}/output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf",
-      "gdbpath": "${workspaceFolder}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl/bin/riscv32-linux-musl-gdb",
+      "servertype": "external",
+      "device": "RV32", // 对 RISC-V 使用通用名称
+      "interface": "swd",
+      "serialNumber": "", // 可指定特定 JLink 序列号，留空表示默认
+      "executable": "${workspaceFolder}/output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf",
       "cwd": "${workspaceFolder}",
-      "debugger_args": [
-        "-ex", "file ${workspaceFolder}/output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf",
-        "-ex", "set arch riscv:rv32",
-        "-ex", "target extended-remote host.docker.internal:3333",
-        "-ex", "monitor halt",
-        "-ex", "monitor reset halt",
-        "-ex", "load"
+      "svdFile": "", // 可选：提供芯片对应的 SVD 文件用于寄存器视图
+      "preLaunchTask": "", // 可设置为编译任务名，如 "build"
+      "gdbPath": "${workspaceFolder}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl/bin/riscv32-linux-musl-gdb",
+      "gdbTarget": "host.docker.internal:3333",
+      "overrideLaunchCommands": [
+        "target remote host.docker.internal:3333",
+        "monitor reset halt",
+        "load"
       ],
-      "stopAtEntry": true,
-      "printCalls": false,
-      "showDevDebugOutput": true
+      "postRestartCommands": [
+        "monitor reset halt"
+      ]
     }
   ]
 }
