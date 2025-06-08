@@ -4,6 +4,9 @@
   "dockerFile": "Dockerfile",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/src",
   "remoteUser": "vscode",
+  "runArgs": [
+    "--add-host=host.docker.internal:host-gateway"
+  ],
   "customizations": {
     "vscode": {
       "extensions": [
@@ -24,7 +27,9 @@
         "MS-CEINTL.vscode-language-pack-zh-hans",
         "GitHub.copilot-chat",
         "DavidAnson.vscode-markdownlint",
-        "vscode-icons-team.vscode-icons"
+        "vscode-icons-team.vscode-icons",
+        "ms-vscode.cpptools",
+        "webfreak.debug"
       ]
     }
   }

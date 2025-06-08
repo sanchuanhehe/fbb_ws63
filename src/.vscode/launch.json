@@ -1,32 +1,28 @@
 {
-    // 使用 IntelliSense 了解相关属性。 
-    // 悬停以查看现有属性的描述。
-    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "(gdb) 启动",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/a.out",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "为 gdb 启用整齐打印",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "将反汇编风格设置为 Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                }
-            ]
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "RISC-V WS63 Debug (Cortex-Debug)",
+      "type": "cortex-debug",
+      "request": "launch",
+      "servertype": "external",
+      "device": "RV32", // 对 RISC-V 使用通用名称
+      "interface": "swd",
+      "serialNumber": "", // 可指定特定 JLink 序列号，留空表示默认
+      "executable": "${workspaceFolder}/output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf",
+      "cwd": "${workspaceFolder}",
+      "svdFile": "", // 可选：提供芯片对应的 SVD 文件用于寄存器视图
+      "preLaunchTask": "", // 可设置为编译任务名，如 "build"
+      "gdbPath": "${workspaceFolder}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl/bin/riscv32-linux-musl-gdb",
+      "gdbTarget": "host.docker.internal:3333",
+      "overrideLaunchCommands": [
+        "target remote host.docker.internal:3333",
+        "monitor reset halt",
+        "load"
+      ],
+      "postRestartCommands": [
+        "monitor reset halt"
+      ]
+    }
+  ]
 }
