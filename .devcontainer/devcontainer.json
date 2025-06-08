@@ -29,7 +29,9 @@
         "DavidAnson.vscode-markdownlint",
         "vscode-icons-team.vscode-icons",
         "ms-vscode.cpptools",
-        "webfreak.debug"
+        "webfreak.debug",
+        "marus25.cortex-debug",
+        "mcu-debug.debug-tracker-vscode"
       ]
     }
   }
