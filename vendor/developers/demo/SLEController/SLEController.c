@@ -454,19 +454,19 @@ static void *OLEDDisplayTask(void)
             double voltage_percent3 = (double)joystick_rcv_data.adc_ch3 / joystick_adc_default_value3 * 100;
             if (voltage_percent0 < (50 + DATA_CALIBRATION) && voltage_percent0 > (50 - DATA_CALIBRATION)) // 如果电压百分比在 50% ± DATA_CALIBRATION 范围内，则设置为 50%
             {
-                voltage_percent0 = 50.0; // 设置为 50%
+                voltage_percent0 = 50.0; // 设置为 50.0%
             }
             if (voltage_percent1 < (50 + DATA_CALIBRATION) && voltage_percent1 > (50 - DATA_CALIBRATION)) // 如果电压百分比在 50% ± DATA_CALIBRATION 范围内，则设置为 50%
             {
-                voltage_percent1 = 50.0; // 设置为 50%
+                voltage_percent1 = 50.0; // 设置为 50.0%
             }
             if (voltage_percent2 < (50 + DATA_CALIBRATION) && voltage_percent2 > (50 - DATA_CALIBRATION)) // 如果电压百分比在 50% ± DATA_CALIBRATION 范围内，则设置为 50%
             {
-                voltage_percent2 = 50.0; // 设置为 50%
+                voltage_percent2 = 50.0; // 设置为 50.0%
             }
             if (voltage_percent3 < (50 + DATA_CALIBRATION) && voltage_percent3 > (50 - DATA_CALIBRATION)) // 如果电压百分比在 50% ± DATA_CALIBRATION 范围内，则设置为 50%
             {
-                voltage_percent3 = 50.0; // 设置为 50%
+                voltage_percent3 = 50.0; // 设置为 50.0%
             }
 
             SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 4, (int)voltage_percent0, 3, false); // 在第 3 行第 4 列显示电压百分比
@@ -586,22 +586,22 @@ static void *JoystickInputTask(void)
             if (sle_send_data.adc_ch0_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch0_percent > (50 - DATA_CALIBRATION)) // 如果百分比在 50% ± DATA_CALIBRATION 范围内
             {
 
-                sle_send_data.adc_ch0_percent = 50.0; // 设置为 50%
+                sle_send_data.adc_ch0_percent = 50.0; // 设置为 50.0%
             }
             if (sle_send_data.adc_ch1_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch1_percent > (50 - DATA_CALIBRATION)) // 如果百分比在 50% ± DATA_CALIBRATION 范围内
             {
 
-                sle_send_data.adc_ch1_percent = 50.0; // 设置为 50%
+                sle_send_data.adc_ch1_percent = 50.0; // 设置为 50.0%
             }
             if (sle_send_data.adc_ch2_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch2_percent > (50 - DATA_CALIBRATION)) // 如果百分比在 50% ± DATA_CALIBRATION 范围内
             {
 
-                sle_send_data.adc_ch2_percent = 50.0; // 设置为 50%
+                sle_send_data.adc_ch2_percent = 50.0; // 设置为 50.0%
             }
             if (sle_send_data.adc_ch3_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch3_percent > (50 - DATA_CALIBRATION)) // 如果百分比在 50% ± DATA_CALIBRATION 范围内
             {
 
-                sle_send_data.adc_ch3_percent = 50.0; // 设置为 50%
+                sle_send_data.adc_ch3_percent = 50.0; // 设置为 50.0%
             }
             sle_send_data.is_test_mode = test_flag;                                                              // 设置测试模式标志
             ret2 = osal_msg_queue_write_copy(SLE_Transfer_QueueID, &sle_send_data, sizeof(sle_send_data), 0xff); // 写入 SLE 传输消息队列
