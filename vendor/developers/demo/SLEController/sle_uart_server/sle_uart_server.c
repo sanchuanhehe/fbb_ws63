@@ -490,7 +490,7 @@ static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errc
                         addr->addr[BT_INDEX_0], addr->addr[BT_INDEX_4]);
     g_sle_pair_hdl = conn_id + 1;
     ssap_exchange_info_t parameter = {0};
-    parameter.mtu_size = 520;
+    parameter.mtu_size = 520; // 设置 MTU 大小为 520 字节
     parameter.version = 1;
     ssaps_set_info(g_server_id, &parameter);
 }

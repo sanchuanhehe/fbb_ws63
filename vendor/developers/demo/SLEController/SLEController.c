@@ -130,7 +130,7 @@ static void ButtonISR_KEY3(void)
     else // 切换 OLED 显示
     {
         OLED_display_index++;
-        OLED_display_index %= 3; // 切换 OLED 显示索引
+        OLED_display_index %= 3; // 切换 OLED 显示索引，最大为 （3 -1）
         oled_init_flag = false;
     }
 }
@@ -139,7 +139,7 @@ static void ButtonISR_KEY6(void)
 {
     osal_printk("Button KEY6 pressed!\r\n");
     test_flag++;
-    test_flag %= 3; // 切换测试模式标志
+    test_flag %= 3; // 切换测试模式标志，最大为 （3 -1）
 }
 
 /**
@@ -365,7 +365,7 @@ static void *OLEDDisplayTask(void)
 
     SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "System"); // 在第 1 行第 1 列显示 "System"
     SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 2, 1, "initializing..."); // 在第 2 行第 1 列显示 "initializing..."
-    osal_msleep(2000);            // 等待 2 秒钟，等待其他任务准备就绪
+    osal_msleep(2000);            // 等待 2000 ms，等待其他任务准备就绪
     osal_mutex_unlock(&g_mux_id); // 释放互斥锁
     osal_printk("Mutex unlocked, OLED initialization complete!\r\n");
 
@@ -391,15 +391,12 @@ static void *OLEDDisplayTask(void)
         {
             osal_printk("recv message failed, ret = %d\n", ret);
         }
-        // else
-        // {
-        //     osal_printk("joystick data: %d %d %d %d\n", joystick_rcv_data.adc_ch0, joystick_rcv_data.adc_ch1, joystick_rcv_data.adc_ch2, joystick_rcv_data.adc_ch3);
-        // }
+        
 
-        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 4, joystick_rcv_data.adc_ch0, 4, false); // 在第 3 行第 4 列显示摇杆1 Y轴数据
-        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 4, joystick_rcv_data.adc_ch1, 4, false); // 在第 2 行第 4 列显示摇杆1 X轴数据
-        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 12, joystick_rcv_data.adc_ch2, 4, false); // 在第 3 行第 12 列显示摇杆2 Y轴数据
-        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 12, joystick_rcv_data.adc_ch3, 4, false); // 在第 2 行第 12 列显示摇杆2 X轴数据
+        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 4, joystick_rcv_data.adc_ch0, 4, false); // 在第 3 行第 4 列显示摇杆1 Y轴数据，长度为 4
+        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 4, joystick_rcv_data.adc_ch1, 4, false); // 在第 2 行第 4 列显示摇杆1 X轴数据，长度为 4
+        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 12, joystick_rcv_data.adc_ch2, 4, false); // 在第 3 行第 12 列显示摇杆2 Y轴数据，长度为 4
+        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 12, joystick_rcv_data.adc_ch3, 4, false); // 在第 2 行第 12 列显示摇杆2 X轴数据，长度为 4
 
         // 更新最大 ADC 值
         if (joystick_rcv_data.adc_ch0 > joystick_adc_default_value0)
@@ -455,21 +452,21 @@ static void *OLEDDisplayTask(void)
             double voltage_percent1 = (double)joystick_rcv_data.adc_ch1 / joystick_adc_default_value1 * 100;
             double voltage_percent2 = (double)joystick_rcv_data.adc_ch2 / joystick_adc_default_value2 * 100;
             double voltage_percent3 = (double)joystick_rcv_data.adc_ch3 / joystick_adc_default_value3 * 100;
-            if (voltage_percent0 < (50 + DATA_CALIBRATION) && voltage_percent0 > (50 - DATA_CALIBRATION))
+            if (voltage_percent0 < (50 + DATA_CALIBRATION) && voltage_percent0 > (50 - DATA_CALIBRATION)) // 如果电压百分比在 50% ± DATA_CALIBRATION 范围内，则设置为 50%
             {
-                voltage_percent0 = 50.0;
+                voltage_percent0 = 50.0; // 设置为 50%
             }
-            if (voltage_percent1 < (50 + DATA_CALIBRATION) && voltage_percent1 > (50 - DATA_CALIBRATION))
+            if (voltage_percent1 < (50 + DATA_CALIBRATION) && voltage_percent1 > (50 - DATA_CALIBRATION)) // 如果电压百分比在 50% ± DATA_CALIBRATION 范围内，则设置为 50%
             {
-                voltage_percent1 = 50.0;
+                voltage_percent1 = 50.0; // 设置为 50%
             }
-            if (voltage_percent2 < (50 + DATA_CALIBRATION) && voltage_percent2 > (50 - DATA_CALIBRATION))
+            if (voltage_percent2 < (50 + DATA_CALIBRATION) && voltage_percent2 > (50 - DATA_CALIBRATION)) // 如果电压百分比在 50% ± DATA_CALIBRATION 范围内，则设置为 50%
             {
-                voltage_percent2 = 50.0;
+                voltage_percent2 = 50.0; // 设置为 50%
             }
-            if (voltage_percent3 < (50 + DATA_CALIBRATION) && voltage_percent3 > (50 - DATA_CALIBRATION))
+            if (voltage_percent3 < (50 + DATA_CALIBRATION) && voltage_percent3 > (50 - DATA_CALIBRATION)) // 如果电压百分比在 50% ± DATA_CALIBRATION 范围内，则设置为 50%
             {
-                voltage_percent3 = 50.0;
+                voltage_percent3 = 50.0; // 设置为 50%
             }
 
             SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 4, (int)voltage_percent0, 3, false); // 在第 3 行第 4 列显示电压百分比
@@ -499,9 +496,9 @@ static void *OLEDDisplayTask(void)
                 SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "SLE Disconnected"); // 在第 1 行第 1 列显示 "SLE Disconnected"
             }
 
-            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 9, (int)battery_voltage, 4, false); // 在第 2 行第 9 列显示电池电压
+            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 9, (int)battery_voltage, 4, false); // 在第 2 行第 9 列显示电池电压，长度为 4
         }
-        else if (OLED_display_index == 2)
+        else if (OLED_display_index == 2) // 当 OLED_display_index == 2 时显示测试模式标志
         {
             if (!oled_init_flag)
             {
@@ -552,8 +549,7 @@ static void *JoystickInputTask(void)
     JoystickData joystick_data = {0};      // 摇杆数据
     SLESendDataStruct sle_send_data = {0}; // 摇杆百分比数据
     uint16_t battery_voltage = 0;          // 电池电压
-    // uint32_t cnt = 0;
-    osal_msleep(1000);                                                 // 等待 ADC 初始化完成
+    osal_msleep(1000);                                                 // 延时 1000 ms，等待 ADC 初始化完成
     mutex_ret = osal_mutex_lock_timeout(&g_mux_id, OSAL_WAIT_FOREVER); // 获取互斥锁
     if (mutex_ret != OSAL_SUCCESS)
     {
@@ -581,36 +577,34 @@ static void *JoystickInputTask(void)
         if (joystick_ready_index == true)
         {
 
-            sle_send_data.adc_ch0_percent = (joystick_data.adc_ch0 * 100) / joystick_adc_default_value0; // 计算百分比
-            sle_send_data.adc_ch1_percent = (joystick_data.adc_ch1 * 100) / joystick_adc_default_value1;
-            sle_send_data.adc_ch2_percent = (joystick_data.adc_ch2 * 100) / joystick_adc_default_value2;
-            sle_send_data.adc_ch3_percent = (joystick_data.adc_ch3 * 100) / joystick_adc_default_value3;
+            sle_send_data.adc_ch0_percent = (joystick_data.adc_ch0 * 100) / joystick_adc_default_value0; // 计算百分比（乘以 100 后除以最大值）
+            sle_send_data.adc_ch1_percent = (joystick_data.adc_ch1 * 100) / joystick_adc_default_value1; // 计算百分比（乘以 100 后除以最大值）
+            sle_send_data.adc_ch2_percent = (joystick_data.adc_ch2 * 100) / joystick_adc_default_value2; // 计算百分比（乘以 100 后除以最大值）
+            sle_send_data.adc_ch3_percent = (joystick_data.adc_ch3 * 100) / joystick_adc_default_value3; // 计算百分比（乘以 100 后除以最大值）
 
             // 受限于 ADC 精度和摇杆的实际情况，需要对百分比进行校准，防止摇杆在中间位置时 ADC 读数不稳定导致百分比偏离 50%
-            if (sle_send_data.adc_ch0_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch0_percent > (50 - DATA_CALIBRATION))
+            if (sle_send_data.adc_ch0_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch0_percent > (50 - DATA_CALIBRATION)) // 如果百分比在 50% ± DATA_CALIBRATION 范围内
             {
 
-                sle_send_data.adc_ch0_percent = 50.0;
+                sle_send_data.adc_ch0_percent = 50.0; // 设置为 50%
             }
-            if (sle_send_data.adc_ch1_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch1_percent > (50 - DATA_CALIBRATION))
+            if (sle_send_data.adc_ch1_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch1_percent > (50 - DATA_CALIBRATION)) // 如果百分比在 50% ± DATA_CALIBRATION 范围内
             {
 
-                sle_send_data.adc_ch1_percent = 50.0;
+                sle_send_data.adc_ch1_percent = 50.0; // 设置为 50%
             }
-            if (sle_send_data.adc_ch2_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch2_percent > (50 - DATA_CALIBRATION))
+            if (sle_send_data.adc_ch2_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch2_percent > (50 - DATA_CALIBRATION)) // 如果百分比在 50% ± DATA_CALIBRATION 范围内
             {
 
-                sle_send_data.adc_ch2_percent = 50.0;
+                sle_send_data.adc_ch2_percent = 50.0; // 设置为 50%
             }
-            if (sle_send_data.adc_ch3_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch3_percent > (50 - DATA_CALIBRATION))
+            if (sle_send_data.adc_ch3_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch3_percent > (50 - DATA_CALIBRATION)) // 如果百分比在 50% ± DATA_CALIBRATION 范围内
             {
 
-                sle_send_data.adc_ch3_percent = 50.0;
+                sle_send_data.adc_ch3_percent = 50.0; // 设置为 50%
             }
             sle_send_data.is_test_mode = test_flag;                                                              // 设置测试模式标志
             ret2 = osal_msg_queue_write_copy(SLE_Transfer_QueueID, &sle_send_data, sizeof(sle_send_data), 0xff); // 写入 SLE 传输消息队列
-            // osal_printk("Data percent: %d %d %d %d\r\n", joystick_data_percent.adc_ch0_percent,
-            //             joystick_data_percent.adc_ch1_percent, joystick_data_percent.adc_ch2_percent, joystick_data_percent.adc_ch3_percent);
         }
 
         uint32_t BAT_Vol = battery_voltage * 1000 * 3 / 2 / 1000; // ADC 读取的数据为三分之二分压的电池电压
@@ -621,7 +615,6 @@ static void *JoystickInputTask(void)
 
             osal_printk("send message failed, ret1 = %d, ret2 = %d\n, ret3 = %d\n", ret1, ret2, ret3);
         }
-        // osal_printk("Battery voltage: %d\r\n", BAT_Vol);
 
         osal_msleep(ADC_DELAY_TIME);
     }

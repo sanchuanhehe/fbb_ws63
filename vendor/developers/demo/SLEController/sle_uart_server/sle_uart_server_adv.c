@@ -195,7 +195,7 @@ static int sle_set_default_announce_param(void)
     param.conn_interval_max = SLE_CONN_INTV_MAX_DEFAULT;
     param.conn_max_latency = SLE_CONN_MAX_LATENCY;
     param.conn_supervision_timeout = SLE_CONN_SUPERVISION_TIMEOUT_DEFAULT;
-    param.announce_tx_power = 18;
+    param.announce_tx_power = 18; // 设置为 18 dBm
     param.own_addr.type = 0;
     ret = memcpy_s(param.own_addr.addr, SLE_ADDR_LEN, local_addr, SLE_ADDR_LEN);
     if (ret != EOK)
