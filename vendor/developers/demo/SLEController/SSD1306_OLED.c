@@ -30,11 +30,11 @@ static void SSD1306_OLED_ShowChar(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *
  */
 void SSD1306_OLED_Init(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data)
 {
-    for (int i = 0; i < (int)(sizeof(SSD1306_OLED_init_Command) / sizeof(SSD1306_OLED_init_Command[0])); i++)
+    for (int i = 0; i < (int)(sizeof(SSD1306_OLED_init_Command) / sizeof(SSD1306_OLED_init_Command[0])); i++) // 通过变量 i 来遍历初始化命令数组
     {
         data->send_buf[0] = SSD1306_OLED_init_Command[i][0];
         data->send_buf[1] = SSD1306_OLED_init_Command[i][1];
-        data->send_len = 2;
+        data->send_len = 2; // 设置发送长度为2字节
         if (uapi_i2c_master_write(bus, dev_addr, data) == ERRCODE_SUCC)
         {
             // osal_printk("i2c%d master send succ!, command: 0x%02X\r\n", bus, SSD1306_OLED_init_Command[i][1]);
@@ -62,7 +62,7 @@ void SSD1306_OLED_Init(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data)
  */
 void SSD1306_OLED_ShowString(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data, uint8_t line, uint8_t column, char *str)
 {
-    for (int i = 0; str[i] != '\0'; i++)
+    for (int i = 0; str[i] != '\0'; i++) // 通过变量 i 来遍历字符串
     {
         SSD1306_OLED_ShowChar(bus, dev_addr, data, line, column + i, str[i]); // 显示字符
     }
@@ -110,7 +110,7 @@ void SSD1306_OLED_ShowIntNum(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data,
     }
     else
     {
-        for (int i = str_len; i < len; i++)
+        for (int i = str_len; i < len; i++) // 如果字符串长度小于指定长度，通过变量 i 来填充空格
         {
             str[i] = ' '; // 用空格填充
         }
@@ -128,10 +128,10 @@ void SSD1306_OLED_ShowIntNum(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data,
  */
 void SSD1306_OLED_Clear(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data)
 {
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 8; i++) // SSD1306 OLED 有 8 页，每页 8 行
     {
         SSD1306_OLED_SetCursor(bus, dev_addr, data, i, 0); // 设置光标位置
-        for (int j = 0; j < 128; j++)
+        for (int j = 0; j < 128; j++) // 每页有 128 列
         {
             SSD1306_OLED_WriteData(bus, dev_addr, data, 0x00); // 清屏
         }
@@ -155,12 +155,12 @@ void SSD1306_OLED_Clear(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data)
 static void SSD1306_OLED_ShowChar(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data, uint8_t line, uint8_t column, char ch)
 {
     SSD1306_OLED_SetCursor(bus, dev_addr, data, (line - 1) * 2, (column - 1) * 8); // 设置光标位置
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 8; i++) // 发送字符的前 8 行数据
     {
         SSD1306_OLED_WriteData(bus, dev_addr, data, SSD1306_OLED_F8x16[ch - ' '][i]); // 发送数据
     }
     SSD1306_OLED_SetCursor(bus, dev_addr, data, (line - 1) * 2 + 1, (column - 1) * 8); // 设置光标位置
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 8; i++) // 发送字符的后 8 行数据
     {
         SSD1306_OLED_WriteData(bus, dev_addr, data, SSD1306_OLED_F8x16[ch - ' '][i + 8]); // 发送数据
     }
@@ -176,7 +176,7 @@ static void SSD1306_OLED_ShowChar(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *
  */
 static void SSD1306_OLED_SendCommand(i2c_bus_t bus, uint16_t dev_addr, i2c_data_t *data, uint8_t command)
 {
-    data->send_buf[0] = 0x00;    // 控制字节，0x00表示写命令
+    data->send_buf[0] = 0x00;    // 控制字节，0x00 表示写命令
     data->send_buf[1] = command; // 命令字节
     data->send_len = 2;
     if (uapi_i2c_master_write(bus, dev_addr, data) == ERRCODE_SUCC)

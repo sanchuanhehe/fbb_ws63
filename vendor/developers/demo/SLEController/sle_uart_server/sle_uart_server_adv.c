@@ -7,7 +7,7 @@
  * 2023-07-17, Create file. \n
  *
  * Code Comments: Written by Lamonce.
- * Last Modified: April 10, 2025 \n
+ * Last Modified: June 09, 2025 \n
  *
  * Introduction:
  * This file implements the advertising functionality for SLE UART server communications.
@@ -70,10 +70,24 @@
 /* 广播名称 */
 
 // static uint8_t sle_local_name[NAME_MAX_LENGTH] = "NearLink"; // 广播名称
-extern uint8_t sle_local_name[NAME_MAX_LENGTH]; // 广播名称，定义在其他文件中
-#define SLE_SERVER_INIT_DELAY_MS 1000                               // 广播初始化延时
-#define sample_at_log_print(fmt, args...) osal_printk(fmt, ##args)  // 日志打印宏
-#define SLE_UART_SERVER_LOG "[sle uart server]"                     // 日志前缀
+#define SLE_SERVER_INIT_DELAY_MS 1000                              // 广播初始化延时
+#define sample_at_log_print(fmt, args...) osal_printk(fmt, ##args) // 日志打印宏
+#define SLE_UART_SERVER_LOG "[sle uart server]"                    // 日志前缀
+
+static uint8_t sle_local_name[NAME_MAX_LENGTH] = {0};
+
+int set_SLE_local_name(const uint8_t *name)
+{
+    if (name == NULL || strlen((char*)name) >= NAME_MAX_LENGTH)
+    {
+        osal_printk("%s set_SLE_local_name failed, name is null or too long\n", SLE_UART_SERVER_LOG);
+        return -1; // 错误处理
+    }
+    // 复制本地名称到全局变量
+    strncpy((char *)sle_local_name, (char *)name, NAME_MAX_LENGTH - 1);
+    sle_local_name[NAME_MAX_LENGTH - 1] = '\0'; // 确保字符串以 null 结尾
+    return 0;                                   // 成功
+}
 
 // 设置广播设备名称，也是本地名称
 static uint16_t sle_set_adv_local_name(uint8_t *adv_data, uint16_t max_len)
@@ -292,7 +306,7 @@ errcode_t sle_uart_server_adv_init(void)
     sle_set_default_announce_data();
     ret = sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
     sample_at_log_print("%s sle_uart_server_adv_init,sle_start_announce devise name :%s\r\n",
-                        SLE_UART_SERVER_LOG, sle_local_name); 
+                        SLE_UART_SERVER_LOG, sle_local_name);
     if (ret != ERRCODE_SLE_SUCCESS)
     {
         sample_at_log_print("%s sle_uart_server_adv_init,sle_start_announce fail :%x\r\n", SLE_UART_SERVER_LOG, ret);

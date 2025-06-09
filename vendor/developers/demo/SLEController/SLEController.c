@@ -12,7 +12,7 @@
  * Copyright (c) lamonce
  *
  * History:
- * 2025-06-03, Edit file.
+ * 2025-06-09, Edit file.
  */
 
 #include "soc_osal.h"
@@ -46,11 +46,12 @@
 #define I2C_TRANSFER_LEN 8      // I2C 传输长度
 #define ADC_DELAY_TIME 100      // 延时
 
-#define QUEUE_SIZE 12                                                                    // 定义队列大小
-#define JOYSTICK_QUEUE_NODE_SIZE (sizeof(JoystickData) / sizeof(uint8_t))                // 定义摇杆数据队列节点大小，单位字节
-#define JOYSTICK_PERCENT_QUEUE_NODE_SIZE (sizeof(JoystickDataPercent) / sizeof(uint8_t)) // 定义百分比队列节点大小，单位字节
-#define BAT_QUEUE_NODE_SIZE (sizeof(uint32_t) / sizeof(uint8_t))                         // 定义电池电压队列节点大小，单位字节
-#define KEY3_PIN 3                                                                       // 定义按钮引脚号
+#define QUEUE_SIZE 12                                                                  // 定义队列大小
+#define JOYSTICK_QUEUE_NODE_SIZE (sizeof(JoystickData) / sizeof(uint8_t))              // 定义摇杆数据队列节点大小，单位字节
+#define JOYSTICK_PERCENT_QUEUE_NODE_SIZE (sizeof(SLESendDataStruct) / sizeof(uint8_t)) // 定义百分比队列节点大小，单位字节
+#define BAT_QUEUE_NODE_SIZE (sizeof(uint32_t) / sizeof(uint8_t))                       // 定义电池电压队列节点大小，单位字节
+#define KEY3_PIN 3                                                                     // 定义按钮引脚号
+#define KEY6_PIN 6
 
 // ADC通道
 #define ADC_CHANNEL0 0 // GPIO7
@@ -88,11 +89,12 @@ typedef struct
     uint32_t adc_ch1_percent; // 摇杆1 X轴百分比
     uint32_t adc_ch2_percent; // 摇杆2 Y轴百分比
     uint32_t adc_ch3_percent; // 摇杆2 X轴百分比
-} JoystickDataPercent;
+    uint8_t is_test_mode;     // 是否为测试模式
+} SLESendDataStruct;
 
-unsigned long g_sle_uart_server_msgqueue_id;          // 消息队列句柄
-#define SLE_UART_SERVER_LOG "[sle uart server]"       // 日志前缀
-uint8_t sle_local_name[NAME_MAX_LENGTH] = "NearLink"; // 设备本地名称，用于 SLE 广播和连接
+unsigned long g_sle_uart_server_msgqueue_id;                 // 消息队列句柄
+#define SLE_UART_SERVER_LOG "[sle uart server]"              // 日志前缀
+static uint8_t sle_local_name[NAME_MAX_LENGTH] = "NearLink"; // 设备本地名称，用于 SLE 广播和连接
 
 static unsigned long joystick_data_queueID = 0;   // 摇杆数据队列ID
 static unsigned long SLE_Transfer_QueueID = 0;    // SLE 传输队列ID
@@ -101,6 +103,7 @@ static unsigned long battery_voltage_queueID = 0; // 电池电压队列ID
 static osal_mutex g_mux_id;            // 互斥锁，用于保证 OLED 初始化和 ADC 初始化的顺序
 static uint8_t OLED_display_index = 0; // OLED 显示索引
 static bool oled_init_flag = false;    // OLED 初始化标志
+static uint8_t test_flag = 0;          // 无人机测试模式
 
 static bool joystick_ready_index = false;        // 摇杆标志
 static uint16_t joystick_adc_default_value0 = 0; // ADC 最大值保存
@@ -127,10 +130,16 @@ static void ButtonISR_KEY3(void)
     else // 切换 OLED 显示
     {
         OLED_display_index++;
-        OLED_display_index %= 2; // 切换 OLED 显示索引
+        OLED_display_index %= 3; // 切换 OLED 显示索引
         oled_init_flag = false;
     }
-    // uapi_gpio_unregister_isr_func(KEY3_PIN);
+}
+
+static void ButtonISR_KEY6(void)
+{
+    osal_printk("Button KEY6 pressed!\r\n");
+    test_flag++;
+    test_flag %= 3; // 切换测试模式标志
 }
 
 /**
@@ -145,6 +154,8 @@ static void pin_init(void)
     uapi_pin_set_mode(KEY3_PIN, PIN_MODE_0);
     uapi_gpio_set_dir(KEY3_PIN, GPIO_DIRECTION_INPUT);
     errcode_t ret = uapi_gpio_register_isr_func(KEY3_PIN, GPIO_INTERRUPT_RISING_EDGE, (gpio_callback_t)ButtonISR_KEY3); // 注册按钮中断服务函数
+    uapi_pin_set_mode(KEY6_PIN, PIN_MODE_0);
+    uapi_gpio_set_dir(KEY6_PIN, GPIO_DIRECTION_INPUT);
     if (ret != 0)
     {
         uapi_gpio_unregister_isr_func(KEY3_PIN);
@@ -170,8 +181,8 @@ static void pin_init(void)
  * @param read_cb_para 读请求回调参数
  * @param status 状态
  */
-static void ssaps_server_read_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_read_cb_t *read_cb_para,
-                                          errcode_t status)
+static void ssaps_server_read_request_callback(uint8_t server_id, uint16_t conn_id, ssaps_req_read_cb_t *read_cb_para,
+                                               errcode_t status)
 {
     osal_printk("%s ssaps read request cbk callback server_id:%x, conn_id:%x, handle:%x, status:%x\r\n",
                 SLE_UART_SERVER_LOG, server_id, conn_id, read_cb_para->handle, status);
@@ -192,8 +203,8 @@ static void ssaps_server_read_request_cbk(uint8_t server_id, uint16_t conn_id, s
  * @param write_cb_para 写请求回调参数
  * @param status 状态
  */
-static void ssaps_server_write_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_write_cb_t *write_cb_para,
-                                           errcode_t status)
+static void ssaps_server_write_request_callback(uint8_t server_id, uint16_t conn_id, ssaps_req_write_cb_t *write_cb_para,
+                                                errcode_t status)
 {
     osal_printk("%s ssaps write request callback cbk server_id:%x, conn_id:%x, handle:%x, status:%x\r\n",
                 SLE_UART_SERVER_LOG, server_id, conn_id, write_cb_para->handle, status);
@@ -352,8 +363,8 @@ static void *OLEDDisplayTask(void)
 
     SSD1306_OLED_Init(I2C_BUS_ID, dev_addr, &data); // 初始化OLED
 
-    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "System"); // 显示初始化信息
-    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 2, 1, "initializing...");
+    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "System"); // 在第 1 行第 1 列显示 "System"
+    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 2, 1, "initializing..."); // 在第 2 行第 1 列显示 "initializing..."
     osal_msleep(2000);            // 等待 2 秒钟，等待其他任务准备就绪
     osal_mutex_unlock(&g_mux_id); // 释放互斥锁
     osal_printk("Mutex unlocked, OLED initialization complete!\r\n");
@@ -367,10 +378,10 @@ static void *OLEDDisplayTask(void)
     JoystickData joystick_rcv_data = {0};
 
     SSD1306_OLED_Clear(I2C_BUS_ID, dev_addr, &data);                             // 清屏
-    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "Joystick Test"); // 显示字符串
-    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 2, 1, "X1:     X2:    ");
-    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 3, 1, "Y1:     Y2:    ");
-    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 4, 1, "KEY3 TO ENTER");
+    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "Joystick Test"); // 在第 1 行第 1 列显示 "Joystick Test"
+    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 2, 1, "X1:     X2:    "); // 在第 2 行第 1 列显示 "X1:     X2:    "
+    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 3, 1, "Y1:     Y2:    "); // 在第 3 行第 1 列显示 "Y1:     Y2:    "
+    SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 4, 1, "KEY3 TO ENTER"); // 在第 4 行第 1 列显示 "KEY3 TO ENTER"
 
     while (!joystick_ready_index)
     {
@@ -385,10 +396,10 @@ static void *OLEDDisplayTask(void)
         //     osal_printk("joystick data: %d %d %d %d\n", joystick_rcv_data.adc_ch0, joystick_rcv_data.adc_ch1, joystick_rcv_data.adc_ch2, joystick_rcv_data.adc_ch3);
         // }
 
-        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 4, joystick_rcv_data.adc_ch0, 4, false); // 显示电压值
-        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 4, joystick_rcv_data.adc_ch1, 4, false);
-        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 12, joystick_rcv_data.adc_ch2, 4, false); // 显示电压值
-        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 12, joystick_rcv_data.adc_ch3, 4, false);
+        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 4, joystick_rcv_data.adc_ch0, 4, false); // 在第 3 行第 4 列显示摇杆1 Y轴数据
+        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 4, joystick_rcv_data.adc_ch1, 4, false); // 在第 2 行第 4 列显示摇杆1 X轴数据
+        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 12, joystick_rcv_data.adc_ch2, 4, false); // 在第 3 行第 12 列显示摇杆2 Y轴数据
+        SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 12, joystick_rcv_data.adc_ch3, 4, false); // 在第 2 行第 12 列显示摇杆2 X轴数据
 
         // 更新最大 ADC 值
         if (joystick_rcv_data.adc_ch0 > joystick_adc_default_value0)
@@ -409,6 +420,17 @@ static void *OLEDDisplayTask(void)
         }
     }
 
+    errcode_t ret_key6 = uapi_gpio_register_isr_func(KEY6_PIN, GPIO_INTERRUPT_RISING_EDGE, (gpio_callback_t)ButtonISR_KEY6);
+    if (ret_key6 != 0)
+    {
+        uapi_gpio_unregister_isr_func(KEY6_PIN);
+        osal_printk("Button KEY6 ISR register failed!\r\n");
+    }
+    // else
+    // {
+    //     osal_printk("Button KEY6 ISR register success!\r\n");
+    // }
+
     while (true)
     {
         ret = osal_msg_queue_read_copy(joystick_data_queueID, &joystick_rcv_data, &joystick_msgSize, OSAL_WAIT_FOREVER); // 注意这里的 msgSize 一定要是指针
@@ -423,9 +445,9 @@ static void *OLEDDisplayTask(void)
             if (!oled_init_flag) // 如果固定显示的内容没有初始化过
             {
                 SSD1306_OLED_Clear(I2C_BUS_ID, dev_addr, &data);                        // 清屏
-                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "ADC Data"); // 显示字符串
-                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 2, 1, "X1:   % X2:   %");
-                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 3, 1, "Y1:   % Y2:   %");
+                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "ADC Data"); // 在第 1 行第 1 列显示 "ADC Data"
+                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 2, 1, "X1:   % X2:   %"); // 在第 2 行第 1 列显示 "X1:   % X2:   %"
+                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 3, 1, "Y1:   % Y2:   %"); // 在第 3 行第 1 列显示 "Y1:   % Y2:   %"
                 oled_init_flag = true;
             }
 
@@ -450,10 +472,10 @@ static void *OLEDDisplayTask(void)
                 voltage_percent3 = 50.0;
             }
 
-            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 4, (int)voltage_percent0, 3, false); // 显示电压百分比
-            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 4, (int)voltage_percent1, 3, false);
-            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 12, (int)voltage_percent2, 3, false); // 显示电压百分比
-            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 12, (int)voltage_percent3, 3, false);
+            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 4, (int)voltage_percent0, 3, false); // 在第 3 行第 4 列显示电压百分比
+            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 4, (int)voltage_percent1, 3, false); // 在第 2 行第 4 列显示电压百分比
+            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 3, 12, (int)voltage_percent2, 3, false); // 在第 3 行第 12 列显示电压百分比
+            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 12, (int)voltage_percent3, 3, false); // 在第 2 行第 12 列显示电压百分比
         }
 
         else if (OLED_display_index == 1) // OLED_display_index == 1 时显示 SLE 相关信息、电池电压等
@@ -461,23 +483,34 @@ static void *OLEDDisplayTask(void)
             if (!oled_init_flag)
             {
                 SSD1306_OLED_Clear(I2C_BUS_ID, dev_addr, &data);
-                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 3, 1, "SLE Name: ");
-                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 4, 1, (char *)sle_local_name); // 显示 SLE 名称
-                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 2, 1, "Battery:     mv");
+                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 3, 1, "SLE Name: "); // 在第 3 行第 1 列显示 "SLE Name: "
+                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 4, 1, (char *)sle_local_name); // 在第 4 行第 1 列显示 SLE 本地名称
+                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 2, 1, "Battery:     mv"); // 在第 2 行第 1 列显示 "Battery:     mv"
                 oled_init_flag = true;
             }
 
             // 判断 SLE 连接状态
             if (sle_uart_client_is_connected())
             {
-                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "SLE Connected   ");
+                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "SLE Connected   "); // 在第 1 行第 1 列显示 "SLE Connected   "
             }
             else
             {
-                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "SLE Disconnected");
+                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "SLE Disconnected"); // 在第 1 行第 1 列显示 "SLE Disconnected"
             }
 
-            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 9, (int)battery_voltage, 4, false); // 显示电池电压
+            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 9, (int)battery_voltage, 4, false); // 在第 2 行第 9 列显示电池电压
+        }
+        else if (OLED_display_index == 2)
+        {
+            if (!oled_init_flag)
+            {
+                SSD1306_OLED_Clear(I2C_BUS_ID, dev_addr, &data);
+                SSD1306_OLED_ShowString(I2C_BUS_ID, dev_addr, &data, 1, 1, "Drone Test Mode"); // 在第 1 行第 1 列显示 "Drone Test Mode"
+                oled_init_flag = true;
+            }
+
+            SSD1306_OLED_ShowIntNum(I2C_BUS_ID, dev_addr, &data, 2, 1, test_flag, 1, false); // 在第 2 行第 1 列显示测试模式标志
         }
     }
     return NULL;
@@ -516,24 +549,27 @@ static void *JoystickInputTask(void)
     uint32_t ret2 = 0;
     uint32_t ret3 = 0;
     uint32_t mutex_ret = 0;
-    JoystickData joystick_data = {0};                // 摇杆数据
-    JoystickDataPercent joystick_data_percent = {0}; // 摇杆百分比数据
-    uint16_t battery_voltage = 0;                    // 电池电压
+    JoystickData joystick_data = {0};      // 摇杆数据
+    SLESendDataStruct sle_send_data = {0}; // 摇杆百分比数据
+    uint16_t battery_voltage = 0;          // 电池电压
     // uint32_t cnt = 0;
     osal_msleep(1000);                                                 // 等待 ADC 初始化完成
     mutex_ret = osal_mutex_lock_timeout(&g_mux_id, OSAL_WAIT_FOREVER); // 获取互斥锁
     if (mutex_ret != OSAL_SUCCESS)
     {
+
         osal_printk("Failed to lock mutex, error code: %d\r\n", mutex_ret);
     }
     else
     {
+
         osal_printk("ADC_task get mutex successfully!\r\n");
     }
 
     osal_printk("ADC start\r\n");
     while (true)
     {
+
         adc_port_read(adc_channel0, &joystick_data.adc_ch0);
         adc_port_read(adc_channel1, &joystick_data.adc_ch1);
         adc_port_read(adc_channel2, &joystick_data.adc_ch2);
@@ -544,29 +580,35 @@ static void *JoystickInputTask(void)
 
         if (joystick_ready_index == true)
         {
-            joystick_data_percent.adc_ch0_percent = (joystick_data.adc_ch0 * 100) / joystick_adc_default_value0; // 计算百分比
-            joystick_data_percent.adc_ch1_percent = (joystick_data.adc_ch1 * 100) / joystick_adc_default_value1;
-            joystick_data_percent.adc_ch2_percent = (joystick_data.adc_ch2 * 100) / joystick_adc_default_value2;
-            joystick_data_percent.adc_ch3_percent = (joystick_data.adc_ch3 * 100) / joystick_adc_default_value3;
+
+            sle_send_data.adc_ch0_percent = (joystick_data.adc_ch0 * 100) / joystick_adc_default_value0; // 计算百分比
+            sle_send_data.adc_ch1_percent = (joystick_data.adc_ch1 * 100) / joystick_adc_default_value1;
+            sle_send_data.adc_ch2_percent = (joystick_data.adc_ch2 * 100) / joystick_adc_default_value2;
+            sle_send_data.adc_ch3_percent = (joystick_data.adc_ch3 * 100) / joystick_adc_default_value3;
 
             // 受限于 ADC 精度和摇杆的实际情况，需要对百分比进行校准，防止摇杆在中间位置时 ADC 读数不稳定导致百分比偏离 50%
-            if (joystick_data_percent.adc_ch0_percent < (50 + DATA_CALIBRATION) && joystick_data_percent.adc_ch0_percent > (50 - DATA_CALIBRATION))
+            if (sle_send_data.adc_ch0_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch0_percent > (50 - DATA_CALIBRATION))
             {
-                joystick_data_percent.adc_ch0_percent = 50.0;
+
+                sle_send_data.adc_ch0_percent = 50.0;
             }
-            if (joystick_data_percent.adc_ch1_percent < (50 + DATA_CALIBRATION) && joystick_data_percent.adc_ch1_percent > (50 - DATA_CALIBRATION))
+            if (sle_send_data.adc_ch1_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch1_percent > (50 - DATA_CALIBRATION))
             {
-                joystick_data_percent.adc_ch1_percent = 50.0;
+
+                sle_send_data.adc_ch1_percent = 50.0;
             }
-            if (joystick_data_percent.adc_ch2_percent < (50 + DATA_CALIBRATION) && joystick_data_percent.adc_ch2_percent > (50 - DATA_CALIBRATION))
+            if (sle_send_data.adc_ch2_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch2_percent > (50 - DATA_CALIBRATION))
             {
-                joystick_data_percent.adc_ch2_percent = 50.0;
+
+                sle_send_data.adc_ch2_percent = 50.0;
             }
-            if (joystick_data_percent.adc_ch3_percent < (50 + DATA_CALIBRATION) && joystick_data_percent.adc_ch3_percent > (50 - DATA_CALIBRATION))
+            if (sle_send_data.adc_ch3_percent < (50 + DATA_CALIBRATION) && sle_send_data.adc_ch3_percent > (50 - DATA_CALIBRATION))
             {
-                joystick_data_percent.adc_ch3_percent = 50.0;
+
+                sle_send_data.adc_ch3_percent = 50.0;
             }
-            ret2 = osal_msg_queue_write_copy(SLE_Transfer_QueueID, &joystick_data_percent, sizeof(joystick_data_percent), 0xff); // 写入 SLE 传输消息队列
+            sle_send_data.is_test_mode = test_flag;                                                              // 设置测试模式标志
+            ret2 = osal_msg_queue_write_copy(SLE_Transfer_QueueID, &sle_send_data, sizeof(sle_send_data), 0xff); // 写入 SLE 传输消息队列
             // osal_printk("Data percent: %d %d %d %d\r\n", joystick_data_percent.adc_ch0_percent,
             //             joystick_data_percent.adc_ch1_percent, joystick_data_percent.adc_ch2_percent, joystick_data_percent.adc_ch3_percent);
         }
@@ -576,6 +618,7 @@ static void *JoystickInputTask(void)
         ret3 = osal_msg_queue_write_copy(battery_voltage_queueID, &BAT_Vol, sizeof(BAT_Vol), 0xff); // 写入电池电压消息队列
         if (ret1 != OSAL_SUCCESS || ret2 != OSAL_SUCCESS || ret3 != OSAL_SUCCESS)
         {
+
             osal_printk("send message failed, ret1 = %d, ret2 = %d\n, ret3 = %d\n", ret1, ret2, ret3);
         }
         // osal_printk("Battery voltage: %d\r\n", BAT_Vol);
@@ -613,19 +656,33 @@ static void *sle_uart_server_task(const char *arg)
     unused(arg);
     osal_printk("%s sle_uart_server_task start\r\n", SLE_UART_SERVER_LOG);
 
+    int set_name_ret = set_SLE_local_name(sle_local_name); // 设置 SLE 本地名称
+    if (set_name_ret != ERRCODE_SLE_SUCCESS)
+    {
+        osal_printk("%s set SLE local name failed, ret = %d\r\n", SLE_UART_SERVER_LOG, set_name_ret);
+        return NULL;
+    }
+    else
+    {
+        osal_printk("%s set SLE local name success, name = %s\r\n", SLE_UART_SERVER_LOG, sle_local_name);
+    }
+
     uint8_t rx_buf[SLE_UART_SERVER_MSG_QUEUE_MAX_SIZE] = {0}; // 定义接收缓冲区
     uint32_t rx_length = SLE_UART_SERVER_MSG_QUEUE_MAX_SIZE;  // 接收缓冲区长度
     uint8_t sle_connect_state[] = "sle_dis_connect";          // 连接状态
 
-    sle_uart_server_create_msgqueue();                                                   // 创建消息队列
-    sle_uart_server_register_msg(sle_uart_server_write_msgqueue);                        // 注册消息队列
-    sle_uart_server_init(ssaps_server_read_request_cbk, ssaps_server_write_request_cbk); // 初始化 Server 端
+    sle_uart_server_create_msgqueue();                                                             // 创建消息队列
+    sle_uart_server_register_msg(sle_uart_server_write_msgqueue);                                  // 注册消息队列
+    sle_uart_server_init(ssaps_server_read_request_callback, ssaps_server_write_request_callback); // 初始化 Server 端
     // 这是一个高度抽象的函数，将 SLE Server 的多种回调函数的注册、启动广播等操作进行集成
+
+    osal_printk("%s sle_uart_server_task init success\r\n", SLE_UART_SERVER_LOG);
 
     errcode_t ret = 0;
 
     while (1)
     {
+
         // 清空接收缓冲区
         sle_uart_server_rx_buf_init(rx_buf, &rx_length);
 
@@ -670,22 +727,25 @@ static void *SELSendTask(void)
 {
     osal_printk("SLE_Send Task Start\r\n");
     uint32_t msg_ret = 0;
-    JoystickDataPercent joystick_data = {0}; // 摇杆百分比数据
-    uint32_t msgSize = sizeof(joystick_data);
+    SLESendDataStruct sle_send_data = {0}; // 摇杆百分比数据
+    uint32_t msgSize = sizeof(sle_send_data);
     char data_string[800] = {0};
     while (true)
     {
-        msg_ret = osal_msg_queue_read_copy(SLE_Transfer_QueueID, &joystick_data, &msgSize, OSAL_WAIT_FOREVER);
+        msg_ret = osal_msg_queue_read_copy(SLE_Transfer_QueueID, &sle_send_data, &msgSize, OSAL_WAIT_FOREVER);
         if (msg_ret == OSAL_SUCCESS)
         {
+            sprintf_s(data_string, sizeof(data_string),
+                      "X1:%d,Y1:%d,X2:%d,Y2:%d,test_mode:%d\n",
+                      sle_send_data.adc_ch1_percent,
+                      sle_send_data.adc_ch0_percent,
+                      sle_send_data.adc_ch3_percent,
+                      sle_send_data.adc_ch2_percent,
+                      sle_send_data.is_test_mode);
+            osal_printk("%s send joystick data to client: %s\n", SLE_UART_SERVER_LOG, data_string);
+
             if (sle_uart_client_is_connected()) // 检查是否有客户端连接
             {
-                sprintf_s(data_string, sizeof(data_string),
-                          "X1:%d,Y1:%d,X2:%d,Y2:%d",
-                          joystick_data.adc_ch1_percent,
-                          joystick_data.adc_ch0_percent,
-                          joystick_data.adc_ch3_percent,
-                          joystick_data.adc_ch2_percent);
                 // 发送数据到 Client 端
                 // osal_printk("%s send joystick data to client: %s\n", SLE_UART_SERVER_LOG, data_string);
                 sle_uart_server_send_report_by_handle((uint8_t *)data_string, strlen(data_string));
