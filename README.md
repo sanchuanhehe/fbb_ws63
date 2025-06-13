@@ -60,7 +60,7 @@
 | HiHope_NearLink_DK3863E_V03（润和软件） | [润和软件开发板星闪案例开发指南](vendor/HiHope_NearLink_DK_WS63E_V03/doc/星闪实验指导手册.md) | [HiHope_NearLink_DK3863E_V03开发板硬件原理图](vendor/HiHope_NearLink_DK_WS63E_V03/doc/hardware) |
 |       BearPi-Pico_H3863（小熊派）       | [小熊派开发板星闪案例开发指南](vendor/BearPi-Pico_H3863/doc/README.md) | [BearPi-Pico_H3863开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware) |
 |         华清远见WS63星闪开发板          | [华清远见星闪开发板案例开发指南](vendor/Hqyj_Ws63/doc/ws63实验指导手册.md) | [华清远见WS63星闪开发板硬件原理图](vendor/Hqyj_Ws63/doc/hardware) |
-|   DyCloud_WF6301_DK开发板（鼎云物联）   |                         <a href="vendor/DyCloud_WF6301_DK V1.0/doc/DyCloud_WF6301 DK 使用手册.md">DyCloud_WF6301_DK开发板开发板硬件原理图</a>                         | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">DyCloud_WF6301_DK开发板开发板硬件原理图</a> |
+|   DyCloud_WF6301_DK开发板（鼎云物联）   |                         <a href="vendor/DyCloud_WF6301_DK V1.0/doc/DyCloud_WF6301 DK 使用手册.md">DyCloud_WF6301_DK开发板案例开发指南</a>                         | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">DyCloud_WF6301_DK开发板开发板硬件原理图</a> |
 |          DTU_Car(大连理工大学)          | [智能小车星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) |    [DTU_Car开发板硬件原理图](vendor/DUT_Car/doc/hardware)    |
 |        MYF-F63VA01开发板(明裕丰)        |         [MYF-F63VA01开发板指南](vendor/MYF_F63/doc)          |  [MYF-F63VA01开发板硬件原理图](vendor/MYF_F63/doc/hardware)  |
 |        KHD-3863B星闪开发板(深开鸿)        |         [KHD-3863B星闪开发板介绍](vendor/Kaihong_KHD-3863B/doc/README.md)          |  [KHD-3863B星闪开发板硬件原理图](vendor/Kaihong_KHD-3863B/doc/hardware/开鸿KHD-3863B星闪开发板.pdf)  |
