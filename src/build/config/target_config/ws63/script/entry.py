@@ -11,15 +11,22 @@ import shutil
 import re
 
 from utils.build_utils import root_path, exec_shell, compare_bin, output_root
+from utils.indie_upgrade_utils import make_indie_upg_src, dump_indie_upg_check_file
 
 from typing import Dict, Any
-
+from enviroment import all_target
 
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 def do_cmd(target_name: str, hook_name: str, env: Dict[str, Any])->bool:
     python_path = sys.executable
     print("python path: ", python_path)
+
+    # 生成接口映射表
+    if hook_name == 'build_pre' and "CONFIG_SUPPORT_HILINK_INDIE_UPGRADE" in env.get("defines"):
+        if not make_indie_upg_src():
+            return False
+
 
     # sdk中执行sample的编译守护
     if hook_name == 'build_pre' and env.get('build_type', '') == 'GuardSDKSample':
@@ -38,17 +45,72 @@ def do_cmd(target_name: str, hook_name: str, env: Dict[str, Any])->bool:
  
         os.chdir(cwd)
 
+    if target_name == "ws63-liteos-msmart" and hook_name == 'build_pre':  # 源码编译
+        print("info: start build ws63-liteos-app for msmart in source.")
+        module_handle_script_path = os.path.join(root_path, "application", "samples", "custom", "ws63", "msmart", "build_module.py")
+        errcode = exec_shell([python_path, module_handle_script_path], None, True)
+        return True
+
+    if target_name == "ws63-liteos-app" and not config_check(root_path, "ws63-liteos-msmart") and os.path.isfile(os.path.join(root_path, "application", "samples", "custom", "ws63", "msmart", "build_module.py")) and hook_name == 'build_pre':
+        # SDK 编译 msmart
+        print("info: start build ws63-liteos-app for msmart in SDK.")
+        module_handle_script_path = os.path.join(root_path, "application", "samples", "custom", "ws63", "msmart", "build_module.py")
+        errcode = exec_shell([python_path, module_handle_script_path], None, True)
+        return True
+
+    par_list = sys.argv
+ 
     target_array = ['ws63-flashboot', 'ws63-loaderboot']
-
-    if not os.path.isfile(os.path.join(root_path, "output", "ws63", "acore", "boot_bin", "flashboot.bin")) and target_name not in target_array and hook_name == 'build_pre':
-        print("flashboot start build .....")
-        errcode = exec_shell([python_path, 'build.py', 'ws63-flashboot'], None, True)
-
-    if not os.path.isfile(os.path.join(root_path, "output", "ws63", "acore", "boot_bin", "loaderboot.bin")) and target_name not in target_array and hook_name == 'build_pre':
-        print("loaderboot start build .....")
-        errcode = exec_shell([python_path, 'build.py', 'ws63-loaderboot'], None, True)
+ 
+    if not "sdk_ws63" in all_target and target_name not in target_array and hook_name == 'build_pre':
+        if '-c' in par_list:
+            print("flashboot start build .....")
+            errcode = exec_shell([python_path, 'build.py', '-c', 'ws63-flashboot'], None, True)
+            if errcode != 0:
+                return False
+            print("loaderboot start build .....")
+            errcode = exec_shell([python_path, 'build.py', '-c', 'ws63-loaderboot'], None, True)
+            if errcode != 0:
+                return False
+        else:
+            print("flashboot start build .....")
+            errcode = exec_shell([python_path, 'build.py', 'ws63-flashboot'], None, True)
+            if errcode != 0:
+                return False
+            print("loaderboot start build .....")
+            errcode = exec_shell([python_path, 'build.py', 'ws63-loaderboot'], None, True)
+            if errcode != 0:
+                return False
     
     if hook_name == 'build_pre':
+        return True
+
+    if target_name == 'ws63-liteos-app' and root_path.endswith('output/sdk') and hook_name == 'build_post':
+        print("start build ws63-liteos-app-haier target")
+        # 海尔代码编译
+        build_haier_script = os.path.join(root_path, '../../application/samples/custom/ws63/haier/boards/HI3863/GCC/build.sh')
+        errcode = subprocess.run(['bash', build_haier_script])
+        if errcode.returncode != 0:
+            print("run build.sh failed!")
+            sys.exit(1)
+        # 拷贝海尔编译结果        
+        src_folder = os.path.join(root_path, '../../application/samples/custom/ws63/haier/boards/HI3863/GCC/libs/libhrapplication.a')
+        dest_folder = os.path.join(root_path, '../../application/samples/custom/ws63/haier/boards/HI3863/sdk/application/ws63-liteos-app/libhrapplication.a')
+        shutil.copyfile(src_folder, dest_folder)
+        # 编译最终fwpkg      
+        build_app_script = os.path.join(root_path,  '../../application/samples/custom/ws63/haier/boards/HI3863/sdk/build.py')
+        errcode = exec_shell(['python3', build_app_script, "-c", "ws63-liteos-app"], None, True)
+        if errcode != 0:
+            print("build ws63-liteos-app-haier target failed!")
+            sys.exit(1)
+        # 拷贝最终编译结果到package目录      
+        dest_folder = os.path.join(root_path, '../package/ws63/ws63_haier')
+        if os.path.exists(dest_folder):
+            print("ws63-liteos-app-haier exist")
+            return True
+        src_folder = os.path.join(root_path, '../../application/samples/custom/ws63/haier/boards/HI3863/sdk/output/ws63')
+        shutil.copytree(src_folder, dest_folder)
+        print("end build ws63-liteos-app-haier target")
         return True
 
     if target_name == 'ws63-liteos-mfg' and hook_name == 'build_post':
@@ -86,6 +148,9 @@ def do_cmd(target_name: str, hook_name: str, env: Dict[str, Any])->bool:
             print("copy_files_to_interim failed!")
             return False
         print("copy_files_to_interim done!")
+
+    if "CONFIG_SUPPORT_HILINK_INDIE_UPGRADE" in env.get("defines"):
+        dump_indie_upg_check_file(os.path.join(root_path, "output", "ws63", "acore", target_name), target_name)
 
     if env.get('pke_rom_bin'):
         # gen pke_rom_bin

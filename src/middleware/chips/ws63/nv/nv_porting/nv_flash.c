@@ -4,6 +4,7 @@
  */
 
 #include "nv_porting.h"
+#include "nv_store.h"
 #include "sfc.h"
 #include "osal_inner.h"
 #include "tcxo.h"
@@ -32,12 +33,12 @@ errcode_t kv_flash_write(const uint32_t flash_offset, uint32_t write_size, const
         return ERRCODE_MALLOC;
     }
     ret = uapi_sfc_reg_write(flash_offset, (uint8_t *)write_data, write_size);
-    if (ret != EOK) {
+    if (ret != ERRCODE_SUCC) {
         goto write_failed;
     }
     /* 回读比较 */
     ret = uapi_sfc_reg_read(flash_offset, cmp_data, write_size);
-    if (ret != EOK) {
+    if (ret != ERRCODE_SUCC) {
         goto write_failed;
     }
     ret = (errcode_t)memcmp(cmp_data, write_data, write_size);
@@ -53,5 +54,18 @@ errcode_t kv_flash_erase(const uint32_t flash_addr, uint32_t size)
 {
     errcode_t ret = ERRCODE_FAIL;
     ret = uapi_sfc_reg_erase(flash_addr, size);
+    return ret;
+}
+
+errcode_t kv_read_factory(uint16_t key_id, uint16_t kvalue_max_length, uint16_t *kvalue_length, uint8_t *kvalue)
+{
+    errcode_t ret = ERRCODE_FAIL;
+    kv_attributes_t data_attribute = 0;
+    kv_store_key_data_t key_data = {kvalue_max_length, 0, kvalue};
+    ret = kv_store_read_backup_key(key_id, &key_data, &data_attribute);
+    if (ret != ERRCODE_SUCC) {
+        return ret;
+    }
+    *kvalue_length = key_data.kvalue_actual_length;
     return ret;
 }

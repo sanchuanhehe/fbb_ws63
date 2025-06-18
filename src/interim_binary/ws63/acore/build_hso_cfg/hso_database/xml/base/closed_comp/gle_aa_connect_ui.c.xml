@@ -1,0 +1,46 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="gle access link establish request memcpy hci connect param failed @gle_aa_connect_ui.c(58),ERROR" ID="0xde5601d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle access link establish request addr memcpy failed @gle_aa_connect_ui.c(63),ERROR" ID="0xde5601fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle access link status report in @gle_aa_connect_ui.c(76),INFO" ID="0xde560265" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle access link establish response link not found @gle_aa_connect_ui.c(89),ERROR" ID="0xde5602ca" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[gle access link connect param update] not found link on addr:0x%02x:**:**:**:%02x:%02x @gle_aa_connect_ui.c(123),ERROR" ID="0xde5603da" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="connectparam update:conn_hdl:0x%02x, interval_min:%02x, interval_max:%02x @gle_aa_connect_ui.c(142),INFO" ID="0xde560475" />
+			<MSG STRUCTURE="diag_log_msg6" NAME="connectparam update:ifs:0x%02x, efs:0x%02x, latency:0x%02x, timeout:0x%02x, uint:0x%02x, tx_rx:0x%02x @gle_aa_connect_ui.c(152),INFO" ID="0xde5604c5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle access link release response link release failed @gle_aa_connect_ui.c(163),ERROR" ID="0xde56051a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm connection cbk memcpy failed @gle_aa_connect_ui.c(190),ERROR" ID="0xde5605f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm connection cbk link create failed @gle_aa_connect_ui.c(200),ERROR" ID="0xde560642" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm connection cbk memcpy failed @gle_aa_connect_ui.c(208),ERROR" ID="0xde560682" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle read remote features fail, status: 0x%x. @gle_aa_connect_ui.c(230),ERROR" ID="0xde560732" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle read remote features complete. @gle_aa_connect_ui.c(232),INFO" ID="0xde560745" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle read remote version fail, status: 0x%x. @gle_aa_connect_ui.c(242),ERROR" ID="0xde560792" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle read remote version complete. @gle_aa_connect_ui.c(244),INFO" ID="0xde5607a5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gle set data len, lcid: 0x%04x, tx octets: 0x%x @gle_aa_connect_ui.c(256),INFO" ID="0xde560805" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm connection update failed @gle_aa_connect_ui.c(271),ERROR" ID="0xde56087a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm connection cbk memcpy failed @gle_aa_connect_ui.c(276),ERROR" ID="0xde5608a2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[gle access link set low latency] not found link on addr:0x%02x:**:**:**:%02x:%02x @gle_aa_connect_ui.c(295),ERROR" ID="0xde56093a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="gle access link set low latency:conn_hdl:0x%02x, enable:%02x, hci_data_flag:%02x @gle_aa_connect_ui.c(308),INFO" ID="0xde5609a5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[gle access link read remote rssi] not found link on co handle:0x%02x @gle_aa_connect_ui.c(335),ERROR" ID="0xde560a7a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle access link read remote rssi:conn_hdl:0x%02x @gle_aa_connect_ui.c(342),INFO" ID="0xde560ab5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="read access filter list size @gle_aa_connect_ui.c(348),INFO" ID="0xde560ae5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="clear access filter list @gle_aa_connect_ui.c(354),INFO" ID="0xde560b15" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="add device to access filter list, addr: %02x:**:**:**:%02x:%02x @gle_aa_connect_ui.c(361),INFO" ID="0xde560b4d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="remove device from access filter list, addr: %02x:**:**:**:%02x:%02x @gle_aa_connect_ui.c(372),INFO" ID="0xde560ba5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[aa_set_acb_evt_param]con_hdl:%u, evt_intv:%u, evt_num:%u @gle_aa_connect_ui.c(394),INFO" ID="0xde560c55" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm connection update failed @gle_aa_connect_ui.c(409),ERROR" ID="0xde560cca" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="connect update replay:conn_hdl:0x%02x, interval_min:%02x, interval_max:%02x @gle_aa_connect_ui.c(430),INFO" ID="0xde560d75" />
+			<MSG STRUCTURE="diag_log_msg6" NAME="connect update replayifs:0x%02x, efs:0x%02x, latency:0x%02x, timeout:0x%02x, uint:0x%02x, tx_rx:0x%02x @gle_aa_connect_ui.c(440),INFO" ID="0xde560dc5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm data length change cbk link not found failed @gle_aa_connect_ui.c(465),ERROR" ID="0xde560e8a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gle data length change, tx: 0x%x, rx: 0x%x. @gle_aa_connect_ui.c(471),INFO" ID="0xde560ebd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle access low latency report in @gle_aa_connect_ui.c(485),INFO" ID="0xde560f2d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm low latency link not found failed @gle_aa_connect_ui.c(496),ERROR" ID="0xde560f82" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="gle cm low latency enable:0x%x, con_handle:0x%x, status:0x%x @gle_aa_connect_ui.c(501),INFO" ID="0xde560fad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm low latency set failed @gle_aa_connect_ui.c(510),ERROR" ID="0xde560ff2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm low latency memcpy failed @gle_aa_connect_ui.c(513),ERROR" ID="0xde56100a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="gle cm low latency enable:0x%x, con_handle:0x%x, status:0x%x, rate: %d @gle_aa_connect_ui.c(519),INFO" ID="0xde56103d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm read remote rssi link not found failed @gle_aa_connect_ui.c(532),ERROR" ID="0xde5610a2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="gle cm read remote rssi con_handle:0x%x, status:0x%x, rssi:0x%x @gle_aa_connect_ui.c(537),INFO" ID="0xde5610cd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cm read remote rssi failed @gle_aa_connect_ui.c(543),ERROR" ID="0xde5610fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE AA] set phy cbk in, op_ev: 0x%04x. @gle_aa_connect_ui.c(551),INFO" ID="0xde56113d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE AA] set phy cbk par null error. @gle_aa_connect_ui.c(553),ERROR" ID="0xde56114a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[gle cm_set_acb_evt_param_cbk]arg null err @gle_aa_connect_ui.c(565),ERROR" ID="0xde5611aa" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="status:%u, con_hdl:%u, evt_intv:%u, evt_num:%u @gle_aa_connect_ui.c(570),INFO" ID="0xde5611d5" />
+			</MSG_LOG>

@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="pack hci gle par onetrack new fail @gle_hci_ui.c(84),ERROR" ID="0xde0602a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="pack hci gle par new fail @gle_hci_ui.c(100),ERROR" ID="0xde060322" />
+			</MSG_LOG>

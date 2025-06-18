@@ -38,6 +38,14 @@ config MIDDLEWARE_SUPPORT_UPG
     help
         This option means support FOTA.
 
+config MIDDLEWARE_SUPPORT_SLICE_UPG
+    bool
+    depends on MIDDLEWARE_SUPPORT_UPG
+    prompt "SLICE FOTA"
+    default n
+    help
+        This option means write or erase flash in slice mode.
+
 config MIDDLEWARE_SUPPORT_EXCEPT_DISABLE_WDT
     bool
     prompt "Disable wdt after exception"

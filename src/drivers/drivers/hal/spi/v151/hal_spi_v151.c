@@ -315,6 +315,41 @@ static inline void hal_spi_pack_data_into_fifo(spi_bus_t bus, const uint8_t *dat
     }
 }
 
+#ifdef CONFIG_SPI_SUPPORT_TXRX_TRANS_MODE
+static errcode_t hal_spi_clear_rx_fifo(spi_bus_t bus, uint32_t trans_frames, uint32_t timeout)
+{
+    uint32_t trans_time = 0;
+    /* Wait for rx complete if spi is in txrx mode */
+    if (hal_spi_v151_spi_ctra_get_trsm(bus) == HAL_SPI_TRANS_MODE_TXRX) {
+        while (hal_spi_v151_spi_wsr_get_tfe(bus) == 0) {
+            /* Wait for transfer complete */
+            if (hal_spi_check_timeout_by_count(&trans_time, timeout)) {
+                return ERRCODE_SPI_TIMEOUT;
+            }
+        }
+
+        trans_time = 0;
+        while (trans_frames) {
+            if (hal_spi_rxflr_get_rxtfl(bus) != 0) {
+                hal_spi_dr_get_dr(bus);
+                trans_frames--;
+            }
+            if (hal_spi_check_timeout_by_count(&trans_time, timeout)) {
+                return ERRCODE_SPI_TIMEOUT;
+            }
+        }
+    }
+    return ERRCODE_SUCC;
+}
+#endif
+
+#ifdef CONFIG_SPI_SUPPORT_TXRX_TRANS_MODE
+__attribute__((weak)) uint32_t spi_port_get_fifo_depth(void)
+{
+    return 0xFFFFFFFF;
+}
+#endif
+
 #pragma weak hal_spi_write = hal_spi_v151_write
 errcode_t hal_spi_v151_write(spi_bus_t bus, hal_spi_xfer_data_t *data, uint32_t timeout)
 {
@@ -367,7 +402,14 @@ errcode_t hal_spi_v151_write(spi_bus_t bus, hal_spi_xfer_data_t *data, uint32_t 
         }
     }
 
+#ifdef CONFIG_SPI_SUPPORT_TXRX_TRANS_MODE
+    uint32_t fifo_depth = spi_port_get_fifo_depth();
+    trans_frames = (data->tx_bytes / frame_bytes > fifo_depth) ? fifo_depth :
+        (data->tx_bytes / frame_bytes);
+    return hal_spi_clear_rx_fifo(bus, trans_frames, timeout);
+#else
     return ERRCODE_SUCC;
+#endif
 }
 
 static void hal_spi_pack_data_outof_fifo(spi_bus_t bus, uint8_t *data, uint32_t frame_bytes,
@@ -405,6 +447,22 @@ static bool hal_spi_read_rx_mode_prepare(spi_bus_t bus)
     return true;
 }
 
+#ifdef CONFIG_SPI_SUPPORT_TXRX_TRANS_MODE
+static bool hal_spi_read_txrx_mode_prepare(spi_bus_t bus, uint32_t trans_frames, uint32_t timeout)
+{
+    uint32_t trans_time = 0;
+    for (uint32_t i = 0; i < trans_frames; i++) {
+        while (hal_spi_v151_spi_wsr_get_tfnf(bus) == 0) {
+            if (hal_spi_check_timeout_by_count(&trans_time, timeout)) {
+                return false;
+            }
+        }
+        hal_spi_dr_set_dr(bus, 0);
+    }
+    return true;
+}
+#endif
+
 #pragma weak hal_spi_read = hal_spi_v151_read
 errcode_t hal_spi_v151_read(spi_bus_t bus, hal_spi_xfer_data_t *data, uint32_t timeout)
 {
@@ -418,6 +476,13 @@ errcode_t hal_spi_v151_read(spi_bus_t bus, hal_spi_xfer_data_t *data, uint32_t t
     if (data->rx_bytes % frame_bytes != 0) {
         return ERRCODE_SPI_INVALID_BYTES;
     }
+#ifdef CONFIG_SPI_SUPPORT_TXRX_TRANS_MODE
+    if (hal_spi_v151_spi_ctra_get_trsm(bus) == HAL_SPI_TRANS_MODE_TXRX) {
+        if (!hal_spi_read_txrx_mode_prepare(bus, trans_frames, timeout_tmp)) {
+            return ERRCODE_SPI_TIMEOUT;
+        }
+    }
+#endif
 
     while (trans_frames > 0) {
         if (hal_spi_v151_spi_wsr_get_rffe(bus) == 1) {

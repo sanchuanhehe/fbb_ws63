@@ -53,7 +53,9 @@ typedef struct {
                                              @else   断连时wpa状态  @endif */
     int32_t rssi;                       /*!< @if Eng Received signal strength indicator (RSSI).
                                              @else   RSSI。  @endif */
-    int32_t channel_num;                /*!< @if Eng WiFi channel_num information of AP.
+    int16_t disconn_state;              /*!< @if Eng State of wifi disconn.
+                                             @else   sta断连时候的状态。  @endif */
+    int16_t channel_num;                /*!< @if Eng WiFi channel_num information of AP.
                                              @else   AP的WiFi信道信息。  @endif */
     int32_t snr;                        /*!< @if Eng WiFi snr information of AP.
                                              @else   AP的WiFi信噪比信息。  @endif */

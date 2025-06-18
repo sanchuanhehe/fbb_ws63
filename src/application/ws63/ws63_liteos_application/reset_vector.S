@@ -1,5 +1,7 @@
 /**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2023. All rights reserved.
+ * @file reset_vector.S
+ * @author Huawei LiteOS
+ * @brief RISC-V trap handling and startup code.
  */
 #include "arch/cpu.h"
 

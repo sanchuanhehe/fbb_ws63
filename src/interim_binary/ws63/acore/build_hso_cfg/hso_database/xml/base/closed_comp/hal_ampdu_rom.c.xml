@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hal_tx_get_dscr_ba_bitmap::memcpy_s failed.} @hal_ampdu_rom.c(94),ERROR" ID="0x809a02f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_reset_machw_ba_lut_pars::wait lut ba idle failed.} @hal_ampdu_rom.c(108),ERROR" ID="0x809a0362" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_set_machw_ba_lut_pars::wait lut ba idle failed.} @hal_ampdu_rom.c(138),ERROR" ID="0x809a0452" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_set_machw_tx_ampdu_lut::wait lut ba idle failed.} @hal_ampdu_rom.c(178),ERROR" ID="0x809a0592" />
+			</MSG_LOG>

@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][ES info]elt_insert_check_reach_limit_ts fail! task_id=0x%x timestamp=0x%x limit_ts=0x%x @evt_sched_mgr_ram.c(173),INFO" ID="0x894a056d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][ES info]elt_insert_check fail! task_id=0x%x timestamp(0x%x) above MAX_SLOT_CLOCK @evt_sched_mgr_ram.c(184),INFO" ID="0x894a05c5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][ES info]elt_insert_check fail! task_id=0x%x timestamp=0x%x &lt; first_allowed_ts=0x%x @evt_sched_mgr_ram.c(194),INFO" ID="0x894a0615" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][ES info]es_elt_cancel task_id=0x%x timestamp=0x%x es_sn=%d cur_priority=%d @evt_sched_mgr_ram.c(216),INFO" ID="0x894a06c5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]es_task_insert arrangement OK! task_id=0x%x timestamp=0x%x es_sn=%d cur_priority=%d @evt_sched_mgr_ram.c(480),INFO" ID="0x894a0f05" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ES debug]es_arrangement_periodic_task: task_id=0x%x timestamp=0x%x es_sn=%d cur_priority=%d @evt_sched_mgr_ram.c(506),INFO" ID="0x894a0fd5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][ES err]elt in ready list deleted due to late! task_id=0x%x timestamp=0x%x, cur_gle_time=0x%x @evt_sched_mgr_ram.c(533),ERROR" ID="0x894a10aa" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][ES warning]es_resched_task_elt: task_id=0x%x can't find! timestamp=0x%x instant=%d next_es_sn=%d @evt_sched_mgr_ram.c(586),WARNING" ID="0x894a1253" />
+			</MSG_LOG>

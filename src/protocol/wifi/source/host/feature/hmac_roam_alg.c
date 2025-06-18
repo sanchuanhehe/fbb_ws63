@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2015-2024. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2015-2024. All rights reserved.
  * 文 件 名   : hmac_roam_alg.c
  * 生成日期   : 2015年3月18日
  * 功能描述   : 漫游模块算法实现

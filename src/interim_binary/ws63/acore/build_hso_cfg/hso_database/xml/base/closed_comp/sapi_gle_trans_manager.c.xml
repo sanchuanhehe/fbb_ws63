@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="stack gle send data new fail. @sapi_gle_trans_manager.c(24),ERROR" ID="0xde6800c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="stack gle send data new fail. @sapi_gle_trans_manager.c(32),INFO" ID="0xde680105" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="stack gle send data memcpy fail. @sapi_gle_trans_manager.c(39),INFO" ID="0xde68013d" />
+			</MSG_LOG>

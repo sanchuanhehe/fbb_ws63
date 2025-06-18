@@ -1,0 +1,11 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[device][TPC]fix_pwr_code:%d @alg_tpc_config_rom.c(35),INFO" ID="0x823e011d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[device][TPC]fix_pwr_code:%d @alg_tpc_config_rom.c(41),INFO" ID="0x823e014d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_query_config_debug::memcpy_s failed.} @alg_tpc_config_rom.c(54),ERROR" ID="0x823e01b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_query_config_debug::memcpy_s failed.} @alg_tpc_config_rom.c(59),ERROR" ID="0x823e01da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="alg_tpc_set_tpc_mode::dmac_vap[%d] IS NULL. @alg_tpc_config_rom.c(85),ERROR" ID="0x823e02aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{user_lut_idx[%d] get best rate fail!} @alg_tpc_config_rom.c(100),ERROR" ID="0x823e0322" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_query_status_debug::memcpy_s failed.} @alg_tpc_config_rom.c(127),ERROR" ID="0x823e03fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="set tpc ack mode:%u @alg_tpc_config_rom.c(147),INFO" ID="0x823e049d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="set tpc ack mode:%u @alg_tpc_config_rom.c(150),INFO" ID="0x823e04b5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="set tpc debug level:%u @alg_tpc_config_rom.c(196),INFO" ID="0x823e0625" />
+			</MSG_LOG>

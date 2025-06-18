@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="{alg_get_gla_switch_enable::ERR!! alg_id[%d] or gla_switch_type[%d]} @alg_gla_rom.c(45),ERROR" ID="0x83d2016a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_gla_config:: alg_param == OSAL_NULL!} @alg_gla_rom.c(61),ERROR" ID="0x83d201ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_gla_config::GLA_USUAL_SWITCH[%d]!} @alg_gla_rom.c(67),WARNING" ID="0x83d2021b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_gla_config::GLA_OPTIONAL_SWITCH[%d]!} @alg_gla_rom.c(71),WARNING" ID="0x83d2023b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_gla_config::unkown cfg type[%d]!} @alg_gla_rom.c(74),ERROR" ID="0x83d20252" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alg_print_single_user_gla_info::dmac_user null! @alg_gla_rom.c(89),ERROR" ID="0x83d202ca" />
+			</MSG_LOG>

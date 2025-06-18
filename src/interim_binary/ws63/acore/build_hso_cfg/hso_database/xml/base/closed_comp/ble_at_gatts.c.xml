@@ -1,0 +1,17 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts register at fail @ble_at_gatts.c(23),ERROR" ID="0xd91000ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts register server at cmd fail @ble_at_gatts.c(53),ERROR" ID="0xd91001aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gatts add service common fail, uuid failed type:%u @ble_at_gatts.c(88),ERROR" ID="0xd91002c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gatts add character par uuid fail, type:%u @ble_at_gatts.c(132),ERROR" ID="0xd9100422" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gatts add characteristic new failed, type:%u @ble_at_gatts.c(142),ERROR" ID="0xd9100472" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts add characteristic str to data fail @ble_at_gatts.c(147),ERROR" ID="0xd910049a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gatts add descriptor par uuid fail type:%u @ble_at_gatts.c(196),ERROR" ID="0xd9100622" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gatt add descriptor at cmd val new fail type:%u @ble_at_gatts.c(205),ERROR" ID="0xd910066a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt add descriptor str to data fail @ble_at_gatts.c(210),ERROR" ID="0xd9100692" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt send response at cmd value new fail @ble_at_gatts.c(274),ERROR" ID="0xd9100892" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt send response str to data fail @ble_at_gatts.c(279),ERROR" ID="0xd91008ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt send indication at cmd val new fail @ble_at_gatts.c(319),ERROR" ID="0xd91009fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt send indication str to data fail @ble_at_gatts.c(324),ERROR" ID="0xd9100a22" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts notify indicate by uuid par uuid error @ble_at_gatts.c(349),ERROR" ID="0xd9100aea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts notify indicate by uuid new fail @ble_at_gatts.c(359),ERROR" ID="0xd9100b3a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts notify indicate str to data fail @ble_at_gatts.c(364),ERROR" ID="0xd9100b62" />
+			</MSG_LOG>

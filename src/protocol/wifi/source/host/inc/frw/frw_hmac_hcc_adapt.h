@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021. All rights reserved.
  * Description: hcc service adapt layer.
- * Author:
+ * Author: Huanghe
  * Create: 2021-09-01
  */
 

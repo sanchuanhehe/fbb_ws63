@@ -13,10 +13,13 @@ extern "C" {
 
 #ifdef CONFIG_SUPPORT_HILINK_INDIE_UPGRADE
 int hilink_indie_upgrade_main(void);
+int read_app_bin_hash(char *hash_str, unsigned int *size);
 #endif
 
 int hilink_wifi_main(void);
 int hilink_ble_main(void);
+int SetBleAndSleAddrToStackFromNv(void);
+void SetNetCfgMode(int mode);
 
 #ifdef __cplusplus
 }

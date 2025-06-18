@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[RADAR_LOG] kalman_tracker-arr_init_1: memcpy_s err! @radar_kalman_tracker.c(70),INFO" ID="0x85520235" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[RADAR_LOG] kalman_tracker-arr_init_1: memcpy_s err! @radar_kalman_tracker.c(75),INFO" ID="0x8552025d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[RADAR_LOG] kalman_tracker-arr_init_1: memcpy_s err! @radar_kalman_tracker.c(80),INFO" ID="0x85520285" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[RADAR_LOG] kalman_tracker-arr_init_1: memcpy_s err! @radar_kalman_tracker.c(85),INFO" ID="0x855202ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[RADAR_LOG] matrix_inv_2d ERROR: ad - bc = 0! @radar_kalman_tracker.c(180),ERROR" ID="0x855205a2" />
+			</MSG_LOG>

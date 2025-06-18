@@ -87,6 +87,18 @@ enum HILINK_StateMachine {
     HILINK_TLS_LINK_RECONNECTED,
 };
 
+/* 设置开关状态 */
+void SetSwitch(unsigned int s);
+
+/* 获取开关状态 */
+int GetSwitch(void);
+
+/* 获取MAC:XX:XX */
+const char *GetMacStr(void);
+
+/* 获取MAC:XXXX */
+const char *GetMacSn(void);
+
 typedef int (*HILINK_GetAcKeyFunc)(unsigned char *acKey, unsigned int acLen);
 
 /*

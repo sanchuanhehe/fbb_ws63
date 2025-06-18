@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="{dmac_config_performace_mode::mode:%u, value:%u.} @dmac_tx_bss_comm_rom.c(52),WARNING" ID="0x80d801a3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_tx_post_soft_tx_complete:post msg failed[%d]} @dmac_tx_bss_comm_rom.c(77),WARNING" ID="0x80d8026b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_hw_send_process::tx_ctl is null.} @dmac_tx_bss_comm_rom.c(132),ERROR" ID="0x80d80422" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="dmac_tx_hw_send::q_num=%d,tx_q_status=%d,ppdu_cnt=%d,tid num=%d @dmac_tx_bss_comm_rom.c(168),WARNING" ID="0x80d80543" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="dmac_tx_hw_send::fifofull,q_num=%d,tx_q_status=%u,ppdu_cnt=%d,tid num=%d @dmac_tx_bss_comm_rom.c(173),WARNING" ID="0x80d8056b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_tx_hw_send::q_num % is more than %d @dmac_tx_bss_comm_rom.c(213),WARNING" ID="0x80d806ab" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_clear_tx_hw_queue::hal_device is null.} @dmac_tx_bss_comm_rom.c(277),ERROR" ID="0x80d808aa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_config_tx_sched_timeout::old[%u] new[%u].} @dmac_tx_bss_comm_rom.c(351),INFO" ID="0x80d80afd" />
+			</MSG_LOG>

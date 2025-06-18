@@ -1,0 +1,8 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="frw dmac alloc hcc netbuf :: len_cur [%u] error @frw_hcc_adapt_rom.c(43),ERROR" ID="0x8328015a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hmac_config_hcc_flowctrl:: data_type[%hhu] error. @frw_hcc_adapt_rom.c(121),WARNING" ID="0x832803cb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_frw_send_data::wkup host failed @frw_hcc_adapt_rom.c(149),ERROR" ID="0x832804aa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="wifi start hcc failed. type:%d, ret=0x%08x @frw_hcc_adapt_rom.c(268),ERROR" ID="0x83280862" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{frw_rx_wifi_post_action_function::param null.} @frw_hcc_adapt_rom.c(280),ERROR" ID="0x832808c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[E]dmac_frw_send_data failed! @frw_hcc_adapt_rom.c(307),ERROR" ID="0x8328099a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[E]frw_rx_netbuf_cb unregister! @frw_hcc_adapt_rom.c(312),ERROR" ID="0x832809c2" />
+			</MSG_LOG>

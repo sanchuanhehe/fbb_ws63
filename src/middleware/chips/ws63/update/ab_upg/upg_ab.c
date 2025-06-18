@@ -303,7 +303,7 @@ errcode_t upg_region_erase(upg_region_index region)
         upg_log_err("[UPG] region addr:0x%08x or size:0x%08x is not 4K aligned\r\n", addr, size);
         return ERRCODE_INVALID_PARAM;
     }
-    if (uapi_sfc_reg_erase(addr, size) != ERRCODE_SUCC) {
+    if (upg_flash_erase(addr, size) != ERRCODE_SUCC) {
         upg_log_err("[UPG] erase region failed\r\n");
         return ERRCODE_FAIL;
     }

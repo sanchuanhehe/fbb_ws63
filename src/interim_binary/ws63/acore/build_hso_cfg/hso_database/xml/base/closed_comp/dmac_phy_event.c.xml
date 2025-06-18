@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="dmac_phy_get_data, oal_mem_alloc failed. @dmac_phy_event.c(35),WARNING" ID="0x8532011b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_phy_get_data memcpy_s: failed!} @dmac_phy_event.c(44),ERROR" ID="0x85320162" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_phy_get_data::send to host ret=%d} @dmac_phy_event.c(54),WARNING" ID="0x853201b3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_phy_event_rpt:sample_start_addr=[0x%x] sample_end_addr=[0x%x] @dmac_phy_event.c(73),WARNING" ID="0x8532024b" />
+			</MSG_LOG>

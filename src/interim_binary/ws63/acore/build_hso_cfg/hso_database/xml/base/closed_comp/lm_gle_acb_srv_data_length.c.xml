@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[BGTP]lm_gle_acb_srv_host_suggest_data_length tx_octets(%d), local_max_tx_octets(%d) @lm_gle_acb_srv_data_length.c(102),INFO" ID="0x89180335" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP]lm_gle_data_length_update_effective_value remote rx_octets(%d)rx_time(%d)tx_octets(%d)tx_time(%d) @lm_gle_acb_srv_data_length.c(170),INFO" ID="0x89180555" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP]lm_gle_data_length_update_effective_value local rx_octets(%d)rx_time(%d)tx_octets(%d)tx_time(%d) @lm_gle_acb_srv_data_length.c(174),INFO" ID="0x89180575" />
+			</MSG_LOG>

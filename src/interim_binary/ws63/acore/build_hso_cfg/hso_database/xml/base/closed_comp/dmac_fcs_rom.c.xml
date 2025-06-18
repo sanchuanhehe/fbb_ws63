@@ -1,0 +1,15 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{mac_fcs_set_channel::null param @dmac_fcs_rom.c(96),WARNING" ID="0x80660303" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_fcs_get_prot_mode::one_packet_cfg is NULL!} @dmac_fcs_rom.c(138),WARNING" ID="0x80660453" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_fcs_get_prot_mode: hal_device is NULL. @dmac_fcs_rom.c(144),WARNING" ID="0x80660483" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_fcs_set_prot_datarate::hal_device null.} @dmac_fcs_rom.c(177),ERROR" ID="0x8066058a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_fcs_set_one_pkt_timeout_time::fcs_cfg is NULL!} @dmac_fcs_rom.c(192),WARNING" ID="0x80660603" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_fcs_prepare_one_packet_cfg:: null pointer.} @dmac_fcs_rom.c(296),WARNING" ID="0x80660943" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_fcs_start::param null.} @dmac_fcs_rom.c(330),ERROR" ID="0x80660a52" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_fcs_start_enhanced::param null.} @dmac_fcs_rom.c(370),ERROR" ID="0x80660b92" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_fcs_start_same_channel::param null.} @dmac_fcs_rom.c(415),ERROR" ID="0x80660cfa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_fcs_start_same_channel:: not the same channel.} @dmac_fcs_rom.c(420),ERROR" ID="0x80660d22" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_fcs_start_enhanced_same_channel::param null.} @dmac_fcs_rom.c(459),ERROR" ID="0x80660e5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_fcs_start_enhanced_same_channel::not the same channel.} @dmac_fcs_rom.c(464),ERROR" ID="0x80660e82" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_fcs_start_send_one_packet::param null.} @dmac_fcs_rom.c(507),ERROR" ID="0x80660fda" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{mac_fcs_request::*fcs_mgr-&gt;fcs_cfg null.} @dmac_fcs_rom.c(545),WARNING" ID="0x8066110b" />
+			</MSG_LOG>

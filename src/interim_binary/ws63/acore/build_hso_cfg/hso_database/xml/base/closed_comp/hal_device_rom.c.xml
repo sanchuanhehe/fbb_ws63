@@ -1,0 +1,16 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="hal_alg_isr_hook_run::hal_device is NULL @hal_device_rom.c(109),INFO" ID="0x80fe036d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_device_calc_up_vap_num::hal device is NULL @hal_device_rom.c(156),ERROR" ID="0x80fe04e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_device_calc_up_vap_num::hal device hal vap id[%d]hal_get_hal_vap null @hal_device_rom.c(170),ERROR" ID="0x80fe0552" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_device_find_all_up_vap::hal_device is NULL @hal_device_rom.c(194),ERROR" ID="0x80fe0612" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="hal_device_find_all_up_vap::up vap num[%d]&gt; %d @hal_device_rom.c(201),ERROR" ID="0x80fe064a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_device_find_all_up_vap::hal vap id[%d]hal_get_hal_vap null @hal_device_rom.c(211),ERROR" ID="0x80fe069a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_idle_set_rx_filter_reg::promis switch is on, not set reg} @hal_device_rom.c(228),INFO" ID="0x80fe0725" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_device_state_idle_set_rx_filter_reg::rx_filter_val = 0x%x cur_state before entry is %d.} @hal_device_rom.c(237),WARNING" ID="0x80fe076b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_scan_set_rx_filter_reg::promis switch is on, not set reg} @hal_device_rom.c(246),INFO" ID="0x80fe07b5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_device_state_scan_set_rx_filter_reg::rx_filter_val = 0x%x cur_state before entry is %d.} @hal_device_rom.c(255),WARNING" ID="0x80fe07fb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_work_set_rx_filter_reg::promis switch is on, not set reg} @hal_device_rom.c(264),INFO" ID="0x80fe0845" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_device_state_work_set_rx_filter_reg::rx_filter_val = 0x%x cur_state before entry is %d.} @hal_device_rom.c(275),WARNING" ID="0x80fe089b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_device_reset_bcn_rx_chain:hal_vap[%d] is NULL @hal_device_rom.c(295),ERROR" ID="0x80fe093a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_find_is_ap_up::hal_device is null} @hal_device_rom.c(327),ERROR" ID="0x80fe0a3a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_find_is_ap_up::hal_vap null} @hal_device_rom.c(338),ERROR" ID="0x80fe0a92" />
+			</MSG_LOG>

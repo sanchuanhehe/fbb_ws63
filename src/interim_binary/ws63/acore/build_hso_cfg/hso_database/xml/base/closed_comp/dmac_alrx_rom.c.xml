@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{dmac_al_rx_copy::memcpy_s failed.} @dmac_alrx_rom.c(45),WARNING" ID="0x8398016b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="al_rx_clear_buffer tx fail! ret=[%02x] @dmac_alrx_rom.c(126),ERROR" ID="0x839803f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="al rx reinit @dmac_alrx_rom.c(137),ERROR" ID="0x8398044a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="al rx alloc fail @dmac_alrx_rom.c(143),ERROR" ID="0x8398047a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_al_rx_get_tid_type:al_rx_tid_type=[%d] @dmac_alrx_rom.c(200),ERROR" ID="0x83980642" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_al_rx_info_ram:memcpy_s failed.} @dmac_alrx_rom.c(225),WARNING" ID="0x8398070b" />
+			</MSG_LOG>

@@ -86,6 +86,57 @@ typedef enum {
 } wifi_return_code;
 
 /**
+* @ingroup wifi_service_api
+*
+* Enumeration of return codes.\n
+* CNcomment:sta协商的协议枚举类型. CNend
+*/
+typedef enum {
+    EXT_WLAN_LEGACY_11A_MODE            = 0, /**< No errors. CNcomment:11a, 5G, OFDM.CNend */
+    EXT_WLAN_LEGACY_11B_MODE            = 1, /**< No errors. CNcomment:11b, 2.4G.CNend */
+    EXT_WLAN_LEGACY_11G_MODE            = 2, /**< No errors. CNcomment:旧的11g only已废弃, 2.4G, OFDM.CNend */
+    EXT_WLAN_MIXED_ONE_11G_MODE         = 3, /**< No errors. CNcomment:11bg, 2.4G.CNend */
+    EXT_WLAN_MIXED_TWO_11G_MODE         = 4, /**< No errors. CNcomment:11g only, 2.4G.CNend */
+    EXT_WLAN_HT_MODE                    = 5, /**< No errors. CNcomment:11n(11bgn或者11an，根据频段判断).CNend */
+    EXT_WLAN_VHT_MODE                   = 6, /**< No errors. CNcomment:11ac.CNend */
+    EXT_WLAN_HT_ONLY_MODE               = 7, /**< No errors. CNcomment:11n only mode,只有带HT的设备才可以接入.CNend */
+    EXT_WLAN_VHT_ONLY_MODE              = 8, /**< No errors. CNcomment:11ac only mode 只有带VHT的设备才可以接入.CNend */
+    EXT_WLAN_HT_11G_MODE                = 9, /**< No errors. CNcomment:11ng,不包括11b.CNend */
+    EXT_WLAN_HE_MODE                    = 10, /**< No errors. CNcomment:11ax.CNend */
+
+    EXT_WLAN_PROTOCOL_BUTT
+} wifi_protocol_enum;
+
+/**
+* @ingroup wifi_service_api
+*
+* Enumeration of return codes.\n
+* CNcomment:sta协商的协议枚举. CNend
+*/
+typedef struct {
+    wifi_protocol_enum wlan_protocol_mode;
+    protocol_mode_enum protocol_mode;
+} wifi_protocol_mode_map_table;
+
+/**
+* @ingroup  soc_wifi_basic
+* @brief  Get sta conn protocol mode.CNcomment:获取关联时station接口的protocol模式.CNend
+*
+* @par Description:
+*           Get protocol mode of station connected.CNcomment:获取关联时station接口的protocol模式.CNend
+*
+* @attention  NULL
+* @param      NULL
+*
+* @retval #protocol_mode_enum protocol mode.If fail, return EXT_WIFI_PHY_MODE_BUTT.
+* @par Dependency:
+*            @li soc_wifi_api.h: WiFi API
+* @see  NULL
+* @since
+*/
+protocol_mode_enum uapi_wifi_sta_conn_get_protocol_mode(void);
+
+/**
 * @ingroup  soc_wifi_basic
 * @brief  Set protocol mode of sta.CNcomment:设置station接口的protocol模式.CNend
 *

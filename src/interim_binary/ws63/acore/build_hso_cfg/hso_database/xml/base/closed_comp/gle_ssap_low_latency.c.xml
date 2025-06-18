@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[sle low latency] tog_cnt: %d, invalid_em_addr: %d, used_em_buf: %d, invalid_data: %d. @gle_ssap_low_latency.c(48),INFO" ID="0xd82a0185" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[sle low latency] memcpy fail. @gle_ssap_low_latency.c(96),ERROR" ID="0xd82a0302" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy low latency callback fail @gle_ssap_low_latency.c(104),ERROR" ID="0xd82a0342" />
+			</MSG_LOG>

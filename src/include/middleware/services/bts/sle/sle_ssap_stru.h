@@ -132,6 +132,12 @@ typedef enum {
     SSAP_OPERATE_INDICATION_BIT_DESCRITOR_WRITE = 0x100,  /*!< @if Eng data value description descriptor can be
                                                                        written
                                                                @else   数据值说明描述符可被写入 @endif */
+    SSAP_OPERATE_INDICATION_BIT_DESCRIPTOR_CLIENT_CONFIGURATION_WRITE = 0x200,
+                                                          /*!< @if Eng client descriptor value can be written
+                                                                @else 客户端描述符可被写入 @endif */
+    SSAP_OPERATE_INDICATION_BIT_DESCRIPTOR_SERVER_CONFIGURATION_WRITE = 0x400,
+                                                          /*!< @if Eng client descriptor value can be written
+                                                                @else 服务端描述符可被写入 @endif */
     SSAP_OPERATE_INDICATION_MAX,                          /*!< @if Eng maximum of operation indication
                                                                @else   操作指示最大值 @endif */
 } ssap_operate_indication_t;
@@ -160,8 +166,8 @@ typedef struct {
 typedef struct {
     uint32_t mtu_size; /*!< @if Eng mtu size
         ·                   @else   mtu大小 @endif */
-    uint16_t version;  /*!< @if Eng version
-                            @else   版本 @endif */
+    uint16_t version;  /*!< @if Eng version, reserved field
+                            @else   版本，预留字段 @endif */
 } ssap_exchange_info_t;
 
 #ifdef __cplusplus

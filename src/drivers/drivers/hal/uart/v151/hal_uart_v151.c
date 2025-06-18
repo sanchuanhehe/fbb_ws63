@@ -13,6 +13,10 @@
 #include "hal_uart_v151_regs_op.h"
 #include "tcxo.h"
 
+#if defined(CONFIG_UART_SUPPORT_RX_FRAME_CALLBACK)
+#define S_TRANS_TO_US 1000000
+#endif
+
 #define hal_uart_get_high_8bit(val) ((val) >> 8)
 #define hal_uart_get_low_8bit(val) ((val) & 0xff)
 #define round_off(val) ((uint32_t)((val) + 1 / 2))
@@ -795,3 +799,10 @@ hal_uart_funcs_t *hal_uart_v151_funcs_get(void)
 {
     return &g_hal_uart_v51_funcs;
 }
+
+#if defined(CONFIG_UART_SUPPORT_RX_FRAME_CALLBACK)
+uint32_t hal_uart_timer_delay_time_get(uint32_t baud_rate)
+{
+    return S_TRANS_TO_US * 770 / baud_rate;  /* 770: rx idle中断触发时间最晚为768个波特率长度 */
+}
+#endif

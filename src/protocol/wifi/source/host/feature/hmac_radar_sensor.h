@@ -96,8 +96,9 @@ static osal_void hmac_radar_sensor_deinit_weakref(osal_void)
 
 osal_u32 hmac_radar_sensor_register_handle_cb(radar_handle_cb cb);
 osal_u16 hamc_radar_sensor_get_ppa_gain(void);
-osal_float hmac_radar_sensor_config_rx_gain(osal_u8 lna_gain,
+osal_void hmac_radar_sensor_config_rx_gain(osal_u8 lna_gain,
     osal_u8 vga_gain, osal_u16 rx_dly_160m, osal_u16 rx_dly_80m);
+osal_float hmac_radar_sensor_calc_trx_chain(osal_u8 lna_gain, osal_u8 vga_gain);
 osal_void hmac_radar_sensor_config_ch_num(osal_u8 ch_num);
 osal_s32 hmac_radar_sensor_start(hmac_radar_sensor_cfg_stru *radar_sensor_cfg);
 osal_void hmac_radar_sensor_set_report_disable_reason_fn(report_radar_sensor_disable_reason_cb cb);

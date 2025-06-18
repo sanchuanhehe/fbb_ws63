@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[BGTP] acb retry create firstts %d delay %d @evt_task_gle_acb_retry.c(208),INFO" ID="0x89360685" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP] acb retry create sed_index 0x%x, first_evt_nextts %d, anchor point 0x%x, delay %d @evt_task_gle_acb_retry.c(210),INFO" ID="0x89360695" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="RETRY START @evt_task_gle_acb_retry.c(252),INFO" ID="0x893607e5" />
+			</MSG_LOG>

@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hal_rf_res_free:free null ptr!} @fe_rf_dev.c(214),ERROR" ID="0x82c206b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_rf_close_pll::rf_dev == OSAL_NULL} @fe_rf_dev.c(232),ERROR" ID="0x82c20742" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_rf_res_init:rf switch[%d] @fe_rf_dev.c(383),WARNING" ID="0x82c20bfb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_initialize_rf_dev::hal_device NULL} @fe_rf_dev.c(400),WARNING" ID="0x82c20c83" />
+			</MSG_LOG>

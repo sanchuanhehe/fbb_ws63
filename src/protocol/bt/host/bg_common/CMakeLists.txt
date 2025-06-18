@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2023. All rights reserved.
+# Copyright (c) @CompanyNameMagicTag. 2023. All rights reserved.
 #===============================================================================
 # Temporarily Released
 set(MODULE_NAME "bth")
@@ -41,6 +41,7 @@ elseif(${CHIP} MATCHES "ws63")
         ${CMAKE_CURRENT_SOURCE_DIR}/include/config/ws63
         ${CMAKE_CURRENT_SOURCE_DIR}/include/log
         ${CMAKE_CURRENT_SOURCE_DIR}/include/log/oml
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/nv
         ${CMAKE_CURRENT_SOURCE_DIR}/include/sdk_common
         ${CMAKE_CURRENT_SOURCE_DIR}/include/service
         ${CMAKE_CURRENT_SOURCE_DIR}/../host/inc
@@ -88,6 +89,7 @@ else()
         ${CMAKE_CURRENT_SOURCE_DIR}/include/dfx
     )
 endif()
+add_subdirectory_if_exist(portings)
 set(PUBLIC_HEADER
         ${PUBLIC_HEADER}/
         ${CMAKE_CURRENT_SOURCE_DIR}/include/config

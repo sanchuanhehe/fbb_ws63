@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[ADV]prog_num is 0 @evt_task_ble_adv_ram.c(115),ERROR" ID="0x895c039a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][scan]evt_task_ble_adv_start_cbk, adv_stop_type=%d, prog_num=%d @evt_task_ble_adv_ram.c(134),WARNING" ID="0x895c0433" />
+			</MSG_LOG>

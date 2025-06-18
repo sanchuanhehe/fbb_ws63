@@ -12,10 +12,12 @@
 
 int HILINK_GetOsTime(HiLinkTimeval *time)
 {
-    return app_call1(APP_CALL_HILINK_GET_OS_TIME, int, HiLinkTimeval *, time);
+    app_call1(APP_CALL_HILINK_GET_OS_TIME, HILINK_GetOsTime, int, HiLinkTimeval *, time);
+    return 0;
 }
 
 int HILINK_GetUtcTime(HiLinkTimeval *time)
 {
-    return app_call1(APP_CALL_HILINK_GET_UTC_TIME, int, HiLinkTimeval *, time);
+    app_call1(APP_CALL_HILINK_GET_UTC_TIME, HILINK_GetUtcTime, int, HiLinkTimeval *, time);
+    return 0;
 }

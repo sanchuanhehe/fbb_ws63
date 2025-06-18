@@ -1,0 +1,27 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{dmac_tx_get_vap_id::hal_vap null hal_vap_id = %d.} @dmac_tx_complete_rom.c(61),WARNING" ID="0x805001eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_complete_free_dscr::dscr is NULL.} @dmac_tx_complete_rom.c(105),ERROR" ID="0x8050034a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_tx_complete_free_dscr_list::buf null(dscr_num=%d, idx=%d). } @dmac_tx_complete_rom.c(132),WARNING" ID="0x80500423" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_complete_normal_buffer::buf null.} @dmac_tx_complete_rom.c(184),ERROR" ID="0x805005c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_complete_normal_buffer::vap id is 0, mac vap had been deleted.} @dmac_tx_complete_rom.c(192),WARNING" ID="0x80500603" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_complete_normal_buffer::dmac_vap null.} @dmac_tx_complete_rom.c(202),ERROR" ID="0x80500652" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_tx_complete_normal_buffer::hook return [%d] @dmac_tx_complete_rom.c(212),WARNING" ID="0x805006a3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_complete_normal_buffer:: not need retry and free.} @dmac_tx_complete_rom.c(231),WARNING" ID="0x8050073b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_tx_complete_ampdu_buffer_hw_send:: dscr_next NULL .} @dmac_tx_complete_rom.c(359),ERROR" ID="0x80500b3a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_tx_complete_ampdu_buffer_hw_send::dscr_cur-&gt;q_num out of range.} @dmac_tx_complete_rom.c(365),ERROR" ID="0x80500b6a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_tx_complete_ampdu_buffer_hw_send::q empty.} @dmac_tx_complete_rom.c(369),ERROR" ID="0x80500b8a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_tx_complete_ampdu_buffer_hw::ba status[%d] error.} @dmac_tx_complete_rom.c(434),WARNING" ID="0x80500d93" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_complete_ampdu_buffer::buf null.} @dmac_tx_complete_rom.c(451),ERROR" ID="0x80500e1a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_complete_ampdu_buffer::vap id is 0,  mac vap had been deleted.} @dmac_tx_complete_rom.c(472),WARNING" ID="0x80500ec3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_tx_complete_ampdu_buffer::dmac_vap[%d] null.} @dmac_tx_complete_rom.c(478),WARNING" ID="0x80500ef3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_tx_complete_ampdu_buffer::dmac_user[%d] null.} @dmac_tx_complete_rom.c(487),WARNING" ID="0x80500f3b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_ba_seqnum_out_window::seq_num %d out of ba window.} @dmac_tx_complete_rom.c(546),WARNING" ID="0x80501113" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_tx_complete_ampdu_handle_dscr::q empty.} @dmac_tx_complete_rom.c(581),ERROR" ID="0x8050122a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_tx_complete_ampdu_handle_dscr:: dscr_next NULL .} @dmac_tx_complete_rom.c(586),ERROR" ID="0x80501252" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_complete_buff::dscr is null.} @dmac_tx_complete_rom.c(685),ERROR" ID="0x8050156a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_tx_dscr_event_handler: queue_num wrong, %d} @dmac_tx_complete_rom.c(757),ERROR" ID="0x805017aa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_tx_dscr_event_handler:: TX Q(%d) IS EMPTY, is_first[%d].} @dmac_tx_complete_rom.c(764),ERROR" ID="0x805017e2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_tx_dscr_event_handler::ppdu_cnt(%d), tx_q_status(%x).} @dmac_tx_complete_rom.c(768),WARNING" ID="0x80501803" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_dscr_event_handler::dmac_tx_complete_buff failed. @dmac_tx_complete_rom.c(785),WARNING" ID="0x8050188b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_tbtt_device_handler but dmac_vap or hal_vap is null! @dmac_tx_complete_rom.c(889),ERROR" ID="0x80501bca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_tbtt_device_handler dmac_send_msg_to_host failed[%d]! @dmac_tx_complete_rom.c(908),WARNING" ID="0x80501c63" />
+			</MSG_LOG>

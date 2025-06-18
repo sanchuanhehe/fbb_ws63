@@ -1,0 +1,17 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle at uuid cpy fail!. @sle_at_ssaps.c(29),ERROR" ID="0xd91e00ea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle at uuid cpy fail!. @sle_at_ssaps.c(56),ERROR" ID="0xd91e01c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle at uuid cpy fail!. @sle_at_ssaps.c(90),ERROR" ID="0xd91e02d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ssaps add property fail @sle_at_ssaps.c(99),ERROR" ID="0xd91e031a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error][AT] string to data error! @sle_at_ssaps.c(104),ERROR" ID="0xd91e0342" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle at uuid cpy fail!. @sle_at_ssaps.c(144),ERROR" ID="0xd91e0482" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ssaps add property fail @sle_at_ssaps.c(154),ERROR" ID="0xd91e04d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error][AT] string to data error! @sle_at_ssaps.c(159),ERROR" ID="0xd91e04fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps add description fail ret = 0x%x @sle_at_ssaps.c(176),ERROR" ID="0xd91e0582" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ssaps notify indicate fail @sle_at_ssaps.c(216),ERROR" ID="0xd91e06c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error][AT] string to data error! @sle_at_ssaps.c(221),ERROR" ID="0xd91e06ea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle at uuid cpy fail!. @sle_at_ssaps.c(244),ERROR" ID="0xd91e07a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ssaps notify indicate fail @sle_at_ssaps.c(254),ERROR" ID="0xd91e07f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error][AT] string to data error! @sle_at_ssaps.c(259),ERROR" ID="0xd91e081a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ssaps send response fail @sle_at_ssaps.c(286),ERROR" ID="0xd91e08f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error][AT] string to data error! @sle_at_ssaps.c(291),ERROR" ID="0xd91e091a" />
+			</MSG_LOG>

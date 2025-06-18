@@ -32,9 +32,6 @@ extern "C" {
 
 #define CONFIG_SPI_SUPPORT_MASTER  1
 #define CONFIG_SPI_SUPPORT_SLAVE  1
-#define CONFIG_SPI_SUPPORT_INTERRUPT  1
-#define CONFIG_SPI_SUPPORT_LOOPBACK  1
-#define CONFIG_SPI_SUPPORT_CRC  1
 
 #define DMA_HANDSHAKE_SPI_BUS_0_TX HAL_DMA_HANDSHAKING_SPI_MS0_TX
 #define DMA_HANDSHAKE_SPI_BUS_0_RX HAL_DMA_HANDSHAKING_SPI_MS0_RX
@@ -172,6 +169,12 @@ uint8_t spi_port_rx_data_level_get(spi_bus_t bus);
  * @param  [in]  bus_clk The SPI bus clock.
  */
 void spi_porting_clock_init(uint32_t bus_clk);
+
+/**
+ * @brief  Get the SPI FIFO DEPTH.
+ * @return The SPI FIFO DEPTH.
+ */
+uint32_t spi_port_get_fifo_depth(void);
 
 /**
  * @}

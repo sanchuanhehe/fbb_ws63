@@ -11,6 +11,7 @@
 #include "trng.h"
 #if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
 #include "nv.h"
+#include "nv_porting.h"
 #endif
 #if defined(CONFIG_DRIVER_SUPPORT_EFUSE)
 #include "efuse.h"
@@ -81,7 +82,7 @@ static uint8_t mac_addr_is_zero(const uint8_t *mac_addr)
 }
 
 #if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
-static uint32_t mac_addr_nv_check(uint8_t *mac_addr)
+uint32_t mac_addr_nv_check(uint8_t *mac_addr)
 {
     uint8_t zero_mac_addr[WLAN_MAC_ADDR_LEN] = {0};
     uint8_t one_mac_addr[WLAN_MAC_ADDR_LEN] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
@@ -90,7 +91,6 @@ static uint32_t mac_addr_nv_check(uint8_t *mac_addr)
     }
     if (memcmp(one_mac_addr, mac_addr, WLAN_MAC_ADDR_LEN) == 0) {
         if (memcpy_s(mac_addr, WLAN_MAC_ADDR_LEN, zero_mac_addr, WLAN_MAC_ADDR_LEN) != EOK) {
-            PRINT("{mac_addr_nv_check failed !}\n");
             return ERRCODE_MEMCPY;
         }
         return ERRCODE_FAIL;
@@ -143,7 +143,7 @@ static addr_idx get_dev_addr_idx(uint8_t type)
             addr_idx = ADDR_IDX_BLE;
             break;
         default:
-            PRINT("get_dev_addr_idx iftype error!!!\n");
+            PRINT("iftype error!\n");
             break;
     }
 
@@ -165,7 +165,7 @@ static uint32_t get_derived_mac(uint8_t mac[], uint8_t mac_len, addr_idx idx)
     uint8_t derive_bit = ((idx == ADDR_IDX_BLE) ? BLE_MAC_ADDR_DERIVE_BIT : WIFI_MAC_ADDR_DERIVE_BIT);
 
     if (mac_len != WLAN_MAC_ADDR_LEN) {
-        PRINT("get_dev_addr::get_derived_mac, error mac_len != 6.\n");
+        PRINT("error mac_len\n");
         return ERRCODE_FAIL;
     }
 
@@ -194,7 +194,7 @@ uint32_t get_dev_addr(uint8_t *pc_addr, uint8_t addr_len, uint8_t type)
     uint8_t  zero_mac[WLAN_MAC_ADDR_LEN] = {0};
     addr_idx addr_idx;
     if (pc_addr == NULL) {
-        PRINT("pc_addr == NULL)!!!\n");
+        PRINT("pc_addr NULL\n");
         return ERRCODE_FAIL;
     }
 
@@ -226,7 +226,7 @@ uint32_t get_dev_addr(uint8_t *pc_addr, uint8_t addr_len, uint8_t type)
 
     addr_idx = get_dev_addr_idx(type);
     if (addr_idx >= ADDR_IDX_BUTT) {
-        PRINT("type=%d,error!!!\n", type);
+        PRINT("type=%d,error!\n", type);
         return ERRCODE_FAIL;
     }
     if (g_mac_derivation_ptr != NULL) {
@@ -242,15 +242,15 @@ static uint32_t mac_addr_check(const uint8_t *pc_addr, uint8_t mac_len)
     uint8_t broadcast_mac[WLAN_MAC_ADDR_LEN] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
 
     if ((pc_addr[0] & 0x1) == 0x1) {
-        PRINT("Multicast mac addr not support!!!\r\n");
+        PRINT("Mc mac not support!\r\n");
         return ERRCODE_FAIL;
     }
     if (memcmp(pc_addr, broadcast_mac, mac_len) == ERRCODE_SUCC) {
-        PRINT("Broadcast mac addr not support!!!\r\n");
+        PRINT("Bc mac not support!\r\n");
         return ERRCODE_FAIL;
     }
     if (memcmp(pc_addr, zero_mac, mac_len) == ERRCODE_SUCC) {
-        PRINT("Zero mac addr not support!!!\r\n");
+        PRINT("Zero mac not support!\r\n");
         return ERRCODE_FAIL;
     }
     return ERRCODE_SUCC;
@@ -291,6 +291,12 @@ static uint32_t init_sle_mac(void)
     uapi_nv_read(NV_ID_SYSTEM_FACTORY_SLE_MAC, WLAN_MAC_ADDR_LEN, &nv_mac_length, &(g_sle_mac_addr.ac_addr[0]));
     if (mac_addr_nv_check(&(g_sle_mac_addr.ac_addr[0])) == ERRCODE_SUCC) {
         return ERRCODE_SUCC;
+    } else {
+        /* 获取NV中的MAC为非法值时，尝试获取NV工厂区中的MAC */
+        kv_read_factory(NV_ID_SYSTEM_FACTORY_SLE_MAC, WLAN_MAC_ADDR_LEN, &nv_mac_length, &(g_sle_mac_addr.ac_addr[0]));
+        if (mac_addr_nv_check(&(g_sle_mac_addr.ac_addr[0])) == ERRCODE_SUCC) {
+            return ERRCODE_SUCC;
+        }
     }
 #endif
 
@@ -301,7 +307,7 @@ static uint32_t init_sle_mac(void)
         }
     }
 #endif
-    PRINT("init_sle_mac failed!!! \r\n");
+    PRINT("init_sle_mac failed!\r\n");
     return ERRCODE_FAIL;
 }
 
@@ -328,32 +334,40 @@ void init_dev_addr(void)
     errcode_t get_mac_res = ERRCODE_FAIL;
 
     if (init_sle_mac() == ERRCODE_SUCC) {
-        PRINT("init_sle_mac, mac_addr:");
+        PRINT("sle_mac:");
         print_mac_addr(g_sle_mac_addr.ac_addr);
     }
 #if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
     uint16_t nv_mac_length;
     if (mac_addr_is_zero(g_mac_addr.ac_addr) != 0) {
+        /* 获取NV中的MAC */
         uapi_nv_read(NV_ID_SYSTEM_FACTORY_MAC, WLAN_MAC_ADDR_LEN, &nv_mac_length, &(g_mac_addr.ac_addr[0]));
         get_mac_res = mac_addr_nv_check(&(g_mac_addr.ac_addr[0]));
+        if (get_mac_res != ERRCODE_SUCC) {
+            /* 获取NV中的MAC为非法值时，尝试获取NV工厂区中的MAC */
+            kv_read_factory(NV_ID_SYSTEM_FACTORY_MAC, WLAN_MAC_ADDR_LEN, &nv_mac_length, &(g_mac_addr.ac_addr[0]));
+            get_mac_res = mac_addr_nv_check(&(g_mac_addr.ac_addr[0]));
+        }
     }
 #endif
 
 #if defined(CONFIG_DRIVER_SUPPORT_EFUSE)
     if (get_mac_res != ERRCODE_SUCC) {
+        /* NV MAC获取失败或为非法值时，获取EFUSE MAC */
         get_mac_res = get_mac_from_efuse(&(g_mac_addr.ac_addr[0]), WLAN_MAC_ADDR_LEN);
     }
 #endif
 
     if (get_mac_res != ERRCODE_SUCC) {
+        /* NV及EFUSE均未获取到合法MAC时，使用随机MAC */
         random_ether_addr(g_mac_addr.ac_addr, WLAN_MAC_ADDR_LEN);
         g_mac_addr.ac_addr[1] = RANDOM_DEFOURT_MAC1; /* 1 地址第2位 0x00 */
         g_mac_addr.ac_addr[2] = RANDOM_DEFOURT_MAC2; /* 2 地址第3位 0x73 */
         g_mac_addr.us_status = 0;
         get_mac_res = ERRCODE_SUCC;
     }
-
-    PRINT("init_dev_addr, mac_addr:");
+    /* 串口打印初始化获取的MAC，默认最后两位掩盖 */
+    PRINT("mac_addr:");
     print_mac_addr(g_mac_addr.ac_addr);
 }
 

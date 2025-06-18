@@ -86,9 +86,8 @@ target = {
             'radar_ai',
             "cjson",
             'xo_trim_port',
-            "mqtt",
             "coap",
-            "sle_chba_user","sle_netdev"
+            "sle_netdev"
         ],
         'ccflags': [
             "-DBOARD_ASIC", '-DPRE_ASIC',
@@ -152,7 +151,8 @@ target = {
             "EFUSE_BIT_OPERATION",
             "PROVISION_WRITE_WITH_INTERFACE",
             "FLASH_REGION_CFG_LOADERBOOT",
-            "BUILD_NOOSAL"
+            "BUILD_NOOSAL",
+            "CONFIG_LOADERBOOT"
         ],
         'ram_component': [
             "loaderboot_common", "common_boot", "ws63_loaderboot_lds", "dfx_preserve",

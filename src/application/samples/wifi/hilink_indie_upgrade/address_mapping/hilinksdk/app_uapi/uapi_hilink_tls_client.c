@@ -12,42 +12,51 @@
 
 HiLinkTlsClient *HILINK_TlsClientCreate(const char *custom)
 {
-    return app_call1(APP_CALL_HILINK_TLS_CLIENT_CREATE, HiLinkTlsClient *, const char *, custom);
+    app_call1(APP_CALL_HILINK_TLS_CLIENT_CREATE, HILINK_TlsClientCreate, HiLinkTlsClient *, const char *, custom);
+    return NULL;
 }
 
 int HILINK_SetTlsClientOption(HiLinkTlsClient *ctx, HiLinkTlsOption option, const void *value, unsigned int len)
 {
-    return app_call4(APP_CALL_HILINK_SET_TLS_CLIENT_OPTION, int, HiLinkTlsClient *, ctx, HiLinkTlsOption, option,
-        const void *, value, unsigned int, len);
+    app_call4(APP_CALL_HILINK_SET_TLS_CLIENT_OPTION, HILINK_SetTlsClientOption, int,
+        HiLinkTlsClient *, ctx, HiLinkTlsOption, option, const void *, value, unsigned int, len);
+    return 0;
 }
 
 int HILINK_TlsClientConnect(HiLinkTlsClient *ctx)
 {
-    return app_call1(APP_CALL_HILINK_TLS_CLIENT_CONNECT, int, HiLinkTlsClient *, ctx);
+    app_call1(APP_CALL_HILINK_TLS_CLIENT_CONNECT, HILINK_TlsClientConnect, int, HiLinkTlsClient *, ctx);
+    return 0;
 }
 
 int HILINK_TlsClientGetContextFd(HiLinkTlsClient *ctx)
 {
-    return app_call1(APP_CALL_HILINK_TLS_CLIENT_GET_CONTEXT_FD, int, HiLinkTlsClient *, ctx);
+    app_call1(APP_CALL_HILINK_TLS_CLIENT_GET_CONTEXT_FD, HILINK_TlsClientGetContextFd, int, HiLinkTlsClient *, ctx);
+    return 0;
 }
 
 int HILINK_TlsClientRead(HiLinkTlsClient *ctx, unsigned char *buf, size_t len)
 {
-    return app_call3(APP_CALL_HILINK_TLS_CLIENT_READ, int, HiLinkTlsClient *, ctx, unsigned char *, buf, size_t, len);
+    app_call3(APP_CALL_HILINK_TLS_CLIENT_READ, HILINK_TlsClientRead, int,
+        HiLinkTlsClient *, ctx, unsigned char *, buf, size_t, len);
+    return 0;
 }
 
 int HILINK_TlsClientWrite(HiLinkTlsClient *ctx, const unsigned char *buf, size_t len)
 {
-    return app_call3(APP_CALL_HILINK_TLS_CLIENT_WRITE, int,
+    app_call3(APP_CALL_HILINK_TLS_CLIENT_WRITE, HILINK_TlsClientWrite, int,
         HiLinkTlsClient *, ctx, const unsigned char *, buf, size_t, len);
+    return 0;
 }
 
 bool HILINK_TlsClientIsValidCert(HiLinkTlsClient *ctx)
 {
-    return app_call1(APP_CALL_HILINK_TLS_CLIENT_IS_VALID_CERT, bool, HiLinkTlsClient *, ctx);
+    app_call1(APP_CALL_HILINK_TLS_CLIENT_IS_VALID_CERT, HILINK_TlsClientIsValidCert, bool, HiLinkTlsClient *, ctx);
+    return false;
 }
 
 int HILINK_TlsClientFreeResource(HiLinkTlsClient *ctx)
 {
-    return app_call1(APP_CALL_HILINK_TLS_CLIENT_FREE_RESOURCE, int, HiLinkTlsClient *, ctx);
+    app_call1(APP_CALL_HILINK_TLS_CLIENT_FREE_RESOURCE, HILINK_TlsClientFreeResource, int, HiLinkTlsClient *, ctx);
+    return 0;
 }

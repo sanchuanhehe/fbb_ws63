@@ -1456,6 +1456,7 @@ static int sme_sae_auth(struct wpa_supplicant *wpa_s, u16 auth_transaction,
 		else
 #endif /* LTOS_CONFIG_NO_INTERNAL_SME */
 			sme_external_auth_send_sae_confirm(wpa_s, sa);
+		wpa_s->sae_auth_state = 1;
 		return 0;
 	} else if (auth_transaction == 2) {
 		if (status_code != WLAN_STATUS_SUCCESS)
@@ -1537,6 +1538,11 @@ void sme_external_auth_mgmt_rx(struct wpa_supplicant *wpa_s,
 			header->u.auth.variable,
 			len - auth_length, 1, header->sa);
 		if (res < 0) {
+			if (header->u.auth.status_code == WLAN_STATUS_SUCCESS) {
+				sme_send_external_auth_status(
+					wpa_s, WLAN_STATUS_UNSPECIFIED_FAILURE);
+				return;
+			}
 			/* Notify failure to the driver */
 			sme_send_external_auth_status(
 				wpa_s, le_to_host16(header->u.auth.status_code));

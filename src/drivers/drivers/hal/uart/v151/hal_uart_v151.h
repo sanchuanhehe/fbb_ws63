@@ -36,6 +36,15 @@ hal_uart_funcs_t *hal_uart_v151_funcs_get(void);
  */
 void hal_uart_irq_handler(uart_bus_t bus);
 
+#if defined(CONFIG_UART_SUPPORT_RX_FRAME_CALLBACK)
+/**
+ * @brief  UART TIMER延时获取函数
+ * @param  [in]  baud_rate 波特率， 参考 @ref hal_uart_attr_t
+ * @endif
+ */
+uint32_t hal_uart_timer_delay_time_get(uint32_t baud_rate);
+#endif
+
 /**
  * @}
  */

@@ -109,7 +109,7 @@ static INLINE__ osal_u64 oal_swap_byteorder_64(osal_u64 value)
      (((value) & 0xff00000000000000ULL) >> SWAP_BYTEORDER_MSAK_56));
 }
 
-/* 修改_PRE_BIG_CPU_ENDIAN保持HMAC&DMAC统一 */
+/* todo 修改_PRE_BIG_CPU_ENDIAN保持HMAC&DMAC统一 */
 #if defined(_PRE_BIG_CPU_ENDIAN) && defined(_PRE_BIG_CPU_ENDIAN) && defined(_PRE_CPU_ENDIAN) \
     && (_PRE_BIG_CPU_ENDIAN == _PRE_CPU_ENDIAN)          /* BIG_ENDIAN */
 #define oal_byteorder_to_le32(_val)        oal_swap_byteorder_32(_val)

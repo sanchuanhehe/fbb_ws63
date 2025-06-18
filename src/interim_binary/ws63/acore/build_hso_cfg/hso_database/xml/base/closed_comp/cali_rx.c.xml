@@ -1,0 +1,18 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="vn2.l_real:%d, vn2.l_imag:%d @cali_rx.c(262),INFO" ID="0x88ba0835" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vn3.l_real:%d, vn3.l_imag:%d @cali_rx.c(279),INFO" ID="0x88ba08bd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dc_dig_i is %d, dc_dig_q is %d, @cali_rx.c(308),INFO" ID="0x88ba09a5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vo1.l_real:%d, vo1.l_imag:%d @cali_rx.c(369),INFO" ID="0x88ba0b8d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vo2.l_real:%d, vo2.l_imag:%d @cali_rx.c(378),INFO" ID="0x88ba0bd5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[Rx DC][Digital]I=0x%x Q=0x%x @cali_rx.c(446),INFO" ID="0x88ba0df5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[Rx DC][Analog][DLNA]lvl.0=0x%x lvl.1=0x%x lvl.2=0x%x lvl.3=0x%x @cali_rx.c(449),INFO" ID="0x88ba0e0d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Rx DC][Analog][DLNA]lvl.4=0x%x @cali_rx.c(450),INFO" ID="0x88ba0e15" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="pwr_500k:%d, pwr_2p5m:%d @cali_rx.c(549),INFO" ID="0x88ba112d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Rx LPF BW]code=0x%x @cali_rx.c(594),INFO" ID="0x88ba1295" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="cali_rx_iq_beta_calc numerator:[%d+j%d] @cali_rx.c(640),INFO" ID="0x88ba1405" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="cali_rx_iq_beta_calc denominator:[%d+j%d] @cali_rx.c(641),INFO" ID="0x88ba140d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="cali_rx_iq_beta_calc beta:[%d+j%d] @cali_rx.c(649),INFO" ID="0x88ba144d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="rx_iq_comp e:%d, p:%d) @cali_rx.c(820),INFO" ID="0x88ba19a5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[Rx IQ][DLNA]P=0x%x, E=0x%x @cali_rx.c(838),INFO" ID="0x88ba1a35" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[LO CAP]vo.l_real:%d, vo.l_imag:%d @cali_rx.c(921),INFO" ID="0x88ba1ccd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[LO CAP] cap = 0x%x @cali_rx.c(955),INFO" ID="0x88ba1ddd" />
+			</MSG_LOG>

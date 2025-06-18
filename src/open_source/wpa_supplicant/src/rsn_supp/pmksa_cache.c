@@ -213,6 +213,10 @@ pmksa_cache_add(struct rsn_pmksa_cache *pmksa, const u8 *pmk, size_t pmk_len,
 	os_memcpy(entry->aa, aa, ETH_ALEN);
 	entry->network_ctx = network_ctx;
 
+#ifdef LOS_CONFIG_PMK_CACHE
+    /* 保存新的PMK */
+    wifi_save_pmk_cache(entry);
+#endif /* LOS_CONFIG_PMK_CACHE */
 	return pmksa_cache_add_entry(pmksa, entry);
 }
 
@@ -563,6 +567,26 @@ int pmksa_cache_set_current(struct wpa_sm *sm, const u8 *pmkid,
 			    int akmp)
 {
 	struct rsn_pmksa_cache *pmksa = sm->pmksa;
+#ifdef LOS_CONFIG_PMK_CACHE
+	/* pmk缓存 */
+	struct rsn_pmksa_cache_entry *cur_pmk_cache = wifi_get_pmk_cache(); /* 取缓存中的pmk */
+	struct rsn_pmksa_cache_entry *tmp_entry = NULL;
+    struct os_reltime now;
+
+    /* 取出来的cur_pmk_cache不为空，且失效时间大于0才进行缓存 */
+	if (cur_pmk_cache != NULL) {
+        os_get_reltime(&now);
+        /* cur_pmk_cache->expiration表示失效时间，在pmksa_cache_add中设置，表示要失效的时间 */
+        if (cur_pmk_cache->expiration > now.sec) {
+            tmp_entry = os_zalloc(sizeof(struct rsn_pmksa_cache_entry));
+            os_memset(tmp_entry, 0, sizeof(struct rsn_pmksa_cache_entry));
+            os_memcpy(tmp_entry, cur_pmk_cache, sizeof(struct rsn_pmksa_cache_entry));
+            tmp_entry->network_ctx = network_ctx;
+            pmksa_cache_add_entry(pmksa, tmp_entry);
+        }
+    }
+#endif /* LOS_CONFIG_PMK_CACHE */
+
 	wpa_printf(MSG_DEBUG, "RSN: PMKSA cache search - network_ctx=%p "
 		   "try_opportunistic=%d akmp=0x%x",
 		   network_ctx, try_opportunistic, akmp);

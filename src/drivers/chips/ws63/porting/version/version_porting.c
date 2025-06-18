@@ -8,6 +8,7 @@
  */
 
 #include "version_porting.h"
+#include "at.h"
 
 char *plat_get_sw_version_str(void)
 {
@@ -16,5 +17,5 @@ char *plat_get_sw_version_str(void)
 
 void print_version(void)
 {
-    osal_printk("SDK Version:%s\r\n", SDK_VERSION);
+    uapi_at_print("SDK Version:%s\r\n", SDK_VERSION);
 }

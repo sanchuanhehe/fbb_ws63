@@ -75,6 +75,7 @@
 #include "wpa_supplicant_if.h"
 #include "driver_soc_at.h"
 #include "securec.h"
+#include "wpa_i.h"
 
 const char *const wpa_supplicant_version =
 "wpa_supplicant v" VERSION_STR "\n"
@@ -234,6 +235,10 @@ int wpa_supplicant_set_wpa_none_key(struct wpa_supplicant *wpa_s,
 	return ret;
 }
 
+static void wpa_supplicant_add_eapol_atribute(struct wpa_supplicant *wpa_s)
+{
+	wpa_s->eapol_timeout = 1;
+}
 
 static void wpa_supplicant_timeout(void *eloop_ctx, void *timeout_ctx)
 {
@@ -252,6 +257,7 @@ static void wpa_supplicant_timeout(void *eloop_ctx, void *timeout_ctx)
 	wpa_bssid_ignore_add(wpa_s, bssid);
 #endif /* EXT_CODE_CROP */
 	wpa_sm_notify_disassoc(wpa_s->wpa);
+	wpa_supplicant_add_eapol_atribute(wpa_s);
 	wpa_supplicant_deauthenticate(wpa_s, WLAN_REASON_DEAUTH_LEAVING);
 	wpa_s->reassociate = 1;
 
@@ -262,7 +268,29 @@ static void wpa_supplicant_timeout(void *eloop_ctx, void *timeout_ctx)
 	wpa_supplicant_req_scan(wpa_s, 1, 0);
 }
 
+static void wpa_supplicant_recv_eapol3_timeout(void *eloop_ctx, void *timeout_ctx)
+{
+    struct wpa_supplicant *wpa_s = eloop_ctx;
+    struct wpa_global *global = eloop_ctx;
 
+    if ((wpa_s->eapol_received == 0) || (wpa_s->wpa->eapol2_pkt.msg == NULL) ||
+        (wpa_s->wpa->eapol2_pkt.msg_len == 0)) {
+        wpa_supplicant_timeout(eloop_ctx, NULL);
+        return;
+    }
+
+    if (wpa_s->eapol2_retry_cnt < wpa_s->eapol2_config_max_retry) {
+        wpa_sm_ether_send(wpa_s->wpa, wpa_s->wpa->eapol2_pkt.dest, wpa_s->wpa->eapol2_pkt.proto,
+            wpa_s->wpa->eapol2_pkt.msg, wpa_s->wpa->eapol2_pkt.msg_len);
+        wpa_s->eapol2_retry_cnt++;
+        /* 1000:ms to us */
+        eloop_register_timeout(0, wpa_s->eapol3_config_recv_timeout * 1000, wpa_supplicant_recv_eapol3_timeout, global,
+            NULL);
+        return;
+    }
+
+    wpa_supplicant_timeout(eloop_ctx, NULL);
+}
 /**
  * wpa_supplicant_req_auth_timeout - Schedule a timeout for authentication
  * @wpa_s: Pointer to wpa_supplicant data
@@ -288,7 +316,18 @@ void wpa_supplicant_req_auth_timeout(struct wpa_supplicant *wpa_s,
 	eloop_register_timeout(sec, usec, wpa_supplicant_timeout, wpa_s, NULL);
 }
 
+static void wpa_supplicant_req_recv_eapol3_timeout(struct wpa_supplicant *wpa_s, int sec, int usec)
+{
+    wpa_s->eapol2_retry_cnt = 0;
+    (void)eloop_cancel_timeout(wpa_supplicant_recv_eapol3_timeout, wpa_s, NULL);
+    eloop_register_timeout(sec, usec, wpa_supplicant_recv_eapol3_timeout, wpa_s, NULL);
+}
 
+void wpa_supplicant_cancel_eapol3_timeout(struct wpa_supplicant *wpa_s)
+{
+    wpa_s->eapol2_retry_cnt = 0;
+    (void)eloop_cancel_timeout(wpa_supplicant_recv_eapol3_timeout, wpa_s, NULL);
+}
 /*
  * wpas_auth_timeout_restart - Restart and change timeout for authentication
  * @wpa_s: Pointer to wpa_supplicant data
@@ -649,6 +688,7 @@ static void wpa_supplicant_cleanup(struct wpa_supplicant *wpa_s)
 	wpa_supplicant_cancel_delayed_sched_scan(wpa_s);
 #endif /* EXT_CODE_CROP */
 	wpa_supplicant_cancel_scan(wpa_s);
+	wpa_supplicant_cancel_eapol3_timeout(wpa_s);
 	wpa_supplicant_cancel_auth_timeout(wpa_s);
 #ifndef LOS_CONFIG_HOSTAPD_TKIP_MIC
 	eloop_cancel_timeout(wpa_supplicant_stop_countermeasures, wpa_s, NULL);
@@ -4363,7 +4403,7 @@ static void wpas_start_assoc_cb(struct wpa_radio_work *work, int deinit)
 			timeout = ssid->mode == WPAS_MODE_IBSS ? 10 : 5;
 		} else if (wpa_s->conf->ap_scan == 1) {
 			/* give IBSS a bit more time */
-			timeout = ssid->mode == WPAS_MODE_IBSS ? 20 : 10;
+			timeout = ssid->mode == WPAS_MODE_IBSS ? 20 : 4;
 		}
 		wpa_supplicant_req_auth_timeout(wpa_s, timeout, 0);
 	}
@@ -5487,7 +5527,7 @@ void wpa_supplicant_rx_eapol(void *ctx, const u8 *src_addr,
 	    (wpa_s->current_ssid == NULL ||
 	     wpa_s->current_ssid->mode != WPAS_MODE_IBSS)) {
 		/* Timeout for completing IEEE 802.1X and WPA authentication */
-		int timeout = 10;
+		int timeout = 3;
 
 		if (wpa_key_mgmt_wpa_ieee8021x(wpa_s->key_mgmt) ||
 		    wpa_s->key_mgmt == WPA_KEY_MGMT_IEEE8021X_NO_WPA ||
@@ -5516,7 +5556,12 @@ void wpa_supplicant_rx_eapol(void *ctx, const u8 *src_addr,
 		}
 #endif /* CONFIG_WPS */
 
-		wpa_supplicant_req_auth_timeout(wpa_s, timeout, 0);
+		if ((wpa_s->eapol2_config_max_retry != 0) && (wpa_s->eapol3_config_recv_timeout != 0)) {
+			/* 1000:ms to us */
+			wpa_supplicant_req_recv_eapol3_timeout(wpa_s, 0, wpa_s->eapol3_config_recv_timeout * 1000);
+		} else {
+			wpa_supplicant_req_auth_timeout(wpa_s, timeout, 0);
+		}
 	}
 	wpa_s->eapol_received++;
 

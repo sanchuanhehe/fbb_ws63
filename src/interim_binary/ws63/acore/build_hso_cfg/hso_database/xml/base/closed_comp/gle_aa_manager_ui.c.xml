@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="gle aa reg cfm cbk cbk_cfm_type:%02x is invalid @gle_aa_manager_ui.c(26),ERROR" ID="0xde4a00d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle aa get cfm cbk type:%02x, cfm_cbk not found @gle_aa_manager_ui.c(41),ERROR" ID="0xde4a014a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle aa get cfm cbk type:%02x, cfm_cbk not found @gle_aa_manager_ui.c(55),ERROR" ID="0xde4a01ba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle aa get cfm cbk type:%02x, cfm_cbk null @gle_aa_manager_ui.c(60),ERROR" ID="0xde4a01e2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="opcode = 0x%04x, cmd_result = 0x%x @gle_aa_manager_ui.c(112),INFO" ID="0xde4a0385" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle set public address memcpy fail. @gle_aa_manager_ui.c(151),ERROR" ID="0xde4a04ba" />
+			</MSG_LOG>

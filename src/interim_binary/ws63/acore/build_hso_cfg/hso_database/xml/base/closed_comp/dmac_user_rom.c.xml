@@ -1,0 +1,51 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{mac_res_get_dmac_user_alloc::dmac_user alloc null,user_idx=%d.} @dmac_user_rom.c(86),ERROR" ID="0x800002b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tid_tx_queue_init::param null.} @dmac_user_rom.c(104),ERROR" ID="0x80000342" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_user_init::dmac_vap null.} @dmac_user_rom.c(131),ERROR" ID="0x8000041a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_user_alloc::dmac_user_alloc failed[%d] userindx[%d]. @dmac_user_rom.c(157),ERROR" ID="0x800004ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_user_alloc::dmac_user null, userindx[%d].} @dmac_user_rom.c(164),ERROR" ID="0x80000522" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_user_init_etc::param null.} @dmac_user_rom.c(181),ERROR" ID="0x800005aa" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_user_add_multi_user::alloc_dmac_user failed[%d], userindex[%d]. @dmac_user_rom.c(222),ERROR" ID="0x800006f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_user_add_multi_user::dmac_user_init() fail, ret = [%d]} @dmac_user_rom.c(238),WARNING" ID="0x80000773" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_user_add_multi_user, user index[%d].} @dmac_user_rom.c(241),WARNING" ID="0x8000078b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_tid_clear::dmac_user=%p, mac_device=%p null ! @dmac_user_rom.c(256),ERROR" ID="0x80000802" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tid_pause::param null.} @dmac_user_rom.c(282),ERROR" ID="0x800008d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_user_pause::dmac_user null.} @dmac_user_rom.c(302),ERROR" ID="0x80000972" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_user_resume::dmac_user null.} @dmac_user_rom.c(352),ERROR" ID="0x80000b02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_user_resume::hal_device null} @dmac_user_rom.c(359),WARNING" ID="0x80000b3b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_user_resume::user in BUTT_mode, cannot resume tid!} @dmac_user_rom.c(365),WARNING" ID="0x80000b6b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_user_free::dmac_user[%d] null.} @dmac_user_rom.c(391),ERROR" ID="0x80000c3a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_config_del_user::dmac_user[%d] null.} @dmac_user_rom.c(412),WARNING" ID="0x80000ce3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_user_add_prep::add_assoc_user_etc fail.} @dmac_user_rom.c(443),ERROR" ID="0x80000dda" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_user_add_prep::user_init() fail! ret = [%d].} @dmac_user_rom.c(450),WARNING" ID="0x80000e13" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_vap_find_user_by_macaddr:: invalid param!!!} @dmac_user_rom.c(479),WARNING" ID="0x80000efb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{oal_dlist_check_head:dmac user doule add.} @dmac_user_rom.c(527),ERROR" ID="0x8000107a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_vap_add_assoc_user_etc::dmac_vap null.} @dmac_user_rom.c(545),ERROR" ID="0x8000110a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_vap_add_assoc_user_etc::user[%d] null.} @dmac_user_rom.c(550),WARNING" ID="0x80001133" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_vap_add_assoc_user_etc::user[%d] already exist.} @dmac_user_rom.c(557),ERROR" ID="0x8000116a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {mac_vap_del_user_loop_proc::user is null ptr} @dmac_user_rom.c(584),ERROR" ID="0x80001242" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {mac_vap_del_user_loop_proc::user[%d] null} @dmac_user_rom.c(592),ERROR" ID="0x80001282" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_vap_del_user_etc::user[%d] null.} @dmac_user_rom.c(621),WARNING" ID="0x8000136b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_vap_del_user_etc::del user[%d] failed.} @dmac_user_rom.c(640),WARNING" ID="0x80001403" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_user_add::null param.} @dmac_user_rom.c(658),ERROR" ID="0x80001492" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_user_add::alloc_dmac_user failed[%d], userindx[%d]. @dmac_user_rom.c(669),ERROR" ID="0x800014ea" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_user_add:: dmac_user[%d] null.} @dmac_user_rom.c(675),WARNING" ID="0x8000151b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_user_del::vap del failed.} @dmac_user_rom.c(714),ERROR" ID="0x80001652" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_user_del_offload::free_mac_user failed[%d]. @dmac_user_rom.c(722),ERROR" ID="0x80001692" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_user_del_reset_settings::del_offload fail!} @dmac_user_rom.c(730),WARNING" ID="0x800016d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_user_del_reset_settings::Del user SUCC! @dmac_user_rom.c(733),WARNING" ID="0x800016eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_user_get_tid_pkt_num_len::msg is none @dmac_user_rom.c(893),ERROR" ID="0x80001bea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_user_get_tid_pkt_num_len: no user} @dmac_user_rom.c(900),WARNING" ID="0x80001c23" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_config_user_rate_info_syn::dmac_user null.user idx [%d]} @dmac_user_rom.c(930),WARNING" ID="0x80001d13" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_user_add_notify_alg::null param.} @dmac_user_rom.c(965),ERROR" ID="0x80001e2a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_user_add_notify_alg::HAL_DEVICE null} @dmac_user_rom.c(971),WARNING" ID="0x80001e5b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_user_add_notify_alg::mac_user[%d] null. @dmac_user_rom.c(979),WARNING" ID="0x80001e9b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_user_add_notify_alg::user_notify fail[%d]. @dmac_user_rom.c(989),WARNING" ID="0x80001eeb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_tid_get_normal_rate_stats::param null, mac_user=%p, rate_stats_info=%p.} @dmac_user_rom.c(1017),ERROR" ID="0x80001fca" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_tid_get_normal_rate_stats::invalid tid_id[%d]. @dmac_user_rom.c(1024),ERROR" ID="0x80002002" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_tid_set_normal_rate_stats::param null, dmac_user=%p, rate_stats_info=%p.} @dmac_user_rom.c(1045),ERROR" ID="0x800020aa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_tid_set_normal_rate_stats::invalid tid_id[%d]. @dmac_user_rom.c(1051),ERROR" ID="0x800020da" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap:%u {dmac_alg_distance_notify_sync_host::dispatch_event fail, ret=%d} @dmac_user_rom.c(1076),WARNING" ID="0x800021a3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_alg_distance_notify_hook::hal_device null} @dmac_user_rom.c(1093),WARNING" ID="0x8000222b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_alg_distance_notify_hook::alg distance status is out of the way2.old:%d, new:%d} @dmac_user_rom.c(1106),WARNING" ID="0x80002293" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_alg_co_intf_notify_hook::alg co_intf status is out of the way.old:%d, new:%d} @dmac_user_rom.c(1128),WARNING" ID="0x80002343" />
+			</MSG_LOG>

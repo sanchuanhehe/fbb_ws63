@@ -1,0 +1,82 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="{alg_ar_set_tx_rate_param:legacy protocol with aggr!pkt_num[%d], is probe[%d] is_amsdu[%d] mpdu[%d]} @alg_autorate_if_rom.c(72),WARNING" ID="0x82260243" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_set_tx_rate:hal_device null!} @alg_autorate_if_rom.c(90),WARNING" ID="0x822602d3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_set_tx_rate_for_probe:hal_device null!} @alg_autorate_if_rom.c(118),WARNING" ID="0x822603b3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_set_tx_rate_for_probe:err hal_bw[%d]!} @alg_autorate_if_rom.c(123),WARNING" ID="0x822603db" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_PARAM] pktno[%d] rank[%d] tx_count[%d] tx_chain[%d]} @alg_autorate_if_rom.c(204),WARNING" ID="0x82260663" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_PARAM] protocol[%d] nss_mcs[0x%x] bw[%d] fec[%d]} @alg_autorate_if_rom.c(207),WARNING" ID="0x8226067b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_PARAM] gi[%d] ltf[%d] preamble[%d] he_dcm[%d]} @alg_autorate_if_rom.c(210),WARNING" ID="0x82260693" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_tx_process_ucast_data:ptr null! user=%d} @alg_autorate_if_rom.c(229),ERROR" ID="0x8226072a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_tx_process_ucast_data:qry user probe fail ret[%d]} @alg_autorate_if_rom.c(249),WARNING" ID="0x822607cb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{[ALG_AR_DBG] [TX_PARAM] PROBE PPDU pktno[%d]} @alg_autorate_if_rom.c(257),WARNING" ID="0x8226080b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [TX_PARAM] USER[%d] wait_cnt[%d] &gt; [%d] probe_pktno[%d] @alg_autorate_if_rom.c(264),WARNING" ID="0x82260843" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_process::autorate_dev is null!} @alg_autorate_if_rom.c(289),WARNING" ID="0x8226090b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_tx_process::ar_vap[%d] null!} @alg_autorate_if_rom.c(294),WARNING" ID="0x82260933" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_process::tx slp frame!} @alg_autorate_if_rom.c(299),WARNING" ID="0x8226095b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_process::tx ucast_mgmt or vip!} @alg_autorate_if_rom.c(304),WARNING" ID="0x82260983" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_process::tx mcast_mgmt or bcast_mgmt!} @alg_autorate_if_rom.c(309),WARNING" ID="0x822609ab" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_process::tx mcast_data or bcast_data!} @alg_autorate_if_rom.c(313),WARNING" ID="0x822609cb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_tx_process::dmac user[%d] null!} @alg_autorate_if_rom.c(323),ERROR" ID="0x82260a1a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_tx_process enter, tx ucast_data user[%d]!}  @alg_autorate_if_rom.c(326),WARNING" ID="0x82260a33" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_process::ptr null!} @alg_autorate_if_rom.c(343),ERROR" ID="0x82260aba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_tx_process::dmac vap[%d] null!} @alg_autorate_if_rom.c(349),ERROR" ID="0x82260aea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_rx_process::ptr null!} @alg_autorate_if_rom.c(376),ERROR" ID="0x82260bc2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_rx_process:ar user not init! user=%d} @alg_autorate_if_rom.c(387),WARNING" ID="0x82260c1b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_rx_process:ar ptr null! user=%d} @alg_autorate_if_rom.c(391),ERROR" ID="0x82260c3a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_autorate_get_tx_best_rate_fix_mode:nss_mcs invalid! protocol[%d],nss_mcs[%d]} @alg_autorate_if_rom.c(439),WARNING" ID="0x82260dbb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_get_tx_best_rate_fix_mode:fix mode, protocol invalid!} @alg_autorate_if_rom.c(446),WARNING" ID="0x82260df3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_get_tx_best_rate_fix_mode:fix mode, bw invalid!} @alg_autorate_if_rom.c(452),WARNING" ID="0x82260e23" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_get_tx_best_rate_fix_mode:fix mode, gi invalid!} @alg_autorate_if_rom.c(458),WARNING" ID="0x82260e53" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_get_tx_best_rate:ptr null} @alg_autorate_if_rom.c(480),ERROR" ID="0x82260f02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_get_tx_best_rate:ar not register!} @alg_autorate_if_rom.c(485),WARNING" ID="0x82260f2b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_get_tx_best_rate:get user id fail} @alg_autorate_if_rom.c(493),ERROR" ID="0x82260f6a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_get_tx_best_rate:get_user info fail! user=%d} @alg_autorate_if_rom.c(499),ERROR" ID="0x82260f9a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_get_tx_best_rate:get rate table fail! user=%d} @alg_autorate_if_rom.c(512),ERROR" ID="0x82261002" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_get_rate_kbps::tx_param_nss_mcs_analysis fail!} @alg_autorate_if_rom.c(541),WARNING" ID="0x822610eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_get_rate_kbps:table null} @alg_autorate_if_rom.c(553),WARNING" ID="0x8226114b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{alg_autorate_get_ru_rate_kbps:table null! protocol[%d] bw[%d] ar_bw[%d] nss[%d]} @alg_autorate_if_rom.c(572),WARNING" ID="0x822611e3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_get_rx_rate_by_rate_table::nss_mcs_analysis fail!} @alg_autorate_if_rom.c(598),WARNING" ID="0x822612b3" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_autorate_get_rx_rate_by_rate_table:table null, bw=%d, he_flag=%d, phy_protocol=%d} @alg_autorate_if_rom.c(612),WARNING" ID="0x82261323" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_change_user_bw:get_user[%d] info fail!}  @alg_autorate_if_rom.c(633),INFO" ID="0x822613cd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{change_user_bw:user[%d] bw[%d]} @alg_autorate_if_rom.c(638),ERROR" ID="0x822613f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_change_user_bw::same avail_bw[%d], return!} @alg_autorate_if_rom.c(642),INFO" ID="0x82261415" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_change_user_bw::cur_bw == user_avail_bw!} @alg_autorate_if_rom.c(648),INFO" ID="0x82261445" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_autorate_change_user_bw::user[%d] request change bw, from[%d] to [%d]!} @alg_autorate_if_rom.c(653),WARNING" ID="0x8226146b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_change_user_bw:legacy protocol do not change bw} @alg_autorate_if_rom.c(657),INFO" ID="0x8226148d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_change_user_bw:init rate fail!user=%d} @alg_autorate_if_rom.c(667),WARNING" ID="0x822614db" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_delete_ba_fail:ptr null or not register}  @alg_autorate_if_rom.c(682),ERROR" ID="0x82261552" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_delete_ba_fail:get_user[%d] info fail!} @alg_autorate_if_rom.c(687),ERROR" ID="0x8226157a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_autorate_delete_ba_fail:user[%d] delete_ba fail! up to protocol[%d], cur_protocol[%d]} @alg_autorate_if_rom.c(692),WARNING" ID="0x822615a3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_delete_ba_fail:init rate fail!user=%d}  @alg_autorate_if_rom.c(708),WARNING" ID="0x82261623" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_enable_event_trig_descend_bw:vap[%d] NULL} @alg_autorate_if_rom.c(731),WARNING" ID="0x822616db" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_enable_event_trig_descend_bw:user[%d]enable event_trig descend bw} @alg_autorate_if_rom.c(746),WARNING" ID="0x82261753" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="AR_intf_change:err cur_intf_mode[%d] @alg_autorate_if_rom.c(766),WARNING" ID="0x822617f3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{alg_autorate_intf_change:intf_type_last[%u], intf_type[%u], duty_20[%u], duty_sec20[%u]} @alg_autorate_if_rom.c(784),WARNING" ID="0x82261883" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_probe_deadlock:dmac_user NULL} @alg_autorate_if_rom.c(804),WARNING" ID="0x82261923" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_probe_deadlock:dmac_vap NULL} @alg_autorate_if_rom.c(809),WARNING" ID="0x8226194b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_probe_deadlock:release lock! user[%d]} @alg_autorate_if_rom.c(818),WARNING" ID="0x82261993" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[alg]alg_ar_init succ @alg_autorate_if_rom.c(858),WARNING" ID="0x82261ad3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="alg_autorate_exit::vap[%d]NULL. @alg_autorate_if_rom.c(928),ERROR" ID="0x82261d02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_exit:: vap null!} @alg_autorate_if_rom.c(938),ERROR" ID="0x82261d52" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_config_rate_fix_tx_param::memcpy_s failed.} @alg_autorate_if_rom.c(966),ERROR" ID="0x82261e32" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_autorate_config_rate_fix:value[%d]nss_mcs[%d]} @alg_autorate_if_rom.c(970),WARNING" ID="0x82261e53" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{alg_autorate_config_rate_fix:protocol[%d] bw[%d] preamble[%d] fec[%d]} @alg_autorate_if_rom.c(972),WARNING" ID="0x82261e63" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{alg_autorate_config_rate_fix:gi[%d] ltf[%d] tx cnt[%d] dcm[%d]} @alg_autorate_if_rom.c(974),WARNING" ID="0x82261e73" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alg_autorate_cfg_change_user_protocol_proc::user_info NULL @alg_autorate_if_rom.c(998),ERROR" ID="0x82261f32" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alg_autorate_cfg_change_user_protocol_proc::err wlan_protocol @alg_autorate_if_rom.c(1004),WARNING" ID="0x82261f63" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="alg_autorate_cfg_change_user_protocol::vap[%d]NULL @alg_autorate_if_rom.c(1028),ERROR" ID="0x82262022" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_config_rate_fix::vap null!} @alg_autorate_if_rom.c(1048),WARNING" ID="0x822620c3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_autorate_config_rate_fix:rank[%d] frame_type[%d]} @alg_autorate_if_rom.c(1052),WARNING" ID="0x822620e3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="alg_autorate_config_rate_fix::ERR frame_type[%d] @alg_autorate_if_rom.c(1075),WARNING" ID="0x8226219b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_config_check_param_valid::err param[%d]!!} @alg_autorate_if_rom.c(1088),ERROR" ID="0x82262202" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_config_rate_mode::err param} @alg_autorate_if_rom.c(1105),ERROR" ID="0x8226228a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_config_rate_mode::fix_rate_mode[%d]} @alg_autorate_if_rom.c(1109),WARNING" ID="0x822622ab" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_config_rate_mode::vap null!}  @alg_autorate_if_rom.c(1116),ERROR" ID="0x822622e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_config_part2::vap null!} @alg_autorate_if_rom.c(1137),ERROR" ID="0x8226238a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_config::auto_protocol[%d]} @alg_autorate_if_rom.c(1145),WARNING" ID="0x822623cb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_config::autorate enable[%d]}  @alg_autorate_if_rom.c(1152),WARNING" ID="0x82262403" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_config:config param error[%d]!} @alg_autorate_if_rom.c(1156),WARNING" ID="0x82262423" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_config: null pointer!} @alg_autorate_if_rom.c(1170),ERROR" ID="0x82262492" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_config::enable_ar_log[%d]} @alg_autorate_if_rom.c(1191),WARNING" ID="0x8226253b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_config::auto_bw[%d]} @alg_autorate_if_rom.c(1198),WARNING" ID="0x82262573" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_autorate_config::event_trig_bw[%d]} @alg_autorate_if_rom.c(1205),WARNING" ID="0x822625ab" />
+			</MSG_LOG>

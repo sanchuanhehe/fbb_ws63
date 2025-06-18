@@ -36,3 +36,11 @@ config AT_SUPPORT_ZDIAG
     default n
     help
         This option means at support zdiag invocation.
+
+config AT_PRINT_BUFFER_SIZE
+    int
+    prompt "AT_PRINT_BUFFER_SIZE"
+    default 384
+    range 128 4096
+    help
+        This option specify the buffer size used for at print. the buffer is on bss memory area.

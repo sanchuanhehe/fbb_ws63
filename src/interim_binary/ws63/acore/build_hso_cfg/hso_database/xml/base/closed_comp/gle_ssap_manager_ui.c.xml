@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="ssap recv data buf len error buf_len:0x%x data_size:0x%x. @gle_ssap_manager_ui.c(38),ERROR" ID="0xde760132" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ssap recv data cbk ev_code = 0x%x, buf-&gt;len = %u, buf-&gt;off = %u @gle_ssap_manager_ui.c(43),INFO" ID="0xde76015d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssap recv data cbk bg_pkt_buff new fail @gle_ssap_manager_ui.c(47),INFO" ID="0xde76017d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssap recv data cbk buff_stru new fail. @gle_ssap_manager_ui.c(55),ERROR" ID="0xde7601ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssap recv data cbk pkt buf data memcpy fail. @gle_ssap_manager_ui.c(62),ERROR" ID="0xde7601f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ev_code = 0x%x not support @gle_ssap_manager_ui.c(70),INFO" ID="0xde760235" />
+			</MSG_LOG>

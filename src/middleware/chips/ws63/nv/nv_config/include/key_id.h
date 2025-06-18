@@ -10,12 +10,20 @@
 
 /* Please use the format of NV_ID_XXX */
 
-/* system factory key_id [0x0001,0x1000) */
+/* system factory key_id [0x0001,0x00C0) */
 #define NV_ID_SYSTEM_FACTORY_AREA_START    0x0001 /* Not a real key_id , just used for region determination. */
 #define NV_ID_SYSTEM_FACTORY_MAC           0x0005 /* Not a real key_id , just used for region determination. */
 #define NV_ID_SYSTEM_XO_TRIM_TEMP_SW       0x0006 /* Temp comp switch for xo trim. */
 #define NV_ID_SYSTEM_XO_TRIM_TEMP_PARAM    0x0007 /* Temp comp fine code for xo trim. */
 #define NV_ID_SYSTEM_FACTORY_SLE_MAC       0x0008 /* SLE MAC NV KEY ID. */
+
+/* BTH key_id [0x00C0,0x00FF) */
+#define NV_ID_BTH_PRODUCT_INFORMATION      0x00C0
+#define NV_ID_GLE_SEC                      0x00C1
+#define NV_ID_BTH_SMP_KEYS                 0x00C2
+#define NV_ID_BTH_HIDINFO                  0x00C3
+#define NV_ID_BTH_RESERVED                 0x00C4
+
 /* user factory key_id [0x1000,0x2000) */
 #define NV_ID_USER_FACTORY_AREA_START      0x1000 /* Not a real key_id , just used for region determination. */
 
@@ -44,6 +52,7 @@
 #define NV_ID_CLR_IP_DISABLE               0x2015 /* Disable report lwip clr ip when disconn */
 #define NV_ID_LINKLOSS_DISABLE             0x2016 /* Disable linkloss */
 #define NV_ID_SOFTAP_FIX_DSPS              0x2017 /* Set Softap DSPS */
+#define NV_ID_ALG_CROSS_PROT_ENABLE        0x2018 /* alg cross protocol enable */
 
 #define NV_ID_FE_RX_INSERT_LOSS            0x2050 /* RF RX insert loss */
 #define NV_ID_FE_CALI_MASK                 0x2051 /* RF cali mask */
@@ -61,6 +70,15 @@
 #define NV_ID_FE_CTA_COEF_SWITCH           0x205D /* RF cta special coef switch */
 
 #define NV_ID_BTC_TXPOWER_CFG              0x20A0 /* btc tx power cfg */
+#define NV_ID_BTC_GOLDEN_PER_SWITCH        0x20A1 /* bt_golden_per_switch */
+#define NV_ID_BTC_TX_TARGET_POWER_CFG      0x20A4 /* btc tx target power cfg */
+#define NV_ID_BTC_SRRC_SWITCH              0x20A5 /* SRRC switch on */
+#define NV_ID_BTC_SRRC_SET_CHANNEL         0x20A6 /* SRRC set channel */
+#define NV_ID_BTC_SRRC_SET_POWER           0x20A7 /* SRRC set power */
+#define NV_ID_BTC_SLE_CONN_DURATION        0x20A8 /* sle connection duration [8, 16], default value is 8 */
+#define NV_ID_BTC_DEMOD_DIFF               0x20A9 /* bsle 1m/2m demod is diff */
+#define NV_ID_BTC_SCHED_PRE_ARG_SWITCH     0x20AA /* Scheduling pre-arrangement switch */
+#define NV_ID_BTC_CHANNEL_SCAN_SWITCH      0x20AB /* channel scan switch */
 
 #define NV_ID_RADAR_1M_HOME_STA_PLATSIC    0x2100
 #define NV_ID_RADAR_1M_HALL_STA_PLATSIC    0x2101
@@ -98,6 +116,7 @@
 
 #define NV_ID_HILINK_ENTRY_MODE            0x2150 /* hilink entry mode */
 #define NV_ID_HILINK_CONNECT_INFO          0x2151 /* hilink connect info */
+#define NV_ID_CHBA_MODE_CFG                0x2160 /* chba mode cfg */
 /* system stable key_id [0x3000,0x4000) */
 #define NV_ID_SYSTEM_STABLE_AREA_START     0x3000 /* Not a real key_id , just used for region determination. */
 #define NV_ID_DBG_UART_BUS_ID              0x3001 /* dbg uart bus id */

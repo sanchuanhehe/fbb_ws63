@@ -1,0 +1,11 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="dmac_tx_set_retry_dscr::param null @dmac_tx_complete_retry_rom.c(94),ERROR" ID="0x829802f2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_config_sdp_retry_times:data_retry_times=%d, manager_retry_times=%d @dmac_tx_complete_retry_rom.c(149),WARNING" ID="0x829804ab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_tx_hw_back_to_queue::dmac_vap null,vap id=%d @dmac_tx_complete_retry_rom.c(190),WARNING" ID="0x829805f3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_tx_hw_back_to_queue::dmac_user[%d] null.} @dmac_tx_complete_retry_rom.c(198),WARNING" ID="0x82980633" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_tx_comp_mgmt_retry_check::drop mgmt,frame type[%d]. @dmac_tx_complete_retry_rom.c(282),WARNING" ID="0x829808d3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_softretry_check_no_retrans::auth is received, not retry antuh} @dmac_tx_complete_retry_rom.c(301),WARNING" ID="0x8298096b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_mgnt_ctrl_is_retry::reassoc_rsp recvd,no retry reassoc_req} @dmac_tx_complete_retry_rom.c(309),WARNING" ID="0x829809ab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dbac running-vap pause, mgmt stop retry, vapid %d @dmac_tx_complete_retry_rom.c(366),WARNING" ID="0x82980b73" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_tx_softretry_mgnt_ctrl::mgmt retry failed, ret=0x%x @dmac_tx_complete_retry_rom.c(375),WARNING" ID="0x82980bbb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_config_frame_soft_retry_times:frame_type=%d, retry_times=%d @dmac_tx_complete_retry_rom.c(555),WARNING" ID="0x8298115b" />
+			</MSG_LOG>

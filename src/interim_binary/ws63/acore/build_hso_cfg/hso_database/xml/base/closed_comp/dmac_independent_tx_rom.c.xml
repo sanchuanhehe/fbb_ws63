@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="dmac_independent_tx:: get dmac_user fail. @dmac_independent_tx_rom.c(38),ERROR" ID="0x81480132" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_independent_tx:: get dmac_vap or hal_vap fail. @dmac_independent_tx_rom.c(43),ERROR" ID="0x8148015a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_independent_tx:: failed, free netbuf @dmac_independent_tx_rom.c(70),WARNING" ID="0x81480233" />
+			</MSG_LOG>

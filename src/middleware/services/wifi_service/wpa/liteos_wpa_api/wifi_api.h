@@ -179,6 +179,7 @@ enum ext_scan_record_flag {
     EXT_SSID_SCAN,
     EXT_PREFIX_SSID_SCAN,
     EXT_BSSID_SCAN,
+    EXT_SSID_SCAN_WITH_CHANNEL,
 };
 
 typedef enum {

@@ -1,5 +1,9 @@
 ﻿/*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2014-2021. All rights reserved.
+ * 文 件 名   : hmac_frag.c
+ * 作    者   : huanghe
+ * 生成日期   : 2014年2月15日
+ * 功能描述   : 分片去分片功能
  */
 
 /*****************************************************************************

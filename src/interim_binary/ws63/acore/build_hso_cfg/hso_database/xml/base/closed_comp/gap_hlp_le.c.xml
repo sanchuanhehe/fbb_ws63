@@ -1,0 +1,30 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[GAP] gaph oobtk req ev cbk memcpy failed @gap_hlp_le.c(431),ERROR" ID="0xdb8c0d7a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gaph token passkey entry event callback memcpy failed @gap_hlp_le.c(491),ERROR" ID="0xdb8c0f5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gaph smp cbk memcpy failed @gap_hlp_le.c(563),ERROR" ID="0xdb8c119a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP][RandAddrCfm][ERROR] gap_fsminst is NULL @gap_hlp_le.c(1128),ERROR" ID="0xdb8c2342" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gaph le manager advertising terminate multi adv addr memcpy failed @gap_hlp_le.c(1822),ERROR" ID="0xdb8c38f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GAP][LE_MULTI_ADV] ACTION=UPDATE_MULTI_ADV_PARAM, RESULT=0x%x @gap_hlp_le.c(1987),INFO" ID="0xdb8c3e1d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GAP][LE_MULTI_ADV] ACTION=UPDATE_MULTI_DATA, RESULT=0x%x @gap_hlp_le.c(2052),INFO" ID="0xdb8c4025" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GAP][LE_MULTI_ADV] ACTION=UPDATE_MULTI_RANDOM_ADDR, RESULT=0x%x @gap_hlp_le.c(2093),INFO" ID="0xdb8c416d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP][LE_MULTI_ADV][ERROR] gap_fsminst is NULL @gap_hlp_le.c(2097),ERROR" ID="0xdb8c418a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GAP][LE_MULTI_ADV] ACTION=UPDATE_MULTIADV_ENABLE, RESULT=0x%x @gap_hlp_le.c(2162),INFO" ID="0xdb8c4395" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP][bt_onetrack] BTC not support SET MULTI ADV PARAM @gap_hlp_le.c(2210),INFO" ID="0xdb8c4515" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GAP][LE_MULTI_ADV] ACTION=SET_MULTI_ADV_PARAM, SUB_CODE=%d, HANDLE=0x%x @gap_hlp_le.c(2245),INFO" ID="0xdb8c462d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gaph le manager cmd send set multi adv data memcpy failed @gap_hlp_le.c(2268),ERROR" ID="0xdb8c46e2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GAP][bt_onetrack] BTC not support SET_MULTI_ADV_DATA, SUB_CODE=%d, HANDLE=0x%x @gap_hlp_le.c(2278),INFO" ID="0xdb8c4735" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GAP][LE_MULTI_ADV] ACTION=SET_MULTI_ADV_DATA, SUB_CODE=%d, HANDLE=0x%x @gap_hlp_le.c(2285),INFO" ID="0xdb8c476d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP][bt_onetrack] BTC not support SET_MULTI_RANDOM_ADDR @gap_hlp_le.c(2304),INFO" ID="0xdb8c4805" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GAP][LE_MULTI_ADV] ACTION=SET_MULTI_RANDOM_ADDR, SUB_CODE=%d, HANDLE=0x%x @gap_hlp_le.c(2317),INFO" ID="0xdb8c486d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP][bt_onetrack] BTC not support SET_MULTI_ADV_ENABLE @gap_hlp_le.c(2336),INFO" ID="0xdb8c4905" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[GAP][LE_MULTI_ADV] ACTION=SET_MULTI_ADV_ENABLE, SUB_CODE=%d, HANDLE=0x%x, ENABLE=%d @gap_hlp_le.c(2356),INFO" ID="0xdb8c49a5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gaph le manager cmd send set ext adv param memcpy failed @gap_hlp_le.c(2501),ERROR" ID="0xdb8c4e2a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GAP]gaph le manager cmd send set ext adv param own_address_type = %x adv_event_flag = %x @gap_hlp_le.c(2516),INFO" ID="0xdb8c4ea5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP][gaph le manager cmd send set legacy adv data memcpy failed @gap_hlp_le.c(2532),ERROR" ID="0xdb8c4f22" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gaph le manager cmd send set ext adv data memcpy failed @gap_hlp_le.c(2576),ERROR" ID="0xdb8c5082" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]set ext adv - BT init not complete!!! @gap_hlp_le.c(3068),WARNING" ID="0xdb8c5fe3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gaph le manager merge ext adv data len cpy memcpy failed @gap_hlp_le.c(3503),ERROR" ID="0xdb8c6d7a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gaph le mgr merge ext adv data memcpy failed @gap_hlp_le.c(3510),ERROR" ID="0xdb8c6db2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gaph le manager merge ext adv data scan respond length memcpy failed @gap_hlp_le.c(3519),ERROR" ID="0xdb8c6dfa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gaph le manager merge ext adv data memcpy failed @gap_hlp_le.c(3526),ERROR" ID="0xdb8c6e32" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP][bt_onetrack] BTC support HCI_OPC_BLE_VENDOR_CAP_OCF:0xFD53 @gap_hlp_le.c(3804),ERROR" ID="0xdb8c76e2" />
+			</MSG_LOG>

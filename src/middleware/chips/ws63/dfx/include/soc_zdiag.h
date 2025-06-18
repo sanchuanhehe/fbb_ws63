@@ -1,5 +1,10 @@
 /**
 * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021. All rights reserved.
+* Description: header file for diag api. \n
+* Author:  \n
+* History: \n
+* 2022-05-07, fix comments. \n
+* 2021-12-31, Create file. \n
 */
 
 #ifndef SOC_ZDIAG_H

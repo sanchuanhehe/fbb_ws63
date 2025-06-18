@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="test_mode_tx_param_check, rx_freq=%d, rx_phy=%d, rx_format=%d @lm_gle_test_mode_act.c(32),INFO" ID="0x88f60105" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="test_mode_tx_param_check, tx_freq=%d, tx_power=%d, test_data_len=%d, pk_payload_type=%d @lm_gle_test_mode_act.c(42),INFO" ID="0x88f60155" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="test_mode_tx_param_check, tx_phy=%d, tx_format=%d, tx_rate=%d, tx_pilot_ratio=%d @lm_gle_test_mode_act.c(44),INFO" ID="0x88f60165" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="test_mode_tx_param_check, tx_polar_r=%d,interval=%d @lm_gle_test_mode_act.c(45),INFO" ID="0x88f6016d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_hci_gle_tx_test_enable_act @lm_gle_test_mode_act.c(93),INFO" ID="0x88f602ed" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_hci_gle_test_end_act @lm_gle_test_mode_act.c(147),INFO" ID="0x88f6049d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="lm test mode rx end, num_packets=%d @lm_gle_test_mode_act.c(183),INFO" ID="0x88f605bd" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="gle_msg_gle_test_mode_stopping_act num packets = %d, mode_type = %d, rx_rssi = %d @lm_gle_test_mode_act.c(186),INFO" ID="0x88f605d5" />
+			</MSG_LOG>

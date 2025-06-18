@@ -1,0 +1,21 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{dmac_set_tim_ie::tim_bit_map is null!} @dmac_psm_ap_rom.c(169),WARNING" ID="0x82f6054b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_set_tim_ie:: bitmap_len[%d] .} @dmac_psm_ap_rom.c(187),ERROR" ID="0x82f605da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_psm_update_tim_ie::vap is null} @dmac_psm_ap_rom.c(201),WARNING" ID="0x82f6064b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_psm_update_tim_ie::tim buffer is null} @dmac_psm_ap_rom.c(207),WARNING" ID="0x82f6067b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_vap_param_init::alloc tim_bitmap memory(length:%d)fail!} @dmac_psm_ap_rom.c(234),WARNING" ID="0x82f60753" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_psm_set_local_bitmap::param null.} @dmac_psm_ap_rom.c(251),WARNING" ID="0x82f607db" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{dmac_psm_set_local_bitmap::tim_offset[%d] + len[%d] &gt;= bitmap_len[%d].} @dmac_psm_ap_rom.c(266),WARNING" ID="0x82f60853" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{dmac_psm_set_local_bitmap::usr[%d] tim_byte_idx[%d] &gt;= bitmap_len[%d].} @dmac_psm_ap_rom.c(281),WARNING" ID="0x82f608cb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_psm_reset::null param.} @dmac_psm_ap_rom.c(328),ERROR" ID="0x82f60a42" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_psm_reset::dmac_user[%d] null. @dmac_psm_ap_rom.c(334),WARNING" ID="0x82f60a73" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_psm_reset::dmac_user-&gt;ps_mode is %u.} @dmac_psm_ap_rom.c(338),INFO" ID="0x82f60a95" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_ap_psm_reset::dmac_vap not init.} @dmac_psm_ap_rom.c(356),WARNING" ID="0x82f60b23" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_ap_psm_reset::msg invalid.} @dmac_psm_ap_rom.c(361),WARNING" ID="0x82f60b4b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_config_ap_psm_reset: reset user %d fail} @dmac_psm_ap_rom.c(369),WARNING" ID="0x82f60b8b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_proc_ctrl::not need process, ignor} @dmac_psm_ap_rom.c(440),INFO" ID="0x82f60dc5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_proc_ctrl::ignor ps-poll.} @dmac_psm_ap_rom.c(449),WARNING" ID="0x82f60e0b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_psm_proc_ctrl::AID in pspoll and user mismatch, aid=%d assoc_id=%d.} @dmac_psm_ap_rom.c(461),ERROR" ID="0x82f60e6a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_psm_proc_ctrl::hand_pspoll return [%d].} @dmac_psm_ap_rom.c(475),WARNING" ID="0x82f60edb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_ap_psm_rx_process:: dmac user %d is null.} @dmac_psm_ap_rom.c(511),WARNING" ID="0x82f60ffb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_psm_ap_proc_hook_init:: register_netbuf_hooks error! @dmac_psm_ap_rom.c(607),ERROR" ID="0x82f612fa" />
+			</MSG_LOG>

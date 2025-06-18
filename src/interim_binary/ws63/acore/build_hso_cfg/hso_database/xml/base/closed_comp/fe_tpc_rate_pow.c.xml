@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="fe_tpc_rate_pow_get_pow_idx_offset idx %d,%d err @fe_tpc_rate_pow.c(100),ERROR" ID="0x81780322" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="fe_tpc_rate_pow_get_rate_idx idx %d,%d err @fe_tpc_rate_pow.c(122),ERROR" ID="0x817803d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_tpc_rate_pow_get_rate_tpc_code band %d err @fe_tpc_rate_pow.c(204),ERROR" ID="0x81780662" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="fe_tpc_rate_pow_get_rate_tpc_code idx %d lvl :%d err @fe_tpc_rate_pow.c(210),ERROR" ID="0x81780692" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_tpc_rate_pow_set_tpc_code_by_rate_idx band %d err @fe_tpc_rate_pow.c(228),ERROR" ID="0x81780722" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="fe_tpc_rate_pow_set_tpc_code_by_rate_idx idx %d lvl %d err @fe_tpc_rate_pow.c(233),ERROR" ID="0x8178074a" />
+			</MSG_LOG>

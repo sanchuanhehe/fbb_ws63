@@ -1,7 +1,7 @@
 /**
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2025. All rights reserved.
  *
- * Description: hilink function mapping. \n
+ * Description: app function mapping. \n
  *
  * History: \n
  * 2024-01-27, Create file. \n
@@ -14,10 +14,8 @@
 extern "C" {
 #endif
 
-int *get_hilink_tbl(void);
-void hilink_func_map_init(void);
-
-extern char hilink_info_addr;
+const struct mapping_tbl *get_app_mapping_tbl(void);
+unsigned int get_app_mapping_tbl_size(void);
 
 #ifdef __cplusplus
 }

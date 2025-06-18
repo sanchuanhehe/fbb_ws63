@@ -1,0 +1,114 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_calc_start_rate_index_by_rssi::protocol[%d] invalid!} @alg_autorate_rom.c(51),WARNING" ID="0x8268019b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{calc_start_rate:protocol[%d]rssi[%d]mcs[%d]!} @alg_autorate_rom.c(58),WARNING" ID="0x826801d3" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{calc_start_rate::protocol[%d] cur_rssi[%d] &lt; min_rssi[%d]!} @alg_autorate_rom.c(65),WARNING" ID="0x8268020b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{get_start_rate_index_by_rssi::get max rate fail! user[%d]} @alg_autorate_rom.c(89),ERROR" ID="0x826802ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_user_initial_stage_proc:user[%d] no avail rate} @alg_autorate_rom.c(108),ERROR" ID="0x82680362" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_ar_user_initial_stage_get_start_rate_index::user[%d] pro[%d] bw[%d]} @alg_autorate_rom.c(113),WARNING" ID="0x8268038b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_ar_user_initial_stage_get_start_rate_index::nss[%d] mcs[%d] rssi[%d]} @alg_autorate_rom.c(115),WARNING" ID="0x8268039b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_initial_stage_tx_proc::rssi invalid!user[%d]} @alg_autorate_rom.c(143),WARNING" ID="0x8268047b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_initial_stage_tx_process:user[%d]bestrate fail!} @alg_autorate_rom.c(151),ERROR" ID="0x826804ba" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_ar_initial_stage_tx_process::user[%d] real_rssi[%d] rate_idx[%d]} @alg_autorate_rom.c(155),WARNING" ID="0x826804db" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_initial_stage_tx_process:user[%d]init rate fail} @alg_autorate_rom.c(166),ERROR" ID="0x82680532" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [TX_COMP] UPDATE_PER rate_stat_update CAP_NOT_CONSISTENT, cur_pkt_protocol[%d], best_protocol[%d], cur_pkt_bw[%d], best_bw[%d] @alg_autorate_rom.c(191),WARNING" ID="0x826805fb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [TX_COMP] UPDATE_PER rate_stat_update CAP_NOT_CONSISTENT, cur_gi[%d], best_gi[%d], cur_nss[%d], cur_dcm[%d] @alg_autorate_rom.c(195),WARNING" ID="0x8268061b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_ar_tx_complete_calc_instant_per::err mpdu num[%d], last_rank_tx_cnt[%d]!} @alg_autorate_rom.c(218),ERROR" ID="0x826806d2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ALG_AR_DBG] [TX_COMP] UPDATE_PER near MAX instant[%d], short[%d], long[%d] @alg_autorate_rom.c(266),WARNING" ID="0x82680853" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{rssi_sudden_down_per_update::user[%d]!} @alg_autorate_rom.c(304),WARNING" ID="0x82680983" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_COMP] UPDATE_PER after rate_idx[%d] instant_per[%d] short[%d] long[%d]} @alg_autorate_rom.c(315),WARNING" ID="0x826809db" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_COMP] UPDATE_BEST_RATE_PER after rate_idx[%d] instant_per[%d] short[%d] long[%d]} @alg_autorate_rom.c(324),WARNING" ID="0x82680a23" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_COMP] UPDATE_BEST_PROBE_PER rate[%d] instant[%d] short[%d] long[%d]} @alg_autorate_rom.c(335),WARNING" ID="0x82680a7b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_complete_update_rank_per::tx_nss_mcs_analysis fail!} @alg_autorate_rom.c(361),WARNING" ID="0x82680b4b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_COMP] UPDATE_PER before user[%d] rate[%d] short[%d] long[%d]} @alg_autorate_rom.c(371),WARNING" ID="0x82680b9b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AUTORATE] see as collision cnt[%d] instant_per[%d] tx_status[%d] last_rank[%d]} @alg_autorate_rom.c(413),WARNING" ID="0x82680ceb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{[ALG_AR_DBG] [TX_COMP]event_trig descend protocol short per[%d]==1024 rssi[%d]&lt;-70db} @alg_autorate_rom.c(539),WARNING" ID="0x826810db" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{event_trigger:get rate fail! protocol[%d]nss[%d]bw[%d]} @alg_autorate_rom.c(568),ERROR" ID="0x826811c2" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_COMP]event_trig ascend protocol short_per[%d] cur_protocol[%d] max rate idx[%d]best rate[%d]} @alg_autorate_rom.c(590),WARNING" ID="0x82681273" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{[ALG_AR_DBG] [TX_COMP]event_trig descend bw, mcs0 &amp;&amp; per&gt;=%d, USER[%d]} @alg_autorate_rom.c(613),WARNING" ID="0x8268132b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{[ALG_AR_DBG] [TX_COMP]event_trig descend bw, adjintf &amp;&amp; per&gt;=%d USER[%d]} @alg_autorate_rom.c(628),WARNING" ID="0x826813a3" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{[ALG_AR_DBG] [TX_COMP]event_trig up mcs short per[%d] long per[%d] diff &gt; 200.pktcnt[%d]} @alg_autorate_rom.c(656),WARNING" ID="0x82681483" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{[ALG_AR_DBG] [TX_COMP]event_trig down mcs short per[%d] long [%d] diff &gt; 150. pktcnt[%d]} @alg_autorate_rom.c(670),WARNING" ID="0x826814f3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{[ALG_AR_DBG] [TX_COMP]event_trig mcs up resv_rate_better.} @alg_autorate_rom.c(678),WARNING" ID="0x82681533" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{prepare_probe_info_choose_next_probe_rate_idx::rate tbl get fail! } @alg_autorate_rom.c(716),WARNING" ID="0x82681663" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{prepare_probe_info_choose_next_probe_rate_idx::get max rate fail} @alg_autorate_rom.c(726),WARNING" ID="0x826816b3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{prepare_probe_info_choose_next_probe_rate_idx::get_thry_gp fail} @alg_autorate_rom.c(734),WARNING" ID="0x826816f3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [test] next_node: protocol[%d] bw[%2d] nss[%d]  gi[%d] @alg_autorate_rom.c(739),WARNING" ID="0x8268171b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{[ALG_AR_DBG] [test] next_node: rate_index[%d], probe_gdpt[%d], theory_goodput[%d]} @alg_autorate_rom.c(741),WARNING" ID="0x8268172b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{choose_next_probe_rate_idx::no avail rate! probe_gdpt[%d]} @alg_autorate_rom.c(748),WARNING" ID="0x82681763" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_ascend_bw_rate_obtain_inner::no avail rate_index!} @alg_autorate_rom.c(767),ERROR" ID="0x826817fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_probe_ascend_protocol_prepare_probe_info::rate tbl get fail! } @alg_autorate_rom.c(775),WARNING" ID="0x8268183b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_probe_try_find_next_bigger_valid_rate_idx::get_theory gp fail} @alg_autorate_rom.c(781),WARNING" ID="0x8268186b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [PREPARE_PROBE]ascend bw best_rate_per[%d]thry_gp[%d] probe_gp[%d] probe_bw[%d]} @alg_autorate_rom.c(836),WARNING" ID="0x82681a23" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{[ALG_AR_DBG] [PREPARE_PROBE]descend bw best probe per[%d] thry_gp[%d] probe_gp[%d]} @alg_autorate_rom.c(873),WARNING" ID="0x82681b4b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_descend_bw_rate_obtain::descend bw no appropriate rate!} @alg_autorate_rom.c(885),WARNING" ID="0x82681bab" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{[ALG_AR_DBG] [PREPARE_PROBE] descend bw next rate[%d] best probe rate[%d]} @alg_autorate_rom.c(890),WARNING" ID="0x82681bd3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_probe_descend_bw_prepare_probe_info::rate tbl get fail!} @alg_autorate_rom.c(897),WARNING" ID="0x82681c0b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_probe_descend_bw_prepare_probe_info::get_theory_goodput fail} @alg_autorate_rom.c(903),WARNING" ID="0x82681c3b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ALG_AR_DBG] [PREPARE_PROBE] probe mcs find per fail!ecord protocol[%d] bw[%d] nss[%d]probe pro, bw, nss diff @alg_autorate_rom.c(932),WARNING" ID="0x82681d23" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{next_probe_per::strategy[%d] invalid}  @alg_autorate_rom.c(944),WARNING" ID="0x82681d83" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_probe_mcs_get_next_probe_node::rate tbl get fail! } @alg_autorate_rom.c(979),WARNING" ID="0x82681e9b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_probe_mcs_get_next_probe_node::get_theory_goodput fail} @alg_autorate_rom.c(986),WARNING" ID="0x82681ed3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{[ALG_AR_DBG] [PREPARE_PROBE] cur stage finish} @alg_autorate_rom.c(997),WARNING" ID="0x82681f2b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ALG_AR_DBG] [STAGE_FINISH]probe mcs update_best:gdpt Org[%d]cur_stage[%d]last_stage[%d] @alg_autorate_rom.c(1059),WARNING" ID="0x8268211b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ALG_AR_DBG] [STAGE_FINISH]probe mcs update_best:same_gi_th[%d] gi_th[%d] @alg_autorate_rom.c(1060),WARNING" ID="0x82682123" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ALG_AR_DBG] [STAGE_FINISH]BEST PROBE RATE rate_index[%d] gi_type[%d] @alg_autorate_rom.c(1080),WARNING" ID="0x826821c3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_find_next_stage_start_probe_rate_down_mcs::tbl get fail! } @alg_autorate_rom.c(1103),WARNING" ID="0x8268227b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_find_next_stage_start_probe_rate_down_mcs::theory gp fail} @alg_autorate_rom.c(1111),WARNING" ID="0x826822bb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PREPARE_PROBE] next_gi finish: protocol[%d] bw[%2d] nss[%d] mcs[%d] @alg_autorate_rom.c(1158),WARNING" ID="0x82682433" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PREPARE_PROBE] next_gi start node: protocol[%d] bw[%2d] nss[%d] mcs[%d] @alg_autorate_rom.c(1168),WARNING" ID="0x82682483" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PREPARE_PROBE] next_gi start node: gi[%d] per[%d] theo_gdpt[%d] probe_gdpt[%d] @alg_autorate_rom.c(1170),WARNING" ID="0x82682493" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ALG_AR_DBG] [PREPARE_PROBE] ENTER_PROBE, user[%d] probe_phase[%d] probe_direction[%d] @alg_autorate_rom.c(1269),WARNING" ID="0x826827ab" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PREPARE_PROBE] best_probe: protocol[%d] bw[%2d] nss[%d] mcs[%d] @alg_autorate_rom.c(1272),WARNING" ID="0x826827c3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PREPARE_PROBE] best_probe: gi[%d] short_per[%d] theo_gdpt[%d] cur_gdpt[%d] @alg_autorate_rom.c(1275),WARNING" ID="0x826827db" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PREPARE_PROBE] next_node: protocol[%d] bw[%2d] nss[%d] mcs[%d] @alg_autorate_rom.c(1278),WARNING" ID="0x826827f3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PREPARE_PROBE] next_node: gi[%d] short_per[%d] theo_gdpt[%d] cur_gdpt[%d] @alg_autorate_rom.c(1281),WARNING" ID="0x8268280b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{init_probe_info:user[%d] lock probe fail!} @alg_autorate_rom.c(1293),WARNING" ID="0x8268286b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_descend_protocol_process::no valid 11b_rate} @alg_autorate_rom.c(1389),ERROR" ID="0x82682b6a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_COMP] UPDATE_INTVL mcs_up pkt_cnt[%d][%d] mcs_down pkt_cnt[%d][%d]} @alg_autorate_rom.c(1509),WARNING" ID="0x82682f2b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_COMP] UPDATE_INTVL ascend bw, cur bw[%d] avail bw[%d] cnt[%d][%d]} @alg_autorate_rom.c(1518),WARNING" ID="0x82682f73" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_COMP] UPDATE_INTVL descend bw, cur bw[%d] avail bw[%d] cnt[%d][%d]} @alg_autorate_rom.c(1528),WARNING" ID="0x82682fc3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_complete_non_probe_pkt_process::get_device info fail!} @alg_autorate_rom.c(1545),WARNING" ID="0x8268304b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{probe_pktno_wait_cnt = %d} @alg_autorate_rom.c(1560),WARNING" ID="0x826830c3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG][PROBE_UPDATE] stat per, rate idx[%d] short[%d] long[%d] record_org_short_per[%d] @alg_autorate_rom.c(1619),WARNING" ID="0x8268329b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ALG_AR_DBG] [PROBE_UPDATE]probe mcs rate per diff[%d]&gt;200 will trigger up @alg_autorate_rom.c(1629),WARNING" ID="0x826832eb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ALG_AR_DBG] [PROBE_UPDATE]probe mcs resv rate better!per[%d] @alg_autorate_rom.c(1634),WARNING" ID="0x82683313" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [PROBE_UPDATE] RATE AGING! time_diff[%d ms]&gt;[%d ms]now[%d],last[%d]} @alg_autorate_rom.c(1685),WARNING" ID="0x826834ab" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ALG_AR_DBG] [PROBE_UPDATE] UPDATE_BEFORE, probe nss_mcs[0x%x], gi_type[%d], short_per[%d] @alg_autorate_rom.c(1702),WARNING" ID="0x82683533" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_ar_probe_result_update::user[%d] err phase[%d]!} @alg_autorate_rom.c(1717),ERROR" ID="0x826835aa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ALG_AR_DBG] [PROBE_UPDATE] UPDATE_AFTER, probe node instant_per[%2d], short_per[%4d] @alg_autorate_rom.c(1730),WARNING" ID="0x82683613" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PROBE_UPDATE] continue_probe cur_instant[%d] cur_short[%d] best_rate[%d] best_probe[%d] @alg_autorate_rom.c(1788),WARNING" ID="0x826837e3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PROBE_UPDATE] best_probe UPDATE user[%d] cur_gdpt[%d] best_gdpt[%d] best_probe_rate_idx[%d] @alg_autorate_rom.c(1815),WARNING" ID="0x826838bb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ALG_AR_DBG] [PROBE_UPDATE] best_probe UPDATE cur_per and best_per &gt; 500 &amp; probe_down @alg_autorate_rom.c(1823),WARNING" ID="0x826838fb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PROBE_UPDATE] best_probe, direction[%d] probe_per[%d] cur_gdpt[%d] best_gdpt[%d] @alg_autorate_rom.c(1826),WARNING" ID="0x82683913" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{cur phase[%d] should not probe!} @alg_autorate_rom.c(1884),INFO" ID="0x82683ae5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ALG_AR_DBG] [FINISH_PROBE] mcs_probe best rate change,resv_rate_better_more [1]-&gt;[0] @alg_autorate_rom.c(1907),WARNING" ID="0x82683b9b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{probe_protocol_finish:user[%d] ERR direct!} @alg_autorate_rom.c(1922),ERROR" ID="0x82683c12" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_ar_probe_protocol_finish_process::user[%d] cur_protocol[%d] cur_ar_bw[%d]} @alg_autorate_rom.c(1932),WARNING" ID="0x82683c63" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_ar_probe_ascend_bw_finish_process:user[%d] cur ar bw[%d]!} @alg_autorate_rom.c(1960),WARNING" ID="0x82683d43" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [FINISH_PROBE] ascend_bw better_cnt[%d] thrd[%d] probe_gp[%d] best_rate_gp[%d] @alg_autorate_rom.c(1970),WARNING" ID="0x82683d93" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_ar_probe_descend_bw_finish_process:user[%d] cur ar bw[%d]!} @alg_autorate_rom.c(1996),WARNING" ID="0x82683e63" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [FINISH_PROBE] descend_bw probe_better[%d] probe_per[%d] best_rate_per[%d] bothbad[%d]} @alg_autorate_rom.c(2002),WARNING" ID="0x82683e93" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{[ALG_AR_DBG] [FINISH_PROBE] descend_bw event_trig disable} @alg_autorate_rom.c(2013),WARNING" ID="0x82683eeb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [FINISH_PROBE] descend_bw better_cnt[%d] thrd[%d] probe_gp[%d] best_rate_gp[%d] @alg_autorate_rom.c(2021),WARNING" ID="0x82683f2b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ALG_AR_DBG] [FINISH_LOG] best rate changed[%d] user[%d] @alg_autorate_rom.c(2184),WARNING" ID="0x82684443" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [FINISH_LOG] mcs up probe_intvl cnt[%d] thrd[%d] keep_cnt[%d] keep_thrd[%d] @alg_autorate_rom.c(2189),WARNING" ID="0x8268446b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [FINISH_LOG] mcs down probe_intvl cnt[%d] thrd[%d] keep_cnt[%d] keep_thrd[%d] @alg_autorate_rom.c(2194),WARNING" ID="0x82684493" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [FINISH_LOG] ascend_bw probe_intvl cnt[%d] thrd[%d] keep_cnt[%d] keep_thrd[%d] @alg_autorate_rom.c(2199),WARNING" ID="0x826844bb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [FINISH_LOG] descend_bw probe_intvl cnt[%d] thrd[%d] keep_cnt[%d] keep_thrd[%d] @alg_autorate_rom.c(2204),WARNING" ID="0x826844e3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [FINISH_LOG] best_rate_info protocol[%d] bw[%d] gi[%d] dcm[%d] @alg_autorate_rom.c(2210),WARNING" ID="0x82684513" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [FINISH_LOG] best_rate_info nss_mcs[0x%x] short_per[%d]long_per[%d] theory_gp[%d] @alg_autorate_rom.c(2213),WARNING" ID="0x8268452b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ALG_AR_DBG] [FINISH_PROBE] unlock_succ user[%d] @alg_autorate_rom.c(2237),WARNING" ID="0x826845eb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ar_probe_finish_process::ERR phase[%d] @alg_autorate_rom.c(2277),WARNING" ID="0x8268472b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_complete_non_probe_pkt_process::get_device info fail!} @alg_autorate_rom.c(2314),WARNING" ID="0x82684853" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_ar_tx_complete_probe_pkt_process:: cur probe pktno not consistent with stored! cur[%d], stored[%d], wait_cnt[%d]} @alg_autorate_rom.c(2320),WARNING" ID="0x82684883" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ALG_AR_DBG] [PROBE_CONTINUE]user[%d] probe_phase[%d] probe_direction[%d] @alg_autorate_rom.c(2351),WARNING" ID="0x8268497b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_COMP] pktno[%d], user[%d], tx status[%d], last_rate_rank[%d]} @alg_autorate_rom.c(2363),WARNING" ID="0x826849db" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_COMP] mpdu_num[%d], error_mpdu_num[%d] data_send_cnt[%d] last_ack_rssi[%d]}  @alg_autorate_rom.c(2365),WARNING" ID="0x826849eb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ALG_AR_DBG] [TX_COMP] is_ar_probe_data[%d], probe type[%d], cts_failure[%d] is_retried[%d]} @alg_autorate_rom.c(2367),WARNING" ID="0x826849fb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_complete_process::get user probe lock fail!} @alg_autorate_rom.c(2399),WARNING" ID="0x82684afb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_complete_process::ptr null!} @alg_autorate_rom.c(2414),WARNING" ID="0x82684b73" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_tx_complete_process::cb null!} @alg_autorate_rom.c(2419),WARNING" ID="0x82684b9b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_tx_complete_process:ar ptr null! user=%d} @alg_autorate_rom.c(2425),WARNING" ID="0x82684bcb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_tx_complete_process:probe pkt process fail![%d]} @alg_autorate_rom.c(2436),WARNING" ID="0x82684c23" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_tx_complete_process::nonprobe pkt proc fail[%d]} @alg_autorate_rom.c(2441),WARNING" ID="0x82684c4b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_tx_complete_process:user[%d]set_rate fail!} @alg_autorate_rom.c(2453),WARNING" ID="0x82684cab" />
+			</MSG_LOG>

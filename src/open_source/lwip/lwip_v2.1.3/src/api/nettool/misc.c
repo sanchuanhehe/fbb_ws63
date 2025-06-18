@@ -46,7 +46,11 @@ os_shell_ntpdate(int argc, const char **argv)
 
   server_num = lwip_sntp_start(argc, (char **)argv, &get_time);
   if (server_num >= 0 && server_num < argc) {
+#if defined(LWIP_LITEOS_COMPAT) && (LWIP_LITEOS_COMPAT) && (!defined(LOSCFG_COMPAT_POSIX))
+    ret = lwip_ctime((time_t *)&get_time.tv_sec);
+#else
     ret = ctime((time_t *)&get_time.tv_sec);
+#endif
     if (ret) {
       LWIP_PLATFORM_PRINT("time server %s: %s"CRLF, argv[server_num], ret);
     } else {

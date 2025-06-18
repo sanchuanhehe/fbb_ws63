@@ -1,6 +1,7 @@
 /*
  * Wrapper functions for mbedtls libcrypto
  * Copyright (c) 2004-2017, Jouni Malinen <j@w1.fi>
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2019. All rights reserved.
  *
  * This software may be distributed under the terms of the BSD license.
  * See README for more details.
@@ -31,7 +32,7 @@
 #include "mbedtls/nist_kw.h"
 #endif
 #include "utils/const_time.h"
-#if defined(__LITEOS__)
+#if defined(__LITEOS__) || defined(__USING_RTOS__)
 #include "trng.h"
 #endif
 
@@ -40,7 +41,7 @@ __attribute__((weak)) int md5_vector(size_t num_elem, const u8 *addr[], const si
 static int get_trng(void *p_rng, unsigned char *buf, size_t len)
 {
 	(void)p_rng;
-#if defined(__LITEOS__)
+#if defined(__LITEOS__) || defined(__USING_RTOS__)
 	return uapi_drv_cipher_trng_get_random_bytes(buf, len) ? -1 : 0;
 #else
 	return 0;
@@ -49,7 +50,7 @@ static int get_trng(void *p_rng, unsigned char *buf, size_t len)
 
 int crypto_get_random(void *buf, size_t len)
 {
-#if defined(__LITEOS__) && !defined(WS53_PRODUCT_FPGA)
+#if (defined(__LITEOS__) || defined(__USING_RTOS__)) && !defined(WS53_PRODUCT_FPGA)
 	return uapi_drv_cipher_trng_get_random_bytes(buf, len) ? -1 : 0;
 #else
 	return 0;

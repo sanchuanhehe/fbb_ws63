@@ -38,6 +38,7 @@ struct wpa_sm_ctx {
 			  size_t len);
 	int (*get_beacon_ie)(void *ctx);
 	void (*cancel_auth_timeout)(void *ctx);
+	void (*cancel_eapol3_timeout)(void *ctx);
 	u8 * (*alloc_eapol)(void *ctx, u8 type, const void *data, u16 data_len,
 			    size_t *msg_len, void **data_pos);
 	int (*add_pmkid)(void *ctx, void *network_ctx, const u8 *bssid,
@@ -136,6 +137,13 @@ struct rsn_supp_config {
 	const u8 *fils_cache_id;
 	int beacon_prot;
 	bool force_kdk_derivation;
+};
+
+struct eapol2_frame {
+    u8 dest[6]; /* 6:mac addr len */
+    u16 proto;
+    u8 *msg;
+    size_t msg_len;
 };
 
 #ifndef CONFIG_NO_WPA

@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="bt mpc general hci cmd req. @ble_ahib_hci.c(47),INFO" ID="0xdeb4017d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt mpc general hci cmd req is not hci general! @ble_ahib_hci.c(50),WARNING" ID="0xdeb40193" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc general hci cmd req interface fail, ret:%d @ble_ahib_hci.c(56),WARNING" ID="0xdeb401c3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib internal cbk] invalid event:%d @ble_ahib_hci.c(78),INFO" ID="0xdeb40275" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib cbk reg] invalid event:%d @ble_ahib_hci.c(87),INFO" ID="0xdeb402bd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_hci.c(97),ERROR" ID="0xdeb4030a" />
+			</MSG_LOG>

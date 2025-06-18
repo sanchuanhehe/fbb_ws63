@@ -1,0 +1,30 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hh503_clear_mac_error_int_status::status is NULL.} @hal_mac_err_rom.c(48),WARNING" ID="0x802a0183" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_irq_hander_error_event callback failed[%d]! @hal_mac_err_rom.c(85),WARNING" ID="0x802a02ab" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(123),ERROR" ID="0x802a03da" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(125),ERROR" ID="0x802a03ea" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(126),ERROR" ID="0x802a03f2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(127),ERROR" ID="0x802a03fa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(128),ERROR" ID="0x802a0402" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(130),ERROR" ID="0x802a0412" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(132),ERROR" ID="0x802a0422" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(134),ERROR" ID="0x802a0432" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(136),ERROR" ID="0x802a0442" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(138),ERROR" ID="0x802a0452" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(140),ERROR" ID="0x802a0462" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(142),ERROR" ID="0x802a0472" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(144),ERROR" ID="0x802a0482" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(146),ERROR" ID="0x802a0492" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(148),ERROR" ID="0x802a04a2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_mac_err_rom.c(159),ERROR" ID="0x802a04fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_mac_errormsg_report::errortype[%d]} @hal_mac_err_rom.c(267),WARNING" ID="0x802a085b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_mac_errormsg_report::ST_TIMEOUT,errortype[%d]} @hal_mac_err_rom.c(277),WARNING" ID="0x802a08ab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_mac_errormsg_report::errortype[%d]} @hal_mac_err_rom.c(294),WARNING" ID="0x802a0933" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_mac_errormsg_report::BUS_ERR,errortype[%d](15:RLEN,16:RADDR,17:WLEN,18:WADDR)} @hal_mac_err_rom.c(303),ERROR" ID="0x802a097a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_mac_errormsg_report::TX_Q_OVERRUN, errortype[%d](19:BK,20:BE,21:VI,22:VO,23:HIPRI,42:BC)} @hal_mac_err_rom.c(314),WARNING" ID="0x802a09d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_mac_errormsg_report::errortype[%d]} @hal_mac_err_rom.c(332),WARNING" ID="0x802a0a63" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_mac_errormsg_report::BACKOFF_TIMEOUT, errortype[%d](32:BE,33:BK,34:VI,35:VO,36:HIPRI)} @hal_mac_err_rom.c(342),WARNING" ID="0x802a0ab3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_mac_errormsg_report::errortype[%d]} @hal_mac_err_rom.c(352),WARNING" ID="0x802a0b03" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_mac_errormsg_report::errortype[%d](2:BA_ENTRY_NOT_FOUND,44:OBSS_NAV_PORT)} @hal_mac_err_rom.c(360),WARNING" ID="0x802a0b43" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_mac_errormsg_report::HAL_MAC_ERROR_BUS_RW_TIMEOUT} @hal_mac_err_rom.c(365),ERROR" ID="0x802a0b6a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_mac_errormsg_report::unknown mac error[%d]!!!} @hal_mac_err_rom.c(369),ERROR" ID="0x802a0b8a" />
+			</MSG_LOG>

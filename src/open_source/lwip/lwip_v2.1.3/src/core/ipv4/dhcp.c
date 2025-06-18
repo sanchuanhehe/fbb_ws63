@@ -1915,6 +1915,8 @@ dhcp_bind(struct netif *netif, struct dhcp_client *dhcp)
     }
     LWIP_DEBUGF_LOG1(DHCP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE,
                      "dhcp_bind(): set request timeout %"U32_F" msecs\n", dhcp->offered_t0_lease * 1000);
+  } else {
+    dhcp->t0_timeout = 0;
   }
 
   /* temporary DHCP lease? */
@@ -2874,8 +2876,18 @@ dhcp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t *addr,
     /* already bound to the given lease address? */
     else if ((dhcp_state->state == DHCP_STATE_REBINDING) ||
              (dhcp_state->state == DHCP_STATE_RENEWING)) {
+#if defined(LWIP_ARP_ANNOUNCE_OPT) && (LWIP_LOWPOWER && LWIP_ARP_ANNOUNCE_OPT)
+    dhcp_state_enum_t pre_state = dhcp_state->state;
+#endif
       dhcp_handle_ack(netif, dhcp);
       dhcp_bind(netif, dhcp);
+#if defined(LWIP_ARP_ANNOUNCE_OPT) && (LWIP_LOWPOWER && LWIP_ARP_ANNOUNCE_OPT)
+      if ((pre_state == DHCP_STATE_RENEWING) && (netif->flags & NETIF_FLAG_ETHARP) != 0 &&
+        (dhcp->offered_t0_lease <= 60)) { // 60 : dhcp renew 1min
+        dhcp_state->tries = 0;
+        dhcp_state->request_timeout = 0;
+      }
+#endif
     }
   }
   /* received a DHCP_NAK in appropriate state? */

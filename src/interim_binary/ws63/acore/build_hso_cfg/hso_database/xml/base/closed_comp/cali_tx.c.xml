@@ -1,0 +1,18 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="dc1:(%d+j%d) @cali_tx.c(165),INFO" ID="0x88bc052d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dc2:(%d+j%d) @cali_tx.c(174),INFO" ID="0x88bc0575" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dc3:(%d+j%d) @cali_tx.c(179),INFO" ID="0x88bc059d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dc4:(%d+j%d) @cali_tx.c(186),INFO" ID="0x88bc05d5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gain:(%d+j%d) @cali_tx.c(191),INFO" ID="0x88bc05fd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="txdc cali_loop_idx:%d @cali_tx.c(219),INFO" ID="0x88bc06dd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="txdc_comp:(%d+j%d) @cali_tx.c(261),INFO" ID="0x88bc082d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[BT CALI][TX DC] [%d + j%d] @cali_tx.c(268),INFO" ID="0x88bc0865" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="cali_tx_iq_beta_calc numerator:[%d+j%d] @cali_tx.c(338),INFO" ID="0x88bc0a95" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="cali_tx_iq_beta_calc denominator:[%d+j%d] @cali_tx.c(339),INFO" ID="0x88bc0a9d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[BT CALI][TX IQ] [e:%d p:%d] @cali_tx.c(533),INFO" ID="0x88bc10ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt_productline_get_curve_params is NULL @cali_tx.c(717),INFO" ID="0x88bc166d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="srrc_cali_tx_power_process channel[%d],target_power:%d invalid para @cali_tx.c(904),WARNING" ID="0x88bc1c43" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp] channel_pwr[%d].channel: %d  @cali_tx.c(942),INFO" ID="0x88bc1d75" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp] channel_pwr[%d].power: %d  @cali_tx.c(943),INFO" ID="0x88bc1d7d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[TX PWR] channel %d power %d  @cali_tx.c(1072),INFO" ID="0x88bc2185" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[TX PWR] Tx power gain index %d, channel %d, gain %d @cali_tx.c(1095),INFO" ID="0x88bc223d" />
+			</MSG_LOG>

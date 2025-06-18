@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2024. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2018-2024. All rights reserved.
  * 文 件 名   : hmac_11v.c
  * 生成日期   : 2018年4月7日
  * 功能描述   : 11v 功能处理

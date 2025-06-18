@@ -150,17 +150,17 @@ osal_void hal_set_mfg_mode(osal_u8 mode);
 osal_void hal_set_xo_trim_coarse(osal_u32 xo_trim_coarse, osal_u32 *coarse_reg);
 osal_void hal_set_xo_trim_fine(osal_u32 xo_trim_fine, osal_u32 *fine_reg);
 osal_void hal_get_xo_trim(osal_u32 *xo_trim_coarse, osal_u32 *xo_trim_fine);
-osal_void hal_get_temp(osal_void);
+osal_s32 hal_get_temp(osal_s8 *temp);
 osal_s32 hal_config_efuse_operate(efuse_operate_stru *param);
 osal_s32 hal_read_efuse_cmu_xo_trim(osal_u8 *coarse_reg, osal_u8 *fine_reg);
 osal_s32 hal_efuse_cmu_xo_trim_write(osal_u8 coarse_reg, osal_u8 fine_reg);
 osal_s32 hal_set_efuse_rssi_offset(osal_u8 *rssi_param, osal_u32 len);
-osal_s32 hal_get_efuse_rssi_offset(osal_void);
+osal_s32 hal_get_efuse_rssi_offset(osal_char *out_buff, osal_u16 out_buff_max_len);
 osal_s32 hal_efuse_write_temp(osal_u8 gears);
-osal_s32 hal_efuse_read_temp(osal_void);
-osal_s32 hal_efuse_status(osal_void);
+osal_s32 hal_efuse_read_temp(osal_char *out_buff, osal_u16 out_buff_max_len);
+osal_s32 hal_efuse_status(osal_char *out_buff, osal_u16 out_buff_max_len);
 osal_s32 hal_efuse_write_power_info(osal_s32 *power_info, osal_u32 len);
-osal_s32 hal_read_efuse_read_power_info(osal_void);
+osal_s32 hal_read_efuse_read_power_info(osal_char *out_buff, osal_u16 out_buff_max_len);
 #ifdef __cplusplus
 #if __cplusplus
 }

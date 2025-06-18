@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="{state[%u]trig[%u]aggr[%u]} @alg_tx_tb_rom.c(92),WARNING" ID="0x82a802e3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="ru_type[%u]mcs[%u]nss[%u]ltf_gi_type[%u] @alg_tx_tb_rom.c(166),WARNING" ID="0x82a80533" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{vap or tb_para is null} @alg_tx_tb_rom.c(182),WARNING" ID="0x82a805b3" />
+			</MSG_LOG>

@@ -1,0 +1,19 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="hci struct to stream new fail @gle_hci_send_data.c(47),ERROR" ID="0xdea4017a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hci struct to stream memcpy fail @gle_hci_send_data.c(57),ERROR" ID="0xdea401ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle hci command encode send tl create par fail  @gle_hci_send_data.c(77),ERROR" ID="0xdea4026a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle hci command encode send tl memcpy error! len = %02x @gle_hci_send_data.c(82),ERROR" ID="0xdea40292" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[gle_command_encode_send_tl][len] %02x @gle_hci_send_data.c(94),INFO" ID="0xdea402f5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI][H--&gt;C] %02x @gle_hci_send_data.c(96),INFO" ID="0xdea40305" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="hci cmd send opcode:0x%02x paramlen=0x%x @gle_hci_send_data.c(102),INFO" ID="0xdea40335" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE HCI] hci data send busy, num: %x. @gle_hci_send_data.c(134),INFO" ID="0xdea40435" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE HCI] busy data [%d]: 0x%02x. @gle_hci_send_data.c(137),INFO" ID="0xdea4044d" />
+			<MSG STRUCTURE="diag_log_msg5" NAME="gle hci acb data send2tl in len:%d, blen:%d, num:%d, plen:%d, pb:%d @gle_hci_send_data.c(149),INFO" ID="0xdea404ad" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE HCI][send data] lcid:%x, total:%u, send data packet count:%u  @gle_hci_send_data.c(155),INFO" ID="0xdea404dd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle hci acl data send2tl create par fail  @gle_hci_send_data.c(165),ERROR" ID="0xdea4052a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI][bt_onetrack][ACB]api h2c write: memcpy fail!!! @gle_hci_send_data.c(176),ERROR" ID="0xdea40582" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE HCI][send data] conn id:%u,api_h2c_write failed:0x%x,acb num:%u @gle_hci_send_data.c(185),ERROR" ID="0xdea405ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE HCI] hci data send busy, num: %x. @gle_hci_send_data.c(239),INFO" ID="0xdea4077d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE HCI] busy data [%d]: 0x%02x. @gle_hci_send_data.c(242),INFO" ID="0xdea40795" />
+			<MSG STRUCTURE="diag_log_msg5" NAME="gle hci acb data send2tl in len:%d, blen:%d, num:%d, plen:%d, pb:%d @gle_hci_send_data.c(254),INFO" ID="0xdea407f5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE HCI][send data] lcid:%x, total:%u, send data packet count:%u  @gle_hci_send_data.c(260),INFO" ID="0xdea40825" />
+			</MSG_LOG>

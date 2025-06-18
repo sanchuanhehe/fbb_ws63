@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[BGTP]lm_gle_iob_start fsm create failed, error %d @lm_gle_iob.c(190),ERROR" ID="0x885805f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[BGTP]lm_gle_iob_start evt create failed. @lm_gle_iob.c(235),ERROR" ID="0x8858075a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[BGTP]lm_gle_iob_start con_hdl 0x%x, role %d @lm_gle_iob.c(243),INFO" ID="0x8858079d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[BGTP]lm_gle_iob_start_master con_hdl 0x%x, role %d @lm_gle_iob.c(258),INFO" ID="0x88580815" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[BGTP]lm_gle_iob_start_slave con_hdl 0x%x, role %d @lm_gle_iob.c(277),INFO" ID="0x885808ad" />
+			</MSG_LOG>

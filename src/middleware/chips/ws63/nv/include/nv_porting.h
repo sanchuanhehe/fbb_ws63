@@ -89,6 +89,9 @@ errcode_t nv_crypto_update_hash(const uint8_t *src, uint32_t length);
 /* 完成HASH计算并返回HASH值 */
 errcode_t nv_crypto_complete_hash(uint8_t *hash);
 
+/* 直接读取NV factory区域 */
+errcode_t kv_read_factory(uint16_t key_id, uint16_t kvalue_max_length, uint16_t *kvalue_length, uint8_t *kvalue);
+ 
 #if (defined(CONFIG_NV_SUPPORT_DEBUG) && (CONFIG_NV_SUPPORT_DEBUG == NV_YES))
 #define nv_log_err(fmt, arg...) osal_printk(fmt, ##arg)
 #define nv_log_info(fmt, arg...) osal_printk(fmt, ##arg)

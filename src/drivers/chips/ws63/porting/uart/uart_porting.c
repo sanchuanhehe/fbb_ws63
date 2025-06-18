@@ -510,6 +510,17 @@ void print_str(const char *str, ...)
     print_str_inner(str, args);
     va_end(args);
 }
+
+void __attribute__((weak)) uapi_at_print(const char* str, ...)
+{
+    va_list args;
+    if ((str == NULL) || (strlen(str) == 0)) {
+        return;
+    }
+    va_start(args, str);
+    print_str_inner(str, args);
+    va_end(args);
+}
 #endif
 
 #ifdef LOG_SUPPORT

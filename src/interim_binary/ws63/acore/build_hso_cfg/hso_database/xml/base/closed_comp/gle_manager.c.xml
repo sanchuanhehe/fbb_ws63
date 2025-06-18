@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="gle manager init g_gle_fsminst already init @gle_manager.c(31),INFO" ID="0xde3e00fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle fsm free arg enter @gle_manager.c(85),INFO" ID="0xde3e02ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle manager cleanup enter @gle_manager.c(98),INFO" ID="0xde3e0315" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gle execute cmd cbk opscode:0x%02x,ret:%u @gle_manager.c(110),INFO" ID="0xde3e0375" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="mgr_cbks null error @gle_manager.c(146),ERROR" ID="0xde3e0492" />
+			</MSG_LOG>

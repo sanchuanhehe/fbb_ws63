@@ -124,6 +124,20 @@ typedef enum {
 
 /**
  * @if Eng
+ * @brief Enum of sle pair needs bonding indicator
+ * @else
+ * @brief 星闪完整性校验指示类型。
+ * @endif
+ */
+typedef enum {
+    SLE_PAIR_NO_BOND      = 0x00,   /*!< @if Eng Sle pair does not need bonding.
+                                         @else   星闪配对不需要绑定。 @endif */
+    SLE_PAIR_NEED_BOND    = 0x01,   /*!< @if Eng Sle pair needs bonding
+                                         @else   星闪配对需要绑定。 @endif */
+} sle_bond_ind_t;
+
+/**
+ * @if Eng
  * @brief Enum of sle logical link update parameters.
  * @else
  * @brief 星闪逻辑链路更新参数请求
@@ -192,6 +206,8 @@ typedef struct {
                                                   @else   秘钥分发算法类型 { @ref sle_key_deriv_algo_t } @endif */
     uint8_t integr_chk_ind;                  /*!< @if Eng integrity check indication { @ref sle_integr_chk_ind_t }
                                                   @else   完整性校验指示 { @ref sle_integr_chk_ind_t } @endif */
+    uint8_t is_bond;                         /*!< @if Eng pair bonding indication { @ref sle_bond_ind_t }
+                                                  @else   配对绑定指示 { @ref sle_bond_ind_t } @endif */
 } sle_auth_info_evt_t;
 
 /**
@@ -256,6 +272,20 @@ typedef enum {
                                              @else 无导频 @endif */
     SLE_PHY_PILOT_DENSITY_NUM,
 } sle_phy_tx_rx_pilot_density_t;
+
+/**
+ * @if Eng
+ * @brief Enum of ble pair keys switch.
+ * @else
+ * @brief 配对秘钥是否可设置开关
+ * @endif
+ */
+typedef enum {
+    SLE_SAVE_SMP_KEYS_AUTO = 0x00,          /*!< @if Eng Pair information unavailable
+                                                        @else   秘钥自动保存 @endif */
+    SLE_SAVE_SMP_KEYS_MANU = 0x01,            /*!< @if Eng Pair information available
+                                                        @else   秘钥用户手动保存 @endif */
+} sle_save_smp_keys_mode_switch_t;
 
 /**
  * @if Eng
@@ -543,6 +573,31 @@ typedef void (*sle_set_phy_callback)(uint16_t conn_id, errcode_t status, const s
 
 /**
  * @if Eng
+ * @brief Callback invoked when pairing remove.
+ * @par Callback invoked when pairing remove.
+ * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
+ * @attention 2.The memories of pointer are requested and freed by the SLE service automatically.
+ * @param [in] addr    address.
+ * @param [in] status  error code.
+ * @par Dependency:
+ * @li  sle_common.h
+ * @see sle_connection_callbacks_t
+ * @else
+ * @brief  取消单个设备配对完成的回调函数。
+ * @par    取消单个设备配对完成的回调函数。
+ * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
+ * @attention  2. 指针由SLE service申请内存，也由SLE service释放，回调中不应释放。
+ * @param [in] addr    地址。
+ * @param [in] status  执行结果错误码。
+ * @par 依赖:
+ * @li  sle_common.h
+ * @see sle_connection_callbacks_t
+ * @endif
+ */
+typedef void (*sle_pair_remove_callback)(const sle_addr_t *addr, errcode_t status);
+
+/**
+ * @if Eng
  * @brief Struct of SLE connection manager callback function.
  * @else
  * @brief SLE连接管理回调函数接口定义。
@@ -565,6 +620,8 @@ typedef struct {
                                                                             @else   设置low latency回调函数。 @endif */
     sle_set_phy_callback set_phy_cb;                                     /*!< @if Eng Set PHY callback.
                                                                             @else   设置PHY回调函数。 @endif */
+    sle_pair_remove_callback pair_remove_cb;                             /*!< @if Eng Pairing remove callback.
+                                                                            @else   取消配对完成回调函数。 @endif */
 } sle_connection_callbacks_t;
 
 /**
@@ -671,16 +728,14 @@ errcode_t sle_pair_remote_device(const sle_addr_t *addr);
  * @brief  Remove pairing.
  * @par Description: Remove pairing.
  * @param  [in]  addr address.
- * @retval ERRCODE_SUCC Success.
- * @retval Other        Failure. For details, see @ref errcode_t
+ * @retval error code, remove pair state result will be returned at { @ref sle_pair_remove_callback }.
  * @par Depends:
  * @li sle_common.h
  * @else
  * @brief  删除配对。
  * @par Description: 删除配对。
  * @param  [in]  addr 地址。
- * @retval ERRCODE_SUCC 成功。
- * @retval Other        失败。参考 @ref errcode_t
+ * @retval 执行结果错误码，取消配对结果将在 { @ref sle_pair_remove_callback }中返回。
  * @par 依赖：
  * @li sle_common.h
  * @endif
@@ -814,6 +869,29 @@ errcode_t sle_get_pair_state(const sle_addr_t *addr, uint8_t *state);
  * @endif
  */
 errcode_t sle_read_remote_device_rssi(uint16_t conn_id);
+
+/**
+ * @if Eng
+ * @brief  Set acb evt param.
+ * @par Description: Set acb evt param.
+ * @param [in]  conn_id connection ID.
+ * @param [in]  evt_intv evt retry interval.
+ * @param [in]  evt_num evt retry num.
+ * @retval error code.
+ * @par Depends:
+ * @li sle_common.h
+ * @else
+ * @brief  设置ACB链路参数
+ * @par Description: 设置ACB链路参数。
+ * @param [in]  conn_id 连接 ID。
+ * @param [in]  evt_intv 重传间隔。
+ * @param [in]  evt_num 重传次数。
+ * @retval 执行结果错误码。
+ * @par 依赖：
+ * @li sle_common.h
+ * @endif
+ */
+errcode_t sle_set_acb_evt_param(uint16_t conn_id, uint16_t evt_intv, uint8_t evt_num);
 
 /**
  * @if Eng

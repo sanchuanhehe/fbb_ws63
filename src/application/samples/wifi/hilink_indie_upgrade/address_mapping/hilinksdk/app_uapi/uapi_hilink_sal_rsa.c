@@ -12,34 +12,41 @@
 
 HiLinkRsaContext HILINK_SAL_RsaInit(HiLinkRsaPkcs1Mode padding, HiLinkMdType md)
 {
-    return app_call2(APP_CALL_HILINK_SAL_RSA_INIT, HiLinkRsaContext, HiLinkRsaPkcs1Mode, padding, HiLinkMdType, md);
+    app_call2(APP_CALL_HILINK_SAL_RSA_INIT, HILINK_SAL_RsaInit, HiLinkRsaContext,
+        HiLinkRsaPkcs1Mode, padding, HiLinkMdType, md);
+    return NULL;
 }
 
 void HILINK_SAL_RsaFree(HiLinkRsaContext ctx)
 {
-    app_call1(APP_CALL_HILINK_SAL_RSA_FREE, void, HiLinkRsaContext, ctx);
+    app_call1_ret_void(APP_CALL_HILINK_SAL_RSA_FREE, HILINK_SAL_RsaFree, HiLinkRsaContext, ctx);
 }
 
 int HILINK_SAL_RsaParamImport(HiLinkRsaContext ctx, const HiLinkRsaParam *param)
 {
-    return app_call2(APP_CALL_HILINK_SAL_RSA_PARAM_IMPORT, int, HiLinkRsaContext, ctx, const HiLinkRsaParam *, param);
+    app_call2(APP_CALL_HILINK_SAL_RSA_PARAM_IMPORT, HILINK_SAL_RsaParamImport, int,
+        HiLinkRsaContext, ctx, const HiLinkRsaParam *, param);
+    return 0;
 }
 
 int HILINK_RsaPkcs1Verify(HiLinkRsaContext ctx, HiLinkMdType md, const unsigned char *hash,
     unsigned int hashLen, const unsigned char *sig, unsigned int sigLen)
 {
-    return app_call6(APP_CALL_HILINK_RSA_PKCS1_VERIFY, int, HiLinkRsaContext, ctx, HiLinkMdType, md,
+    app_call6(APP_CALL_HILINK_RSA_PKCS1_VERIFY, HILINK_RsaPkcs1Verify, int, HiLinkRsaContext, ctx, HiLinkMdType, md,
         const unsigned char *, hash, unsigned int, hashLen, const unsigned char *, sig, unsigned int, sigLen);
+    return 0;
 }
 
 int HILINK_RsaPkcs1Decrypt(const HiLinkRsaCryptParam *param, unsigned char *buf, unsigned int *len)
 {
-    return app_call3(APP_CALL_HILINK_RSA_PKCS1_DECRYPT, int, const HiLinkRsaCryptParam *, param,
+    app_call3(APP_CALL_HILINK_RSA_PKCS1_DECRYPT, HILINK_RsaPkcs1Decrypt, int, const HiLinkRsaCryptParam *, param,
         unsigned char *, buf, unsigned int *, len);
+    return 0;
 }
 
 int HILINK_RsaPkcs1Encrypt(const HiLinkRsaCryptParam *param, unsigned char *buf, unsigned int len)
 {
-    return app_call3(APP_CALL_HILINK_RSA_PKCS1_ENCRYPT, int, const HiLinkRsaCryptParam *, param,
+    app_call3(APP_CALL_HILINK_RSA_PKCS1_ENCRYPT, HILINK_RsaPkcs1Encrypt, int, const HiLinkRsaCryptParam *, param,
         unsigned char *, buf, unsigned int, len);
+    return 0;
 }

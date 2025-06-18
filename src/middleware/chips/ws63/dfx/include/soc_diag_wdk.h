@@ -1,5 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021. All rights reserved.
+ * Description: define file id and module id
  */
 
 #ifndef SOC_DIAG_WDK_H

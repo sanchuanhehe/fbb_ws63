@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="sle_chba msg option code is invalid @sle_chba_netdev_thread.c(30),ERROR" ID="0x8fda00f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sle_chba_queue create fail(%d) @sle_chba_netdev_thread.c(43),ERROR" ID="0x8fda015a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sle_chba thread event init fail(%d) @sle_chba_netdev_thread.c(48),ERROR" ID="0x8fda0182" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="osal_event_read ret 0x%x @sle_chba_netdev_thread.c(58),ERROR" ID="0x8fda01d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="osal_msg_queue_read_copy fail(0x%x) @sle_chba_netdev_thread.c(64),ERROR" ID="0x8fda0202" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="osal_msg_queue_write_copy fail(0x%x) @sle_chba_netdev_thread.c(116),WARNING" ID="0x8fda03a3" />
+			</MSG_LOG>

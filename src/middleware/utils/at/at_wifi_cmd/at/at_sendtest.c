@@ -17,6 +17,9 @@
 #include "los_cpup.h"
 #include "los_task_pri.h"
 #include "at_sendtest.h"
+#ifdef AT_COMMAND
+#include "at.h"
+#endif
 
 typedef struct {
     iperf_cfg_t cfg;
@@ -53,8 +56,11 @@ typedef struct {
 #define SENDTEST_INVALID_TASK_ID  0xFFFFFFFF
 
 #define SENDTEST_MIN_IDEL_RATE 50
-
+#ifdef AT_COMMAND
+#define sendtest_printf(fmt, args...) uapi_at_print(fmt, ##args)
+#else
 #define sendtest_printf(fmt, args...) printf(fmt, ##args)
+#endif
 
 static td_u32 g_send_taskid[SOCKETS_MAX_NUM] = {SENDTEST_INVALID_TASK_ID};
 static td_u32 g_send_report_taskid[SOCKETS_MAX_NUM] = {SENDTEST_INVALID_TASK_ID};

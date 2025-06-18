@@ -1,0 +1,13 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble at gap register at fail @ble_at_gap.c(29),ERROR" ID="0xd90c00ea" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[Error] ble at link common failed,ret = %x, type = %u @ble_at_gap.c(96),ERROR" ID="0xd90c0302" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble disconn peer by conn handle connection node NULL! @ble_at_gap.c(130),ERROR" ID="0xd90c0412" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble at filter data len error filter data len %u @ble_at_gap.c(279),ERROR" ID="0xd90c08ba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] set adv data filter data mem malloc fail, i = %d @ble_at_gap.c(287),ERROR" ID="0xd90c08fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble at scan adv data filter data convert fail ret 0x%x @ble_at_gap.c(301),ERROR" ID="0xd90c096a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv param tx_power error -127~20, 127 @ble_at_gap.c(446),ERROR" ID="0xd90c0df2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data new adv data error @ble_at_gap.c(482),ERROR" ID="0xd90c0f12" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data adv data fail @ble_at_gap.c(488),ERROR" ID="0xd90c0f42" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data new scan rsp data error @ble_at_gap.c(498),ERROR" ID="0xd90c0f92" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble set adv data rsp data fail @ble_at_gap.c(504),ERROR" ID="0xd90c0fc2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="l2cap bth ota init failed =%x @ble_at_gap.c(585),ERROR" ID="0xd90c124a" />
+			</MSG_LOG>

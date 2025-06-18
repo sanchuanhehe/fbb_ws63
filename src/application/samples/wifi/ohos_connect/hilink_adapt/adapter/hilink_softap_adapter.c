@@ -13,6 +13,8 @@
 #include "lwip/nettool/ifconfig.h"
 #include "osal_task.h"
 
+#define IP_LEN 40
+
 typedef struct {
     const char *ifname;
     const char *ip_str;
@@ -62,18 +64,29 @@ static int softap_start_dhcps(void)
     return HILINK_SAL_NOK;
 }
 
+static char *GetGateWayIp(unsigned int i1, unsigned int i2, unsigned int i3, unsigned int i4)
+{
+    static char ip[IP_LEN] = {0};
+    if (sprintf_s(ip, sizeof(ip), "%u.%u.%u.%u", i1, i2, i3, i4) <= 0) {
+        return NULL;
+    }
+    return ip;
+}
+
 static int softap_config_static_ip(void)
 {
     int ret = 0;
     ifcfg_args_t ifconfig_param;
-    memset_s(&ifconfig_param, sizeof(ifconfig_param), 0, sizeof(ifconfig_param));
+    (void)memset_s(&ifconfig_param, sizeof(ifconfig_param), 0, sizeof(ifconfig_param));
 
     ifconfig_param.ifname = "ap0";
-    ifconfig_param.ip_str = "192.168.3.1";
+    /* 192.168.3.1:softap default ip addr */
+    ifconfig_param.ip_str = GetGateWayIp(192, 168, 3, 1);
     ifconfig_param.netmask = "netmask";
     ifconfig_param.netmask_value = "255.255.255.0";
     ifconfig_param.gateway = "gateway";
-    ifconfig_param.gateway_value = "192.168.3.1";
+    /* 192.168.3.1:softap default gateway ip addr */
+    ifconfig_param.gateway_value = GetGateWayIp(192, 168, 3, 1);
 
     lwip_ifconfig(6, &ifconfig_param.ifname); // 6: ifconfig param number
 
@@ -94,6 +107,7 @@ int HILINK_StartSoftAp(const char *ssid, unsigned int ssidLen)
 
     if (strcpy_s((char *)config.ssid, sizeof(config.ssid), ssid) != EOK) {
         HILINK_SAL_WARN("strcpy error\r\n");
+        (void)memset_s(&config, sizeof(softap_config_stru), 0, sizeof(softap_config_stru));
         return HILINK_SAL_STRCPY_ERR;
     }
 
@@ -102,11 +116,13 @@ int HILINK_StartSoftAp(const char *ssid, unsigned int ssidLen)
 
     if (wifi_softap_enable(&config) != ERRCODE_SUCC) {
         HILINK_SAL_ERROR("enable hotspot fail\r\n");
+        (void)memset_s(&config, sizeof(softap_config_stru), 0, sizeof(softap_config_stru));
         return HILINK_SAL_SET_SOFTAP_ERR;
     }
 
     if (softap_config_static_ip() != HILINK_SAL_OK) {
         HILINK_SAL_ERROR("set softap ip failed\r\n");
+        (void)memset_s(&config, sizeof(softap_config_stru), 0, sizeof(softap_config_stru));
         return HILINK_SAL_SET_SOFTAP_ERR;
     }
     osal_msleep(4000); /* 4000：配置静态ip之后要睡眠4秒之后再开启dhcps */
@@ -114,9 +130,10 @@ int HILINK_StartSoftAp(const char *ssid, unsigned int ssidLen)
     // dhcps
     if (softap_start_dhcps() != 0) {
         HILINK_SAL_ERROR("set softap dhcps failed\r\n");
+        (void)memset_s(&config, sizeof(softap_config_stru), 0, sizeof(softap_config_stru));
         return HILINK_SAL_SET_SOFTAP_ERR;
     }
-
+    (void)memset_s(&config, sizeof(softap_config_stru), 0, sizeof(softap_config_stru));
     return HILINK_SAL_OK;
 }
 

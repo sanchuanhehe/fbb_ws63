@@ -1,0 +1,54 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_latency_stat_on::tx storage already exists} @dmac_latency_stat_rom.c(48),WARNING" ID="0x81fc0183" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_latency_stat_on::rx already storage exists} @dmac_latency_stat_rom.c(53),WARNING" ID="0x81fc01ab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_config_latency_stat_on::trace memory alloc fail[%d].} @dmac_latency_stat_rom.c(60),WARNING" ID="0x81fc01e3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_config_latency_stat_on::stats memory alloc fail[%d].} @dmac_latency_stat_rom.c(66),WARNING" ID="0x81fc0213" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_latency_stat_off::tx storage already freed} @dmac_latency_stat_rom.c(87),WARNING" ID="0x81fc02bb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_latency_stat_off::rx storage already freed} @dmac_latency_stat_rom.c(92),WARNING" ID="0x81fc02e3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_latency_switch_init memcpy_s failed} @dmac_latency_stat_rom.c(105),WARNING" ID="0x81fc034b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_latency_stat_switch:: dmac_vap is null!} @dmac_latency_stat_rom.c(121),WARNING" ID="0x81fc03cb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_config_latency_stat_switch::switch on init failed[%d].} @dmac_latency_stat_rom.c(142),WARNING" ID="0x81fc0473" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_report_latency_stat:: dmac_vap is null!} @dmac_latency_stat_rom.c(162),WARNING" ID="0x81fc0513" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_clear_latency_stat:: dmac_vap is null!} @dmac_latency_stat_rom.c(183),WARNING" ID="0x81fc05bb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_config_clear_latency_stat::clear latency stat failed[%d].} @dmac_latency_stat_rom.c(191),WARNING" ID="0x81fc05fb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dac_config_clear_latency_stat::clear latency stat failed[%d].} @dmac_latency_stat_rom.c(197),WARNING" ID="0x81fc062b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_latency_trace_init_proc::osal_kmalloc failed. @dmac_latency_stat_rom.c(276),WARNING" ID="0x81fc08a3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_latency_trace_init_proc::osal_kmalloc failed. @dmac_latency_stat_rom.c(288),WARNING" ID="0x81fc0903" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_latency_trace_init::trace init tx fail[%d]} @dmac_latency_stat_rom.c(319),ERROR" ID="0x81fc09fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_latency_trace_init::trace init rx fail[%d]} @dmac_latency_stat_rom.c(327),ERROR" ID="0x81fc0a3a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="=== Latency Data Report - TRACE[TX][DMAC] - start === @dmac_latency_stat_rom.c(409),INFO" ID="0x81fc0ccd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="DMAC_STAGE_1: from Entry to Send to HW; DMAC_STAGE_2: from HW-Send to Relasebuf on succ @dmac_latency_stat_rom.c(411),INFO" ID="0x81fc0cdd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="pktid, stage_1, stage_2, |  total  | seqnum | @dmac_latency_stat_rom.c(412),INFO" ID="0x81fc0ce5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="=== Latency Data Report - TRACE[RX][DMAC] - start === @dmac_latency_stat_rom.c(415),INFO" ID="0x81fc0cfd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="DMAC_STAGE_1: from Entry to Trans to hmac @dmac_latency_stat_rom.c(416),INFO" ID="0x81fc0d05" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="pktid, stage_1, |  total  | seqnum | @dmac_latency_stat_rom.c(417),INFO" ID="0x81fc0d0d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_report_latency_trace_proc::Nothing to report!} @dmac_latency_stat_rom.c(421),WARNING" ID="0x81fc0d2b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_report_latency_trace_proc::not enough memory for report!} @dmac_latency_stat_rom.c(427),WARNING" ID="0x81fc0d5b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="%5u %7u %7u @dmac_latency_stat_rom.c(443),INFO" ID="0x81fc0ddd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="| %7u | %6u | @dmac_latency_stat_rom.c(445),INFO" ID="0x81fc0ded" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="%5u  %5u    | %7u | %6u | @dmac_latency_stat_rom.c(448),INFO" ID="0x81fc0e05" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="=== === === === === === end === === === === === === @dmac_latency_stat_rom.c(451),INFO" ID="0x81fc0e1d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_clear_latency_trace::clear latency results failed. @dmac_latency_stat_rom.c(487),WARNING" ID="0x81fc0f3b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_clear_latency_trace::clear latency results failed. @dmac_latency_stat_rom.c(492),WARNING" ID="0x81fc0f63" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_clear_latency_trace::clear latency results failed. @dmac_latency_stat_rom.c(500),WARNING" ID="0x81fc0fa3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_clear_latency_trace::clear latency results failed. @dmac_latency_stat_rom.c(507),WARNING" ID="0x81fc0fdb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_latency_stats_init_proc::osal_kmalloc failed. @dmac_latency_stat_rom.c(526),WARNING" ID="0x81fc1073" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_latency_stats_init_proc::osal_kmalloc failed. @dmac_latency_stat_rom.c(537),WARNING" ID="0x81fc10cb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_latency_stats_init::stats init tx fail[%d]} @dmac_latency_stat_rom.c(566),ERROR" ID="0x81fc11b2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_latency_stats_init::stats init rx fail[%d]} @dmac_latency_stat_rom.c(574),ERROR" ID="0x81fc11f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="=== === === === ==== Latency Data Report - STATS[TX][DMAC] - start ==== === === === === @dmac_latency_stat_rom.c(593),INFO" ID="0x81fc128d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="=== === === === ==== Latency Data Report - STATS[RX][DMAC] - start ==== === === === === @dmac_latency_stat_rom.c(597),INFO" ID="0x81fc12ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_report_latency_trace_proc::Nothing to report!} @dmac_latency_stat_rom.c(601),WARNING" ID="0x81fc12cb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="Time Slots      | 0-50us |, |50-200us|, |200us-1ms|, |1ms-10ms|, |10ms-40ms|, | &gt;40ms | @dmac_latency_stat_rom.c(608),INFO" ID="0x81fc1305" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="TX_DMAC_STAGE_%d [ %6u  ,  %6u   ,   %6u    @dmac_latency_stat_rom.c(612),INFO" ID="0x81fc1325" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="RX_DMAC_STAGE_%d [ %6u  ,  %6u   ,   %6u    @dmac_latency_stat_rom.c(615),INFO" ID="0x81fc133d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME=",   %6u  ,   %6u   , %6u  ] @dmac_latency_stat_rom.c(618),INFO" ID="0x81fc1355" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="=== === === === === === === === === === == end == === === === === === === === === === === @dmac_latency_stat_rom.c(621),INFO" ID="0x81fc136d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_clear_latency_stats::clear latency results failed. @dmac_latency_stat_rom.c(652),WARNING" ID="0x81fc1463" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_clear_latency_stats::clear latency results failed. @dmac_latency_stat_rom.c(657),WARNING" ID="0x81fc148b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_clear_latency_stats::clear latency results failed. @dmac_latency_stat_rom.c(665),WARNING" ID="0x81fc14cb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_clear_latency_stats::clear latency results failed. @dmac_latency_stat_rom.c(674),WARNING" ID="0x81fc1513" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_latency_stat_tx_entry::cb is null.} @dmac_latency_stat_rom.c(724),ERROR" ID="0x81fc16a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_record_latency_tx::cb is null.} @dmac_latency_stat_rom.c(787),ERROR" ID="0x81fc189a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_latency_stat_rx_entry::cb is null.} @dmac_latency_stat_rom.c(845),ERROR" ID="0x81fc1a6a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_record_latency_rx::cb is null.} @dmac_latency_stat_rom.c(902),ERROR" ID="0x81fc1c32" />
+			</MSG_LOG>

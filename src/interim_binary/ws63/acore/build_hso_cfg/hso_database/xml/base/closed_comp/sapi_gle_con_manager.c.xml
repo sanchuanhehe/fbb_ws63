@@ -1,0 +1,16 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="sapi gle connection request pointer NULL error @sapi_gle_con_manager.c(17),ERROR" ID="0xde66008a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle connection request new error @sapi_gle_con_manager.c(24),ERROR" ID="0xde6600c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle connection request memcpy error @sapi_gle_con_manager.c(29),ERROR" ID="0xde6600ea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle connection request memcpy error @sapi_gle_con_manager.c(43),ERROR" ID="0xde66015a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle connection release pointer NULL error @sapi_gle_con_manager.c(57),ERROR" ID="0xde6601ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle connection release new error @sapi_gle_con_manager.c(65),ERROR" ID="0xde66020a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle connection release memcpy error @sapi_gle_con_manager.c(71),ERROR" ID="0xde66023a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle connection release memcpy error @sapi_gle_con_manager.c(86),ERROR" ID="0xde6602b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle private connection param set request new fail @sapi_gle_con_manager.c(110),ERROR" ID="0xde660372" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle private connection param set request memcpy error @sapi_gle_con_manager.c(116),ERROR" ID="0xde6603a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle connection param update request new error @sapi_gle_con_manager.c(131),ERROR" ID="0xde66041a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle connection param update request memcpy error @sapi_gle_con_manager.c(137),ERROR" ID="0xde66044a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle ahib set acb low latency memcpy error @sapi_gle_con_manager.c(154),ERROR" ID="0xde6604d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle ahib set acb low latency em data memcpy error @sapi_gle_con_manager.c(176),ERROR" ID="0xde660582" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle ahib read rssi memcpy_s error @sapi_gle_con_manager.c(193),ERROR" ID="0xde66060a" />
+			</MSG_LOG>

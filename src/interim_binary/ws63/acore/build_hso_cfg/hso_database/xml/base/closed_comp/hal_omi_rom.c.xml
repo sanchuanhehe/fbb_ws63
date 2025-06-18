@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hh503_irq_rom_info_handle_isr::hal_dev is null @hal_omi_rom.c(37),ERROR" ID="0x805a012a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_irq_rom_info_handle_isr::hal_vap is null @hal_omi_rom.c(46),ERROR" ID="0x805a0172" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_irq_rom_info_handle_isr::dispatch event FAILED @hal_omi_rom.c(58),ERROR" ID="0x805a01d2" />
+			</MSG_LOG>

@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="[ES view]evt_prog_push_eeq: ready_list task_id=0x%x timestamp=0x%x duration=%d @evt_prog.c(90),INFO" ID="0x887802d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_prog_get_eeq_allow_prog_cnt, eeq_allow_cnt=0 @evt_prog.c(111),INFO" ID="0x8878037d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][eeq_fullint_urgent]next_free_idx=%d, eeq_offset=0x%x, eeq_size=%d @evt_prog.c(220),ERROR" ID="0x887806e2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][eeq_fullint_normal]next_free_idx=%d, eeq_offset=0x%x, eeq_size=%d @evt_prog.c(230),ERROR" ID="0x88780732" />
+			</MSG_LOG>

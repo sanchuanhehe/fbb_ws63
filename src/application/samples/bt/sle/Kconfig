@@ -6,12 +6,6 @@
 choice
     prompt "SLE Sample"
 
-config SAMPLE_SUPPORT_SLE_UUID_SERVER_SAMPLE
-    bool "Support SLE UUID Server Sample."
-
-config SAMPLE_SUPPORT_SLE_UUID_CLIENT_SAMPLE
-    bool "Support SLE UUID Client Sample."
-
 config SAMPLE_SUPPORT_SLE_SPEED_SERVER_SAMPLE
     bool "Support SLE Throughput Server Sample."
 

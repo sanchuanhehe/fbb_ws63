@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_add_peer_macaddr::waiting lut ce idle timeout!} @hal_power.c(131),ERROR" ID="0x80cc041a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_add_peer_macaddr::waiting lut ce idle timeout!} @hal_power.c(141),ERROR" ID="0x80cc046a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{set_pow_to_pow_code_tpc_cali:ch_idx:%d sar:%d max_pow:%d table len:%d} @hal_power.c(203),INFO" ID="0x80cc065d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="set_pow_to_pow_code::max_power_tmp:%d limit:%d tgt_pow:%d tpc_code:0x%x @hal_power.c(230),INFO" ID="0x80cc0735" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_set_rf_limit_power::band = %d, limit_power = %d} @hal_power.c(255),WARNING" ID="0x80cc07fb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_set_resp_frm_phy_tx_mode: distance_idx[%d] invalid!} @hal_power.c(374),ERROR" ID="0x80cc0bb2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_pow_set_resp_frame_tx_power::band[%d]chan_idx[%d] is invalid} @hal_power.c(409),WARNING" ID="0x80cc0ccb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_pow_set_band_spec_frame_tx_power::band[%d]chan_idx[%d] is invalid} @hal_power.c(435),WARNING" ID="0x80cc0d9b" />
+			</MSG_LOG>

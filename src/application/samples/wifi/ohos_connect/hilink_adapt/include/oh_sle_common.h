@@ -88,3 +88,7 @@ typedef struct {
 }
 #endif
 #endif  /* OH_SLE_COMMON_H */
+/**
+ * @}
+ */
+

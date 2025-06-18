@@ -1,0 +1,59 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_get_sta_ps_stat::dmac_vap not init.} @dmac_psm_sta_rom.c(75),WARNING" ID="0x81d4025b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_config_get_sta_ps_stat::pm fsm not attached.} @dmac_psm_sta_rom.c(82),WARNING" ID="0x81d40293" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_config_get_sta_ps_stat::sta ps stat[%d], ps mode[%d]} @dmac_psm_sta_rom.c(87),WARNING" ID="0x81d402bb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_psm_max_powersave_enable:enable[%d]} @dmac_psm_sta_rom.c(109),WARNING" ID="0x81d4036b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_psm_max_powersave_enable::dmac_vap null.} @dmac_psm_sta_rom.c(115),ERROR" ID="0x81d4039a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_set_psm_param::dmac_vap not init.} @dmac_psm_sta_rom.c(141),WARNING" ID="0x81d4046b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_set_psm_param::dmac_vap not init.} @dmac_psm_sta_rom.c(174),WARNING" ID="0x81d40573" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{sta_pm_param_info: pm_timer should be same as mcast_timeout.} @dmac_psm_sta_rom.c(190),WARNING" ID="0x81d405f3" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_psm_process_fast_ps_state_change::awake,send[%d]null frame,active null wait:[%d].} @dmac_psm_sta_rom.c(218),WARNING" ID="0x81d406d3" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_psm_process_fast_ps_state_change::active,send[%d]null frame,doze null wait:[%d].} @dmac_psm_sta_rom.c(226),WARNING" ID="0x81d40713" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_psm_start_activity_timer has null point:dmac_vap =%p pm_handle=%p} @dmac_psm_sta_rom.c(247),ERROR" ID="0x81d407ba" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_psm_vap_set::use dtim*4, beacon[%d], dtim period[%d]} @dmac_psm_sta_rom.c(333),WARNING" ID="0x81d40a6b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_psm_vap_set::use dtim*2, beacon[%d], dtim period[%d]} @dmac_psm_sta_rom.c(338),WARNING" ID="0x81d40a93" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_psm_update_bcn_tout_max_cnt::bcn period[%d],dtim period[%d] @dmac_psm_sta_rom.c(393),WARNING" ID="0x81d40c4b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="vap_id[%d] {dmac_psm_update_dtime_period::set dtim period[%d], bcn tout max cnt[%d]listen interval[%d]} @dmac_psm_sta_rom.c(430),WARNING" ID="0x81d40d73" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_update_keepalive::pm fsm not attached.} @dmac_psm_sta_rom.c(460),ERROR" ID="0x81d40e62" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_psm_update_keepalive::beacon[%d],dtim period[%d]} @dmac_psm_sta_rom.c(482),ERROR" ID="0x81d40f12" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] dmac_psm_update_bcn_rx_chain:no vap up @dmac_psm_sta_rom.c(681),ERROR" ID="0x81d4154a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_mask_mac_parse_tim::dmac_vap null.} @dmac_psm_sta_rom.c(772),WARNING" ID="0x81d41823" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_bcn_no_frm_event_hander:vap is not valid} @dmac_psm_sta_rom.c(793),ERROR" ID="0x81d418ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_process_tim_elm_sta_awake::change_fast_ps_state failed.} @dmac_psm_sta_rom.c(908),WARNING" ID="0x81d41c63" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {keepalive [powersave mode]::send null frame to ap.} @dmac_psm_sta_rom.c(931),WARNING" ID="0x81d41d1b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_process_tim_elm_sta_awake::keepalive send null fail.} @dmac_psm_sta_rom.c(934),WARNING" ID="0x81d41d33" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_process_tim_elm::pm fsm not attached.} @dmac_psm_sta_rom.c(966),ERROR" ID="0x81d41e32" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_psm_process_qosnull_no_ack rx QOS NULL DATA from AP with no ack, ans null} @dmac_psm_sta_rom.c(1043),WARNING" ID="0x81d4209b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {pm fsm not attached.} @dmac_psm_sta_rom.c(1076),ERROR" ID="0x81d421a2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{dmac_psm_rx_process_data_sta::event[%d] change doze,frame is multi[%d],bcn wait[%d]} @dmac_psm_sta_rom.c(1100),WARNING" ID="0x81d42263" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {pm[%d]vap state[%d]send null fail} @dmac_psm_sta_rom.c(1190),WARNING" ID="0x81d42533" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {sta_pm state[%d],retrans active null data to max cnt} @dmac_psm_sta_rom.c(1231),WARNING" ID="0x81d4267b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {sta_pm state[%d],retrans sleep null data to max cnt} @dmac_psm_sta_rom.c(1247),WARNING" ID="0x81d426fb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {retrans null data fail} @dmac_psm_sta_rom.c(1268),WARNING" ID="0x81d427a3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_tx_complete_sta:fsm not attached.} @dmac_psm_sta_rom.c(1337),ERROR" ID="0x81d429ca" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_psm_process_state::timer is registerd,time now[%d],timer[%d]} @dmac_psm_sta_rom.c(1397),WARNING" ID="0x81d42bab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_process_tbtt_sta::pm fsm not attached.} @dmac_psm_sta_rom.c(1434),ERROR" ID="0x81d42cd2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_send_pspoll_to_ap:allocNetbuff Err} @dmac_psm_sta_rom.c(1499),WARNING" ID="0x81d42edb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_send_pspoll_to_ap:VapId%d} @dmac_psm_sta_rom.c(1507),WARNING" ID="0x81d42f1b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_send_pspoll_to_ap failed[%d].} @dmac_psm_sta_rom.c(1533),WARNING" ID="0x81d42feb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] dmac_psm_send_null_data: scaning and vap status is pause, do not send null!vap_mode[%d] @dmac_psm_sta_rom.c(1589),WARNING" ID="0x81d431ab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_send_null_data::alloc netbuff failed.} @dmac_psm_sta_rom.c(1605),WARNING" ID="0x81d4322b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_psm_send_null_data::dmac_tx_mgmt_enqueue failed[%d].} @dmac_psm_sta_rom.c(1615),WARNING" ID="0x81d4327b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_send_null_frame_to_ap::send_qosnull failed[%d].} @dmac_psm_sta_rom.c(1642),WARNING" ID="0x81d43353" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_send_null_frame_to_ap:: psm [%d]} @dmac_psm_sta_rom.c(1665),WARNING" ID="0x81d4340b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_send_null_frame_to_ap::dmac_user[%d] NULL.} @dmac_psm_sta_rom.c(1677),WARNING" ID="0x81d4346b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_send_null_frame_to_ap::send_null_data failed[%d].} @dmac_psm_sta_rom.c(1688),WARNING" ID="0x81d434c3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {keepalive [active mode]::send null frame to ap.} @dmac_psm_sta_rom.c(1734),WARNING" ID="0x81d43633" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_psm_alarm_callback::event:[%d]change pm state doze.} @dmac_psm_sta_rom.c(1772),WARNING" ID="0x81d43763" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="vap_id[%d] {dmac_psm_alarm_callback::pm state:[%d],doze trans flag:[%d]timer restart cnt[%d].} @dmac_psm_sta_rom.c(1781),WARNING" ID="0x81d437ab" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_psm_is_tid_queues_empty::vap is null @dmac_psm_sta_rom.c(1895),WARNING" ID="0x81d43b3b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_is_tid_queues_empty::user is null @dmac_psm_sta_rom.c(1901),WARNING" ID="0x81d43b6b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_send_null_frame_to_ap_opt::pm fsm not attached. @dmac_psm_sta_rom.c(1926),WARNING" ID="0x81d43c33" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_get_state::fsm not attached.} @dmac_psm_sta_rom.c(1949),WARNING" ID="0x81d43ceb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_sta_up_rx_beacon:beacon period changed old[%d]-&gt;new[%d]. @dmac_psm_sta_rom.c(1995),WARNING" ID="0x81d43e5b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_rx_sta_up_beacon_mgmt::frame_len[%d] err} @dmac_psm_sta_rom.c(2026),ERROR" ID="0x81d43f52" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_rx_frame_ps_process: vap id %d data is need drop} @dmac_psm_sta_rom.c(2085),INFO" ID="0x81d4412d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_beacon_timeout_event_hander: vap is null[%x].} @dmac_psm_sta_rom.c(2192),ERROR" ID="0x81d44482" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_beacon_timeout_event_hander:pm fsm not attached.} @dmac_psm_sta_rom.c(2197),WARNING" ID="0x81d444ab" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_psm_sta_proc_hook_init:: register_netbuf_hooks error! @dmac_psm_sta_rom.c(2233),ERROR" ID="0x81d445ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_psm_sta_proc_hook_init:: dmac_register_cfg_hooks error! @dmac_psm_sta_rom.c(2239),ERROR" ID="0x81d445fa" />
+			</MSG_LOG>

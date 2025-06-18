@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
+# Copyright (c) CompanyNameMagicTag 2022-2022. All rights reserved.
 #===============================================================================
 option (RUN_ON_LINUX "Dts use C PUBLIC LIB" OFF)
 

@@ -1,0 +1,12 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="hal_device_find_up_vap::hal_device is NULL @hal_device.c(144),ERROR" ID="0x84d00482" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_device_find_up_vap::no up vap[%d] @hal_device.c(151),ERROR" ID="0x84d004ba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_device_find_up_vap::hal vap id[%d]hal_get_hal_vap null @hal_device.c(162),ERROR" ID="0x84d00512" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_device_find_up_vap::mac_vap_id is NULL @hal_device.c(168),ERROR" ID="0x84d00542" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_device_find_one_up_hal_vap::hal_device is NULL @hal_device.c(198),ERROR" ID="0x84d00632" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_device_find_one_up_hal_vap::hal vap id[%d]hal_get_hal_vap null @hal_device.c(211),ERROR" ID="0x84d0069a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_device_find_another_up_vap::hal_device is NULL @hal_device.c(239),ERROR" ID="0x84d0077a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="hal_device_find_another_up_vap::up vap num[%d]&gt; %d @hal_device.c(247),ERROR" ID="0x84d007ba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_device_find_another_up_vap::hal vap id[%d]hal_get_hal_vap null @hal_device.c(257),ERROR" ID="0x84d0080a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_inc_assoc_user_nums::hal_device is NULL.} @hal_device.c(277),ERROR" ID="0x84d008aa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_dec_assoc_user_nums::assoc_user_nums is already zero.} @hal_device.c(287),ERROR" ID="0x84d008fa" />
+			</MSG_LOG>

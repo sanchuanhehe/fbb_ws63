@@ -573,7 +573,11 @@ int mbedtls_net_set_block( mbedtls_net_context *ctx )
 #ifdef ESCP_MBDTLS_CUSTOMIZATION
     return( fcntl( ctx->fd, F_SETFL, fcntl( ctx->fd, F_GETFL, 0 ) & ~O_NONBLOCK ) );
 #else
+#if defined(WS_IOT_LWIP_C)
+    return( lwip_fcntl( ctx->fd, F_SETFL, lwip_fcntl( ctx->fd, F_GETFL, 0 ) & ~O_NONBLOCK ) );
+#else
     return( fcntl( ctx->fd, F_SETFL, fcntl( ctx->fd, F_GETFL ) & ~O_NONBLOCK ) );
+#endif
 #endif
 #endif
 #endif
@@ -592,7 +596,11 @@ int mbedtls_net_set_nonblock( mbedtls_net_context *ctx )
 #ifdef ESCP_MBDTLS_CUSTOMIZATION
     return( fcntl( ctx->fd, F_SETFL, fcntl( ctx->fd, F_GETFL, 0 ) | O_NONBLOCK ) );
 #else
+#if defined(WS_IOT_LWIP_C)
+    return( lwip_fcntl( ctx->fd, F_SETFL, lwip_fcntl( ctx->fd, F_GETFL, 0 ) & ~O_NONBLOCK ) );
+#else
     return( fcntl( ctx->fd, F_SETFL, fcntl( ctx->fd, F_GETFL ) | O_NONBLOCK ) );
+#endif
 #endif
 #endif
 #endif

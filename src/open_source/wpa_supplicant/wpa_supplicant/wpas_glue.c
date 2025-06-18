@@ -463,6 +463,10 @@ static void _wpa_supplicant_cancel_auth_timeout(void *wpa_s)
 	wpa_supplicant_cancel_auth_timeout(wpa_s);
 }
 
+static void _wpa_supplicant_cancel_eapol3_timeout(void *wpa_s)
+{
+	wpa_supplicant_cancel_eapol3_timeout(wpa_s);
+}
 
 static void _wpa_supplicant_set_state(void *wpa_s, enum wpa_states state)
 {
@@ -1417,6 +1421,7 @@ int wpa_supplicant_init_wpa(struct wpa_supplicant *wpa_s)
 	ctx->get_beacon_ie = wpa_supplicant_get_beacon_ie;
 	ctx->alloc_eapol = _wpa_alloc_eapol;
 	ctx->cancel_auth_timeout = _wpa_supplicant_cancel_auth_timeout;
+	ctx->cancel_eapol3_timeout = _wpa_supplicant_cancel_eapol3_timeout;
 	ctx->add_pmkid = wpa_supplicant_add_pmkid;
 	ctx->remove_pmkid = wpa_supplicant_remove_pmkid;
 #ifndef CONFIG_NO_CONFIG_BLOBS

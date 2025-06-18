@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{frw_custom_msg_to_host::msg[%u] fail!} @frw_main.c(159),ERROR" ID="0x80e404fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{frw_alloc_msg_node::memcpy_s fail!} @frw_main.c(296),ERROR" ID="0x80e40942" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_config_netbuf_ram_max_size::old[%u] new[%u]} @frw_main.c(478),INFO" ID="0x80e40ef5" />
+			</MSG_LOG>

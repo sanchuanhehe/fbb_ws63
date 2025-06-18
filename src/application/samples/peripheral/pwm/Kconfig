@@ -6,7 +6,7 @@ config PWM_CHANNEL
     int
     prompt "Choose PWM Test Channel."
     depends on SAMPLE_SUPPORT_PWM
-    default 0
+    default 4
 
 config PWM_GROUP_ID
     int
@@ -18,11 +18,11 @@ config PWM_PIN
     int
     prompt "Choose PWM pin."
     depends on SAMPLE_SUPPORT_PWM
-    default 20
+    default 12
 
 config PWM_PIN_MODE
     int
     prompt "Choose PWM pin mode."
-    default 3
+    default 1
     depends on SAMPLE_SUPPORT_PWM
 

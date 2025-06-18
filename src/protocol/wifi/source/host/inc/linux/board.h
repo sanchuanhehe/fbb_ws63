@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2023. All rights reserved.
  * Description: Host board config header file.
- * Author:
+ * Author: Huanghe
  * Create: 2021-06-01
  */
 

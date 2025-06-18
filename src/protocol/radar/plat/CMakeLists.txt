@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2024. All rights reserved.
+# Copyright (c) CompanyNameMagicTag 2023-2024. All rights reserved.
 #===============================================================================
 MESSAGE(STATUS "project_name:" ${project_name})
 if(CHIP STREQUAL "ws63")

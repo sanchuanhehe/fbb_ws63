@@ -124,18 +124,6 @@ TD_PRV td_u16 g_peer_port;
 TD_PRV osal_mutex g_ip_mux_id = {};
 #endif
 
-TD_PRV td_u32 at_task_show(td_void)
-{
-#ifndef CONFIG_FACTORY_TEST_MODE
-// AT+TASK命令,打印进程信息,freertos不涉及
-#ifdef __LITEOS__
-    osal_printk("task_info:\r\n");
-    OsDbgTskInfoGet(OS_ALL_TASK_MASK);
-#endif
-#endif
-    return EXT_ERR_SUCCESS;
-}
-
 #ifdef _PRE_SYSCHANNEL_FEATURE
 static td_bool g_chan_reint_type = TD_FALSE;
 TD_PRV int syschannel_set_ipv6_default_filter(void)
@@ -147,7 +135,7 @@ TD_PRV int syschannel_set_ipv6_default_filter(void)
     filter_ipv6.match_mask = WIFI_FILTER_MASK_LOCAL_PORT | WIFI_FILTER_MASK_PROTOCOL;
     filter_ipv6.config_type = WIFI_FILTER_LWIP; /* XX_VLWIP to T31, XX_LWIP to ws53 */
     ret = uapi_syschannel_add_filter((td_char*)&filter_ipv6, sizeof(filter_ipv6), WIFI_FILTER_TYPE_IPV6);
-    printf("add mcu dhcp filter6 ret %d\n", ret);
+    uapi_at_print("add mcu dhcp filter6 ret %d\n", ret);
     return ret;
 }
 
@@ -160,7 +148,7 @@ TD_PRV int syschannel_set_ipv4_default_filter(void)
     filter_ipv4.match_mask = WIFI_FILTER_MASK_LOCAL_PORT | WIFI_FILTER_MASK_PROTOCOL;
     filter_ipv4.config_type = WIFI_FILTER_LWIP; /* XX_VLWIP to T31, XX_LWIP to ws53 */
     ret = uapi_syschannel_add_filter((td_char*)&filter_ipv4, sizeof(filter_ipv4), WIFI_FILTER_TYPE_IPV4);
-    printf("add mcu listen 68 filter4 ret 0x%x\n", ret);
+    uapi_at_print("add mcu listen 68 filter4 ret 0x%x\n", ret);
 
     (void)memset_s(&filter_ipv4, sizeof(filter_ipv4), 0, sizeof(filter_ipv4));
     filter_ipv4.local_port = 67;             /* 67 DHCP UDP port */
@@ -168,7 +156,7 @@ TD_PRV int syschannel_set_ipv4_default_filter(void)
     filter_ipv4.match_mask = WIFI_FILTER_MASK_LOCAL_PORT | WIFI_FILTER_MASK_PROTOCOL;
     filter_ipv4.config_type = WIFI_FILTER_LWIP; /* XX_VLWIP to T31, XX_LWIP to ws53 */
     ret = uapi_syschannel_add_filter((td_char*)&filter_ipv4, sizeof(filter_ipv4), WIFI_FILTER_TYPE_IPV4);
-    printf("add mcu listen 67 filter4 ret 0x%x\n", ret);
+    uapi_at_print("add mcu listen 67 filter4 ret 0x%x\n", ret);
 
     (void)memset_s(&filter_ipv4, sizeof(filter_ipv4), 0, sizeof(filter_ipv4));
     filter_ipv4.local_port = 6001;          /* 6001 TCP port */
@@ -176,7 +164,7 @@ TD_PRV int syschannel_set_ipv4_default_filter(void)
     filter_ipv4.match_mask = WIFI_FILTER_MASK_PROTOCOL | WIFI_FILTER_MASK_LOCAL_PORT;
     filter_ipv4.config_type = WIFI_FILTER_LWIP; /* XX_VLWIP to T31, XX_LWIP to ws53 */
     ret = uapi_syschannel_add_filter((td_char*)&filter_ipv4, sizeof(filter_ipv4), WIFI_FILTER_TYPE_IPV4);
-    printf("add mcu listen 6001 filter4 ret 0x%x\n", ret);
+    uapi_at_print("add mcu listen 6001 filter4 ret 0x%x\n", ret);
 
     (void)memset_s(&filter_ipv4, sizeof(filter_ipv4), 0, sizeof(filter_ipv4));
     filter_ipv4.remote_port = 6002;          /* 6002 TCP port */
@@ -184,7 +172,7 @@ TD_PRV int syschannel_set_ipv4_default_filter(void)
     filter_ipv4.match_mask = WIFI_FILTER_MASK_PROTOCOL | WIFI_FILTER_MASK_REMOTE_PORT;
     filter_ipv4.config_type = WIFI_FILTER_LWIP; /* XX_VLWIP to T31, XX_LWIP to ws53 */
     ret = uapi_syschannel_add_filter((td_char*)&filter_ipv4, sizeof(filter_ipv4), WIFI_FILTER_TYPE_IPV4);
-    printf("add mcu listen 6002 filter4 ret 0x%x\n", ret);
+    uapi_at_print("add mcu listen 6002 filter4 ret 0x%x\n", ret);
 
     (void)memset_s(&filter_ipv4, sizeof(filter_ipv4), 0, sizeof(filter_ipv4));
     filter_ipv4.local_port = 7001;           /* 7001 UDP port */
@@ -192,7 +180,7 @@ TD_PRV int syschannel_set_ipv4_default_filter(void)
     filter_ipv4.match_mask = WIFI_FILTER_MASK_LOCAL_PORT | WIFI_FILTER_MASK_PROTOCOL;
     filter_ipv4.config_type = WIFI_FILTER_LWIP; /* XX_VLWIP to T31, XX_LWIP to ws53 */
     ret = uapi_syschannel_add_filter((td_char*)&filter_ipv4, sizeof(filter_ipv4), WIFI_FILTER_TYPE_IPV4);
-    printf("add mcu listen 7001 filter4 ret 0x%x\n", ret);
+    uapi_at_print("add mcu listen 7001 filter4 ret 0x%x\n", ret);
 
     (void)memset_s(&filter_ipv4, sizeof(filter_ipv4), 0, sizeof(filter_ipv4));
     filter_ipv4.remote_port = 7002;           /* 7002 UDP port */
@@ -200,14 +188,14 @@ TD_PRV int syschannel_set_ipv4_default_filter(void)
     filter_ipv4.match_mask = WIFI_FILTER_MASK_REMOTE_PORT | WIFI_FILTER_MASK_PROTOCOL;
     filter_ipv4.config_type = WIFI_FILTER_LWIP; /* XX_VLWIP to T31, XX_LWIP to ws53 */
     ret = uapi_syschannel_add_filter((td_char*)&filter_ipv4, sizeof(filter_ipv4), WIFI_FILTER_TYPE_IPV4);
-    printf("add mcu listen 7002 filter4 ret 0x%x\n", ret);
+    uapi_at_print("add mcu listen 7002 filter4 ret 0x%x\n", ret);
     return ret;
 }
 
 TD_PRV int syschannel_set_default_filter(void)
 {
     int ret = uapi_syschannel_set_default_filter(WIFI_FILTER_VLWIP);
-    printf("set all net packets foward to camera default.\n");
+    uapi_at_print("set all net packets foward to camera default.\n");
 
     if (syschannel_set_ipv4_default_filter() != EXT_ERR_SUCCESS) {
         ret = EXT_ERR_FAILURE;
@@ -222,19 +210,19 @@ TD_PRV int syschannel_set_default_filter(void)
 TD_PRV int sdio_init_task_body(void *param)
 {
     unused(param);
-    osal_printk("syschannel start sdio init:%d\r\n", g_chan_reint_type);
+    uapi_at_print("syschannel start sdio init:%d\r\n", g_chan_reint_type);
     osDelay(TASK_COMMON_APP_DELAY_MS);
     uapi_watchdog_disable();
 #ifndef CONFIG_FACTORY_TEST_MODE
     if (g_chan_reint_type) {
         if (uapi_syschannel_dev_reinit(SDIO_TYPE) != EXT_ERR_SUCCESS) {
-            osal_printk("syschannel_init:: syschannel_dev_reinit failed");
+            uapi_at_print("syschannel_init:: syschannel_dev_reinit failed");
         }
         uapi_watchdog_enable();
         return 0;
     } else {
         if (uapi_syschannel_dev_init(SDIO_TYPE) != EXT_ERR_SUCCESS) {
-            osal_printk("syschannel_init:: syschannel_dev_init failed");
+            uapi_at_print("syschannel_init:: syschannel_dev_init failed");
             uapi_watchdog_enable();
             return 0;
         }
@@ -243,7 +231,7 @@ TD_PRV int sdio_init_task_body(void *param)
     uapi_watchdog_enable();
 
     syschannel_set_default_filter();
-    osal_printk("finish sdio init\r\n");
+    uapi_at_print("finish sdio init\r\n");
     return 0;
 }
 #endif
@@ -257,8 +245,8 @@ at_ret_t at_syschannel_add_filter(const addfilter_args_t *args)
     syschannel_ipv6_filter* ipv6_filter = TD_NULL;
     unsigned char type = args->para6;
     int len = 0;
-    PRINT("syschannel_ipv4_filter length is:%d \r\n", sizeof(syschannel_ipv4_filter));
-    PRINT("syschannel_ipv6_filter length is:%d \r\n", sizeof(syschannel_ipv6_filter));
+    uapi_at_print("syschannel_ipv4_filter length is:%d \r\n", sizeof(syschannel_ipv4_filter));
+    uapi_at_print("syschannel_ipv6_filter length is:%d \r\n", sizeof(syschannel_ipv6_filter));
     /* 区分ipv4和ipv6 */
     if (args->para6 == 0) {
         if (args->para1 != 0) {
@@ -314,8 +302,8 @@ at_ret_t at_syschannel_del_filter(const delfilter_args_t *args)
     syschannel_ipv6_filter* ipv6_filter = TD_NULL;
     unsigned char type = args->para6;
     int len = 0;
-    PRINT("syschannel_ipv4_filter length is:%d \r\n", sizeof(syschannel_ipv4_filter));
-    PRINT("syschannel_ipv6_filter length is:%d \r\n", sizeof(syschannel_ipv6_filter));
+    uapi_at_print("syschannel_ipv4_filter length is:%d \r\n", sizeof(syschannel_ipv4_filter));
+    uapi_at_print("syschannel_ipv6_filter length is:%d \r\n", sizeof(syschannel_ipv6_filter));
     /* 区分ipv4和ipv6 */
     if (args->para6 == 0) {
         if (args->para1 != 0) {
@@ -376,7 +364,7 @@ at_ret_t at_syschannel_query_filter(const queryfilter_args_t *args)
     unsigned char type = args->para3;
     if (args->para1 == 0) {
         ret = uapi_syschannel_query_filter(TD_NULL, num, type);
-        PRINT("num = %d \r\n", *num);
+        uapi_at_print("num = %d \r\n", *num);
         if (args->para2 != 0) {
             free(num);
         }
@@ -385,7 +373,7 @@ at_ret_t at_syschannel_query_filter(const queryfilter_args_t *args)
     syschannel_filter_list_stru *syschannel_filter = syschannel_get_filter_list();
     ret = uapi_syschannel_query_filter((char **)&filter, num, type);
     if (filter == TD_NULL) {
-        PRINT("return filter is null!!!!! \r\n");
+        uapi_at_print("return filter is null!!!!! \r\n");
     }
     /* 区分ipv4和ipv6 */
     if (args->para1 != 0) {
@@ -393,21 +381,21 @@ at_ret_t at_syschannel_query_filter(const queryfilter_args_t *args)
             filter_num = syschannel_filter->ipv4_filter_num;
             syschannel_ipv4_filter *ipv4_filter = (syschannel_ipv4_filter *)filter;
             for (int i = 0; i < filter_num; i++) {
-                PRINT("local_port= %d; packet_type=%d; match_mask=%d; config_type = %d \r\n", ipv4_filter[i].local_port,
+                uapi_at_print("local_port=%d;packet_type=%dmatch_mask=%dconfig_type=%d\r\n", ipv4_filter[i].local_port,
                     ipv4_filter[i].packet_type, ipv4_filter[i].match_mask, ipv4_filter[i].config_type);
             }
         } else if ((ret == 0) && (filter != TD_NULL) && (args->para3 == 1)) {
             filter_num = syschannel_filter->ipv6_filter_num;
             syschannel_ipv6_filter *ipv6_filter = (syschannel_ipv6_filter *)filter;
             for (int i = 0; i < filter_num; i++) {
-                PRINT("local_port= %d; packet_type=%d; match_mask=%d; config_type = %d \r\n", ipv6_filter[i].local_port,
+                uapi_at_print("local_port=%d;packet_type=%dmatch_mask=%dconfig_type=%d\r\n", ipv6_filter[i].local_port,
                     ipv6_filter[i].packet_type, ipv6_filter[i].match_mask, ipv6_filter[i].config_type);
             }
         }
     }
 
     if (args->para2 != 0) {
-        PRINT("length = %d \r\n", *num);
+        uapi_at_print("length = %d \r\n", *num);
     }
     free(num);
     return ret;
@@ -458,7 +446,7 @@ TD_PRV td_u32 at_task_syschannel(td_bool reinit)
     attr.stack_size = SYSCHANNEL_TASK_STACK_SIZE;
     attr.priority = SYSCHANNEL_TASK_PRIO;
     if (osThreadNew((osThreadFunc_t)sdio_init_task_body, NULL, &attr) == NULL) {
-        osal_printk("Falied to create syschannel init task!\n");
+        uapi_at_print("Falied to create syschannel init task!\n");
         return AT_RET_SYNTAX_ERROR;
     }
 #else
@@ -487,7 +475,6 @@ at_ret_t cmd_set_macaddr(const mac_args_t *args)
     if (wifi_set_base_mac_addr((td_char*)mac_addr, WIFI_MAC_LEN) != 0) {
         return AT_RET_SYNTAX_ERROR;
     }
-    PRINT("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -501,8 +488,7 @@ at_ret_t cmd_get_macaddr(void)
     if (wifi_get_base_mac_addr((unsigned char *)mac_addr, WIFI_MAC_LEN) != ERRCODE_SUCC) {
         return AT_RET_SYNTAX_ERROR;
     }
-    PRINT("+MAC:" EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
-    PRINT("OK\r\n");
+    uapi_at_print("+MAC:" EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
 
     return AT_RET_OK;
 }
@@ -515,10 +501,10 @@ at_ret_t at_iperf(const iperf_args_t *args)
     LOS_TaskResRecycle();
 #endif
     if (CmdIperf(convert_bin_to_dec(args->para_map), (td_char *)&args->para1) == 0) {
-        PRINT("AT_IPERF OK\r\n");
+        uapi_at_print("AT_IPERF OK\r\n");
         return AT_RET_OK;
     }
-    PRINT("AT_IPERF ERROR\r\n");
+    uapi_at_print("AT_IPERF ERROR\r\n");
     return AT_RET_SYNTAX_ERROR;
 #else
     los_unref_param(args);
@@ -534,7 +520,6 @@ at_ret_t at_sendtest(const sendtest_args_t *args)
     LOS_TaskResRecycle();
 #endif
     if (cmd_sendtest(convert_bin_to_dec(args->para_map), (td_char *)&args->para1) != 0) {
-        uapi_at_printf("OK\r\n");
         return AT_RET_OK;
     }
 
@@ -596,13 +581,23 @@ at_ret_t at_ping6(const ping6_args_t *args)
     return AT_RET_SYNTAX_ERROR;
 }
 
+__attribute__((weak)) void sys_info_show(void)
+{
+    return;
+}
+
+__attribute__((weak)) void sys_pm_info_show(void)
+{
+    return;
+}
+
 at_ret_t at_sys_info(void)
 {
     print_version();
-    td_s32 ret = at_task_show();
-    if (ret != EXT_ERR_SUCCESS) {
-        return AT_RET_SYNTAX_ERROR;
-    }
+#ifndef CONFIG_FACTORY_TEST_MODE
+    sys_pm_info_show();
+    sys_info_show();
+#endif
     return AT_RET_OK;
 }
 
@@ -671,7 +666,6 @@ at_ret_t at_setup_dhcp(const dhcp_args_t *args)
     }
 #endif
     if (ret == 0) {
-        uapi_at_report("OK\r\n");
         return AT_RET_OK;
     }
 
@@ -701,7 +695,6 @@ at_ret_t at_setup_dhcps(const dhcps_args_t *args)
     }
 #endif
     if (ret == 0) {
-        uapi_at_report("OK\r\n");
         return AT_RET_OK;
     }
 
@@ -772,7 +765,6 @@ at_ret_t at_lwip_ifconfig_getip(void)
 {
     td_char *args = TD_NULL;
     lwip_ifconfig(0, &args);
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -799,13 +791,9 @@ at_ret_t at_lwip_ifconfig(const ifcfg_args_t *args)
         }
     } else {
         ret = lwip_ifconfig(argc, (td_char *)&args->para1);
-        if (ret == 3) { /* 3:up down 执行成功 */
-            uapi_at_printf("OK\r\n");
-        }
         return (ret == 0 || ret == 3) ? AT_RET_OK : AT_RET_SYNTAX_ERROR;  /* 3:up down 执行成功 */
     }
 #endif
-    uapi_at_report("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -858,7 +846,7 @@ TD_PRV td_u32 ip_ip_resv_show_msg(td_u8 link_id)
 
     td_char *ip_buffer = (td_char*)malloc(EXT_IP_RESV_BUF_LEN + 1);
     if (ip_buffer == TD_NULL) {
-        printf("{ip_ip_resv_output:ip buffer malloc fail}\r\n");
+        uapi_at_print("{ip_ip_resv_output:ip buffer malloc fail}\r\n");
         return EXT_ERR_FAILURE;
     }
 
@@ -868,7 +856,7 @@ TD_PRV td_u32 ip_ip_resv_show_msg(td_u8 link_id)
     ret = recvfrom(g_ip_link_ctl[link_id].sfd, ip_buffer, EXT_IP_RESV_BUF_LEN, 0,
         (struct sockaddr *)&cln_addr, (socklen_t *)&cln_addr_len);
     if (ret < 0) {
-        printf("link %d RESV FAIL\r\n", link_id);
+        uapi_at_print("link %d RESV FAIL\r\n", link_id);
         if ((errno != EINTR) && (errno != EAGAIN)) {
             g_ip_link_ctl[link_id].link_stats = EXT_IP_LINK_WAIT_CLOSE;
         }
@@ -881,25 +869,25 @@ TD_PRV td_u32 ip_ip_resv_show_msg(td_u8 link_id)
     }
 
     if (ret < EXT_PRINT_SIZE_MAX) {
-        printf("\r\n+IPD,%d,%d,%s,%d:%s", link_id, ret, inet_ntoa(cln_addr.sin_addr), htons(cln_addr.sin_port),
+        uapi_at_print("\r\n+IPD,%d,%d,%s,%d:%s", link_id, ret, inet_ntoa(cln_addr.sin_addr), htons(cln_addr.sin_port),
             ip_buffer);
     } else if ((ret >= EXT_PRINT_SIZE_MAX) && (ret <= EXT_IP_RESV_BUF_LEN)) {
-        printf("\r\n+IPD,%d,%d,%s,%d:", link_id, ret, inet_ntoa(cln_addr.sin_addr), htons(cln_addr.sin_port));
+        uapi_at_print("\r\n+IPD,%d,%d,%s,%d:", link_id, ret, inet_ntoa(cln_addr.sin_addr), htons(cln_addr.sin_port));
         do {
             char print_out_buff[EXT_PRINT_SIZE_MAX] = {0};
             if ((memset_s(print_out_buff, sizeof(print_out_buff), 0x0, sizeof(print_out_buff)) != EOK) ||
                 (memcpy_s(print_out_buff, sizeof(print_out_buff) - 1, ip_buffer + print_len,
                 sizeof(print_out_buff) - 1) != EOK)) {
-                printf("{ip_ip_resv_output: print_out_buff memset_s/memcpy_s fail\r\n}");
+                uapi_at_print("{ip_ip_resv_output: print_out_buff memset_s/memcpy_s fail\r\n}");
             }
-            printf("%s", print_out_buff);
+            uapi_at_print("%s", print_out_buff);
 
             ret -= sizeof(print_out_buff) - 1;
             print_len += sizeof(print_out_buff) - 1;
         } while (ret >= (EXT_PRINT_SIZE_MAX - 1));
 
         if (ret > 0) {
-            printf("%s", ip_buffer + print_len);
+            uapi_at_print("%s", ip_buffer + print_len);
         }
     }
     free(ip_buffer);
@@ -970,10 +958,9 @@ TD_PRV td_void ip_tcp_send(td_u8 link_id, TD_CONST td_char *send_msg)
     ret = send(g_ip_link_ctl[link_id].sfd, send_msg, send_len, 0);
     osal_mutex_unlock(&g_ip_mux_id);
     if (ret <= 0) {
-        uapi_at_printf("ERROR\r\n");
         return;
     }
-    uapi_at_printf("SEND %d bytes\r\nOK\r\n", ret);
+    uapi_at_print("SEND %d bytes\r\n", ret);
     return;
 }
 
@@ -991,10 +978,9 @@ TD_PRV td_void ip_udp_send(td_u8 link_id, in_addr_t peer_ipaddr, td_u16 peer_por
         (struct sockaddr *)&cln_addr, (socklen_t)sizeof(cln_addr));
     osal_mutex_unlock(&g_ip_mux_id);
     if (ret <= 0) {
-        uapi_at_printf("ERROR\r\n");
         return;
     }
-    uapi_at_printf("SEND %d bytes\r\nOK\r\n", ret);
+    uapi_at_print("SEND %d bytes\r\n", ret);
     return;
 }
 
@@ -1019,13 +1005,13 @@ td_void at_send_recv_data(td_char *data)
 TD_PRV td_u32 ip_close_link(td_s32 link_id)
 {
     if (link_id >= EXT_IP_LINK_ID_MAX) {
-        uapi_at_printf("invalid link\r\n");
+        uapi_at_print("invalid link\r\n");
         return EXT_ERR_FAILURE;
     }
 
     osal_mutex_lock_timeout(&g_ip_mux_id, EXT_IP_MUX_WAIT_TIME);
     if (g_ip_link_ctl[link_id].link_stats == EXT_IP_LINK_ID_IDLE) {
-        uapi_at_printf("invalid link\r\n");
+        uapi_at_print("invalid link\r\n");
         osal_mutex_unlock(&g_ip_mux_id);
         return EXT_ERR_FAILURE;
     }
@@ -1040,7 +1026,7 @@ TD_PRV td_u32 ip_tcp_server_close(td_void)
     int i;
     osal_mutex_lock_timeout(&g_ip_mux_id, EXT_IP_MUX_WAIT_TIME);
     if (g_listen_fd.link_stats == EXT_IP_LINK_ID_IDLE) {
-        uapi_at_printf("no server\r\n");
+        uapi_at_print("no server\r\n");
         osal_mutex_unlock(&g_ip_mux_id);
         return EXT_ERR_FAILURE;
     }
@@ -1072,12 +1058,12 @@ TD_PRV td_void ip_monitor_link_close(td_void)
     osal_mutex_lock_timeout(&g_ip_mux_id, EXT_IP_MUX_WAIT_TIME);
     for (i = 0; i < EXT_IP_LINK_ID_MAX; i++) {
         if (g_ip_link_ctl[i].link_stats == EXT_IP_LINK_WAIT_CLOSE) {
-            uapi_at_printf("link %d CLOSED\r\n", i);
+            uapi_at_print("link %d CLOSED\r\n", i);
             ip_link_release(i);
         } else if (g_ip_link_ctl[i].link_stats == EXT_IP_LINK_USER_CLOSE) {
-            uapi_at_printf("link %d CLOSED\r\n", i);
+            uapi_at_print("link %d CLOSED\r\n", i);
             ip_link_release(i);
-            uapi_at_printf("OK\r\n");
+            uapi_at_print("OK\r\n");
         }
     }
 
@@ -1089,7 +1075,7 @@ TD_PRV td_void ip_monitor_link_close(td_void)
         closesocket(g_listen_fd.sfd);
         g_listen_fd.sfd = -1;
         g_listen_fd.link_stats = EXT_IP_LINK_ID_IDLE;
-        uapi_at_printf("OK\r\n");
+        uapi_at_print("OK\r\n");
     }
     osal_mutex_unlock(&g_ip_mux_id);
 }
@@ -1106,7 +1092,7 @@ TD_PRV td_void ip_tcp_accept(td_void)
     osal_mutex_lock_timeout(&g_ip_mux_id, EXT_IP_MUX_WAIT_TIME);
     resv_fd = accept(g_listen_fd.sfd, (struct sockaddr *)&cln_addr, (socklen_t *)&cln_addr_len);
     if (resv_fd < 0) {
-        uapi_at_printf("{accept failed, return is %d}\r\n", resv_fd);
+        uapi_at_print("{accept failed, return is %d}\r\n", resv_fd);
         osal_mutex_unlock(&g_ip_mux_id);
         return;
     }
@@ -1119,7 +1105,7 @@ TD_PRV td_void ip_tcp_accept(td_void)
         }
     }
     if ((i >= EXT_IP_LINK_ID_MAX) || (link_id == -1)) {
-        uapi_at_printf("no link id to use now\r\n");
+        uapi_at_print("no link id to use now\r\n");
         closesocket(resv_fd);
         osal_mutex_unlock(&g_ip_mux_id);
         return;
@@ -1130,7 +1116,7 @@ TD_PRV td_void ip_tcp_accept(td_void)
     g_ip_link_ctl[link_id].link_stats = EXT_IP_LINK_WAIT_RESV;
     g_ip_link_ctl[link_id].link_res = EXT_IP_LINK_AUTO;
     g_ip_link_ctl[link_id].ext_ip_protocol = EXT_IP_TCP;
-    uapi_at_printf("%d,CONNECT\r\n", link_id);
+    uapi_at_print("%d,CONNECT\r\n", link_id);
     osal_mutex_unlock(&g_ip_mux_id);
 
     return;
@@ -1151,7 +1137,7 @@ TD_PRV td_void ip_monitor_failure_proc(td_void)
         g_listen_fd.link_stats = EXT_IP_LINK_ID_IDLE;
     }
 
-    uapi_at_printf("{ip_monitor : ip monitor exit}\r\n");
+    uapi_at_print("{ip_monitor : ip monitor exit}\r\n");
 }
 
 TD_PRV td_void ip_monitor(td_void)
@@ -1183,7 +1169,7 @@ TD_PRV td_void ip_monitor(td_void)
         time_val.tv_usec = 500000; /* 500000 Timeout interval is 500ms */
         ret = lwip_select(sfd_max + 1, &read_set, 0, 0, &time_val);
         if (ret < 0) {
-            printf("{ip_monitor : socket select failure\r\n");
+            uapi_at_print("{ip_monitor : socket select failure\r\n");
             ip_monitor_failure_proc();
             osal_mutex_destroy(&g_ip_mux_id);
             break;
@@ -1214,7 +1200,7 @@ TD_PRV td_u32 ip_creat_ip_task(td_void)
     start_ip_task.uwResved = LOS_TASK_STATUS_DETACHED;
     td_u32 ret = LOS_TaskCreate((UINT32 *)(&g_ip_taskid), &start_ip_task);
     if (ret != EXT_ERR_SUCCESS) {
-        uapi_at_printf("{ip_creat_ip_task:task create failed 0x%08x.}\r\n", ret);
+        uapi_at_print("{ip_creat_ip_task:task create failed 0x%08x.}\r\n", ret);
         return EXT_ERR_FAILURE;
     }
 #endif
@@ -1233,7 +1219,7 @@ TD_PRV td_u32 ip_start_tcp_client(td_u8 link_id, const td_char *peer_ipaddr, td_
     }
     osal_mutex_lock_timeout(&g_ip_mux_id, EXT_IP_MUX_WAIT_TIME);
     if (g_ip_link_ctl[link_id].link_stats != EXT_IP_LINK_ID_IDLE) {
-        uapi_at_printf("invalid link\r\n");
+        uapi_at_print("invalid link\r\n");
         osal_mutex_unlock(&g_ip_mux_id);
         return EXT_ERR_FAILURE;
     }
@@ -1241,7 +1227,7 @@ TD_PRV td_u32 ip_start_tcp_client(td_u8 link_id, const td_char *peer_ipaddr, td_
 
     td_s32 sfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sfd == -1) {
-        uapi_at_printf("{ip_start_tcp_client: socket fail}\r\n");
+        uapi_at_print("{ip_start_tcp_client: socket fail}\r\n");
         return EXT_ERR_FAILURE;
     }
 
@@ -1249,7 +1235,7 @@ TD_PRV td_u32 ip_start_tcp_client(td_u8 link_id, const td_char *peer_ipaddr, td_
     tos = 128; /* 128:TOS设定为128，对应tid = 4，WLAN_WME_AC_VI */
     ret = setsockopt(sfd, IPPROTO_IP, IP_TOS, &tos, sizeof(tos));
     if (ret) {
-        uapi_at_printf("{ip_start_tcp_client: setsockopt TOPS fail, return is %d}\r\n", ret);
+        uapi_at_print("{ip_start_tcp_client: setsockopt TOPS fail, return is %d}\r\n", ret);
         closesocket(sfd);
         return EXT_ERR_FAILURE;
     }
@@ -1258,14 +1244,14 @@ TD_PRV td_u32 ip_start_tcp_client(td_u8 link_id, const td_char *peer_ipaddr, td_
     srv_addr.sin_port = htons (peer_port);
     ret = connect(sfd, (struct sockaddr *)&srv_addr, sizeof(srv_addr));
     if (ret != 0) {
-        uapi_at_printf("{ip_start_tcp_client: connect fail, return is %d}\r\n", ret);
+        uapi_at_print("{ip_start_tcp_client: connect fail, return is %d}\r\n", ret);
         closesocket(sfd);
         return EXT_ERR_FAILURE;
     }
 
     ip_set_tcp_link_info(link_id, sfd);
     if (ip_creat_ip_task() != EXT_ERR_SUCCESS) {
-        uapi_at_printf("{ip_start_tcp_client: creat ip task fail}\r\n");
+        uapi_at_print("{ip_start_tcp_client: creat ip task fail}\r\n");
         osal_mutex_lock_timeout(&g_ip_mux_id, EXT_IP_MUX_WAIT_TIME);
         ip_link_release(link_id);
         osal_mutex_unlock(&g_ip_mux_id);
@@ -1287,7 +1273,7 @@ TD_PRV td_u32 ip_start_udp(td_u8 link_id, td_u16 local_port)
     }
     osal_mutex_lock_timeout(&g_ip_mux_id, EXT_IP_MUX_WAIT_TIME);
     if (g_ip_link_ctl[link_id].link_stats != EXT_IP_LINK_ID_IDLE) {
-        uapi_at_printf("invalid link\r\n");
+        uapi_at_print("invalid link\r\n");
         osal_mutex_unlock(&g_ip_mux_id);
         return EXT_ERR_FAILURE;
     }
@@ -1295,7 +1281,7 @@ TD_PRV td_u32 ip_start_udp(td_u8 link_id, td_u16 local_port)
 
     td_s32 sfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sfd == -1) {
-        uapi_at_printf("{ip_start_udp: socket fail}\r\n");
+        uapi_at_print("{ip_start_udp: socket fail}\r\n");
         return EXT_ERR_FAILURE;
     }
 
@@ -1304,7 +1290,7 @@ TD_PRV td_u32 ip_start_udp(td_u8 link_id, td_u16 local_port)
     srv_addr.sin_port = htons(local_port);
     ret = bind(sfd, (struct sockaddr*)&srv_addr, sizeof(srv_addr));
     if (ret != 0) {
-        uapi_at_printf("{ip_start_udp:bind failed, return is %d}\r\n", ret);
+        uapi_at_print("{ip_start_udp:bind failed, return is %d}\r\n", ret);
         closesocket(sfd);
         return EXT_ERR_FAILURE;
     }
@@ -1312,14 +1298,14 @@ TD_PRV td_u32 ip_start_udp(td_u8 link_id, td_u16 local_port)
     tos = 128; /* 128:TOS is set to 128, corresponding to tid = 4，WLAN_WME_AC_VI */
     ret = setsockopt(sfd, IPPROTO_IP, IP_TOS, &tos, sizeof(tos));
     if (ret) {
-        uapi_at_printf("{ip_start_udp: setsockopt TOPS fail, return is %d}\r\n", ret);
+        uapi_at_print("{ip_start_udp: setsockopt TOPS fail, return is %d}\r\n", ret);
         closesocket(sfd);
         return EXT_ERR_FAILURE;
     }
 
     ip_set_udp_link_info(link_id, sfd);
     if (ip_creat_ip_task() != EXT_ERR_SUCCESS) {
-        uapi_at_printf("{ip_start_tcp_client: creat ip task fail}\r\n");
+        uapi_at_print("{ip_start_tcp_client: creat ip task fail}\r\n");
         osal_mutex_lock_timeout(&g_ip_mux_id, EXT_IP_MUX_WAIT_TIME);
         ip_link_release(link_id);
         osal_mutex_unlock(&g_ip_mux_id);
@@ -1362,7 +1348,6 @@ at_ret_t at_start_ip(const ipstart_args_t *args)
     } else {
         return AT_RET_SYNTAX_ERROR;
     }
-    printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1373,7 +1358,7 @@ at_ret_t ip_send_tcp(td_s32 argc, const ipsend_args_t *args)
     td_char *msg = NULL;
 
     if (argc != 3) { /* 3 Parameter verification */
-        uapi_at_printf("invalid link\r\n");
+        uapi_at_print("invalid link\r\n");
         osal_mutex_unlock(&g_ip_mux_id);
         return AT_RET_SYNTAX_ERROR;
     }
@@ -1383,13 +1368,13 @@ at_ret_t ip_send_tcp(td_s32 argc, const ipsend_args_t *args)
     len = (td_u16)atoi(args->para2);
     msg = (td_char*)malloc(len + 1);
     if (msg == TD_NULL) {
-        printf("ip_send_tcp::malloc fail\r\n");
+        uapi_at_print("ip_send_tcp::malloc fail\r\n");
         osal_mutex_unlock(&g_ip_mux_id);
         return AT_RET_SYNTAX_ERROR;
     }
     memset_s(msg, len + 1, '\0', len + 1);
     if (strncpy_s(msg, len + 1, send_msg, len) != EOK) {
-        printf("ip_send_tcp::strncpy_s fail\r\n");
+        uapi_at_print("ip_send_tcp::strncpy_s fail\r\n");
         free(msg);
         osal_mutex_unlock(&g_ip_mux_id);
         return AT_RET_SYNTAX_ERROR;
@@ -1409,7 +1394,7 @@ at_ret_t ip_send_udp(td_s32 argc, const ipsend_args_t *args)
     td_char *msg = NULL;
 
     if (argc != 5) { /* 5 Parameter verification */
-        uapi_at_printf("invalid link\r\n");
+        uapi_at_print("invalid link\r\n");
         osal_mutex_unlock(&g_ip_mux_id);
         return AT_RET_SYNTAX_ERROR;
     }
@@ -1424,13 +1409,13 @@ at_ret_t ip_send_udp(td_s32 argc, const ipsend_args_t *args)
     len = (td_u16)atoi(args->para2);
     msg = (td_char*)malloc(len + 1);
     if (msg == TD_NULL) {
-        printf("ip_send_udp::malloc fail\n");
+        uapi_at_print("ip_send_udp::malloc fail\n");
         osal_mutex_unlock(&g_ip_mux_id);
         return AT_RET_SYNTAX_ERROR;
     }
     memset_s(msg, len + 1, '\0', len + 1);
     if (strncpy_s(msg, len + 1, send_msg, len) != EOK) {
-        printf("ip_send_udp::strncpy_s fail\n");
+        uapi_at_print("ip_send_udp::strncpy_s fail\n");
         free(msg);
         osal_mutex_unlock(&g_ip_mux_id);
         return AT_RET_SYNTAX_ERROR;
@@ -1454,13 +1439,13 @@ at_ret_t at_ip_send(const ipsend_args_t *args)
 
     g_link_id = (td_u16)atoi(args->para1);
     if ((g_link_id < 0) || (g_link_id >= EXT_IP_LINK_ID_MAX)) {
-        uapi_at_printf("invalid link\r\n");
+        uapi_at_print("invalid link\r\n");
         return AT_RET_SYNTAX_ERROR;
     }
 
     osal_mutex_lock_timeout(&g_ip_mux_id, EXT_IP_MUX_WAIT_TIME);
     if (g_ip_link_ctl[g_link_id].link_stats == EXT_IP_LINK_ID_IDLE) {
-        uapi_at_printf("invalid link\r\n");
+        uapi_at_print("invalid link\r\n");
         osal_mutex_unlock(&g_ip_mux_id);
         return AT_RET_SYNTAX_ERROR;
     }
@@ -1482,13 +1467,13 @@ TD_PRV td_u32 ip_tcp_server_start(td_u16 local_port)
     td_u32 opt = 1;
 
     if (g_listen_fd.link_stats == EXT_IP_LINK_SERVER_LISTEN) {
-        uapi_at_printf("server is running\r\n");
+        uapi_at_print("server is running\r\n");
         return EXT_ERR_FAILURE;
     }
 
     g_listen_fd.sfd = socket(AF_INET, SOCK_STREAM, 0);
     if (g_listen_fd.sfd == -1) {
-        uapi_at_printf("{ip_tcp_server_start: creat socket failed}\r\n");
+        uapi_at_print("{ip_tcp_server_start: creat socket failed}\r\n");
         return EXT_ERR_FAILURE;
     }
 
@@ -1499,7 +1484,7 @@ TD_PRV td_u32 ip_tcp_server_start(td_u16 local_port)
     srv_addr.sin_port = htons(local_port);
     ret = bind(g_listen_fd.sfd, (struct sockaddr *)&srv_addr, sizeof(srv_addr));
     if (ret != 0) {
-        uapi_at_printf("{ip_tcp_server_start:bind failed, return is %d}\r\n", ret);
+        uapi_at_print("{ip_tcp_server_start:bind failed, return is %d}\r\n", ret);
 
         closesocket(g_listen_fd.sfd);
         g_listen_fd.sfd = -1;
@@ -1509,7 +1494,7 @@ TD_PRV td_u32 ip_tcp_server_start(td_u16 local_port)
 
     ret = listen(g_listen_fd.sfd, EXT_IP_LINK_SERVER_LISTEN);
     if (ret != 0) {
-        uapi_at_printf("{ip_tcp_server_start:listen failed, return is %d\n}", ret);
+        uapi_at_print("{ip_tcp_server_start:listen failed, return is %d\n}", ret);
 
         closesocket(g_listen_fd.sfd);
         g_listen_fd.sfd = -1;
@@ -1518,7 +1503,7 @@ TD_PRV td_u32 ip_tcp_server_start(td_u16 local_port)
     }
 
     if (ip_creat_ip_task() != EXT_ERR_SUCCESS) {
-        uapi_at_printf("{ip_tcp_server_start:ip_creat_ip_task fail}\r\n");
+        uapi_at_print("{ip_tcp_server_start:ip_creat_ip_task fail}\r\n");
 
         closesocket(g_listen_fd.sfd);
         g_listen_fd.sfd = -1;
@@ -1567,7 +1552,6 @@ at_ret_t at_ip_tcp_server(const iplisten_args_t *args)
     } else {
         return AT_RET_SYNTAX_ERROR;
     }
-    uapi_at_printf("OK\r\n");
 
     return AT_RET_OK;
 }

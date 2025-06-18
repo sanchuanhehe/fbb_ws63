@@ -219,6 +219,23 @@ errcode_t wifi_sta_scan_stop(void);
 
 /**
  * @if Eng
+ * @brief  Get softap scan results.
+ * @param  [out]  result Scan result.
+ * @param  [out]  size Number of scan result.
+ * @retval ERRCODE_SUCC        Execute successfully.
+ * @retval Other               Execute failed.
+ * @else
+ * @brief  获取softap扫描结果。
+ * @param  [out]  result 扫描的结果。
+ * @param  [out]  size 扫描到的网络数目。
+ * @retval ERRCODE_SUCC 成功。
+ * @retval Other        失败。
+ * @endif
+ */
+errcode_t wifi_ap_get_scan_info(wifi_scan_info_stru *result, uint32_t *size);
+
+/**
+ * @if Eng
  * @brief  Get sta scan results.
  * @param  [out]  result Scan result.
  * @param  [out]  size Number of scan result.
@@ -315,6 +332,42 @@ errcode_t wifi_sta_wnm_notify(const char *param, uint32_t len);
  * @endif
  */
 errcode_t wifi_sta_connect(const wifi_sta_config_stru *config);
+
+/**
+ * @if Eng
+ * @brief  Get ap security type of last connection.
+ * @param  [out]  param Security type.
+ * @retval ERRCODE_SUCC        Execute successfully.
+ * @retval Other               Execute failed.
+ * @else
+ * @brief  获取上一次连接的ap的加密方式.
+ * @param  [out]  param 加密方式。
+ * @retval ERRCODE_SUCC 成功。
+ * @retval Other        失败。
+ * @endif
+ */
+errcode_t wifi_sta_get_last_conn_security_type(wifi_conn_sec_stru *param);
+
+/**
+ * @if Eng
+ * @brief  Get last connecttion vendor ie.
+ * @param  [in]  mac Mac addr of ap.
+ * @param  [in]  mac_len Mac addr len of ap.
+ * @param  [out]  out_buffer Output buffer.
+ * @param  [out]  out_buffer_len Output buffer max len.
+ * @retval ERRCODE_SUCC        Execute successfully.
+ * @retval Other               Execute failed.
+ * @else
+ * @brief  获取上一次连接的ap的vendor ie.
+ * @param  [in]  mac AP的mac地址。
+ * @param  [in]  mac_len Mac地址长度。
+ * @param  [out]  out_buffer 输出缓冲区。
+ * @param  [out]  out_buffer_len 输出缓冲区最大长度。
+ * @retval ERRCODE_SUCC 成功。
+ * @retval Other        失败。
+ * @endif
+ */
+errcode_t wifi_get_last_conn_vendor_ie(uint8_t *mac, uint16_t mac_len, uint8_t *out_buffer, uint16_t out_buffer_len);
 
 /**
  * @if Eng
@@ -996,6 +1049,35 @@ errcode_t wifi_set_psd_mode(ext_psd_option_param *psd_option);
 */
 errcode_t wifi_set_psd_cb(wifi_psd_cb data_cb);
 
+/**
+* @if Eng
+* @brief  Config wifi sta connect parameters interface.
+* @param  [in]  para Each stage connect parameters of wifi sta.
+* @retval ERRCODE_SUCC        Execute successfully.
+* @retval Other               Execute failed.
+* @else
+* @brief  配置wifi sta连接参数接口。
+* @param  [in]  para wifi sta连接参数。
+* @retval ERRCODE_SUCC  成功。
+* @retval Other         失败。
+* @endif
+*/
+errcode_t wifi_sta_config_conn_paras(wifi_sta_conn_paras *para);
+
+/**
+* @if Eng
+* @brief  Get last dataframe rssi.
+* @param  [out]  data_rssi last dataframe rssi.
+* @retval ERRCODE_SUCC        Execute successfully.
+* @retval Other               Execute failed.
+* @else
+* @brief  获取最后一帧数据帧的信号强度。
+* @param  [out]  data_rssi 最后一帧数据帧信号强度。
+* @retval ERRCODE_SUCC  成功。
+* @retval Other         失败。
+* @endif
+*/
+errcode_t wifi_sta_get_rssi_of_data_frame(int8_t *data_rssi);
 /**
  * @}
  */

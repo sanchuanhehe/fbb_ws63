@@ -1,0 +1,120 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="gle ssap pdu send cbk malloc fail @gle_ssap_server.c(57),ERROR" ID="0xde7a01ca" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="gle ssap pdu send cbk not found link on addr:0x%02x:**:**:**:%02x:%02x @gle_ssap_server.c(70),ERROR" ID="0xde7a0232" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ssap pdu data send data[%u]:%02x @gle_ssap_server.c(79),INFO" ID="0xde7a027d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle ssap init  ok @gle_ssap_server.c(99),INFO" ID="0xde7a031d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssap reg item print enter @gle_ssap_server.c(109),INFO" ID="0xde7a036d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="primary service item @gle_ssap_server.c(114),INFO" ID="0xde7a0395" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="second service item @gle_ssap_server.c(117),INFO" ID="0xde7a03ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="property item @gle_ssap_server.c(120),INFO" ID="0xde7a03c5" />
+			<MSG STRUCTURE="diag_log_msg5" NAME="item[%u]: hdl:0x%02x, type:0x%x, operate_indication:0x%x, permission:0x%x @gle_ssap_server.c(128),INFO" ID="0xde7a0405" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="uuid.len = %u, uuid:0x%04x @gle_ssap_server.c(130),INFO" ID="0xde7a0415" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="item_data[%u]: 0x%02x @gle_ssap_server.c(134),INFO" ID="0xde7a0435" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps start service handle param null @gle_ssap_server.c(151),ERROR" ID="0xde7a04ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps start service handle memcpy uuid failed @gle_ssap_server.c(158),ERROR" ID="0xde7a04f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ssaps event_callback_handler]ev:0x%x @gle_ssap_server.c(220),INFO" ID="0xde7a06e5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps_cbks null error @gle_ssap_server.c(223),ERROR" ID="0xde7a06fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssap server reg tree enter @gle_ssap_server.c(259),INFO" ID="0xde7a081d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssap server reg tree ok @gle_ssap_server.c(261),INFO" ID="0xde7a082d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="get item value by type [0x%02x] failed @gle_ssap_server.c(282),ERROR" ID="0xde7a08d2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="new_data-&gt;value[%u]: 0x%02x @gle_ssap_server.c(291),INFO" ID="0xde7a091d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="addr:0x%02x:**:**:**:%02x:%02x ccc value 0x%02X @gle_ssap_server.c(301),INFO" ID="0xde7a096d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="property_hdl:0x%04x @gle_ssap_server.c(319),INFO" ID="0xde7a09fd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="service start_hdl = 0x%04x, end_hdl = 0x%04x @gle_ssap_server.c(329),INFO" ID="0xde7a0a4d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="find service-&gt;hdl:0x%04x @gle_ssap_server.c(343),INFO" ID="0xde7a0abd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="update property service info memcpy uuid failed @gle_ssap_server.c(346),ERROR" ID="0xde7a0ad2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="find service null by hdl:0x%04x @gle_ssap_server.c(350),ERROR" ID="0xde7a0af2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps item value set property is NULL @gle_ssap_server.c(364),ERROR" ID="0xde7a0b62" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="find item null by hdl:0x%x @gle_ssap_server.c(369),ERROR" ID="0xde7a0b8a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ssaps update item value hdl:%x, ccc_value = 0x%x @gle_ssap_server.c(392),INFO" ID="0xde7a0c45" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ssaps notify/indicate error, cccd: %d, op_ind: %d  @gle_ssap_server.c(406),WARNING" ID="0xde7a0cb3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps update item find tl by addr failed @gle_ssap_server.c(417),INFO" ID="0xde7a0d0d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="uuid.len = %d, uuid:0x%04x, begin_hdl:0x%04x, end_hdl:0x%04x @gle_ssap_server.c(464),INFO" ID="0xde7a0e85" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="find_hdl:0x%04x, uuid:0x%04x @gle_ssap_server.c(472),INFO" ID="0xde7a0ec5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ssaps find items by uuid]new node fail @gle_ssap_server.c(476),ERROR" ID="0xde7a0ee2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ssaps find_items_by_uuid]list_count[%d] @gle_ssap_server.c(487),INFO" ID="0xde7a0f3d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ssaps update_item_value_by_uuid]param null @gle_ssap_server.c(501),ERROR" ID="0xde7a0faa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ssaps find_handle_by_uuid]param null @gle_ssap_server.c(532),ERROR" ID="0xde7a10a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="find handle by uuid mem new failed @gle_ssap_server.c(538),ERROR" ID="0xde7a10d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="find handle by uuid memcpy failed @gle_ssap_server.c(544),ERROR" ID="0xde7a1102" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="find handle by uuid hdl_count = %d @gle_ssap_server.c(553),INFO" ID="0xde7a114d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="handl_result[%d] = 0x%04x @gle_ssap_server.c(561),INFO" ID="0xde7a118d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="service_uuid memcpy failed @gle_ssap_server.c(568),ERROR" ID="0xde7a11c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="tl-&gt;mtu = %u error @gle_ssap_server.c(592),ERROR" ID="0xde7a1282" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps read rsp err_code:0x%02x @gle_ssap_server.c(599),ERROR" ID="0xde7a12ba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps read rsp err_code:0x%02x @gle_ssap_server.c(605),ERROR" ID="0xde7a12ea" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ssaps read rsp]data_len = %u, val-&gt;len = %u @gle_ssap_server.c(609),INFO" ID="0xde7a130d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ssaps read rsp]op_code:0x%02x, control_code:0x%02x, handle:0x%04x, data_len:%u @gle_ssap_server.c(613),INFO" ID="0xde7a132d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps read rsp malloc data fail @gle_ssap_server.c(616),ERROR" ID="0xde7a1342" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps read rsp memcpy failed @gle_ssap_server.c(626),ERROR" ID="0xde7a1392" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps pend_property new failed @gle_ssap_server.c(645),ERROR" ID="0xde7a142a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="tl-&gt;mtu = %u error @gle_ssap_server.c(667),ERROR" ID="0xde7a14da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ssaps read_by_uuid_rsp]err_code:0x%02x @gle_ssap_server.c(682),ERROR" ID="0xde7a1552" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ssaps read_by_uuid_rsp]data_len = %u, val-&gt;len = %u @gle_ssap_server.c(687),INFO" ID="0xde7a157d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="op_code:0x%02x, control_code:0x%02x, handle:0x%04x, data_len:%u @gle_ssap_server.c(694),INFO" ID="0xde7a15b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ssaps read_by_uuid_rsp]data malloc fail @gle_ssap_server.c(697),ERROR" ID="0xde7a15ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ssaps read_by_uuid_rsp]memcpy failed @gle_ssap_server.c(708),ERROR" ID="0xde7a1622" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="tl-&gt;mtu = %u error @gle_ssap_server.c(736),ERROR" ID="0xde7a1702" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps write rsp err_code:0x%02x @gle_ssap_server.c(750),ERROR" ID="0xde7a1772" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ssaps write rsp]data_len = %u, val-&gt;len = %u @gle_ssap_server.c(762),INFO" ID="0xde7a17d5" />
+			<MSG STRUCTURE="diag_log_msg5" NAME="ssaps write rsp op_code:0x%02x, control_code:0x%02x, handle:0x%04x, head_len:%u, data_len:%u @gle_ssap_server.c(766),INFO" ID="0xde7a17f5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps write rsp malloc data fail @gle_ssap_server.c(769),ERROR" ID="0xde7a180a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps write rsp memcpy failed @gle_ssap_server.c(785),ERROR" ID="0xde7a188a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps item value rsp op_code:0x%02x @gle_ssap_server.c(809),INFO" ID="0xde7a194d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ssaps item value send tl-&gt;status:0x%x, tl-&gt;mtu:%u @gle_ssap_server.c(840),INFO" ID="0xde7a1a45" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ssaps upd item value err:0x%02x hdl:0x%04x @gle_ssap_server.c(878),ERROR" ID="0xde7a1b72" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="find item null by hdl:0x%04x @gle_ssap_server.c(888),ERROR" ID="0xde7a1bc2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps update item value err_code:0x%02x @gle_ssap_server.c(895),ERROR" ID="0xde7a1bfa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="property value mem new failed @gle_ssap_server.c(918),ERROR" ID="0xde7a1cb2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps write rsp handle mem cpy failed @gle_ssap_server.c(924),ERROR" ID="0xde7a1ce2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="property_uuid memcpy failed @gle_ssap_server.c(974),ERROR" ID="0xde7a1e72" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="find item null by hdl:0x%04x @gle_ssap_server.c(1014),ERROR" ID="0xde7a1fb2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps write handle data len[%u] error @gle_ssap_server.c(1032),ERROR" ID="0xde7a2042" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="op_code[0x%02x], handle[0x%02x] @gle_ssap_server.c(1040),INFO" ID="0xde7a2085" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="data_type[%u], data_len[%u] @gle_ssap_server.c(1042),INFO" ID="0xde7a2095" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="property mem new failed @gle_ssap_server.c(1047),ERROR" ID="0xde7a20ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps write handle mem cpy failed @gle_ssap_server.c(1058),ERROR" ID="0xde7a2112" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ssaps write_handle]addr memcpy failed @gle_ssap_server.c(1064),ERROR" ID="0xde7a2142" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps write req handle data len[%u] error @gle_ssap_server.c(1086),ERROR" ID="0xde7a21f2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="op_code[0x%02x], control_code[0x%02x], handle[0x%02x] @gle_ssap_server.c(1102),INFO" ID="0xde7a2275" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="data_type[%u], data_len[%u] @gle_ssap_server.c(1104),INFO" ID="0xde7a2285" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="property mem new failed @gle_ssap_server.c(1112),ERROR" ID="0xde7a22c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps write req handle mem cpy failed @gle_ssap_server.c(1124),ERROR" ID="0xde7a2322" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ssaps write req handle]addr memcpy failed @gle_ssap_server.c(1130),ERROR" ID="0xde7a2352" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="get item value by type type[0x%02x] @gle_ssap_server.c(1150),INFO" ID="0xde7a23f5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="get item value by type hdl:0x%x, type[0x%02x] failed @gle_ssap_server.c(1155),ERROR" ID="0xde7a241a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="item_value-&gt;value[%u]: 0x%02x @gle_ssap_server.c(1162),INFO" ID="0xde7a2455" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="find item null by hdl:0x%x @gle_ssap_server.c(1184),ERROR" ID="0xde7a2502" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps read req handle data len[%u] error @gle_ssap_server.c(1209),ERROR" ID="0xde7a25ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps not support multi read @gle_ssap_server.c(1213),ERROR" ID="0xde7a25ea" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="op_code[0x%02x], control_code[0x%02x], handle[0x%04x], data_type[0x%02x] @gle_ssap_server.c(1227),INFO" ID="0xde7a265d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps read req handle mem cpy failed @gle_ssap_server.c(1233),ERROR" ID="0xde7a268a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="property_uuid memcpy failed @gle_ssap_server.c(1240),ERROR" ID="0xde7a26c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="find item null by hdl:0x%04x @gle_ssap_server.c(1278),ERROR" ID="0xde7a27f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="find pendding list by request param is NULL @gle_ssap_server.c(1298),ERROR" ID="0xde7a2892" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="find pendding list by %u fail @gle_ssap_server.c(1305),ERROR" ID="0xde7a28ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="property mem new failed @gle_ssap_server.c(1320),ERROR" ID="0xde7a2942" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="item_hdl[%04x]:len = %u @gle_ssap_server.c(1394),INFO" ID="0xde7a2b95" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ssaps read_by_uuid_rsp_data]len:%u @gle_ssap_server.c(1438),INFO" ID="0xde7a2cf5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ssaps read_by_uuid_rsp_data]rsp_data null @gle_ssap_server.c(1445),ERROR" ID="0xde7a2d2a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="data_indication:0x%04x, item_value-&gt;len:%u @gle_ssap_server.c(1492),INFO" ID="0xde7a2ea5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ssaps read_by_uuid_req]len[%u] invalid @gle_ssap_server.c(1526),ERROR" ID="0xde7a2fb2" />
+			<MSG STRUCTURE="diag_log_msg5" NAME="op_code[0x%02x], control_code[0x%02x], begin_hdl[0x%04x], end_hdl[0x%04x], data_type[0x%02x] @gle_ssap_server.c(1539),INFO" ID="0xde7a301d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="uuid.len[%u], uuid[0x%04x] @gle_ssap_server.c(1542),INFO" ID="0xde7a3035" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssap read by uuid len error: %d @gle_ssap_server.c(1556),INFO" ID="0xde7a30a5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ssaps read_by_uuid_req]addr or uuid memcpy failed @gle_ssap_server.c(1571),ERROR" ID="0xde7a311a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ssaps exchange_mtu_rsp]op_code:0x%02x, control_code:0x%02x, rmt version:%02x @gle_ssap_server.c(1604),INFO" ID="0xde7a3225" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ssaps exchange info rsp]malloc fail @gle_ssap_server.c(1607),ERROR" ID="0xde7a323a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ssaps tl_exchange_info_rsp]addr:0x%02x:**:**:**:%02x:%02x, mtu:%u @gle_ssap_server.c(1635),INFO" ID="0xde7a331d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ssaps exchange_info_handle]len[%u] error @gle_ssap_server.c(1658),ERROR" ID="0xde7a33d2" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="op_code[0x%02x], control_code[0x%02x], mtu[%u], version[0x%04x] @gle_ssap_server.c(1666),INFO" ID="0xde7a3415" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="mtu not support, set default @gle_ssap_server.c(1668),INFO" ID="0xde7a3425" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssaps indicate cfm handle data len[%u] error @gle_ssap_server.c(1687),ERROR" ID="0xde7a34ba" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="op_code[0x%02x], control_code[0x%02x], data_len[%u] @gle_ssap_server.c(1695),INFO" ID="0xde7a34fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="value_pdu mem new failed @gle_ssap_server.c(1700),ERROR" ID="0xde7a3522" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="value_pdu mem cpy failed @gle_ssap_server.c(1707),ERROR" ID="0xde7a355a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ssapc value_handle]memcpy addr failed @gle_ssap_server.c(1713),ERROR" ID="0xde7a358a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ssaps set mtu len error ] value[0x%x] error @gle_ssap_server.c(1733),ERROR" ID="0xde7a362a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="gle ssap create tl link by addr add dev on&quot; &quot;addr:0x%02x:**:**:**:%02x:%02x @gle_ssap_server.c(1770),INFO" ID="0xde7a3755" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="gle ssap delete link on addr:0x%02x:**:**:**:%02x:%02x @gle_ssap_server.c(1793),INFO" ID="0xde7a380d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="gle ssap not found link on addr:0x%02x:**:**:**:%02x:%02x @gle_ssap_server.c(1798),INFO" ID="0xde7a3835" />
+			</MSG_LOG>

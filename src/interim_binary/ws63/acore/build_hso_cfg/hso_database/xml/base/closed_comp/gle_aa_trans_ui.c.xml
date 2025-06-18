@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[GLE AA] gle_aa_trans_data_send_busy, lcid: %d, busy_val: %u. @gle_aa_trans_ui.c(29),INFO" ID="0xde5800ed" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE AA] controller data send, co_hdl: 0x%04x, data_index: 0x%04x, len: %d. @gle_aa_trans_ui.c(40),INFO" ID="0xde580145" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle access controller data cbk in @gle_aa_trans_ui.c(49),INFO" ID="0xde58018d" />
+			</MSG_LOG>

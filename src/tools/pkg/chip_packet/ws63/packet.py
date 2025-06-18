@@ -79,9 +79,18 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
     target_env = TargetEnvironment(pack_style_str)
     defines = target_env.get('defines')
     if "CONFIG_SUPPORT_HILINK_INDIE_UPGRADE" in defines:
-        hilink_bin_dir = os.path.join(SDK_DIR, "interim_binary", "ws63", "bin", "hilink_bin")
+        hilink_interim_sign_file = os.path.join(SDK_DIR, "interim_binary", "ws63", "bin", "hilink_bin", "ws63-liteos-hilink-sign.bin")
+        hilink_output_sign_file = os.path.join(SDK_DIR, "output", "ws63", "acore", "ws63-liteos-hilink", "ws63-liteos-hilink-sign.bin")
+        hilink_target_packet_dir = os.path.join(SDK_DIR, "output", "ws63", "acore", "hilink_bin")
+        if not os.path.isdir(hilink_target_packet_dir):
+            os.makedirs(hilink_target_packet_dir)
+        if os.path.isfile(hilink_interim_sign_file):
+            shutil.copy(hilink_interim_sign_file, hilink_target_packet_dir)
+        if os.path.isfile(hilink_output_sign_file):
+            shutil.copy(hilink_output_sign_file, hilink_target_packet_dir)
+        hilink_bin_dir = os.path.join(SDK_DIR, "output", "ws63", "acore", "hilink_bin")
         hilink_bin = os.path.join(hilink_bin_dir, "ws63-liteos-hilink-sign.bin")
-        hilink_bx = hilink_bin + f"|0x406000|{hex(get_file_size(hilink_bin))}|1"
+        hilink_bx = hilink_bin + f"|0x3F0000|{hex(get_file_size(hilink_bin))}|1"
 
     # efuse bin
     efuse_bin = os.path.join(efuse_bin_dir, "efuse_cfg.bin")

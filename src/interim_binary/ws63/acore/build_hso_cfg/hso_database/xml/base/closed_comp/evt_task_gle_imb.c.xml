@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[BGTP]evt_task_gle_imb_create env exist, con_hdl %d @evt_task_gle_imb.c(299),ERROR" ID="0x891a095a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[BGTP] evt_task_gle_imb_cancel_cbk con_hdl 0x%x, ts 0x%x, es_sn %d @evt_task_gle_imb.c(538),INFO" ID="0x891a10d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[IMB][RX]RX LEN ERR! @evt_task_gle_imb.c(913),ERROR" ID="0x891a1c8a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[BGTP]evt_task_gle_imb_process_rx_desc_isr status:0x%x @evt_task_gle_imb.c(958),INFO" ID="0x891a1df5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP] evt_task_gle_imb_statistics1: per=%d, noerr=%d, syncerr=%d, othererr=%d @evt_task_gle_imb.c(1471),INFO" ID="0x891a2dfd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP] GLE imb rx error, 8 packet status 0x%x, 0x%x, 0x%x, 0x%x @evt_task_gle_imb.c(1494),WARNING" ID="0x891a2eb3" />
+			</MSG_LOG>

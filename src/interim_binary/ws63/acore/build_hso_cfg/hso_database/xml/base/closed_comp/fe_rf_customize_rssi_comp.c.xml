@@ -1,0 +1,8 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_set_all_rssi_comp::band:%d @fe_rf_customize_rssi_comp.c(30),ERROR" ID="0x852800f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="fe_custom_set_all_rssi_comp::mem cpy fail. @fe_rf_customize_rssi_comp.c(34),ERROR" ID="0x85280112" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="fe_custom_set_all_rssi_comp:set rssi comp[%d]:%d @fe_rf_customize_rssi_comp.c(38),INFO" ID="0x85280135" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_set_rssi_comp::band:%d. @fe_rf_customize_rssi_comp.c(49),ERROR" ID="0x8528018a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_set_rssi_comp::subband:%d out of range. @fe_rf_customize_rssi_comp.c(53),ERROR" ID="0x852801aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_get_rssi_comp::band:%d. @fe_rf_customize_rssi_comp.c(66),ERROR" ID="0x85280212" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_get_rssi_comp::subband:%d out of range. @fe_rf_customize_rssi_comp.c(70),ERROR" ID="0x85280232" />
+			</MSG_LOG>

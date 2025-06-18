@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[Error] gattc register callbacks failed,ret = %x @ble_at_cmd_gatt_test.c(169),ERROR" ID="0xd846054a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] gatts register callbacks failed,ret = %x @ble_at_cmd_gatt_test.c(269),ERROR" ID="0xd846086a" />
+			</MSG_LOG>

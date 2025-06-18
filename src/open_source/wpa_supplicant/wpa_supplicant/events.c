@@ -67,7 +67,6 @@
 #include "driver_soc_at.h"
 #include "wpa_supplicant_if.h"
 
-
 #define MAX_OWE_TRANSITION_BSS_SELECT_COUNT 5
 
 #ifdef CONFIG_SSID_RECONNECT
@@ -3990,7 +3989,11 @@ static void wpa_supplicant_event_assoc(struct wpa_supplicant *wpa_s,
 		wpa_supplicant_set_state(wpa_s, WPA_COMPLETED);
 	} else if (!ft_completed) {
 		/* Timeout for receiving the first EAPOL packet */
-		wpa_supplicant_req_auth_timeout(wpa_s, 10, 0);
+        if (wpa_s->eapol1_config_recv_timeout != 0) {
+            wpa_supplicant_req_auth_timeout(wpa_s, 0, wpa_s->eapol1_config_recv_timeout * 1000); /* 1000:ms to us */
+        } else {
+            wpa_supplicant_req_auth_timeout(wpa_s, 3, 0);
+        }
 	}
 	wpa_supplicant_cancel_scan(wpa_s);
 #ifdef CONFIG_IEEE80211R
@@ -4188,6 +4191,9 @@ static int could_be_psk_mismatch(struct wpa_supplicant *wpa_s, u16 reason_code,
 	   当status < 16时, 认为密码可能错误, 否则可能是被对端拉黑 */
 	if (wpa_key_mgmt_sae(wpa_s->key_mgmt) && wpa_s->wpa_state == WPA_ASSOCIATING
 		&& reason_code < WLAN_REASON_GROUP_KEY_UPDATE_TIMEOUT + WLAN_MAC_EXT_AUTH_FAIL) {
+		if ((locally_generated == 1 && reason_code == WLAN_REASON_DEAUTH_LEAVING)) {
+			wpa_s->sae_timeout = 1;
+		}
 		return 1;
 	}
 	/* 需要密码校验场景下，未收到4-1 eapol帧也认为是密码错误 */
@@ -4236,6 +4242,44 @@ static void wpa_supplicatn_ssid_reconnect(void *eloop_ctx, void *timeout_ctx)
 	}
 }
 #endif
+
+static void wpa_supplicant_event_clear_disconn_atribute(struct wpa_supplicant *wpa_s)
+{
+    wpa_s->mgmt_type = 0;
+    wpa_s->eapol_timeout = 0;
+    wpa_s->eapol_state = 0;
+    wpa_s->is_sae = 0;
+    wpa_s->sae_timeout = 0;
+    wpa_s->sae_auth_state = 0;
+}
+static void wpa_supplicant_event_add_disconn_atribute(struct wpa_supplicant *wpa_s,
+    event_wifi_disconnected *disconnect)
+{
+    disconnect->mgmt_type = wpa_s->mgmt_type;
+    if (wpa_key_mgmt_sae(wpa_s->key_mgmt)) {
+        disconnect->is_sae = 1;
+    }
+
+    switch (wpa_s->wpa_state) {
+        case WPA_ASSOCIATED :
+            disconnect->eapol_timeout = wpa_s->eapol_timeout;
+            disconnect->eapol_state = wpa_s->eapol_state;
+            break;
+        case WPA_4WAY_HANDSHAKE:
+            disconnect->eapol_timeout = wpa_s->eapol_timeout;
+            disconnect->eapol_state = wpa_s->eapol_state;
+            break;
+        case WPA_ASSOCIATING:
+            disconnect->auth_stage = wpa_s->auth_stage;
+            disconnect->sae_timeout = wpa_s->sae_timeout;
+            disconnect->sae_auth_state = wpa_s->sae_auth_state;
+            break;
+        default:
+            break;
+    }
+
+    wpa_supplicant_event_clear_disconn_atribute(wpa_s);
+}
 
 static void wpa_supplicant_event_disassoc_finish(struct wpa_supplicant *wpa_s,
 						 u16 reason_code,
@@ -4403,6 +4447,7 @@ static void wpa_supplicant_event_disassoc_finish(struct wpa_supplicant *wpa_s,
                 wpa_warning_log1(MSG_DEBUG, "wpa_supplicant_event_disassoc_finish eapol err convert reason[%d] to WLAN_REASON_4WAY_HANDSHAKE_TIMEOUT", reason_code);
 				disconnect.reason_code = WLAN_REASON_4WAY_HANDSHAKE_TIMEOUT;
 			}
+			wpa_supplicant_event_add_disconn_atribute(wpa_s, &disconnect);
 			wpa_comm_event_report(EXT_WIFI_EVT_DISCONNECTED, wpa_s, &disconnect);
 		}
 #endif /* LOS_WPA_PATCH */
@@ -4926,6 +4971,10 @@ static void wpas_event_disassoc(struct wpa_supplicant *wpa_s,
 		addr = info->addr;
 		ie = info->ie;
 		ie_len = info->ie_len;
+		wpa_s->mgmt_type = (info->reason_code >> 15) & 1; /* 15:driver maybe set reason code bit15 */
+		wpa_s->auth_stage = (info->reason_code >> 14) & 1; /* 14:driver maybe set reason code bit14 */
+		info->reason_code = info->reason_code & ~(1 << 15);
+		info->reason_code = info->reason_code & ~(1 << 14);
 		reason_code = info->reason_code;
 		locally_generated = info->locally_generated;
 #ifndef CONFIG_PRINT_NOUSE
@@ -5690,7 +5739,7 @@ void wpa_supplicant_event(void *ctx, enum wpa_event_type event,
 	if (wifi_dev == NULL)
 		return;
 
-	if (wifi_dev->iftype == EXT_WIFI_IFTYPE_AP) {
+	if (wifi_dev->iftype == EXT_WIFI_IFTYPE_AP || wifi_dev->iftype == EXT_WIFI_IFTYPE_P2P_GO) {
 		hostapd_event(g_hapd, event, data);
 		return;
 	}

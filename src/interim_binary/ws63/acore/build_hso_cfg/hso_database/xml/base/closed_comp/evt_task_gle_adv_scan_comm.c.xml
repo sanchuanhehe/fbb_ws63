@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[gle][scan]evt_task_gle_scan_check_aux_ptr, aux_offset=%d, channel_idx=%d @evt_task_gle_adv_scan_comm.c(35),WARNING" ID="0x890a011b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[gle][scan]AUX phy check fail, frame_format=%d, phy=%d, pilot_ratio=%d @evt_task_gle_adv_scan_comm.c(42),WARNING" ID="0x890a0153" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="evt_task_gle_read_adv_auxptr early version offset(%d) @evt_task_gle_adv_scan_comm.c(252),INFO" ID="0x890a07e5" />
+			</MSG_LOG>

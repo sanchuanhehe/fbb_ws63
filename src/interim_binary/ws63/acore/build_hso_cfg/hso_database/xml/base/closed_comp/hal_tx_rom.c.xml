@@ -1,0 +1,8 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hh503_irq_tx_complete_isr:base_dscr is null} @hal_tx_rom.c(61),WARNING" ID="0x81b401eb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_irq_tx_complete_isr:callback failed[%d]} @hal_tx_rom.c(83),WARNING" ID="0x81b4029b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_irq_tx_queue_al_empty_isr:: rst=0x%x. que=%d} @hal_tx_rom.c(115),WARNING" ID="0x81b4039b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_log_txq_overrun::invalid param,hal_device[%p] param[%d].} @hal_tx_rom.c(138),ERROR" ID="0x81b40452" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{hal_log_txq_overrun::sw act ppdu_cnt=%d, sw record ppdu_cnt=%d, tx_q_status=%d, value=%d.} @hal_tx_rom.c(159),ERROR" ID="0x81b404fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_is_hw_tx_queue_empty::hal_device is NULL @hal_tx_rom.c(171),ERROR" ID="0x81b4055a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_tx_clear_tx_hw_queue::hal_device null.} @hal_tx_rom.c(193),ERROR" ID="0x81b4060a" />
+			</MSG_LOG>

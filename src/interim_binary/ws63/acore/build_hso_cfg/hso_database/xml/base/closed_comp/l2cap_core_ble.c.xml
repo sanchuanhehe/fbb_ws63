@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[L2CAP][CREDIT FLOW CONTROL] ACTION=INVALID_ACL, PSM=%d, IS_LE=%d @l2cap_core_ble.c(306),WARNING" ID="0xdbb60993" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[L2CAP][CREDIT FLOW CONTROL] ACTION=INVALID_ACL, CID=%d, IS_LE=%d @l2cap_core_ble.c(311),WARNING" ID="0xdbb609bb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[L2CAP] k-frame SDU length greater than MTU  @l2cap_core_ble.c(456),INFO" ID="0xdbb60e45" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[L2CAP] k-frame assemble memcpy error @l2cap_core_ble.c(469),ERROR" ID="0xdbb60eaa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[L2CAP] Total length of segments greater than SDU length specified in first K-frame  @l2cap_core_ble.c(474),INFO" ID="0xdbb60ed5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[L2CAP]l2cap data le oriented pend2list memcpy error @l2cap_core_ble.c(555),ERROR" ID="0xdbb6115a" />
+			</MSG_LOG>

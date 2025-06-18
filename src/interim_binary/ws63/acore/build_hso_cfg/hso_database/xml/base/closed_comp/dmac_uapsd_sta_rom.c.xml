@@ -1,0 +1,8 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{dmac_uapsd_send_qosnull:: ac %d is too large.} @dmac_uapsd_sta_rom.c(62),ERROR" ID="0x803001f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_uapsd_send_qosnull::net_buf failed.} @dmac_uapsd_sta_rom.c(69),ERROR" ID="0x8030022a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_uapsd_send_qosnull::tx_process_data failed[%d].} @dmac_uapsd_sta_rom.c(90),ERROR" ID="0x803002d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_uapsd_trigger_sp_sta::pm fsm not attached.} @dmac_uapsd_sta_rom.c(110),ERROR" ID="0x80300372" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_uapsd_trigger_sp_sta::ESOP [%d] TIMEOUT} @dmac_uapsd_sta_rom.c(123),WARNING" ID="0x803003db" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_uapsd_trigger_sp_sta::send_null_frame to active failed[%d]} @dmac_uapsd_sta_rom.c(142),WARNING" ID="0x80300473" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_uapsd_tx_process_data_sta, tx_ctl is null} @dmac_uapsd_sta_rom.c(289),ERROR" ID="0x8030090a" />
+			</MSG_LOG>

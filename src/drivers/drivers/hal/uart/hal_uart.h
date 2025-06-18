@@ -313,6 +313,7 @@ typedef errcode_t (*hal_uart_callback_t)(uart_bus_t bus, hal_uart_evt_id_t evt, 
  * @param  [in]  pins The PINs to use for UART TX, RX, RTS and CTS.
  * @param  [in]  attr UART attributes.
  * @param  [in]  flow_ctrl UART flow control type.
+ * @param  [in]  extra_attr UART attributes for UART TX/RX fifo level
  * @retval ERRCODE_SUCC   Success.
  * @retval Other        Failure. For details, see @ref errcode_t
  * @else
@@ -322,6 +323,7 @@ typedef errcode_t (*hal_uart_callback_t)(uart_bus_t bus, hal_uart_evt_id_t evt, 
  * @param  [in]  pins UART的引脚，包括TX, RX, RTS 和 CTS
  * @param  [in]  attr UART的基本配置参数
  * @param  [in]  flow_ctrl UART流控类型
+ * @param  [in]  UART的额外配置参数 TX/RX FIFO水线
  * @retval ERRCODE_SUCC 成功
  * @retval Other        失败，参考 @ref errcode_t
  * @endif
@@ -543,6 +545,7 @@ errcode_t hal_uart_set_rx_fifo_int_level(uart_bus_t bus, uart_fifo_rx_int_lvl_t 
  * @param  [in]  pins The PINs to use for UART TX, RX, RTS and CTS.
  * @param  [in]  attr UART attributes.
  * @param  [in]  flow_ctrl UART flow control type.
+ * @param  [in]  extra_attr UART attributes for UART TX/RX fifo level
  * @retval ERRCODE_SUCC   Success.
  * @retval Other        Failure. For details, see @ref errcode_t
  * @else
@@ -552,6 +555,7 @@ errcode_t hal_uart_set_rx_fifo_int_level(uart_bus_t bus, uart_fifo_rx_int_lvl_t 
  * @param  [in]  pins UART的引脚，包括TX, RX, RTS 和 CTS
  * @param  [in]  attr UART的基本配置参数
  * @param  [in]  flow_ctrl UART流控类型
+ * @param  [in]  extra_attr UART的额外配置参数 TX/RX FIFO水线
  * @retval ERRCODE_SUCC 成功
  * @retval Other        失败，参考 @ref errcode_t
  * @endif
