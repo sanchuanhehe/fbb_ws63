@@ -1,0 +1,100 @@
+{%- extends "!layout.html" %}
+
+
+{%- block extrahead %}
+<!-- 加载版本数据 -->
+<script type="text/javascript" src="{{ versions_url }}"></script>
+
+<!-- 图片放大 -->
+<link rel="stylesheet" type="text/css" href="{{ pathto('_static/css/viewer.min.css', 1) }}">
+<script src="{{ pathto('_static/js/viewer.min.js', 1) }}"></script>
+
+<!-- 全局变量扩展 -->
+<script type="text/javascript">
+  const USER_DEFINED_OPTIONS = {
+    REPO_NAMESPACE: "{{ repo_namespace }}",
+    REPO_PATH: "{{ repo_path }}",
+    REPO_HOST: "{{ repo_host }}",
+    REPO_TYPE: "{{ repo_type }}",
+    PAGE_NAME: "{{ pagename }}",
+    PAGE_SOURCE_SUFFIX: "{{ page_source_suffix }}",
+    URL_ROOT_PREFIX: "{{ url_root_prefix }}",
+  };
+</script>
+
+<script src="{{ pathto('_static/js/commonUtils.js', 1) }}"></script>
+<script src="{{ pathto('_static/js/jquery-3.7.1.min.js', 1) }}"></script>
+<script src="{{ pathto('_static/js/jq.base64.js', 1) }}"></script>
+
+{% if use_doc_reading == "yes" %}
+<!--文档捉虫，js导入顺序不可变动 -->
+<link rel="stylesheet" type="text/css" href="/tools/docs-accompany-reading/css/docdetail.css">
+<link rel="stylesheet" type="text/css" href="/tools/docs-accompany-reading/css/style.css">
+<script src="/tools/docs-accompany-reading/js/docdebug.js"></script>
+<script src="/tools/docs-accompany-reading/js/docdetail.js"></script>
+{% endif %}
+
+
+{% endblock %}
+
+
+{%- block menu %}
+  {%- set toctree = toctree(maxdepth=theme_navigation_depth|int,
+                            collapse=theme_collapse_navigation|tobool,
+                            includehidden=theme_includehidden|tobool,
+                            titles_only=theme_titles_only|tobool) | toctree_handler %}
+  {%- if toctree %}
+    {{ toctree }}
+  {%- else %}
+    <!-- Local TOC -->
+    <div class="local-toc">{{ toc }}</div>
+  {%- endif %}
+{%- endblock %}
+
+
+{%- block sidebartitle %}
+{%- set _logo_url = logo_url|default(pathto('_static/' + (logo or ""), 1)) %}
+{%- set _root_doc = root_doc|default(master_doc) %}
+<a href="{{ pathto(_root_doc) }}" {% if not theme_logo_only %} class="icon icon-home" {% endif %}>
+  {%- if logo or logo_url %}
+  <img src="{{ _logo_url }}" class="logo" alt="{{ _('Logo') }}" />
+  {%- endif %}
+  {% if not theme_logo_only %}<div class="projectTitle">{{ project }}</div>{% endif %}
+</a>
+
+<div class="selectors">
+  <!-- <select id="repo-select" style="max-width: 150px;">
+    <option value="" disabled="" selected="">选择芯片类型</option>
+  </select> -->
+  <div class="repo-select">
+    <div class="select repo-selector">
+      <div class="ellipse repo-readOnly"></div>
+      <input type="text" id="repo-select" readonly="readonly">
+      <span class="iconfont icon-xiala"></span>
+    </div>
+    <ul id="repo-options">
+    </ul>
+  </div>
+  <div class="version-select">
+    <div class="text">
+      版本：
+    </div>
+    <div class="select version-selector">
+      <div class="ellipse version-readOnly"></div>
+      <input class="ellipse" type="text" id="version-select" readonly="readonly">
+      <span class="iconfont icon-xiala"></span>
+    </div>
+    <ul id="version-options">
+    </ul>
+  </div>
+
+</div>
+<script type="text/javascript" src="{{ pathto('_static/js/version-selector.js', 1) }}"></script>
+
+{%- include "searchbox.html" %}
+{%- endblock %}
+
+
+<!--文档帮助 -->
+{% block comments %}
+{% endblock %}
