@@ -40,7 +40,7 @@
 | 10 | [模组：MYF-F63星闪模组链接 （明裕丰）](https://shop187806465.taobao.com/?spm=pc_detail.29232929.shop_block.dshopinfo.2fd27dd6T64Lbi) | 星闪模组、开发板、星闪AI模组和开发板 |
 | 11 | [模组：KHM-3863A 星闪模组购买链接 （深开鸿）](https://mall.kaihong.com/productDetail?skuId=1839224386385612801&goodsId=1839224386133954561) | 星闪、WiFi、蓝牙三模SoC通信模组，支持AT指令及OpenCPU二次开发，支持KaihongOS Lite版本及星闪链路软总线特性等 |
 
-![](./../../306x/open_mcu_9/docs/pic/readme/3.jpg)
+![3](./vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/main_readme/3.jpg)
 
 
 
