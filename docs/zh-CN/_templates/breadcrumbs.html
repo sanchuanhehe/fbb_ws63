@@ -1,0 +1,28 @@
+{%- extends "!breadcrumbs.html" %}
+
+{%- block breadcrumbs_aside %}
+  <li class="wy-breadcrumbs-aside">
+      {% if repo_types == 'inner' %}
+      <a href="https://{{ repo_host }}/{{ repo_namespace }}/{{ repo_path }}/docs/-/files?ref={{ release }}&filePath={{ language }}/{{ pagename }}{{ page_source_suffix }}&isFile=True" target="_blank">{{ _('Edit On CodeHub') }}</a>
+      {% else %}
+          {% if pagename.endswith('index') %}
+          <a href="https://{{ repo_host }}/{{ repo_namespace }}/{{ repo_path }}/{{ gitee_pageview_mode or 'blob' }}/{{ release }}/docs" class="fa fa-github" target="_blank">
+              <img src="{{ pathto('_static/img/gitee.svg', 1) }}" class="HiSpark" alt="">
+              {{ _('Edit On Gitee') }}
+          </a>
+          {% else %}
+          <a href="https://{{ repo_host }}/{{ repo_namespace }}/{{ repo_path }}/{{ gitee_pageview_mode or 'blob' }}/{{ release }}/docs/{{ language }}/{{ pagename }}{{ page_source_suffix }}" class="fa fa-github" target="_blank">
+              <img src="{{ pathto('_static/img/gitee.svg', 1) }}" class="HiSpark" alt="">
+              {{ _('Edit On Gitee') }}
+          </a>
+          {% endif %}
+      {% endif %}
+  </li>
+{%- endblock %}
+
+
+
+
+
+
+
