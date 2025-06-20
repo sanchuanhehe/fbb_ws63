@@ -9,8 +9,7 @@
     let languagePath = language ? "/" + language + "/" : "/"
     function toVersionHref(event) {
         let version = event.target.value;
-        let uriPrefix = urlRoot + currentRepoTarget + languagePath + version;
-        let hrefUrl = uriPrefix + "/" + USER_DEFINED_OPTIONS.PAGE_NAME + ".html";
+        let hrefUrl = urlRoot + currentRepoTarget + languagePath + version;
         console.log(hrefUrl)
         window.location.href = hrefUrl;
     };
@@ -73,8 +72,7 @@
     $('.version-readOnly').text(versionSelect.value)
     function toRepoHref(event) {
         let repo = event.target.value;
-        let uriPrefix = urlRoot + repo + languagePath + currentVersion;
-        let hrefUrl = uriPrefix + "/" + USER_DEFINED_OPTIONS.PAGE_NAME + ".html";
+        let hrefUrl = urlRoot + repo + languagePath + currentVersion;
         console.log(hrefUrl);
         window.location.href = hrefUrl;
     };
