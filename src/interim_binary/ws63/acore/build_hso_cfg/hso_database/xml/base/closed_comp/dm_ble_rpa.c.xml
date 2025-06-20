@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]dm_ble_hci_le_set_addr_resolution_enable_act Address Resolution set to 0x%X @dm_ble_rpa.c(340),INFO" ID="0x880e0aa5" />
+			</MSG_LOG>

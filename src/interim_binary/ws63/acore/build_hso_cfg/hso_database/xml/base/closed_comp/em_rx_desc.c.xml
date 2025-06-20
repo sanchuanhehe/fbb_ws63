@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]em_free_rx_desc idx(0x%x)current_idx(%d)rxdatabuf_header_idx(%d)BT_GET_LR(0x%x)) @em_rx_desc.c(54),ERROR" ID="0x88b201b2" />
+			</MSG_LOG>

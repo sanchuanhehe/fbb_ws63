@@ -1,0 +1,13 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="[HCI] le local set own addr update adv pts_mode=%d, is_le_ext_adving = %d, updated = %d @hci_le.c(153),INFO" ID="0xdb9204cd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI]le local set own addr privacy=%d @hci_le.c(221),INFO" ID="0xdb9206ed" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI]le isa go idle local-&gt;leisa_cur = %02x @hci_le.c(1344),INFO" ID="0xdb922a05" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI][WHITE_LIST]TYPE=%d, ADDR=%02x:%02x:**:**:**:%02x @hci_le.c(1602),INFO" ID="0xdb923215" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] get remote feature is NULL @hci_le.c(1707),ERROR" ID="0xdb92355a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI] remote feature 0-3: 0x%02x, 0x%02x, 0x%02x, 0x%02x @hci_le.c(1711),INFO" ID="0xdb92357d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI] remote feature 4-7: 0x%02x, 0x%02x, 0x%02x, 0x%02x @hci_le.c(1713),INFO" ID="0xdb92358d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI] remote feature LL Privacy not support @hci_le.c(1715),INFO" ID="0xdb92359d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]le local get own addr by type memcpy failed @hci_le.c(2167),ERROR" ID="0xdb9243ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]le local get own addr by type memcpy failed @hci_le.c(2202),ERROR" ID="0xdb9244d2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[HCI]le local get own addr by type slot = %02x, type = %02x @hci_le.c(2206),INFO" ID="0xdb9244f5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI]le local set own addr by type addr_type = %02x @hci_le.c(2216),INFO" ID="0xdb924545" />
+			</MSG_LOG>

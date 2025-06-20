@@ -36,6 +36,10 @@
 #define MS_ID_ADDR        0xF8
 #define CHIP_ID_ADDR      OTP_CHIP_ID_START
 #define TCXO_REBOOT_DELAY 500ULL
+#define SECTOR_ERASE_DELAY_MS    20
+#define FLASH_PAGE_SIZE_BIT_LENGTH 12
+#define BYTE_4K_MASK              0xFFF
+#define BYTE_4K                   0x1000
 
 #define uapi_array_size(_array)  (sizeof(_array) / sizeof((_array)[0]))
 
@@ -198,7 +202,7 @@ void upg_progress_callback_register(void)
 {
     errcode_t ret = uapi_upg_register_progress_callback(upg_progress_callbck);
     if (ret != ERRCODE_SUCC) {
-        upg_log_err("[UPG] upgrade progress callback regist failed\r\n");
+        upg_log_err("[UPG] progress callback regist failed\r\n");
     }
 }
 #endif
@@ -226,18 +230,38 @@ void non_os_exit_critical(void);
 // 升级读flash接口需支持跨页读取
 errcode_t upg_flash_read(const uint32_t flash_offset, const uint32_t size, uint8_t *ram_data)
 {
-    errcode_t ret = ERRCODE_FAIL;
-#if defined (CONFIG_DRIVER_SUPPORT_SFC)
-    ret = uapi_sfc_reg_read(flash_offset, (uint8_t *)ram_data, size);
-    if (ret != ERRCODE_SUCC) {
-#else
-    ret = (errcode_t)memcpy_s((uint8_t *)(uintptr_t)(flash_offset + FLASH_START), size, (void *)ram_data, size);
-    if (ret != EOK) {
-#endif
-        return ERRCODE_FAIL;
-    }
-    return ERRCODE_SUCC;
+    return uapi_sfc_reg_read(flash_offset, (uint8_t *)ram_data, size);
 }
+
+#ifdef CONFIG_MIDDLEWARE_SUPPORT_SLICE_UPG
+#define UPG_FLASH_WRITE_CUT_SIZE 0x200
+static errcode_t upg_flash_write_slice(uint32_t flash_offset, uint32_t size, const uint8_t *ram_data)
+{
+    errcode_t ret = ERRCODE_FAIL;
+    uint32_t addr = flash_offset;
+    uint32_t max_addr = flash_offset + (size / UPG_FLASH_WRITE_CUT_SIZE - 1) * UPG_FLASH_WRITE_CUT_SIZE;
+    uint32_t align_size = (size / UPG_FLASH_WRITE_CUT_SIZE) * UPG_FLASH_WRITE_CUT_SIZE;
+    uint32_t last_size = size - align_size;
+    const uint8_t *data_addr = ram_data;
+    if (size < UPG_FLASH_WRITE_CUT_SIZE) {
+        return uapi_sfc_reg_write(addr, (uint8_t *)data_addr, size);
+    }
+    for (; addr <= max_addr; addr = addr + UPG_FLASH_WRITE_CUT_SIZE, data_addr += UPG_FLASH_WRITE_CUT_SIZE) {
+        ret = uapi_sfc_reg_write(addr, (uint8_t *)data_addr, UPG_FLASH_WRITE_CUT_SIZE);
+        if (ret == ERRCODE_SUCC) {
+            osal_msleep(SECTOR_ERASE_DELAY_MS);
+        } else {
+            return ret;
+        }
+    }
+    if (last_size != 0) {
+        addr = flash_offset + align_size;
+        data_addr = ram_data + align_size;
+        ret = uapi_sfc_reg_write(addr, (uint8_t *)data_addr, last_size);
+    }
+    return ret;
+}
+#endif
 
 // 升级写flash接口需支持跨页写入和写前擦功能
 errcode_t upg_flash_write(const uint32_t flash_offset, uint32_t size, const uint8_t *ram_data, bool do_erase)
@@ -249,21 +273,16 @@ errcode_t upg_flash_write(const uint32_t flash_offset, uint32_t size, const uint
             return ret;
         }
     }
+#ifdef CONFIG_MIDDLEWARE_SUPPORT_SLICE_UPG
     /* 写入flash */
-    uint32_t lock = (uint32_t)osal_irq_lock();
-
-#if defined (CONFIG_DRIVER_SUPPORT_SFC)
-    ret = uapi_sfc_reg_write(flash_offset, (uint8_t *)ram_data, size);
-    if (ret != ERRCODE_SUCC) {
+    ret = upg_flash_write_slice(flash_offset, size, ram_data);
 #else
-    ret = (errcode_t)memcpy_s((uint8_t *)(uintptr_t)(flash_offset + FLASH_START), size, (void *)ram_data, size);
-    if (ret != EOK) {
+    /* 写入flash */
+    ret = uapi_sfc_reg_write(flash_offset, (uint8_t *)ram_data, size);
 #endif
-        osal_irq_restore(lock);
+    if (ret != EOK) {
         goto write_failed;
     }
-    osal_irq_restore(lock);
-
 #if UPG_FLASH_FUNC_DEBUG == YES
     uint8_t *cmp_data = upg_malloc(size);
     if (cmp_data == NULL) {
@@ -286,9 +305,22 @@ write_failed:
     return ret;
 }
 
-#define FLASH_PAGE_SIZE_BIT_LENGTH 12
-#define BYTE_4K_MASK              0xFFF
-#define BYTE_4K                   0x1000
+static errcode_t upg_flash_erase_slice(uint32_t start_sector, uint32_t hal_erase_size)
+{
+#ifdef CONFIG_MIDDLEWARE_SUPPORT_SLICE_UPG
+    errcode_t ret = ERRCODE_FAIL;
+    for (uint32_t i = start_sector; i < (start_sector + hal_erase_size); i += BYTE_4K) {
+        ret = uapi_sfc_reg_erase(i, BYTE_4K);
+        osal_msleep(SECTOR_ERASE_DELAY_MS);
+        if (ret != ERRCODE_SUCC) {
+            return ret;
+        }
+    }
+    return ERRCODE_SUCC;
+#else
+    return uapi_sfc_reg_erase(start_sector, hal_erase_size);
+#endif
+}
 
 errcode_t upg_flash_erase(const uint32_t flash_offset, const uint32_t size)
 {
@@ -323,10 +355,11 @@ errcode_t upg_flash_erase(const uint32_t flash_offset, const uint32_t size)
         }
     }
     // 擦除
-    ret = uapi_sfc_reg_erase(start_sector, hal_erase_size);
+    ret = upg_flash_erase_slice(start_sector, hal_erase_size);
     if (ret != ERRCODE_SUCC) {
-            goto end;
+        goto end;
     }
+
     // 回写
     if (first_size != 0) {
         ret = upg_flash_write(start_sector, first_size, writeback_first_data, false);
@@ -367,7 +400,7 @@ uint8_t *upg_get_root_public_key(void)
     errcode_t ret;
     ret = upg_get_package_header(&pkg_header);
     if (ret != ERRCODE_SUCC || pkg_header == NULL) {
-        upg_log_err("[UPG] upg_get_package_header fail\r\n");
+        upg_log_err("[UPG] get package header fail\r\n");
         return NULL;
     }
     static uint8_t public_key[PUBLIC_KEY_LEN];
@@ -384,11 +417,11 @@ STATIC errcode_t check_fota_msid(const uint32_t msid_ext, const uint32_t mask_ms
     uint32_t msid = 0;
     errcode_t ret = uapi_efuse_read_buffer((uint8_t *)&msid, MS_ID_ADDR, sizeof(uint32_t));
     if (ret != ERRCODE_SUCC) {
-        upg_log_err("[UPG] get msid failed. ret = 0x%x\r\n", ret);
+        upg_log_err("[UPG] get msid fail,ret=0x%x\r\n", ret);
     }
 
     if ((msid_ext & mask_msid_ext) != (msid & mask_msid_ext)) {
-        upg_log_err("[UPG] upg verify: msid is wrong!\r\n");
+        upg_log_err("[UPG] msid wrong!\r\n");
     }
 
     return ERRCODE_SUCC; // msid地址未确定，先返回成功
@@ -460,12 +493,12 @@ errcode_t upg_get_board_version(uint32_t image_id, uint32_t *key_ver, uint32_t *
     upg_image_header_t *img_header = NULL;
     errcode_t ret = upg_get_package_header(&pkg_header);
     if (ret != ERRCODE_SUCC || pkg_header == NULL) {
-        upg_log_err("[UPG] upg_get_package_header fail\r\n");
+        upg_log_err("[UPG] get_package_header fail\r\n");
         return ret;
     }
     ret = upg_get_pkg_image_hash_table(pkg_header, &img_hash_table);
     if (ret != ERRCODE_SUCC || img_hash_table == NULL) {
-        upg_log_err("[UPG] upg_get_pkg_image_hash_table fail\r\n");
+        upg_log_err("[UPG] get_pkg_hash_table fail\r\n");
         upg_free(pkg_header);
         return ret;
     }
@@ -473,7 +506,7 @@ errcode_t upg_get_board_version(uint32_t image_id, uint32_t *key_ver, uint32_t *
     for (uint32_t i = 0; i < fota_info->image_num; i++) {
         ret = upg_get_pkg_image_header((const upg_image_hash_node_t *)&(img_hash_table[i]), &img_header);
         if (ret != ERRCODE_SUCC || img_header == NULL) {
-            upg_log_err("[UPG] upg_get_pkg_image_header fail\r\n");
+            upg_log_err("[UPG] get_pkg_image_header fail\r\n");
             upg_free(pkg_header);
             upg_free(img_hash_table);
             break;
@@ -546,13 +579,15 @@ errcode_t ws63_upg_init(void)
     upg_func.serial_putc = ws63_upg_putc;
     ret = uapi_upg_init(&upg_func);
     if (ret != ERRCODE_SUCC) {
-        upg_log_err("[UPG] upgrade init failed!\r\n");
+        upg_log_err("[UPG] init failed!\r\n");
         return ret;
     }
 #ifdef WS63_PRODUCT_NONE
     upg_progress_callback_register();
+    boot_msg0("[UPG] init OK!");
+#else
+    upg_log_info("[UPG] init OK!\r\n");
 #endif
-    upg_log_info("[UPG] upgrade init OK!\r\n");
     return ret;
 }
 

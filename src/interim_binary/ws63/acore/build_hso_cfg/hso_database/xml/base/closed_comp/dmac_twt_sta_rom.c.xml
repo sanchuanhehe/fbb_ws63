@@ -1,0 +1,14 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="{tx_twt_information_req:resume at %x%x!.} @dmac_twt_sta_rom.c(116),WARNING" ID="0x81ae03a3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_twt_frame_tx_complete_process:: input param is NULL.} @dmac_twt_sta_rom.c(240),ERROR" ID="0x81ae0782" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_twt_frame_tx_complete_process:: find dmac user fail!.} @dmac_twt_sta_rom.c(261),ERROR" ID="0x81ae082a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{twt status=[%d]!} @dmac_twt_sta_rom.c(271),WARNING" ID="0x81ae087b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_twt_update_regs::dmac_user null.} @dmac_twt_sta_rom.c(308),ERROR" ID="0x81ae09a2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{dmac_twt_update_regs::errTwt next[%d],res[%d],inTRV[%d]} @dmac_twt_sta_rom.c(336),ERROR" ID="0x81ae0a82" />
+			<MSG STRUCTURE="diag_log_msg6" NAME="{dmac_twt_update_regs::tsf:H=%08x,L=%08x;TWT:H=%08x,L=%08x;dur=%d,inTRV=%d} @dmac_twt_sta_rom.c(349),WARNING" ID="0x81ae0aeb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_twt_update::dmac_vap null.} @dmac_twt_sta_rom.c(367),ERROR" ID="0x81ae0b7a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_twt_update::update_source %d.} @dmac_twt_sta_rom.c(372),WARNING" ID="0x81ae0ba3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_twt_handle_ps::dmac_vap_rom-&gt;twt_cfg.twt_ps_pause == pause[%d].} @dmac_twt_sta_rom.c(405),ERROR" ID="0x81ae0caa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_twt_announce_process::send awake indication fail [%d].} @dmac_twt_sta_rom.c(423),WARNING" ID="0x81ae0d3b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_twt_sp_event_proc::twt_session_status=[%d].} @dmac_twt_sta_rom.c(458),ERROR" ID="0x81ae0e52" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_twt_wake_on_proc::twt_session_status == ON, timeout, disable_machw_phy_and_pa} @dmac_twt_sta_rom.c(467),WARNING" ID="0x81ae0e9b" />
+			</MSG_LOG>

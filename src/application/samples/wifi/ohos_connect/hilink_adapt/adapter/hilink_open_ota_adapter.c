@@ -49,6 +49,10 @@ static errcode_t upg_get_upgrade_part_size(uint32_t *size)
     if (ret_val != ERRCODE_SUCC) {
         return ret_val;
     }
+    if (info.part_info.addr_info.size < UPG_UPGRADE_FLAG_LENGTH) {
+        HILINK_SAL_WARN("size=%u,%u\r\n", info.part_info.addr_info.size, UPG_UPGRADE_FLAG_LENGTH);
+        return -1;
+    }
     *size = info.part_info.addr_info.size - UPG_UPGRADE_FLAG_LENGTH;
     return ERRCODE_SUCC;
 }
@@ -119,11 +123,14 @@ int HILINK_OtaAdapterFlashErase(unsigned int size)
 /* TODO 需要记录写入后的offset */
 int HILINK_OtaAdapterFlashWrite(const unsigned char *buf, unsigned int bufLen)
 {
+    if ((buf ==  NULL) || (bufLen == 0)) {
+        return RETURN_ERROR;
+    }
     (void)uapi_watchdog_kick();
 
     errcode_t ret_val;
     uint32_t start_addr;
-    if ((buf ==  NULL) || (bufLen == 0) || ((g_upgrade.write_offset + bufLen) > g_upgrade.max_size)) {
+    if ((g_upgrade.write_offset + bufLen) > g_upgrade.max_size) {
         return RETURN_ERROR;
     }
     ret_val = upg_get_upgrade_part_start_addr(&start_addr);

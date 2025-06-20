@@ -1,0 +1,13 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[ERROR][bt_adpll_start_tx]freq=%d mode=%d @bt_pll.c(75),ERROR" ID="0x897a025a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="freq_khz error:%d @bt_pll.c(183),WARNING" ID="0x897a05bb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gain_scale2 error:%d @bt_pll.c(187),WARNING" ID="0x897a05db" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt_adpll_stop_tx_if end @bt_pll.c(223),INFO" ID="0x897a06fd" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ERROR][bt_adpll_start_tx_if]freq_rf=%d freq_dbb=%d mode=%d @bt_pll.c(230),ERROR" ID="0x897a0732" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="bt_adpll_start_tx_if param-&gt;freq_rf=%d,param-&gt;mode=%d,param-&gt;freq_dbb=%d,param-&gt;gain=%d @bt_pll.c(234),INFO" ID="0x897a0755" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ERROR][bt_adpll_start_tx_if]freq_rf=%d mode=%d @bt_pll.c(240),ERROR" ID="0x897a0782" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="bt_adpll_start_tx_if param-&gt;freq_rf=%d,param-&gt;mode=%d @bt_pll.c(243),INFO" ID="0x897a079d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt_adpll_start_tx_if end @bt_pll.c(248),INFO" ID="0x897a07c5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ERROR][bt_rf_start_rx_if]freq_rf=%d @bt_pll.c(258),ERROR" ID="0x897a0812" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt_rf_start_rx_if param-&gt;freq_rf=%d @bt_pll.c(261),INFO" ID="0x897a082d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt_rf_start_rx_if end @bt_pll.c(264),INFO" ID="0x897a0845" />
+			</MSG_LOG>

@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][initiate]txpd_node alloc fail! @evt_task_ble_initiate.c(390),ERROR" ID="0x88620c32" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][initiate]txbuff_node alloc fail! @evt_task_ble_initiate.c(400),ERROR" ID="0x88620c82" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP]ble_initiate_set_con_req, initiate_phys=%d, txbuff_idx=%d, acl_offset=%d, acl_intv=%d @evt_task_ble_initiate.c(498),INFO" ID="0x88620f95" />
+			</MSG_LOG>

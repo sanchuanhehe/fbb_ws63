@@ -9,11 +9,13 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/serial/serial.c
     ${CMAKE_CURRENT_SOURCE_DIR}/watchdog/boot_watchdog.c
     ${CMAKE_CURRENT_SOURCE_DIR}/reset/reset_porting.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/validate_chip/validate_chip.c
 )
 
 set(PUBLIC_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/efuse_wrap
     ${CMAKE_CURRENT_SOURCE_DIR}/reset
+    ${CMAKE_CURRENT_SOURCE_DIR}/validate_chip/
 )
 
 set(PRIVATE_HEADER

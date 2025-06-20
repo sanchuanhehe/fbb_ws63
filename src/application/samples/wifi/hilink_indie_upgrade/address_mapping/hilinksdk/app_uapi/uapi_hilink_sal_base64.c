@@ -12,13 +12,15 @@
 int HILINK_SAL_Base64Encode(const unsigned char *inData, unsigned int inLen,
     unsigned char *outData, unsigned int *outLen)
 {
-    return app_call4(APP_CALL_HILINK_SAL_BASE64_ENCODE, int, const unsigned char *, inData, unsigned int, inLen,
-        unsigned char *, outData, unsigned int *, outLen);
+    app_call4(APP_CALL_HILINK_SAL_BASE64_ENCODE, HILINK_SAL_Base64Encode, int,
+        const unsigned char *, inData, unsigned int, inLen, unsigned char *, outData, unsigned int *, outLen);
+    return 0;
 }
 
 int HILINK_SAL_Base64Decode(const unsigned char *inData, unsigned int inLen,
     unsigned char *outData, unsigned int *outLen)
 {
-    return app_call4(APP_CALL_HILINK_SAL_BASE64_DECODE, int, const unsigned char *, inData, unsigned int, inLen,
-        unsigned char *, outData, unsigned int *, outLen);
+    app_call4(APP_CALL_HILINK_SAL_BASE64_DECODE, HILINK_SAL_Base64Decode, int,
+        const unsigned char *, inData, unsigned int, inLen, unsigned char *, outData, unsigned int *, outLen);
+    return 0;
 }

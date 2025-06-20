@@ -12,7 +12,7 @@
 
 #ifndef OH_SLE_SSAP_CLIENT_H
 #define OH_SLE_SSAP_CLIENT_H
- 
+
 #include <stdint.h>
 #include "errcode.h"
 #include "oh_sle_common.h"
@@ -219,7 +219,7 @@ typedef void (*SsapcFindStructureCallback)(uint8_t clientId, uint16_t connId,
  */
 typedef void (*SsapcFindPropertyCallback)(uint8_t clientId, uint16_t connId,
     SsapcFindPropertyResult *property, errcode_t status);
- 
+
 /**
  * @if Eng
  * @brief Callback invoked when find completed.
@@ -251,7 +251,7 @@ typedef void (*SsapcFindPropertyCallback)(uint8_t clientId, uint16_t connId,
  */
 typedef void (*SsapcFindStructureCompleteCallback)(uint8_t clientId, uint16_t connId,
     SsapcFindStructureResult *structureResult, errcode_t status);
- 
+
 /**
  * @if Eng
  * @brief Callback invoked when receive read response.
@@ -283,7 +283,7 @@ typedef void (*SsapcFindStructureCompleteCallback)(uint8_t clientId, uint16_t co
  */
 typedef void (*SsapcReadCfmCallback)(uint8_t clientId, uint16_t connId, SsapcHandleValue *readData,
     errcode_t status);
- 
+
 /**
  * @if Eng
  * @brief Callback invoked when read feature completed.
@@ -315,7 +315,7 @@ typedef void (*SsapcReadCfmCallback)(uint8_t clientId, uint16_t connId, SsapcHan
  */
 typedef void (*SsapcReadByUuidCompleteCallback)(uint8_t clientId, uint16_t connId,
     SsapcReadByUuidCmpResult *cmpResult, errcode_t status);
- 
+
 /**
  * @if Eng
  * @brief Callback function for receiving write response.
@@ -347,7 +347,7 @@ typedef void (*SsapcReadByUuidCompleteCallback)(uint8_t clientId, uint16_t connI
  */
 typedef void (*SsapcWriteCfmCallback)(uint8_t clientId, uint16_t connId, SsapcWriteResult *writeResult,
     errcode_t status);
- 
+
 /**
  * @if Eng
  * @brief Callback invoked when receive exchange info response.
@@ -379,7 +379,7 @@ typedef void (*SsapcWriteCfmCallback)(uint8_t clientId, uint16_t connId, SsapcWr
  */
 typedef void (*SsapcExchangeInfoCallback)(uint8_t clientId, uint16_t connId, SsapcExchangeInfo *param,
     errcode_t status);
- 
+
 /**
  * @if Eng
  * @brief Callback function for receiving a notification.
@@ -411,7 +411,7 @@ typedef void (*SsapcExchangeInfoCallback)(uint8_t clientId, uint16_t connId, Ssa
  */
 typedef void (*SsapcNotificationCallback)(uint8_t clientId, uint16_t connId, SsapcHandleValue *data,
     errcode_t status);
- 
+
 /**
  * @if Eng
  * @brief Callback function for receiving a indication.
@@ -443,7 +443,7 @@ typedef void (*SsapcNotificationCallback)(uint8_t clientId, uint16_t connId, Ssa
  */
 typedef void (*SsapcIndicationCallback)(uint8_t clientId, uint16_t connId, SsapcHandleValue *data,
     errcode_t status);
- 
+
 /**
  * @if Eng
  * @brief Struct of ssap client callback function.
@@ -472,7 +472,7 @@ typedef struct {
     SsapcIndicationCallback indicationCb;                      /*!< @if Eng Callback hook for receive indication.
                                                                        @else   指示事件上报钩子。 @endif */
 } SsapcCallbacks;
- 
+
 /**
  * @if Eng
  * @brief  Register ssap client.
@@ -511,7 +511,7 @@ errcode_t SsapcRegisterClient(SleUuid *appUuid, uint8_t *clientId);
  * @endif
  */
 errcode_t SsapcUnregisterClient(uint8_t clientId);
- 
+
 /**
  * @if Eng
  * @brief  Find structure.
@@ -536,7 +536,7 @@ errcode_t SsapcUnregisterClient(uint8_t clientId);
  * @endif
  */
 errcode_t SsapcFindStructure(uint8_t clientId, uint16_t connId, SsapcFindStructureParam *param);
- 
+
 /**
  * @if Eng
  * @brief  Send read by uuid request.
@@ -586,7 +586,7 @@ errcode_t SsapcReadReqByUuid(uint8_t clientId, uint16_t connId, SsapcReadReqByUu
  * @endif
  */
 errcode_t SsapcReadReq(uint8_t clientId, uint16_t connId, uint16_t handle, uint8_t type);
- 
+
 /**
  * @if Eng
  * @brief  Send write request.
@@ -609,7 +609,7 @@ errcode_t SsapcReadReq(uint8_t clientId, uint16_t connId, uint16_t handle, uint8
  * @endif
  */
 errcode_t SsapWriteReq(uint8_t clientId, uint16_t connId, SsapcWriteParam *param);
- 
+
 /**
  * @if Eng
  * @brief  Send write command.
@@ -632,7 +632,7 @@ errcode_t SsapWriteReq(uint8_t clientId, uint16_t connId, SsapcWriteParam *param
  * @endif
  */
 errcode_t SsapcWriteCmd(uint8_t clientId, uint16_t connId, SsapcWriteParam *param);
- 
+
 /**
  * @if Eng
  * @brief  Send exchange info request.
@@ -655,7 +655,7 @@ errcode_t SsapcWriteCmd(uint8_t clientId, uint16_t connId, SsapcWriteParam *para
  * @endif
  */
 errcode_t SsapcExchangeInfoReq(uint8_t clientId, uint16_t connId, SsapcExchangeInfo* param);
- 
+
 /**
  * @if Eng
  * @brief  Register SSAP client callbacks.
@@ -674,7 +674,7 @@ errcode_t SsapcExchangeInfoReq(uint8_t clientId, uint16_t connId, SsapcExchangeI
  * @endif
  */
 errcode_t SsapcRegisterCallbacks(SsapcCallbacks *func);
- 
+
 #ifdef __cplusplus
 }
 #endif

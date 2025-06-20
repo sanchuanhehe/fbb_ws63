@@ -24,6 +24,8 @@ typedef enum {
     WIFI_SCAN_TPYE_BSSID,
     /* 根据AP频率扫描 */
     WIFI_SCAN_TPYE_FREQ,
+    /* 普通扫描 */
+    WIFI_SCAN_TPYE_BASIC,
 } HILINK_WifiScanType;
 
 typedef struct {

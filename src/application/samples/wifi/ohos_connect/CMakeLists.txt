@@ -2,27 +2,39 @@
 # @brief    cmake file
 # Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
 #===============================================================================
+set(HILINK_LIBS_DIR ${ROOT_DIR}/application/samples/wifi/libhilink)
+
 if (NOT DEFINES MATCHES "CONFIG_SUPPORT_HILINK_INDIE_UPGRADE")
 set(COMPONENT_NAME "hilinkdevicesdk")
-set(LIBS ${ROOT_DIR}/application/samples/wifi/libhilink/lib${COMPONENT_NAME}.a)
+set(LIBS ${HILINK_LIBS_DIR}/lib${COMPONENT_NAME}.a)
 set(WHOLE_LINK
     true
 )
 build_component()
 
 set(COMPONENT_NAME "hilinkota")
-set(LIBS ${ROOT_DIR}/application/samples/wifi/libhilink/lib${COMPONENT_NAME}.a)
+set(LIBS ${HILINK_LIBS_DIR}/lib${COMPONENT_NAME}.a)
 set(WHOLE_LINK
     true
 )
 build_component()
 
 set(COMPONENT_NAME "hilinkbtsdk")
-set(LIBS ${ROOT_DIR}/application/samples/wifi/libhilink/lib${COMPONENT_NAME}.a)
+set(LIBS ${HILINK_LIBS_DIR}/lib${COMPONENT_NAME}.a)
 set(WHOLE_LINK
     true
 )
 build_component()
+
+if (DEFINES MATCHES "SUPPORT_QUICK_NETCFG")
+set(COMPONENT_NAME "hilinkquickcfg")
+set(LIBS ${HILINK_LIBS_DIR}/lib${COMPONENT_NAME}.a)
+set(WHOLE_LINK
+    true
+)
+build_component()
+endif()
+
 endif()
 
 set(COMPONENT_NAME "hilink")
@@ -53,11 +65,29 @@ set(SOURCES
     ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/adapter/hilink_stdio_adapter.c
     ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/adapter/hilink_thread_adapter.c
     ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/adapter/hilink_ble_adapter.c
-    ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/entry/hilink_indie_upgrade_main.c
-    ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/entry/hilink_wifi_main.c
-    ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/entry/hilink_ble_main.c
     ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/entry/hilink_entry.c
+    ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/adapter/oh_sle_srv_cm.c
+    ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/adapter/oh_sle_srv_dd.c
+    ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/adapter/oh_sle_srv_ssap_server.c
+    ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/adapter/oh_sle_srv_ssap_client.c
+
 )
+
+if (DEFINES MATCHES "SUPPORT_MINIMALIST_NETCFG" OR DEFINES MATCHES "SUPPORT_BLE_ANCILLAY_NETCFG")
+    list(APPEND SOURCES ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/entry/hilink_ble_main.c)
+endif()
+
+if (DEFINES MATCHES "SUPPORT_SOFTAP_NETCFG")
+    list(APPEND SOURCES ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/entry/hilink_wifi_main.c)
+endif()
+
+if (DEFINES MATCHES "SUPPORT_QUICK_NETCFG")
+    list(APPEND SOURCES ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/adapter/hilink_quick_netcfg_demo.c)
+endif()
+
+if (DEFINES MATCHES "CONFIG_SUPPORT_HILINK_INDIE_UPGRADE")
+    list(APPEND SOURCES ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/entry/hilink_indie_upgrade_main.c)
+endif()
 
 set(PUBLIC_HEADER
     ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/include/
@@ -69,6 +99,7 @@ set(PRIVATE_HEADER
     ${CMAKE_HILINK_SOURCE_DIR}/hilink_adapt/adapter/include/
     ${ROOT_DIR}/protocol/wifi/source/host/inc/liteOS
     ${ROOT_DIR}/open_source/mbedtls/mbedtls_v3.1.0/harden/src/internal_include
+    ${ROOT_DIR}/include
 )
 
 # use this when you want to add ccflags like -include xxx

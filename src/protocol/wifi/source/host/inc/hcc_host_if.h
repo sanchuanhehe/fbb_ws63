@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2023. All rights reserved.
  * Description: hcc driver implementatioin.
- * Author:
+ * Author: Huanghe
  * Create: 2020-10-20
  */
 

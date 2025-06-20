@@ -285,7 +285,11 @@ sntp_format_time(s32_t sec)
 {
   time_t ut;
   ut = (u32_t)((u32_t)sec + DIFF_SEC_1970_2036);
+#if defined(LWIP_LITEOS_COMPAT) && (LWIP_LITEOS_COMPAT) && (!defined(LOSCFG_COMPAT_POSIX))
+  return lwip_ctime(&ut);
+#else
   return ctime(&ut);
+#endif
 }
 #endif /* LWIP_DEBUG && !sntp_format_time */
 

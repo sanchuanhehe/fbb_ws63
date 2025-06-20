@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="[HCI][AUTH_FAIL] STATUS=PIN_OR_KEY_MISSING, REMOTE_ADDR=%02x:%02x:**:**:**:%02x @hci_secu_ram.c(145),WARNING" ID="0xdbca048b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[HCI][REMOVE_LINK_KEY] addr = **:**:**:**:%02x:%02x @hci_secu_ram.c(278),INFO" ID="0xdbca08b5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[HCI][SAVE_LINK_KEY] LOCAL_MASK=0x%x, REMOTE_SEC_MASK=0x%x @hci_secu_ram.c(416),INFO" ID="0xdbca0d05" />
+			</MSG_LOG>

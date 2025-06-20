@@ -1,0 +1,12 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="hal_show_linkloss_reg_info::mac rx_cnt[0x%x], rx_queue[0x%x], intr[0x%x], err_intr[0x%x] @hal_mac.c(375),ERROR" ID="0x84020bba" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="hal_show_linkloss_reg_info::mac vector word0[0x%x], word1[0x%x], word2[0x%x], word3[0x%x] @hal_mac.c(380),WARNING" ID="0x84020be3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="hal_show_linkloss_reg_info::mac vector word4[0x%x], word5[0x%x], word6[0x%x], word7[0x%x] @hal_mac.c(385),WARNING" ID="0x84020c0b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="hal_show_linkloss_reg_info::mac err_intr2[0x%x], phy 11b frame cnt[0x%x] @hal_mac.c(388),ERROR" ID="0x84020c22" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_sample_daq_prepare_data done! @hal_mac.c(405),INFO" ID="0x84020cad" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{mac_daq_reg_cfg::clk[0x%x] ctl1[0x%x] reuser1[0x%x] diag_en[0x%x]} @hal_mac.c(428),WARNING" ID="0x84020d63" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{daq_done_reg_info::sample_done_reg[%x] sample_done_addr_reg[%x] fifo_status_reg[%x]} @hal_mac.c(436),WARNING" ID="0x84020da3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_set_mac_diag_init::osal_kmalloc pkt_ram failed. @hal_mac.c(551),ERROR" ID="0x8402113a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_mac_diag_match_proc: invalid match_type:%d @hal_mac.c(674),ERROR" ID="0x84021512" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_set_mac_diag_param: invalid index:%d @hal_mac.c(762),ERROR" ID="0x840217d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_set_mac_diag_mode::invalid index: %d @hal_mac.c(906),ERROR" ID="0x84021c52" />
+			</MSG_LOG>

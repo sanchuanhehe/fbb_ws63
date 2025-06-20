@@ -65,18 +65,21 @@ static int AddDeviceConfig(wifi_sta_config_stru *config)
 
     if (memcpy_s(connect_info.ssid, sizeof(connect_info.ssid), config->ssid, strlen((char *)config->ssid)) != EOK) {
         HILINK_SAL_ERROR("memcpy_s error\r\n");
+        (void)memset_s(&connect_info, sizeof(connect_info), 0, sizeof(connect_info));
         return HILINK_SAL_NOK;
     }
 
     if (memcpy_s(connect_info.pwd, sizeof(connect_info.pwd), config->pre_shared_key,
         strlen((char *)config->pre_shared_key)) != EOK) {
         HILINK_SAL_ERROR("memcpy_s error\r\n");
+        (void)memset_s(&connect_info, sizeof(connect_info), 0, sizeof(connect_info));
         return HILINK_SAL_NOK;
     }
 
     if (memcpy_s(connect_info.bssid, sizeof(connect_info.bssid), config->bssid,
         sizeof(config->bssid)) != EOK) {
         HILINK_SAL_ERROR("memcpy_s error\r\n");
+        (void)memset_s(&connect_info, sizeof(connect_info), 0, sizeof(connect_info));
         return HILINK_SAL_NOK;
     }
 
@@ -84,8 +87,10 @@ static int AddDeviceConfig(wifi_sta_config_stru *config)
     nv_ret = uapi_nv_write(NV_ID_HILINK_CONNECT_INFO, (uint8_t *)&connect_info, sizeof(connect_info));
     if (nv_ret != ERRCODE_SUCC) {
         HILINK_SAL_ERROR("read write connect info to nv failed\r\n");
+        (void)memset_s(&connect_info, sizeof(connect_info), 0, sizeof(connect_info));
         return HILINK_SAL_NOK;
     }
+    (void)memset_s(&connect_info, sizeof(connect_info), 0, sizeof(connect_info));
     return HILINK_SAL_OK;
 }
 
@@ -105,26 +110,30 @@ static int GetDeviceConfigs(wifi_sta_config_stru *config)
         (uint8_t *)&connect_info);
     if (nv_ret != ERRCODE_SUCC) {
         HILINK_SAL_ERROR("read hilink connect info  from nv failed\r\n");
+        (void)memset_s(&connect_info, sizeof(connect_info), 0, sizeof(connect_info));
         return HILINK_SAL_NOK;
     }
 
     if (memcpy_s(config->ssid, sizeof(config->ssid), connect_info.ssid, sizeof(connect_info.ssid)) != EOK) {
         HILINK_SAL_ERROR("memcpy_s error\r\n");
+        (void)memset_s(&connect_info, sizeof(connect_info), 0, sizeof(connect_info));
         return HILINK_SAL_NOK;
     }
 
     if (memcpy_s(config->pre_shared_key, sizeof(config->pre_shared_key), connect_info.pwd, sizeof(connect_info.pwd)) !=
         EOK) {
         HILINK_SAL_ERROR("memcpy_s error\r\n");
+        (void)memset_s(&connect_info, sizeof(connect_info), 0, sizeof(connect_info));
         return HILINK_SAL_NOK;
     }
 
     if (memcpy_s(config->bssid, sizeof(config->bssid), connect_info.bssid, sizeof(connect_info.bssid)) !=
         EOK) {
         HILINK_SAL_ERROR("memcpy_s error\r\n");
+        (void)memset_s(&connect_info, sizeof(connect_info), 0, sizeof(connect_info));
         return HILINK_SAL_NOK;
     }
-
+    (void)memset_s(&connect_info, sizeof(connect_info), 0, sizeof(connect_info));
     return HILINK_SAL_OK;
 }
 static int RemoveDevice(void)
@@ -210,14 +219,17 @@ static int GetWifiConfigFromOhos(wifi_sta_config_stru *config)
             HILINK_SAL_ERROR("get device config fail\r\n");
             isPrint = true;
         }
+        (void)memset_s(&wifiConfig, sizeof(wifiConfig), 0, sizeof(wifiConfig));
         return HILINK_SAL_GET_WIFI_INFO_ERR;
     }
     isPrint = false;
 
     if (memcpy_s(config, sizeof(wifi_sta_config_stru), &wifiConfig, sizeof(wifi_sta_config_stru)) != EOK) {
         HILINK_SAL_ERROR("memcpy error\r\n");
+        (void)memset_s(&wifiConfig, sizeof(wifiConfig), 0, sizeof(wifiConfig));
         return HILINK_SAL_MEMCPY_ERR;
     }
+    (void)memset_s(&wifiConfig, sizeof(wifiConfig), 0, sizeof(wifiConfig));
     return HILINK_SAL_OK;
 }
 
@@ -232,7 +244,7 @@ int HILINK_GetWiFiSsid(char *ssid, unsigned int *ssidLen)
     (void)memset_s(&result, sizeof(result), 0, sizeof(result));
     /* 避免循环调用导致的打印刷屏 */
     static bool isPrint = false;
-
+    *ssidLen = 0;
     int ret = GetWifiConfigFromOhos(&result);
     if ((ret != HILINK_SAL_OK) || (result.ssid[0] == '\0') || (HILINK_Strlen((char *)result.ssid) >=
         sizeof(result.ssid))) {
@@ -241,15 +253,17 @@ int HILINK_GetWiFiSsid(char *ssid, unsigned int *ssidLen)
             isPrint = true;
         }
         /* 初次配网获取不到ssid */
+        (void)memset_s(&result, sizeof(result), 0, sizeof(result));
         return HILINK_SAL_OK;
     }
     isPrint = false;
     if (strcpy_s(ssid, WIFI_MAX_SSID_LEN, (char *)result.ssid) != EOK) {
         HILINK_SAL_ERROR("strcpy error\r\n");
+        (void)memset_s(&result, sizeof(result), 0, sizeof(result));
         return HILINK_SAL_STRCPY_ERR;
     }
     *ssidLen = HILINK_Strlen(ssid);
-
+    (void)memset_s(&result, sizeof(result), 0, sizeof(result));
     return HILINK_SAL_OK;
 }
 
@@ -386,6 +400,7 @@ static int AdvanceScanWifiByOhos(const wifi_sta_config_stru *config)
 
     if (wifi_sta_scan_advance(&scanParams) != ERRCODE_SUCC) {
         HILINK_SAL_ERROR("wifi advance scan fail\r\n");
+        (void)memset_s(&scanParams, sizeof(scanParams), 0, sizeof(scanParams));
         return HILINK_SAL_SCAN_WIFI_ERR;
     }
 
@@ -398,8 +413,10 @@ static int AdvanceScanWifiByOhos(const wifi_sta_config_stru *config)
     }
     if (scanTimeout == 0) {
         HILINK_SAL_ERROR("wifi advance scan timeout\r\n");
+        (void)memset_s(&scanParams, sizeof(scanParams), 0, sizeof(scanParams));
         return HILINK_SAL_SCAN_WIFI_ERR;
     }
+    (void)memset_s(&scanParams, sizeof(scanParams), 0, sizeof(scanParams));
     return HILINK_SAL_OK;
 }
 
@@ -407,12 +424,13 @@ static bool GetScanWifiResultFromOhos(const wifi_sta_config_stru *config, wifi_s
 {
     bool ret = false;
     unsigned int size = WIFI_SCAN_AP_LIMIT;
-    wifi_scan_info_stru *result = (wifi_scan_info_stru *)HILINK_Malloc(sizeof(wifi_scan_info_stru) * size);
+    unsigned int resultSize = sizeof(wifi_scan_info_stru) * size;
+    wifi_scan_info_stru *result = (wifi_scan_info_stru *)HILINK_Malloc(resultSize);
     if (result == NULL) {
         HILINK_SAL_ERROR("malloc error\r\n");
         return false;
     }
-    (void)memset_s(result, sizeof(wifi_scan_info_stru) * size, 0, sizeof(wifi_scan_info_stru) * size);
+    (void)memset_s(result, resultSize, 0, resultSize);
 
     if (wifi_sta_get_scan_info(result, &size) !=  ERRCODE_SUCC) {
         HILINK_SAL_ERROR("Get wifi scan info fail.\r\n");
@@ -422,20 +440,21 @@ static bool GetScanWifiResultFromOhos(const wifi_sta_config_stru *config, wifi_s
 
     if ((size == 0) || (size > WIFI_SCAN_AP_LIMIT)) {
         HILINK_SAL_WARN("can not scan any wifi or scan size over limit, size:%u\r\n", size);
-    } else {
-        for (unsigned int i = 0; i < size; ++i) {
-            /* 匹配目标wifi：ssid完全匹配，且WiFi加密类型应同时open或者同时不为open */
-            if ((HILINK_Strcmp((char *)result[i].ssid, (char *)config->ssid) == 0) &&
-                ((config->security_type != WIFI_SEC_TYPE_OPEN && result[i].security_type != WIFI_SEC_TYPE_OPEN) ||
-                 (config->security_type == WIFI_SEC_TYPE_OPEN && result[i].security_type == WIFI_SEC_TYPE_OPEN))) {
-                HILINK_SAL_NOTICE("find target ssid success\r\n");
-                if (memcpy_s(info, sizeof(wifi_scan_info_stru), &result[i], sizeof(wifi_scan_info_stru)) != 0) {
-                    HILINK_SAL_ERROR("memcpy error\r\n");
-                    break;
-                }
-                ret = true;
+        HILINK_Free(result);
+        return false;
+    }
+    for (unsigned int i = 0; i < size; ++i) {
+        /* 匹配目标wifi：ssid完全匹配，且WiFi加密类型应同时open或者同时不为open */
+        if ((HILINK_Strcmp((char *)result[i].ssid, (char *)config->ssid) == 0) &&
+            ((config->security_type != WIFI_SEC_TYPE_OPEN && result[i].security_type != WIFI_SEC_TYPE_OPEN) ||
+             (config->security_type == WIFI_SEC_TYPE_OPEN && result[i].security_type == WIFI_SEC_TYPE_OPEN))) {
+            HILINK_SAL_NOTICE("find target ssid success\r\n");
+            if (memcpy_s(info, sizeof(wifi_scan_info_stru), &result[i], sizeof(wifi_scan_info_stru)) != EOK) {
+                HILINK_SAL_ERROR("memcpy error\r\n");
                 break;
             }
+            ret = true;
+            break;
         }
     }
 
@@ -516,82 +535,10 @@ int HILINK_RestartWiFi(void)
 
     ret = wifi_sta_enable();
     if (ret != ERRCODE_SUCC) {
-        HILINK_SAL_ERROR("disable wifi error, ret = %d\r\n", ret);
+        HILINK_SAL_ERROR("enable wifi error, ret = %d\r\n", ret);
         return HILINK_SAL_NOK;
     }
-
-    return HILINK_SAL_OK;
-}
-
-static int AddBssidToWifiConfig(int securityType, const unsigned char *bssid, unsigned int len)
-{
-    /* 读取当前WiFi配置 */
-    wifi_sta_config_stru config;
-    (void)memset_s(&config, sizeof(config), 0, sizeof(config));
-    if ((GetWifiConfigFromOhos(&config) != HILINK_SAL_OK) || (config.ssid[0] == '\0')) {
-        HILINK_SAL_ERROR("get wifi config fail\r\n");
-        (void)memset_s(&config, sizeof(config), 0, sizeof(config));
-        return HILINK_SAL_GET_WIFI_INFO_ERR;
-    }
-
-    /* 拷贝bssid */
-    if (memcpy_s(config.bssid, sizeof(config.bssid), bssid, len) != EOK) {
-        HILINK_SAL_ERROR("memcpy bssid failed\r\n");
-        (void)memset_s(&config, sizeof(config), 0, sizeof(config));
-        return HILINK_SAL_MEMCPY_ERR;
-    }
-
-    /* harmonyos中，-1表示无效加密类型，仅更新有效加密类型 */
-    if (securityType != -1) {
-        config.security_type = securityType;
-    }
-
-    /* 更新WiFi配置 */
-    if (RemoveDevice() != HILINK_SAL_OK) {
-        HILINK_SAL_ERROR("remove config error\r\n");
-        (void)memset_s(&config, sizeof(wifi_sta_config_stru), 0, sizeof(wifi_sta_config_stru));
-        return HILINK_SAL_REMOVE_WIFI_ERR;
-    }
-    if (AddDeviceConfig(&config) != HILINK_SAL_OK) {
-        HILINK_SAL_ERROR("add config fail\r\n");
-        (void)memset_s(&config, sizeof(wifi_sta_config_stru), 0, sizeof(wifi_sta_config_stru));
-        return HILINK_SAL_ADD_WIFI_ERR;
-    }
-    (void)memset_s(&config, sizeof(wifi_sta_config_stru), 0, sizeof(wifi_sta_config_stru));
-    return HILINK_SAL_OK;
-}
-
-static int RemoveBssidFromWifiConfig(void)
-{
-    /* 读取当前WiFi配置 */
-    wifi_sta_config_stru config;
-    (void)memset_s(&config, sizeof(config), 0, sizeof(config));
-    if ((GetWifiConfigFromOhos(&config) != HILINK_SAL_OK) || (config.ssid[0] == '\0')) {
-        HILINK_SAL_ERROR("get wifi config fail\r\n");
-        (void)memset_s(&config, sizeof(config), 0, sizeof(config));
-        return HILINK_SAL_GET_WIFI_INFO_ERR;
-    }
-
-    /* 清除bssid */
-    if (memset_s(config.bssid, sizeof(config.bssid), 0, sizeof(config.bssid)) != EOK) {
-        HILINK_SAL_ERROR("memcpy bssid failed\r\n");
-        (void)memset_s(&config, sizeof(config), 0, sizeof(config));
-        return HILINK_SAL_MEMSET_ERR;
-    }
-
-    /* 更新WiFi配置 */
-    if (RemoveDevice() != HILINK_SAL_OK) {
-        HILINK_SAL_ERROR("remove config error\r\n");
-        (void)memset_s(&config, sizeof(wifi_sta_config_stru), 0, sizeof(wifi_sta_config_stru));
-        return HILINK_SAL_REMOVE_WIFI_ERR;
-    }
-
-    if (AddDeviceConfig(&config) != HILINK_SAL_OK) {
-        HILINK_SAL_ERROR("add config fail\r\n");
-        (void)memset_s(&config, sizeof(wifi_sta_config_stru), 0, sizeof(wifi_sta_config_stru));
-        return HILINK_SAL_ADD_WIFI_ERR;
-    }
-    (void)memset_s(&config, sizeof(wifi_sta_config_stru), 0, sizeof(wifi_sta_config_stru));
+    HILINK_Printf("hilink restarted wifi station\r\n");
     return HILINK_SAL_OK;
 }
 
@@ -615,12 +562,6 @@ int HILINK_ConnectWiFiByBssid(int securityType, const unsigned char *bssid, unsi
     }
 
     g_isReasonRefresh = false;
-
-    if (AddBssidToWifiConfig(securityType, bssid, len) != HILINK_SAL_OK) {
-        HILINK_SAL_ERROR("add bssid to config failed\r\n");
-        return HILINK_SAL_ADD_WIFI_ERR;
-    }
-
     int netConnect = WIFI_DISCONNECTED;
     if (HILINK_GetNetworkState(&netConnect) != HILINK_SAL_OK) {
         /* 网络状态获取失败，不退出继续连接 */
@@ -635,12 +576,16 @@ int HILINK_ConnectWiFiByBssid(int securityType, const unsigned char *bssid, unsi
     }
 
     wifi_sta_config_stru config;
-    memset_s(&config, sizeof(config), 0, sizeof(config));
+    (void)memset_s(&config, sizeof(config), 0, sizeof(config));
     if (GetWifiConfigFromOhos(&config) != HILINK_SAL_OK) {
         return HILINK_SAL_GET_WIFI_INFO_ERR;
     }
 
     config.ip_type = DHCP;
+    if (memcpy_s(config.bssid, sizeof(config.bssid), bssid, len) != EOK) {
+        HILINK_SAL_ERROR("memcpy error\r\n");
+        return HILINK_SAL_MEMCPY_ERR;
+    }
     if (wifi_sta_connect(&config) != ERRCODE_SUCC) {
         HILINK_SAL_ERROR("connect to wifi fail.\n");
         return HILINK_SAL_CONENCT_WIFI_ERR;
@@ -649,12 +594,6 @@ int HILINK_ConnectWiFiByBssid(int securityType, const unsigned char *bssid, unsi
     if (sta_setup_dhcp() != 0) {
         HILINK_SAL_ERROR("set sta dhcp failed\r\n");
         return HILINK_SAL_CONENCT_WIFI_ERR;
-    }
-
-    /* 指定完BSSID连接后及时清除BSSID配置，避免下次自动重连 */
-    if (RemoveBssidFromWifiConfig() != HILINK_SAL_OK) {
-        HILINK_SAL_ERROR("remove bssid to config failed\r\n");
-        return HILINK_SAL_ADD_WIFI_ERR;
     }
 
     return HILINK_SAL_OK;
@@ -749,7 +688,16 @@ int HILINK_ScanAP(const HILINK_APScanParam *param)
 
     /* 指定WiFi的ssid进行扫描 */
     g_isStaScanSuccess = false;
-
+    HILINK_SAL_ERROR("ready WIFI_SCAN_TPYE_BASIC\r\n");
+    if (param->scanType == WIFI_SCAN_TPYE_BASIC) {
+        HILINK_SAL_ERROR("in WIFI_SCAN_TPYE_BASIC\r\n");
+        if (wifi_sta_scan() != ERRCODE_SUCC) {
+            HILINK_SAL_ERROR("wifi scan fail\r\n");
+            return HILINK_SAL_SCAN_WIFI_ERR;
+        }
+        return HILINK_SAL_OK;
+    }
+    HILINK_SAL_ERROR("out WIFI_SCAN_TPYE_BASIC\r\n");
     /* 组装扫描参数，填充SSID */
     wifi_scan_params_stru scanParams;
     (void)memset_s(&scanParams, sizeof(scanParams), 0, sizeof(scanParams));
@@ -789,12 +737,13 @@ static int GetScanWifiResultList(wifi_scan_info_stru **list, unsigned int *listS
 
 static int CopyScanWifiResultList(HILINK_APList *scanList, wifi_scan_info_stru *result, unsigned int resSize)
 {
-    HILINK_APInfo *info = (HILINK_APInfo *)HILINK_Malloc(sizeof(HILINK_APInfo) * resSize);
+    unsigned int infoSize = sizeof(HILINK_APInfo) * resSize;
+    HILINK_APInfo *info = (HILINK_APInfo *)HILINK_Malloc(infoSize);
     if (info == NULL) {
         HILINK_SAL_ERROR("malloc error\r\n");
         return HILINK_SAL_MALLOC_ERR;
     }
-    (void)memset_s(info, sizeof(HILINK_APInfo) * resSize, 0, sizeof(HILINK_APInfo) * resSize);
+    (void)memset_s(info, infoSize, 0, infoSize);
     for (unsigned int i = 0; i < resSize; i++) {
         if ((strcpy_s(info[i].ssid, sizeof(info[i].ssid), result[i].ssid) != EOK) ||
             (memcpy_s(info[i].bssid, sizeof(info[i].bssid), result[i].bssid, sizeof(result[i].bssid)) != EOK)) {

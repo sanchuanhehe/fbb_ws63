@@ -20,6 +20,8 @@ sys.path.append(os.path.join(g_root, "build", "config"))
 sys.path.remove(os.path.join(g_root, 'build', 'config', "target_config", "ws63"))
 from enviroment import TargetEnvironment
 
+from utils.indie_upgrade_utils import check_indie_upg_match
+
 class upg_base_info:
     def __init__(self):
         self.root_path = g_root
@@ -41,7 +43,9 @@ class upg_base_info:
         self.flashboot = os.path.join(self.root_path, "output", "ws63", "acore","boot_bin", "flashboot_sign.bin")
         self.app_bin = os.path.join(self.output, "acore", "ws63-liteos-app", "ws63-liteos-app-sign.bin")
         self.app_iot_bin = os.path.join(self.output, "acore", "ws63-liteos-app-iot", "ws63-liteos-app-iot-sign.bin")
+        self.app_iot_check = os.path.join(self.output, "acore", "ws63-liteos-app-iot", "ws63-liteos-app-iot-check.json")
         self.hilink_bin = os.path.join(self.output, "acore", "ws63-liteos-hilink", "ws63-liteos-hilink-sign.bin")
+        self.hilink_check = os.path.join(self.output, "acore", "ws63-liteos-hilink", "ws63-liteos-hilink-check.json")
         self.test_bin = os.path.join(self.output, "acore", "ws63-liteos-testsuite", "ws63-liteos-testsuite-sign.bin")
         self.nv_bin = os.path.join(self.output, "acore", "nv_bin", "ws63_all_nv.bin")
 
@@ -57,6 +61,22 @@ class upg_base_info:
         self.hilink_old_bin = os.path.join(self.output, "acore", "old_version", "ws63-liteos-hilink-sign.bin")
         self.test_old_bin = os.path.join(self.output, "acore", "old_version", "ws63-liteos-testsuite-sign.bin")
         self.nv_old_bin = os.path.join(self.output, "acore", "old_version", "ws63_all_nv.bin")
+
+def check_bin_match(input_param, info):
+    if 'app_iot' not in input_param:
+        return True
+
+    target_env = TargetEnvironment("ws63-liteos-app-iot")
+    defines = target_env.get('defines')
+    if "CONFIG_SUPPORT_HILINK_INDIE_UPGRADE" not in defines:
+        return True
+
+    if not check_indie_upg_match(info.hilink_check, info.app_iot_check):
+        print("indie upg hilink and app not match")
+        return False
+
+    print("check indie upg hilink and app match succ")
+    return True
 
 def get_new_image(input_param, info):
     image_list = []
@@ -108,7 +128,8 @@ def get_parameters():
 
     parser.add_argument('--pkt', type=str, default = 'app',
                         help='需要生成的镜像,包括: app,boot,nv')
-
+    parser.add_argument('--ver', type=str, default = '',
+                        help='版本号')
     config, unknown = parser.parse_known_args()
     return config
 
@@ -136,17 +157,23 @@ def make_pkt(info, input_param):
 if __name__ == '__main__':
     info = upg_base_info()
     conf = get_parameters()
+    print("update param: ", conf)
     input_param = conf.pkt.split(",")
     if "boot" not in input_param:
         input_param.append("boot")
-
-    conf.app_name        = "update"
-    conf.upg_format_path = info.fota_format_path
-    conf.base            = info.fota_cfg
-    conf.temp_dir        = info.temp_dir
-    conf.new_images      = get_new_image(input_param, info)
-    conf.old_images      = get_old_image(input_param, info)
-    conf.output_dir      = info.upg_output
-    conf.type            = 0
+    if not check_bin_match(input_param, info):
+        sys.exit(1)
+    if len(conf.ver) > 16:  # 预留字节数为0~52，默认版本号占16字节
+        print("error: version length is too long.")
+        exit(1)
+    conf.app_name              = "update"
+    conf.upg_format_path       = info.fota_format_path
+    conf.base                  = info.fota_cfg
+    conf.temp_dir              = info.temp_dir
+    conf.new_images            = get_new_image(input_param, info)
+    conf.old_images            = get_old_image(input_param, info)
+    conf.output_dir            = info.upg_output
+    conf.type                  = 0
+    conf.user_firmware_version = conf.ver
     begin(conf)
     make_pkt(info, input_param)

@@ -1,6 +1,7 @@
 /*
  * wpa_supplicant/hostapd / Debug prints
  * Copyright (c) 2002-2013, Jouni Malinen <j@w1.fi>
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2014-2019. All rights reserved.
  *
  * This software may be distributed under the terms of the BSD license.
  * See README for more details.
@@ -11,6 +12,7 @@
 
 int wpa_cli_scan(struct wpa_supplicant *wpa_s, const char *buf, int len);
 int wpa_cli_scan_results(struct wpa_supplicant *wpa_s);
+int wpa_cli_set_eapol_paras(struct wpa_supplicant *wpa_s, ext_wifi_config_conn_paras *para);
 int wpa_cli_channel_scan(struct wpa_supplicant *wpa_s, int channel);
 int wpa_cli_ap_scan(struct wpa_supplicant *wpa_s, const char *mode);
 int wpa_cli_add_network(struct wpa_supplicant *wpa_s);

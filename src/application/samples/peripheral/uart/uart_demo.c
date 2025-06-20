@@ -25,7 +25,7 @@
 static uint8_t g_app_uart_rx_buff[CONFIG_UART_TRANSFER_SIZE] = { 0 };
 #if defined(CONFIG_UART_SUPPORT_INT_MODE)
 static uint8_t g_app_uart_int_rx_flag = 0;
-static volatile uint8_t g_app_uart_int_index = 0;
+static volatile uint16_t g_app_uart_int_index = 0;
 static uint8_t g_app_uart_int_rx_buff[CONFIG_UART_TRANSFER_SIZE] = { 0 };
 #endif
 static uart_buffer_config_t g_app_uart_buffer_config = {
@@ -94,11 +94,15 @@ static void app_uart_read_int_handler(const void *buffer, uint16_t length, bool 
     }
 
     uint8_t *buff = (uint8_t *)buffer;
-    if (memcpy_s(g_app_uart_rx_buff, length, buff, length) != EOK) {
-        osal_printk("uart%d int mode data copy fail!\r\n", CONFIG_UART_BUS_ID);
-        return;
+    osal_printk("uart%d  read data: ", CONFIG_UART_BUS_ID);
+    for (uint16_t i = 0; i < length; i++) {
+        osal_printk("%d ", buff[i]);
     }
-    if (memcpy_s(g_app_uart_int_rx_buff + g_app_uart_int_index, length, g_app_uart_rx_buff, length) != EOK) {
+    osal_printk("\r\n");
+    if (g_app_uart_int_index + length > CONFIG_UART_TRANSFER_SIZE) {
+        g_app_uart_int_index = 0;
+    }
+    if (memcpy_s(g_app_uart_int_rx_buff + g_app_uart_int_index, length, buff, length) != EOK) {
         g_app_uart_int_index = 0;
         osal_printk("uart%d int mode data2 copy fail!\r\n", CONFIG_UART_BUS_ID);
     }
@@ -110,9 +114,11 @@ static void app_uart_write_int_handler(const void *buffer, uint32_t length, cons
 {
     unused(params);
     uint8_t *buff = (void *)buffer;
-    for (uint8_t i = 0; i < length; i++) {
-        osal_printk("uart%d write data[%d] = %d\r\n", CONFIG_UART_BUS_ID, i, buff[i]);
+    osal_printk("uart%d write data: ", CONFIG_UART_BUS_ID);
+    for (uint16_t i = 0; i < length; i++) {
+        osal_printk("%d ", buff[i]);
     }
+    osal_printk("\r\n");
 }
 
 static void app_uart_register_rx_callback(void)

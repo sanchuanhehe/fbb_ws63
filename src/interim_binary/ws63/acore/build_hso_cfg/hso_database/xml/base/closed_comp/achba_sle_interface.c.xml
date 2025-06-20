@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="API set sle addr: %02x:%02x:**:**:%02x:%02x @achba_sle_interface.c(47),INFO" ID="0x8fd6017d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="API: %s, reply_type %d. @achba_sle_interface.c(85),INFO" ID="0x8fd602ad" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="Error: %s achba_ops is NULL! @achba_sle_interface.c(105),ERROR" ID="0x8fd6034a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="Error: %s sle_ops is NULL! @achba_sle_interface.c(112),ERROR" ID="0x8fd60382" />
+			</MSG_LOG>

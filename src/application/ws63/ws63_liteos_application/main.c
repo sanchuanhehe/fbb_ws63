@@ -12,6 +12,7 @@
 #include "uart.h"
 #include "exception.h"
 #include "timer.h"
+#include "timer_patch.h"
 #include "arch/cache.h"
 #include "osal_task.h"
 #include "systick.h"
@@ -138,7 +139,7 @@
 #define TASK_PRIORITY_RD_F        24
 #define RADAR_STACK_SIZE_D        0x800
 #define RADAR_STACK_SIZE_F        0x2600
-#define RADAR_STACK_SIZE          0x400
+#define RADAR_STACK_SIZE          0x800
 #endif
 
 typedef struct {
@@ -290,7 +291,7 @@ static void main_initialise(const void *unused1, uint32_t unused2)
             continue;
         }
         if (osal_kthread_set_priority(task_handle, g_app_tasks[i].priority) != OSAL_SUCCESS) {
-            PRINT("set_priority[%d] failed\r\n", i);
+            PRINT("set_pri[%d] failed\r\n", i);
         }
     }
     osal_kthread_unlock();
@@ -401,6 +402,7 @@ static void hw_init(void)
     sw_debug_uart_init(CONFIG_DEBUG_UART_BAUDRATE);
     PRINT("dbg uart init ok.\n");
 #endif
+    ws63_timer_patch_init();
     uapi_timer_init();
     uapi_timer_adapter(1, TIMER_1_IRQN, irq_prio(TIMER_1_IRQN));
     uapi_systick_init();

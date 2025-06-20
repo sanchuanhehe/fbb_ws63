@@ -1,0 +1,29 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{alg_aggr_tx_probe_type_process:get probe lock fail! ret[%d]} @alg_aggr_probe_rom.c(87),WARNING" ID="0x81ac02bb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_aggr_tx_probe_type_process: aggr probe state err! lut_idx[%d], probe_state[%d], probe_lock[%d]} @alg_aggr_probe_rom.c(95),WARNING" ID="0x81ac02fb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_aggr_check_probe_direction_up: input param invalid! aggr_time_idx:%d} @alg_aggr_probe_rom.c(126),ERROR" ID="0x81ac03f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_aggr_check_probe_direction_up:[AGGR_UP_CANCEL] normal_time[%d]} @alg_aggr_probe_rom.c(143),WARNING" ID="0x81ac047b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_aggr_get_probe_down_base_aggr_time: input cur_aggr_idx[%d] invalid!} @alg_aggr_probe_rom.c(160),ERROR" ID="0x81ac0502" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_aggr_check_probe_direction_down:input aggr_time_idx[%d] invalid! } @alg_aggr_probe_rom.c(195),ERROR" ID="0x81ac061a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{alg_aggr_check_probe_direction_down: alg_aggr_get_probe_down_base_aggr_time fail! ret[%d], cur_idx[%d], min_idx[%d], cur_per[%d]} @alg_aggr_probe_rom.c(213),WARNING" ID="0x81ac06ab" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{alg_aggr_check_probe_direction_down: [AGGR_DOWN_CANCEL] stat_cnt = %d, normal_time = %dus, per = %d, down_delta_per = %d} @alg_aggr_probe_rom.c(241),WARNING" ID="0x81ac078b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_aggr_update_probe_up_mpdu_bytes::aggr_time_idx[%d] invalid!} @alg_aggr_probe_rom.c(279),WARNING" ID="0x81ac08bb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{[AGGR_UP_UPDATE_INVALID1]stat_cnt[%d] normal_time[%dus] up_time[%dus]} @alg_aggr_probe_rom.c(293),INFO" ID="0x81ac092d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{[AGGR_UP_UPDATE_INVALID2]cur_probe_up_bytes(%d) &lt; normal_bytes(%d), probe useless!} @alg_aggr_probe_rom.c(296),INFO" ID="0x81ac0945" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[AGGR_UP_UPDATE1]stat_cnt[%d] rate[%dkbps] ormal_time[%dus] up_time[%dus]} @alg_aggr_probe_rom.c(347),WARNING" ID="0x81ac0adb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{[AGGR_UP_UPDATE2]avg_delta_per=%d, normal_aggr_bytes = %d, probe_up_aggr_byptes = %d} @alg_aggr_probe_rom.c(351),WARNING" ID="0x81ac0afb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[AGGR_UP_UPDATE3]up_per = %d, normal_per = %d, alpha_up = %d, alpha_up*(1-normal_per) = %d} @alg_aggr_probe_rom.c(356),WARNING" ID="0x81ac0b23" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{[AGGR_DOWN_UPDATE1]stat_cnt = %d, normal_time = %dus, down_time = %dus} @alg_aggr_probe_rom.c(361),WARNING" ID="0x81ac0b4b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{[AGGR_DOWN_UPDATE2]avg_delta_per = %d, normal_aggr_bytes = %d, rate = %d} @alg_aggr_probe_rom.c(365),WARNING" ID="0x81ac0b6b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[AGGR_DOWN_UPDATE3]normal_per = %d, down_per = %d, alpha_dw = %d, alpha_dw*(1-normal_per) = %d} @alg_aggr_probe_rom.c(369),WARNING" ID="0x81ac0b8b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_aggr_probe_up_update_aggr_best_info:[AUTO-AGGR] [BEST_INC] aggr_idx = %d, aggr_time = %dus} @alg_aggr_probe_rom.c(406),WARNING" ID="0x81ac0cb3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_aggr_probe_down_update_aggr_best_info:[AUTO-AGGR] min index but try to probe down, aggr idx[%d]} @alg_aggr_probe_rom.c(557),ERROR" ID="0x81ac116a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_aggr_probe_down_update_aggr_best_info:[AUTO-AGGR] [BEST_DEC] aggr_idx = %d, aggr_time = %dus} @alg_aggr_probe_rom.c(574),WARNING" ID="0x81ac11f3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_aggr_probe_pkt_process::user_tx_rate_kbps fail!} @alg_aggr_probe_rom.c(654),WARNING" ID="0x81ac1473" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_aggr_release_probe_lock::qry user probe flag fail! ret[%d]} @alg_aggr_probe_rom.c(681),ERROR" ID="0x81ac154a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_aggr_get_probe_lock::get user probe lock fail! ret[%d]} @alg_aggr_probe_rom.c(705),ERROR" ID="0x81ac160a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_aggr_get_probe_lock::user probe lock invalid! user_lut_idx[%d] probe_lock[%d]} @alg_aggr_probe_rom.c(717),WARNING" ID="0x81ac166b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_aggr_get_probe_lock::user lock probe flag fail! ret[%d]} @alg_aggr_probe_rom.c(725),WARNING" ID="0x81ac16ab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_aggr_get_probe_lock::get user probe lock fail! ret[%d]} @alg_aggr_probe_rom.c(734),ERROR" ID="0x81ac16f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_aggr_get_probe_lock::IDLE State, Aggr Probe Lock, release.} @alg_aggr_probe_rom.c(739),WARNING" ID="0x81ac171b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_aggr_basic_probe_sent_process::probe pkt lost, back to IDLE.} @alg_aggr_probe_rom.c(776),WARNING" ID="0x81ac1843" />
+			</MSG_LOG>

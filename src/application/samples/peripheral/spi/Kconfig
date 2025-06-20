@@ -14,37 +14,37 @@ config SPI_MASTER_BUS_ID
     int
     prompt "Choose SPI master bus id."
     depends on SAMPLE_SUPPORT_SPI_MASTER
-    default 2
+    default 0
 
 config SPI_DI_MASTER_PIN
     int
     prompt "Choose SPI DI master pin."
     depends on SAMPLE_SUPPORT_SPI_MASTER
-    default 16
+    default 11
 
 config SPI_DO_MASTER_PIN
     int
     prompt "Choose SPI DO master pin."
     depends on SAMPLE_SUPPORT_SPI_MASTER
-    default 17
+    default 9
 
 config SPI_CLK_MASTER_PIN
     int
     prompt "Choose SPI CLK master pin."
     depends on SAMPLE_SUPPORT_SPI_MASTER
-    default 18
+    default 7
 
 config SPI_CS_MASTER_PIN
     int
     prompt "Choose SPI CS master pin."
     depends on SAMPLE_SUPPORT_SPI_MASTER
-    default 19
+    default 10
 
 config SPI_MASTER_PIN_MODE
     int
     prompt "Choose SPI master pin mode."
     depends on SAMPLE_SUPPORT_SPI_MASTER
-    default 1
+    default 3
 
 config SPI_MASTER_SUPPORT_QSPI
     bool
@@ -88,37 +88,37 @@ config SPI_SLAVE_BUS_ID
     int
     prompt "Choose SPI slave bus id."
     depends on SAMPLE_SUPPORT_SPI_SLAVE
-    default 4
+    default 0
 
 config SPI_DI_SLAVE_PIN
     int
     prompt "Choose SPI DI slave pin."
     depends on SAMPLE_SUPPORT_SPI_SLAVE
-    default 12
+    default 11
 
 config SPI_DO_SLAVE_PIN
     int
     prompt "Choose SPI DO slave pin."
     depends on SAMPLE_SUPPORT_SPI_SLAVE
-    default 13
+    default 9
 
 config SPI_CLK_SLAVE_PIN
     int
     prompt "Choose SPI CLK slave pin."
     depends on SAMPLE_SUPPORT_SPI_SLAVE
-    default 14
+    default 7
 
 config SPI_CS_SLAVE_PIN
     int
     prompt "Choose SPI CS slave pin."
     depends on SAMPLE_SUPPORT_SPI_SLAVE
-    default 15
+    default 10
 
 config SPI_SLAVE_PIN_MODE
     int
     prompt "Choose SPI slave pin mode."
     depends on SAMPLE_SUPPORT_SPI_SLAVE
-    default 5
+    default 3
 
 config SPI_TRANSFER_LEN
     int

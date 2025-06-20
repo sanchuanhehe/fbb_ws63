@@ -1,0 +1,10 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="bt acore set product type smp_index:0x:%x! @nv_common.c(38),INFO" ID="0xd8320135" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt acore set smp index 0x:%x! @nv_common.c(47),INFO" ID="0xd832017d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] bt set own addr config fail, errcode: 0x%x @nv_common.c(57),ERROR" ID="0xd83201ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] bt read nv smp keys fail, errcode: 0x%x @nv_common.c(76),ERROR" ID="0xd8320262" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] bt set own addr config fail, errcode: 0x%x @nv_common.c(92),ERROR" ID="0xd83202e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] bt read nv reserv fail, errcode: 0x%x @nv_common.c(108),ERROR" ID="0xd8320362" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] bt read nv config fail, errcode: 0x%x @nv_common.c(182),ERROR" ID="0xd83205b2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] bt read nv config succ, real_len:%d. @nv_common.c(185),INFO" ID="0xd83205cd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] bt set nv config fail, errcode: 0x%x @nv_common.c(204),ERROR" ID="0xd8320662" />
+			</MSG_LOG>

@@ -127,7 +127,9 @@ if os.path.isfile("params.bin"):
 if not os.path.isdir(boot_bin):
     shutil.copytree(inter_bin, boot_bin)
 
-if not os.path.isfile(os.path.join(boot_bin, "ws63-liteos-mfg.bin")):
+shutil.copy(os.path.join(inter_bin, "ssb.bin"), boot_bin)
+
+if os.path.isfile(os.path.join(mfg_bin, "ws63-liteos-mfg.bin")):
     shutil.copy(os.path.join(mfg_bin, "ws63-liteos-mfg.bin"), boot_bin)
 
 #sign ssb

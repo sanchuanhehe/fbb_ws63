@@ -197,6 +197,34 @@ typedef struct {
 
 /**
  * @if Eng
+ * @brief Enum of ble pair info switch.
+ * @else
+ * @brief 是否获取配对信息开关
+ * @endif
+ */
+typedef enum {
+    GAP_BLE_PAIR_INFO_UNAVAILABLE = 0x00,          /*!< @if Eng Pair information unavailable
+                                                        @else   配对信息不可获取 @endif */
+    GAP_BLE_PAIR_INFO_AVAILABLE = 0x01,            /*!< @if Eng Pair information available
+                                                        @else   配对信息可获取 @endif */
+} gap_ble_pair_info_switch_t;
+
+/**
+ * @if Eng
+ * @brief Enum of ble set key switch.
+ * @else
+ * @brief 秘钥用户设置开关
+ * @endif
+ */
+typedef enum {
+    GAP_BLE_SAVE_SMP_KEYS_AUTO = 0x00,          /*!< @if Eng Pair information unavailable
+                                                        @else   秘钥自动保存 @endif */
+    GAP_BLE_SAVE_SMP_KEYS_MANU = 0x01,            /*!< @if Eng Pair information available
+                                                        @else   秘钥用户手动保存 @endif */
+} gap_ble_save_pair_keys_mode_switch_t;
+
+/**
+ * @if Eng
  * @brief Struct of BLE PHY parameters.
  * @else
  * @brief BLE PHY参数数据结构。
@@ -778,6 +806,52 @@ typedef void (*gap_ble_set_scan_param_callback)(errcode_t status);
 
 /**
  * @if Eng
+ * @brief Callback invoked in setting adv data filter.
+ * @par  When registered, this callback return result of setting adv data filter.
+ * @attention 1.This function is called in bts context,should not be blocked or do long time waiting.
+ * @attention 2. The memories of devices are requested and freed by the bts automatically.
+ * @param  [in] status  errcode_t
+ * @par Dependency:
+ * @li  bts_def.h
+ * @see gap_ble_callbacks_t
+ * @else
+ * @brief  设置扫描数据过滤条件回调。
+ * @par    注册该回调函数之后，返回设置扫描数据过滤条件的结果。
+ * @attention  1. 该回调函数运行于bts线程，不能阻塞或长时间等待。
+ * @attention  2. devices由bts申请内存，也由bts释放，回调中不应释放。
+ * @param  [in] result 执行结果。
+ * @par 依赖:
+ * @li  bts_def.h
+ * @see gap_ble_callbacks_t
+ * @endif
+ */
+typedef void (*gap_ble_set_adv_data_filter_callback)(errcode_t status);
+
+/**
+ * @if Eng
+ * @brief Callback invoked in cleaning adv data filter.
+ * @par  When registered, this callback return result of cleaning adv data filter.
+ * @attention 1.This function is called in bts context,should not be blocked or do long time waiting.
+ * @attention 2. The memories of devices are requested and freed by the bts automatically.
+ * @param  [in] status  errcode_t
+ * @par Dependency:
+ * @li  bts_def.h
+ * @see gap_ble_callbacks_t
+ * @else
+ * @brief  清除扫描数据过滤条件回调。
+ * @par    注册该回调函数之后，返回清除扫描数据过滤条件的结果。
+ * @attention  1. 该回调函数运行于bts线程，不能阻塞或长时间等待。
+ * @attention  2. devices由bts申请内存，也由bts释放，回调中不应释放。
+ * @param  [in] result 执行结果。
+ * @par 依赖:
+ * @li  bts_def.h
+ * @see gap_ble_callbacks_t
+ * @endif
+ */
+typedef void (*gap_ble_clean_adv_data_filter_callback)(errcode_t status);
+
+/**
+ * @if Eng
  * @brief Callback invoked when connection completed.
  * @par When registered, this callback notifies the upper layer if a connnection is established.
  * @attention 1.This function is called in bts context,should not be blocked or do long time waiting.
@@ -978,6 +1052,10 @@ typedef struct {
                                                                       @else   认证完成回调函数 @endif */
     gap_ble_connect_param_update_callback conn_param_update_cb;  /*!< @if Eng connect param update callback
                                                                       @else   连接参数更新回调函数 @endif */
+    gap_ble_set_adv_data_filter_callback set_data_data_filter_cb; /*!< @if Eng set adv data filter callback
+                                                                      @else   设置广播数据过滤回调函数 @endif */
+    gap_ble_clean_adv_data_filter_callback clean_data_data_filter_cb; /*!< @if Eng clean adv data filter callback
+                                                                      @else   清理广播数据过滤回调函数 @endif */
 } gap_ble_callbacks_t;
 
 /**

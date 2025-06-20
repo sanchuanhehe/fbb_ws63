@@ -1,5 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2023. All rights reserved.
+ * Description: dfx feature config file
+ * This file should be changed only infrequently and with great care.
  */
 
 #ifndef DFX_FEATURE_CONFIG_H

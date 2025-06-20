@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][initiate]lm_ble_initiate_create_fsm success, initiate_handle=%d @lm_ble_initiate_fsm.c(92),INFO" ID="0x884202e5" />
+			</MSG_LOG>

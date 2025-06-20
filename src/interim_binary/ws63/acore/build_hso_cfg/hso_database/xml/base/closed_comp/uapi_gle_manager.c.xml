@@ -1,0 +1,14 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[uapi gle_init] @uapi_gle_manager.c(22),INFO" ID="0xd8e000b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[uapi gle_enable] @uapi_gle_manager.c(29),INFO" ID="0xd8e000ed" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[uapi gle_disable] @uapi_gle_manager.c(35),INFO" ID="0xd8e0011d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[uapi gle_cleanup] @uapi_gle_manager.c(41),INFO" ID="0xd8e0014d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle manager register cbks pointer null @uapi_gle_manager.c(65),ERROR" ID="0xd8e0020a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle conn manager register cbks pointer null @uapi_gle_manager.c(75),ERROR" ID="0xd8e0025a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="manager new register cbk table failed @uapi_gle_manager.c(111),ERROR" ID="0xd8e0037a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle manager exter_cbks will be overlaped @uapi_gle_manager.c(119),WARNING" ID="0xd8e003bb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle manager register cbks new failed @uapi_gle_manager.c(124),ERROR" ID="0xd8e003e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle manager register cbks memcpy failed @uapi_gle_manager.c(129),ERROR" ID="0xd8e0040a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] gle general evt param null @uapi_gle_manager.c(153),ERROR" ID="0xd8e004ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] gle manager general event report opcode[%02x] @uapi_gle_manager.c(157),INFO" ID="0xd8e004ed" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="module_id func not reg @uapi_gle_manager.c(161),ERROR" ID="0xd8e0050a" />
+			</MSG_LOG>

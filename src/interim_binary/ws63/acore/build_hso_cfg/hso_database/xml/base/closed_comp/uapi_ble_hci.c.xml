@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[ACore] ble general hci proc:cmdid:0x%02X pay_len:%d. @uapi_ble_hci.c(39),INFO" ID="0xd880013d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] ble general hci proc no handle for command id:0x%02x. @uapi_ble_hci.c(47),INFO" ID="0xd880017d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] mc ble hci general bta len error, except len = %u, real len = %u @uapi_ble_hci.c(139),ERROR" ID="0xd880045a" />
+			</MSG_LOG>

@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_glp.c(57),INFO" ID="0xd90401cd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[gle glp evt proc] param NULL. @sle_srv_glp.c(73),ERROR" ID="0xd904024a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[gle glp evt proc] type invalid. cmd/evt(%d) @sle_srv_glp.c(79),ERROR" ID="0xd904027a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[gle glp evt proc] malloc fail. cmd/evt(%d) @sle_srv_glp.c(85),ERROR" ID="0xd90402aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[gle glp evt proc] type invalid. cmd/evt(%d) @sle_srv_glp.c(96),ERROR" ID="0xd9040302" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy glp callback fail @sle_srv_glp.c(115),ERROR" ID="0xd904039a" />
+			</MSG_LOG>

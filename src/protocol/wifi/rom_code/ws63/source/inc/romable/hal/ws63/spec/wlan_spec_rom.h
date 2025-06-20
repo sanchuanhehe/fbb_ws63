@@ -45,7 +45,7 @@ extern "C" {
 
 #define WLAN_SERVICE_DEVICE_MAX_NUM_PER_CHIP    1 /* 每个chip支持业务device的最大个数 */
 
-/* wg. 以下两个宏含义一致 HMAC和DMAC需要归一 */
+/*  todo wg. 以下两个宏含义一致 HMAC和DMAC需要归一 */
 /* 整个BOARD支持的最大的业务device数目 */
 #define WLAN_SERVICE_DEVICE_SUPPORT_MAX_NUM_SPEC \
     (WLAN_CHIP_MAX_NUM_PER_BOARD * WLAN_SERVICE_DEVICE_MAX_NUM_PER_CHIP)

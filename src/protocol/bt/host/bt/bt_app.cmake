@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2023. All rights reserved.
+# Copyright (c) @CompanyNameMagicTag. 2023. All rights reserved.
 #===============================================================================
 set(COMPONENT_NAME "bt_app")
 set(BTA_RAM_LIST  "" CACHE INTERNAL "" FORCE)

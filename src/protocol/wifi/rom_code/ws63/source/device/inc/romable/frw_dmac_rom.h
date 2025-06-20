@@ -1,7 +1,7 @@
 ﻿/*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2022. All rights reserved.
  * Description: Header file of dmac public interface.
- * Author:
+ * Author: Huanghe
  */
 
 #ifndef FRW_DMAC_ROM_H

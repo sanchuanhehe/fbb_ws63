@@ -540,7 +540,6 @@ typedef void (*sle_seek_result_callback)(sle_seek_result_info_t *seek_result_dat
  * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
  * @attention 2.The memories of pointer are requested and freed by the SLE service automatically.
  * @param [in] status error code.
- * @retval #void no return value.
  * @par Dependency:
  * @li  sle_common.h
  * @see sle_connection_callbacks_t
@@ -550,7 +549,6 @@ typedef void (*sle_seek_result_callback)(sle_seek_result_info_t *seek_result_dat
  * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLE service申请内存，也由SLE service释放，回调中不应释放。
  * @param [in] status 执行结果错误码。
- * @retval 无返回值。
  * @par 依赖:
  * @li  sle_common.h
  * @see sle_connection_callbacks_t
@@ -565,7 +563,6 @@ typedef void (*sle_enable_callback)(errcode_t status);
  * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
  * @attention 2.The memories of pointer are requested and freed by the SLE service automatically.
  * @param [in] status error code.
- * @retval #void no return value.
  * @par Dependency:
  * @li  sle_common.h
  * @see sle_connection_callbacks_t
@@ -575,7 +572,6 @@ typedef void (*sle_enable_callback)(errcode_t status);
  * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
  * @attention  2. 指针由SLE service申请内存，也由SLE service释放，回调中不应释放。
  * @param [in] status 执行结果错误码。
- * @retval 无返回值。
  * @par 依赖:
  * @li  sle_common.h
  * @see sle_connection_callbacks_t

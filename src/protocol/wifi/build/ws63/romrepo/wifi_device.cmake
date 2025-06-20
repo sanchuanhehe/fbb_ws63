@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
+# Copyright (c) @CompanyNameMagicTag 2022-2022. All rights reserved.
 #===============================================================================
 
 # Wi-Fi基础ROM组件

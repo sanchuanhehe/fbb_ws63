@@ -1,0 +1,26 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][TCID init] TCID exhaust, cast_mask = %u @gle_tm_hlp.c(85),WARNING" ID="0xde1402ab" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle trans mgt tcid init tcid_node GLE_NEW failed @gle_tm_hlp.c(92),ERROR" ID="0xde1402e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][TCID init] mem exhaust, data_len = %zu @gle_tm_hlp.c(111),WARNING" ID="0xde14037b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][TCID init] mode config parameters is NULL. @gle_tm_hlp.c(116),ERROR" ID="0xde1403a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][TCID init] memcpy failed @gle_tm_hlp.c(125),ERROR" ID="0xde1403ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][TCID init] mem exhaust, data_len = %zu @gle_tm_hlp.c(135),WARNING" ID="0xde14043b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][TCID init] mode config parameters is NULL. @gle_tm_hlp.c(140),ERROR" ID="0xde140462" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][TCID init] memcpy failed @gle_tm_hlp.c(149),ERROR" ID="0xde1404aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][TCID init] mem exhaust, data_len = %zu @gle_tm_hlp.c(166),WARNING" ID="0xde140533" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][TCID init] memcpy failed @gle_tm_hlp.c(173),ERROR" ID="0xde14056a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][TCID init] mem exhaust, data_len = %zu @gle_tm_hlp.c(181),WARNING" ID="0xde1405ab" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][TCID init] memcpy failed @gle_tm_hlp.c(188),ERROR" ID="0xde1405e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][TCID init] local TCID = 0x%04x @gle_tm_hlp.c(201),INFO" ID="0xde14064d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][TCID init] used TCID list new failed, used TCID = 0x%04x @gle_tm_hlp.c(215),WARNING" ID="0xde1406bb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][TCID done] local TCID = 0x%04x @gle_tm_hlp.c(274),INFO" ID="0xde140895" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][LCID init] mem exhaust, data_len = %zu @gle_tm_hlp.c(290),WARNING" ID="0xde140913" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][LCID init] memcpy failed. @gle_tm_hlp.c(295),WARNING" ID="0xde14093b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][LCID init] mem exhaust, data_len = %zu @gle_tm_hlp.c(304),WARNING" ID="0xde140983" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][LCID init] memcpy failed. @gle_tm_hlp.c(311),WARNING" ID="0xde1409bb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][LCID init] LCID = 0x%04x @gle_tm_hlp.c(322),INFO" ID="0xde140a15" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][LCID init] LCID has been inited @gle_tm_hlp.c(332),INFO" ID="0xde140a65" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][LCID done] LCID = 0x%04x @gle_tm_hlp.c(363),INFO" ID="0xde140b5d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle send controller data cfm error, result: %d @gle_tm_hlp.c(384),ERROR" ID="0xde140c02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle send controller data cfm error, return param is NULL @gle_tm_hlp.c(390),ERROR" ID="0xde140c32" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gle send controller data cfm, co_handle: 0x%04x, data_index: 0x%04x. @gle_tm_hlp.c(396),INFO" ID="0xde140c65" />
+			</MSG_LOG>

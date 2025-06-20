@@ -11,6 +11,13 @@
 
 int HILINK_BT_SetSdkEventCallback(HILINK_BT_SdkEventCallBack callback)
 {
-    return hilink_call1(HILINK_CALL_HILINK_BT_SET_SDK_EVENT_CALLBACK, int,
+    hilink_call1(HILINK_CALL_HILINK_BT_SET_SDK_EVENT_CALLBACK, HILINK_BT_SetSdkEventCallback, int,
         HILINK_BT_SdkEventCallBack, callback);
+    return 0;
+}
+
+int HILINK_BT_HardRevoke(void)
+{
+    hilink_call0(HILINK_CALL_HILINK_BT_SET_SDK_EVENT_CALLBACK, HILINK_BT_HardRevoke, int);
+    return 0;
 }

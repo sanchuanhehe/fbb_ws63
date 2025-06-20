@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="dmac_config_custom_power_cali::msg null error! @cali_proc_dmac_msg.c(57),ERROR" ID="0x834201ca" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_config_hcc_send_ready_msg::send wlan ready failed ret=%d} @cali_proc_dmac_msg.c(93),ERROR" ID="0x834202ea" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_config_hcc_send_ready_msg::send cali finish failed ret=%d} @cali_proc_dmac_msg.c(100),WARNING" ID="0x83420323" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_cali_data_buffer_download::msg is none @cali_proc_dmac_msg.c(131),ERROR" ID="0x8342041a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_cali_data_buffer_download::need_receive:%u. @cali_proc_dmac_msg.c(138),WARNING" ID="0x83420453" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_cali_data_buffer_download::mem copy fail @cali_proc_dmac_msg.c(143),WARNING" ID="0x8342047b" />
+			</MSG_LOG>

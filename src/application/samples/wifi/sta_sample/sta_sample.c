@@ -23,6 +23,7 @@
 #define WIFI_SCAN_AP_LIMIT               64
 #define WIFI_MAC_LEN                     6
 #define WIFI_STA_SAMPLE_LOG              "[WIFI_STA_SAMPLE]"
+#define WIFI_SCAN_EXPECT_SSID            "my_softAP"
 #define WIFI_NOT_AVALLIABLE              0
 #define WIFI_AVALIABE                    1
 #define WIFI_GET_IP_MAX_COUNT            300
@@ -87,7 +88,7 @@ td_s32 example_get_match_network(wifi_sta_config_stru *expected_bss)
 {
     td_s32  ret;
     td_u32  num = 64; /* 64:扫描到的Wi-Fi网络数量 */
-    td_char expected_ssid[] = "my_softAP";
+    td_char expected_ssid[] = WIFI_SCAN_EXPECT_SSID;
     td_char key[] = "my_password"; /* 待连接的网络接入密码 */
     td_bool find_ap = TD_FALSE;
     td_u8   bss_index;
@@ -176,6 +177,26 @@ td_bool example_check_dhcp_status(struct netif *netif_p, td_u32 *wait_count)
     return -1;
 }
 
+td_u32 example_sta_scan(td_void)
+{
+    td_u32 ret;
+    wifi_scan_params_stru scan_params = {0};
+
+    ret = memcpy_s(scan_params.ssid, sizeof(scan_params.ssid), WIFI_SCAN_EXPECT_SSID,
+        strlen(WIFI_SCAN_EXPECT_SSID) + 1);
+    if (ret != EOK) {
+        PRINT("%s::memcpy_s.\r\n", WIFI_STA_SAMPLE_LOG);
+        return ERRCODE_FAIL;
+    }
+
+    scan_params.scan_type = WIFI_SSID_SCAN;
+    scan_params.ssid_len = strlen(WIFI_SCAN_EXPECT_SSID);
+    scan_params.ssid[scan_params.ssid_len] = '\0';
+    ret = wifi_sta_scan_advance(&scan_params);
+
+    return ret;
+}
+
 td_s32 example_sta_function(td_void)
 {
     td_char ifname[WIFI_IFNAME_MAX_SIZE + 1] = "wlan0"; /* 创建的STA接口名 */
@@ -195,7 +216,7 @@ td_s32 example_sta_function(td_void)
             PRINT("%s::Scan start!\r\n", WIFI_STA_SAMPLE_LOG);
             g_wifi_state = WIFI_STA_SAMPLE_SCANING;
             /* 启动STA扫描 */
-            if (wifi_sta_scan() != 0) {
+            if (example_sta_scan() != 0) {
                 g_wifi_state = WIFI_STA_SAMPLE_INIT;
                 continue;
             }

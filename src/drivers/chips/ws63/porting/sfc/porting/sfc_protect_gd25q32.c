@@ -6,14 +6,13 @@
  * History: \n
  * 2022-11-30， Create file. \n
  */
+#ifdef BUILD_NOOSAL
 #include "hal_sfc_v150.h"
-#ifndef BUILD_NOOSAL
-#include "soc_osal.h"
-#endif
 #include "debug_print.h"
 #include "hal_sfc_v150_regs_op.h"
 #include "securec.h"
 #include "tcxo.h"
+#include "boot_serial.h"
 #include "sfc.h"
 #include "sfc_porting.h"
 #include "sfc_protect.h"
@@ -114,9 +113,9 @@ errcode_t sfc_port_fix_sr_gd25q32(void)
         err3 = sfc_port_gd25q32_read_sr(SPI_CMD_RDSR_3);
         if ((err1 == ERRCODE_SUCC) && (err2 == ERRCODE_SUCC) && (err3 == ERRCODE_SUCC)) {
             if (i == 0) {
-                print_str("No need to fix SR!\r\n");
+                boot_msg0("No need to fix SR!\r\n");
             } else {
-                print_str("SR fix ok!\r\n");
+                boot_msg0("SR fix ok!\r\n");
             }
             return ERRCODE_SUCC;
         }
@@ -136,3 +135,4 @@ errcode_t sfc_port_fix_sr_gd25q32(void)
     }
     return ERRCODE_FAIL;
 }
+#endif

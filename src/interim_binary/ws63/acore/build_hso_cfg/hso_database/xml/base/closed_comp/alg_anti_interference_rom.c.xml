@@ -1,0 +1,11 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{alg_anti_intf_init_timer_and_nav:: register_device FAIL!.} @alg_anti_interference_rom.c(106),ERROR" ID="0x824a0352" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_anti_intf_exit: get priv stru failed!} @alg_anti_interference_rom.c(132),WARNING" ID="0x824a0423" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_dmac_anti_intf_tx_complete_process::hal_device pointer is null!} @alg_anti_interference_rom.c(162),WARNING" ID="0x824a0513" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{[ANTI_INTF_DBG]tx_complete:min rssi[%d] last rssi[%d] eceived user bitmap[%d] user_bitmap_last[%d]} @alg_anti_interference_rom.c(178),WARNING" ID="0x824a0593" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{[ANTI_INTF_DBG]tx_complete send to host:min rssi[%d], eceived user bitmap[%d]} @alg_anti_interference_rom.c(189),WARNING" ID="0x824a05eb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{[ANTI_INTF_DBG]alg_dmac_anti_intf_record_tx_rssi_info: last_ack_rssi[%d], rssi_min[%d]} @alg_anti_interference_rom.c(207),WARNING" ID="0x824a067b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_get_anti_intf_ar_stat::msg is null. @alg_anti_interference_rom.c(251),ERROR" ID="0x824a07da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_get_anti_intf_ar_stat::dmac_vap_tmp[%d] IS NULL. @alg_anti_interference_rom.c(261),WARNING" ID="0x824a082b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_get_anti_intf_ar_stat::data copy fail.rsp_buf_len[%d] data_size[%d]. @alg_anti_interference_rom.c(272),ERROR" ID="0x824a0882" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_dmac_anti_intf_config_param: hal device NULL!} @alg_anti_interference_rom.c(309),ERROR" ID="0x824a09aa" />
+			</MSG_LOG>

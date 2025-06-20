@@ -54,10 +54,12 @@
 /*****************************************************************************
   Radar SoftAP+Socket sample用例
 *****************************************************************************/
-td_s32 radar_start_softap(td_void)
+td_s32 radar_start_softap(uint16_t ap_iso)
 {
     /* SoftAp接口的信息 */
-    td_char ssid[WIFI_MAX_SSID_LEN] = "my_softAP";
+    td_char base_ssid[WIFI_MAX_SSID_LEN] = "my_softAP";
+    td_char ssid[WIFI_MAX_SSID_LEN] = {0};
+    sprintf(ssid, "%s-%d", base_ssid, ap_iso);
     td_char pre_shared_key[WIFI_MAX_KEY_LEN] = "123456789";
     softap_config_stru hapd_conf = {0};
     softap_config_advance_stru config = {0};
@@ -116,6 +118,12 @@ static void radar_print_res(radar_result_t *res)
     PRINT("[RADAR_SAMPLE] lb:%u, hb:%u, hm:%u\r\n", res->lower_boundary, res->upper_boundary, res->is_human_presence);
 }
 
+static void radar_print_cur_frame_res(radar_current_frame_result_t *res)
+{
+    PRINT("[RADAR_SAMPLE] gear1:%u, gear2:%u, gear3:%u, ai:%u\r\n",
+        res->gear_one_flag, res->gear_two_flag, res->gear_three_flag, res->ai_flag);
+}
+
 // 维测信息依次为:
 // 1.告知上层是否需要写入flash
 // 2.LNA * 10 + VGA
@@ -155,6 +163,9 @@ static void radar_init_para(void)
     dbg_para.period = RADAR_DEFAULT_PERIOD;
     uapi_radar_set_debug_para(&dbg_para);
 
+    int16_t dly_time = RADAR_QUIT_DELAY_TIME;
+    uapi_radar_set_delay_time(dly_time);
+
     radar_sel_para_t sel_para;
     sel_para.height = RADAR_HEIGHT_2M;
     sel_para.scenario = RADAR_SCENARIO_TYPE_HOME;
@@ -165,8 +176,8 @@ static void radar_init_para(void)
 
     // 算法门限, 前三个使用tools/bin/radar_tool/radar_para_gen_tool工具标定, 后面五个使用本sample给出的默认值即可
     radar_alg_para_t alg_para;
-    alg_para.d_th_1m = 32;
-    alg_para.d_th_2m = 25;
+    alg_para.d_th_1m = 20;
+    alg_para.d_th_2m = 22;
     alg_para.p_th = 25;
     alg_para.t_th_1m = 13;
     alg_para.t_th_2m = 26;
@@ -174,23 +185,48 @@ static void radar_init_para(void)
     alg_para.b_th_cnt = 4;
     alg_para.a_th = 70;
     uapi_radar_set_alg_para(&alg_para, 0);
+}
 
-    int16_t dly_time = RADAR_QUIT_DELAY_TIME;
-    uapi_radar_set_delay_time(dly_time);
+td_s32 radar_start_sta(td_void)
+{
+    (void)osDelay(WIFI_INIT_WAIT_TIME); /* 500: 延时0.5s, 等待wifi初始化完毕 */
+    PRINT("STA try enable.\r\n");
+    /* 创建STA接口 */
+    if (wifi_sta_enable() != 0) {
+        PRINT("sta enbale fail !\r\n");
+        return -1;
+    }
+
+    /* 连接成功 */
+    PRINT("STA enable success.\r\n");
+    return 0;
 }
 
 int radar_demo_init(void *param)
 {
     PRINT("[RADAR_SAMPLE] radar_demo_init softap!\r\n");
-
     param = param;
-    radar_start_softap();
+
+    radar_start_sta();
     uapi_radar_register_result_cb(radar_print_res);
+    uapi_radar_register_current_frame_result_cb(radar_print_cur_frame_res);
     uapi_radar_register_debug_info_cb(radar_print_dbg_info, RADAR_DBG_INFO_RPT_COEF);
-    radar_init_para();
+
     // 启动雷达
     (void)osDelay(WIFI_START_SOFTAP_DELAY);
     uapi_radar_set_status(RADAR_STATUS_START);
+    // 获取隔离度值
+    (void)osDelay(WIFI_START_SOFTAP_DELAY);
+    uint16_t ap_iso;
+    uapi_radar_get_isolation(&ap_iso);
+    uapi_radar_set_status(RADAR_STATUS_STOP);
+    wifi_sta_disable();
+	
+	(void)osDelay(WIFI_START_SOFTAP_DELAY);
+
+    radar_start_softap(ap_iso);
+    uapi_radar_set_status(RADAR_STATUS_START);
+	radar_init_para();
 
     for (;;) {
         (void)osDelay(RADAR_STATUS_QUERY_DELAY);
@@ -203,6 +239,8 @@ int radar_demo_init(void *param)
         uapi_radar_get_isolation(&iso);
         radar_result_t res = {0};
         uapi_radar_get_result(&res);
+        radar_current_frame_result_t cur_frame_res = {0};
+        uapi_radar_get_current_frame_result(&cur_frame_res);
         int16_t arr[RADAR_DBG_INFO_LEN] = {0};
         uapi_radar_get_debug_info(arr, RADAR_DBG_INFO_LEN);
         radar_print_dbg_info(arr, RADAR_DBG_INFO_LEN);

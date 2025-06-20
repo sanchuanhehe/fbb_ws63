@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="hal_vap_send_beacon_pkt::vap mode [%d]!= WLAN_VAP_MODE_BSS_AP,or hal vap id=%d &gt;= max vap=%d]} @hal_bcn_rom.c(41),WARNING" ID="0x837c014b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_irq_bcn_no_frm_isr:get hal vap[%d] failed!} @hal_bcn_rom.c(86),WARNING" ID="0x837c02b3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {hh503_irq_bcn_no_frm_isr::vap mode[%d] != STA.} @hal_bcn_rom.c(92),WARNING" ID="0x837c02e3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {hh503_irq_bcn_no_frm_isr::callback returns err[%d].} @hal_bcn_rom.c(101),WARNING" ID="0x837c032b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_irq_wait_beacon_timeout_isr::hal_vap(id:%d) null, tsf reg val[0x%08x].} @hal_bcn_rom.c(131),WARNING" ID="0x837c041b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] hh503_irq_wait_beacon_timeout_isr::vap mode[%d] wrong, tsf reg val[0x%08x] @hal_bcn_rom.c(138),WARNING" ID="0x837c0453" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {hh503_irq_wait_beacon_timeout_isr::callback returns err[%d].} @hal_bcn_rom.c(147),WARNING" ID="0x837c049b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {hal_vap_beacon_resume::vap id error.} @hal_bcn_rom.c(173),WARNING" ID="0x837c056b" />
+			</MSG_LOG>

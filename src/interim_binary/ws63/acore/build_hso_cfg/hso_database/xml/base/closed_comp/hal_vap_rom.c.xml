@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hh503_alloc_vap::create hal vap failed.} @hal_vap_rom.c(37),ERROR" ID="0x804c012a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_add_vap::vap num[%d] execeed spec[3], add failed.} @hal_vap_rom.c(70),ERROR" ID="0x804c0232" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_del_vap::hal vap[%d] had alread del!} @hal_vap_rom.c(150),INFO" ID="0x804c04b5" />
+			</MSG_LOG>

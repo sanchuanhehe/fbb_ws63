@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[GLE AA] encrypt plaintext memcpy fail. @gle_aa_secu_ui.c(25),ERROR" ID="0xde4800ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE AA] enable encryption link key memcpy fail. @gle_aa_secu_ui.c(42),ERROR" ID="0xde480152" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE AA] enable encryption, crypt %d, key_deriv %d, integr_chk %d. @gle_aa_secu_ui.c(49),INFO" ID="0xde48018d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE AA] enable encryption link key memcpy fail. @gle_aa_secu_ui.c(62),ERROR" ID="0xde4801f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE AA] encrypt param req cbk par null error @gle_aa_secu_ui.c(85),ERROR" ID="0xde4802aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="op_ev = 0x%04X  @gle_aa_secu_ui.c(88),INFO" ID="0xde4802c5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE AA] encrypt change cbk par null error @gle_aa_secu_ui.c(96),ERROR" ID="0xde480302" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="op_ev = 0x%04X  @gle_aa_secu_ui.c(99),INFO" ID="0xde48031d" />
+			</MSG_LOG>

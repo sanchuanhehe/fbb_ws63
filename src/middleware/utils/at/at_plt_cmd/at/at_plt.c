@@ -37,6 +37,8 @@ extern errcode_t write_acccode(uint16_t vendor_code);
 
 #ifdef CONFIG_MIDDLEWARE_SUPPORT_NV
 #include "nv.h"
+#include "mac_addr.h"
+#include "nv_porting.h"
 #endif
 #include "efuse.h"
 #include "efuse_porting.h"
@@ -46,6 +48,7 @@ extern errcode_t write_acccode(uint16_t vendor_code);
 #ifdef CONFIG_SUPPORT_CRASHINFO_SAVE_TO_FLASH
 #include "exception.h"
 #endif
+#include "cfbb_version.h"
 
 #define CONVERT_HALF 2
 static td_s32 at_plt_convert_bin_to_dec(td_s32 pbin)
@@ -138,20 +141,20 @@ at_ret_t plt_nv_read(const nvread_args_t *args)
     errcode_t ret = uapi_nv_read_with_attr((uint16_t)args->key_id, AT_PLT_NV_WRITE_MAX_LENGTH, &nv_value_length,
         nv_value, &nv_attr);
     if (ret != ERRCODE_SUCC) {
-        print_str("plt_nv_read failed, ret = [0x%x]\r\n", ret);
+        uapi_at_print("plt_nv_read failed, ret = [0x%x]\r\n", ret);
         return ret;
     }
     if (nv_attr.permanent == true) {
-        print_str("NV[0x%x] is permanent\r\n", args->key_id);
+        uapi_at_print("NV[0x%x] is permanent\r\n", args->key_id);
     }
     if (nv_attr.encrypted == true) {
-        print_str("NV[0x%x] is encrypted\r\n", args->key_id);
+        uapi_at_print("NV[0x%x] is encrypted\r\n", args->key_id);
     }
     if (nv_attr.non_upgrade == true) {
-        print_str("NV[0x%x] is non_upgrade\r\n", args->key_id);
+        uapi_at_print("NV[0x%x] is non_upgrade\r\n", args->key_id);
     }
     for (int i = 0; i < nv_value_length; i++) {
-        print_str("nv_value[%d] = [0x%x]\r\n", i, nv_value[i]);
+        uapi_at_print("nv_value[%d] = [0x%x]\r\n", i, nv_value[i]);
     }
 #else
     unused(args);
@@ -206,11 +209,11 @@ at_ret_t plt_nv_write(const nvwrite_args_t *args)
     errcode_t ret = uapi_nv_write_with_attr((uint16_t)args->key_id, write_value, (uint16_t)args->length, &nv_attr,
         NULL);
     if (ret != ERRCODE_SUCC) {
-        print_str("plt_nv_write failed, ret = [0x%x]\r\n", ret);
+        uapi_at_print("plt_nv_write failed, ret = [0x%x]\r\n", ret);
         return ret;
     }
     for (uint32_t i = 0; i < args->length; i++) {
-        print_str("nv_value[%d] = [0x%x]\r\n", i, write_value[i]);
+        uapi_at_print("nv_value[%d] = [0x%x]\r\n", i, write_value[i]);
     }
 #else
     unused(args);
@@ -237,14 +240,14 @@ static td_u32 set_mac_addr_with_type(td_s32 mac_type, td_uchar *mac_addr, td_u16
         case MAC_ADDR_EFUSE:
             ret = efuse_write_mac(mac_addr, addr_len);
             if (ret != ERRCODE_SUCC) {
-                osal_printk("SET EFUSE MAC ERROR, ret : 0x%x\r\n", ret);
+                uapi_at_print("SET EFUSE MAC ERROR, ret : 0x%x\r\n", ret);
                 return ret;
             }
             break;
         case SLE_MAC_ADDR_EFUSE:
             ret = efuse_write_sle_mac(mac_addr, addr_len);
             if (ret != ERRCODE_SUCC) {
-                osal_printk("SET EFUSE SLE MAC ERROR, ret : 0x%x\r\n", ret);
+                uapi_at_print("SET EFUSE SLE MAC ERROR, ret : 0x%x\r\n", ret);
                 return ret;
             }
             break;
@@ -252,7 +255,7 @@ static td_u32 set_mac_addr_with_type(td_s32 mac_type, td_uchar *mac_addr, td_u16
 #if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
             ret = uapi_nv_write(NV_ID_SYSTEM_FACTORY_MAC, mac_addr, addr_len);
             if (ret != ERRCODE_SUCC) {
-                osal_printk("SET NV MAC ERROR, ret : 0x%x\r\n", ret);
+                uapi_at_print("SET NV MAC ERROR, ret : 0x%x\r\n", ret);
                 return ret;
             }
 #else
@@ -263,7 +266,7 @@ static td_u32 set_mac_addr_with_type(td_s32 mac_type, td_uchar *mac_addr, td_u16
 #if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
             ret = uapi_nv_write(NV_ID_SYSTEM_FACTORY_SLE_MAC, mac_addr, addr_len);
             if (ret != ERRCODE_SUCC) {
-                osal_printk("SET NV SLE MAC ERROR, ret : 0x%x\r\n", ret);
+                uapi_at_print("SET NV SLE MAC ERROR, ret : 0x%x\r\n", ret);
                 return ret;
             }
 #else
@@ -292,7 +295,7 @@ at_ret_t set_efuse_mac_addr(const efusemac_args_t *args)
         return AT_RET_SYNTAX_ERROR;
     }
     if ((mac_addr[0] & 0x1) == 0x1) {
-        osal_printk("set mac error: multicast mac addr not aviable!!\r\n");
+        uapi_at_print("set mac error: multicast mac addr not aviable!!\r\n");
         return AT_RET_SYNTAX_ERROR;
     }
 
@@ -300,7 +303,6 @@ at_ret_t set_efuse_mac_addr(const efusemac_args_t *args)
         return AT_RET_CMD_PARA_ERROR;
     }
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -318,32 +320,43 @@ at_ret_t get_efuse_mac_addr(void)
     uint16_t nv_mac_length;
     ret = uapi_nv_read(NV_ID_SYSTEM_FACTORY_MAC, MAC_LEN, &nv_mac_length, mac_addr);
     if (ret != ERRCODE_SUCC || nv_mac_length != MAC_LEN) {
-        osal_printk("GET NV MAC ERROR, ret : 0x%x\r\n", ret);
+        uapi_at_print("GET NV MAC ERROR, ret : 0x%x\r\n", ret);
     }
-    osal_printk("+EFUSEMAC: NV MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
+    if (mac_addr_nv_check(mac_addr) != 0) {
+        /* 获取NV中的MAC为非法值时，尝试从NV factory区中获取MAC */
+        ret = kv_read_factory(NV_ID_SYSTEM_FACTORY_MAC, MAC_LEN, &nv_mac_length, mac_addr);
+        if (ret != ERRCODE_SUCC || nv_mac_length != MAC_LEN) {
+            uapi_at_print("GET FACTORY NV MAC ERROR, ret : 0x%x\r\n", ret);
+        }
+    }
+    uapi_at_print("+EFUSEMAC: NV MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
 #endif
-    ret = efuse_read_mac(mac_addr, MAC_LEN, &efuse_left_count);
-    if (ret == ERRCODE_SUCC) {
-        osal_printk("+EFUSEMAC: EFUSE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
+    if (efuse_read_mac(mac_addr, MAC_LEN, &efuse_left_count) == ERRCODE_SUCC) {
+        uapi_at_print("+EFUSEMAC: EFUSE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
     } else {
-        osal_printk("+EFUSEMAC: EFUSE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(null_mac_addr));
+        uapi_at_print("+EFUSEMAC: EFUSE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(null_mac_addr));
     }
-    osal_printk("+EFUSEMAC: Efuse mac chance(s) left: %d times.\r\n", efuse_left_count);
+    uapi_at_print("+EFUSEMAC: Efuse mac chance(s) left: %d times.\r\n", efuse_left_count);
 
-    ret = efuse_read_sle_mac(mac_addr, MAC_LEN);
-    if (ret == ERRCODE_SUCC) {
-        osal_printk("+EFUSEMAC: EFUSE SLE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
+    if (efuse_read_sle_mac(mac_addr, MAC_LEN) == ERRCODE_SUCC) {
+        uapi_at_print("+EFUSEMAC: EFUSE SLE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
     } else {
-        osal_printk("+EFUSEMAC: EFUSE SLE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(null_mac_addr));
+        uapi_at_print("+EFUSEMAC: EFUSE SLE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(null_mac_addr));
     }
 #if defined(CONFIG_MIDDLEWARE_SUPPORT_NV)
     ret = uapi_nv_read(NV_ID_SYSTEM_FACTORY_SLE_MAC, MAC_LEN, &nv_mac_length, mac_addr);
     if (ret != ERRCODE_SUCC || nv_mac_length != MAC_LEN) {
-        osal_printk("GET NV SLE MAC ERROR, ret : 0x%x\r\n", ret);
+        uapi_at_print("GET NV SLE MAC ERROR, ret : 0x%x\r\n", ret);
     }
-    osal_printk("+EFUSEMAC: NV SLE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
+    if (mac_addr_nv_check(mac_addr)) {
+        /* 获取NV中的MAC为非法值时，尝试获取NV工厂区中的MAC */
+        ret = kv_read_factory(NV_ID_SYSTEM_FACTORY_SLE_MAC, MAC_LEN, &nv_mac_length, mac_addr);
+        if (ret != ERRCODE_SUCC || nv_mac_length != MAC_LEN) {
+            uapi_at_print("GET FACTORY NV SLE MAC ERROR, ret : 0x%x\r\n", ret);
+        }
+    }
+    uapi_at_print("+EFUSEMAC: NV SLE MAC " EXT_AT_MACSTR "\r\n", ext_at_mac2str(mac_addr));
 #endif
-    osal_printk("OK\r\n");
 
     return AT_RET_OK;
 }
@@ -355,6 +368,11 @@ at_ret_t plt_reboot(void)
 {
     hal_reboot_chip();
     return AT_RET_OK;
+}
+
+void __attribute__((weak)) print_version(void)
+{
+    uapi_at_report(uapi_get_cfbb_version());
 }
 
 at_ret_t at_query_ver_cmd(void)
@@ -378,11 +396,11 @@ at_ret_t at_query_tsensor_temp(void)
     }
 
     if (ret != EXT_ERR_SUCCESS) {
-        osal_printk("+RDTEMP:ret0x%x.\r\n", ret);
+        uapi_at_print("+RDTEMP:ret0x%x.\r\n", ret);
         return ret;
     }
 
-    osal_printk("+RDTEMP:%d\r\n", temp);
+    uapi_at_print("+RDTEMP:%d\r\n", temp);
 #endif
     return AT_RET_OK;
 }
@@ -411,7 +429,7 @@ at_ret_t at_query_xtal_compesation(void)
         return ret;
     }
 
-    osal_printk("+XTALCOM:%d,%d,%d\r\n", high_temp_threshold, low_temp_threshold, pll_compesation);
+    uapi_at_print("+XTALCOM:%d,%d,%d\r\n", high_temp_threshold, low_temp_threshold, pll_compesation);
 #endif
 
     return AT_RET_OK;
@@ -429,12 +447,12 @@ at_ret_t at_factory_erase(void)
         return ret;
     }
     if (factory_mode_cfg.factory_mode != 0x0) {
-        osal_printk("factory mode, can not erase\r\n");
+        uapi_at_print("factory mode, can not erase\r\n");
         return AT_RET_SYNTAX_ERROR;
     }
     ret = mfg_flash_erase();
     if (ret != EXT_ERR_SUCCESS) {
-        osal_printk("at_factory_erase:: uapi_flash_erase failed, ret :%x\r\n", ret);
+        uapi_at_print("at_factory_erase:: uapi_flash_erase failed, ret :%x\r\n", ret);
         return ret;
     }
     /* set normal mode after erase factory. inorder to let start success after reboot. */
@@ -444,7 +462,7 @@ at_ret_t at_factory_erase(void)
     if (ret != EXT_ERR_SUCCESS) {
         return ret;
     }
-    osal_printk("+FTMERASE:erase addr:0x%x, size:0x%x OK.\r\n", factory_mode_cfg.factory_addr_start,
+    uapi_at_print("+FTMERASE:erase addr:0x%x, size:0x%x OK.\r\n", factory_mode_cfg.factory_addr_start,
         factory_mode_cfg.factory_size);
 #endif
 
@@ -454,9 +472,9 @@ at_ret_t at_factory_erase(void)
 at_ret_t at_factory_mode_read(void)
 {
 #ifdef _PRE_WLAN_FEATURE_MFG_TEST
-    osal_printk("factory mode\r\n");
+    uapi_at_print("factory mode\r\n");
 #else
-    osal_printk("non_factory mode\r\n");
+    uapi_at_print("non_factory mode\r\n");
 #endif
     return AT_RET_OK;
 }
@@ -468,7 +486,7 @@ static td_u32 at_setup_factory_mode_switch(td_s32 argc, const factory_mode_args_
     errcode_t ret;
     mfg_factory_config_t factory_mode_cfg;
     mfg_region_config_t img_info;
-    osal_printk("+FTM SWITCH: start\r\n");
+    uapi_at_print("+FTM SWITCH: start\r\n");
 
     if (argc != 1) {
         return AT_RET_SYNTAX_ERROR;
@@ -489,22 +507,22 @@ static td_u32 at_setup_factory_mode_switch(td_s32 argc, const factory_mode_args_
 
     ret = mfg_flash_read((uint8_t *)(&factory_mode_cfg), sizeof(mfg_factory_config_t));
     if (ret != ERRCODE_SUCC) {
-        osal_printk("at_setup_factory_mode_switch:: read failed, ret :%x ", ret);
+        uapi_at_print("at_setup_factory_mode_switch:: read failed, ret :%x ", ret);
         return ERRCODE_FAIL;
     }
 
     ret = mfg_factory_mode_switch(img_info, switch_mode, &factory_mode_cfg);
     if (ret != ERRCODE_SUCC) {
-        osal_printk("at_setup_factory_mode_switch:: mfg_factory_mode_switch failed, ret :%x ", ret);
+        uapi_at_print("at_setup_factory_mode_switch:: mfg_factory_mode_switch failed, ret :%x ", ret);
         return ERRCODE_FAIL;
     }
 
     ret = mfg_flash_write((const uint8_t *)(&factory_mode_cfg), sizeof(factory_mode_cfg));
     if (ret != ERRCODE_SUCC) {
-        osal_printk("ftm config init write failed, ret :%x ", ret);
+        uapi_at_print("ftm config init write failed, ret :%x ", ret);
         return ERRCODE_FAIL;
     }
-    osal_printk("FTM SWTICH:0x%x, size:0x%x OK.\r\n", factory_mode_cfg.factory_addr_switch,
+    uapi_at_print("FTM SWTICH:0x%x, size:0x%x OK.\r\n", factory_mode_cfg.factory_addr_switch,
         factory_mode_cfg.factory_switch_size);
     return AT_RET_OK;
 }
@@ -532,7 +550,7 @@ static td_u32 at_setup_loglevel_cmd(td_s32 argc, const loglevel_args_t *args)
     td_u8 log_level;
 
     if (argc == 0) { /* argc 0 */
-        osal_printk("+LOGL:%u\r\n", dfx_print_get_level());
+        uapi_at_print("+LOGL:%u\r\n", dfx_print_get_level());
         return AT_RET_OK;
     }
     if (argc != 1) { /* argc 1 */
@@ -545,7 +563,7 @@ static td_u32 at_setup_loglevel_cmd(td_s32 argc, const loglevel_args_t *args)
     }
 
     dfx_print_set_level(log_level);
-    osal_printk("+LOGL:%d\r\n", log_level);
+    uapi_at_print("+LOGL:%d\r\n", log_level);
 #else
     unused(argc);
     unused(args);
@@ -678,7 +696,7 @@ static td_u32 at_setup_gpiodir_cmd(td_s32 argc, const gpiodir_args_t *args)
 
     io_num = (pin_t)(args->para1);
     if (io_num > PIN_NONE) {
-        osal_printk("+RDGPIO:invalid io,%d\r\n", io_num);
+        uapi_at_print("+RDGPIO:invalid io,%d\r\n", io_num);
         return AT_RET_SYNTAX_ERROR;
     }
 
@@ -691,7 +709,7 @@ static td_u32 at_setup_gpiodir_cmd(td_s32 argc, const gpiodir_args_t *args)
     if (ret != EXT_ERR_SUCCESS) {
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("+GPIODIR:%d,%d\r\n", io_num, io_dir);
+    uapi_at_print("+GPIODIR:%d,%d\r\n", io_num, io_dir);
 
     return AT_RET_OK;
 }
@@ -725,7 +743,7 @@ static td_u32 at_setup_iogetmode_cmd(td_s32 argc, const getiomode_args_t *args)
 
     io_num = (pin_t)(args->para1);
     if (io_num > PIN_NONE) {
-        osal_printk("+GETIOMODE:invalid io,%d\r\n", io_num);
+        uapi_at_print("+GETIOMODE:invalid io,%d\r\n", io_num);
         return AT_RET_SYNTAX_ERROR;
     }
 
@@ -744,7 +762,7 @@ static td_u32 at_setup_iogetmode_cmd(td_s32 argc, const getiomode_args_t *args)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    osal_printk("+GETIOMODE:%d,%d,%d,%d\r\n", io_num, io_mode, io_pull_stat, io_capalibity);
+    uapi_at_print("+GETIOMODE:%d,%d,%d,%d\r\n", io_num, io_mode, io_pull_stat, io_capalibity);
     return AT_RET_OK;
 }
 #endif
@@ -818,7 +836,7 @@ static td_u32 at_setup_iosetmode_cmd(td_s32 argc, const setiomode_args_t *args)
         }
     }
 
-    osal_printk("+SETIOMODE:%d,%d,%d,%d\r\n", io_num, io_mode, io_pull_stat, io_capalibity);
+    uapi_at_print("+SETIOMODE:%d,%d,%d,%d\r\n", io_num, io_mode, io_pull_stat, io_capalibity);
     return AT_RET_OK;
 }
 #endif
@@ -874,7 +892,7 @@ static td_u32 at_setup_gpiowt_cmd(td_s32 argc, const wrgpio_args_t *args)
     if (ret != EXT_ERR_SUCCESS) {
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("+WRGPIO:%d,%d,%d\r\n", io_num, io_dir, io_level);
+    uapi_at_print("+WRGPIO:%d,%d,%d\r\n", io_num, io_dir, io_level);
 
     return EXT_ERR_SUCCESS;
 }
@@ -920,7 +938,7 @@ static td_u32 at_setup_gpiord_cmd(td_s32 argc, const rdgpio_args_t *args)
 
     io_level = uapi_gpio_get_val((pin_t)io_num);
 
-    osal_printk("+RDGPIO:%d,%d,%d\r\n", io_num, io_dir, io_level);
+    uapi_at_print("+RDGPIO:%d,%d,%d\r\n", io_num, io_dir, io_level);
 
     return EXT_ERR_SUCCESS;
 }
@@ -967,13 +985,13 @@ at_ret_t at_help(void)
         free(cmd_tbl);
         return AT_RET_MEM_API_ERROR;
     }
-    osal_printk("+HELP:cmd cnt:%d\r\n", cnt);
+    uapi_at_print("+HELP:cmd cnt:%d\r\n", cnt);
     for (i = 0; i < cnt; ++i) {
         cmd_entry = (at_cmd_entry_t *)cmd_tbl[i];
-        osal_printk("AT+%-28s ", cmd_entry->name);
+        uapi_at_print("AT+%-28s ", cmd_entry->name);
         total++;
         if (total % 3 == 0) {  /* 3 entrys per newline */
-            osal_printk("\r\n");
+            uapi_at_print("\r\n");
         }
     }
     free(cmd_tbl);
@@ -987,12 +1005,12 @@ at_ret_t at_get_dump(void)
 #ifdef CONFIG_SUPPORT_CRASHINFO_SAVE_TO_FLASH
     bool hascrashinfo = crashinfo_status_get();
     if (hascrashinfo == false) {
-        osal_printk("No crash dump found!\r\n");
+        uapi_at_print("No crash dump found!\r\n");
         return AT_RET_OK;
     }
     crashinfo_dump();
 #else
-    osal_printk("No crash dump found!\r\n");
+    uapi_at_print("No crash dump found!\r\n");
 #endif
     return AT_RET_OK;
 }
@@ -1050,7 +1068,7 @@ static at_ret_t at_str_to_tm(const char *str, struct tm *tm)
     }
 
     if (tm->tm_year < 70) { /* 70:the year is starting in 1970,tm_year must be greater than 70 */
-        osal_printk("\nUsage: date -s set system time range from 1970.\n");
+        uapi_at_print("\nUsage: date -s set system time range from 1970.\n");
         return AT_RET_SYNTAX_ERROR;
     }
 
@@ -1071,7 +1089,7 @@ at_ret_t at_date_cmd(void)
     if (gettimeofday64(&now_time, NULL) != 0) {
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("%s\n", ctime64(&now_time.tv_sec));
+    uapi_at_print("%s\n", ctime64(&now_time.tv_sec));
 
     return AT_RET_OK;
 }
@@ -1083,7 +1101,7 @@ at_ret_t at_date_set_cmd(const date_args_t *args)
     struct timeval64 set_time = {0};
 
     if (gettimeofday64(&now_time, NULL) != 0) {
-        osal_printk("set_time failed...\n");
+        uapi_at_print("set_time failed...\n");
         return AT_RET_SYNTAX_ERROR;
     }
 
@@ -1091,18 +1109,18 @@ at_ret_t at_date_set_cmd(const date_args_t *args)
     at_copy_tm(&tm, localtime64(&now_time.tv_sec));
 
     if (at_str_to_tm(args->para1, &tm) != AT_RET_OK) {
-        osal_printk("at_str_to_tm failed...\n");
+        uapi_at_print("at_str_to_tm failed...\n");
         return AT_RET_SYNTAX_ERROR;
     }
 
     set_time.tv_sec = mktime64(&tm);
     if (set_time.tv_sec == -1) {
-        osal_printk("mktime failed...\n");
+        uapi_at_print("mktime failed...\n");
         return AT_RET_SYNTAX_ERROR;
     }
 
     if (settimeofday64(&set_time, NULL) != 0) {
-        osal_printk("settime failed...\n");
+        uapi_at_print("settime failed...\n");
         return AT_RET_SYNTAX_ERROR;
     }
 
@@ -1138,7 +1156,7 @@ at_ret_t cmd_write_mfg_flag(void)
         break;
     }
     if (writable == false) {
-        osal_printk("mfg flag no remain left\r\n");
+        uapi_at_print("mfg flag no remain left\r\n");
         return AT_RET_SYNTAX_ERROR;
     }
 #endif
@@ -1154,13 +1172,11 @@ at_ret_t cmd_get_dieid(void)
     if (uapi_efuse_read_buffer(die_id, 0, sizeof(die_id)) != AT_RET_OK) {
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("OK\r\n");
-    osal_printk("CHIP_ID: 0x%02x\r\n", die_id[0]);
-    osal_printk("DIE_ID: 0x: ", die_id[0]);
+    uapi_at_print("CHIP_ID: 0x%02x\r\n", die_id[0]);
+    uapi_at_print("DIE_ID: 0x: ", die_id[0]);
     for (index = 1; index < sizeof(die_id); ++index) {
-        osal_printk("%02x", die_id[index]);
+        uapi_at_print("%02x", die_id[index]);
     }
-    osal_printk("OK\r\n");
 #endif
     return AT_RET_OK;
 }
@@ -1173,14 +1189,17 @@ at_ret_t cmd_set_customer_rsvd_efuse(const customer_rsvd_efuse_args_t *args)
     td_u8 key[CUSTOM_RESVED_EFUSE_BYTE_LEN];
     td_u32 len = 0;
     td_u8 tmp_data;
+    td_u8 force = 0;
 
-    if (argc != 1) {
+    if (argc != 1 && argc != 2) { /* 2:参数个数为2 */
         return AT_RET_SYNTAX_ERROR;
     }
     if ((args->para1[0] != '0') && (args->para1[1] != 'x')) {
         return AT_RET_CMD_PARA_ERROR;
     }
- 
+    if (argc == 2) { /* 2:参数个数为2 */
+        force = args->para2;
+    }
     len = (td_u32)strlen((char *)(args->para1 + 2)); /* 2:偏移2个字符 */
     if (len != CUSTOM_RESVED_EFUSE_BYTE_LEN * 2) { /* 2:乘2 */
         return AT_RET_CMD_PARA_ERROR;
@@ -1192,12 +1211,11 @@ at_ret_t cmd_set_customer_rsvd_efuse(const customer_rsvd_efuse_args_t *args)
         key[index] = key[CUSTOM_RESVED_EFUSE_BYTE_LEN - 1 - index];
         key[CUSTOM_RESVED_EFUSE_BYTE_LEN - 1 - index] = tmp_data;
     }
-    ret = efuse_write_customer_rsvd_efuse(key, CUSTOM_RESVED_EFUSE_BYTE_LEN);
+    ret = efuse_write_customer_rsvd_efuse(key, CUSTOM_RESVED_EFUSE_BYTE_LEN, force);
     if (ret != ERRCODE_SUCC) {
-        osal_printk("SET CUSTOMER RSVD EFUSE ERROR, ret : 0x%x\r\n", ret);
+        uapi_at_print("SET CUSTOMER RSVD EFUSE ERROR, ret : 0x%x\r\n", ret);
         return AT_RET_CMD_PARA_ERROR;
     }
-    osal_printk("OK\r\n");
 #else
     unused(args);
 #endif
@@ -1214,15 +1232,14 @@ at_ret_t cmd_get_customer_rsvd_efuse(void)
     memset_s(key, CUSTOM_RESVED_EFUSE_BYTE_LEN, 0, CUSTOM_RESVED_EFUSE_BYTE_LEN);
     ret = efuse_read_item(EFUSE_CUSTOM_RESVED_ID, key, sizeof(key));
     if (ret != EXT_ERR_SUCCESS) {
-        osal_printk("READ EFUSE CUSTOM RESVED ERROR, ret : 0x%x\r\n", ret);
+        uapi_at_print("READ EFUSE CUSTOM RESVED ERROR, ret : 0x%x\r\n", ret);
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("OK\r\n");
-    osal_printk("RESERVED EFUSE:0x");
+    uapi_at_print("RESERVED EFUSE:0x");
     for (index = sizeof(key); index > 0; index--) {
-        osal_printk("%02x", key[index - 1]);
+        uapi_at_print("%02x", key[index - 1]);
     }
-    osal_printk("\r\n");
+    uapi_at_print("\r\n");
 #endif
     return AT_RET_OK;
 }
@@ -1234,10 +1251,9 @@ at_ret_t cmd_disable_ssi_jtag(void)
 
     ret = efuse_write_jtag_ssi();
     if (ret != ERRCODE_SUCC) {
-        osal_printk("SET EFUSE SSI JTAG ERROR, ret : 0x%x\r\n", ret);
+        uapi_at_print("SET EFUSE SSI JTAG ERROR, ret : 0x%x\r\n", ret);
         return AT_RET_CMD_PARA_ERROR;
     }
-    osal_printk("OK\r\n");
 #endif
     return AT_RET_OK;
 }
@@ -1250,11 +1266,10 @@ at_ret_t cmd_get_ssi_jtag_status(void)
 
     ret = efuse_read_jtag_ssi(&ssi_jtag, sizeof(ssi_jtag));
     if (ret != EXT_ERR_SUCCESS) {
-        osal_printk("READ EFUSE SSI JTAG ERROR, ret : 0x%x\r\n", ret);
+        uapi_at_print("READ EFUSE SSI JTAG ERROR, ret : 0x%x\r\n", ret);
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("OK\r\n");
-    osal_printk("SSI JTAG: %d\r\n", ssi_jtag);
+    uapi_at_print("SSI JTAG: %d\r\n", ssi_jtag);
 #endif
     return AT_RET_OK;
 }
@@ -1278,10 +1293,9 @@ at_ret_t cmd_set_hash_root_public_key(const pubkey_args_t *args)
     at_str_to_hex((char *)(args->para1 + 2), len, key); /* 2:偏移2个字符 */
     ret = efuse_write_hash_root_public_key(key, sizeof(key));
     if (ret != ERRCODE_SUCC) {
-        osal_printk("SET EFUSE KEY ERROR, ret : 0x%x\r\n", ret);
+        uapi_at_print("SET EFUSE KEY ERROR, ret : 0x%x\r\n", ret);
         return AT_RET_CMD_PARA_ERROR;
     }
-    osal_printk("OK\r\n");
 #else
     unused(args);
 #endif
@@ -1298,15 +1312,14 @@ at_ret_t cmd_get_hash_root_public_key(void)
     memset_s(key, sizeof(key), 0, sizeof(key));
     ret = efuse_read_hash_root_public_key(key, sizeof(key));
     if (ret != EXT_ERR_SUCCESS) {
-        osal_printk("READ EFUSE HASH ROOT PUBLIC KEY ERROR, ret : 0x%x\r\n", ret);
+        uapi_at_print("READ EFUSE HASH ROOT PUBLIC KEY ERROR, ret : 0x%x\r\n", ret);
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("OK\r\n");
-    osal_printk("KEY:");
+    uapi_at_print("KEY:");
     for (index = 0; index < sizeof(key); index++) {
-        osal_printk("%02x", key[index]);
+        uapi_at_print("%02x", key[index]);
     }
-    osal_printk("\r\n");
+    uapi_at_print("\r\n");
 #endif
     return AT_RET_OK;
 }
@@ -1318,10 +1331,9 @@ at_ret_t cmd_sec_verify_enable(void)
 
     ret = efuse_write_sec_verify();
     if (ret != ERRCODE_SUCC) {
-        osal_printk("SET EFUSE SEC VERIFY ERROR, ret : 0x%x\r\n", ret);
+        uapi_at_print("SET EFUSE SEC VERIFY ERROR, ret : 0x%x\r\n", ret);
         return AT_RET_CMD_PARA_ERROR;
     }
-    osal_printk("OK\r\n");
 #endif
     return AT_RET_OK;
 }
@@ -1334,11 +1346,10 @@ at_ret_t cmd_get_sec_verify_status(void)
 
     ret = efuse_read_sec_verify(&sec_verify, sizeof(sec_verify));
     if (ret != EXT_ERR_SUCCESS) {
-        osal_printk("READ EFUSE SEC VERIFY ERROR, ret : 0x%x\r\n", ret);
+        uapi_at_print("READ EFUSE SEC VERIFY ERROR, ret : 0x%x\r\n", ret);
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("OK\r\n");
-    osal_printk("SEC VERIFY: %d\r\n", sec_verify);
+    uapi_at_print("SEC VERIFY: %d\r\n", sec_verify);
 #endif
     return AT_RET_OK;
 }
@@ -1352,19 +1363,18 @@ at_ret_t plt_flash_read(const flashread_args_t *args)
 
     data = (td_u8 *)malloc(args->length);
     if (data == TD_NULL) {
-        free(data);
         return AT_RET_SYNTAX_ERROR;
     }
     ret = plt_flash_read_data(args->addr, args->length, data);
     if (ret != EXT_ERR_SUCCESS) {
         free(data);
-        osal_printk("plt_flash_read_data error, ret: 0x%x\r\n", ret);
+        uapi_at_print("plt_flash_read_data error, ret: 0x%x\r\n", ret);
         return AT_RET_SYNTAX_ERROR;
     }
     for (index = 0; index < (td_u32)args->length; ++index) {
-        print_str("%x ", data[index]);
+        uapi_at_print("%x ", data[index]);
     }
-    print_str("\r\n", data[index]);
+    uapi_at_print("\r\n");
     free(data);
 #else
     unused(args);
@@ -1387,17 +1397,16 @@ at_ret_t plt_flash_write(const flashwrite_args_t *args)
     }
     data = (td_u8 *)malloc(args->length);
     if (data == TD_NULL) {
-        free(data);
         return AT_RET_SYNTAX_ERROR;
     }
     at_str_to_hex((char *)(args->data), len, data);
     ret = plt_flash_write_data(args->addr, args->length, data, &left);
     if (ret != EXT_ERR_SUCCESS) {
         free(data);
-        osal_printk("plt_flash_write error, ret: 0x%x\r\n", ret);
+        uapi_at_print("plt_flash_write error, ret: 0x%x\r\n", ret);
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("plt_flash_write left:%d\r\n", left);
+    uapi_at_print("plt_flash_write left:%u\r\n", left);
     free(data);
 #else
     unused(args);

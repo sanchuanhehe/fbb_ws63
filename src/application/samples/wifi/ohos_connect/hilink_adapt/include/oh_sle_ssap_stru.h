@@ -116,12 +116,12 @@ typedef enum {
  * @endif
  */
 typedef enum {
-    OH_SSAP_OPERATE_INDICATION_BIT_READ = 0x01,              /*!< @if Eng data values can be read
-                                                               @else   数据值可被读取 @endif */
-    OH_SSAP_OPERATE_INDICATION_BIT_WRITE_NO_RSP = 0x02,      /*!< @if Eng data values can be written without feedback.
-                                                               @else   数据值可被写入，写入后无反馈 @endif */
-    OH_SSAP_OPERATE_INDICATION_BIT_WRITE = 0x04,        /*!< @if Eng data values can be written. After being written,
-                                                                       a feedback is generated to the client.
+    OH_SSAP_OPERATE_INDICATION_BIT_READ = 0x01,         /*!< @if Eng data values can be read
+                                                          @else   数据值可被读取 @endif */
+    OH_SSAP_OPERATE_INDICATION_BIT_WRITE_NO_RSP = 0x02, /*!< @if Eng data values can be written without feedback.
+                                                          @else   数据值可被写入，写入后无反馈 @endif */
+    OH_SSAP_OPERATE_INDICATION_BIT_WRITE = 0x04,        /*!< @if Eng data values can be written. After being
+                                                                       written, a feedback is generated to the client.
                                                                @else   数据值可被写入，写入后产生反馈给客户端 @endif */
     OH_SSAP_OPERATE_INDICATION_BIT_NOTIFY = 0x08,            /*!< @if Eng data value send to client by notification.
                                                                @else   数据值通过通知方式传递给客户端 @endif */
@@ -168,3 +168,6 @@ typedef struct {
 }
 #endif
 #endif /* OH_SLE_SSAP_STRU_H */
+/**
+ * @}
+ */

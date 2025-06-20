@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] {radar target state release entry, prev state[%d](0:rls,1:confirm,2:lost,3:track).} @radar_frame_based_fsm_evt_handler.c(80),INFO" ID="0x855e0285" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] {radar target state release wrong event[%d]} @radar_frame_based_fsm_evt_handler.c(118),ERROR" ID="0x855e03b2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] {radar target state confirm entry, prev state[%d](0:rls,1:confirm,2:lost,3:track).} @radar_frame_based_fsm_evt_handler.c(138),INFO" ID="0x855e0455" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] {radar target state confirm wrong event[%d]} @radar_frame_based_fsm_evt_handler.c(189),ERROR" ID="0x855e05ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] {radar target state lost_search entry, prev state[%d](0:rls,1:confirm,2:lost,3:track).} @radar_frame_based_fsm_evt_handler.c(208),INFO" ID="0x855e0685" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] {radar target state lost_search wrong event[%d]} @radar_frame_based_fsm_evt_handler.c(253),ERROR" ID="0x855e07ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] {radar target state track entry, prev state[%d](0:rls,1:confirm,2:lost,3:track).} @radar_frame_based_fsm_evt_handler.c(271),INFO" ID="0x855e087d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{radar target state track wrong event[%d]} @radar_frame_based_fsm_evt_handler.c(321),ERROR" ID="0x855e0a0a" />
+			</MSG_LOG>

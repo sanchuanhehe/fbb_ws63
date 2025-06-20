@@ -14,6 +14,7 @@
 #define OH_SLE_DEVICE_ANC_SEK
 
 #include <stdint.h>
+#include "errcode.h"
 #include "oh_sle_errcode.h"
 #include "oh_sle_common.h"
 
@@ -194,6 +195,8 @@ typedef struct SleAnnounceParam {
                                                  @else   最大设备公开周期, 0x000020~0xffffff, 单位125us @endif */
     uint8_t  announceChannelMap;         /*!< @if Eng announce channel map
                                                  @else   设备公开信道, 0:76, 1:77, 2:78 @endif */
+    uint8_t announceTxPower;           /*!< @if Eng announce tx power
+                                                 @else   广播tx功率 @endif */
     SleAddr ownAddr;                    /*!< @if Eng own address
                                                  @else   本端地址 @endif */
     SleAddr peerAddr;                   /*!< @if Eng peer address
@@ -292,20 +295,20 @@ typedef struct SleSeekParam {
  */
 typedef struct SleSeekResultInfo {
     uint8_t eventType;                /*!< @if Eng event type
-                                            @else   上报事件类型 @endif */
-    SleAddr addr;                   /*!< @if Eng address
-                                            @else   地址 @endif */
-    SleAddr directAddr;            /*!< @if Eng direct address
-                                            @else   定向发现地址 @endif */
-    uint8_t rssi;                      /*!< @if Eng rssi
-                                            @else   信号强度指示，取值范围[-127dBm, 20dBm]，0x7F表示不提供信号强度指示
-                                            @endif */
+                                           @else   上报事件类型 @endif */
+    SleAddr addr;                     /*!< @if Eng address
+                                           @else   地址 @endif */
+    SleAddr directAddr;               /*!< @if Eng direct address
+                                           @else   定向发现地址 @endif */
+    int8_t rssi;                      /*!< @if Eng rssi
+                                           @else   信号强度指示，取值范围[-127dBm, 20dBm]，0x7F表示不提供信号强度指示
+                                           @endif */
     uint8_t dataStatus;               /*!< @if Eng data status
-                                            @else   数据状态 @endif */
+                                           @else   数据状态 @endif */
     uint8_t dataLength;               /*!< @if Eng data length
-                                            @else   数据长度 @endif */
-    uint8_t *data;                     /*!< @if Eng data
-                                            @else   数据 @endif */
+                                           @else   数据长度 @endif */
+    uint8_t *data;                    /*!< @if Eng data
+                                           @else   数据 @endif */
 } SleSeekResultInfo;
 
 /**
@@ -389,6 +392,31 @@ typedef void (*SleAnnounceTerminalCallback)(uint32_t announceId);
 
 /**
  * @if Eng
+ * @brief Callback invoked when announce remove.
+ * @par Callback invoked when announce remove.
+ * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
+ * @attention 2.The memories of pointer are requested and freed by the SLE service automatically.
+ * @param  [in] announce_id announce ID.
+ * @param  [in]  status       error code.
+ * @par Dependency:
+ * @li  sle_common.h
+ * @see sle_connection_callbacks_t
+ * @else
+ * @brief  删除广播的回调函数。
+ * @par    删除广播的回调函数。
+ * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
+ * @attention  2. 指针由SLE service申请内存，也由SLE service释放，回调中不应释放。
+ * @param  [in] announce_id 公开ID。
+ * @param  [in]  status       执行结果错误码。
+ * @par 依赖:
+ * @li  sle_common.h
+ * @see sle_connection_callbacks_t
+ * @endif
+ */
+typedef void (*SleAnnounceRemoveCallback)(uint32_t announceId, errcode_t status);
+
+/**
+ * @if Eng
  * @brief Callback invoked when seek enabled.
  * @par Callback invoked when seek enabled.
  * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
@@ -464,6 +492,42 @@ typedef void (*SleSeekResultCallback)(SleSeekResultInfo *SeekResultData);
 
 /**
  * @if Eng
+ * @brief The callback interface for sle dfr function.
+ * @retval no return value
+ * @else
+ * @brief sle协议栈dfr流程
+ * @retval 无返回值
+ * @endif
+ */
+typedef void (*SleDfrCallback)(void);
+
+/**
+ * @if Eng
+ * @brief Callback invoked when device power on.
+ * @par Callback invoked when device power on.
+ * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
+ * @attention 2.The memories of pointer are requested and freed by the SLE service automatically.
+ * @param [in] status error code.
+ * @retval void no return value.
+ * @par Dependency:
+ * @li  sle_common.h
+ * @see sle_dev_manager_callbacks_t
+ * @else
+ * @brief  SLE设备上电。
+ * @par    SLE设备上电。
+ * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
+ * @attention  2. 指针由SLE service申请内存，也由SLE service释放，回调中不应释放。
+ * @param [in] status 执行结果错误码。
+ * @retval 无返回值。
+ * @par 依赖:
+ * @li  sle_common.h
+ * @see sle_dev_manager_callbacks_t
+ * @endif
+ */
+typedef void (*SlePowerOnCallback)(uint8_t status);
+
+/**
+ * @if Eng
  * @brief Callback invoked when SLE stack enable.
  * @par Callback invoked when SLE stack enable.
  * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
@@ -485,7 +549,7 @@ typedef void (*SleSeekResultCallback)(SleSeekResultInfo *SeekResultData);
  * @see SleConnectionCallbacks
  * @endif
  */
-typedef void (*SleEnableCallback)(ErrCodeType status);
+typedef void (*SleEnableCallback)(uint8_t status);
 
 /**
  * @if Eng
@@ -510,7 +574,7 @@ typedef void (*SleEnableCallback)(ErrCodeType status);
  * @see SleConnectionCallbacks
  * @endif
  */
-typedef void (*SleDisableCallback)(ErrCodeType status);
+typedef void (*SleDisableCallback)(uint8_t status);
 
 /**
  * @if Eng
@@ -530,12 +594,18 @@ typedef struct {
                                                                  @else   设备公开关闭回调函数。 @endif */
     SleAnnounceTerminalCallback announceTerminalCb;    /*!< @if Eng device announce terminated callback.
                                                                  @else   设备公开停止回调函数。 @endif */
+    SleAnnounceRemoveCallback announceRemoveCb;        /*!< @if Eng device announce remove callback.
+                                                                 @else   设备公开停止回调函数。 @endif */
     SleStartSeekCallback seekEnableCb;                 /*!< @if Eng scan enable callback.
                                                                  @else   扫描使能回调函数。 @endif */
     SleSeekDisableCallback seekDisableCb;              /*!< @if Eng scan disable callback.
                                                                  @else   扫描关闭回调函数。 @endif */
     SleSeekResultCallback seekResultCb;                /*!< @if Eng scan result callback.
                                                                  @else   扫描结果回调函数。 @endif */
+    SleDfrCallback seekDfrCb;                          /*!< @if Eng scan result callback.
+                                                                 @else   扫描结果回调函数。 @endif */
+    SlePowerOnCallback slePowerOnCb;                   /*!< @if Eng SLE device power on callback.
+                                                            @else   SLE设备上电回调函数。 @endif */
 } SleAnnounceSeekCallbacks;
 
 /**
@@ -831,3 +901,6 @@ ErrCodeType SleAnnounceSeekRegisterCallbacks(SleAnnounceSeekCallbacks *func);
 }
 #endif
 #endif /* OH_OH_SLE_DEVICE_ANC_SEK */
+/**
+ * @}
+ */

@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]hci_bt_cmd_reject: opcode = 0x%x, err_code = 0x%x @hci_bt.c(105),INFO" ID="0x887e034d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]hci_bt_send_hw_err: err_code(0x%x) @hci_bt.c(120),WARNING" ID="0x887e03c3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]hci_bt_cmd_received: opcode = 0x%x @hci_bt.c(156),INFO" ID="0x887e04e5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]hci_bt_cmd_received opcode(0x%x) out of command window @hci_bt.c(159),WARNING" ID="0x887e04fb" />
+			</MSG_LOG>

@@ -1,0 +1,39 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="ble add ble white list params err! len = %d @ble_ahib_gap.c(57),ERROR" ID="0xdea601ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble remove ble white list params err! len = %d @ble_ahib_gap.c(70),ERROR" ID="0xdea60232" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc get white list: %d @ble_ahib_gap.c(81),ERROR" ID="0xdea6028a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set global value err! len = %d @ble_ahib_gap.c(92),ERROR" ID="0xdea602e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set period advertising err! len = %d @ble_ahib_gap.c(104),ERROR" ID="0xdea60342" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc dis period advertising err! len = %d @ble_ahib_gap.c(115),ERROR" ID="0xdea6039a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set period adv list err! len = %d @ble_ahib_gap.c(128),ERROR" ID="0xdea60402" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc period adv create sync err! len = %d @ble_ahib_gap.c(139),ERROR" ID="0xdea6045a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc period adv terminate sync err! len = %d @ble_ahib_gap.c(150),ERROR" ID="0xdea604b2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set resolve addr err! len = %d @ble_ahib_gap.c(162),ERROR" ID="0xdea60512" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[CONN]ble core:AppConnectBleWhiteList @ble_ahib_gap.c(177),INFO" ID="0xdea6058d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set connect param: %d @ble_ahib_gap.c(188),ERROR" ID="0xdea605e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set connect param err! len = %d @ble_ahib_gap.c(191),ERROR" ID="0xdea605fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set hci le event mask: %d @ble_ahib_gap.c(202),ERROR" ID="0xdea60652" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="bt mpc set hci le event mask error! len = %d, stru_len: %d @ble_ahib_gap.c(206),ERROR" ID="0xdea60672" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble ahib enable ble err! ret = %d @ble_ahib_gap.c(218),ERROR" ID="0xdea606d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble ahib disable ble err! ret = %d @ble_ahib_gap.c(228),ERROR" ID="0xdea60722" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc connection params update err! len = %d @ble_ahib_gap.c(240),ERROR" ID="0xdea60782" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set local appearance err! len = %d @ble_ahib_gap.c(259),ERROR" ID="0xdea6081a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc dis extern adv err! len = %d @ble_ahib_gap.c(270),ERROR" ID="0xdea60872" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc hci link key: %d @ble_ahib_gap.c(282),ERROR" ID="0xdea608d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set hci link key err! len = %d @ble_ahib_gap.c(285),ERROR" ID="0xdea608ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set extern adv err! len = %d @ble_ahib_gap.c(299),ERROR" ID="0xdea6095a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc remove extern adv err! len = %d @ble_ahib_gap.c(310),ERROR" ID="0xdea609b2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set len: %d @ble_ahib_gap.c(330),ERROR" ID="0xdea60a52" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set len len err! len = %d @ble_ahib_gap.c(333),ERROR" ID="0xdea60a6a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set phy: %d @ble_ahib_gap.c(346),ERROR" ID="0xdea60ad2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set phy len err! len = %d @ble_ahib_gap.c(349),ERROR" ID="0xdea60aea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc remove extern adv err! len = %d @ble_ahib_gap.c(360),ERROR" ID="0xdea60b42" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set scan adv data filter data err! len = %d @ble_ahib_gap.c(373),ERROR" ID="0xdea60baa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc passkey response: %d @ble_ahib_gap.c(392),ERROR" ID="0xdea60c42" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc passkey response err! len = %d @ble_ahib_gap.c(395),ERROR" ID="0xdea60c5a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc read remote rssi: %d @ble_ahib_gap.c(423),ERROR" ID="0xdea60d3a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc read remote rssi err! len = %d @ble_ahib_gap.c(426),ERROR" ID="0xdea60d52" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc set local addr = %d @ble_ahib_gap.c(434),ERROR" ID="0xdea60d92" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib internal cbk] invalid event:%d @ble_ahib_gap.c(788),WARNING" ID="0xdea618a3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib cbk reg] invalid event:%d @ble_ahib_gap.c(797),WARNING" ID="0xdea618eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_gap.c(843),ERROR" ID="0xdea61a5a" />
+			</MSG_LOG>

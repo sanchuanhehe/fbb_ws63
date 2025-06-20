@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="ble_test_mode rssi_avg=%d, cnt = %d @evt_task_ble_test_mode_isr.c(37),INFO" ID="0x886a012d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="test mode rx wrong, status = 0x%x @evt_task_ble_test_mode_isr.c(71),WARNING" ID="0x886a023b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="evt_task_ble_test_mode_evt_cbk prog_num = %d, mode_type = %d  @evt_task_ble_test_mode_isr.c(109),INFO" ID="0x886a036d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="evt_task_ble_test_mode_start_cbk prog_num = %d @evt_task_ble_test_mode_isr.c(118),INFO" ID="0x886a03b5" />
+			</MSG_LOG>

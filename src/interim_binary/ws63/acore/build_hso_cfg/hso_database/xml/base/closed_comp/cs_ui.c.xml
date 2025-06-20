@@ -1,0 +1,50 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="cs reg service enter @cs_ui.c(94),INFO" ID="0xde9002f5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="cs reg service range:0x%x, uuid_len:%u, uuid:0x%04x @cs_ui.c(110),INFO" ID="0xde900375" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs reg service find item failed @cs_ui.c(114),ERROR" ID="0xde900392" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="cs reg service service hdl:0x%x, service end_hdl:0x%x @cs_ui.c(122),INFO" ID="0xde9003d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs reg character enter @cs_ui.c(137),INFO" ID="0xde90044d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs reg character failed @cs_ui.c(143),ERROR" ID="0xde90047a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[CS]gatt reg character memcpy error @cs_ui.c(152),ERROR" ID="0xde9004c2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[cs reg character]hdl:0x%02x, type = 0x%x, uuid:0x%04x @cs_ui.c(156),INFO" ID="0xde9004e5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="cs reg descriptor descriptor-&gt;type:0x%x @cs_ui.c(167),INFO" ID="0xde90053d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="item_list is null @cs_ui.c(169),ERROR" ID="0xde90054a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="find null by handle:[0x%02x] @cs_ui.c(174),ERROR" ID="0xde900572" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="descriptor-&gt;val-&gt;value[%u]:%02x @cs_ui.c(181),INFO" ID="0xde9005ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs reg descriptor new fail @cs_ui.c(187),ERROR" ID="0xde9005da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs server reg tree enter, service is null @cs_ui.c(209),INFO" ID="0xde90068d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs server reg tree out @cs_ui.c(230),INFO" ID="0xde900735" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs add property new node failed @cs_ui.c(241),ERROR" ID="0xde90078a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs add property new val failed @cs_ui.c(250),ERROR" ID="0xde9007d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs add property mem copy failed @cs_ui.c(258),ERROR" ID="0xde900812" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="add descriptor ccc node new failed @cs_ui.c(275),ERROR" ID="0xde90089a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="add descriptor ccc mem new failed @cs_ui.c(284),ERROR" ID="0xde9008e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="add descriptor ccc mem copy failed @cs_ui.c(292),ERROR" ID="0xde900922" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs range allocate protocol not register @cs_ui.c(309),ERROR" ID="0xde9009aa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs range allocate protocol new failed @cs_ui.c(330),ERROR" ID="0xde900a52" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="item_val is null error @cs_ui.c(371),ERROR" ID="0xde900b9a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[general write req]data_len = %u, val-&gt;len = %u, op_code:0x%02x, hdl:0x%04x @cs_ui.c(377),INFO" ID="0xde900bcd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="general write req malloc data fail @cs_ui.c(381),ERROR" ID="0xde900bea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="general write req memcpy failed @cs_ui.c(395),ERROR" ID="0xde900c5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="item_val-&gt;value memcpy failed @cs_ui.c(408),ERROR" ID="0xde900cc2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="item_val new failed @cs_ui.c(416),ERROR" ID="0xde900d02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="item_val memcpy error @cs_ui.c(421),ERROR" ID="0xde900d2a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs task cbk new fail @cs_ui.c(496),ERROR" ID="0xde900f82" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="tl done err_code:[0x%02x] @cs_ui.c(522),INFO" ID="0xde901055" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="task complete igonre null task @cs_ui.c(533),ERROR" ID="0xde9010aa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="task[%u] complete, err_code:[0x%02x] @cs_ui.c(537),INFO" ID="0xde9010cd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="cur_hdl:[0x%08x], last_hdl:[0x%04x] @cs_ui.c(552),INFO" ID="0xde901145" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[task_error_cfm]reason:0x%02x @cs_ui.c(561),INFO" ID="0xde90118d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[task_error_cfm]task null error @cs_ui.c(563),ERROR" ID="0xde90119a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs tl connect init addr mem copy failed  @cs_ui.c(574),ERROR" ID="0xde9011f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="tl find by lcid, lcid = 0x%02x @cs_ui.c(605),INFO" ID="0xde9012ed" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="tl find by tcid, tcid = 0x%02x @cs_ui.c(622),INFO" ID="0xde901375" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="task create tl connection tl-&gt;status = 0x%x, tl-&gt;mask = 0x%02x @cs_ui.c(655),INFO" ID="0xde90147d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="tl task[%d] trans done @cs_ui.c(674),INFO" ID="0xde901515" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="tl trans done trans-&gt;op:[0x%02x] @cs_ui.c(678),INFO" ID="0xde901535" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tl_timeout @cs_ui.c(698),INFO" ID="0xde9015d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[tl_timeout]null error @cs_ui.c(710),ERROR" ID="0xde901632" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="need wait for response @cs_ui.c(723),INFO" ID="0xde90169d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="trans-&gt;op[0x%02x], tl-&gt;trans-&gt;op[0x%02x] collision @cs_ui.c(730),WARNING" ID="0xde9016d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle cs tl trans timer:%p collision @cs_ui.c(738),ERROR" ID="0xde901712" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle cs tl trans init timer start fail @cs_ui.c(748),ERROR" ID="0xde901762" />
+			</MSG_LOG>

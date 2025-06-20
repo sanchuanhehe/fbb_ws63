@@ -1,0 +1,15 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="sapi ssaps add server failed @sapi_gle_ssap_server.c(80),ERROR" ID="0xde700282" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle ssap register server add ok @sapi_gle_ssap_server.c(86),INFO" ID="0xde7002b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi gle ssap register server already exited @sapi_gle_ssap_server.c(88),ERROR" ID="0xde7002c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle sapi ssaps del server new error @sapi_gle_ssap_server.c(113),ERROR" ID="0xde70038a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle ahib ssaps del server memcpy_s error @sapi_gle_ssap_server.c(117),ERROR" ID="0xde7003aa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi ssaps add server failed @sapi_gle_ssap_server.c(136),ERROR" ID="0xde700442" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="sapi ssaps add service, protocol:%02x service type:%02x, len:%u @sapi_gle_ssap_server.c(149),INFO" ID="0xde7004ad" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="sapi ssaps add service, uuid:%02x%02x%02x%02x @sapi_gle_ssap_server.c(154),INFO" ID="0xde7004d5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sapi ssaps add property data_size:%u @sapi_gle_ssap_server.c(170),INFO" ID="0xde700555" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sapi ssaps add property property_handle:0x%02x @sapi_gle_ssap_server.c(182),INFO" ID="0xde7005b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi ssaps add property desc not support @sapi_gle_ssap_server.c(196),ERROR" ID="0xde700622" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sapi ssaps add property desc property_handle: 0x%02x @sapi_gle_ssap_server.c(201),INFO" ID="0xde70064d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sapi ssaps add property desc descr_count = %u @sapi_gle_ssap_server.c(207),INFO" ID="0xde70067d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sapi ssaps start service enter @sapi_gle_ssap_server.c(223),INFO" ID="0xde7006fd" />
+			</MSG_LOG>

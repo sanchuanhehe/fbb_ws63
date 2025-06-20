@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]dump_intv_list: task_id=0x%x interval=%d offset=%d duration_slot_min=%d @evt_sched_util.c(62),INFO" ID="0x887601f5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]init_elt_by_param: task_id=0x%x interval=0x%x duration_max_us=%d duration_min_us=%d @evt_sched_util.c(185),INFO" ID="0x887605cd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]update_elt_by_param: task_id=0x%x es_sn=%d duration_max_us=%d duration_min_us=%d @evt_sched_util.c(204),INFO" ID="0x88760665" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp]finetimer_refresh: lr=0x%x, current_time=0x%x, finetarget_time=0x%x @evt_sched_util.c(228),INFO" ID="0x88760725" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]dec_elt_count err! task_id=0x%x timestamp=0x%x es_sn=%d cur_priority=%d @evt_sched_util.c(240),ERROR" ID="0x88760782" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]move_to_cancel_list: lr=0x%x, task_id=0x%x, timestamp=0x%x, cur_priority=%d @evt_sched_util.c(268),INFO" ID="0x88760865" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp]process_cancel_cbk: cancel_list task_id=0x%x timestamp=0x%x duration=%d @evt_sched_util.c(281),INFO" ID="0x887608cd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]check_cancel_list fail! task_id=0x%x clkn=0x%x @evt_sched_util.c(313),WARNING" ID="0x887609cb" />
+			</MSG_LOG>

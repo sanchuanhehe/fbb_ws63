@@ -1,7 +1,9 @@
-/*
+/* ----------------------------------------------------------------------------
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
  * Description: filesystem(fs) adapter.
- */
+ * Author: none
+ * Create: 2023-03-21
+ * --------------------------------------------------------------------------- */
 
 #ifndef FS_H
 #define FS_H

@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="alg_tpc_adjust_bf_report::null pointers @hal_alg_tpc.c(60),WARNING" ID="0x80f601e3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alg_tpc_adjust_rts_report::null pointers @hal_alg_tpc.c(183),WARNING" ID="0x80f605bb" />
+			</MSG_LOG>

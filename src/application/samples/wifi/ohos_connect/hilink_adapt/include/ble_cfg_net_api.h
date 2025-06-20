@@ -64,10 +64,10 @@ typedef enum {
 
 /* BLE广播类型定义 */
 typedef enum {
-    BLE_ADV_DEFAULT,
-    BLE_ADV_NEARBY_V0,
-    BLE_ADV_ONEHOP,
-    BLE_ADV_LOCAL_NAME,
+    BLE_ADV_DEFAULT, // 新蓝牙靠近发现
+    BLE_ADV_NEARBY_V0, // 拉取半模态卡片的靠近发现
+    BLE_ADV_ONEHOP, // 蓝牙碰一碰
+    BLE_ADV_LOCAL_NAME, // 常态广播
     BLE_ADV_CUSTOM
 } BLE_AdvType;
 

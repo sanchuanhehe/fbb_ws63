@@ -26,12 +26,22 @@ set(WHOLE_LINK
 )
 build_component()
 
+if (DEFINES MATCHES "SUPPORT_QUICK_NETCFG")
+set(COMPONENT_NAME "hilinkquickcfg")
+set(LIBS ${ROOT_DIR}/application/samples/wifi/libhilink/lib${COMPONENT_NAME}.a)
+set(WHOLE_LINK
+    true
+)
+build_component()
+endif()
+
 set(COMPONENT_NAME "hilink_addr_map")
 
 set(CMAKE_HILINK_SOURCE_DIR
     ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/hilink_call_entry.c
     ${CMAKE_CURRENT_SOURCE_DIR}/hilink_function_mapping.c
     ${CMAKE_CURRENT_SOURCE_DIR}/app_uapi/uapi_hichain.c
     ${CMAKE_CURRENT_SOURCE_DIR}/app_uapi/uapi_hilink_device.c
@@ -59,6 +69,12 @@ set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/app_uapi/uapi_hilink_ble_adapter.c
     ${CMAKE_CURRENT_SOURCE_DIR}/app_uapi/uapi_hilink_ble_main.c
     ${CMAKE_CURRENT_SOURCE_DIR}/app_uapi/uapi_cmsis_liteos2.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/app_uapi/uapi_cJSON.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/app_uapi/uapi_mbed_tls.c
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/app_uapi/uapi_oh_sle_connection_manager.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/app_uapi/uapi_oh_sle_device_discovery.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/app_uapi/uapi_oh_sle_ssap_server.c
 )
 
 set(PUBLIC_HEADER
@@ -76,6 +92,9 @@ set(PRIVATE_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/../include/
 
     ${ROOT_DIR}/kernel/liteos/liteos_v208.5.0/Huawei_LiteOS/open_source/CMSIS/CMSIS/RTOS2/Include/
+    ${ROOT_DIR}/include/
+    ${ROOT_DIR}/open_source/cjson/cjson
+    ${ROOT_DIR}/open_source/mbedtls/mbedtls_v3.1.0/include
 )
 
 # use this when you want to add ccflags like -include xxx

@@ -12,12 +12,14 @@
 
 int HILINK_SAL_Hkdf(const HiLinkHkdfParam *param, unsigned char *key, unsigned int keyLen)
 {
-    return app_call3(APP_CALL_HILINK_SAL_HKDF, int,
+    app_call3(APP_CALL_HILINK_SAL_HKDF, HILINK_SAL_Hkdf, int,
         const HiLinkHkdfParam *, param, unsigned char *, key, unsigned int, keyLen);
+    return 0;
 }
 
 int HILINK_SAL_Pkcs5Pbkdf2Hmac(const HiLinkPbkdf2HmacParam *param, unsigned char *key, unsigned int keyLen)
 {
-    return app_call3(APP_CALL_HILINK_SAL_PKCS5_PBKDF2_HMAC, int,
+    app_call3(APP_CALL_HILINK_SAL_PKCS5_PBKDF2_HMAC, HILINK_SAL_Pkcs5Pbkdf2Hmac, int,
         const HiLinkPbkdf2HmacParam *, param, unsigned char *, key, unsigned int, keyLen);
+    return 0;
 }

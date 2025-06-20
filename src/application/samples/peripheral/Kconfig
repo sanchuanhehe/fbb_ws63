@@ -325,6 +325,20 @@ menu "SFC Sample Configuration"
 endmenu
 endif
 
+config SAMPLE_SUPPORT_SFC_PERF
+    bool
+    prompt "Support SFC PERF Sample."
+    default n
+    depends on ENABLE_PERIPHERAL_SAMPLE
+    help
+        This option means support SFC PERF Sample.
+
+if SAMPLE_SUPPORT_SFC_PERF
+menu "SFC Perf Sample Configuration"
+    osource "application/samples/peripheral/sfc_perf/Kconfig"
+endmenu
+endif
+
 config SAMPLE_SUPPORT_SPI
     bool
     prompt "Support SPI Sample."

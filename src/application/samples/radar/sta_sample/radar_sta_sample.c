@@ -134,7 +134,7 @@ td_s32 radar_start_sta(td_void)
     }
 
     /* 连接成功 */
-    PRINT("STA connect success.\r\n");
+    PRINT("STA enable success.\r\n");
     return 0;
 }
 
@@ -143,6 +143,12 @@ static void radar_print_res(radar_result_t *res)
     PRINT("[RADAR_SAMPLE] lb:%u, hb:%u, hm:%u\r\n", res->lower_boundary, res->upper_boundary, res->is_human_presence);
 
     radar_ctrl_led(res);
+}
+
+static void radar_print_cur_frame_res(radar_current_frame_result_t *res)
+{
+    PRINT("[RADAR_SAMPLE] gear1:%u, gear2:%u, gear3:%u, ai:%u\r\n",
+        res->gear_one_flag, res->gear_two_flag, res->gear_three_flag, res->ai_flag);
 }
 
 // 维测信息依次为:
@@ -184,6 +190,9 @@ static void radar_init_para(void)
     dbg_para.period = RADAR_DEFAULT_PERIOD;
     uapi_radar_set_debug_para(&dbg_para);
 
+    int16_t dly_time = RADAR_QUIT_DELAY_TIME;
+    uapi_radar_set_delay_time(dly_time);
+
     radar_sel_para_t sel_para;
     sel_para.height = RADAR_HEIGHT_2M;
     sel_para.scenario = RADAR_SCENARIO_TYPE_HOME;
@@ -194,8 +203,8 @@ static void radar_init_para(void)
 
     // 算法门限, 前三个使用tools/bin/radar_tool/radar_para_gen_tool工具标定, 后面五个使用本sample给出的默认值即可
     radar_alg_para_t alg_para;
-    alg_para.d_th_1m = 32;
-    alg_para.d_th_2m = 25;
+    alg_para.d_th_1m = 20;
+    alg_para.d_th_2m = 22;
     alg_para.p_th = 25;
     alg_para.t_th_1m = 13;
     alg_para.t_th_2m = 26;
@@ -203,9 +212,6 @@ static void radar_init_para(void)
     alg_para.b_th_cnt = 4;
     alg_para.a_th = 70;
     uapi_radar_set_alg_para(&alg_para, 0);
-
-    int16_t dly_time = RADAR_QUIT_DELAY_TIME;
-    uapi_radar_set_delay_time(dly_time);
 }
 
 int radar_demo_init(void *param)
@@ -215,11 +221,13 @@ int radar_demo_init(void *param)
     radar_led_init();
     radar_start_sta();
     uapi_radar_register_result_cb(radar_print_res);
+    uapi_radar_register_current_frame_result_cb(radar_print_cur_frame_res);
     uapi_radar_register_debug_info_cb(radar_print_dbg_info, RADAR_DBG_INFO_RPT_COEF);
-    radar_init_para();
+
     // 启动雷达
     (void)osDelay(WIFI_START_STA_DELAY);
     uapi_radar_set_status(RADAR_STATUS_START);
+    radar_init_para();
 
     for (;;) {
         (void)osDelay(RADAR_STATUS_QUERY_DELAY);
@@ -232,6 +240,8 @@ int radar_demo_init(void *param)
         uapi_radar_get_isolation(&iso);
         radar_result_t res = {0};
         uapi_radar_get_result(&res);
+        radar_current_frame_result_t cur_frame_res = {0};
+        uapi_radar_get_current_frame_result(&cur_frame_res);
         int16_t arr[RADAR_DBG_INFO_LEN] = {0};
         uapi_radar_get_debug_info(arr, RADAR_DBG_INFO_LEN);
         radar_print_dbg_info(arr, RADAR_DBG_INFO_LEN);

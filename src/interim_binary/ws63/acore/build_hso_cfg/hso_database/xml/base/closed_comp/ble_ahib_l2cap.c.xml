@@ -1,0 +1,36 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap reg psm. @ble_ahib_l2cap.c(49),INFO" ID="0xdeb0018d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface reg psm fail. len = %u @ble_ahib_l2cap.c(52),ERROR" ID="0xdeb001a2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface fail: %d @ble_ahib_l2cap.c(58),ERROR" ID="0xdeb001d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface fail: %d @ble_ahib_l2cap.c(64),ERROR" ID="0xdeb00202" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap unreg psm. @ble_ahib_l2cap.c(74),INFO" ID="0xdeb00255" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface unreg psm fail. len = %u @ble_ahib_l2cap.c(77),ERROR" ID="0xdeb0026a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface fail: %d @ble_ahib_l2cap.c(83),ERROR" ID="0xdeb0029a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface fail: %d @ble_ahib_l2cap.c(89),ERROR" ID="0xdeb002ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general interface credit ch req. @ble_ahib_l2cap.c(99),INFO" ID="0xdeb0031d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface credit ch req fail. len = %u @ble_ahib_l2cap.c(102),ERROR" ID="0xdeb00332" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface credit ch req fail: %d @ble_ahib_l2cap.c(108),ERROR" ID="0xdeb00362" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface credit ch req fail: %d @ble_ahib_l2cap.c(114),ERROR" ID="0xdeb00392" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general interface credit ch rsq. @ble_ahib_l2cap.c(124),INFO" ID="0xdeb003e5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface credit ch rsq fail. len = %u @ble_ahib_l2cap.c(127),ERROR" ID="0xdeb003fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface credit ch rsq fail: %d @ble_ahib_l2cap.c(133),ERROR" ID="0xdeb0042a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface credit ch rsq fail: %d @ble_ahib_l2cap.c(139),ERROR" ID="0xdeb0045a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general interface credit tx. @ble_ahib_l2cap.c(147),INFO" ID="0xdeb0049d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface credit tx fail. len = %u @ble_ahib_l2cap.c(151),ERROR" ID="0xdeb004ba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface credit ch rsq fail: %d @ble_ahib_l2cap.c(157),ERROR" ID="0xdeb004ea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general interface. @ble_ahib_l2cap.c(167),INFO" ID="0xdeb0053d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface credit ch flow control fail. len = %u @ble_ahib_l2cap.c(170),ERROR" ID="0xdeb00552" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface fail: %d @ble_ahib_l2cap.c(176),ERROR" ID="0xdeb00582" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface fail: %d @ble_ahib_l2cap.c(182),ERROR" ID="0xdeb005b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general interface disconnect. @ble_ahib_l2cap.c(192),INFO" ID="0xdeb00605" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface disconnect fail. len = %u @ble_ahib_l2cap.c(195),ERROR" ID="0xdeb0061a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface disconnect fail: %d @ble_ahib_l2cap.c(201),ERROR" ID="0xdeb0064a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general interface disconnect fail: %d @ble_ahib_l2cap.c(207),ERROR" ID="0xdeb0067a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general set l2cap config params. @ble_ahib_l2cap.c(217),INFO" ID="0xdeb006cd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general set l2cap config params fail. len = %u @ble_ahib_l2cap.c(220),ERROR" ID="0xdeb006e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: bt mpc adapter l2cap set l2cap config params fail: %d @ble_ahib_l2cap.c(226),ERROR" ID="0xdeb00712" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general set l2cap config params fail: %d @ble_ahib_l2cap.c(232),ERROR" ID="0xdeb00742" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general handler opcode 0x%04x invaild! @ble_ahib_l2cap.c(265),ERROR" ID="0xdeb0084a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib internal cbk] invalid event:%d @ble_ahib_l2cap.c(326),WARNING" ID="0xdeb00a33" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib cbk reg] invalid event:%d @ble_ahib_l2cap.c(335),WARNING" ID="0xdeb00a7b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_l2cap.c(348),ERROR" ID="0xdeb00ae2" />
+			</MSG_LOG>

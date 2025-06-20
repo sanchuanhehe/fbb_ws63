@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][scan]set_scan_params_act, scan_type=%d, scan_interval=%d, scan_window=%d, address_type=%d @lm_ble_legacy_scan_act.c(89),INFO" ID="0x883a02cd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][scan]set_scan_params_act, scan_filter_policy=%d, status=%d @lm_ble_legacy_scan_act.c(92),INFO" ID="0x883a02e5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]Address type is static private but no static private address is available! @lm_ble_legacy_scan_act.c(121),WARNING" ID="0x883a03cb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][scan]lm_ble_scan_off_hci_set_scan_enable_act, scan_enable=%d, filter_duplicates=%d @lm_ble_legacy_scan_act.c(161),INFO" ID="0x883a050d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][scan]lm_ble_scan_off_hci_set_scan_enable_act, invalid hci command params![%d] @lm_ble_legacy_scan_act.c(165),WARNING" ID="0x883a052b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][scan]lm_ble_scanning_hci_set_scan_enable_act, scan_enable=%d, filter_duplicates=%d @lm_ble_legacy_scan_act.c(207),INFO" ID="0x883a067d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]lm_ble_scanning_hci_set_scan_enable_act, invalid hci connamd params! @lm_ble_legacy_scan_act.c(211),WARNING" ID="0x883a069b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][scan]lm_ble_scan_recv_legacy_adv, filter_duplicates=%d, report_adv=%d @lm_ble_legacy_scan_act.c(402),INFO" ID="0x883a0c95" />
+			</MSG_LOG>

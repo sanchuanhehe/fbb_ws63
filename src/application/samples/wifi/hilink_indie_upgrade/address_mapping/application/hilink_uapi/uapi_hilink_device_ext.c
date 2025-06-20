@@ -12,5 +12,6 @@
 
 void HILINK_RegisterGetAcV2Func(HILINK_GetAcKeyFunc func)
 {
-    hilink_call1(HILINK_CALL_HILINK_REGISTER_GET_AC_V2_FUNC, void, HILINK_GetAcKeyFunc, func);
+    hilink_call1_ret_void(HILINK_CALL_HILINK_REGISTER_GET_AC_V2_FUNC, HILINK_RegisterGetAcV2Func,
+        HILINK_GetAcKeyFunc, func);
 }

@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle at cmd sdk get name malloc fail! @sle_at_dd.c(85),ERROR" ID="0xd91a02aa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error][AT] announce tx power id is error -127~20, 127 @sle_at_dd.c(123),ERROR" ID="0xd91a03da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle at cmd sdk set dd announce data new fail! @sle_at_dd.c(153),ERROR" ID="0xd91a04ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error][AT] string to data error! @sle_at_dd.c(158),ERROR" ID="0xd91a04f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle at cmd sdk set dd scan rsp data new fail! @sle_at_dd.c(166),ERROR" ID="0xd91a0532" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error][AT] string to data error! @sle_at_dd.c(171),ERROR" ID="0xd91a055a" />
+			</MSG_LOG>

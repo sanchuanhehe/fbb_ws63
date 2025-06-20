@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]lm_ble_scan_event_sched_stop_act, switch to LM_BLE_STATE_SCAN_OFF @lm_ble_scan.c(222),INFO" ID="0x883606f5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]lm_ble_scan_set_scan_param_dft, use default scan params! @lm_ble_scan.c(277),INFO" ID="0x883608ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]lm_ble_scan_evt_task_end, send MSG_TASK_END to evt task fsm! @lm_ble_scan.c(292),INFO" ID="0x88360925" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]lm_ble_set_scan_enable, scan evt task env exists, start scan evt task fsm! @lm_ble_scan.c(369),INFO" ID="0x88360b8d" />
+			</MSG_LOG>

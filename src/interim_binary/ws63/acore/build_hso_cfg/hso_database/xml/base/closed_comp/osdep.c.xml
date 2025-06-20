@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[BTOS][MEM_INTEGRITY_CHECK]Not support! @osdep.c(805),INFO" ID="0xdb98192d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[BTOS][MEM_NEW]ALLOC_SIZE=%u, alloc fail! @osdep.c(839),WARNING" ID="0xdb981a3b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[MEM_FREE][%d][0x%x], caller:0x%x  @osdep.c(877),INFO" ID="0xdb981b6d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[BTOS][MEM_NEW]ALLOC_SIZE=%u, alloc fail! @osdep.c(900),WARNING" ID="0xdb981c23" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[BTOS][MEM_NEW_S]AVAILABLE_MEMORY=%u, alloc fail because under secure threshold size_cpy! @osdep.c(953),WARNING" ID="0xdb981dcb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[BTOS][MEM_NEW_S] btos new osal vmalloc mem new fail! @osdep.c(964),ERROR" ID="0xdb981e22" />
+			</MSG_LOG>

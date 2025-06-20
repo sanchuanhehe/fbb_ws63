@@ -1,0 +1,8 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[Error] gattc register at fail @ble_at_gattc.c(22),ERROR" ID="0xd90e00b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gattc register client at cmd fail @ble_at_gattc.c(46),ERROR" ID="0xd90e0172" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error]ble at gattc find service at cmd fail @ble_at_gattc.c(80),ERROR" ID="0xd90e0282" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error]ble at gattc discovery character at cmd fail @ble_at_gattc.c(103),ERROR" ID="0xd90e033a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error]ble at gattc read req by uuid at cmd fail @ble_at_gattc.c(160),ERROR" ID="0xd90e0502" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gattc write req at cmd data new fail @ble_at_gattc.c(183),ERROR" ID="0xd90e05ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gattc write req str to data fail @ble_at_gattc.c(188),ERROR" ID="0xd90e05e2" />
+			</MSG_LOG>

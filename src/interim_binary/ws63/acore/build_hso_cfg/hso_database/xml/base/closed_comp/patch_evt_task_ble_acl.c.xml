@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]ACL RX DATA MIC ERROR! @patch_evt_task_ble_acl.c(89),ERROR" ID="0x897e02ca" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[BGTP]evt_task_ble_acl_cancel_cbk con_hdl 0x%x, ts 0x%x, es_sn %d @patch_evt_task_ble_acl.c(106),INFO" ID="0x897e0355" />
+			</MSG_LOG>

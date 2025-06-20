@@ -12,10 +12,12 @@
 
 int HILINK_Restart(void)
 {
-    return app_call0(APP_CALL_HILINK_RESTART, int);
+    app_call0(APP_CALL_HILINK_RESTART, HILINK_Restart, int);
+    return 0;
 }
 
 unsigned char HILINK_GetSystemBootReason(void)
 {
-    return app_call0(APP_CALL_HILINK_GET_SYSTEM_BOOT_REASON, unsigned char);
+    app_call0(APP_CALL_HILINK_GET_SYSTEM_BOOT_REASON, HILINK_GetSystemBootReason, unsigned char);
+    return 0;
 }

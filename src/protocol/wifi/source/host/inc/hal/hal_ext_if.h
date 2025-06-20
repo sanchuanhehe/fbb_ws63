@@ -694,6 +694,14 @@ static  INLINE__ osal_void hal_set_counter1_clear(osal_void)
 {
     hal_public_hook_func(_set_counter1_clear)();
 }
+
+/*****************************************************************************
+功能描述  : 配置mac_tx/rx_clken门控模式
+*****************************************************************************/
+static  INLINE__ osal_void hal_set_mac_clken(oal_bool_enum_uint8 wctrl_enable)
+{
+    hal_public_hook_func(_set_mac_clken)(wctrl_enable);
+}
 #endif
 
 #define HAL_VAP_LEVEL_FUNC

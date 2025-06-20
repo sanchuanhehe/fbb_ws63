@@ -1,0 +1,18 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[Rx IQ]numer(real=%d imag=%d), denom=(real=%d imag=%d) @rf_calibration_alg.c(245),INFO" ID="0x88c407ad" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[Rx IQ]multiply_res(real=%d imag=%d), after=(real=%d imag=%d) @rf_calibration_alg.c(258),INFO" ID="0x88c40815" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Rx IQ]power=%d @rf_calibration_alg.c(259),INFO" ID="0x88c4081d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt_set2comp::comp val = %d @rf_calibration_alg.c(289),WARNING" ID="0x88c4090b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ERROR]bt_interp: length = 0 @rf_calibration_alg.c(304),ERROR" ID="0x88c40982" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ERROR]bt_interp: XARRAY not INC! xarray[%d]=%d, xarray[%d]=%d @rf_calibration_alg.c(328),ERROR" ID="0x88c40a42" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ERROR] bt_rf_interp: Run error! @rf_calibration_alg.c(351),ERROR" ID="0x88c40afa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SQRT] Negative input @rf_calibration_alg.c(514),WARNING" ID="0x88c41013" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[AGC][CLIP]accumulation %d=(%d) @rf_calibration_alg.c(553),INFO" ID="0x88c4114d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[AGC][CLIP]saturated! clip_num=%d, th=0x%x @rf_calibration_alg.c(561),INFO" ID="0x88c4118d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[CALI][AGC]final gain code=0x%x @rf_calibration_alg.c(610),INFO" ID="0x88c41315" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tbt_cali_complex_div: l_power is zero! @rf_calibration_alg.c(755),INFO" ID="0x88c4179d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tbt_cali_complex_div: l_power is zero! @rf_calibration_alg.c(790),INFO" ID="0x88c418b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt_cali_matrix_multiply_with_num overflow @rf_calibration_alg.c(869),WARNING" ID="0x88c41b2b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt_cali_matrix_dot_product calcu result overflow @rf_calibration_alg.c(886),WARNING" ID="0x88c41bb3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt_cali_matrix_sqrt overflow The number is less than 0 @rf_calibration_alg.c(911),WARNING" ID="0x88c41c7b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt_cali_matrix_plus_with_num overflow @rf_calibration_alg.c(940),WARNING" ID="0x88c41d63" />
+			</MSG_LOG>

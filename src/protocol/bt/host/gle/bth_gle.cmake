@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
+# Copyright (c) CompanyNameMagicTag 2022-2022. All rights reserved.
 #===============================================================================
 set(COMPONENT_NAME "bth_gle")
 set(BTH_RAM_LIST  "" CACHE INTERNAL "" FORCE)

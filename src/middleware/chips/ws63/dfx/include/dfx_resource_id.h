@@ -1,5 +1,7 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. All rights reserved.
+* Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. All rights reserved.
+ * Description: dfx resource id
+ * This file should be changed only infrequently and with great care.
  */
 #ifndef DFX_RESOURCE_ID
 #define DFX_RESOURCE_ID

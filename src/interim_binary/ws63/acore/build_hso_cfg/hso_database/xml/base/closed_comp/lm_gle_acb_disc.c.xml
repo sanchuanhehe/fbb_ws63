@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="phy info, tx_format:%d, rx_format:%d, txphy:%d, rxphy:%d @lm_gle_acb_disc.c(215),INFO" ID="0x884e06bd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="map info, map0:0x%x, map0:0x%x, map2:0x%x, map3:0x%x @lm_gle_acb_disc.c(217),INFO" ID="0x884e06cd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="map4:0x%x, tx_pilot_ratio:0x%x, rx_pilot_ratio:0x%x, sw_rxpdidx:%d @lm_gle_acb_disc.c(219),INFO" ID="0x884e06dd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="last_sync_timestamp:0x%x, cur_time:0x%x, reason:0x%x, hw_rxpdidx:%d @lm_gle_acb_disc.c(221),INFO" ID="0x884e06ed" />
+			</MSG_LOG>

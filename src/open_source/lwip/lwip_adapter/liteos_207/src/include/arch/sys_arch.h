@@ -46,6 +46,7 @@ static inline void sys_align_free(void *mem)
 #include "los_sem.h"
 #include "los_typedef.h"
 #endif
+#include <sys/time.h>
 #include "semaphore.h"
 #include "osal_mutex.h"
 #include "osal_wait.h"
@@ -107,6 +108,23 @@ typedef int sys_prot_t;
 typedef pthread_mutex_t sys_mutex_t;
 #else
 typedef u32_t sys_mutex_t;
+#endif
+
+#if defined(LWIP_LITEOS_COMPAT) && (LWIP_LITEOS_COMPAT) && (!defined(LOSCFG_COMPAT_POSIX))
+static inline u32_t lwip_stime(const time_t *t)
+{
+    struct timeval tv = { .tv_sec = *t, .tv_usec = 0 };
+    return settimeofday(&tv, (void *)0);
+}
+
+static inline char *lwip_ctime(const time_t *t)
+{
+    struct tm *tm = localtime(t);
+    if (!tm) {
+        return 0;
+    }
+    return asctime(tm);
+}
 #endif
 
 #else  /* NO_SYS == 0 */

@@ -188,3 +188,6 @@ typedef enum {
 #endif
 #endif
 #endif /* OH_SLE_ERR_CODE_TYPE_H */
+/**
+ * @}
+ */

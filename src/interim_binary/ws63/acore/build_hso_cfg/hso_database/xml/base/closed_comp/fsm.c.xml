@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="[bgtp]fsm_msg_update_saved_msg: fsm_msg msg_id=0x%x src_id=0x%x dst_id=0x%x @fsm.c(577),INFO" ID="0x8802120d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]fsm_register fail: fsm_id(0x%x) @fsm.c(696),WARNING" ID="0x880215c3" />
+			</MSG_LOG>

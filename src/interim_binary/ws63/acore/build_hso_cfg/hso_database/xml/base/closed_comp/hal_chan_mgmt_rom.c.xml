@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{mac_fcs_set_channel:: fpga is not support 80M.} @hal_chan_mgmt_rom.c(63),ERROR" ID="0x81f201fa" />
+			</MSG_LOG>

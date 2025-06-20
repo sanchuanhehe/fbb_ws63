@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[PER SYNC]alloc memory for complete event failed! @lm_ble_per_sync.c(265),WARNING" ID="0x88e0084b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[PER SYNC]alloc memory for command status failed! @lm_ble_per_sync.c(281),WARNING" ID="0x88e008cb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[PER SYNC]alloc memory for established event failed! @lm_ble_per_sync.c(297),WARNING" ID="0x88e0094b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[PER SYNC]alloc memory for per adv report event failed! @lm_ble_per_sync.c(494),WARNING" ID="0x88e00f73" />
+			</MSG_LOG>

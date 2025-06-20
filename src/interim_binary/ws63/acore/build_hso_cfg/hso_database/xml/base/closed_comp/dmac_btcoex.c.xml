@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{dmac_btcoex_init:: dmac_register_cfg_hooks error[%u]! @dmac_btcoex.c(35),ERROR" ID="0x84c2011a" />
+			</MSG_LOG>

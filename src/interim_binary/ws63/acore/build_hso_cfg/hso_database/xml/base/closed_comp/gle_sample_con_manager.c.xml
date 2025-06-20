@@ -1,0 +1,20 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="sample cm conn state cbk connect handle:%02x, state:%02x, disc_reason %x @gle_sample_con_manager.c(19),INFO" ID="0xd8d2009d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Connected] @gle_sample_con_manager.c(21),INFO" ID="0xd8d200ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Disconnected] @gle_sample_con_manager.c(23),INFO" ID="0xd8d200bd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="addr:%02x:**:**:**:%02x:%02x, handle:%02x @gle_sample_con_manager.c(27),INFO" ID="0xd8d200dd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="sample cm conn update cbk handle:%02x, state:%02x @gle_sample_con_manager.c(35),INFO" ID="0xd8d2011d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="addr:%02x:**:**:**:%02x:%02x, handle:%02x @gle_sample_con_manager.c(38),INFO" ID="0xd8d20135" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="interval: %d, latency: %d, timeout: %d. @gle_sample_con_manager.c(41),INFO" ID="0xd8d2014d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[set acb low latency cbk] status:%02x, enable:%02x @gle_sample_con_manager.c(47),INFO" ID="0xd8d2017d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[set acb low latency cbk] addr:%02x:**:**:**:%02x:%02x @gle_sample_con_manager.c(49),INFO" ID="0xd8d2018d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[read remote rssi cbk] read remote rssi :conn id:%d, status:%d, rssi:%d @gle_sample_con_manager.c(56),INFO" ID="0xd8d201c5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle sample dd read filter list size cbk, size: %d @gle_sample_con_manager.c(62),INFO" ID="0xd8d201f5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle sample read remote feature version cbk, conn hdl: 0x%04x @gle_sample_con_manager.c(68),INFO" ID="0xd8d20225" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="gle sample read remote feature version cbk, 0x%02x 0x%02x 0x%02x 0x%02x @gle_sample_con_manager.c(72),INFO" ID="0xd8d20245" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="gle sample read remote feature version cbk, 0x%02x 0x%02x 0x%02x 0x%02x @gle_sample_con_manager.c(76),INFO" ID="0xd8d20265" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gle sample read remote feature version cbk, 0x%02x 0x%02x @gle_sample_con_manager.c(79),INFO" ID="0xd8d2027d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="gle sample read remote feature version cbk, version: %d, company_id: %d, subversion: %d. @gle_sample_con_manager.c(82),INFO" ID="0xd8d20295" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gle sample set phy cbk, status: %d, conn hdl: 0x%04x @gle_sample_con_manager.c(88),INFO" ID="0xd8d202c5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="gle sample set phy cbk, tx_format: %d, rx_format: %d, tx_phy: %d, rx_phy: %d. @gle_sample_con_manager.c(91),INFO" ID="0xd8d202dd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="gle sample set phy cbk, tx_pilot_density: %d, rx_pilot_density: %d, g_feedback: %d, t_feedback: %d. @gle_sample_con_manager.c(94),INFO" ID="0xd8d202f5" />
+			</MSG_LOG>

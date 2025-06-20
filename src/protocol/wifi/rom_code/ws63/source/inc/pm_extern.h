@@ -1,7 +1,7 @@
 ﻿/*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2012-2020. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2012-2020. All rights reserved.
  * Description: pm extern head.
- * Author:
+ * Author: Huanghe
  * Create: 2020-04-06
  */
 #ifndef __MP13_PM_EXTERN_H__

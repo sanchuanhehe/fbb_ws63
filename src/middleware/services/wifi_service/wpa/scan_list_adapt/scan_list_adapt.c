@@ -905,15 +905,11 @@ static int uapi_wifi_sta_scan_results_cb(void *params)
     return 0;
 }
 
-int uapi_wifi_sta_scan_results(ext_wifi_ap_info *ap_list, unsigned int *ap_num)
+int uapi_wifi_get_scan_results(ext_wifi_ap_info *ap_list, unsigned int *ap_num)
 {
     wifi_app_get_scan_result_param *params = NULL;
 
     if ((ap_list == NULL) || (ap_num == NULL) || (*ap_num > WIFI_SCAN_AP_LIMIT)) {
-        return -1;
-    }
-
-    if (wifi_dev_get(EXT_WIFI_IFTYPE_STATION) == NULL) {
         return -1;
     }
 
@@ -937,12 +933,17 @@ int uapi_wifi_sta_scan_results(ext_wifi_ap_info *ap_list, unsigned int *ap_num)
     params->private_param.configed_ssid_len = 0;
 
     /* 可能跟wpa supplicant中同时调用该函数, frw队列中应该会阻塞等待前一个消息处理完成 */
-    (void)uapi_wifi_app_service("wlan0", params);
+    if (wifi_dev_get(EXT_WIFI_IFTYPE_STATION) != NULL) {
+        (void)uapi_wifi_app_service("wlan0", params);
+    } else if (wifi_dev_get(EXT_WIFI_IFTYPE_AP) != NULL) {
+        (void)uapi_wifi_app_service("ap0", params);
+    } else {
+        return -1;
+    }
 
     /* 驱动回填 */
     *ap_num = *(params->private_param.size);
 
-    (void)memset_s(&g_scan_record, sizeof(g_scan_record), 0, sizeof(g_scan_record));
     os_free(params);
     return 0;
 }

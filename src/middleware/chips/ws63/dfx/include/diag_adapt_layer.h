@@ -1,5 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2023. All rights reserved.
+ * Description: diag usr adapt
+ * This file should be changed only infrequently and with great care.
  */
 
 #ifndef DIAG_ADAPT_LAYER_H

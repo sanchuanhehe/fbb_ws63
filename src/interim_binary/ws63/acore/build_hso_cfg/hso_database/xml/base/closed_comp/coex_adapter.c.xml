@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[COEX]get wrong uart info head = %x @coex_adapter.c(95),INFO" ID="0x88a402fd" />
+			</MSG_LOG>

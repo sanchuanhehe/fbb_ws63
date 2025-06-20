@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[BGTP] evt_task_ble_initiate_start, set_txpd fail! @evt_task_ble_initiate_ram.c(66),INFO" ID="0x89460215" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[BGTP] evt_task_ble_initiate_start, set_con_req fail! @evt_task_ble_initiate_ram.c(73),INFO" ID="0x8946024d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[BGTP] evt_task_ble_initiate_start, task_start fail! @evt_task_ble_initiate_ram.c(86),INFO" ID="0x894602b5" />
+			</MSG_LOG>

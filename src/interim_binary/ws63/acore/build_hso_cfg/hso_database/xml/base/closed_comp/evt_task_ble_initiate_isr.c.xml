@@ -1,0 +1,8 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][scan]evt_task_ble_initiate_start_cbk, prog_num=%d @evt_task_ble_initiate_isr.c(149),WARNING" ID="0x886404ab" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[SCINITIATEAN][RX]MSG_ALLOC_FAILED! @evt_task_ble_initiate_isr.c(201),ERROR" ID="0x8864064a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][initiate]evt_task_ble_initiate_report_data, clock=0x%x, us_offset=0x%x, window_offset=%d @evt_task_ble_initiate_isr.c(242),INFO" ID="0x88640795" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][initiate]evt_task_ble_initiate_recv_data, status=0x%x @evt_task_ble_initiate_isr.c(265),WARNING" ID="0x8864084b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][scan]evt_task_ble_initiate_evt_cbk, prog_num=%d @evt_task_ble_initiate_isr.c(286),WARNING" ID="0x886408f3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][scan]evt_task_ble_initiate_abnormal_cbk, timestamp=0x%x, current time=0x%x @evt_task_ble_initiate_isr.c(341),INFO" ID="0x88640aad" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][scan]evt_task_ble_initiate_abnormal_cbk, prog_num=%d @evt_task_ble_initiate_isr.c(346),WARNING" ID="0x88640ad3" />
+			</MSG_LOG>

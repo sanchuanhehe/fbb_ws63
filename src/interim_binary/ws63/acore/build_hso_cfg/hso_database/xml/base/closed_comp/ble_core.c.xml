@@ -1,0 +1,100 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="ble core: get connect inst by addr, addr is NULL @ble_core.c(127),ERROR" ID="0xdcc003fa" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: get connect inst by addr not found, addr = 0x%02x:**:**:**:%02x:%02x @ble_core.c(138),INFO" ID="0xdcc00455" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: get connect inst by handle not found, handle:%x @ble_core.c(152),INFO" ID="0xdcc004c5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: memcpy mac fail when connected, addr = 0x%02x:**:**:**:%02x:%02x @ble_core.c(170),ERROR" ID="0xdcc00552" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: create connect inst connected, addr:0x%02x:**:**:**:%02x:%02x @ble_core.c(185),INFO" ID="0xdcc005cd" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="create connect inst connected not idle link, addr:0x%02x:**:**:**:%02x:%02x @ble_core.c(191),INFO" ID="0xdcc005fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: rmt_addr is NULL @ble_core.c(203),ERROR" ID="0xdcc0065a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="bts get ble conn state by addr disconnected on addr:0x%02x:**:**:**:%02x:%02x @ble_core.c(214),INFO" ID="0xdcc006b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: rmt_addr is NULL @ble_core.c(232),ERROR" ID="0xdcc00742" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: report conn status to mcu report status on addr:0x%02x:**:**:**:%02x:%02x @ble_core.c(312),INFO" ID="0xdcc009c5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: ble core report conn status to mcu mtu = %d, cap:%d, type:%d @ble_core.c(323),INFO" ID="0xdcc00a1d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="ble core: ble core report conn status to mcu conn_state:%d, conn_handle:%d, cap:%d, type:%d @ble_core.c(330),INFO" ID="0xdcc00a55" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: set ble conn state:%d @ble_core.c(337),INFO" ID="0xdcc00a8d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: connect_inst is NULL. @ble_core.c(340),ERROR" ID="0xdcc00aa2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="rpt pair stauts conn not exist @ble_core.c(362),INFO" ID="0xdcc00b55" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[pair]ble core: report pair status to mcu rmt_dev_hdl = %d, pair_result = %d @ble_core.c(371),INFO" ID="0xdcc00b9d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: the link does not exist status:%d. @ble_core.c(379),INFO" ID="0xdcc00bdd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: set ble pair status by addr = %d @ble_core.c(385),INFO" ID="0xdcc00c0d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: The link does not exist, handle:%x @ble_core.c(394),INFO" ID="0xdcc00c55" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: set ble mtu value err: %d @ble_core.c(405),ERROR" ID="0xdcc00caa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: The link does not exist. @ble_core.c(411),INFO" ID="0xdcc00cdd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: The link does not exist. @ble_core.c(422),INFO" ID="0xdcc00d35" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: get ble mtu error: %d @ble_core.c(427),ERROR" ID="0xdcc00d5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: The link does not exist. @ble_core.c(437),INFO" ID="0xdcc00dad" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: reg ble service fail: %d @ble_core.c(450),ERROR" ID="0xdcc00e12" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv set terminate ahi_b pointer is NULL. @ble_core.c(459),INFO" ID="0xdcc00e5d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: set ble adv addr type fail: %d @ble_core.c(481),ERROR" ID="0xdcc00f0a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble log ble general set use private addr g_config_le_s_can_use_privacy = %d use_private_addr = %d @ble_core.c(494),INFO" ID="0xdcc00f75" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: start pair rmt addr is NULL @ble_core.c(504),ERROR" ID="0xdcc00fc2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: App Start Ble Pair @ble_core.c(509),INFO" ID="0xdcc00fed" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble start pair fail: %d @ble_core.c(515),ERROR" ID="0xdcc0101a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble disconnect when start pair @ble_core.c(519),ERROR" ID="0xdcc0103a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: app ble pair manager param NULL @ble_core.c(534),ERROR" ID="0xdcc010b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: app ble pair manager pkt_ptr NULL @ble_core.c(540),ERROR" ID="0xdcc010e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: app ble pair manager cmd_type = %d @ble_core.c(546),INFO" ID="0xdcc01115" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="MPC: app change adv addr type:addr_type = %d, use_private_addr = %d @ble_core.c(571),INFO" ID="0xdcc011dd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: App disconnect all ble link  @ble_core.c(578),INFO" ID="0xdcc01215" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: App disconnect @ble_core.c(601),INFO" ID="0xdcc012cd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble disconnect ble err! pkt_len = %u @ble_core.c(609),ERROR" ID="0xdcc0130a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: disconnect ble fail: %d @ble_core.c(624),ERROR" ID="0xdcc01382" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble already disconnect @ble_core.c(628),INFO" ID="0xdcc013a5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: App connect @ble_core.c(640),INFO" ID="0xdcc01405" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble connect ble err! pkt_len = %u @ble_core.c(643),ERROR" ID="0xdcc0141a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: App Connect Ble memcpy fail @ble_core.c(649),ERROR" ID="0xdcc0144a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: App connect fail: %d @ble_core.c(656),ERROR" ID="0xdcc01482" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: App Set Ble Sec Params err! pkt_len = %u @ble_core.c(667),ERROR" ID="0xdcc014da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: App Set Ble Sec Params fail: %d @ble_core.c(673),ERROR" ID="0xdcc0150a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: app get ble core connect status, param NULL @ble_core.c(682),ERROR" ID="0xdcc01552" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: app get ble core connect status, pkt_ptr NULL @ble_core.c(687),ERROR" ID="0xdcc0157a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: app get ble core connect status, the link does not exist @ble_core.c(698),ERROR" ID="0xdcc015d2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble core: conn_state = 0x%x PairStatus=0x%x @ble_core.c(712),INFO" ID="0xdcc01645" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble core:addr:0x%02x:**:**:**:%02x:%02x @ble_core.c(715),INFO" ID="0xdcc0165d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ScoDisconnectResetConnMode = %d @ble_core.c(739),INFO" ID="0xdcc0171d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ConnModeUpdate set pending mode = %d @ble_core.c(772),INFO" ID="0xdcc01825" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: The link does not exist @ble_core.c(798),INFO" ID="0xdcc018f5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ConnModeUpdate ignore = %d @ble_core.c(805),INFO" ID="0xdcc0192d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: conn params mode = %d @ble_core.c(813),INFO" ID="0xdcc0196d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble core: update conn param ignore, mode:%d, cur int:%d @ble_core.c(819),INFO" ID="0xdcc0199d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble update connection start fail: %d @ble_core.c(828),ERROR" ID="0xdcc019e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: app update conn params param null @ble_core.c(839),ERROR" ID="0xdcc01a3a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: update param err @ble_core.c(845),ERROR" ID="0xdcc01a6a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: link is not connected when update connect params @ble_core.c(853),ERROR" ID="0xdcc01aaa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: conn params type error = %d @ble_core.c(867),ERROR" ID="0xdcc01b1a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: sais notify data monitor memcpy rmt_bd fail: %d @ble_core.c(890),ERROR" ID="0xdcc01bd2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: app notify ble baterry level NULL @ble_core.c(906),ERROR" ID="0xdcc01c52" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: app notify ble baterry level fail: %d @ble_core.c(912),ERROR" ID="0xdcc01c82" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble notify data para is NULL @ble_core.c(922),ERROR" ID="0xdcc01cd2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble notify data fail ret: %x @ble_core.c(933),ERROR" ID="0xdcc01d2a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble notify mcu disconnect! @ble_core.c(943),INFO" ID="0xdcc01d7d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble disconnect error, the link does not exist. handle = %x @ble_core.c(953),ERROR" ID="0xdcc01dca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble disconnect, reason = 0x%x @ble_core.c(979),INFO" ID="0xdcc01e9d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: The number of links has reached the maximum. @ble_core.c(1007),INFO" ID="0xdcc01f7d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: ble connected peer address: 0x%02x:**:**:**:0x%02x:0x%02x @ble_core.c(1020),INFO" ID="0xdcc01fe5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble state ind handle message is NULL @ble_core.c(1032),ERROR" ID="0xdcc02042" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: ble connect change, state = 0x%x, value = 0x%x, conn_handle = %d @ble_core.c(1037),INFO" ID="0xdcc0206d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: ble connect change, addr = 0x%02x:**:**:**:%02x:%02x @ble_core.c(1040),INFO" ID="0xdcc02085" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: The number of links has reached the maximum. @ble_core.c(1047),INFO" ID="0xdcc020bd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble state ind rmt is NULL @ble_core.c(1081),ERROR" ID="0xdcc021ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble state ind memcpy rmt fail: %d @ble_core.c(1088),ERROR" ID="0xdcc02202" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: app ble smp key handle message is NULL @ble_core.c(1102),ERROR" ID="0xdcc02272" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[pair]ble core: report pair keys to mcu  @ble_core.c(1107),INFO" ID="0xdcc0229d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE ENCRYTION SUCCEED @ble_core.c(1118),INFO" ID="0xdcc022f5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE KEY MISS connect_inst not found  @ble_core.c(1145),ERROR" ID="0xdcc023ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE KEY MISS @ble_core.c(1149),ERROR" ID="0xdcc023ea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: conn update tiomeout @ble_core.c(1166),ERROR" ID="0xdcc02472" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: AppBleConnResult msg_data is NULL @ble_core.c(1175),ERROR" ID="0xdcc024ba" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble core: final conn status = 0x%02x, mode = %d @ble_core.c(1185),INFO" ID="0xdcc0250d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="ble core: handle&amp;interval&amp;latency&amp;timeout, 0x%04x &amp; 0x%04x &amp; 0x%04x &amp; 0x%04x @ble_core.c(1188),INFO" ID="0xdcc02525" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: conn update result fail = %d @ble_core.c(1204),WARNING" ID="0xdcc025a3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: Service Change reachs limit times,Active Disconn @ble_core.c(1305),INFO" ID="0xdcc028cd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ServiceChangedNotify @ble_core.c(1317),INFO" ID="0xdcc0292d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: Had Active Disconn,not to retry @ble_core.c(1332),INFO" ID="0xdcc029a5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ANCS]500ms comes! @ble_core.c(1366),INFO" ID="0xdcc02ab5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: unsupported msg_id: 0x%x @ble_core.c(1386),INFO" ID="0xdcc02b55" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE PAIR FAIL @ble_core.c(1394),ERROR" ID="0xdcc02b92" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: app ble init fail ret:%x @ble_core.c(1483),ERROR" ID="0xdcc02e5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble core connect proc cmds param NULL @ble_core.c(1529),ERROR" ID="0xdcc02fca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble core connect proc cmds pkt_ptr NULL @ble_core.c(1534),ERROR" ID="0xdcc02ff2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble core connect proc cmds, pkt_ptr 0x%x @ble_core.c(1538),INFO" ID="0xdcc03015" />
+			</MSG_LOG>

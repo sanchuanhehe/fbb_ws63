@@ -100,37 +100,6 @@ td_s32 kapi_km_env_deinit(td_void)
 
 td_s32 kapi_km_deinit(td_void)
 {
-    td_s32 i;
-    crypto_owner owner;
-    crypto_kapi_keyslot_ctx *keyslot_ctx = TD_NULL;
-    crypto_kapi_klad_ctx *klad_ctx = TD_NULL;
-
-    crypto_get_owner(&owner);
-    /* mcipher keyslot. */
-    for (i = 0; i < CRYPTO_MCIPHER_KEYSLOT_NUM; i++) {
-        keyslot_ctx = &g_keyslot_symc_ctx_list[i];
-        if (memcmp(&owner, &keyslot_ctx->owner, sizeof(crypto_owner)) == 0) {
-            (td_void)drv_keyslot_destroy(keyslot_ctx->keyslot_handle);
-            (td_void)memset_s(keyslot_ctx, sizeof(crypto_kapi_keyslot_ctx), 0, sizeof(crypto_kapi_keyslot_ctx));
-        }
-    }
-    /* hmac keyslot. */
-    for (i = 0; i < CRYPTO_HMAC_KEYSLOT_NUM; i++) {
-        keyslot_ctx = &g_keyslot_hmac_ctx_list[i];
-        if (memcmp(&owner, &keyslot_ctx->owner, sizeof(crypto_owner)) == 0) {
-            (td_void)drv_keyslot_destroy(keyslot_ctx->keyslot_handle);
-            (td_void)memset_s(keyslot_ctx, sizeof(crypto_kapi_keyslot_ctx), 0, sizeof(crypto_kapi_keyslot_ctx));
-        }
-    }
-
-    /* klad. */
-    for (i = 0; i < CRYPTO_HMAC_KEYSLOT_NUM; i++) {
-        klad_ctx = &g_klad_ctx_list[i];
-        if (memcmp(&owner, &klad_ctx->owner, sizeof(crypto_owner)) == 0) {
-            (td_void)memset_s(klad_ctx, sizeof(crypto_kapi_klad_ctx), 0, sizeof(crypto_kapi_klad_ctx));
-        }
-    }
-
     return TD_SUCCESS;
 }
 

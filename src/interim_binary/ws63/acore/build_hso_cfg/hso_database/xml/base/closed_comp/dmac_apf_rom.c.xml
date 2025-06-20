@@ -1,0 +1,12 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{dmac_apf_opcode_cmp_imm::handle-&gt;opcode[%hhu] error.} @dmac_apf_rom.c(292),ERROR" ID="0x83560922" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{dmac_apf_opcode_calcu::opcode[%hhu] reg0[%u] * reg1[%u] overflowing.} @dmac_apf_rom.c(349),ERROR" ID="0x83560aea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_apf_opcode_calcu::handle-&gt;opcode[%hhu] error.} @dmac_apf_rom.c(369),ERROR" ID="0x83560b8a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_apf_ext_opcode_calcu::handle-&gt;imm[%u] error.} @dmac_apf_rom.c(413),ERROR" ID="0x83560cea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_apf_exec_opcode::handle-&gt;opcode[%hhu] error.} @dmac_apf_rom.c(473),ERROR" ID="0x83560eca" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_apf_process_sub_msdu::sub msdu len[%hu] &lt; snap len[%d] @dmac_apf_rom.c(540),WARNING" ID="0x835610e3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_apf_process_amsdu::submsdu offset[%d] &gt; payload_len[%d] @dmac_apf_rom.c(589),ERROR" ID="0x8356126a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_apf_process_amsdu :: drop. @dmac_apf_rom.c(604),WARNING" ID="0x835612e3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_config_apf_exec::osal_kmalloc failed. @dmac_apf_rom.c(699),WARNING" ID="0x835615db" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_apf_filter_rx_process_etc register fail! @dmac_apf_rom.c(709),ERROR" ID="0x8356162a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_apf_exec :: apf off!} @dmac_apf_rom.c(717),WARNING" ID="0x8356166b" />
+			</MSG_LOG>

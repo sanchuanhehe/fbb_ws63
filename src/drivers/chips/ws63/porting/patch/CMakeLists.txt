@@ -42,3 +42,4 @@ set(MAIN_COMPONENT
 
 build_component()
 
+install_sdk(${CMAKE_CURRENT_SOURCE_DIR}/ "timer_patch.h")

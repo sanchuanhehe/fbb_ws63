@@ -1,0 +1,25 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="cs pdu new packet is null @cs_pdu.c(31),ERROR" ID="0xde9400fa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="cs pdu tl send data len = %u, off = %u @cs_pdu.c(41),INFO" ID="0xde94014d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="cs pdu tl send data not register send cbk for protocol:0x%x @cs_pdu.c(49),INFO" ID="0xde94018d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="item value send item-&gt;hdl:0x%x, type:%02x @cs_pdu.c(59),INFO" ID="0xde9401dd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="item value send tl-&gt;status:0x%x, tl-&gt;mtu:%u @cs_pdu.c(65),INFO" ID="0xde94020d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="item value send item-&gt;data-&gt;len = %u, op_code:0x%02x @cs_pdu.c(70),INFO" ID="0xde940235" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="item value send item-&gt;hdl:0x%x, type:%02x @cs_pdu.c(82),INFO" ID="0xde940295" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="item value send item-&gt;data-&gt;len = %u, op_code:0x%02x @cs_pdu.c(87),INFO" ID="0xde9402bd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="get item value by type: 0x%02x @cs_pdu.c(146),INFO" ID="0xde940495" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="descriptor[%u]-&gt;type = 0x%02x @cs_pdu.c(155),INFO" ID="0xde9404dd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="get item value by type: 0x%02x @cs_pdu.c(175),INFO" ID="0xde94057d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="descriptor[0x%x]-&gt;type = 0x%02x @cs_pdu.c(186),INFO" ID="0xde9405d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="update item ccc copy list new fail @cs_pdu.c(282),ERROR" ID="0xde9408d2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="descriptor[%u]: type = 0x%x @cs_pdu.c(304),INFO" ID="0xde940985" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="descriptor[%u]-&gt;val.value[%u]: 0x%02x @cs_pdu.c(308),INFO" ID="0xde9409a5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[cache] cache count = %d :  @cs_pdu.c(335),INFO" ID="0xde940a7d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[cache] cache i = %d item_node = 0x%x item = 0x%x item_hdl = %d  @cs_pdu.c(342),INFO" ID="0xde940ab5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[cache] HIT! cache count = %d item = 0x%x handle = 0x%x  @cs_pdu.c(362),INFO" ID="0xde940b55" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[cache] bth list node new failed! @cs_pdu.c(379),ERROR" ID="0xde940bda" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[cache] UPDATE! cache count = %d item = 0x%x handle = 0x%x  @cs_pdu.c(387),INFO" ID="0xde940c1d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="cs_find_item_by_handle item_node-&gt;hdl:%02X, hdl:%02X @cs_pdu.c(416),ERROR" ID="0xde940d02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs service range get group end service_list is null @cs_pdu.c(460),ERROR" ID="0xde940e62" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cs pdu error rsp pdata malloc fail @cs_pdu.c(488),ERROR" ID="0xde940f42" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ssap error rsp op:[0x%02x], err_hdl:[0x%02x], err_code = 0x%02x @cs_pdu.c(492),ERROR" ID="0xde940f62" />
+			</MSG_LOG>

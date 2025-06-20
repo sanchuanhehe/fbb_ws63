@@ -232,7 +232,7 @@ uint32_t efuse_read_sle_mac(uint8_t *data, uint16_t data_len)
     return uapi_efuse_read_buffer(data, (SLE_MAC_ADDR_START_BIT / BIT_TO_BYTE), data_len);
 }
 
-uint32_t efuse_write_customer_rsvd_efuse(uint8_t *data, uint16_t data_len)
+uint32_t efuse_write_customer_rsvd_efuse(uint8_t *data, uint16_t data_len, uint8_t force)
 {
     uint32_t ret = ERRCODE_FAIL;
     uint8_t read_back_data[CUSTOM_RESVED_EFUSE_BYTE_LEN] = {0};
@@ -240,7 +240,8 @@ uint32_t efuse_write_customer_rsvd_efuse(uint8_t *data, uint16_t data_len)
         return ERRCODE_FAIL;
     }
     ret = efuse_read_item(EFUSE_CUSTOM_RESVED_ID, read_back_data, CUSTOM_RESVED_EFUSE_BYTE_LEN);
-    if ((ret == ERRCODE_SUCC) && (check_data(read_back_data, CUSTOM_RESVED_EFUSE_BYTE_LEN) == ERRCODE_SUCC)) {
+    if ((ret == ERRCODE_SUCC) && ((force == 1) || (check_data(read_back_data, CUSTOM_RESVED_EFUSE_BYTE_LEN)
+        == ERRCODE_SUCC))) {
         ret = uapi_efuse_write_buffer(CUSTOM_RESVED_EFUSE_LEN_START_BYTE_ADDR, data, data_len);
         return ret;
     }

@@ -1,0 +1,79 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_clear_all::wait lut ce set done failed.} @hal_mac_rom.c(199),ERROR" ID="0x811c063a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_clear_all::wait lut ce set done failed.} @hal_mac_rom.c(207),ERROR" ID="0x811c067a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_clear_all::waiting lut done timeout!} @hal_mac_rom.c(221),ERROR" ID="0x811c06ea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_add_cipher_key::wait lut ce idle failed before add.} @hal_mac_rom.c(471),ERROR" ID="0x811c0eba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_cipher_key::memmove_s fail} @hal_mac_rom.c(478),WARNING" ID="0x811c0ef3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_cipher_key::memmove_s fail} @hal_mac_rom.c(485),WARNING" ID="0x811c0f2b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_cipher_key::memmove_s fail} @hal_mac_rom.c(491),WARNING" ID="0x811c0f5b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_add_cipher_key::wait lut ce idle failed when add key } @hal_mac_rom.c(532),ERROR" ID="0x811c10a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_compare_cipher_key::KEY is not matched the target!!} @hal_mac_rom.c(577),ERROR" ID="0x811c120a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_compare_tkip_mic_key::TKIP_MIC_KEY is not matched the target!!!} @hal_mac_rom.c(615),ERROR" ID="0x811c133a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_cipher_key:: security_key is null} @hal_mac_rom.c(652),ERROR" ID="0x811c1462" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_cipher_key:: key is null} @hal_mac_rom.c(658),ERROR" ID="0x811c1492" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_cipher_key:: wait lut ce idle timeout!!!} @hal_mac_rom.c(664),ERROR" ID="0x811c14c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_cipher_key:: wait lut ce set done timeout!} @hal_mac_rom.c(687),ERROR" ID="0x811c157a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_cipher_key::memmove_s fail} @hal_mac_rom.c(694),WARNING" ID="0x811c15b3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_cipher_key::memmove_s fail} @hal_mac_rom.c(701),WARNING" ID="0x811c15eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_cipher_key::memmove_s fail} @hal_mac_rom.c(707),WARNING" ID="0x811c161b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_cipher_key:wait lut ce set done timeout for cipher key read} @hal_mac_rom.c(715),ERROR" ID="0x811c165a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hh503_ce_get_cipher_key cipher_type[%d] mic key err @hal_mac_rom.c(725),ERROR" ID="0x811c16aa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{uapi102_clear_tx_pn::waiting lut pn idle timeout!} @hal_mac_rom.c(742),ERROR" ID="0x811c1732" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_ce_get_key_process:wait lut ce idle timeout tid[%d]} @hal_mac_rom.c(800),ERROR" ID="0x811c1902" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_key_process:: wait lut ce idle timeout!} @hal_mac_rom.c(810),ERROR" ID="0x811c1952" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_ce_get_key_process:wait lut ce idle timeout peer_idx[%d]} @hal_mac_rom.c(818),ERROR" ID="0x811c1992" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_key_process:: wait lut ce idle timeout!!!} @hal_mac_rom.c(869),ERROR" ID="0x811c1b2a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_key_process:: wait lut ce set done timeout!!!} @hal_mac_rom.c(896),ERROR" ID="0x811c1c02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_key_process:: wait lut ce set done timeout for mic key read !!!} @hal_mac_rom.c(932),ERROR" ID="0x811c1d22" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_get_key:: key is null} @hal_mac_rom.c(976),ERROR" ID="0x811c1e82" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_add_key::config_pa_ce_control failed.} @hal_mac_rom.c(993),ERROR" ID="0x811c1f0a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_add_key::config_ce_ce_control failed.} @hal_mac_rom.c(999),ERROR" ID="0x811c1f3a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_add_key::add_cipher_key failed.} @hal_mac_rom.c(1005),ERROR" ID="0x811c1f6a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_ce_add_key::get_cipher_key failed.ul_ret =[%d]} @hal_mac_rom.c(1009),ERROR" ID="0x811c1f8a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hh503_get_bcn_rate::vap mode [%d]!= WLAN_VAP_MODE_BSS_AP,or hal vap id=%d &gt;= max vap=%d]} @hal_mac_rom.c(1033),ERROR" ID="0x811c204a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="hh503_set_psm_tbtt_offset::vap[%d] id[%d] invalid.} @hal_mac_rom.c(1051),WARNING" ID="0x811c20db" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_del_key_process::wait lut ce setting done timeout.} @hal_mac_rom.c(1135),ERROR" ID="0x811c237a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_ce_del_key_process::lut_idx=%d, reg_value=0x%08x.} @hal_mac_rom.c(1143),WARNING" ID="0x811c23bb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_del_key_process::wait lut ce setting done timeout.} @hal_mac_rom.c(1164),ERROR" ID="0x811c2462" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_del_key::wait lut ce idle failed.} @hal_mac_rom.c(1178),ERROR" ID="0x811c24d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_del_key::wait lut ce set done failed.} @hal_mac_rom.c(1214),ERROR" ID="0x811c25f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_del_key::wait lut ce set done failed.} @hal_mac_rom.c(1227),ERROR" ID="0x811c265a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hh503_vap_set_machw_tsf_disable::vap mode [%d] != WLAN_VAP_MODE_BSS_AP,or hal vap id=%d &gt;= max vap=%d! @hal_mac_rom.c(1248),WARNING" ID="0x811c2703" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_disable_sta_tsf_tbtt::vap id[%d] invalid} @hal_mac_rom.c(1281),WARNING" ID="0x811c280b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_disable_tsf_tbtt::hal_vap null} @hal_mac_rom.c(1313),ERROR" ID="0x811c290a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_disable_tsf_tbtt::hal vap[%d],wrong vap mode[%d]} @hal_mac_rom.c(1323),ERROR" ID="0x811c295a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_set_tpc_params::band[%d]chan_idx[%d] is invalid} @hal_mac_rom.c(1385),WARNING" ID="0x811c2b4b" />
+			<MSG STRUCTURE="diag_log_msg5" NAME="{hh503_show_irq_info::ct_end[%d], absent_start[%d], noa_absent_end[%d], absent_start[%d], absent_end[%d]} @hal_mac_rom.c(1424),INFO" ID="0x811c2c85" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{OBSS_PD = %d,  NON_SRG = %d,  SRG = %d!} @hal_mac_rom.c(1445),WARNING" ID="0x811c2d2b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{NON_SRG PD_LV = 0x%x, PD_SR_TX_POWER = 0x%x, SRG PD_LV = 0x%x, SRG TX_POWER = 0x%x!} @hal_mac_rom.c(1453),WARNING" ID="0x811c2d6b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="NON_SRG_62_68_CNT = %d, NON_SRG_68_74_CNT = %d, NON_SRG_74_78_CNT = %d, NON_SRG_78_82_CNT = %d @hal_mac_rom.c(1463),WARNING" ID="0x811c2dbb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="SRG_62_68_CNT = %d, SRG_68_74_CNT = %d, SRG_74_78_CNT = %d, SRG_78_82_CNT = %d @hal_mac_rom.c(1467),WARNING" ID="0x811c2ddb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="TX_SUCCESS_NUM = %d, TX_NUM = %d @hal_mac_rom.c(1469),WARNING" ID="0x811c2deb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_set_dev_support_11ax:: hal dev enable.} @hal_mac_rom.c(2001),WARNING" ID="0x811c3e8b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_set_bss_color::hal vap id=%d &gt; max vap=%d]} @hal_mac_rom.c(2146),ERROR" ID="0x811c4312" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_set_partial_bss_color::hal vap id=%d &gt; max vap=%d]} @hal_mac_rom.c(2171),ERROR" ID="0x811c43da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_set_ac_queue_size failed, vap = %d} @hal_mac_rom.c(2346),ERROR" ID="0x811c4952" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_set_machw_tx_suspend::wait suspend status failed in btcoex scene.} @hal_mac_rom.c(2391),WARNING" ID="0x811c4abb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_set_machw_tx_suspend::wait suspend status failed.} @hal_mac_rom.c(2394),ERROR" ID="0x811c4ad2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_set_tx_nonqos_seq_num::failed.} @hal_mac_rom.c(2431),ERROR" ID="0x811c4bfa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_set_tx_qos_seq_num::failed.} @hal_mac_rom.c(2461),ERROR" ID="0x811c4cea" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_vap_set_macaddr::hal vap id=%d &gt;= max vap=%d]} @hal_mac_rom.c(2525),ERROR" ID="0x811c4eea" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{hh503_vap_set_macaddr:: MAC ADDR:: %02x:%02x:%02x:%02x:xx:xx.} @hal_mac_rom.c(2543),WARNING" ID="0x811c4f7b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_vap_clr_opmode::hal vap id=%d &gt;= max vap=%d]} @hal_mac_rom.c(2559),ERROR" ID="0x811c4ffa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_vap_set_opmode::hal sta id=%d &gt;= max vap=%d]} @hal_mac_rom.c(2590),ERROR" ID="0x811c50f2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_vap_set_opmode::hal sta id=%d,wrong vap mode[%d]} @hal_mac_rom.c(2599),ERROR" ID="0x811c513a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hh503_vap_set_beacon_rate::vap mode [%d]!= WLAN_VAP_MODE_BSS_AP,or hal vap id=%d &gt;= max vap=%d]} @hal_mac_rom.c(2693),WARNING" ID="0x811c542b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hh503_set_sta_bssid::vap mode [%d]!= WLAN_VAP_MODE_BSS_STA,or hal vap id=%d &gt;= max vap=%d]} @hal_mac_rom.c(2724),WARNING" ID="0x811c5523" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_ce_add_peer_macaddr::invalid lut idx [%d]!} @hal_mac_rom.c(2778),ERROR" ID="0x811c56d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_add_peer_macaddr::waiting lut ce idle timeout!} @hal_mac_rom.c(2785),ERROR" ID="0x811c570a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_add_peer_macaddr::waiting lut ce idle timeout!} @hal_mac_rom.c(2807),ERROR" ID="0x811c57ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_del_peer_macaddr::waiting lut idle timeout!} @hal_mac_rom.c(2824),ERROR" ID="0x811c5842" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_ce_del_peer_macaddr::waiting lut done timeout!} @hal_mac_rom.c(2837),ERROR" ID="0x811c58aa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_set_txop_ps_partial_aid::hal vap id=%d &gt; max vap=%d]} @hal_mac_rom.c(3146),ERROR" ID="0x811c6252" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_set_mac_aid::hal vap id=%d &gt; max vap=%d]} @hal_mac_rom.c(3169),ERROR" ID="0x811c630a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_vap_set_machw_aifsn_ac_wfa::ac illegal[%d], fail to set reg val.} @hal_mac_rom.c(3290),WARNING" ID="0x811c66d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_vap_set_edca_machw_cw_wfa::ac illegal[%d], fail to set reg val.} @hal_mac_rom.c(3369),WARNING" ID="0x811c694b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_wait_mac_done_timeout::lut done timeout value[%d]!} @hal_mac_rom.c(3646),WARNING" ID="0x811c71f3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_register_alg_isr_hook::hal_alg_register_isr_func failed.} @hal_mac_rom.c(3826),ERROR" ID="0x811c7792" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_unregister_alg_isr_hook::hal_alg_unregister_isr_func failed.} @hal_mac_rom.c(3841),ERROR" ID="0x811c780a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hal_set_bcn_phy_tx_mode::vap mode [%d]!= WLAN_VAP_MODE_BSS_AP,or hal vap id=%d &gt;= max vap=%d]} @hal_mac_rom.c(3869),WARNING" ID="0x811c78eb" />
+			</MSG_LOG>

@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]BTC Timer memory allocate fail. @btc_timer.c(153),ERROR" ID="0x889804ca" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[Timer] btc_timer_check_hw_timer_past current time 0x%X, hardware timer set to 0x%X at 0x%X @btc_timer.c(294),WARNING" ID="0x88980933" />
+			</MSG_LOG>

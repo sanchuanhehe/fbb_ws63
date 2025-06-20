@@ -1,0 +1,54 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_set_sta_pm_on::sta pm fsm not attached.} @dmac_sta_pm_rom.c(100),ERROR" ID="0x815e0322" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_set_sta_pm_on:the same ps mode:[%d] @dmac_sta_pm_rom.c(107),WARNING" ID="0x815e035b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_set_sta_pm_on:no powersave send null fail! @dmac_sta_pm_rom.c(125),WARNING" ID="0x815e03eb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_set_sta_pm_on::vap state:[%d],assoc aid:[%d] not start timer} @dmac_sta_pm_rom.c(143),WARNING" ID="0x815e047b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_set_sta_pm_on:ps mode:[%d],aid[%d]} @dmac_sta_pm_rom.c(148),WARNING" ID="0x815e04a3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_set_sta_pm_on::dmac_vap not init.} @dmac_sta_pm_rom.c(163),WARNING" ID="0x815e051b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="vap_id[%d] {dmac_config_set_sta_pm_on::module[%d],switch[%d],close status[%d].} @dmac_sta_pm_rom.c(170),WARNING" ID="0x815e0553" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_config_set_sleep:: dsleep cnt[%d]} @dmac_sta_pm_rom.c(229),WARNING" ID="0x815e072b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_config_set_sleep:: dsleep[%d]} @dmac_sta_pm_rom.c(232),WARNING" ID="0x815e0743" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="vap_id[%d] {dmac_set_sta_pm_on_cb::module[%d],switch[%d],close status[%d].} @dmac_sta_pm_rom.c(245),WARNING" ID="0x815e07ab" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_set_sta_pm_on_cb:: sta %d is not assoc} @dmac_sta_pm_rom.c(250),WARNING" ID="0x815e07d3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_set_sta_pm_on_cb::dmac_send_msg_to_host failed[%d].} @dmac_sta_pm_rom.c(265),WARNING" ID="0x815e084b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_set_sta_ps_mode::dmac_vap not init.} @dmac_sta_pm_rom.c(278),WARNING" ID="0x815e08b3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] dmac set pm mode[%d]&gt; max mode fail @dmac_sta_pm_rom.c(286),WARNING" ID="0x815e08f3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_set_uapsd_para::dmac_vap not init.} @dmac_sta_pm_rom.c(300),WARNING" ID="0x815e0963" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_config_set_uapsd_para::max_sp_len[%d] &gt; 6!} @dmac_sta_pm_rom.c(307),ERROR" ID="0x815e099a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_config_set_uapsd_para::max_sp_len[%d]!} @dmac_sta_pm_rom.c(313),INFO" ID="0x815e09cd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_pm_process_deassociate::param null.} @dmac_sta_pm_rom.c(343),ERROR" ID="0x815e0aba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_pm_process_deassociate::cl is ps pause need vote active]} @dmac_sta_pm_rom.c(358),WARNING" ID="0x815e0b33" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_pm_process_deassociate::twt is ps pause need vote active]} @dmac_sta_pm_rom.c(366),WARNING" ID="0x815e0b73" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_process_send_null_succ_event::param null.} @dmac_sta_pm_rom.c(399),ERROR" ID="0x815e0c7a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_process_send_null_succ_event::event[%d] change state doze} @dmac_sta_pm_rom.c(416),WARNING" ID="0x815e0d03" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{sta_power_state_active_entry::param null.} @dmac_sta_pm_rom.c(437),ERROR" ID="0x815e0daa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_null_data_pending_callback :: noa end, send null data again @dmac_sta_pm_rom.c(457),WARNING" ID="0x815e0e4b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{sta_power_state_active_event::dmac_vap null.} @dmac_sta_pm_rom.c(501),WARNING" ID="0x815e0fab" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {sta_power_state_active_event:null:%d} @dmac_sta_pm_rom.c(511),WARNING" ID="0x815e0ffb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_is_sta_allow_to_sleep::param null.} @dmac_sta_pm_rom.c(551),ERROR" ID="0x815e113a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_power_state_process_doze::event[%d] vote sleep,but mcast timer is registerd @dmac_sta_pm_rom.c(589),WARNING" ID="0x815e126b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{sta_power_state_doze_entry::pm_handler null.} @dmac_sta_pm_rom.c(608),WARNING" ID="0x815e1303" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {sta_power_state_awake_event:send_null_frame_to_ap} @dmac_sta_pm_rom.c(649),WARNING" ID="0x815e144b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{sta_power_state_doze_event::pm_handler null.} @dmac_sta_pm_rom.c(678),WARNING" ID="0x815e1533" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{sta_power_state_doze_event::dmac_vap null.} @dmac_sta_pm_rom.c(684),WARNING" ID="0x815e1563" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{sta_power_state_awake_entry::dmac_vap is null pointer} @dmac_sta_pm_rom.c(707),ERROR" ID="0x815e161a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {sta_power_state_awake_event_part1::send_pspoll fail[%d].} @dmac_sta_pm_rom.c(733),WARNING" ID="0x815e16eb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {sta_power_state_awake_event_part2::dmac_send_null_frame_to_ap:[%d]} @dmac_sta_pm_rom.c(765),WARNING" ID="0x815e17eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{sta_power_state_awake_event::pm_handler or dmac_vap is null} @dmac_sta_pm_rom.c(791),WARNING" ID="0x815e18bb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_sta_initialize_psm_globals::param null.} @dmac_sta_pm_rom.c(808),ERROR" ID="0x815e1942" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_pm_sta_attach::param null.} @dmac_sta_pm_rom.c(851),ERROR" ID="0x815e1a9a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_pm_sta_attach::vap id[%d]pm fsm aready attached.} @dmac_sta_pm_rom.c(858),ERROR" ID="0x815e1ad2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_pm_sta_attach::vap id[%d]pm fsm attach failed. @dmac_sta_pm_rom.c(885),ERROR" ID="0x815e1baa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_pm_sta_wait_for_mcast_callback::param null.} @dmac_sta_pm_rom.c(899),ERROR" ID="0x815e1c1a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_pm_sta_wait_for_mcast_callback::post_event fail} @dmac_sta_pm_rom.c(905),WARNING" ID="0x815e1c4b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="vap_id[%d] {dmac_pm_sta_wait_for_mcast::timer is registerd,doze event[%d],now time[%d],timer[%d]} @dmac_sta_pm_rom.c(925),WARNING" ID="0x815e1ceb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_pm_sta_doze_state_trans::now event:[%d],but wait flag:[%d] can not vote sleep.} @dmac_sta_pm_rom.c(967),WARNING" ID="0x815e1e3b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_psm_sta_state_trans_handle::dmac event:[%d]trans state to active in[%d]state} @dmac_sta_pm_rom.c(1001),WARNING" ID="0x815e1f4b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_psm_sta_state_trans_handle::dmac event:[%d]trans state to awake in awake} @dmac_sta_pm_rom.c(1012),WARNING" ID="0x815e1fa3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_psm_sta_state_trans_handle::dmac event:[%d]trans state to doze in doze} @dmac_sta_pm_rom.c(1023),WARNING" ID="0x815e1ffb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_pm_sta_state_trans::param null.} @dmac_sta_pm_rom.c(1039),ERROR" ID="0x815e207a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap[%d] {dmac_pm_sta_state_trans:invalid state %d} @dmac_sta_pm_rom.c(1045),ERROR" ID="0x815e20aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_pm_sta_post_event::dmac_vap null.event:[%d]} @dmac_sta_pm_rom.c(1070),WARNING" ID="0x815e2173" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="vap_id[%d] {dmac_pm_sta_post_event::nowevent:[%d],butevent:[%d]change to[%d]not doze} @dmac_sta_pm_rom.c(1092),WARNING" ID="0x815e2223" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="vap_id[%d] {dmac_pm_sta_post_event::nowevent:[%d],butevent:[%d]change to[%d]not awake} @dmac_sta_pm_rom.c(1099),WARNING" ID="0x815e225b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_pm_sta_detach::vap id[%d]pm fsm not attatched @dmac_sta_pm_rom.c(1117),ERROR" ID="0x815e22ea" />
+			</MSG_LOG>

@@ -11,7 +11,7 @@
 int HILINK_SAL_Base64Encode(const unsigned char *inData, unsigned int inLen,
     unsigned char *outData, unsigned int *outLen)
 {
-    if ((inData == NULL) || (inLen == 0)) {
+    if ((inData == NULL) || (inLen == 0) || (outLen == NULL)) {
         HILINK_SAL_WARN("invalid param\r\n");
         return HILINK_SAL_PARAM_INVALID;
     }
@@ -41,7 +41,7 @@ int HILINK_SAL_Base64Encode(const unsigned char *inData, unsigned int inLen,
 int HILINK_SAL_Base64Decode(const unsigned char *inData, unsigned int inLen,
     unsigned char *outData, unsigned int *outLen)
 {
-    if ((inData == NULL) || (inLen == 0)) {
+    if ((inData == NULL) || (inLen == 0) || (outLen == NULL)) {
         HILINK_SAL_WARN("invalid param\r\n");
         return HILINK_SAL_PARAM_INVALID;
     }

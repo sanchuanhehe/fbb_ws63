@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="{hal_p2p_event_handle::noa_type=%d, p2p_mode=%d,hal_idx=%d!} @hal_irq_rom.c(96),ERROR" ID="0x822a0302" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_p2p_event_handle::noa_type=%d,hal_idx=%d!null} @hal_irq_rom.c(102),WARNING" ID="0x822a0333" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_p2p_event_handle::callback failed[%d]} @hal_irq_rom.c(158),WARNING" ID="0x822a04f3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_irq_p2p_pm_event_hdl::callback failed[%d]} @hal_irq_rom.c(184),WARNING" ID="0x822a05c3" />
+			</MSG_LOG>

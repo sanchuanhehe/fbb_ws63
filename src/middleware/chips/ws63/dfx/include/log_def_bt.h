@@ -1,5 +1,8 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2018-2020. All rights reserved.
+ * Description:  common logging producer interface - need to change name of log.h in all the protocol core files
+ * Author: 
+ * Create:
  */
 
 #ifndef LOG_DEF_BTC_H
@@ -203,15 +206,15 @@ typedef enum {
     PWR_CTRL_CFG_RAM_C,
     GLE_ISR_RAM_C,
     BLE_ISR_RAM_C,
+    DM_BLE_RAM_C,
     BTC_FILE_ID_MAX = 1000,
     CHBA_FILE_ID_EXT_START = 1001,
-    SLE_CHBA_NETDEV_USER_MSG_C,
     SLE_CHBA_NETDEV_ACHBA_MSG_C,
     ACHBA_SLE_INTERFACE_C,
     SLE_CHBA_NETDEV_C,
-    SLE_CHBA_USER_MSG_MNG_C,
     SLE_CHBA_NETDEV_THREAD_C,
-    SLE_CHBA_USER_MSG_PROC_C,
+    SLE_CHBA_NETDEV_BTS_CALL_C,
+    SLE_CHBA_NETDEV_LINK_MNG_C,
     CHBA_FILE_ID_EXT_END = 1022,
 } log_def_btc_enum;
 

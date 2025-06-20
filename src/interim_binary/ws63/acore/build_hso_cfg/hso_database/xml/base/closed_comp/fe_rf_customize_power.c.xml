@@ -1,0 +1,15 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_set_chip_max_power::band:%d @fe_rf_customize_power.c(43),ERROR" ID="0x81b0015a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_get_chip_max_power::band:%d @fe_rf_customize_power.c(53),ERROR" ID="0x81b001aa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="fe_custom_get_target_power::band:%d, rate_idx:%d @fe_rf_customize_power.c(62),ERROR" ID="0x81b001f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_config_all_target_power::band:%d @fe_rf_customize_power.c(78),ERROR" ID="0x81b00272" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="fe_custom_config_all_target_power::idx:%d, power:%d @fe_rf_customize_power.c(85),INFO" ID="0x81b002ad" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="fe_custom_get_target_power::band:%d, rate_idx:%d @fe_rf_customize_power.c(95),ERROR" ID="0x81b002fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_set_limit_power::band:%d @fe_rf_customize_power.c(108),ERROR" ID="0x81b00362" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="fe_custom_set_limit_power::idx:%d, power:%d @fe_rf_customize_power.c(115),INFO" ID="0x81b0039d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="fe_custom_get_limit_power::band:%d, pow_idx:%d rate_idx:%d ch_idx:%d @fe_rf_customize_power.c(138),ERROR" ID="0x81b00452" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_set_sar_power::band:%d @fe_rf_customize_power.c(151),ERROR" ID="0x81b004ba" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="fe_custom_set_sar_power::idx:%d, power:%d @fe_rf_customize_power.c(158),INFO" ID="0x81b004f5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="fe_custom_set_sar_power::band:%d level:%d @fe_rf_customize_power.c(168),ERROR" ID="0x81b00542" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_set_cta_coef_flag::band:%d @fe_rf_customize_power.c(177),ERROR" ID="0x81b0058a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="fe_custom_get_cta_coef_flag::band:%d @fe_rf_customize_power.c(186),ERROR" ID="0x81b005d2" />
+			</MSG_LOG>

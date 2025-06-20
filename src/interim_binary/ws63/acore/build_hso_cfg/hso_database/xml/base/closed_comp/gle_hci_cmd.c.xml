@@ -1,0 +1,21 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="gle hci command rtx rts is NULL @gle_hci_cmd.c(109),ERROR" ID="0xde0c036a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[TIMEOUT]gle hci cmd rtx opcode=0x%x @gle_hci_cmd.c(118),WARNING" ID="0xde0c03b3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle hci command rtx malloc fail. @gle_hci_cmd.c(121),ERROR" ID="0xde0c03ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle hci command check send malloc fail @gle_hci_cmd.c(140),ERROR" ID="0xde0c0462" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] hci command timer start fail @gle_hci_cmd.c(146),ERROR" ID="0xde0c0492" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle hci command check send check and send, cmd_num:0x%x @gle_hci_cmd.c(154),INFO" ID="0xde0c04d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle hci internal command send core send core error @gle_hci_cmd.c(167),WARNING" ID="0xde0c053b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hci command send core opcode=0x%x error @gle_hci_cmd.c(183),WARNING" ID="0xde0c05bb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[HCI]send cmd event:0x%X, opcode:0x%x, cmd:0x%x @gle_hci_cmd.c(200),INFO" ID="0xde0c0645" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[error command argument modify] arg_err_new is NULL @gle_hci_cmd.c(227),ERROR" ID="0xde0c071a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[gle hci command remove] evindex:0x%x @gle_hci_cmd.c(263),INFO" ID="0xde0c083d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[gle hci read buffer size] cfm_info invalid @gle_hci_cmd.c(316),ERROR" ID="0xde0c09e2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[gle hci read buffer size] result = 0x%x, opindex: 0x%08x @gle_hci_cmd.c(321),INFO" ID="0xde0c0a0d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[gle hci read buffer size] read buffer size failed, status: 0x%02x @gle_hci_cmd.c(326),ERROR" ID="0xde0c0a32" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[gle hci read buffer size] acb data len: %u num: %u, icb data len: %u num: %u @gle_hci_cmd.c(332),INFO" ID="0xde0c0a65" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle set public address status fail, status:0x%x @gle_hci_cmd.c(344),ERROR" ID="0xde0c0ac2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle set public address status success. @gle_hci_cmd.c(347),INFO" ID="0xde0c0add" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle get public address status fail, status:0x%x @gle_hci_cmd.c(359),ERROR" ID="0xde0c0b3a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="get addr:0x%02x:**:**:**:%02x:%02x @gle_hci_cmd.c(365),INFO" ID="0xde0c0b6d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle get public address memcpy fail @gle_hci_cmd.c(367),ERROR" ID="0xde0c0b7a" />
+			</MSG_LOG>

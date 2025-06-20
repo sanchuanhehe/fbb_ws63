@@ -42,6 +42,7 @@ typedef struct {
 typedef struct {
     uint32_t                para_map;
     const uint8_t           *para1; /* 每个项目存在差异 */
+    uint8_t                 para2; /* Range: 0~1 */
 } customer_rsvd_efuse_args_t;
 
 typedef struct {
@@ -503,13 +504,23 @@ const at_para_parse_syntax_t date_syntax[] = {
     },
 };
 
+const int32_t customer_rsvd_efuse_para2_values[] = {
+    0, 1
+};
+
 const at_para_parse_syntax_t customer_rsvd_efuse_syntax[] = {
     {
         .type = AT_SYNTAX_TYPE_STRING,
-        .last = true,
         .attribute = AT_SYNTAX_ATTR_MAX_LENGTH,
         .entry.string.max_length = 130,
         .offset = offsetof(customer_rsvd_efuse_args_t, para1)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .last = true,
+        .attribute = AT_SYNTAX_ATTR_OPTIONAL | AT_SYNTAX_ATTR_LIST_VALUE,
+        .entry.int_list = {2, customer_rsvd_efuse_para2_values},
+        .offset = offsetof(customer_rsvd_efuse_args_t, para2)
     },
 };
 

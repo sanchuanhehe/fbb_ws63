@@ -1,0 +1,14 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{alg_schedule_init_user:[%d]get hal_device pointer fail!} @alg_schedule_rom.c(118),ERROR" ID="0x843c03b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_schedule_init_user: mem alloc fail!} @alg_schedule_rom.c(125),ERROR" ID="0x843c03ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{schedule_get_tx_time_by_rank:user_lut_idx[%d] get rate fail!} @alg_schedule_rom.c(191),ERROR" ID="0x843c05fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_schedule_tx_complete_free_process: dmac_user[%d] null.} @alg_schedule_rom.c(213),WARNING" ID="0x843c06ab" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[SCH_STAT]alg_schedule_get_chip_cal_time:: chip_time[%d],backoff_done_time[%d], tx_done_times[%d] @alg_schedule_rom.c(255),WARNING" ID="0x843c07fb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SCH_STAT]alg_schedule_get_dscr_cal_time:: dscr_time[%d] @alg_schedule_rom.c(287),WARNING" ID="0x843c08fb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[SCH_STAT]:: user id[%d], tid[%d], dmac_mpdu_num[%d] @alg_schedule_rom.c(366),WARNING" ID="0x843c0b73" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[SCH_STAT]:: tx_time[%d], total_bytes[%d] @alg_schedule_rom.c(368),WARNING" ID="0x843c0b83" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="alg_schedule_stat_timer_handle::vap[%d] IS NULL. @alg_schedule_rom.c(397),ERROR" ID="0x843c0c6a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="bcast info:: bcast_time[%d], bcast_bytes[%d] @alg_schedule_rom.c(417),WARNING" ID="0x843c0d0b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_schedule_stat_timer_handle::dispatch_event fail, ret=%d} @alg_schedule_rom.c(432),WARNING" ID="0x843c0d83" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_schedule_dmac_config: hal_device null pointer!} @alg_schedule_rom.c(445),ERROR" ID="0x843c0dea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_schedule_dmac_config:config param error!} @alg_schedule_rom.c(463),WARNING" ID="0x843c0e7b" />
+			</MSG_LOG>

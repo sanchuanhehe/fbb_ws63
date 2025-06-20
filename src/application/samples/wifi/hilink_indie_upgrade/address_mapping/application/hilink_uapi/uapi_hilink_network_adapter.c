@@ -11,6 +11,7 @@
 
 int HILINK_RegWiFiRecoveryCallback(const WiFiRecoveryApi *cb, unsigned int cbSize)
 {
-    return hilink_call2(HILINK_CALL_HILINK_REG_WIFI_RECOVERY_CALLBACK, int, const WiFiRecoveryApi *,
-        cb, unsigned int, cbSize);
+    hilink_call2(HILINK_CALL_HILINK_REG_WI_FI_RECOVERY_CALLBACK, HILINK_RegWiFiRecoveryCallback, int,
+        const WiFiRecoveryApi *, cb, unsigned int, cbSize);
+    return 0;
 }

@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="[PER ADV]fsm exception! src_id=%d, dest_id=%d, msg_id=%d @lm_ble_per_adv_fsm.c(26),WARNING" ID="0x88da00d3" />
+			</MSG_LOG>

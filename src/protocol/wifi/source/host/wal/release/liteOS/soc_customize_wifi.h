@@ -243,6 +243,7 @@ typedef enum {
     WLAN_CFG_PRIV_FRONT_SWITCH,
     WLAN_CFG_PRIV_TXDATA_QUE_LIMIT,
     WLAN_CFG_PRIV_CUSTOM_DATA_END,
+    WLAN_CFG_PRIV_CROSS_PROT_ENABLE,
     WLAN_CFG_PRIV_BUTT,
 }wlan_cfg_priv;
 typedef osal_u8 wlan_cfg_priv_id_uint8;

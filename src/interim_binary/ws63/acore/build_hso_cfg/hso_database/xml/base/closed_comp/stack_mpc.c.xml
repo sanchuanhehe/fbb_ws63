@@ -1,0 +1,13 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME=" handle is null  @stack_mpc.c(70),WARNING" ID="0xd8940233" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="handle has exit, opcode = 0x%x  @stack_mpc.c(121),WARNING" ID="0xd89403cb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="handle create faild, no memory  @stack_mpc.c(126),WARNING" ID="0xd89403f3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="field_id create faild, no memory  @stack_mpc.c(135),WARNING" ID="0xd894043b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy_s fail. @stack_mpc.c(140),WARNING" ID="0xd8940463" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ERROR]create hdl-&gt;out_data fail @stack_mpc.c(199),ERROR" ID="0xd894063a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy_s fail. @stack_mpc.c(206),WARNING" ID="0xd8940673" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="handle is null  @stack_mpc.c(212),ERROR" ID="0xd89406a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy_s fail. @stack_mpc.c(235),WARNING" ID="0xd894075b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="stack mpc msg send sync malloc fail @stack_mpc.c(242),ERROR" ID="0xd8940792" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy_s fail  @stack_mpc.c(250),ERROR" ID="0xd89407d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ret = 0x%x  @stack_mpc.c(255),ERROR" ID="0xd89407fa" />
+			</MSG_LOG>

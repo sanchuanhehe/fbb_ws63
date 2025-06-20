@@ -28,7 +28,8 @@ extern "C" {
 ******************************************************************************/
 #define ALG_CCA_OPT_ED_HIGH_20TH_LOW_TH (-82)
 #ifdef _PRE_RADAR_CCA_SW_OPT
-#define RADAR_ENABLE_CCA_ED_RSSI         (-60)     /* 雷达开启cca能量门限和协议门限都是 -60dBm */
+#define RADAR_ENABLE_CCA_ED_RSSI         (-30)     /* 非认证模式下，雷达开启cca能量门限和协议门限都是 -30dBm */
+#define RADAR_ENABLE_CCA_ED_RSSI_CERTIFY (-60)     /* 认证模式下，雷达开启cca能量门限和协议门限都是 -60dBm */
 #endif
 
 /******************************************************************************

@@ -1,0 +1,16 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="dmac_get_device_vap_stat, vap_id[%d] err!  @dmac_feature_dft_rom.c(43),WARNING" ID="0x84ea015b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_get_device_vap_stat:memcpy_s failed} @dmac_feature_dft_rom.c(49),WARNING" ID="0x84ea018b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_enable_device_vap_stat:msg is null} @dmac_feature_dft_rom.c(62),WARNING" ID="0x84ea01f3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_enable_device_vap_stat, vap_id[%d] err!  @dmac_feature_dft_rom.c(68),WARNING" ID="0x84ea0223" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_get_hw_stat::msg is null.} @dmac_feature_dft_rom.c(83),WARNING" ID="0x84ea029b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_get_hw_stat::memcpy_s failed.} @dmac_feature_dft_rom.c(89),WARNING" ID="0x84ea02cb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_enable_device_vap_stat:msg is null} @dmac_feature_dft_rom.c(102),WARNING" ID="0x84ea0333" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_config_aggre_info_enable::aggre_info_enable[%u] invalid.} @dmac_feature_dft_rom.c(176),ERROR" ID="0x84ea0582" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_aggre_info_enable::before not malloc memory.} @dmac_feature_dft_rom.c(182),WARNING" ID="0x84ea05b3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_aggre_info_enable::free the memory.} @dmac_feature_dft_rom.c(184),WARNING" ID="0x84ea05c3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_aggre_info_enable::before malloc the memory.} @dmac_feature_dft_rom.c(192),WARNING" ID="0x84ea0603" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_aggre_info_enable::malloc fail.} @dmac_feature_dft_rom.c(197),WARNING" ID="0x84ea062b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_aggre_info_enable::malloc the memory.} @dmac_feature_dft_rom.c(202),WARNING" ID="0x84ea0653" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_get_tx_vap_aggre_info::memcpy_s failed.} @dmac_feature_dft_rom.c(234),WARNING" ID="0x84ea0753" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_get_tx_vap_aggre_info::memcpy_s failed.} @dmac_feature_dft_rom.c(243),WARNING" ID="0x84ea079b" />
+			</MSG_LOG>

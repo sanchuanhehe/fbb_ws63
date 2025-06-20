@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[bgtp] CS evt_task_ble_cs_start_cbk, prog_num=%d @evt_task_ble_cs.c(69),WARNING" ID="0x886c022b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp] CS evt_task_ble_cs_evt_cbk, prog_num=%d @evt_task_ble_cs.c(87),INFO" ID="0x886c02bd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp] CS create sed_index 0x%x, interval %d, anchor point 0x%x, delay %d @evt_task_ble_cs.c(184),INFO" ID="0x886c05c5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp] evt_task_ble_cs_create cs %d exist. @evt_task_ble_cs.c(264),ERROR" ID="0x886c0842" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp] evt_task_ble_cs_destory con_hdl 0x%x @evt_task_ble_cs.c(319),INFO" ID="0x886c09fd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp] CS hadm rssi ptr 0x%x @evt_task_ble_cs.c(369),INFO" ID="0x886c0b8d" />
+			</MSG_LOG>

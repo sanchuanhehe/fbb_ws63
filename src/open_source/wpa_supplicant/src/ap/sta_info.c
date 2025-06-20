@@ -1539,10 +1539,8 @@ void ap_sta_disconnect(struct hostapd_data *hapd, struct sta_info *sta,
 
 	if (sta == NULL && addr)
 		sta = ap_get_sta(hapd, addr);
-#ifndef EXT_CODE_CROP
 	if (addr)
-		hostapd_drv_sta_deauth(hapd, addr, reason);
-#endif /* EXT_CODE_CROP */
+        hostapd_drv_sta_deauth(hapd, addr, reason);
 	if (sta == NULL)
 		return;
 	ap_sta_set_authorized(hapd, sta, 0);

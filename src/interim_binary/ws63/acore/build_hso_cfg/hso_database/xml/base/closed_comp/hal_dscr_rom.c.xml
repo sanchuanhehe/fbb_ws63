@@ -1,0 +1,21 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="hal_tx_get_dscr_ctrl_one_param:rate_rank[%d] @hal_dscr_rom.c(319),ERROR" ID="0x83b209fa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="hal_tx_put_dscr: the len is over limit! The queue id[%d],total len [%d] @hal_dscr_rom.c(402),ERROR" ID="0x83b20c92" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="hal_tx_put_dscr: mpdu_num[%d], msdu0_len[%d] @hal_dscr_rom.c(404),ERROR" ID="0x83b20ca2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hh503_rx_alloc_netbuf_and_dscr::netbuf invalid. @hal_dscr_rom.c(596),ERROR" ID="0x83b212a2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{hal_rx_add_dscr::queue[%d] alloc fail, cnt_th[%u/%u].} @hal_dscr_rom.c(651),WARNING" ID="0x83b2145b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{hal_rx_add_dscr::queue[%d] validity chk err, cnt_th[%u/%u].} @hal_dscr_rom.c(655),WARNING" ID="0x83b2147b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{hal_rx_pre_add_dscr::queue[%d] alloc fail, cnt_th[%u/%u].} @hal_dscr_rom.c(683),WARNING" ID="0x83b2155b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{hal_rx_pre_add_dscr::queue[%d] validity chk err, cnt_th[%u/%u].} @hal_dscr_rom.c(687),WARNING" ID="0x83b2157b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_tx_init_dscr_queue::device null.} @hal_dscr_rom.c(698),ERROR" ID="0x83b215d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_tx_ctrl_dscr_unlink::tx_dscr null.} @hal_dscr_rom.c(768),ERROR" ID="0x83b21802" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_tx_dscr_get_real_addr::dscr is NULL!.} @hal_dscr_rom.c(1058),WARNING" ID="0x83b22113" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_rx_ctrl_dscr_link::rx_buffer_addr null.} @hal_dscr_rom.c(1097),ERROR" ID="0x83b2224a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_rx_free_dscr_list::invalid queue_num[%d].} @hal_dscr_rom.c(1236),WARNING" ID="0x83b226a3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_rx_init_dscr_queue::normal queue init fail[%u].} @hal_dscr_rom.c(1318),WARNING" ID="0x83b22933" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_rx_init_dscr_queue::high queue init fail[%u].} @hal_dscr_rom.c(1333),WARNING" ID="0x83b229ab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_rx_init_dscr_queue::small queue init fail[%u].} @hal_dscr_rom.c(1348),WARNING" ID="0x83b22a23" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{Invalid dscr addr:0x%x @hal_dscr_rom.c(1437),ERROR" ID="0x83b22cea" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{hal_get_tx_dscr_field::dscr rate[0x%x], dscr bw[%d], phy max bw[%d]!} @hal_dscr_rom.c(1510),WARNING" ID="0x83b22f33" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_dump_all_tx_dscr::hal_device null.} @hal_dscr_rom.c(1525),ERROR" ID="0x83b22faa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_dump_all_tx_dscr::tx dscr dump. qnum[%d],ppducnt[%d]} @hal_dscr_rom.c(1531),WARNING" ID="0x83b22fdb" />
+			</MSG_LOG>

@@ -63,10 +63,17 @@
  */
 #if !defined SNTP_SET_SYSTEM_TIME || defined __DOXYGEN__
 #if LWIP_LITEOS_COMPAT
+#ifndef LOSCFG_COMPAT_POSIX
+#define SNTP_SET_SYSTEM_TIME(sec)   do { \
+    time_t t = (time_t)(sec); \
+    (void)lwip_stime(&t); \
+  } while (0)
+#else
 #define SNTP_SET_SYSTEM_TIME(sec)   do { \
     time_t t = (time_t)(sec); \
     (void)stime(&t); \
   } while (0)
+#endif
 #else
 #define SNTP_SET_SYSTEM_TIME(sec)   LWIP_UNUSED_ARG(sec)
 #endif

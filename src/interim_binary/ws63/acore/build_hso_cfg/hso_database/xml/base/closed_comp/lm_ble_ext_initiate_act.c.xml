@@ -1,0 +1,11 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]invalid con params, i=%d, scan_intv=%d, scan_window=%d, intv_min=%d @lm_ble_ext_initiate_act.c(48),WARNING" ID="0x88440183" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]invalid con params, i=%d, intv_max=%d, max_latency=%d, supervision_timeout=%d @lm_ble_ext_initiate_act.c(50),WARNING" ID="0x88440193" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP]Ext Initiate params, filter_policy=%d, peer_addr_type=%d, own_addr_type=%d, initiate_phys=%d @lm_ble_ext_initiate_act.c(79),INFO" ID="0x8844027d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][initiate]Address type is static private but no static private address is available! @lm_ble_ext_initiate_act.c(84),WARNING" ID="0x884402a3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][initiate]lm_ble_initiate_off_check_ext_params, address params invalid! @lm_ble_ext_initiate_act.c(89),WARNING" ID="0x884402cb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][initiate]lm_ble_initiate_off_check_ext_params, invalid phy params, initiate_phys=%d @lm_ble_ext_initiate_act.c(96),WARNING" ID="0x88440303" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP]lm_ble_initiate_off_hci_ext_create_con_act, address 0x%x:0x%x:0x%x:0x%x:xx:xx @lm_ble_ext_initiate_act.c(160),INFO" ID="0x88440505" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[BGTP][initiate]lm_ble_initiate_off_hci_ext_create_con_act, connect exists! @lm_ble_ext_initiate_act.c(162),WARNING" ID="0x88440513" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][initiate]lm_ble_initiate_off_hci_create_con_act success, switch to INITIATING state @lm_ble_ext_initiate_act.c(195),INFO" ID="0x8844061d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][initiate]ext initiate set con info, clock=0x%x, us_offset=0x0x%x, init_phy=%d, chsel=%d @lm_ble_ext_initiate_act.c(249),INFO" ID="0x884407cd" />
+			</MSG_LOG>

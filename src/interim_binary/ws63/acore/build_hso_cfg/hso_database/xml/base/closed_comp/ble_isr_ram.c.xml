@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][ble_isr] isr(%d) not registered yet @ble_isr_ram.c(52),INFO" ID="0x898801a5" />
+			</MSG_LOG>
