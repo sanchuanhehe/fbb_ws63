@@ -1,0 +1,21 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[ACore] bt acore task framek free property id = 0x%x @mpc_trans.c(64),INFO" ID="0xd8160205" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] bt acore task framek write property id = 0x%x @mpc_trans.c(91),INFO" ID="0xd81602dd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore][Error] write Property fail id:0x%x, ret:0x%x @mpc_trans.c(97),ERROR" ID="0xd816030a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] write Property id:0x%x,ret:0x%x @mpc_trans.c(107),INFO" ID="0xd816035d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore][Error] bt acore task framek write property fail id:%d,ret:%x @mpc_trans.c(112),ERROR" ID="0xd8160382" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] property.id = 0x%x @mpc_trans.c(136),INFO" ID="0xd8160445" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] acore task init. @mpc_trans.c(143),INFO" ID="0xd816047d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore][Warning] acore task property handler ret:%d. @mpc_trans.c(162),INFO" ID="0xd8160515" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] mpc send msg to bth len:%d result:0x%x @mpc_trans.c(172),INFO" ID="0xd8160565" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ahia uapi ipc init failed ret: %u  @mpc_trans.c(192),ERROR" ID="0xd8160602" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ahia uapi ipc register rx handler failed ret: %u  @mpc_trans.c(203),ERROR" ID="0xd816065a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore][Error] bt trans, msg get fail ret:%x @mpc_trans.c(228),ERROR" ID="0xd8160722" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ACore][Error] rec mcu error data, tid:0x%x, sof:0x%x, len:0x%04x, opcode:0x%04x @mpc_trans.c(243),ERROR" ID="0xd816079a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore][Error] rec data malloc fail opcode:0x%04x, length:(0x%04x) @mpc_trans.c(253),ERROR" ID="0xd81607ea" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore][Error] rec data memcpy fail opcode:0x%04x, length:(0x%04x) @mpc_trans.c(261),ERROR" ID="0xd816082a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ACore][Error] rec mcu write property fail,tid:0x%x,sof:0x%x,len:0x%04x,opcode:0x%04x @mpc_trans.c(271),ERROR" ID="0xd816087a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore][Error] ipc data from Core:%d payload null @mpc_trans.c(290),ERROR" ID="0xd8160912" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore][Error] ipc data from BT Core error = %d @mpc_trans.c(301),ERROR" ID="0xd816096a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore][Error] ipc data data len err = %d @mpc_trans.c(307),ERROR" ID="0xd816099a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore][Error] ipc data from unknow core, src id %d @mpc_trans.c(312),ERROR" ID="0xd81609c2" />
+			</MSG_LOG>

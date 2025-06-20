@@ -364,6 +364,28 @@ typedef struct {
     osal_u8 resv[3]; /* 3保留字节 */
 } mac_cfg_scan_param_stru;
 
+typedef enum {
+    MAC_CONFIG_AUTH_MAX_RETRY,
+    MAC_CONFIG_AUTH_RECV_TIMEOUT,
+    MAC_CONFIG_ASSOC_MAX_RETRY,
+    MAC_CONFIG_ASSOC_RECV_TIMEOUT,
+    MAC_CONFIG_EAPOL1_RECV_TIMEOUT,
+    MAC_CONFIG_EAPOL2_MAX_RETRY,
+    MAC_CONFIG_EAPOL3_RECV_TIMEOUT,
+    MAC_CONFIG_CONNECT_PARA_MAX,
+} mac_cfg_sta_conn_paras_enum;
+
+typedef struct {
+ /* bitmap:
+ |        bit0         |         bit1         |        bit2         |       bit3         |
+ |   auth max retry    |    auth recv timeout |  assoc max retry    | assoc recv timeout |
+ |        bit4         |         bit5         |        bit6         |       bit7         |
+ | eapol1 recv timeout |  eapol2 max retry    | eapol3 recv timeout |       resv bit     | */
+    osal_u8 bitmap;                               /* 参数配置比特位图 */
+    osal_u8 resv;                                 /* 保留字段 */
+    osal_u16 conn_paras[MAC_CONFIG_CONNECT_PARA_MAX]; /* 参数值, 超时单位：毫秒 */
+} mac_cfg_sta_conn_paras;
+
 typedef struct {
     osal_u16 txop_limit_cycle;
     osal_u8 resv[2]; /* 2保留字节 */
@@ -2027,8 +2049,8 @@ typedef struct hmac_vap_tag {
     mac_vap_state_enum_uint8 vap_state;         /* VAP状态 */
     wlan_protocol_enum_uint8 protocol;          /* 工作的协议模式 */
     wlan_protocol_mode_enum_uint8 max_protocol; /* vap最大工作的协议模式 */
-    osal_u8 resv0[3];                           /* 保留3字节对齐 */
-
+    osal_u8 resv0[2];                           /* 保留2字节对齐 */
+    osal_u8 sta_last_conn_channel; /* sta上一次关联ap或者设置的信道 */
     mac_channel_stru channel; /* channel 合并，dmac_config_offload_start_vap修改 */
     mac_ch_switch_info_stru ch_switch_info;
 
@@ -2267,7 +2289,7 @@ typedef struct hmac_vap_tag {
     hmac_set_rate_stru vap_curr_rate;
 
     osal_u16 in_tbtt_offset; /* 内部tbtt offset配置值 */
-    osal_u8 resv19[1];
+    osal_s8 data_frame_rssi;
 
     /* --------- Private STA成员 Start ------------------ */
     osal_u8 resv30 : 1;

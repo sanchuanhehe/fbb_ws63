@@ -1,12 +1,7 @@
 /**
-* @file radar_service.h
-*
-* Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023.All rights reserved.
-* Description: header file for radar service api. \n
-* \n
-* History: \n
-* 2023-11-27，初始化该文件 \n
-*/
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2024. All rights reserved.
+ * Description: header file for radar service api.
+ */
 
 #ifndef SERVICE_RADAR_SERVICE_H
 #define SERVICE_RADAR_SERVICE_H
@@ -75,9 +70,9 @@ typedef enum {
 
 /**
  * @if Eng
- * @brief  radar result.
+ * @brief  radar fusion result.
  * @else
- * @brief  雷达结果。
+ * @brief  雷达融合结果。
  * @endif
  */
 typedef struct {
@@ -94,6 +89,24 @@ typedef struct {
 
 /**
  * @if Eng
+ * @brief  radar cur result.
+ * @else
+ * @brief  雷达单帧结果。
+ * @endif
+ */
+typedef struct {
+    uint8_t gear_one_flag;    /*!< @if Eng radar current frame result: Is there any movement in gear 1
+                                    @else   雷达当前帧结果，1档位置(默认距雷达水平距离1米处)是否有人运动 @endif */
+    uint8_t gear_two_flag;    /*!< @if Eng radar current frame result: Is there any movement in gear 2
+                                    @else   雷达当前帧结果，2档位置(默认距雷达水平距离2米处)是否有人运动 @endif */
+    uint8_t gear_three_flag;  /*!< @if Eng radar current frame result: Is there any movement in gear 3
+                                    @else   雷达当前帧结果，3档位置(默认距雷达水平距离6米处)是否有人运动 @endif */
+    uint8_t ai_flag;          /*!< @if Eng radar current frame AI result: Is there any movement
+                                    @else   雷达当前帧AI结果，是否为人体运动 @endif */
+} radar_current_frame_result_t;
+
+/**
+ * @if Eng
  * @brief Callback invoked when the radar detection is complete and the result changes.
  * @par Description: Callback invoked when the radar detection is complete and the result changes.
  * @attention This callback function runs on the radar feature thread.
@@ -107,6 +120,28 @@ typedef struct {
  * @endif
  */
 typedef void (*radar_result_cb_t)(radar_result_t *result);
+
+/**
+ * @if Eng
+ * @brief Callback invoked after each frame is calculated.
+ * @par Description: Callback invoked after each frame is calculated.
+ * @attention This callback function runs on the radar feature thread.
+ * @attention It cannot be blocked or wait for a long time or use a large stack space.
+ * @param [in] gear_1 radar gear_1 current frame result.
+ * @param [in] gear_2 radar gear_2 current frame result.
+ * @param [in] gear_3 radar gear_3 current frame result.
+ * @param [in] ai     radar ai current frame result.
+ * @else
+ * @brief  每一个雷达帧计算完成后的回调函数。
+ * @par Description: 每一个雷达帧计算完成后的回调函数。
+ * @attention  该回调函数运行于radar feature线程, 不能阻塞或长时间等待, 不能使用较大栈空间。
+ * @param [in] gear_1 雷达档位1当前帧检测结果。
+ * @param [in] gear_2 雷达档位2当前帧检测结果。
+ * @param [in] gear_3 雷达档位3当前帧检测结果。
+ * @param [in] ai     雷达AI当前帧检测结果。
+ * @endif
+ */
+typedef void (*radar_current_frame_result_cb_t)(radar_current_frame_result_t *result);
 
 /**
  * @if Eng
@@ -268,6 +303,20 @@ typedef struct {
                             @else   抗频谱对称干扰数量门限, 范围0-99 @endif */
     uint8_t a_th;       /*!< @if Eng AI human body recognition similarity threshold, range 0-99
                             @else   AI人体识别相似度门限, 范围0-99 @endif */
+    uint8_t pt_cld_para_1;    /*!< @if Eng Point cloud threshold of 0~1 meter, range 0-20
+                            @else   0~1米范围点云门限, 范围0-20 @endif */
+    uint8_t pt_cld_para_2;    /*!< @if Eng Point cloud threshold of 0~1 meter, range 0-20
+                            @else   1~2米范围点云门限, 范围0-20 @endif */
+    uint8_t pt_cld_para_3;    /*!< @if Eng Point cloud threshold of 0~1 meter, range 0-20
+                            @else   2~5米范围点云门限, 范围0-20 @endif */
+    uint8_t pt_cld_para_4;    /*!< @if Eng Point cloud threshold of 0~1 meter, range 0-20
+                            @else   5米以上范围点云门限, 范围0-20 @endif */
+    uint8_t rd_pwr_para_1;    /*!< @if Eng Point cloud threshold of 0~1 meter, range 1-100
+                            @else   0~1米范围点云门限, 范围1-100 @endif */
+    uint8_t rd_pwr_para_2;    /*!< @if Eng Point cloud threshold of 0~1 meter, range 1-100
+                            @else   1~2米范围点云门限, 范围1-100 @endif */
+    uint8_t rd_pwr_para_3;    /*!< @if Eng Point cloud threshold of 0~1 meter, range 1-100
+                            @else   2~6米范围点云门限, 范围1-100 @endif */
 } radar_alg_para_t;
 
 /**
@@ -348,6 +397,21 @@ errcode_t uapi_radar_register_result_cb(radar_result_cb_t cb);
 
 /**
  * @if Eng
+ * @brief  Radar current farme result callback registration function.
+ * @par Description: Radar current farme result callback registration function.
+ * @param [in] cb callback function.
+ * @retval error code.
+ * @else
+ * @brief  雷达当前帧结果回调注册函数。
+ * @par Description: 雷达当前帧结果回调注册函数。
+ * @param [in] cb 回调函数。
+ * @retval 执行结果错误码。
+ * @endif
+ */
+errcode_t uapi_radar_register_current_frame_result_cb(radar_current_frame_result_cb_t cb);
+
+/**
+ * @if Eng
  * @brief  Get repot result of radar.
  * @par Description: Get repot result of radar.
  * @param [in] *res repot result of radar, see @ref radar_result_t.
@@ -360,6 +424,21 @@ errcode_t uapi_radar_register_result_cb(radar_result_cb_t cb);
  * @endif
  */
 errcode_t uapi_radar_get_result(radar_result_t *res);
+
+/**
+ * @if Eng
+ * @brief  Get repot current frame result of radar.
+ * @par Description: Get repot current frame result of radar.
+ * @param [in] *res repot current frame result of radar, see @ref radar_current_frame_result_t.
+ * @retval error code.
+ * @else
+ * @brief  获取雷达当前帧上报结果。
+ * @par Description: 获取雷达当前帧上报结果。
+ * @param [in] *res 雷达当前帧上报结果。
+ * @retval 执行结果错误码。
+ * @endif
+ */
+errcode_t uapi_radar_get_current_frame_result(radar_current_frame_result_t *res);
 
 /**
  * @if Eng
@@ -454,7 +533,7 @@ errcode_t uapi_radar_select_alg_para(radar_sel_para_t *para);
 /**
  * @if Eng
  * @brief  Set algorithm parameter of radar.
- * @par Description: Set algorithm parameterof radar.
+ * @par Description: Set algorithm parameter of radar.
  * @param [in] *para algorithm parameters of radar, see @ref radar_alg_para_t.
  * @param [in] write_to_flash whether write to flash or no.
  * @retval error code.

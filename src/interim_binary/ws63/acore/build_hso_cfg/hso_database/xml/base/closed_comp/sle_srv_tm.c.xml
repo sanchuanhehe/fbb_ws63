@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="tm signal capability failed, conn id is invalid. @sle_srv_tm.c(41),ERROR" ID="0xd8ce014a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tm signal capability memcpy failed. @sle_srv_tm.c(48),ERROR" ID="0xd8ce0182" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[tm_signal_capability_req]failed, conn(%d) failed, ret = 0x%x @sle_srv_tm.c(55),ERROR" ID="0xd8ce01ba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="tm send data busy cbk failed, length:%d @sle_srv_tm.c(74),ERROR" ID="0xd8ce0252" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tm send data busy cbk memcpy failed. @sle_srv_tm.c(78),ERROR" ID="0xd8ce0272" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle data send busy cbk, lcid is invalid. @sle_srv_tm.c(85),ERROR" ID="0xd8ce02aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_tm.c(101),INFO" ID="0xd8ce032d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle server manager init failed. @sle_srv_tm.c(116),ERROR" ID="0xd8ce03a2" />
+			</MSG_LOG>

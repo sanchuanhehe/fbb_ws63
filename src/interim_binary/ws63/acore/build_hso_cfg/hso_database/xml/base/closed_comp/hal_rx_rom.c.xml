@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="{hh503_irq_drx_complete_isr::dscr_num[%d,%d],dscr[%x] small[%x]!.} @hal_rx_rom.c(54),ERROR" ID="0x82be01b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_event_to_dmac_get_callback = OSAL_NULL. @hal_rx_rom.c(60),ERROR" ID="0x82be01e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hh503_irq_drx_complete_isr::dispatch event failed, queue_id = %d. @hal_rx_rom.c(76),ERROR" ID="0x82be0262" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hh503_irq_drx_complete_isr::dispatch event failed, queue_id = %d. @hal_rx_rom.c(88),ERROR" ID="0x82be02c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_irq_rx_complete_isr:all dscr are null!} @hal_rx_rom.c(112),ERROR" ID="0x82be0382" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_irq_crx_complete_isr:: rst=%u.} @hal_rx_rom.c(134),WARNING" ID="0x82be0433" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_is_hw_rx_queue_empty::hal_device is NULL!} @hal_rx_rom.c(196),ERROR" ID="0x82be0622" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_set_rx_filter_reg::rx_filter_val is 0x%08x} @hal_rx_rom.c(248),WARNING" ID="0x82be07c3" />
+			</MSG_LOG>

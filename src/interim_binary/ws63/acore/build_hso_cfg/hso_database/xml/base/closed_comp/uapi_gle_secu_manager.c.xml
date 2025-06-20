@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="gle set secu params pointer null @uapi_gle_secu_manager.c(21),ERROR" ID="0xd8e800aa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle set secu params wrong @uapi_gle_secu_manager.c(34),ERROR" ID="0xd8e80112" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="recover key fail, there is no key @uapi_gle_secu_manager.c(63),WARNING" ID="0xd8e801fb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle secu manager register cbks pointer null @uapi_gle_secu_manager.c(75),ERROR" ID="0xd8e8025a" />
+			</MSG_LOG>

@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="[ACore] bt mpc handler:transid:0x%02X srvid:0x%02X pay_len:%d. @mpc_dispatch.c(113),INFO" ID="0xd812038d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] bt_mpc_handler command_id:%02x service id:0x:%02x invaild. @mpc_dispatch.c(127),ERROR" ID="0xd81203fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore][Error]BT ACORE receive null data. @mpc_dispatch.c(145),ERROR" ID="0xd812048a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore][Error]BT ACORE receive data Crc Error. @mpc_dispatch.c(150),ERROR" ID="0xd81204b2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ACore]SDK_RECV:route data:TID&amp;SOF&amp;SID&amp;CID, LEN = 0x%04X%04X, %d @mpc_dispatch.c(175),INFO" ID="0xd812057d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore]][Error] dest_id:0x%x! @mpc_dispatch.c(193),ERROR" ID="0xd812060a" />
+			</MSG_LOG>

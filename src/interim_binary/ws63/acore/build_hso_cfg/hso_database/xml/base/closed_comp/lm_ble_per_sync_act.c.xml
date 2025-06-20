@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[PER SYNC]alloc memory for complete event failed! @lm_ble_per_sync_act.c(59),WARNING" ID="0x88e401db" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[PER SYNC]mgr create sync: sid=%d, addr_type=%d @lm_ble_per_sync_act.c(94),INFO" ID="0x88e402f5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[PER SYNC]create sync: waiting for sync info @lm_ble_per_sync_act.c(337),INFO" ID="0x88e40a8d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[PER SYNC]sync info received. ts=0x%x, ts_us=%d, phy=%d, phy_rate=%d @lm_ble_per_sync_act.c(378),INFO" ID="0x88e40bd5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[PER SYNC]    offset base=%d, counter=%d, intv=%d @lm_ble_per_sync_act.c(380),INFO" ID="0x88e40be5" />
+			</MSG_LOG>

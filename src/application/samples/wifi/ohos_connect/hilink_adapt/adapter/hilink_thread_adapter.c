@@ -102,7 +102,7 @@ HiLinkMutexId HILINK_MutexCreate(void)
 
 static inline unsigned int MsToTick(unsigned int ms)
 {
-    uint64_t tick = ms * osKernelGetTickFreq() / MS_PER_SECOND;
+    uint64_t tick = (uint64_t)ms * osKernelGetTickFreq() / MS_PER_SECOND;
     if (tick > UINT32_MAX) {
         return UINT32_MAX;
     }
@@ -146,13 +146,13 @@ int HILINK_MutexUnlock(HiLinkMutexId mutex)
 void HILINK_MutexDestroy(HiLinkMutexId mutex)
 {
     if (mutex == NULL) {
-        HILINK_SAL_NOTICE("invalid param\r\n");
+        HILINK_SAL_WARN("invalid param\r\n");
         return;
     }
 
     osStatus_t status = osMutexDelete((osMutexId_t)mutex);
     if (status != osOK) {
-        HILINK_SAL_NOTICE("mutex delete error %d\r\n", status);
+        HILINK_SAL_WARN("mutex delete error %d\r\n", status);
     }
 }
 
@@ -196,13 +196,13 @@ int HILINK_SemPost(HiLinkSemId handle)
 void HILINK_SemDestroy(HiLinkSemId handle)
 {
     if (handle == NULL) {
-        HILINK_SAL_NOTICE("invalid param\r\n");
+        HILINK_SAL_WARN("invalid param\r\n");
         return;
     }
 
     osStatus_t status = osSemaphoreDelete((osSemaphoreId_t)handle);
     if (status != osOK) {
-        HILINK_SAL_NOTICE("sem delete error %d\r\n", status);
+        HILINK_SAL_WARN("sem delete error %d\r\n", status);
     }
 }
 
@@ -210,7 +210,6 @@ int HILINK_MilliSleep(unsigned int ms)
 {
     osStatus_t status = osDelay(MsToTick(ms));
     if (status != osOK) {
-        HILINK_SAL_WARN("delay %u ms error %d\r\n", ms, status);
         return -1;
     }
     return HILINK_SAL_SLEEP_ERR;

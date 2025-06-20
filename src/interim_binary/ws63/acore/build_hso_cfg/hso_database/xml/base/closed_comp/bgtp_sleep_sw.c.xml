@@ -1,0 +1,8 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[BGTP][SLEEP]bgtp_sleep_irq_handler, pmu cur_state:%d @bgtp_sleep_sw.c(168),WARNING" ID="0x889a0543" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[BGTP][SLEEP]bgtp_soc_wakeup_irq_handler cur_state:%d @bgtp_sleep_sw.c(191),INFO" ID="0x889a05fd" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[BGTP][SLEEP]bgtp_bsub_wakeup_irq_handler sleep_time:0x%x, sleep_duration:%d, finecnt:%d @bgtp_sleep_sw.c(222),INFO" ID="0x889a06f5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[BGTP][SLEEP]bgtp_bsub_wakeup_irq_handler wakeup_clk:0x%x, sleep_dur_us:%d, finecnt:%d @bgtp_sleep_sw.c(224),INFO" ID="0x889a0705" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[BGTP][SLEEP]bgtp_bsub_wakeup_irq_handler sleep_time:0x%x, sleep_duration:%d, finecnt:%d @bgtp_sleep_sw.c(231),INFO" ID="0x889a073d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[BGTP][SLEEP]bgtp_bsub_wakeup_irq_handler wakeup timeout, cur_clk:%d, sleep_dur_us:%d, finecnt:%d @bgtp_sleep_sw.c(234),ERROR" ID="0x889a0752" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[BGTP][PMU]bgtp_sleep_wait_to_idle extern wakeup timeout @bgtp_sleep_sw.c(258),ERROR" ID="0x889a0812" />
+			</MSG_LOG>

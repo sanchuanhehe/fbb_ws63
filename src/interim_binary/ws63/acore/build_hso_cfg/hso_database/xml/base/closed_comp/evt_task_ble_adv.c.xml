@@ -1,0 +1,10 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][adv disable]task_type= %d,sed_id = 0x%x @evt_task_ble_adv.c(48),INFO" ID="0x885c0185" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]ble_adv_idle_event_int:task_type(0x%x),stop_type(0x%x),prog_num(0x%x),cur_clk(0x%x) @evt_task_ble_adv.c(158),INFO" ID="0x885c04f5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[BGTP] evt_task_ble_adv_conn_req_check timeout:0x%x interval:0x%x latency:0x%x @evt_task_ble_adv.c(295),INFO" ID="0x885c093d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[BGTP] evt_task_ble_adv_conn_req_check address 0x%x:%x:xx:xx:xx:%x already connected @evt_task_ble_adv.c(300),INFO" ID="0x885c0965" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][adv]evt_task_ble_adv_recv_check: ble_rxsyncerr(%x), err status(0x%x), rxlen(%d), rxtype(0x%x) @evt_task_ble_adv.c(345),WARNING" ID="0x885c0acb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]evt_task_ble_adv_config_es task_id(0x%x)task_type(0x%x)interval(%d)duration_min_slots(%d) @evt_task_ble_adv.c(671),INFO" ID="0x885c14fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ble][adv]intv_offset_req intv fail! @evt_task_ble_adv.c(698),INFO" ID="0x885c15d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ble][adv]intv_offset_req offset fail! @evt_task_ble_adv.c(705),INFO" ID="0x885c160d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]evt_task_ble_adv_check_adv_stop:adv_start_ts(0x%x),cur_time(0x%x),intv(0x%x),dura(0x%x) @evt_task_ble_adv.c(783),INFO" ID="0x885c187d" />
+			</MSG_LOG>

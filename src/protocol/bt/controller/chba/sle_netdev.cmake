@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+# Copyright (c) CompanyNameMagicTag 2023-2023. All rights reserved.
 #===============================================================================
 set(MODULE_NAME "bt")
 set(AUTO_DEF_FILE_ID FALSE)
@@ -9,6 +9,7 @@ set(CHBA_NETDEV_LIST  "" CACHE INTERNAL "" FORCE)
 set(CHBA_NETDEV_HEADER_LIST  "" CACHE INTERNAL "" FORCE)
 
 add_subdirectory_if_exist(sle_netdev)
+add_subdirectory_if_exist(at)
 
 set(PUBLIC_DEFINES
 )
@@ -28,8 +29,6 @@ set(WHOLE_LINK
 set(MAIN_COMPONENT
     false
 )
-
-set(COMPONENT_NAME "sle_netdev")
 
 if("${CHBA_NETDEV_LIST}" STREQUAL "")
     set(CHBA_NETDEV_LIST "__null__")

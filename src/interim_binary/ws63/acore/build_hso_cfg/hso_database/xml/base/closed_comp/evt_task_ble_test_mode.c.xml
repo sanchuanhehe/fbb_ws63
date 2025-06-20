@@ -1,0 +1,23 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="payload type exceed : 0x%x! @evt_task_ble_test_mode.c(360),ERROR" ID="0x88680b42" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble_test_mode_tx alloc mem fail! @evt_task_ble_test_mode.c(379),ERROR" ID="0x88680bda" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble_test_mode_tx alloc mem fail! @evt_task_ble_test_mode.c(403),ERROR" ID="0x88680c9a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="payload type exceed : 0x%x! @evt_task_ble_test_mode.c(417),ERROR" ID="0x88680d0a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble_test_mode alloc txpd or txnode fail! @evt_task_ble_test_mode.c(457),ERROR" ID="0x88680e4a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[test mode txpd cfg]ble_txphce_txlen = %d, ble_txtype = %d, txpd ptr = 0x%x, buf_ptr = %d @evt_task_ble_test_mode.c(487),INFO" ID="0x88680f3d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[CTE_INFO]ble_tx_supp_flag = %d, ble_txphce_txsp = %d, ble_tx_supp_type = %d, ble_tx_supp_time = %d @evt_task_ble_test_mode.c(497),INFO" ID="0x88680f8d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[test mode cte sed cfg]cte_type = %d, cte_len = %d, ble_antcntnum = %d, env_ptr-&gt;tx_freq = %d @evt_task_ble_test_mode.c(528),INFO" ID="0x88681085" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="evt_task_ble_test_mode_tx_set_sed txpwr = %d, txphy = %d, tx_freq = %d, env_ptr-&gt;tx_freq = %d @evt_task_ble_test_mode.c(593),INFO" ID="0x8868128d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="evt_task_ble_test_mode_tx_set_sed real tx sed phy = %d, sed addr = 0x%x @evt_task_ble_test_mode.c(595),INFO" ID="0x8868129d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="test mode enable whitening @evt_task_ble_test_mode.c(610),INFO" ID="0x88681315" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="test mode disable whitening @evt_task_ble_test_mode.c(613),INFO" ID="0x8868132d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[test mode rx sed cfg]sed-&gt;ble_rxphy_mod = %d, ble_ch_idx = %d, env_ptr-&gt;rx_freq = %d @evt_task_ble_test_mode.c(681),INFO" ID="0x8868154d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="evt_task_ble_test_mode_tx_create @evt_task_ble_test_mode.c(767),INFO" ID="0x886817fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="env_ptr == NULL, create env @evt_task_ble_test_mode.c(770),INFO" ID="0x88681815" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="evt task create test mode env fail! @evt_task_ble_test_mode.c(773),INFO" ID="0x8868182d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="evt_task_ble_test_mode_tx_start @evt_task_ble_test_mode.c(886),INFO" ID="0x88681bb5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="rx end, prog_num == 0 @evt_task_ble_test_mode.c(961),INFO" ID="0x88681e0d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tx end. prog_num == 0 @evt_task_ble_test_mode.c(976),INFO" ID="0x88681e85" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="rx end prog_num != 0, macc_comm_le_cntl_comm_le_rftest_abort_setf @evt_task_ble_test_mode.c(1007),INFO" ID="0x88681f7d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble_hci_le_test_end_act @evt_task_ble_test_mode.c(1012),INFO" ID="0x88681fa5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="prog_num != 0, macc_comm_le_cntl_comm_le_rftest_abort_setf @evt_task_ble_test_mode.c(1026),INFO" ID="0x88682015" />
+			</MSG_LOG>

@@ -33,7 +33,8 @@ typedef struct {
                                              @else SSID。 @endif */
     uint8_t bssid[WIFI_MAC_LEN];        /*!< @if Eng Basic service set ID (BSSID).
                                              @else BSSID。 @endif */
-    int8_t reserved;
+    int8_t pairwise;                    /*!< @if Eng Encryption type.
+                                             @else 加密类型。 @endif */
     wifi_security_enum security_type;   /*!< @if Eng Security type.For details, see wifi_security_enumType.
                                              @else 安全类型。 @endif */
     int32_t rssi;                       /*!< @if Eng Received signal strength indicator (RSSI).

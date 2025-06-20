@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake make file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2023. All rights reserved.
+# Copyright (c) @CompanyNameMagicTag. 2023. All rights reserved.
 #===============================================================================
 set(AUTO_DEF_FILE_ID FALSE)
 if(${CHIP} MATCHES "bs20|bs21|bs21e|bs21a|bs22|bs26")

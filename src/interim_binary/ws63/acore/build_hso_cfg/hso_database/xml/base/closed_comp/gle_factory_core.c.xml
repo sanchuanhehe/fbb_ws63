@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[gle factory cmd proc] param NULL. @gle_factory_core.c(22),ERROR" ID="0xde8600b2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[gle factory cmd proc] type invalid. cmd/evt(%d) @gle_factory_core.c(40),ERROR" ID="0xde860142" />
+			</MSG_LOG>

@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="em_alloc_comm_tx_buff fail len(%d) @em_tx_buff.c(72),ERROR" ID="0x888a0242" />
+			</MSG_LOG>

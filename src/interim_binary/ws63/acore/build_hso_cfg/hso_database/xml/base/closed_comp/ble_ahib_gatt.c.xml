@@ -1,0 +1,85 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail: %d @ble_ahib_gatt.c(37),WARNING" ID="0xdeac012b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail. len = %d @ble_ahib_gatt.c(49),ERROR" ID="0xdeac018a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail: %d @ble_ahib_gatt.c(56),ERROR" ID="0xdeac01c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail: %d @ble_ahib_gatt.c(62),WARNING" ID="0xdeac01f3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt start service req fail. len = %d @ble_ahib_gatt.c(74),ERROR" ID="0xdeac0252" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt start service req memcpy fail: %d @ble_ahib_gatt.c(81),ERROR" ID="0xdeac028a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt start service req fail: %d @ble_ahib_gatt.c(87),WARNING" ID="0xdeac02bb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt stop service req fail. len = %d @ble_ahib_gatt.c(97),ERROR" ID="0xdeac030a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt stop service req fail: %d @ble_ahib_gatt.c(104),ERROR" ID="0xdeac0342" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail. len = %d @ble_ahib_gatt.c(117),ERROR" ID="0xdeac03aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail: %d @ble_ahib_gatt.c(123),ERROR" ID="0xdeac03da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail: %d @ble_ahib_gatt.c(129),WARNING" ID="0xdeac040b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail. len = %d @ble_ahib_gatt.c(141),ERROR" ID="0xdeac046a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface memcpy fail: %d @ble_ahib_gatt.c(148),ERROR" ID="0xdeac04a2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="bt mpc adapter gatt add characteristic req para.data_size:%d param-&gt;pkt_len:%d new:%d. @ble_ahib_gatt.c(154),INFO" ID="0xdeac04d5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface memcpy fail: %d @ble_ahib_gatt.c(161),ERROR" ID="0xdeac050a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt add characteristic fail: %d @ble_ahib_gatt.c(167),WARNING" ID="0xdeac053b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt add descriptor req fail. len = %d @ble_ahib_gatt.c(181),ERROR" ID="0xdeac05aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt add descriptor req memcpy fail: %d @ble_ahib_gatt.c(189),ERROR" ID="0xdeac05ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt add descriptor req memcpy fail: %d @ble_ahib_gatt.c(198),ERROR" ID="0xdeac0632" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt add descriptor req fail: %d @ble_ahib_gatt.c(204),WARNING" ID="0xdeac0663" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt send response req fail. len = %d @ble_ahib_gatt.c(217),ERROR" ID="0xdeac06ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt send response req memcpy fail: %d @ble_ahib_gatt.c(225),ERROR" ID="0xdeac070a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt send response req memcpy fail: %d @ble_ahib_gatt.c(234),ERROR" ID="0xdeac0752" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt send response req interface fail: %d @ble_ahib_gatt.c(240),WARNING" ID="0xdeac0783" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt mpc adapter gatt notify characteristic changed req qos buf overflow. @ble_ahib_gatt.c(251),ERROR" ID="0xdeac07da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt notify characteristic changed req fail. len = %d @ble_ahib_gatt.c(258),ERROR" ID="0xdeac0812" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt notify characteristic changed req: %d @ble_ahib_gatt.c(265),WARNING" ID="0xdeac084b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="mpc gatt notify character changed by_uuid fail. len = %d @ble_ahib_gatt.c(275),ERROR" ID="0xdeac089a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="mpc gatt notify character changed by_uuid fail: ret = %d @ble_ahib_gatt.c(282),WARNING" ID="0xdeac08d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt update descriptor value req fail. len = %u @ble_ahib_gatt.c(292),ERROR" ID="0xdeac0922" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt update descriptor value req fail: %d @ble_ahib_gatt.c(299),WARNING" ID="0xdeac095b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt set gap ui attributes req fail. len = %u @ble_ahib_gatt.c(309),ERROR" ID="0xdeac09aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt set gap ui attributes req fail: %d @ble_ahib_gatt.c(315),WARNING" ID="0xdeac09db" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt set gap ui attributes req fail: %d @ble_ahib_gatt.c(327),WARNING" ID="0xdeac0a3b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: gatt general interface fail. len = %u @ble_ahib_gatt.c(338),ERROR" ID="0xdeac0a92" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt discovery service req interface fail, ret%d @ble_ahib_gatt.c(345),WARNING" ID="0xdeac0acb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt discovery include service req param len error, len = %u @ble_ahib_gatt.c(357),ERROR" ID="0xdeac0b2a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt discovery include service req interface fail, ret%d @ble_ahib_gatt.c(364),WARNING" ID="0xdeac0b63" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt discovery character req param len error, len = %u @ble_ahib_gatt.c(376),ERROR" ID="0xdeac0bc2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt discovery character req interface fail, ret%d @ble_ahib_gatt.c(383),WARNING" ID="0xdeac0bfb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt discovery character by uuid req param len error, len = %u @ble_ahib_gatt.c(395),ERROR" ID="0xdeac0c5a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt discovery character by uuid req interface fail, ret%d @ble_ahib_gatt.c(403),WARNING" ID="0xdeac0c9b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt read character value by uuid req param len error, len = %u @ble_ahib_gatt.c(415),ERROR" ID="0xdeac0cfa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt read character value by uuid req interface fail, ret%d @ble_ahib_gatt.c(423),WARNING" ID="0xdeac0d3b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt read multiple character value req param len error, len = %u @ble_ahib_gatt.c(435),ERROR" ID="0xdeac0d9a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt read multiple character value req interface fail, ret%d @ble_ahib_gatt.c(443),WARNING" ID="0xdeac0ddb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter ble general gatt set att key size req param len error, len = %u @ble_ahib_gatt.c(454),ERROR" ID="0xdeac0e32" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter ble general gatt set att key size req interface fail, ret%d @ble_ahib_gatt.c(461),WARNING" ID="0xdeac0e6b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="bt mpc adapter ble general gatt set config param req param len error, len = %u dst:%d @ble_ahib_gatt.c(474),ERROR" ID="0xdeac0ed2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter ble general gatt set config param req interface fail, ret%d @ble_ahib_gatt.c(481),WARNING" ID="0xdeac0f0b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt multiple read character value req param len error, len = %u @ble_ahib_gatt.c(493),ERROR" ID="0xdeac0f6a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt multiple read character value req interface fail, ret%d @ble_ahib_gatt.c(501),WARNING" ID="0xdeac0fab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt multiple value ntf value req param len error, len = %u @ble_ahib_gatt.c(512),ERROR" ID="0xdeac1002" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt multiple value ntf value req interface fail, ret%d @ble_ahib_gatt.c(519),WARNING" ID="0xdeac103b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt discovery desc req param len error, len = %u @ble_ahib_gatt.c(531),ERROR" ID="0xdeac109a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt discovery desc req interface fail, ret%d @ble_ahib_gatt.c(538),WARNING" ID="0xdeac10d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt discovery desc by handle req param len error, len = %u @ble_ahib_gatt.c(550),ERROR" ID="0xdeac1132" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt discovery desc by handle req interface fail, ret%d @ble_ahib_gatt.c(558),WARNING" ID="0xdeac1173" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt mpc adapter gatt write character req qos buf overflow. @ble_ahib_gatt.c(568),ERROR" ID="0xdeac11c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt write character req param len error, len = %u @ble_ahib_gatt.c(576),ERROR" ID="0xdeac1202" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt write character req interface fail, ret%d @ble_ahib_gatt.c(583),WARNING" ID="0xdeac123b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt reliable write characteristic value req param len error, len = %u @ble_ahib_gatt.c(595),ERROR" ID="0xdeac129a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt reliable write characteristic value req interface fail, ret%d @ble_ahib_gatt.c(602),WARNING" ID="0xdeac12d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt write descriptor req param len error, len = %u @ble_ahib_gatt.c(613),ERROR" ID="0xdeac132a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt write descriptor req interface fail, ret%d @ble_ahib_gatt.c(620),WARNING" ID="0xdeac1363" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt mtu config req param len error, len = %u @ble_ahib_gatt.c(632),ERROR" ID="0xdeac13c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt mtu config req interface fail, ret%d @ble_ahib_gatt.c(639),WARNING" ID="0xdeac13fb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt get hid report map req param len error, len = %u @ble_ahib_gatt.c(651),ERROR" ID="0xdeac145a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt get hid report map req interface fail, ret%d @ble_ahib_gatt.c(658),WARNING" ID="0xdeac1493" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt read character req param len error, len = %u @ble_ahib_gatt.c(669),WARNING" ID="0xdeac14eb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt read character req param fail, ret%d @ble_ahib_gatt.c(675),WARNING" ID="0xdeac151b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt read descriptor req param len error, len = %u @ble_ahib_gatt.c(687),WARNING" ID="0xdeac157b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt read descriptor req param fail, ret%d @ble_ahib_gatt.c(693),WARNING" ID="0xdeac15ab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt mtu set req param len error, len = %u @ble_ahib_gatt.c(706),ERROR" ID="0xdeac1612" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt mtu set req interface fail, ret%d @ble_ahib_gatt.c(713),WARNING" ID="0xdeac164b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt mpc adapter gatt handler op_code:%x. @ble_ahib_gatt.c(864),INFO" ID="0xdeac1b05" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ble_general_gatt] write ind mpc tx fail tx_cnt:%d @ble_ahib_gatt.c(950),ERROR" ID="0xdeac1db2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ble_general_gatt] read ind mpc tx fail tx_cnt:%d @ble_ahib_gatt.c(968),ERROR" ID="0xdeac1e42" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[BCore] mtu changed: new mtu:%d @ble_ahib_gatt.c(980),INFO" ID="0xdeac1ea5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib internal cbk] invalid event:%d @ble_ahib_gatt.c(1152),WARNING" ID="0xdeac2403" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib cbk reg] invalid event:%d @ble_ahib_gatt.c(1163),WARNING" ID="0xdeac245b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_gatt.c(1186),ERROR" ID="0xdeac2512" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_gatt.c(1204),ERROR" ID="0xdeac25a2" />
+			</MSG_LOG>

@@ -1,0 +1,16 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_p2p_go_absence_period_start_sta_prot::pm fsm not attached.} @dmac_p2p_rom.c(45),WARNING" ID="0x83c2016b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_p2p_noa_absent_start_event::send_pspoll_to_ap fail} @dmac_p2p_rom.c(79),WARNING" ID="0x83c2027b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] dmac_p2p_resume_send_null_to_ap::send[%d]null fail @dmac_p2p_rom.c(123),WARNING" ID="0x83c203db" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_p2p_handle_ps::dmac_vap null.} @dmac_p2p_rom.c(168),ERROR" ID="0x83c20542" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="dmac_p2p_set_noa_param start_time %u offset_tsf %u tsf %u @dmac_p2p_rom.c(209),INFO" ID="0x83c2068d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_p2p_set_noa_param dmac_vap %u tsf_lo %u @dmac_p2p_rom.c(215),WARNING" ID="0x83c206bb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="dmac_p2p_set_noa_param start_time %u offset_tsf %u tsf %u @dmac_p2p_rom.c(240),INFO" ID="0x83c20785" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_p2p_noa_absent_end_event::p2p NoA count expired} @dmac_p2p_rom.c(296),WARNING" ID="0x83c20943" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_p2p_pm_post_event::[%d]} @dmac_p2p_rom.c(320),ERROR" ID="0x83c20a02" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_p2p_pm_post_event:: type[%d]} @dmac_p2p_rom.c(328),WARNING" ID="0x83c20a43" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_p2p_state_event::msg null} @dmac_p2p_rom.c(339),WARNING" ID="0x83c20a9b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_p2p_sync_noa_info::msg null} @dmac_p2p_rom.c(351),WARNING" ID="0x83c20afb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_p2p_sync_noa_info::memcpy_s fail} @dmac_p2p_rom.c(357),WARNING" ID="0x83c20b2b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_p2p_sync_noa_info noa_oper[%d]} @dmac_p2p_rom.c(364),INFO" ID="0x83c20b65" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_p2p_sync_noa_info} @dmac_p2p_rom.c(368),WARNING" ID="0x83c20b83" />
+			</MSG_LOG>

@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="{hal_btcoex_sw_preempt_init::sw_preempt_mode is [0x%x], type[%d], subtype[%d].} @hal_coex_reg.c(214),WARNING" ID="0x83a806b3" />
+			</MSG_LOG>

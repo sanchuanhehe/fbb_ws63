@@ -6,7 +6,7 @@ config SFC_SAMPLE_USER_ADDR
     hex
     prompt "choose SFC sample Start Address(Real address of the flash memory)."
     depends on SAMPLE_SUPPORT_SFC
-    default 0x7C000
+    default 0x3F3000
 
 config SFC_SAMPLE_USER_SIZE
     hex

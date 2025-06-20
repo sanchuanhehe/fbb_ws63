@@ -1193,7 +1193,7 @@ typedef struct {
 } hal_error_state_stru;
 
 /* 会影响目标vdet值的参数集合 */
-typedef union {                                                 /*  */
+typedef union {                                                 /* todo */
     struct {
         wlan_channel_band_enum_uint8    freq         : 4;
         wlan_bw_cap_enum_uint8          band_width   : 4;

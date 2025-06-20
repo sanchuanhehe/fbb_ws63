@@ -235,7 +235,6 @@ void HILINK_EnableProcessDelErrCode(int enable);
 /*
  * 开发者直接调用该接口完成设备解绑后装信息并恢复交房设置
  * type 0：普通解绑 1:其它场景
- * 返回0表示成功，其他错误码异常
  */
 void HILINK_UnbindDevice(int type);
 

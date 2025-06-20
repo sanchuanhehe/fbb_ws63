@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_flush_hw_queue::tx_dscr or skb_start_addr point is null.} @dmac_tx_queue_rom.c(66),ERROR" ID="0x82b00212" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_tx_queue_save::retry cnt=%d, break} @dmac_tx_queue_rom.c(84),WARNING" ID="0x82b002a3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_tx_restore_tx_queue::q[%d], ppdu[%d]!=0.} @dmac_tx_queue_rom.c(192),WARNING" ID="0x82b00603" />
+			</MSG_LOG>

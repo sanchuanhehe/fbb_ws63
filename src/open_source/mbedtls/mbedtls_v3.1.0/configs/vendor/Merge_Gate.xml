@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VGCRPS>
+    <vgcrps>
+        <VGCRP>
+            <name>mbedtls_merge</name>
+            <type>Private</type>
+            <windowsRsyncFiles></windowsRsyncFiles>
+            <authorities>
+                <authority>
+                    <address>https://codehub-dg-y.huawei.com/</address>
+                    <user>${git_user}</user>
+                    <pswd>${git_passwd}</pswd>
+                </authority>
+            </authorities>
+            <crepos>
+                <!-- 代码路径，根据依赖的分支下载代码 -->
+                <CRP>
+                    <url>${codehubTargetRepoHttpUrl}</url>
+                    <branch>${codehubTargetBranch}</branch>
+                    <iSourceToBuildRef>${iSourceToBuildRef}</iSourceToBuildRef>
+                    <user>${git_user}</user>
+                    <pswd>${git_passwd}</pswd>
+                    <cleanBeforeUpdate>true</cleanBeforeUpdate>
+                    <setFileTime>false</setFileTime>
+                    <lfsCheckout>true</lfsCheckout>
+                    <mPath>mbedtls</mPath>
+                    <codeType>git</codeType>
+                </CRP>
+            </crepos>
+        </VGCRP>
+    </vgcrps>
+</VGCRPS>

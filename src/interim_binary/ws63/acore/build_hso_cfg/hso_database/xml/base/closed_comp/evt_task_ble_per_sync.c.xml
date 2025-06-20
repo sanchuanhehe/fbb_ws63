@@ -1,0 +1,10 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[PER SYNC]unknown phy %d @evt_task_ble_per_sync.c(70),WARNING" ID="0x88e60233" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[PER SYNC]evt_task_ble_per_sync_init_es: task_id=0x%x type=%d, intv=%d, duration_min_us=%d @evt_task_ble_per_sync.c(101),INFO" ID="0x88e6032d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[PER SYNC]evt_task_ble_per_sync_get_or_create_env: create env fail! @evt_task_ble_per_sync.c(250),WARNING" ID="0x88e607d3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[PER SYNC]evt_task_ble_per_sync_start: sync_handle=0x%x sed_id=0x%x @evt_task_ble_per_sync.c(402),INFO" ID="0x88e60c95" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[PER SYNC]evt_task_ble_per_sync_start: schedule failed! @evt_task_ble_per_sync.c(418),WARNING" ID="0x88e60d13" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[PER SYNC]evt_task_ble_per_sync_prepare_data: alloc Rx desc fail. @evt_task_ble_per_sync.c(511),WARNING" ID="0x88e60ffb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[PER SYNC]evt_task_ble_per_sync_rx_data: rxpd_idx=%d, status=0x%x, report_state=%d @evt_task_ble_per_sync.c(632),INFO" ID="0x88e613c5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[PER SYNC]evt_task_ble_per_sync_common_cbk:prog_num is 0 @evt_task_ble_per_sync.c(657),ERROR" ID="0x88e6148a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[PER SYNC] unhandled isr pos=%d sed_id=0x%x @evt_task_ble_per_sync.c(744),WARNING" ID="0x88e61743" />
+			</MSG_LOG>

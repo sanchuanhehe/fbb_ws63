@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[ble low latency] tog_cnt: %d, invalid_em_addr: %d, used_em_buf: %d, invalid_data: %d. @btsrv_low_latency.c(36),INFO" ID="0xd86a0125" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy low latency callback fail @btsrv_low_latency.c(107),ERROR" ID="0xd86a035a" />
+			</MSG_LOG>

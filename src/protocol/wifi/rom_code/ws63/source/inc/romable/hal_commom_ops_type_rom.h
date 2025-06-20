@@ -1,7 +1,7 @@
 ﻿/*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2022. All rights reserved.
  * Description: Header files shared by hal_commom_ops.h and hal_common_ops_rom.h.
- * Author:
+ * Author: Huanghe
  */
 
 #ifndef __HAL_COMMOM_OPS_TYPE_ROM_H__

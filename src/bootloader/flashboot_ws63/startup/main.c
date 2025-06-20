@@ -26,6 +26,7 @@
 #include "upg_porting.h"
 #include "upg_common.h"
 #include "upg_alloc.h"
+#include "upg_config.h"
 #include "soc_porting.h"
 #include "drv_flashboot_cipher.h"
 #ifdef CONFIG_MIDDLEWARE_SUPPORT_UPG_AB
@@ -88,7 +89,9 @@ static void boot_flash_init(void)
 
     uint32_t  ret = sfc_flash_init();
     if (ret != ERRCODE_SUCC) {
+        serial_cancel_mute();
         boot_msg1("Flash Init Fail! ret = ", ret);
+        serial_set_mute();
     } else {
         boot_msg0("Flash Init Succ!");
     }
@@ -137,8 +140,9 @@ static void ws63_flashboot_recovery(void)
     if (!flashboot_need_recovery()) {
         return;
     }
+    serial_cancel_mute();
     uapi_watchdog_kick();
-    boot_msg0("Flashboot backup is working!");
+    boot_msg0("Flashboot backup working!");
     partition_information_t src_img_info = {0};
     partition_information_t dst_img_info = {0};
     errcode_t ret;
@@ -151,15 +155,16 @@ static void ws63_flashboot_recovery(void)
 
     ret = uapi_sfc_reg_erase(dst_img_info.part_info.addr_info.addr, dst_img_info.part_info.addr_info.size);
     if (ret != ERRCODE_SUCC) {
-        boot_msg1("flashboot recovery erase failed!! ret = ", ret);
+        boot_msg1("Recovery erase failed!! ret = ", ret);
     }
     ret = uapi_sfc_reg_write(dst_img_info.part_info.addr_info.addr,
         (uint8_t *)(uintptr_t)(src_img_info.part_info.addr_info.addr + FLASH_START),
         src_img_info.part_info.addr_info.size);
     if (ret != ERRCODE_SUCC) {
-        boot_msg1("flashboot recovery write failed!! ret = ", ret);
+        boot_msg1("Recovery write failed!! ret = ", ret);
     }
-    boot_msg0("Flashboot fix ok!");
+    boot_msg0("Recovery ok!");
+    serial_set_mute();
 }
 
 #define UPG_FIX_RETRY_CNT_REG   RESET_COUNT_REG
@@ -201,6 +206,7 @@ static void ws63_try_fix_app(void)
 /* 尝试ota修复运行区镜像 */
 static void ws63_try_fix_app(void)
 {
+    errcode_t ret;
     uint8_t try_cnt = ws63_get_try_fix_cnt();
     /* 连续验签失败次数小于阈值不做处理 */
     if (try_cnt < VERIFY_RETRY_CNT_THRES) {
@@ -214,20 +220,35 @@ static void ws63_try_fix_app(void)
     }
     ws63_set_try_fix_cnt(try_cnt + 1);
 
-    /* 重置升级标记 */
-    errcode_t ret = uapi_upg_reset_upgrade_flag();
+#if (UPG_CFG_VERIFICATION_SUPPORT == YES)
+    /* 升级包校验 */
+    upg_package_header_t *pkg_header = NULL;
+    ret = upg_get_package_header(&pkg_header);
+    if (ret != ERRCODE_SUCC || pkg_header == NULL) {
+        boot_msg1("get_pkg_header fail, ret = ", ret);
+        return;
+    }
+    ret = uapi_upg_verify_file((const upg_package_header_t *)pkg_header);
     if (ret != ERRCODE_SUCC) {
-        boot_msg1("reset_upgrade_flag fail, ret = ", ret);
+        boot_msg1("upg_verify fail, ret = ", ret);
+        return;
+    }
+#endif
+
+    /* 重置升级标记 */
+    ret = uapi_upg_reset_upgrade_flag();
+    if (ret != ERRCODE_SUCC) {
+        boot_msg1("reset upgrade flag fail, ret=", ret);
         return;
     }
 
     /* 请求升级 */
     ret = uapi_upg_request_upgrade(false);
     if (ret != ERRCODE_SUCC) {
-        boot_msg0("request_upgrade fail, fota_pkt_not_exit.");
+        boot_msg1("request upgrade fail, ret=", ret);
         return;
     }
-    boot_msg0("fota_pkt exit, try_fota_fix_app.");
+    boot_msg0("Try fota fix app.");
 }
 #endif
 
@@ -264,6 +285,7 @@ static void ws63_upg_check(void)
     return;
 #endif
     if (ws63_upg_need_upgrade()) {
+        serial_cancel_mute();
         boot_msg0("need upgrade");
         errcode_t ret = uapi_upg_start();
         // 1, 没有升级包、或者升级标记区结果已经设置的情况不需要重启
@@ -278,6 +300,7 @@ static void ws63_upg_check(void)
             boot_msg0("--------------------------");
             boot_msg0("upgrade success, reset now");
         }
+        serial_set_mute();
         reset();
     }
 }
@@ -330,10 +353,10 @@ static void dump_io_level(void)
     if (poc_coex.bits.rg_poc_sel == POC_SEL_SW_MODE) {
         sw_level   = (poc_coex.bits.rg_poc_value == POC_VALUE_3V3) ? LEVEL_3V3 : LEVEL_1V8;
         chip_level = (poc_coex.bits.ms1c == POC_VALUE_3V3) ? LEVEL_3V3 : LEVEL_1V8;
-        boot_msg2("io level work in sw mode, level[sw:chip]:", sw_level, chip_level);
+        boot_msg2("sw mode, level[sw:chip]:", sw_level, chip_level);
     } else {
         chip_level = (poc_coex.bits.ms1c == POC_VALUE_3V3) ? LEVEL_3V3 : LEVEL_1V8;
-        boot_msg1("io level work in hw mode, level[chip]:", chip_level);
+        boot_msg1("hw mode, level[chip]:", chip_level);
     }
 }
 
@@ -343,6 +366,7 @@ static uint32_t ws63_flashboot_init(void)
     uart_param_stru uart_param = FLASHBOOT_UART_DEFAULT_PARAM;
     uapi_tcxo_init();
     hiburn_uart_init(uart_param, HIBURN_CODELOADER_UART);
+    serial_set_mute();
     boot_msg0("Flashboot Uart Init Succ!");
     uapi_partition_init();
     pmp_enable();
@@ -351,10 +375,11 @@ static uint32_t ws63_flashboot_init(void)
     boot_flash_init();
     err = sfc_port_fix_sr();
     if (err != ERRCODE_SUCC) {
+        serial_cancel_mute();
         boot_msg1("SFC fix SR ret =", err);
+        serial_set_mute();
     }
     dump_io_level();
-    print_str("flashboot version : %s\r\n", SDK_VERSION);
     return 0;
 }
 
@@ -365,13 +390,13 @@ static errcode_t ws63_verify_app(uint32_t addr)
 
     ret = verify_image_head(APP_BOOT_TYPE, (uint32_t)(uintptr_t)flashboot_key_area->ext_pulic_key_area, addr);
     if (ret != ERRCODE_SUCC) {
-        boot_msg1("flashboot verify_image_app_head failed!! ret = ", ret);
+        boot_msg1("verify app head failed! ret=", ret);
         return ret;
     }
 
     ret = verify_image_body(addr, addr + APP_IMAGE_HEADER_LEN);
     if (ret != ERRCODE_SUCC) {
-        boot_msg1("verify_image_app_body failed!! ret = ", ret);
+        boot_msg1("verify app body failed!! ret=", ret);
         return ret;
     }
     return ERRCODE_SUCC;
@@ -381,6 +406,9 @@ static void ws63_verify_app_handle(uint32_t addr)
 {
     errcode_t ret = ws63_verify_app(addr);
     if (ret != ERRCODE_SUCC) {
+        serial_cancel_mute();
+        boot_msg0("VE");
+        serial_set_mute();
         ws63_try_fix_app();
         reset();
     }
@@ -402,7 +430,9 @@ static void ws63_flash_encrypt_config(uint32_t image_addr, uint32_t image_size)
     }
 
     if (start_addr % FLASH_ENCRY_ADDR_ALINE != 0 || end_addr % FLASH_ENCRY_ADDR_ALINE != 0) {
-        boot_msg2("app_image start or end addr err, must 256byte alignment ", image_addr, end_addr);
+        serial_cancel_mute();
+        boot_msg2("Addr not 256byte alignment ", image_addr, end_addr);
+        serial_set_mute();
         reset();
     }
     boot_msg0("flash_encrypt enable.");
@@ -414,18 +444,24 @@ static void ws63_flash_encrypt_config(uint32_t image_addr, uint32_t image_size)
     flash_key.oneway = TD_TRUE;
     ret = drv_rom_cipher_config_odrk1(flash_key);
     if (ret != ERRCODE_SUCC) {
-        boot_msg1("fapc_set_config drv_rom_cipher_config_odrk1 err = ", (uint32_t)ret);
+        serial_cancel_mute();
+        boot_msg1("Encrypt odrk1 err=", (uint32_t)ret);
+        serial_set_mute();
         reset();
     }
     ret = drv_rom_cipher_fapc_config(0, start_addr, end_addr, img_info->iv, IV_LEN);
     if (ret != ERRCODE_SUCC) {
-        boot_msg1("fapc_set_config drv_rom_cipher_fapc_config err = ", (uint32_t)ret);
+        serial_cancel_mute();
+        boot_msg1("Encrypt fapc err=", (uint32_t)ret);
+        serial_set_mute();
         reset();
     }
 
     ret = drv_rom_cipher_fapc_bypass_config(1, end_addr, FLASH_MAX_END, TD_TRUE);
     if (ret != ERRCODE_SUCC) {
-        boot_msg1("fapc_set_config drv_rom_cipher_fapc_bypass_config err = ", (uint32_t)ret);
+        serial_cancel_mute();
+        boot_msg1("Encrypt bypass err=", (uint32_t)ret);
+        serial_set_mute();
         reset();
     }
 }
@@ -471,7 +507,9 @@ void start_fastboot(void)
     ws63_upg_check(); // 升级模式判断
     err = uapi_partition_get_info(PARTITION_APP_IMAGE, &img_info);
     if (err != ERRCODE_SUCC) {
-        boot_msg0("Flashboot get app partition failed!, boot abort!");
+        serial_cancel_mute();
+        boot_msg0("Get app partition failed!");
+        serial_set_mute();
         reset();
     }
     image_addr = img_info.part_info.addr_info.addr + FLASH_START;

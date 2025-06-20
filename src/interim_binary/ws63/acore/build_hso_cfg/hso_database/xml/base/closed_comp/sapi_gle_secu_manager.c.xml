@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="stack set security params new fail. @sapi_gle_secu_manager.c(27),ERROR" ID="0xde6a00da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="stack set security params memcpy fail. @sapi_gle_secu_manager.c(32),ERROR" ID="0xde6a0102" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE SM] sapi start pairing failed, in param is NULL. @sapi_gle_secu_manager.c(45),ERROR" ID="0xde6a016a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE SM] sapi remove pairing failed, in param is NULL. @sapi_gle_secu_manager.c(56),ERROR" ID="0xde6a01c2" />
+			</MSG_LOG>

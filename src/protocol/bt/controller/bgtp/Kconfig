@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    Kconfig file.
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+# Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
 #===============================================================================
 
 config USING_BLE_LEGACY_ADV_V1

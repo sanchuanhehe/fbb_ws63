@@ -1537,6 +1537,19 @@ struct wpa_supplicant {
 	unsigned int enable_dscp_policy_capa:1;
 	unsigned int connection_dscp:1;
 	unsigned int wait_for_dscp_req:1;
+
+    u8 eapol2_config_max_retry;
+    u8 eapol2_retry_cnt;
+    u16 eapol1_config_recv_timeout;
+    u16 eapol3_config_recv_timeout;
+    u16 mgmt_type:1; /* mgmt frame type,0:deauth,1:disassoc */
+    u16 eapol_timeout:1; /* eapol timeout or not,0:not timeout,1:timeout */
+    u16 eapol_state:1; /* eapol state,0:receving eapol key1,1:receving eapol key3 */
+    u16 is_sae:1; /* is sae?,0:no,1:yes */
+    u16 sae_timeout:1; /* sae auth timeout? 0:no,1:yes */
+    u16 sae_auth_state:1; /* sae auth state,0:receving commit rsp,1:receving confirm rsp */
+    u16 auth_stage:1; /* auth stage,0:auth,1:assoc */
+    u16 resv:9;
 };
 
 
@@ -1577,6 +1590,7 @@ void wpa_supplicant_initiate_eapol(struct wpa_supplicant *wpa_s);
 void wpa_clear_keys(struct wpa_supplicant *wpa_s, const u8 *addr);
 void wpa_supplicant_req_auth_timeout(struct wpa_supplicant *wpa_s,
 				     int sec, int usec);
+void wpa_supplicant_cancel_eapol3_timeout(struct wpa_supplicant *wpa_s);
 void wpas_auth_timeout_restart(struct wpa_supplicant *wpa_s, int sec_diff);
 void wpa_supplicant_reinit_autoscan(struct wpa_supplicant *wpa_s);
 void wpa_supplicant_set_state(struct wpa_supplicant *wpa_s,

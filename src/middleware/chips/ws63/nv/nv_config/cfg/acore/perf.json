@@ -190,6 +190,13 @@
             "attributions": 1,
             "value": 0
         },
+        "alg_cross_prot_enable":{
+            "key_id": "0x2018",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 1,
+            "value": 1
+        },
         "fe_rx_insert_loss":{
             "key_id": "0x2050",
             "key_status": "alive",
@@ -314,6 +321,69 @@
             "structure_type": "btc_power_type_t",
             "attributions": 1,
             "value": [7]
+        },
+        "bt_golden_per_switch":{
+            "key_id": "0x20A1",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 1,
+            "value": 0
+        },
+        "btc_tx_target_power":{
+            "key_id": "0x20A4",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 1,
+            "value": 20
+        },
+        "btc_srrc_switch":{
+            "key_id": "0x20A5",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 1,
+            "value": 1
+        },
+        "btc_srrc_set_channel":{
+            "key_id": "0x20A6",
+            "key_status": "alive",
+            "structure_type": "btc_srrc_channel_type_t",
+            "attributions": 4,
+            "value": [[0,78,255,255,255,255,255,255]]
+        },
+        "btc_srrc_set_power":{
+            "key_id": "0x20A7",
+            "key_status": "alive",
+            "structure_type": "btc_srrc_power_type_t",
+            "attributions": 4,
+            "value": [[12,8,255,255,255,255,255,255]]
+        },
+        "sle_con_dur":{
+            "key_id": "0x20A8",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 1,
+            "value": 8
+        },
+        "btc_demod_diff":{
+            "key_id": "0x20A9",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 1,
+            "value": 0
+        },
+        "btc_sched_pre_arg_switch":{
+            "key_id": "0x20AA",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 1,
+            "value": 1
+        },
+        "btc_channel_scan_switch":{
+            "key_id": "0x20AB",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 1,
+            "value": 1
         },
         "radar_alg_param0":{
             "key_id": "0x2100",
@@ -562,6 +632,13 @@
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             ]
+        },
+        "chba_cfg":{
+            "key_id": "0x2160",
+            "key_status": "alive",
+            "structure_type": "chba_cfg_t",
+            "attributions": 1,
+            "value": [0, 1]
         }
     }
 }

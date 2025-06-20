@@ -1,0 +1,26 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_change_user_mode_process: input pointer is null!} @alg_tpc_probe_rom.c(96),ERROR" ID="0x81940302" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_change_user_mode_process::hal_device is NULL} @alg_tpc_probe_rom.c(101),ERROR" ID="0x8194032a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_change_user_mode_process: user_pow_info-&gt;user is NULL!} @alg_tpc_probe_rom.c(115),ERROR" ID="0x8194039a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_config_target_rate: invalid alg_cfg!} @alg_tpc_probe_rom.c(167),WARNING" ID="0x8194053b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_get_traffic_rate_info: traffic_type = %u invalid!} @alg_tpc_probe_rom.c(189),ERROR" ID="0x819405ea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_get_pow_frame_type: get_traffic_rate_info err!} @alg_tpc_probe_rom.c(203),ERROR" ID="0x8194065a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_get_probe_direction: delay autorate rate down!!!} @alg_tpc_probe_rom.c(301),WARNING" ID="0x8194096b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{pktno = %4d, alg_tpc_get_probe_direction: traffic_type = %2d, pktnum= %2d, keep_cnt = %2d} @alg_tpc_probe_rom.c(310),WARNING" ID="0x819409b3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{alg_tpc_get_probe_direction: probe_state=%2d,best_pow_per=%2d,best_pow_idx=%2d,probe_pow_idx=%2d} @alg_tpc_probe_rom.c(315),WARNING" ID="0x819409db" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_non_probe_state_process: per raise up. Start probe! @alg_tpc_probe_rom.c(332),WARNING" ID="0x81940a63" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_update_probe_state: update best_pow_idx = %2d!} @alg_tpc_probe_rom.c(458),WARNING" ID="0x81940e53" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="pktno=%4d, tpc probe fail, retry! @alg_tpc_probe_rom.c(489),WARNING" ID="0x81940f4b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_probe_state_process:pow_idx = %d!} @alg_tpc_probe_rom.c(498),ERROR" ID="0x81940f92" />
+			<MSG STRUCTURE="diag_log_msg5" NAME="pktno=%d, alg_tpc_probe_state_process, best_pow[%d]=%d,probe_pow[%d]=%d @alg_tpc_probe_rom.c(523),WARNING" ID="0x8194105b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_tpc_update_power_per: div 0! tx_count=%d, data_count = %d} @alg_tpc_probe_rom.c(553),ERROR" ID="0x8194114a" />
+			<MSG STRUCTURE="diag_log_msg6" NAME="{alg_tpc_update_power_per rank[%d] mpdu_num[%d], tx_cnt[%d], lvl[%d]per[%d/%d]} @alg_tpc_probe_rom.c(597),WARNING" ID="0x819412ab" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_get_rate_reduction_delay_flag: traffic_type invalid!} @alg_tpc_probe_rom.c(621),ERROR" ID="0x8194136a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_update_probe_state: attend to fall down from highest MCS, force best_pow_idx =%2d!!!} @alg_tpc_probe_rom.c(640),WARNING" ID="0x81941403" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_tpc_best_rate_change_process: pktno = %4d, from %2d to %2d!} @alg_tpc_probe_rom.c(658),WARNING" ID="0x81941493" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_init_probe_info:user[%d] get best rate fail!} @alg_tpc_probe_rom.c(736),ERROR" ID="0x81941702" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="alg_tpc_set_tpc_mode::dmac_vap[%d] IS NULL. @alg_tpc_probe_rom.c(801),ERROR" ID="0x8194190a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_tx_complete_process: get_traffic_rate_info err!} @alg_tpc_probe_rom.c(849),ERROR" ID="0x81941a8a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_stat_and_distance_identify:user_lut_idx[%d] get best rate fail!} @alg_tpc_probe_rom.c(857),ERROR" ID="0x81941aca" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_tpc_tx_query: pktno = %4d, probe owner = %2d} @alg_tpc_probe_rom.c(911),WARNING" ID="0x81941c7b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_set_pow_level: invalid frame type, %d} @alg_tpc_probe_rom.c(926),WARNING" ID="0x81941cf3" />
+			</MSG_LOG>

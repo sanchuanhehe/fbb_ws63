@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] vap mode wrong. @dmac_keep_alive_rom.c(39),ERROR" ID="0x8040013a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="keepalive info: @dmac_keep_alive_rom.c(42),WARNING" ID="0x80400153" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="powersave mode : [%d](1 active  2 powersave) @dmac_keep_alive_rom.c(44),WARNING" ID="0x80400163" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="keepalive cap[%d] @dmac_keep_alive_rom.c(45),WARNING" ID="0x8040016b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="keepalive cnt[%d] keepalive max_num[%d] @dmac_keep_alive_rom.c(47),WARNING" ID="0x8040017b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="activity_timeout[%d] @dmac_keep_alive_rom.c(48),WARNING" ID="0x80400183" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] pst_user_tmp is null. @dmac_keep_alive_rom.c(94),ERROR" ID="0x804002f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_user_keepalive_timer::dmac_vap null.} @dmac_keep_alive_rom.c(131),WARNING" ID="0x8040041b" />
+			</MSG_LOG>

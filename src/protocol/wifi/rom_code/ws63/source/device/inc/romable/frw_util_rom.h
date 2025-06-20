@@ -1,7 +1,7 @@
 ﻿/*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2022. All rights reserved.
  * Description: oal util interface
- * Author:
+ * Author: Huanghe
  */
 
 #ifndef FRW_UTIL_ROM_H

@@ -1,0 +1,30 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{alg_rts_get_user_info::user_lut_idx[%d] is invalid!} @alg_rts_rom.c(79),WARNING" ID="0x83bc027b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_rts_tx_process::user_lut_idx[%d] not valid!} @alg_rts_rom.c(129),WARNING" ID="0x83bc040b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_tx_process::rate set failed} @alg_rts_rom.c(157),WARNING" ID="0x83bc04eb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_rts_set_fixed_rts_mode:rts_mode[%d]} @alg_rts_rom.c(192),WARNING" ID="0x83bc0603" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_rts_tx_complete_process::user_lut_idx[%d] not valid!} @alg_rts_rom.c(309),WARNING" ID="0x83bc09ab" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{alg_rts_update_first_loss_ratio:[RTS] rts_open:%u, data_send_cnt:%u, loss_ratio:%u, rts_fail_cnt:%u} @alg_rts_rom.c(337),WARNING" ID="0x83bc0a8b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLA][ALG][RTS]:user_id=%d,rate0_use_rts=%d @alg_rts_rom.c(345),WARNING" ID="0x83bc0acb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[GLA][ALG][RTS]:user_id=%d,first_loss_ratio=%d,data_cnt=%d,cts_failure=%d @alg_rts_rom.c(403),WARNING" ID="0x83bc0c9b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_rts_rate_tx_param::vap_id[%d]get fail!} @alg_rts_rom.c(434),ERROR" ID="0x83bc0d92" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_rts_rate_tx_param::fixed rate [%d] invalid} @alg_rts_rom.c(459),ERROR" ID="0x83bc0e5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_rate_tx_param::set_rts_rate::failed} @alg_rts_rom.c(467),WARNING" ID="0x83bc0e9b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_rts_set_rank_rts_rate::protocol[%d] is invalid} @alg_rts_rom.c(515),WARNING" ID="0x83bc101b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_co_intf_notify::hal_dev is null!} @alg_rts_rom.c(528),ERROR" ID="0x83bc1082" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alg_rts_tx_payload_len_notify::null pointers! @alg_rts_rom.c(549),WARNING" ID="0x83bc112b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_tx_payload_len_notify::rts user not valid!} @alg_rts_rom.c(556),WARNING" ID="0x83bc1163" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_tx_payload_len_notify::get curr rate kbps fail} @alg_rts_rom.c(572),WARNING" ID="0x83bc11e3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_tx_payload_len_notify::rate set failed} @alg_rts_rom.c(599),WARNING" ID="0x83bc12bb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="alg_rts_calc_duration::captures fault rts rate[%d]! @alg_rts_rom.c(616),ERROR" ID="0x83bc1342" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alg_rts_threshold_sync::null pointers! @alg_rts_rom.c(702),WARNING" ID="0x83bc15f3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="alg_rts_threshold_sync::msg len should be[%d], actual[%d] @alg_rts_rom.c(712),ERROR" ID="0x83bc1642" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_init::alg register failed!} @alg_rts_rom.c(729),ERROR" ID="0x83bc16ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_init_user:dmac_alg registered fail} @alg_rts_rom.c(784),WARNING" ID="0x83bc1883" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_exit_user::input null pointers!} @alg_rts_rom.c(825),ERROR" ID="0x83bc19ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_rts_exit_user:user_lut_idx=[%d] is not initialized} @alg_rts_rom.c(838),WARNING" ID="0x83bc1a33" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_config_param::NULL POINTERS!} @alg_rts_rom.c(891),ERROR" ID="0x83bc1bda" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_config_param::memcpy_s error!} @alg_rts_rom.c(901),ERROR" ID="0x83bc1c2a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_config_param::memcpy_s error!} @alg_rts_rom.c(916),ERROR" ID="0x83bc1ca2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_rts_config_param::config param error!} @alg_rts_rom.c(927),WARNING" ID="0x83bc1cfb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_rts_config_param::get_rts_mdoe [%d] invalid mode} @alg_rts_rom.c(962),WARNING" ID="0x83bc1e13" />
+			</MSG_LOG>

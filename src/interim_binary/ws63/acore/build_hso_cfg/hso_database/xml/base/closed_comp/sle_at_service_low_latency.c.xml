@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="sle low latency dongle enable fail, ret:%d  @sle_at_service_low_latency.c(26),ERROR" ID="0xd92000d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sle low latency mouse enable fail, ret:%d  @sle_at_service_low_latency.c(38),ERROR" ID="0xd9200132" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="sle at cmd acb set low latency conn_id:%02x, enable:%x, rate:%02x @sle_at_service_low_latency.c(59),INFO" ID="0xd92001dd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] sle low latency set fail, ret:%d  @sle_at_service_low_latency.c(63),ERROR" ID="0xd92001fa" />
+			</MSG_LOG>

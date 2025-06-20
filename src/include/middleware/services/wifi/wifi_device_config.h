@@ -305,6 +305,70 @@ typedef enum wifi_security_enum {
 
 /**
  * @if Eng
+ * @brief  Enumeration of WiFi disconnect states.
+ * @else
+ * @brief  WiFi断连状态枚举。
+ * @endif
+ */
+typedef enum {
+    WIFI_DISCONN_STATE_AUTH_TIMEOUT = 1,            /*!< @if Eng Auth timeout(non-sae auth).
+                                                         @else 非sae auth阶段超时. @endif */
+    WIFI_DISCONN_STATE_AUTH_RCV_DEAUTH,             /*!< @if Eng Received deauth(non-sae auth).
+                                                         @else 非sae auth阶段收到deauth. @endif */
+    WIFI_DISCONN_STATE_AUTH_RCV_RSP_ERR,            /*!< @if Eng Received err response(non-sae auth).
+                                                         @else 非sae auth阶段收到错误回复. @endif */
+    WIFI_DISCONN_STATE_AUTH_SAE_COMMIT_TIMEOUT,     /*!< @if Eng Auth commit timeout(sae).
+                                                         @else auth阶段接收commit超时(sae). @endif */
+    WIFI_DISCONN_STATE_AUTH_SAE_COMMIT_RCV_DEAUTH,  /*!< @if Eng Receiving deauth(sae auth commit) .
+                                                         @else sae auth commit阶段收到deauth. @endif */
+    WIFI_DISCONN_STATE_AUTH_SAE_COMMIT_CHECK_ERR,  /*!< @if Eng Sae commit check failed.
+                                                         @else 校验sae commit失败. @endif */
+    WIFI_DISCONN_STATE_AUTH_SAE_CONFIRM_TIMEOUT,    /*!< @if Eng Auth confirm timeout(sae).
+                                                         @else auth阶段接收confirm超时(sae). @endif */
+    WIFI_DISCONN_STATE_AUTH_SAE_CONFIRM_RCV_DEAUTH, /*!< @if Eng Receiving deauth(sae auth confirm).
+                                                         @else sae auth confirm阶段收到deauth. @endif */
+    WIFI_DISCONN_STATE_AUTH_SAE_CONFIRM_CHECK_ERR,  /*!< @if Eng Sae confirm check failed.
+                                                         @else 校验sae confirm失败. @endif */
+    WIFI_DISCONN_STATE_ASSOC_TIMEOUT,               /*!< @if Eng Assoc timeout.
+                                                         @else assoc超时. @endif */
+    WIFI_DISCONN_STATE_ASSOC_RCV_DEAUTH,            /*!< @if Eng Receving deauth(assoc).
+                                                         @else assoc 阶段收到deauth. @endif */
+    WIFI_DISCONN_STATE_ASSOC_RCV_DISASSOC,          /*!< @if Eng Receving disassoc(assoc).
+                                                         @else assoc 阶段收到disassoc. @endif */
+    WIFI_DISCONN_STATE_ASSOC_RCV_RSP_ERR,           /*!< @if Eng Receving err response(assoc).
+                                                         @else assoc 阶段收到错误回复. @endif */
+    WIFI_DISCONN_STATE_EAPOL_KEY1_TIMEOUT,          /*!< @if Eng Receving eapol1 timeout.
+                                                         @else 接收eapol1超时. @endif */
+    WIFI_DISCONN_STATE_EAPOL_KEY1_RCV_DEAUTH,       /*!< @if Eng Receiving deauth when waiting eapol1.
+                                                         @else 等待eapol1阶段收到deauth. @endif */
+    WIFI_DISCONN_STATE_EAPOL_KEY1_RCV_DISASSOC,     /*!< @if Eng Receiving disassoc when waiting eapol1.
+                                                         @else 等待eapol1阶段收到disassoc. @endif */
+    WIFI_DISCONN_STATE_EAPOL_KEY1_RCV_ERR,          /*!< @if Eng Eapol1 check failed.
+                                                         @else eapol1校验失败. @endif */
+    WIFI_DISCONN_STATE_EAPOL_KEY3_TIMEOUT,          /*!< @if Eng Receving eapol3 timeout.
+                                                         @else 接收eapol3超时. @endif */
+    WIFI_DISCONN_STATE_EAPOL_KEY3_RCV_DEAUTH,       /*!< @if Eng Receiving deauth when waiting eapol3.
+                                                         @else 等待eapol3阶段收到deauth. @endif */
+    WIFI_DISCONN_STATE_EAPOL_KEY3_RCV_DISASSOC,     /*!< @if Eng Receiving disassoc when waiting eapol3.
+                                                         @else 等待eapol3阶段收到disassoc. @endif */
+    WIFI_DISCONN_STATE_EAPOL_KEY3_RCV_ERR,          /*!< @if Eng Eapol3 check failed.
+                                                         @else eapol3校验失败. @endif */
+    WIFI_DISCONN_STATE_CONNECTED_RCV_DEAUTH,        /*!< @if Eng Receving deauth after connect success.
+                                                         @else 连接成功后，收到deauth. @endif */
+    WIFI_DISCONN_STATE_CONNECTED_RCV_DISASSOC,      /*!< @if Eng Receving disassoc after connect success.
+                                                         @else 连接成功后，收到disassoc. @endif */
+    WIFI_DISCONN_STATE_LINKLOSS,                    /*!< @if Eng Linkloss.
+                                                         @else 驱动主动断连. @endif */
+    WIFI_DISCONN_STATE_APP_ACTIVE_DISCONN,          /*!< @if Eng App layer active disconn.
+                                                         @else 应用层主动断连. @endif */
+    WIFI_DISCONN_STATE_CANNOT_FIND_AP,              /*!< @if Eng Cannot find target ap.
+                                                         @else 扫描不到ap. @endif */
+    WIFI_DISCONN_STATE_UNKNOWN                      /*!< @if Eng Other disconn state.
+                                                         @else 其它断连状态。 @endif */
+} wifi_disconn_state_enum;
+
+/**
+ * @if Eng
  * @brief  Type of WiFi interface.
  * @else
  * @brief  Type of WiFi interface。
@@ -335,6 +399,24 @@ typedef enum {
                                          @else P2P DEVICE @endif */
     WIFI_IFTYPES_BUTT
 } wifi_iftype_t;
+
+/**
+ * @if Eng
+ * @brief  Enumeration of WiFi sta each connect stage para config types.
+ * @else
+ * @brief  WiFi sta 各连接阶段参数配置枚举类型。
+ * @endif
+ */
+typedef enum {
+    CONFIG_AUTH_MAX_RETRY,
+    CONFIG_AUTH_RECV_TIMEOUT,
+    CONFIG_ASSOC_MAX_RETRY,
+    CONFIG_ASSOC_RECV_TIMEOUT,
+    CONFIG_EAPOL1_RECV_TIMEOUT,
+    CONFIG_EAPOL2_MAX_RETRY,
+    CONFIG_EAPOL3_RECV_TIMEOUT,
+    CONFIG_CONNECT_PARA_MAX,
+} wifi_sta_connect_paras_enum;
 
 /**
  * @if Eng
@@ -459,6 +541,8 @@ typedef enum {
                                  @else 基于指定前缀SSID的扫描。 @endif */
     WIFI_BSSID_SCAN,        /*!< @if Eng  A scan based on a specified BSSID.
                                  @else 基于指定BSSID的扫描。 @endif */
+    WIFI_SSID_SCAN_WITH_CHANNEL, /*!< @if Eng  A scan based on a specified SSID and channel.
+                                      @else 基于指定SSID与信道的扫描。 @endif */
     STA_SCAN_BUTT
 } wifi_scan_type_enum;
 
@@ -604,6 +688,38 @@ typedef struct {
                                              @else 取值范围: [1, 10]. 设置为n时，表示linkloss计数达到阈值的（n/10）时，开始发送探测帧保活。 @endif */
     uint8_t resv[1];
 } linkloss_paras_stru;
+
+/**
+ * @if Eng
+ * @brief  Struct of connection encrption type.
+ * @else
+ * @brief  wifi连接加密方式。
+ * @endif
+ */
+typedef struct {
+    wifi_security_enum sec_type;
+    int32_t pairwise; /* aes or tkip or mix */
+} wifi_conn_sec_stru;
+/**
+ * @if Eng
+ * @brief  Struct of sta connect parameters.
+ * @else
+ * @brief  sta连接参数配置结构体。
+ * @endif
+ */
+typedef struct {
+ /* bitmap:
+ |        bit0         |         bit1         |        bit2         |       bit3         |
+ |   auth max retry    |    auth recv timeout |  assoc max retry    | assoc recv timeout |
+ |        bit4         |         bit5         |        bit6         |       bit7         |
+ | eapol1 recv timeout |  eapol2 max retry    | eapol3 recv timeout |       resv bit     | */
+    uint8_t bitmap;                               /*!< @if Eng config bit map.
+                                                       @else 参数配置比特位图。 @endif */
+    uint8_t resv;                                 /*!< @if Eng reserved byte.
+                                                       @else 保留字段。 @endif */
+    uint16_t conn_paras[CONFIG_CONNECT_PARA_MAX]; /*!< @if Eng para values, timeout unit:ms.
+                                                       @else 参数值, 超时单位：毫秒。 @endif */
+} wifi_sta_conn_paras;
 
 /**
  * @}

@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="dmac_config_platform_pm_debug: %d @dmac_psm_sta.c(44),WARNING" ID="0x80940163" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_config_platform_pm_enable: %d @dmac_psm_sta.c(57),WARNING" ID="0x809401cb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_bcn_no_frm_event_hander:vap is not valid} @dmac_psm_sta.c(78),ERROR" ID="0x80940272" />
+			</MSG_LOG>

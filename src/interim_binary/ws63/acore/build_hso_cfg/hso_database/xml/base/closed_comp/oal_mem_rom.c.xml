@@ -1,0 +1,15 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="oal_mem_init::start_addr &amp; end_addr is 0. @oal_mem_rom.c(148),ERROR" ID="0x817204a2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_mem_init::osal_kmalloc pkt_ram[%d] failed. @oal_mem_rom.c(154),ERROR" ID="0x817204d2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="new start=%u, end=%u, netbuf start=%u @oal_mem_rom.c(173),INFO" ID="0x8172056d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="mem already inited @oal_mem_rom.c(186),WARNING" ID="0x817205d3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="oal_mem_init::oal_mem_init_pkt_cfg failed. @oal_mem_rom.c(202),ERROR" ID="0x81720652" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_mem_get_pkt_payload::idx[%u] out of range, return NULL. @oal_mem_rom.c(225),ERROR" ID="0x8172070a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="oal_mem_netbuf_alloc::failed, len[%u] priority[%u] id[%u] lr[0x%x]. @oal_mem_rom.c(294),WARNING" ID="0x81720933" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_dmac_netbuf_payload:: lr[0x%x] @oal_mem_rom.c(386),WARNING" ID="0x81720c13" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="oal_dmac_netbuf_payload:: lr[0x%x], netbuf[0x%x] invalid @oal_mem_rom.c(397),ERROR" ID="0x81720c6a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_netbuf_get_hdr::netbuf is invalid, lr[0x%x]. @oal_mem_rom.c(411),ERROR" ID="0x81720cda" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_dmac_netbuf_end:: lr[0x%x] @oal_mem_rom.c(450),WARNING" ID="0x81720e13" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="oal_netbuf_dscr:: lr[0x%x], netbuf[0x%x] invalid @oal_mem_rom.c(473),ERROR" ID="0x81720eca" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="oal_netbuf_lwip:: lr[0x%x], netbuf[0x%x] invalid @oal_mem_rom.c(484),ERROR" ID="0x81720f22" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="oal_netbuf_skb:: lr[0x%x], netbuf[0x%x] invalid @oal_mem_rom.c(495),ERROR" ID="0x81720f7a" />
+			</MSG_LOG>

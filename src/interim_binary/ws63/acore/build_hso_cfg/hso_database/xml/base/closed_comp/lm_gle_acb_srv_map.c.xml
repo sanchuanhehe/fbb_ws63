@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="lm_gle_acb_set_map: 0x%04x 0x%04x 0x%04x 0x%04x  @lm_gle_acb_srv_map.c(131),INFO" ID="0x890c041d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="lm_gle_acb_set_map: 0x%04x @lm_gle_acb_srv_map.c(132),INFO" ID="0x890c0425" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp]lm_gle_llcp_chnl_map_ind_act pre_instant_clk(%d)instant(%d)curtime(%d) @lm_gle_acb_srv_map.c(247),INFO" ID="0x890c07bd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="lm_gle_req_map_upd_act: instant=%d, pre_instant_clk=%d @lm_gle_acb_srv_map.c(349),INFO" ID="0x890c0aed" />
+			</MSG_LOG>

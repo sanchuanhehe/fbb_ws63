@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{hal_one_packet_start::memcpy_s failed, ret = %d.} @hal_one_pkt_rom.c(73),ERROR" ID="0x827a024a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="wait one packet done timeout &gt; 10ms ! @hal_one_pkt_rom.c(157),WARNING" ID="0x827a04eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_send_one_packet:wait one packet done timeout! @hal_one_pkt_rom.c(178),WARNING" ID="0x827a0593" />
+			</MSG_LOG>

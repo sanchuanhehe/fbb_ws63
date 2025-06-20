@@ -1,0 +1,11 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[Error] bth_l2cap_chan not find! @btsv_l2cap_chan.c(38),ERROR" ID="0xd84e0132" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] conn_node == NULL @btsv_l2cap_chan.c(44),ERROR" ID="0xd84e0162" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] mc ble l2cap credit channel flow control atb fail! @btsv_l2cap_chan.c(54),ERROR" ID="0xd84e01b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bth_l2cap_chan aleardy reg! @btsv_l2cap_chan.c(68),ERROR" ID="0xd84e0222" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bth_l2cap_chan reg fail! @btsv_l2cap_chan.c(77),ERROR" ID="0xd84e026a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bth_l2cap_chan == NULL @btsv_l2cap_chan.c(106),ERROR" ID="0xd84e0352" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] conn_node == NULL @btsv_l2cap_chan.c(112),ERROR" ID="0xd84e0382" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bth chan data write malloc fail! @btsv_l2cap_chan.c(118),ERROR" ID="0xd84e03b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bth chan data write: memcpy failed! @btsv_l2cap_chan.c(124),ERROR" ID="0xd84e03e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bth chan data write: memcpy failed! @btsv_l2cap_chan.c(132),ERROR" ID="0xd84e0422" />
+			</MSG_LOG>

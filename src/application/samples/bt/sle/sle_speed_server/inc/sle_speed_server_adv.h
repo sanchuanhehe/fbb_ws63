@@ -88,4 +88,6 @@ typedef enum {
  * @endif
  */
 errcode_t sle_uuid_server_adv_init(void);
+
+void sle_announce_register_cbks(void);
 #endif

@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="sample ssaps find hdl by uuid cbk param null @gle_sample_ssap_server.c(19),ERROR" ID="0xd8d8009a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sample ssaps find hdl by uuid cbk param null @gle_sample_ssap_server.c(40),ERROR" ID="0xd8d80142" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sample ssaps write value cbk param null @gle_sample_ssap_server.c(57),ERROR" ID="0xd8d801ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sample ssaps read value cbk param null @gle_sample_ssap_server.c(79),ERROR" ID="0xd8d8027a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sample ssaps register cbks @gle_sample_ssap_server.c(119),ERROR" ID="0xd8d803ba" />
+			</MSG_LOG>

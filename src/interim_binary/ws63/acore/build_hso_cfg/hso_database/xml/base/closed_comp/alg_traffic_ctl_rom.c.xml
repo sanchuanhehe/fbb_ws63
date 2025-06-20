@@ -1,0 +1,16 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[GLA][ALG][TRC_RX_NORMAL]:rx_thres=%d,pkts=%d,event=%d,dscr_on_chip=%d @alg_traffic_ctl_rom.c(159),WARNING" ID="0x846804fb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[GLA][ALG][TRC_RX_SMALL]:rx_thres=%d,pkts=%d,event=%d,dscr_on_chip=%d @alg_traffic_ctl_rom.c(164),WARNING" ID="0x84680523" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="traffic_ctl rx_dscr_ctl_alg_info is NULL @alg_traffic_ctl_rom.c(226),ERROR" ID="0x84680712" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="traffic_ctl init user, vap_id:%d, assoc_id:%d, is_multi_user:%d @alg_traffic_ctl_rom.c(323),WARNING" ID="0x84680a1b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="traffic_ctl free user, vap_id:%d, assoc_id:%d, is_multi_user:%d @alg_traffic_ctl_rom.c(342),WARNING" ID="0x84680ab3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="traffic_ctl add vap, vap_id:%d @alg_traffic_ctl_rom.c(360),WARNING" ID="0x84680b43" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="traffic_ctl del vap, vap_id:%d @alg_traffic_ctl_rom.c(378),WARNING" ID="0x84680bd3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[GLA][ALG][TRC_TX]:flowctl=%d,tx_continue_on=%d,max_cycle=%d,stop_thres=%d @alg_traffic_ctl_rom.c(418),WARNING" ID="0x84680d13" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="traffic_ctl alg_traffic_ctl_init succ @alg_traffic_ctl_rom.c(487),INFO" ID="0x84680f3d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="traffic_ctl alg_traffic_ctl_exit succ @alg_traffic_ctl_rom.c(511),INFO" ID="0x84680ffd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="traffic_ctl {alg_traffic_ctl_config_msg_rsp::memcpy_s failed.} @alg_traffic_ctl_rom.c(690),ERROR" ID="0x84681592" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="traffic_ctl {alg_traffic_ctl_config_msg_rsp::memcpy_s failed.} @alg_traffic_ctl_rom.c(696),ERROR" ID="0x846815c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="traffic_ctl {alg_traffic_ctl_config_msg_rsp::memcpy_s failed.} @alg_traffic_ctl_rom.c(702),ERROR" ID="0x846815f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="traffic_ctl {alg_traffic_ctl_config_msg_rsp::memcpy_s failed.} @alg_traffic_ctl_rom.c(707),ERROR" ID="0x8468161a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="traffic_ctl cfg_id:%d value:%d @alg_traffic_ctl_rom.c(734),WARNING" ID="0x846816f3" />
+			</MSG_LOG>

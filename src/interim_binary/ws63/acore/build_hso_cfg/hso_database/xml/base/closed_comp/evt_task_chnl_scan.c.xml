@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="chnl_scan_restart_config format(0x%x)chmap0(0x%x) @evt_task_chnl_scan.c(149),WARNING" ID="0x886604ab" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][CHNLSCAN]chnl_scan_data_save: freq=%d, rssi=%d, ma=%d @evt_task_chnl_scan.c(332),INFO" ID="0x88660a65" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][CHNLSCAN]ch%d: moving_avg=%d @evt_task_chnl_scan.c(592),INFO" ID="0x88661285" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="evt_task_chnl_scan_evt_cbk isr_pos(0x%x) @evt_task_chnl_scan.c(790),ERROR" ID="0x886618b2" />
+			</MSG_LOG>

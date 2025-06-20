@@ -1,0 +1,14 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{dmac_frw_msg_exec_callback msg_id[%d] msg_id out of range} @frw_dmac_rom.c(65),WARNING" ID="0x8282020b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_frw_msg_exec_callback message_id[%d] callback unregistered} @frw_dmac_rom.c(72),WARNING" ID="0x82820243" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_frw_msg_exec_callback message_id[%d] dmac_vap is null} @frw_dmac_rom.c(81),WARNING" ID="0x8282028b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[E]frw_rx_msg_cb unregister! @frw_dmac_rom.c(147),ERROR" ID="0x8282049a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[FRW QUE %d]msg que cnt %d @frw_dmac_rom.c(180),INFO" ID="0x828205a5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="count[%d][msgid:%d vapid:%d] @frw_dmac_rom.c(183),INFO" ID="0x828205bd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_frw_alloc_msg_node: node alloc failed. msg_id %d @frw_dmac_rom.c(253),ERROR" ID="0x828207ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_frw_alloc_msg_node: data alloc failed. msg_id %d @frw_dmac_rom.c(272),ERROR" ID="0x82820882" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{frw_alloc_msg_node::memcpy_s fail!} @frw_dmac_rom.c(277),ERROR" ID="0x828208aa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{frw_thread_do_process_msg::report sync msg rsp fail!} @frw_dmac_rom.c(341),ERROR" ID="0x82820aaa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac frw post mem fail @frw_dmac_rom.c(471),WARNING" ID="0x82820ebb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{msg_id[%d] d2d_post_sync_msg::dmac_frw_msg_exec failed[%d].} @frw_dmac_rom.c(501),WARNING" ID="0x82820fab" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{msg_id[%d] dmac_hal_post_async_msg::dmac_frw_post_async_msg failed[%d].} @frw_dmac_rom.c(527),WARNING" ID="0x8282107b" />
+			</MSG_LOG>

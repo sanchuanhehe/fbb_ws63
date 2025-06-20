@@ -120,6 +120,18 @@ int HILINK_SetConfigInfoPath(const char *path);
  */
 void HILINK_DiagnosisRecordEx(int errCode);
 
+/**
+ * @brief 记录诊断信息
+ * @param errCode [IN] 诊断错误码，范围982099001~982099999， 具体参考FaultCodeType
+ * @param param [IN] 辅助定位信息，大小限制在512字节内，可上传故障相关定位信息
+ * 示例
+ * 内存不足："mem: used:xxx, free:yyy"
+ * 访问非法内存："sp addr=0xaaaaaa    sp content= 0xbbbbbb"
+ * @return 0 成功 ; 其他失败
+ * @attention 设备发生故障时不能频繁调用
+ */
+int HILINK_DiagnosisInfoRecord(int errCode, const char *param);
+
 /*
  * 注册获取设备表面的最强点信号发射功率强度回调函数
  * 返回0表示成功，返回非0失败
@@ -469,6 +481,7 @@ int HILINK_GetRecevieTraceId(TraceIdInfo *out);
  */
 void HILINK_DisableCentralOta(void);
 
+void HILINK_EnablePrescan(void);
 #ifdef __cplusplus
 #if __cplusplus
 }

@@ -1,5 +1,6 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+ * Description: define wifi file id
  */
 
 #ifndef __LOG_DEF_WIFI_H__
@@ -695,11 +696,13 @@ typedef enum {
     OAM_FILE_ID_RADAR_TARGET_FSM_C,
     OAM_FILE_ID_RADAR_PLOT_EXTRACTION_C,
     OAM_FILE_ID_RADAR_INTERPOLATION_C,
+    OAM_FILE_ID_RADAR_ADL_TRACK_FSM_C,
+    OAM_FILE_ID_RADAR_PPL_DATA_CUBE_MGC_C,
+    OAM_FILE_ID_RADAR_FRAME_BASED_FSM_HANDLER_C,
     DIAG_FILE_ID_HAL_WIFI_PATCH_C,
     DIAG_FILE_ID_DMAC_WIFI_PATCH_C,
     DIAG_FILE_ID_WIFI_HOST_HMAC_MFG_C,
     DIAG_FILE_ID_WIFI_DEV_ALG_AR_C,
-    OAM_FILE_ID_RADAR_PPL_DATA_CUBE_MGC_C,
 
     DIAG_FILE_ID_MAX_BUFF = 1024
 } log_file_list_enum_wifi_app_t;

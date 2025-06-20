@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="alg_temp_init::dmac_alg_register fail! @alg_temp_protect_rom.c(37),ERROR" ID="0x8316012a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alg_temp_exit::dmac_alg_unregister fail! @alg_temp_protect_rom.c(51),ERROR" ID="0x8316019a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_alg_temp_protect_state_switch::if_over_state:%u @alg_temp_protect_rom.c(62),WARNING" ID="0x831601f3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_alg_temp_protect_pa_off_switch::msg or data NULL! @alg_temp_protect_rom.c(73),ERROR" ID="0x8316024a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_alg_temp_protect_pa_off_switch:is_pa_off:%u is_mac_pa_enabled:%u @alg_temp_protect_rom.c(80),WARNING" ID="0x83160283" />
+			</MSG_LOG>

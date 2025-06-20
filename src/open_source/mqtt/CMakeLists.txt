@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief mqtt cmake file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+# Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
 #===============================================================================
 set(COMPONENT_NAME "mqtt")
 

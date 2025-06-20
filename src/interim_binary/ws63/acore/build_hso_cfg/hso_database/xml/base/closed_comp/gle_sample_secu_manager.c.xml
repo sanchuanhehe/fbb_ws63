@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="sample sm pair start cbk co_handle: 0x%04x  bond_status: %d @gle_sample_secu_manager.c(36),INFO" ID="0xd8d40125" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="sample sm pair remove cbk co_handle: 0x%04x remove_status: %d @gle_sample_secu_manager.c(43),INFO" ID="0xd8d4015d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="sample sm auth complete cbk addr: %02x:**:**:**:%02x:%02x @gle_sample_secu_manager.c(50),INFO" ID="0xd8d40195" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="sample sm encrypt complete cbk addr: %02x:**:**:**:%02x:%02x @gle_sample_secu_manager.c(57),INFO" ID="0xd8d401cd" />
+			</MSG_LOG>

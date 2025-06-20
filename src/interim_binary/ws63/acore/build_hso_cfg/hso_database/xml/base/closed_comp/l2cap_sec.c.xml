@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="[L2CAP][DELETE_CID] RESULT=0x%x, STATUS=0x%x, PSM=0x%x, LOCAL_CID @l2cap_sec.c(122),WARNING" ID="0xdbc603d3" />
+			</MSG_LOG>

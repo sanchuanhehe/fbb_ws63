@@ -1,0 +1,10 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{dmac_fcs_start_send_one_packet::param null.} @dmac_forward_main.c(147),ERROR" ID="0x8144049a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{vap_id[%d] dmac_vap[%p] send one_pkt fail, start retransmit!} @dmac_forward_main.c(157),WARNING" ID="0x814404eb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_vap_clear_tx_queue::vap_id %d, succ.} @dmac_forward_main.c(218),INFO" ID="0x814406d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_tbtt_device_handler_hook but dmac_vap or hal_vap is null! @dmac_forward_main.c(270),ERROR" ID="0x81440872" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_schedule::dmac_vap is NULL} @dmac_forward_main.c(304),ERROR" ID="0x81440982" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_schedule q_num wrong, return} @dmac_forward_main.c(332),ERROR" ID="0x81440a62" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_frame_pn_enable:: hmac_vap/param is null ptr!} @dmac_forward_main.c(408),ERROR" ID="0x81440cc2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_forward_init:: register_netbuf_hooks error! ret = 0x%x @dmac_forward_main.c(502),ERROR" ID="0x81440fb2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_forward_init:: msg_hook_register error! ret = 0x%x @dmac_forward_main.c(514),ERROR" ID="0x81441012" />
+			</MSG_LOG>

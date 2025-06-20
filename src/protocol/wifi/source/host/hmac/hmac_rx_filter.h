@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2014-2021. All rights reserved.
  * Description:Header file of hmac_rx_filter.c
- * Author:
+ * Author: huanghe
  * Create: 2014-07-14
  */
 

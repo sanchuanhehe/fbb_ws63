@@ -1,0 +1,58 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_fsm_init_rx_dscr::init rx dscr succ} @hal_device_fsm_rom.c(97),WARNING" ID="0x848c030b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_fsm_init_rx_dscr::hw_rx_queue not empty!!!} @hal_device_fsm_rom.c(99),WARNING" ID="0x848c031b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_work_sub_state_trans::dev no vap up!} @hal_device_fsm_rom.c(275),ERROR" ID="0x848c089a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_work_sub_state_trans::sub state error!} @hal_device_fsm_rom.c(286),ERROR" ID="0x848c08f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_set_pm_bitmap::vap[%d] not up!} @hal_device_fsm_rom.c(393),WARNING" ID="0x848c0c4b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_scan_abort:state[%d]} @hal_device_fsm_rom.c(541),WARNING" ID="0x848c10eb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_device_handle_scan_pause::alreay paused,type[0x%x]scan idx[%d]} @hal_device_fsm_rom.c(557),ERROR" ID="0x848c116a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_handle_scan_pause::idx[%d]} @hal_device_fsm_rom.c(572),WARNING" ID="0x848c11e3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_handle_scan_resume:: not paused} @hal_device_fsm_rom.c(583),ERROR" ID="0x848c123a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_handle_scan_resume:: paused[0x%x]} @hal_device_fsm_rom.c(597),WARNING" ID="0x848c12ab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_handle_scan_resume:: idx[%d]} @hal_device_fsm_rom.c(605),WARNING" ID="0x848c12eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_scan_every_channel_state_chean:: NULL PTR @hal_device_fsm_rom.c(628),ERROR" ID="0x848c13a2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_scan_params_prepare::fsm not attached.scan_channel_info[0x%p]} @hal_device_fsm_rom.c(652),ERROR" ID="0x848c1462" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_scan_handle_scan_back::event[%d], work bitmap[%d]} @hal_device_fsm_rom.c(714),ERROR" ID="0x848c1652" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_add_work_vap_bitmap::event[%d], ptr null} @hal_device_fsm_rom.c(758),ERROR" ID="0x848c17b2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{hal_device_add_work_vap_bitmap::vap id error[%d],mac vap id[%d]vap mode[%d]} @hal_device_fsm_rom.c(767),ERROR" ID="0x848c17fa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_device_add_work_vap_bitmap::event join complete,hal vap id[%d],vap mode[%d]!!!not sta} @hal_device_fsm_rom.c(773),ERROR" ID="0x848c182a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{hal_device_add_work_vap_bitmap::hal vap id[%d],registerd[%d],event[%d],now bitmap[%d]!!!} @hal_device_fsm_rom.c(782),ERROR" ID="0x848c1872" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{hal_device_add_work_vap_bitmap::event[%d],hal vap id[%d],vap mode[%d]already registered,now bitmap[%d]} @hal_device_fsm_rom.c(788),WARNING" ID="0x848c18a3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{hal_device_add_work_vap_bitmap::event[%d]add vap hal id[%d],mode[%d]to work_vap_bitmap[%d]} @hal_device_fsm_rom.c(798),WARNING" ID="0x848c18f3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_del_work_vap_bitmap::event[%d],ptr null} @hal_device_fsm_rom.c(821),ERROR" ID="0x848c19aa" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{hal_device_del_work_vap_bitmap::vap id[%d]hal id[%d],vap is registerd[%d],now work_vap_bitmap[%d]} @hal_device_fsm_rom.c(837),WARNING" ID="0x848c1a2b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{hal_dev_fsm_info::mac_pa_switch_en[%d],wait_hw_txq_empty[0x%x],sub_fsm_stat[%d],fsm_stat[%d]} @hal_device_fsm_rom.c(898),WARNING" ID="0x848c1c13" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{hal_dev_fsm_info::cur_sub_stat[%d],vap_pm_state_bitmap[0x%x],last_set_vap_id[0x%x]} @hal_device_fsm_rom.c(903),WARNING" ID="0x848c1c3b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_idle_check_timeout_fn::hal_device is null} @hal_device_fsm_rom.c(963),WARNING" ID="0x848c1e1b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_idle_check_timeout_fn :: hal_dev_fsm_current[%d]} @hal_device_fsm_rom.c(971),WARNING" ID="0x848c1e5b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_device_handle_event::ptr NULL @hal_device_fsm_rom.c(1036),ERROR" ID="0x848c2062" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_device_handle_event::hal device fsm not attached @hal_device_fsm_rom.c(1042),ERROR" ID="0x848c2092" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hal_device_handle_event::state[%d]dispatch event[%d]not succ[%d] @hal_device_fsm_rom.c(1049),ERROR" ID="0x848c20ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_idle_to_scan_prepare::ptr NULL @hal_device_fsm_rom.c(1081),ERROR" ID="0x848c21ca" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{hal_device_idle_to_scan_prepare::scan start idx[%d],scan channel nums[%d],scan time each chan[%d],mode[%d]} @hal_device_fsm_rom.c(1093),WARNING" ID="0x848c222b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_device_work_to_scan_prepare::hal device workbitmap[%d]is work state wrong!!!scan mode[%d]} @hal_device_fsm_rom.c(1115),ERROR" ID="0x848c22da" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{hal_device_work_to_scan_prepare::scan start idx[%d],scan channel nums[%d],scan time each chan[%d], mode[%d]} @hal_device_fsm_rom.c(1129),WARNING" ID="0x848c234b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_device_fsm_attach::hal device fsm have attached @hal_device_fsm_rom.c(1144),WARNING" ID="0x848c23c3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_device_fsm_attach::hal device fsm not attatched @hal_device_fsm_rom.c(1179),ERROR" ID="0x848c24da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_init_entry::hal_device null.} @hal_device_fsm_rom.c(1206),ERROR" ID="0x848c25b2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_device_state_init_entry::hal dev fsm in INIT, mac pa[%d](1:on,0:off), prev state[%d].} @hal_device_fsm_rom.c(1213),WARNING" ID="0x848c25eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_init_event::hal_device null.} @hal_device_fsm_rom.c(1243),WARNING" ID="0x848c26db" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_state_init_event::HAL_DEVICE_EVENT_SYSTEM_INIT. event[%d]} @hal_device_fsm_rom.c(1251),WARNING" ID="0x848c271b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_state_init_event::wrong event1[%d]} @hal_device_fsm_rom.c(1262),ERROR" ID="0x848c2772" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_state_init_event::wrong event2[%d]} @hal_device_fsm_rom.c(1265),ERROR" ID="0x848c278a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_idle_entry::hal_device null.} @hal_device_fsm_rom.c(1284),ERROR" ID="0x848c2822" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_device_state_idle_entry::hal dev fsm in IDLE, mac pa[%d](1:on,0:off), prev state[%d].} @hal_device_fsm_rom.c(1303),WARNING" ID="0x848c28bb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_idle_event::hal_device null.} @hal_device_fsm_rom.c(1333),WARNING" ID="0x848c29ab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_state_idle_event::slave init event[%d].} @hal_device_fsm_rom.c(1374),WARNING" ID="0x848c2af3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_state_idle_event::idle state wrong event[%d]} @hal_device_fsm_rom.c(1378),ERROR" ID="0x848c2b12" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_work_entry::hal_device null.} @hal_device_fsm_rom.c(1396),ERROR" ID="0x848c2ba2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_device_state_work_entry:HalDev fsm inWORK,macPa=%d(1:on,0:off),prevState=%d(0:Init,1:Idle,2:Work,3:Scan} @hal_device_fsm_rom.c(1407),WARNING" ID="0x848c2bfb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_work_event::hal_device null.} @hal_device_fsm_rom.c(1437),WARNING" ID="0x848c2ceb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_state_work_event::work state wrong event[%d]} @hal_device_fsm_rom.c(1472),ERROR" ID="0x848c2e02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_scan_entry::hal_device null.} @hal_device_fsm_rom.c(1492),ERROR" ID="0x848c2ea2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_device_state_scan_entry::hal dev fsm in SCAN, mac pa[%d](1:on,0:off), prev state[%d](0:Init,1:Idle,2:Work,3:Scan).} @hal_device_fsm_rom.c(1510),WARNING" ID="0x848c2f33" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_scan_exit::hal_device null.} @hal_device_fsm_rom.c(1528),ERROR" ID="0x848c2fc2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_state_scan_exit::wrong event[%d],exit scan state} @hal_device_fsm_rom.c(1537),ERROR" ID="0x848c300a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_work_event::hal_device null.} @hal_device_fsm_rom.c(1553),WARNING" ID="0x848c308b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_device_state_scan_event::in scan state vap down} @hal_device_fsm_rom.c(1592),WARNING" ID="0x848c31c3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_device_state_scan_event::scan state wrong event[%d]} @hal_device_fsm_rom.c(1603),ERROR" ID="0x848c321a" />
+			</MSG_LOG>

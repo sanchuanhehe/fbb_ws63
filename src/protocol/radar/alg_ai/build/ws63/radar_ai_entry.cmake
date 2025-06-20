@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2024. All rights reserved.
+# Copyright (c) @CompanyNameMagicTag 2024-2024. All rights reserved.
 #===============================================================================
 set(COMPONENT_NAME "radar_ai")
 set(MODULE_NAME "wifi")
@@ -9,7 +9,6 @@ set(AUTO_DEF_FILE_ID FALSE)
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_attention_layer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_conv_layer.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_conv2_layer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_fc_layer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_lstm_layer.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg_ai/radar_ai_model.c
@@ -39,6 +38,8 @@ set(PRIVATE_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/ppl
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl
     ${CMAKE_CURRENT_SOURCE_DIR}/../alg/spl/target_track/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl
+    ${CMAKE_CURRENT_SOURCE_DIR}/../alg/fpl/target_track/
 )
 
 set(PRIVATE_DEFINES

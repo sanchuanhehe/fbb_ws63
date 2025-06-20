@@ -58,6 +58,10 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_SFC)
     add_subdirectory_if_exist(sfc)
 endif()
 
+if(DEFINED CONFIG_SAMPLE_SUPPORT_SFC_PERF)
+    add_subdirectory_if_exist(sfc_perf)
+endif()
+
 if(DEFINED CONFIG_SAMPLE_SUPPORT_SPI)
     add_subdirectory_if_exist(spi)
 endif()

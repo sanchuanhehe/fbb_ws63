@@ -2,14 +2,6 @@
 # @brief    cmake file
 # Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
 #===============================================================================
-if(DEFINED CONFIG_SAMPLE_SUPPORT_BLE_GATT_CLIENT_SAMPLE)
-    add_subdirectory_if_exist(ble_gatt_client)
-endif()
-
-if(DEFINED CONFIG_SAMPLE_SUPPORT_BLE_GATT_SERVER_SAMPLE)
-    add_subdirectory_if_exist(ble_gatt_server)
-endif()
-
 if(DEFINED CONFIG_SAMPLE_SUPPORT_BLE_SPEED_SERVER_SAMPLE)
     add_subdirectory_if_exist(ble_speed_server)
 endif()

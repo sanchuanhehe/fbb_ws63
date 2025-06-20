@@ -215,9 +215,12 @@ static void InitMbedtls(void)
 #if defined(HILINK_TLS_DEBUG)
 static void TlsDebug(void *context, int level, const char *file, int line, const char *str)
 {
-    (void) level;
-    (void) file;
-    (void) line;
+    (void)level;
+    (void)file;
+    (void)line;
+    if ((context == NULL) || (str == NULL)) {
+        return;
+    }
     HiLinkTlsClient *ctx = (HiLinkTlsClient *)(context);
     HILINK_SAL_INFO("custom=%s,mbeddebug: %s", ctx->custom, str);
 }

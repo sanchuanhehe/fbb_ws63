@@ -216,6 +216,10 @@ def fill_fota_info_area(cf, image_num, fota_obj):
         fota_info_head.hardware_id = fota_obj.hardware_id
 
     #fota_info_head.reserved = 0 # 预留给用户
+    if fota_obj.user_firmware_version is not None:
+        version_len = len(fota_obj.user_firmware_version)
+        user_version_hex = bytearray.fromhex(fota_obj.user_firmware_version.encode().hex())
+        fota_info_head.reserved[0:version_len] = user_version_hex[0:version_len]
     #fota_info_head.sign_fota_info = 0 # 签名
 
     return area_len, upg_bin
@@ -828,6 +832,10 @@ class fota_info:
         print("input_dict:", self.input_dict)
         print("original_dict:", self.original_dict)
         self.diff_image_info = self._get_image_path_for_diff_image(self.input_dict, self.original_dict) # 差分镜像信息
+        if hasattr(user_input, 'user_firmware_version'):
+            self.user_firmware_version = user_input.user_firmware_version
+        else:
+            self.user_firmware_version = None
 
     def _set_tool_path(self):
         if platform.system().lower() == "linux":

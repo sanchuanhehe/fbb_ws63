@@ -12,16 +12,14 @@
 #include "osal_addr.h"
 #include "soc_osal.h"
 #include "common_def.h"
-
+#include "nv.h"
 #include "sle_common.h"
 #include "sle_errcode.h"
 #include "sle_ssap_server.h"
 #include "sle_connection_manager.h"
 #include "sle_device_discovery.h"
-#include "sle_transmition_manager.h"
-#include "nv.h"
-
 #include "sle_speed_server_adv.h"
+#include "sle_transmition_manager.h"
 #include "sle_speed_server.h"
 
 #define OCTET_BIT_LEN 8
@@ -65,8 +63,6 @@ static sle_link_qos_state_t g_sle_link_state = 0;  /* sle link state */
 #define DEFAULT_SLE_SPEED_DATA_LEN 1500
 #define DEFAULT_SLE_SPEED_MTU_SIZE 1500
 #define SPEED_DEFAULT_TIMEOUT_MULTIPLIER 0x1f4
-#define SPEED_DEFAULT_SCAN_INTERVAL 400
-#define SPEED_DEFAULT_SCAN_WINDOW 20
 static unsigned char data[PKT_DATA_LEN];
 
 static uint8_t sle_uuid_base[] = { 0x37, 0xBE, 0xA8, 0x80, 0xFC, 0x70, 0x11, 0xEA, \
@@ -88,7 +84,7 @@ static void sle_uuid_setu2(uint16_t u2, sle_uuid_t *out)
 static void ssaps_read_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_read_cb_t *read_cb_para,
     errcode_t status)
 {
-    osal_printk("[speed server] ssaps read request cbk server_id:%x, conn_id:%x, handle:%x, status:%x\r\n",
+    osal_printk("[speed server] ssaps read request cbk server_id:0x%x, conn_id:0x%x, handle:0x%x, status:0x%x\r\n",
         server_id, conn_id, read_cb_para->handle, status);
     osal_task *task_handle = NULL;
     osal_kthread_lock();
@@ -213,7 +209,7 @@ static errcode_t sle_uuid_server_service_add(void)
     sle_uuid_setu2(SLE_UUID_SERVER_SERVICE, &service_uuid);
     ret = ssaps_add_service_sync(g_server_id, &service_uuid, 1, &g_service_handle);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("[speed server] sle uuid add service fail, ret:%x\r\n", ret);
+        osal_printk("[speed server] sle uuid add service fail, ret:0x%x\r\n", ret);
         return ERRCODE_SLE_FAIL;
     }
     return ERRCODE_SLE_SUCCESS;
@@ -242,7 +238,7 @@ static errcode_t sle_uuid_server_property_add(void)
     }
     ret = ssaps_add_property_sync(g_server_id, g_service_handle, &property,  &g_property_handle);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("[speed server] sle uuid add property fail, ret:%x\r\n", ret);
+        osal_printk("[speed server] sle uuid add property fail, ret:0x%x\r\n", ret);
         osal_vfree(property.value);
         return ERRCODE_SLE_FAIL;
     }
@@ -254,7 +250,7 @@ static errcode_t sle_uuid_server_property_add(void)
 
     ret = ssaps_add_descriptor_sync(g_server_id, g_service_handle, g_property_handle, &descriptor);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("[speed server] sle uuid add descriptor fail, ret:%x\r\n", ret);
+        osal_printk("[speed server] sle uuid add descriptor fail, ret:0x%x\r\n", ret);
         osal_vfree(property.value);
         return ERRCODE_SLE_FAIL;
     }
@@ -283,11 +279,11 @@ static errcode_t sle_uuid_server_add(void)
         ssaps_unregister_server(g_server_id);
         return ERRCODE_SLE_FAIL;
     }
-    osal_printk("[speed server] sle uuid add service, server_id:%x, service_handle:%x, property_handle:%x\r\n",
+    osal_printk("[speed server] sle uuid add service, server_id:0x%x, service_handle:0x%x, property_handle:0x%x\r\n",
         g_server_id, g_service_handle, g_property_handle);
     ret = ssaps_start_service(g_server_id, g_service_handle);
     if (ret != ERRCODE_SLE_SUCCESS) {
-        osal_printk("[speed server] sle uuid add service fail, ret:%x\r\n", ret);
+        osal_printk("[speed server] sle uuid add service fail, ret:0x%x\r\n", ret);
         return ERRCODE_SLE_FAIL;
     }
     osal_printk("[speed server] sle uuid add service out\r\n");
@@ -299,7 +295,7 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
 {
     osal_printk("[speed server] connect state changed conn_id:0x%02x, conn_state:0x%x, pair_state:0x%x, \
         disc_reason:0x%x\r\n", conn_id, conn_state, pair_state, disc_reason);
-    osal_printk("[speed server] connect state changed addr:%02x:**:**:**:%02x:%02x\r\n",
+    osal_printk("[speed server] connect state changed addr:0x%02x:**:**:**:0x%02x:0x%02x\r\n",
         addr->addr[BT_INDEX_0], addr->addr[BT_INDEX_4], addr->addr[BT_INDEX_5]);
     g_sle_conn_hdl = conn_id;
     sle_connection_param_update_t parame = {0};
@@ -315,37 +311,58 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
     }
 }
 
+static void sle_auth_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errcode_t status,
+    const sle_auth_info_evt_t* evt)
+{
+    unused(conn_id);
+    unused(evt);
+    osal_printk("[speed server] auth cmp:0x%x\r\n", status);
+    if (status == ERRCODE_SLE_SUCCESS) {
+        return;
+    }
+    osal_printk("[speed server] auth failed, remove pair and restart adv\r\n");
+    sle_remove_paired_remote_device(addr);
+    sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
+}
+
 static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errcode_t status)
 {
-    osal_printk("[speed server] pair complete conn_id:%02x, status:%x\r\n",
+    osal_printk("[speed server] pair complete conn_id:0x%02x, status:0x%x\r\n",
         conn_id, status);
-    osal_printk("[speed server] pair complete addr:%02x:**:**:**:%02x:%02x\r\n",
+    osal_printk("[speed server] pair complete addr:0x%02x:**:**:**:0x%02x:0x%02x\r\n",
         addr->addr[BT_INDEX_0], addr->addr[BT_INDEX_4], addr->addr[BT_INDEX_5]);
+    if (status == ERRCODE_SLE_SUCCESS) {
+        return;
+    }
+    osal_printk("[speed server] pair failed, remove pair and restart adv\r\n");
+    sle_remove_paired_remote_device(addr);
+    sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
 }
 
 void sle_sample_update_cbk(uint16_t conn_id, errcode_t status, const sle_connection_param_update_evt_t *param)
 {
     unused(status);
-    osal_printk("[ssap server] updat state changed conn_id:%d, interval = %02x\n", conn_id, param->interval);
+    osal_printk("[ssap server] updat state changed conn_id:%d, interval = 0x%02x\n", conn_id, param->interval);
 }
 
 void sle_sample_update_req_cbk(uint16_t conn_id, errcode_t status, const sle_connection_param_update_req_t *param)
 {
     unused(conn_id);
     unused(status);
-    osal_printk("[ssap server] sle_sample_update_req_cbk interval_min:%02x, interval_max:%02x\n",
+    osal_printk("[ssap server] sle_sample_update_req_cbk interval_min:0x%02x, interval_max:0x%02x\n",
         param->interval_min, param->interval_max);
 }
 
 void sle_sample_rssi_cbk(uint16_t conn_id, int8_t rssi, errcode_t status)
 {
-    osal_printk("[ssap server] conn_id:%d, rssi = %c, status = %x\n", conn_id, rssi, status);
+    osal_printk("[ssap server] conn_id:%d, rssi = %d, status = 0x%x\n", conn_id, rssi, status);
 }
 
 static void sle_conn_register_cbks(void)
 {
     sle_connection_callbacks_t conn_cbks = {0};
     conn_cbks.connect_state_changed_cb = sle_connect_state_changed_cbk;
+    conn_cbks.auth_complete_cb = sle_auth_complete_cbk;
     conn_cbks.pair_complete_cb = sle_pair_complete_cbk;
     conn_cbks.connect_param_update_req_cb = sle_sample_update_req_cbk;
     conn_cbks.connect_param_update_cb = sle_sample_update_cbk;
@@ -359,20 +376,6 @@ void sle_ssaps_set_info(void)
     info.mtu_size = DEFAULT_SLE_SPEED_MTU_SIZE;
     info.version = 1;
     ssaps_set_info(g_server_id, &info);
-}
-
-void sle_speed_connect_param_init(void)
-{
-    sle_default_connect_param_t param = {0};
-    param.enable_filter_policy = 0;
-    param.gt_negotiate = 0;
-    param.initiate_phys = 1;
-    param.max_interval = SPEED_DEFAULT_CONN_INTERVAL;
-    param.min_interval = SPEED_DEFAULT_CONN_INTERVAL;
-    param.scan_interval = SPEED_DEFAULT_SCAN_INTERVAL;
-    param.scan_window = SPEED_DEFAULT_SCAN_WINDOW;
-    param.timeout = SPEED_DEFAULT_TIMEOUT_MULTIPLIER;
-    sle_default_connection_param_set(&param);
 }
 
 void sle_set_local_addr_init(void)
@@ -396,24 +399,28 @@ void sle_speed_server_set_nv(void)
     osal_printk("[speed server] The value of nv is set to %d.\r\n", nv_value);
 }
 
-/* 初始化speed server */
-errcode_t sle_speed_server_init(void)
+void sle_enable_server_cbk(void)
 {
-    uapi_watchdog_disable();
-    enable_sle();
-    printf("sle enable\r\n");
     sle_speed_server_set_nv();
-    sle_conn_register_cbks();
-    sle_ssaps_register_cbks();
     sle_uuid_server_add();
-    sle_uuid_server_adv_init();
     sle_ssaps_set_info();
 #ifdef SLE_QOS_FLOWCTRL_FUNCTION_SWITCH
     sle_transmission_register_cbks();
 #endif
-    sle_speed_connect_param_init();
     sle_set_local_addr_init();
+    sle_uuid_server_adv_init();
     osal_printk("[speed server] init ok\r\n");
+}
+
+/* 初始化speed server */
+errcode_t sle_speed_server_init(void)
+{
+    uapi_watchdog_disable();
+    sle_announce_register_cbks();
+    sle_conn_register_cbks();
+    sle_ssaps_register_cbks();
+    enable_sle();
+    printf("sle enable end.\r\n");
     return ERRCODE_SLE_SUCCESS;
 }
 

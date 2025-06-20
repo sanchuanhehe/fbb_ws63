@@ -1,0 +1,14 @@
+name: "mbedtls_toolbox"
+description: "ONT代码仓编译任务toolbox镜像!"
+image: "kweecr04.his.huawei.com:80/ecr-build-arm-gzkunpeng/homenetwork_suse12sp5_toolbox_imgs:r22c10pi4_toolbox_v1.3"
+mode: "TOOLBOX"
+flavor: "LARGE"
+mount_dir: "/usr1"
+code_cache: true
+clean_workspace: true
+start_cmd: ""
+envs:
+  - name: "DOCKER_START_USER"
+    value: "builduser"
+customized_config:
+  - cloudCacheFlag: true

@@ -11,5 +11,6 @@
 
 int HILINK_RegisterErrnoCallback(GetErrno cb)
 {
-    return hilink_call1(HILINK_CALL_HILINK_REG_ERRNO_CALLBACK, int, GetErrno, cb);
+    hilink_call1(HILINK_CALL_HILINK_REGISTER_ERRNO_CALLBACK, HILINK_RegisterErrnoCallback, int, GetErrno, cb);
+    return 0;
 }

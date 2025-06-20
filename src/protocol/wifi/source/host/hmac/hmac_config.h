@@ -147,6 +147,7 @@ osal_s32 hmac_config_reg_write(hmac_vap_stru *hmac_vap, frw_msg *msg);
 #endif
 osal_s32 hmac_config_query_rssi(hmac_vap_stru *hmac_vap, frw_msg *msg);
 osal_s32 hmac_config_query_psst(hmac_vap_stru *hmac_vap, frw_msg *msg);
+osal_s32 hmac_config_get_vendor_ie(hmac_vap_stru *hmac_vap, frw_msg *msg);
 
 #ifdef _PRE_WLAN_SUPPORT_CCPRIV_CMD
 osal_s32 hmac_config_reg_info(hmac_vap_stru *hmac_vap, frw_msg *msg);
@@ -172,7 +173,8 @@ osal_s32 hmac_config_suspend_action_sync(hmac_vap_stru *hmac_vap, frw_msg *msg);
 osal_s32 hmac_config_adjust_tx_power(hmac_vap_stru *hmac_vap, frw_msg *msg);
 osal_s32 hmac_config_set_rate_power_offset(hmac_vap_stru *hmac_vap, frw_msg *msg);
 osal_s32 hmac_config_set_cal_tone(hmac_vap_stru *hmac_vap, frw_msg *msg);
-
+osal_s32 hmac_config_set_sta_conn_paras(hmac_vap_stru *hmac_vap, frw_msg *msg);
+osal_s32 hmac_config_get_data_frame_rssi(hmac_vap_stru *hmac_vap, frw_msg *msg);
 osal_s32 hmac_config_restore_tx_power(hmac_vap_stru *hmac_vap, frw_msg *msg);
 osal_s32 hmac_config_set_rf_limit_power(hmac_vap_stru *hmac_vap, frw_msg *msg);
 

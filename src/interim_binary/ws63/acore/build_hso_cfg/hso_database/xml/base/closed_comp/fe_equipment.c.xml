@@ -1,0 +1,31 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_set_power_curve:: memcpy fail!} @fe_equipment.c(44),ERROR" ID="0x852a0162" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_config_all_curve_factor:: memcpy fail!} @fe_equipment.c(59),ERROR" ID="0x852a01da" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="mfg cali para change:bw[%d], protocol[%d], before curve[%u], after curve[%u] @fe_equipment.c(125),WARNING" ID="0x852a03eb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="fe_mfg_tx_pow_save_equip_param:chip_pdet[0x%x],flag[0x%x],tpc[%u] @fe_equipment.c(142),WARNING" ID="0x852a0473" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="level:%d,p_raw(x):%lld, inst_pow(y):%lld, result c:%d @fe_equipment.c(183),INFO" ID="0x852a05bd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{fe_mfg_calculate_power_curve_c::param c[%d] out of range} @fe_equipment.c(186),ERROR" ID="0x852a05d2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{fe_mfg_cal_and_save_power_curve_param::condition cal flag[%x], save flag[%x]!} @fe_equipment.c(208),WARNING" ID="0x852a0683" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_power_set_curve_factor:: hmac_vap_stru NULL!} @fe_equipment.c(235),ERROR" ID="0x852a075a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_power_get_curve_factor:: hmac_vap_stru NULL!} @fe_equipment.c(266),ERROR" ID="0x852a0852" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{fe_mfg_power_get_curve_factor:output_param_num:%d!} @fe_equipment.c(278),INFO" ID="0x852a08b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="factor: @fe_equipment.c(279),INFO" ID="0x852a08bd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="%d @fe_equipment.c(281),INFO" ID="0x852a08cd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_power_set_curve_param:: hmac_vap_stru NULL!} @fe_equipment.c(293),ERROR" ID="0x852a092a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_power_set_low_curve_param:: hmac_vap_stru NULL!} @fe_equipment.c(318),ERROR" ID="0x852a09f2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{fe_mfg_get_power_curve_by_level:output_param_num:%d!} @fe_equipment.c(350),INFO" ID="0x852a0af5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="curve param: @fe_equipment.c(351),INFO" ID="0x852a0afd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="%d @fe_equipment.c(353),INFO" ID="0x852a0b0d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_power_get_curve_param:: hmac_vap_stru NULL!} @fe_equipment.c(365),ERROR" ID="0x852a0b6a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_power_get_low_curve_param:: hmac_vap_stru NULL!} @fe_equipment.c(379),ERROR" ID="0x852a0bda" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_set_instrument_power:: memcpy fail!} @fe_equipment.c(398),ERROR" ID="0x852a0c72" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_set_instrument_power:: param not in discending order!} @fe_equipment.c(403),ERROR" ID="0x852a0c9a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{fe_mfg_set_instrument_power::instrument power[%d] = %d!} @fe_equipment.c(410),WARNING" ID="0x852a0cd3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_power_set_tar_power:: hmac_vap_stru NULL!} @fe_equipment.c(426),ERROR" ID="0x852a0d52" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_power_set_tar_power:: memcpy fail!} @fe_equipment.c(430),ERROR" ID="0x852a0d72" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_power_set_tar_power:: param not in ascending order!} @fe_equipment.c(435),WARNING" ID="0x852a0d9b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{fe_mfg_power_set_tar_power::target power[%d] = %d!} @fe_equipment.c(442),WARNING" ID="0x852a0dd3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_power_set_tar_cali_power:: hmac_vap_stru NULL!} @fe_equipment.c(458),ERROR" ID="0x852a0e52" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_rssi_set_rssi_offset:: hmac_vap_stru NULL!} @fe_equipment.c(495),ERROR" ID="0x852a0f7a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{fe_mfg_rssi_get_rssi_offset:: hmac_vap_stru NULL!} @fe_equipment.c(520),ERROR" ID="0x852a1042" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{fe_mfg_rssi_get_rssi_offset:cali subband[%d]rssi offset[%d]!} @fe_equipment.c(532),INFO" ID="0x852a10a5" />
+			</MSG_LOG>

@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][TM init] transmission management module init @gle_tm_ui.c(26),INFO" ID="0xde1200d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][TM done] transmission management module done @gle_tm_ui.c(50),INFO" ID="0xde120195" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM] find lcid 0x%04x failed, release default tcid failed. @gle_tm_ui.c(64),ERROR" ID="0xde120202" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM] register upper cbk func new failed. @gle_tm_ui.c(116),ERROR" ID="0xde1203a2" />
+			</MSG_LOG>

@@ -8,6 +8,7 @@ set(CMAKE_HILINK_SOURCE_DIR
     ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/app_call_entry.c
     ${CMAKE_CURRENT_SOURCE_DIR}/app_function_mapping.c
     ${CMAKE_CURRENT_SOURCE_DIR}/hilink_uapi/uapi_hilink.c
     ${CMAKE_CURRENT_SOURCE_DIR}/hilink_uapi/uapi_hilink_log_manage.c
@@ -18,6 +19,10 @@ set(SOURCES
 
     ${CMAKE_CURRENT_SOURCE_DIR}/hilink_uapi/uapi_hilink_network_adapter.c
     ${CMAKE_CURRENT_SOURCE_DIR}/hilink_uapi/uapi_hilink_socket_adapter.c
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/hilink_uapi/uapi_hilink_custom.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/hilink_uapi/uapi_hilink_sle_api.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/hilink_uapi/uapi_hilink_quick_netcfg_api.c
 )
 
 set(PUBLIC_HEADER

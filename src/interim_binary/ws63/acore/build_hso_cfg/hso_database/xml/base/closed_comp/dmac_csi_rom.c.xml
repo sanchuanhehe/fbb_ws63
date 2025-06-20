@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{dmac_hal_csi_sync_cfg::create data buf failed!} @dmac_csi_rom.c(58),WARNING" ID="0x845001d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_config_rx_csi::dmac_send_msg_to_host failed[%d].} @dmac_csi_rom.c(87),WARNING" ID="0x845002bb" />
+			</MSG_LOG>

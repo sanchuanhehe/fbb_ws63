@@ -1,5 +1,6 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2024. All rights reserved.
+ * Copyright (c) CompanyNameMagicTag
+ * Description: struction of AT command and public function
  */
 #ifndef __AT_REGIST_CCPRIV_H__
 #define __AT_REGIST_CCPRIV_H__

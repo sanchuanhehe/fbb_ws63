@@ -41,29 +41,15 @@ static bool IsAesGcmParamValid(const HiLinkAesGcmParam *param)
         return false;
     }
 
-    if ((param->addLen != 0) && (param->add == NULL)) {
+    if (((param->addLen != 0) && (param->add == NULL)) ||
+        ((param->addLen == 0) && (param->add != NULL))) {
         HILINK_SAL_WARN("invalid add\r\n");
         return false;
     }
 
     return true;
 }
-static void hilink_dump_gcm(mbedtls_gcm_context *ctx, mbedtls_cipher_id_t id, const unsigned char *key,
-    unsigned int keybits)
-{
-    int i;
-    osal_printk("\r\nhilink mbedtls_gcm_context:\r\n");
-    char *tmp = (char *)ctx;
-    for (i = 0; i < sizeof(mbedtls_gcm_context); i++) {
-        osal_printk("%02x ", tmp[i]);
-    }
-    osal_printk("\r\nid: %d\r\n", id);
-    osal_printk("\r\nkey:\r\n");
-    for (i = 0; i < keybits / BITS_PER_BYTES; i++) {
-        osal_printk("%02x ", key[i]);
-    }
-    osal_printk("\r\nkeylen: %d\r\n", keybits / BITS_PER_BYTES);
-}
+
 int HILINK_SAL_AesGcmEncrypt(const HiLinkAesGcmParam *param, unsigned char *tag,
     unsigned int tagLen, unsigned char *buf)
 {
@@ -75,8 +61,6 @@ int HILINK_SAL_AesGcmEncrypt(const HiLinkAesGcmParam *param, unsigned char *tag,
     mbedtls_gcm_init(&context);
     int ret;
     do {
-        hilink_dump_gcm(&context, MBEDTLS_CIPHER_ID_AES,
-            param->key, param->keyLen * BITS_PER_BYTES);
         ret = mbedtls_gcm_setkey(&context, MBEDTLS_CIPHER_ID_AES,
             param->key, param->keyLen * BITS_PER_BYTES);
         if (ret != 0) {
@@ -108,8 +92,6 @@ int HILINK_SAL_AesGcmDecrypt(const HiLinkAesGcmParam *param, const unsigned char
     mbedtls_gcm_init(&context);
     int ret;
     do {
-        hilink_dump_gcm(&context, MBEDTLS_CIPHER_ID_AES,
-            param->key, param->keyLen * BITS_PER_BYTES);
         ret = mbedtls_gcm_setkey(&context, MBEDTLS_CIPHER_ID_AES,
             param->key, param->keyLen * BITS_PER_BYTES);
         if (ret != 0) {

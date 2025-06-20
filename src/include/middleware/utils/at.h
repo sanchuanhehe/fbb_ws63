@@ -439,6 +439,17 @@ void uapi_at_report(const char *str);
 
 /**
  * @if Eng
+ * @brief  Format output AT print information to the default channel.
+ * @param  [in]  str AT print information.This parameter must have a string terminator.
+ * @else
+ * @brief  向默认通道输出格式化AT打印信息。
+ * @param  [in]  str AT打印信息。这个参数必须携带字符串结束符。
+ * @endif
+ */
+void uapi_at_print(const char* str, ...);
+
+/**
+ * @if Eng
  * @brief  Output AT print information to the specified channel.
  * @param  [in]  channel_id AT channel number. It is defined in the at_config.h file which is defined by product.
  * @param  [in]  str AT print information.This parameter must have a string terminator.

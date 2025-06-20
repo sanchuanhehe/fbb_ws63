@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][ble_isr] isr(%d) not registered yet @ble_isr.c(117),INFO" ID="0x887a03ad" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[BLE_ERR_INT]comm_errint1=0x%x, comm_errint2=0x%x, ble_errint=0x%x @ble_isr.c(138),ERROR" ID="0x887a0452" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[BLE_ERR_INT]clk=0x%x, fincnt=%d @ble_isr.c(140),ERROR" ID="0x887a0462" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP]ble_errorint_isr rbuf_rls0(0x%x)bitmap_prt0(0x%x)rxpd_ctrl(0x%x)rxbuf_error_info(0x%x) @ble_isr.c(145),INFO" ID="0x887a048d" />
+			</MSG_LOG>

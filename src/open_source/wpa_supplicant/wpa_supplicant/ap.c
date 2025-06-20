@@ -689,7 +689,7 @@ static int wpa_supplicant_conf_ap(struct wpa_supplicant *wpa_s,
 #ifndef LOS_CONFIG_HOSTAPD_SECURITY
 	if (bss->wpa && bss->ieee802_1x)
 		bss->ssid.security_policy = SECURITY_WPA;
-	} else if (bss->wpa) {
+	else if (bss->wpa) {
 		bss->ssid.security_policy = SECURITY_WPA_PSK;
 #ifdef CONFIG_WEP
 	} else if (bss->ieee802_1x) {

@@ -1,0 +1,25 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_init_user_pow_info: mem alloc fail!} @alg_tpc_rom.c(75),ERROR" ID="0x81fe025a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[device][TPC]alg_tpc_init_user_pow_info,user_state:%d,%d. @alg_tpc_rom.c(86),INFO" ID="0x81fe02b5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_init_user_pow_info:lut_idx[%d] get best rate fail!} @alg_tpc_rom.c(92),ERROR" ID="0x81fe02e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alg_tpc_tx_query_vap_spectial:dmac_vap null  @alg_tpc_rom.c(301),WARNING" ID="0x81fe096b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_tx_process::vap[%d]get hal_device is NULL!} @alg_tpc_rom.c(400),ERROR" ID="0x81fe0c82" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_tx_complete_process::vap[%d] hal_dev is NULL!} @alg_tpc_rom.c(473),ERROR" ID="0x81fe0eca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_rx_mgmt_process::[%d]get hal_device is NULL!} @alg_tpc_rom.c(547),ERROR" ID="0x81fe111a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="alg_tpc_intf_state_change_process::is_co %u cur_intf_mode %d @alg_tpc_rom.c(601),WARNING" ID="0x81fe12cb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="alg_tpc_change_spec_frame_tx_powervap[%u] vap_user_nums[%u] device_user_nums[%u] distance_id[%u] @alg_tpc_rom.c(634),INFO" ID="0x81fe13d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_vap_update_frame_tx_power:hal_device null!} @alg_tpc_rom.c(665),ERROR" ID="0x81fe14ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_vap_update_frame_tx_power::null pointer.} @alg_tpc_rom.c(673),WARNING" ID="0x81fe150b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_distance_state_has_changed::param NULL!} @alg_tpc_rom.c(705),ERROR" ID="0x81fe160a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[device][TPC],old_distance:%d, new:%d. @alg_tpc_rom.c(732),INFO" ID="0x81fe16e5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_user_distance_judge:user[%d] get rate fail!} @alg_tpc_rom.c(782),ERROR" ID="0x81fe1872" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[GLA][ALG][TPC]user_id=%d,ack_rssi=%d,mgmt_rssi=%d,distance=%d @alg_tpc_rom.c(861),WARNING" ID="0x81fe1aeb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_distance_identify::[%d] or hal_device is NULL!} @alg_tpc_rom.c(875),ERROR" ID="0x81fe1b5a" />
+			<MSG STRUCTURE="diag_log_msg4" NAME=" {alg_tpc_distance_identify::20m_rssi = %d,ack %d, mgmt %d, distance is %d!} @alg_tpc_rom.c(895),WARNING" ID="0x81fe1bfb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{alg_tpc_set_tx_tpc::power_0=%d power_1=%d power_2=%d, power_3=%d} @alg_tpc_rom.c(945),INFO" ID="0x81fe1d8d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_tpc_set_tx_action_tpc::rank=%u tx_user_id=%u tid=%u} @alg_tpc_rom.c(966),INFO" ID="0x81fe1e35" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{alg_tpc_set_tx_action_tpc::power_0=%d power_1=%d power_2=%d, power_3=%d} @alg_tpc_rom.c(974),INFO" ID="0x81fe1e75" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="alg_tpc_set_tpc_mode::mode [%d] invalid. @alg_tpc_rom.c(990),ERROR" ID="0x81fe1ef2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[device][TPC]tpc mode old:%d,new:%d. @alg_tpc_rom.c(1004),INFO" ID="0x81fe1f65" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[device][TPC]over temp[%u] @alg_tpc_rom.c(1016),INFO" ID="0x81fe1fc5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_tpc_init_para:: dev null.} @alg_tpc_rom.c(1065),ERROR" ID="0x81fe214a" />
+			</MSG_LOG>

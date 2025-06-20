@@ -27,7 +27,6 @@
 #endif
 
 static bool g_isKVInit = false;
-static char g_filePath[MAX_PATH_LEN];
 
 typedef struct KeyNameItem {
     const char *hilinkKey;
@@ -96,25 +95,7 @@ static const char *FindFileName(const char *key)
 
 static int SetConfigInfoPath(const char *path)
 {
-    if (HILINK_Strlen(path) >= MAX_PATH_LEN) {
-        HILINK_SAL_WARN("path too long: %s\r\n", path);
-        return HILINK_SAL_KV_INTI_ERR;
-    }
-
-    (void)memset_s(g_filePath, MAX_PATH_LEN, 0, MAX_PATH_LEN);
-    /* 长度为0保存在根目录下 */
-    if (HILINK_Strlen(path) == 0) {
-        HILINK_SAL_NOTICE("empty path\r\n");
-        return HILINK_SAL_OK;
-    }
-    if (strcpy_s(g_filePath, MAX_PATH_LEN, path) != EOK) {
-        HILINK_SAL_WARN("strncpy_s error\r\n");
-        return HILINK_SAL_STRCPY_ERR;
-    }
-    if (g_filePath[HILINK_Strlen(path) - 1] == '/') {
-        g_filePath[HILINK_Strlen(path) - 1] = '\0';
-    }
-
+    (void)path;
     return HILINK_SAL_OK;
 }
 
@@ -152,8 +133,8 @@ static int ReadFile(const char *filePath, unsigned int offset, unsigned char *va
     HILINK_SAL_DEBUG("read %s, read len %u, offset %u\r\n", filePath, len, offset);
 
     int fp = fs_adapt_open(filePath, O_RDWR);
-    if (fp < 0) {
-        HILINK_SAL_ERROR("open %s failed\r\n", filePath);
+    if (fp <= 0) {
+        HILINK_SAL_ERROR("open %s failed fp=%d\r\n", filePath, fp);
         return HILINK_SAL_NOK;
     }
 
@@ -228,14 +209,18 @@ unnormal_close:
 static int CreateEmptyFileAfterDelete(const char *filePath)
 {
     HILINK_SAL_NOTICE("delete %s\r\n", filePath);
+    int ret = fs_adapt_delete(filePath);
+    HILINK_SAL_NOTICE("fs_adapt_delete %d\r\n", ret);
     return HILINK_SAL_OK;
 }
 
 static int GetFilePathByKey(const char *key, char *buf, unsigned int len)
 {
-    const char *fileName = NULL;
-
-    fileName = FindFileName(key);
+    if (len < 1) {
+        HILINK_SAL_ERROR("len\n");
+        return HILINK_SAL_NOK;
+    }
+    const char *fileName = fileName = FindFileName(key);
     if (fileName == NULL) {
         HILINK_SAL_ERROR("get file path failed\n");
         return HILINK_SAL_NOK;

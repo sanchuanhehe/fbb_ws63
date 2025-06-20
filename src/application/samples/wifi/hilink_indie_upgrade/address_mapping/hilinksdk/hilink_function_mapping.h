@@ -14,17 +14,8 @@
 extern "C" {
 #endif
 
-int *get_app_tbl(void);
-
-extern unsigned int __bss_begin__;
-extern unsigned int __bss_end__;
-extern unsigned int __data_begin__;
-extern unsigned int __data_load__;
-extern unsigned int __data_size__;
-
-extern unsigned int __sram_text_begin__;
-extern unsigned int __sram_text_load__;
-extern unsigned int __sram_text_size__;
+const struct mapping_tbl *get_hilink_mapping_tbl(void);
+unsigned int get_hilink_mapping_tbl_size(void);
 
 #ifdef __cplusplus
 }

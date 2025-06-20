@@ -14,10 +14,11 @@
 
 void HILINK_SetLogLevel(HiLinkLogLevel level)
 {
-    hilink_call1(HILINK_CALL_HILINK_SET_LOG_LEVEL, void, HiLinkLogLevel, level);
+    hilink_call1_ret_void(HILINK_CALL_HILINK_SET_LOG_LEVEL, HILINK_SetLogLevel, HiLinkLogLevel, level);
 }
 
 HiLinkLogLevel HILINK_GetLogLevel(void)
 {
-    return hilink_call0(HILINK_CALL_HILINK_GET_LOG_LEVEL, HiLinkLogLevel);
+    hilink_call0(HILINK_CALL_HILINK_GET_LOG_LEVEL, HILINK_GetLogLevel, HiLinkLogLevel);
+    return HILINK_LOG_INVALID;
 }

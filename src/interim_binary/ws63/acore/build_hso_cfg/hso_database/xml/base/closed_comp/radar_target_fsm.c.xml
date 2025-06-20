@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[RADAR_LOG] {radar target fsm attach point null.} @radar_target_fsm.c(75),ERROR" ID="0x8554025a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] radar target id[%d]fsm have attached @radar_target_fsm.c(83),WARNING" ID="0x8554029b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] radar target id[%d]fsm have detached @radar_target_fsm.c(112),WARNING" ID="0x85540383" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[RADAR_LOG] target manager is null @radar_target_fsm.c(130),ERROR" ID="0x85540412" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] radar target id[%d]fsm not attached @radar_target_fsm.c(137),ERROR" ID="0x8554044a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[RADAR_LOG] radar target fsm::state[%d]dispatch event[%d]not succ[%d] @radar_target_fsm.c(147),ERROR" ID="0x8554049a" />
+			</MSG_LOG>

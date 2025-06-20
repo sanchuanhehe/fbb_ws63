@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{edca_tx_complete_process:get best rate fail!} @alg_edca_opt_rom.c(71),ERROR" ID="0x8466023a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_get_edca_ac_stat::msg is null. @alg_edca_opt_rom.c(131),ERROR" ID="0x8466041a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_get_edca_ac_stat::traffic_type error[%d]. @alg_edca_opt_rom.c(137),ERROR" ID="0x8466044a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_get_edca_ac_stat::data copy fail.rsp_buf_len[%d] data_size[%d]. @alg_edca_opt_rom.c(143),ERROR" ID="0x8466047a" />
+			</MSG_LOG>

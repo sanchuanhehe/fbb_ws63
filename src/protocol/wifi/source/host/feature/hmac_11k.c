@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2017-2024. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2017-2024. All rights reserved.
  * 文 件 名   : hmac_11k.c
  * 生成日期   : 2017年3月15日
  * 功能描述   : 11K
@@ -2414,6 +2414,7 @@ OAL_STATIC osal_void hmac_rrm_bcn_scan_cb(void *scan_record_ptr)
     osal_spin_unlock(&(bss_mgmt->lock));
 
     if (osal_list_empty(&(rrm_info->meas_rpt_list)) != 0) {
+        hmac_rrm_free_ssid_and_reqinfo_ieid_item(rrm_info);
         rptmode.refused = 1;
         hmac_rrm_encap_meas_rpt_reject(hmac_vap, &rptmode);
         oam_warning_log2(0, OAM_SF_RRM, "vap_id[%d] hmac_rrm_bcn_scan_cb::scan fail, status[%d].",
@@ -2453,6 +2454,7 @@ OAL_STATIC osal_void hmac_rrm_bcn_means_mode_table(hmac_vap_stru *hmac_vap)
     hmac_rrm_get_bcn_info_from_save(hmac_vap);
 
     if (osal_list_empty(&(rrm_info->meas_rpt_list)) != 0) {
+        hmac_rrm_free_ssid_and_reqinfo_ieid_item(rrm_info);
         rptmode.refused = 1;
         hmac_rrm_encap_meas_rpt_reject(hmac_vap, &rptmode);
         oam_warning_log1(0, OAM_SF_RRM, "vap_id[%d] hmac_rrm_bcn_means_mode_table::scan fail.", hmac_vap->vap_id);
@@ -2622,6 +2624,7 @@ OAL_STATIC osal_u32 hmac_rrm_bcn_encap_meas_rpt_reject(hmac_vap_stru *hmac_vap, 
 OAL_STATIC osal_u32 hmac_rrm_meas_bcn(hmac_vap_stru *hmac_vap, mac_bcn_req_stru *bcn_req,
     mac_scan_req_stru *scan_req)
 {
+    osal_u32 ret = OAL_FAIL;
     /* 根据模式进行测量 */
     if (hmac_rrm_bcn_encap_meas_rpt_reject(hmac_vap, bcn_req) == OAL_FAIL) {
         return OAL_FAIL;
@@ -2633,7 +2636,7 @@ OAL_STATIC osal_u32 hmac_rrm_meas_bcn(hmac_vap_stru *hmac_vap, mac_bcn_req_stru 
             scan_req->scan_type = WLAN_SCAN_TYPE_PASSIVE;
             /* 测量时间, 需要足够长的时间以保证可以收到指定beacon */
             scan_req->scan_time = MAC_RRM_BCN_REQ_PASSIVE_SCAN_TIME; // WLAN_DEFAULT_PASSIVE_SCAN_TIME;
-            hmac_rrm_bcn_scan_do(hmac_vap, bcn_req, scan_req);
+            ret = hmac_rrm_bcn_scan_do(hmac_vap, bcn_req, scan_req);
             break;
 
         /* Active:触发扫描，发probe req，测量收到的Beacon和probe rsp */
@@ -2642,18 +2645,19 @@ OAL_STATIC osal_u32 hmac_rrm_meas_bcn(hmac_vap_stru *hmac_vap, mac_bcn_req_stru 
             /* 测量时间 */
             scan_req->scan_time = WLAN_DEFAULT_ACTIVE_SCAN_TIME;
 
-            hmac_rrm_bcn_scan_do(hmac_vap, bcn_req, scan_req);
+            ret = hmac_rrm_bcn_scan_do(hmac_vap, bcn_req, scan_req);
             break;
 
         /* Table:上报保存的扫描结果 */
         case RM_BCN_REQ_MEAS_MODE_TABLE:
             hmac_rrm_bcn_means_mode_table(hmac_vap);
+            ret = OAL_SUCC;
             break;
 
         default:
             break;
     }
-    return OAL_SUCC;
+    return ret;
 }
 
 OAL_STATIC osal_void hmac_rrm_get_bcn_ap_rpt_channels(mac_ap_chn_rpt_stru **ap_chn_rpt, osal_u8 ap_chn_rpt_num,
@@ -2855,6 +2859,10 @@ OAL_STATIC osal_u32 hmac_rrm_parse_beacon_ssid(hmac_vap_stru *hmac_vap, osal_u8 
             oam_error_log1(0, OAM_SF_RRM, "hmac_rrm_parse_beacon_ssid::ssid_len[%d] invalid", ssid_sub_element[1]);
             return OAL_FAIL;
         }
+        if (rrm_info->bcn_req_info.ssid != OSAL_NULL) {
+            oal_mem_free(rrm_info->bcn_req_info.ssid, OSAL_TRUE);
+            rrm_info->bcn_req_info.ssid = OSAL_NULL;
+        }
         rrm_info->bcn_req_info.ssid_len = *(ssid_sub_element + 1);
         rrm_info->bcn_req_info.ssid = oal_mem_alloc(OAL_MEM_POOL_ID_LOCAL, rrm_info->bcn_req_info.ssid_len, OAL_TRUE);
         if (rrm_info->bcn_req_info.ssid == OAL_PTR_NULL) {
@@ -2906,6 +2914,10 @@ OAL_STATIC osal_u32 hmac_rrm_parse_beacon_reqinfo(hmac_vap_stru *hmac_vap, osal_
     reqinfo = mac_find_ie_etc(MAC_EID_REQINFO, reqinfo_search_addr, c_bcn_req_sub_len);
     if (reqinfo != OAL_PTR_NULL) {
         rrm_info->bcn_req_info.req_ie_num = *(reqinfo + 1);
+        if (rrm_info->bcn_req_info.reqinfo_ieid != OSAL_NULL) {
+            oal_mem_free(rrm_info->bcn_req_info.reqinfo_ieid, OSAL_TRUE);
+            rrm_info->bcn_req_info.reqinfo_ieid = OSAL_NULL;
+        }
         oam_warning_log2(0, OAM_SF_RRM, "vap_id[%d] hmac_rrm_parse_beacon_req::frame_body::req_ie_num[%d].",
             hmac_vap->vap_id, rrm_info->bcn_req_info.req_ie_num);
         rrm_info->bcn_req_info.reqinfo_ieid = oal_mem_alloc(OAL_MEM_POOL_ID_LOCAL,

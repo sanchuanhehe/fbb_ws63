@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2022-2022. All rights reserved.
  * Description: Header files shared by wlan_spec.h and wlan_spec_rom.h.
  * Create: 2022-11-26
  */

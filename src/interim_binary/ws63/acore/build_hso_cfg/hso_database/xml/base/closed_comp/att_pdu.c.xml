@@ -1,0 +1,11 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[ATT]att item write memcpy error @att_pdu.c(556),ERROR" ID="0xdc501162" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]att item modify value core memcpy error @att_pdu.c(809),ERROR" ID="0xdc50194a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="att read multiple rsp memcpy error @att_pdu.c(930),ERROR" ID="0xdc501d12" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]attc pendind response multi memcpy error @att_pdu.c(1169),ERROR" ID="0xdc50248a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]att read rsp memcpy error @att_pdu.c(1573),ERROR" ID="0xdc50312a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]att general write req memcpy error @att_pdu.c(1795),ERROR" ID="0xdc50381a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="att prepare write pdu memcpy error @att_pdu.c(1872),ERROR" ID="0xdc503a82" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]att prepare write ind memcpy error @att_pdu.c(1930),ERROR" ID="0xdc503c52" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]att handle range rsp memcpy error @att_pdu.c(2186),ERROR" ID="0xdc504452" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]att handle range rsp memcpy error @att_pdu.c(2195),ERROR" ID="0xdc50449a" />
+			</MSG_LOG>

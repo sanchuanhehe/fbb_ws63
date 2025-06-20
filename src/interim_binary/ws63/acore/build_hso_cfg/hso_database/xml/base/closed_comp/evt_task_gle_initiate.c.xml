@@ -1,0 +1,12 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]evt_task_gle_initiate_set_intv_window_phy, window:%d, intv:%d @evt_task_gle_initiate.c(91),INFO" ID="0x88d202dd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]evt_task_gle_initiate_set_env, gt_role_ind(%d)init_phys(%d)filter_policy(%d)peer_addr_type(%d) @evt_task_gle_initiate.c(118),INFO" ID="0x88d203b5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp]evt_task_gle_initiate_set_env, peer_addr:0x%x:0x%x:xx:xx:xx:0x%x @evt_task_gle_initiate.c(120),INFO" ID="0x88d203c5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_task_gle_initiate_create_desc, env_ptr is NULL @evt_task_gle_initiate.c(292),WARNING" ID="0x88d20923" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_task_gle_initiate_create_desc, fsm register fail! @evt_task_gle_initiate.c(301),WARNING" ID="0x88d2096b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_task_gle_initiate_intv_offset_req, intv_req fail! @evt_task_gle_initiate.c(381),INFO" ID="0x88d20bed" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_task_gle_initiate_intv_offset_req, offset_req fail! @evt_task_gle_initiate.c(388),INFO" ID="0x88d20c25" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_task_gle_initiate_start, start fail, env_ptr is NULL! @evt_task_gle_initiate.c(472),WARNING" ID="0x88d20ec3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_task_gle_initiate_start, task_start fail! @evt_task_gle_initiate.c(506),WARNING" ID="0x88d20fd3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_task_gle_initiate_fsm_start, switch to idle! @evt_task_gle_initiate.c(523),INFO" ID="0x88d2105d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_task_gle_initiate_end_process! @evt_task_gle_initiate.c(555),INFO" ID="0x88d2115d" />
+			</MSG_LOG>

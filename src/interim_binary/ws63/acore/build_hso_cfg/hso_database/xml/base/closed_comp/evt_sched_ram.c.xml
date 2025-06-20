@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][ES warning]evt_sched_get_offset Fail! task_id=0x%x interval=%d duration_slot_min=%d @evt_sched_ram.c(95),WARNING" ID="0x894802fb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][ES info]evt_sched_delete_task:task_id(0x%x)list(%d)timestamp(0x%x)es_sn(%d) @evt_sched_ram.c(193),INFO" ID="0x8948060d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]evt_sched_insert_single_task Fail! task_id=0x%x type=%d timestamp=0x%x cur_priority=%d @evt_sched_ram.c(420),WARNING" ID="0x89480d23" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][ES warning]evt_sched_update_duration: param invalid! task_id=0x%x, max=%d, min=%d @evt_sched_ram.c(469),WARNING" ID="0x89480eab" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][ES warning]evt_sched_update_eeq_priority: param invalid! task_id=0x%x, eeq_priority=%d @evt_sched_ram.c(492),WARNING" ID="0x89480f63" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][ES warning]evt_sched_update_acl_timestamp_and_delay: task_id=0x%x not found @evt_sched_ram.c(533),WARNING" ID="0x894810ab" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][ES err]evt_sched_update_acl_param_with_instant: task_id=0x%x instant(%d) passed! next_es_sn=%d @evt_sched_ram.c(575),ERROR" ID="0x894811fa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][ES warning]evt_sched_scan_update_param: task_id=0x%x not found @evt_sched_ram.c(589),WARNING" ID="0x8948126b" />
+			</MSG_LOG>

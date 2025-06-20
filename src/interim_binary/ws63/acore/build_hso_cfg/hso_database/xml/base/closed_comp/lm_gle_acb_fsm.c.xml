@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="lm_gle_acb_fsm_create_srv fsm_id(0x%x) @lm_gle_acb_fsm.c(156),INFO" ID="0x885004e5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="lm_gle_acb_fsm_delete_srv srv_fsm_id(0x%x) @lm_gle_acb_fsm.c(192),INFO" ID="0x88500605" />
+			</MSG_LOG>

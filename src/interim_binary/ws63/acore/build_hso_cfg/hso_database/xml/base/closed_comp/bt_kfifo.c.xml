@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="KFIFO: bt kfifo copy in memcpy error @bt_kfifo.c(90),ERROR" ID="0xdcae02d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="KFIFO: init_size:%d @bt_kfifo.c(126),INFO" ID="0xdcae03f5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="KFIFO: none vaild size %d @bt_kfifo.c(132),ERROR" ID="0xdcae0422" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="KFIFO: bt kfifo init memset error @bt_kfifo.c(140),ERROR" ID="0xdcae0462" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="KFIFO: bt kfifo copy out memcpy error @bt_kfifo.c(200),ERROR" ID="0xdcae0642" />
+			</MSG_LOG>

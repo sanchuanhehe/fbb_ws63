@@ -545,6 +545,7 @@ typedef struct {
 typedef struct {
     hmac_bss_mgmt_stru          bss_mgmt;                            /* 存储扫描BSS结果的管理结构 */
     wlan_scan_chan_stats_stru   chan_results[WLAN_MAX_CHANNEL_NUM]; /* 信道统计/测量结果 */
+    hal_ch_mac_statics_stru     mac_ch_stats[WLAN_MAX_CHANNEL_NUM]; /* MAC信道统计结果 */
     osal_u8                     chan_numbers;                        /* 此次扫描总共需要扫描的信道个数 */
     osal_u8                     device_id : 4;
     osal_u8                     chip_id   : 4;

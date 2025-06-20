@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][scan]lm_ble_check_adv_cmd_conflict, g_adv_cmd_class=%d, cmd_type=%d @lm_ble_comm.c(148),WARNING" ID="0x892c04a3" />
+			</MSG_LOG>

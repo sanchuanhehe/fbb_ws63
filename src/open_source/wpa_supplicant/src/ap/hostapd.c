@@ -1414,10 +1414,11 @@ static int hostapd_setup_bss(struct hostapd_data *hapd, int first)
 	if (hostapd_dpp_init(hapd))
 		return -1;
 #endif /* CONFIG_DPP */
-
+#endif /* EXT_CODE_CROP */
+#ifdef CONFIG_P2P
 	if (authsrv_init(hapd) < 0)
 		return -1;
-#endif /* EXT_CODE_CROP */
+#endif
 	if (ieee802_1x_init(hapd)) {
 		wpa_printf(MSG_ERROR, "IEEE 802.1X initialization failed.");
 		return -1;

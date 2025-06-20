@@ -205,11 +205,14 @@
 #define SPI_DIV_LEN             5
 #define PLL_CLK480M             480
 
+#define SPI_PORT_FIFO_DEPTH     64
+
 spi_v151_regs_t *g_spi_base_addrs[SPI_BUS_MAX_NUM] = {
     (spi_v151_regs_t *)SPI_BUS_0_BASE_ADDR,
     (spi_v151_regs_t *)SPI_BUS_1_BASE_ADDR,
 };
 
+#ifdef CONFIG_SPI_SUPPORT_INTERRUPT
 typedef struct spi_interrupt {
     core_irq_t irq_num;
     osal_irq_handler irq_func;
@@ -253,6 +256,7 @@ void spi_port_unregister_irq(spi_bus_t bus)
 {
     osal_irq_disable(g_spi_interrupt_lines[bus].irq_num);
 }
+#endif
 
 uintptr_t spi_porting_base_addr_get(spi_bus_t index)
 {
@@ -682,4 +686,9 @@ void spi_porting_clock_init(uint32_t bus_clk)
     reg_clrbit(CLDO_SUB_CRG_CKEN_CTL1, 0, POS_25);      // close spi clock
     reg_setbit(CLDO_CRG_CLK_SEL, 0, POS_6);             // switch spi clock to pll
     reg_setbit(CLDO_SUB_CRG_CKEN_CTL1, 0, POS_25);      // open spi clock
+}
+
+uint32_t spi_port_get_fifo_depth(void)
+{
+    return SPI_PORT_FIFO_DEPTH;
 }

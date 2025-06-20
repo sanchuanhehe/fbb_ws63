@@ -1,0 +1,10 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{alg_compatibility_get_user_info:: user_idx[%d] invalid.} @alg_compatibility_rom.c(37),ERROR" ID="0x84de012a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_compatibility_init_user:err user[%d]!} @alg_compatibility_rom.c(56),WARNING" ID="0x84de01c3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_compatibility_init_user::lut_index[%d] overflow! } @alg_compatibility_rom.c(62),WARNING" ID="0x84de01f3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_compatibility_exit_user:get_user_info fail!user=%d} @alg_compatibility_rom.c(92),WARNING" ID="0x84de02e3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_compatibility_tx_process::ptr null!} @alg_compatibility_rom.c(111),ERROR" ID="0x84de037a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_compatibility_tx_process::dmac_user null!} @alg_compatibility_rom.c(121),ERROR" ID="0x84de03ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_ar_tx_process:get_user_info fail!user=%d} @alg_compatibility_rom.c(134),WARNING" ID="0x84de0433" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_compatibility_tx_complete_process::tx_ctl null!} @alg_compatibility_rom.c(208),WARNING" ID="0x84de0683" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_compatibility_tx_complete_process:get_user_info fail!user=%d} @alg_compatibility_rom.c(225),WARNING" ID="0x84de070b" />
+			</MSG_LOG>

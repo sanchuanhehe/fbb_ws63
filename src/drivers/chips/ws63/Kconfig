@@ -179,3 +179,13 @@ config PM_SUPPORT_SRV_DECOUPLING
     bool
     prompt "PM support service decoupling"
     default n
+
+choice
+    prompt "Pwm frequency"
+    default HIGH_FREQUENCY
+
+    config HIGH_FREQUENCY
+        bool "high frequency (1221hz-40Mhz)"
+    config LOW_FREQUENCY
+        bool "low frequency (62hz-2Mhz)"
+endchoice

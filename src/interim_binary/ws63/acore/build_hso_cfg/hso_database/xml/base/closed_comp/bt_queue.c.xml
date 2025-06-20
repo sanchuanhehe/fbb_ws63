@@ -1,0 +1,27 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="bam queue init queue is null! @bt_queue.c(32),ERROR" ID="0xdc900102" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam item data malloc wrong pkt_len @bt_queue.c(70),ERROR" ID="0xdc900232" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam item data malloc new_item malloc fail @bt_queue.c(78),ERROR" ID="0xdc900272" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam item data free ptr is null! @bt_queue.c(91),ERROR" ID="0xdc9002da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue append param is null! @bt_queue.c(113),ERROR" ID="0xdc90038a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bam queue empty ret = 0x%x @bt_queue.c(144),INFO" ID="0xdc900485" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bam queue empty is empty = 0x%x @bt_queue.c(149),DBG" ID="0xdc9004ae" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue get size queue is null! @bt_queue.c(157),WARNING" ID="0xdc9004eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue get count queue is null! @bt_queue.c(177),WARNING" ID="0xdc90058b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue remove param is null! @bt_queue.c(205),ERROR" ID="0xdc90066a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="LINK have been remove from queue!! @bt_queue.c(210),WARNING" ID="0xdc900693" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue peek queue is null! @bt_queue.c(267),ERROR" ID="0xdc90085a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue peek NOT EMPTY ! @bt_queue.c(272),DBG" ID="0xdc900886" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="Peek Error; Queue Count:0x%8X @bt_queue.c(278),ERROR" ID="0xdc9008b2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="Peek Error; Queue Size:0x%8X  @bt_queue.c(280),ERROR" ID="0xdc9008c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue touch queue is null! @bt_queue.c(300),ERROR" ID="0xdc900962" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue touch NOT EMPTY ! @bt_queue.c(305),DBG" ID="0xdc90098e" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="Peek Error; Queue Count:0x%8X @bt_queue.c(311),ERROR" ID="0xdc9009ba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="Peek Error; Queue Size:0x%8X  @bt_queue.c(313),ERROR" ID="0xdc9009ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue size queue is null! @bt_queue.c(332),ERROR" ID="0xdc900a62" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue read queue is null! @bt_queue.c(358),ERROR" ID="0xdc900b32" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue read new_item malloc fail! @bt_queue.c(366),ERROR" ID="0xdc900b72" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue data param is null! @bt_queue.c(420),ERROR" ID="0xdc900d22" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="need build new packet! @bt_queue.c(428),ERROR" ID="0xdc900d62" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue data new_item malloc fail! @bt_queue.c(438),ERROR" ID="0xdc900db2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bam queue flush queue is null! @bt_queue.c(476),ERROR" ID="0xdc900ee2" />
+			</MSG_LOG>

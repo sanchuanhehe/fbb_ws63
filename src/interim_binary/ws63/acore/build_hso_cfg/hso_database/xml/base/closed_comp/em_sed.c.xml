@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="em_alloc_head_sed_id user_type(%d)sed_id(%d) @em_sed.c(34),INFO" ID="0x88820115" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="em_alloc_head_sed_id fail user_type(%d) @em_sed.c(38),ERROR" ID="0x88820132" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="em_alloc_tail_sed_id user_type(%d)sed_id(%d) @em_sed.c(55),INFO" ID="0x888201bd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="em_alloc_tail_sed_id fail user_type(%d) @em_sed.c(59),ERROR" ID="0x888201da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="em_free_sed_id sed_id(%d) @em_sed.c(73),INFO" ID="0x8882024d" />
+			</MSG_LOG>

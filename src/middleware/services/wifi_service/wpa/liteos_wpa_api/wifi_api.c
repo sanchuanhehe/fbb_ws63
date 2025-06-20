@@ -14,6 +14,9 @@
 #include "src/crypto/sha1.h"
 #include "driver_soc.h"
 #include "driver_soc_ioctl.h"
+#ifdef LOS_CONFIG_PMK_CACHE
+#include "pmksa_cache.h"
+#endif /* LOS_CONFIG_PMK_CACHE */
 #include "soc_osal.h"
 #ifdef CONFIG_WPS
 #include "wps/wps.h"
@@ -26,6 +29,10 @@
 #include "tls.h"
 #endif /* LOS_CONFIG_WPA_ENTERPRISE */
 
+#ifdef LOS_CONFIG_PMK_CACHE
+#define PMK_CACHE_NUM                4
+#define PMK_CACHE_IDX_INVALID        (-1)
+#endif /* LOS_CONFIG_PMK_CACHE */
 #define WPA_TASK_STACK_SIZE          0x1800UL
 #define WPA_CB_STACK_SIZE            0x800UL
 #define WPA_TASK_PRIO_NUM            4
@@ -49,6 +56,23 @@
 #define WPA_KEY_MGMT_WPA3_FT_PSK        "SAE FT-SAE"
 #define WPA_KEY_MGMT_WPA3_FT_PSK_MIX    "SAE WPA-PSK WPA-PSK-SHA256 FT-SAE FT-PSK"
 #define WPA2_PROTO  "WPA2"
+
+#ifdef LOS_CONFIG_PMK_CACHE
+/* pmk缓存, 一个缓存与一份assoc配置对应 */
+typedef struct {
+    struct rsn_pmksa_cache_entry pmk_cache;
+    ext_wifi_assoc_request assoc_conf;
+    unsigned char channel;
+} ext_wifi_pmk_conf;
+
+typedef struct {
+    ext_wifi_pmk_conf pmk_entry[PMK_CACHE_NUM];
+    int cur_idx; /* 当前索引, 标识当前指向哪个pmk_entry */
+    int pmk_idx; /* pmk索引, 标识本次连接要用哪个pmk */
+} ext_wifi_pmk_cache;
+
+ext_wifi_pmk_cache g_pmk_cache_list = {0};
+#endif /* LOS_CONFIG_PMK_CACHE */
 
 static bool g_wpa_event_inited_flag;
 unsigned int g_wpataskid;
@@ -1024,7 +1048,7 @@ static int wifi_scan_param_handle(const struct wpa_scan_params *params, char *ad
 static int wifi_scan_buffer_process(const char *freq_buff, const char *ssid_buff,
                                     const char *bssid_buff, ext_wifi_iftype iftype)
 {
-    int sum;
+    int sum = 0;
     int ret                            = EXT_WIFI_OK;
     unsigned int ret_val               = EXT_WIFI_OK;
     char buf[WPA_EXTERNED_SSID_LEN]    = { 0 };
@@ -1041,8 +1065,9 @@ static int wifi_scan_buffer_process(const char *freq_buff, const char *ssid_buff
             wpa_error_log0(MSG_ERROR, "wpa_buffer_handle: freq_buff snprintf_s faild");
             return EXT_WIFI_FAIL;
         }
+        sum += ret;
     }
-    sum = ret;
+
     if (bssid_buff[0] != '\0') {
         ret = snprintf_s((char *)(buf + sum), (size_t)(sizeof(buf) - (size_t)sum),
                          (size_t)(strlen(bssid_buff) + 1), "%s ", bssid_buff);
@@ -1050,8 +1075,9 @@ static int wifi_scan_buffer_process(const char *freq_buff, const char *ssid_buff
             wpa_error_log0(MSG_ERROR, "wpa_buffer_handle: bssid_buff snprintf_s faild");
             return EXT_WIFI_FAIL;
         }
+        sum += ret;
     }
-    sum += ret;
+
     if (ssid_buff[0] != '\0' && g_ssid_prefix_flag != WPA_FLAG_ON) {
         ret = snprintf_s((char *)(buf + sum), (size_t)(sizeof(buf) - (size_t)sum),
                          (size_t)(strlen(ssid_buff) + 1), "%s", ssid_buff);
@@ -1059,8 +1085,9 @@ static int wifi_scan_buffer_process(const char *freq_buff, const char *ssid_buff
             wpa_error_log0(MSG_ERROR, "wpa_buffer_handle: ssid_buff snprintf_s faild");
             return EXT_WIFI_FAIL;
         }
+        sum += ret;
     }
-    sum += ret;
+
     g_usr_scanning_flag = WPA_FLAG_ON;
     (void)os_event_clear(g_wpa_event, ~(unsigned int)WPA_EVENT_SCAN_OK);
     if (wpa_cli_scan(wpa_s, buf, sum) == EXT_WIFI_OK) {
@@ -1197,6 +1224,13 @@ static int wifi_scan_params_parse(const ext_wifi_scan_params *sp, struct wpa_sca
             break;
         case EXT_WIFI_BSSID_SCAN:
             ret = wifi_scan_params_parse_bssid_scan(sp, scan_params);
+            break;
+        case EXT_WIFI_SSID_SCAN_WITH_CHANNEL:
+            ret = wifi_scan_params_parse_ssid_scan(sp, scan_params);
+            if (wifi_scan_params_parse_channel_scan(sp, scan_params) != ret) {
+                ret = EXT_WIFI_FAIL;
+            }
+            scan_params->flag = EXT_SSID_SCAN_WITH_CHANNEL;
             break;
         default:
             wpa_error_log0(MSG_ERROR, "uapi_wifi_sta_scan: Invalid scan_type!");
@@ -1643,7 +1677,8 @@ int wifi_scan_result_filter_parse(const void *buf)
            ((g_scan_record.flag == EXT_PREFIX_SSID_SCAN) && prefix_ssid_flag) ||
            ((g_scan_record.flag == EXT_CHANNEL_SCAN) && chl_flag) ||
            ((g_scan_record.flag == EXT_BSSID_SCAN) && bssid_flag) ||
-           ((g_scan_record.flag == EXT_SSID_SCAN) && ssid_flag);
+           ((g_scan_record.flag == EXT_SSID_SCAN) && ssid_flag) ||
+           ((g_scan_record.flag == EXT_SSID_SCAN_WITH_CHANNEL) && ssid_flag && chl_flag);
 }
 
 int wifi_scan_result_ssid_parse(char **starttmp, void *buf, size_t *reply_len)
@@ -1727,7 +1762,7 @@ EXIT:
     return ret;
 }
 
-__attribute__((weak)) int uapi_wifi_sta_scan_results(ext_wifi_ap_info *ap_list, unsigned int *ap_num)
+__attribute__((weak)) int uapi_wifi_get_scan_results(ext_wifi_ap_info *ap_list, unsigned int *ap_num)
 {
     if ((ap_list == NULL) || (ap_num == NULL) || (g_mesh_sta_flag == WPA_FLAG_ON))
         return EXT_WIFI_FAIL;
@@ -1745,6 +1780,26 @@ __attribute__((weak)) int uapi_wifi_sta_scan_results(ext_wifi_ap_info *ap_list, 
         (void)os_event_write(g_wpa_event, WPA_EVENT_SCAN_RESULT_FREE_OK);
         return EXT_WIFI_FAIL;
     }
+}
+
+int uapi_wifi_sta_config_wpa_eapol_para(ext_wifi_config_conn_paras *para)
+{
+    struct ext_wifi_dev *wifi_dev = NULL;
+
+    wifi_dev= wifi_dev_get(EXT_WIFI_IFTYPE_STATION);
+    if ((wifi_dev == NULL) || (wifi_dev->priv == NULL) ||
+        (wifi_dev->iftype == EXT_WIFI_IFTYPE_AP) ||
+        (wifi_dev->iftype >= EXT_WIFI_IFTYPE_P2P_CLIENT)) {
+        wpa_error_log0(MSG_ERROR, "uapi_wifi_sta_config_wpa_eapol_para: get wifi dev failed\n");
+        return EXT_WIFI_FAIL;
+    }
+
+    if (wpa_cli_set_eapol_paras((struct wpa_supplicant *)(wifi_dev->priv), para) != EXT_WIFI_OK) {
+        wpa_error_log0(MSG_ERROR, "uapi_wifi_sta_config_wpa_eapol_para: set failed\n");
+        return EXT_WIFI_FAIL;
+    }
+
+    return EXT_WIFI_OK;
 }
 
 int wpa_cli_scan_results_clear(struct wpa_supplicant *wpa_s)
@@ -2311,8 +2366,94 @@ static int wifi_sta_connect(const ext_wifi_assoc_request *req,
     return EXT_WIFI_OK;
 }
 
+#ifdef LOS_CONFIG_PMK_CACHE
+/* 检查wpa3 pmk缓存, 返回缓存对应下标, 不存在则返回PMK_CACHE_IDX_INVALID */
+static int wifi_find_wpa3_pmk_cache(const ext_wifi_assoc_request *req)
+{
+    int i = 0;
+    for (;i < PMK_CACHE_NUM; i++) {
+        if (memcmp(req, &(g_pmk_cache_list.pmk_entry[i].assoc_conf), sizeof(ext_wifi_assoc_request)) == 0 &&
+			g_pmk_cache_list.pmk_entry[i].channel == req->channel) {
+            wpa_warning_log1(MSG_DEBUG, "got same assoc conf[%d]", i);
+            return i;
+        }
+    }
+    wpa_warning_log0(MSG_DEBUG, "there is no same wpa3 conf.");
+    return PMK_CACHE_IDX_INVALID;
+}
+
+/* 更新wpa3的pmk */
+static void wifi_flush_wpa3_pmk(const ext_wifi_assoc_request *req)
+{
+    int pmk_idx;
+    /* 非wpa3加密，忽略 */
+    if ((req->auth != EXT_WIFI_SECURITY_SAE) && (req->auth != EXT_WIFI_SECURITY_WPA3_WPA2_PSK_MIX)) {
+        g_pmk_cache_list.pmk_idx = PMK_CACHE_IDX_INVALID;
+        wpa_warning_log0(MSG_DEBUG, "not wpa3.");
+        return;
+    }
+
+    /* 检查是否存在PMK缓存, 不存在则新增, 存在则刷新pmk索引 */
+    pmk_idx = wifi_find_wpa3_pmk_cache(req);
+    g_pmk_cache_list.pmk_idx = pmk_idx;
+    if (g_pmk_cache_list.pmk_idx >= 0 && g_pmk_cache_list.pmk_idx < PMK_CACHE_NUM) {
+        wpa_warning_log1(MSG_DEBUG, "match same conf, set pmk idx[%d]\r\n", g_pmk_cache_list.pmk_idx);
+        return;
+    }
+    /* pmk_idx=PMK_CACHE_IDX_INVALID的场景，没有相同的配置信息（表示之前没有连过），则用一下个缓存存储pmk */
+    g_pmk_cache_list.cur_idx++;
+    if (g_pmk_cache_list.cur_idx >= PMK_CACHE_NUM) {
+        g_pmk_cache_list.cur_idx = 0;
+    }
+    /* 存一下新的ap的配置信息 */
+    if (memcpy_s(&g_pmk_cache_list.pmk_entry[g_pmk_cache_list.cur_idx].assoc_conf,
+        sizeof(ext_wifi_assoc_request), req, sizeof(ext_wifi_assoc_request)) != EOK) {
+        wpa_warning_log1(MSG_DEBUG, "add a new config, cur idx[%d]\r\n", g_pmk_cache_list.cur_idx);
+    }
+    g_pmk_cache_list.pmk_entry[g_pmk_cache_list.cur_idx].channel = req->channel;
+}
+
+/* 将当前pmk存入cache */
+void wifi_save_pmk_cache(struct rsn_pmksa_cache_entry *entry)
+{
+    /* 当前有相同的wpa3配置信息，表示该ap关联过，不用重新存 */
+    if (g_pmk_cache_list.pmk_idx >= 0 && g_pmk_cache_list.pmk_idx < PMK_CACHE_NUM) {
+        return;
+    }
+    /* pmk_idx = PMK_CACHE_IDX_INVALID的场景，表示没有对应的pmk，需要新存一个pmk */
+    if (memcpy_s(&g_pmk_cache_list.pmk_entry[g_pmk_cache_list.cur_idx].pmk_cache,
+        sizeof(struct rsn_pmksa_cache_entry), entry, sizeof(struct rsn_pmksa_cache_entry)) != EOK) {
+        wpa_warning_log0(MSG_DEBUG, "there is no corresponding pmk, need to save a new pmk.");
+        return;
+    };
+}
+
+/* 根据下标取pmk缓存 */
+struct rsn_pmksa_cache_entry *wifi_get_pmk_cache(void)
+{
+    if (g_pmk_cache_list.pmk_idx < 0 || g_pmk_cache_list.pmk_idx >= PMK_CACHE_NUM) {
+        return NULL;
+    }
+    return &(g_pmk_cache_list.pmk_entry[g_pmk_cache_list.pmk_idx].pmk_cache);
+}
+
+void wifi_flush_pmk_cache(void)
+{
+    if (g_pmk_cache_list.pmk_idx < 0 || g_pmk_cache_list.pmk_idx >= PMK_CACHE_NUM) {
+        return;
+    }
+    /* 清空当前失效的pmk */
+    memset_s(&g_pmk_cache_list.pmk_entry[g_pmk_cache_list.pmk_idx], sizeof(ext_wifi_pmk_conf),
+        0, sizeof(ext_wifi_pmk_conf));
+}
+#endif /* LOS_CONFIG_PMK_CACHE */
+
 int uapi_wifi_sta_connect(const ext_wifi_assoc_request *req)
 {
+#ifdef LOS_CONFIG_PMK_CACHE
+    /* 刷新wpa3 pmk缓存id */
+    wifi_flush_wpa3_pmk(req);
+#endif /* LOS_CONFIG_PMK_CACHE */
     if (is_lock_flag_off() == EXT_WIFI_FAIL) {
         wpa_error_log0(MSG_ERROR, "wifi dev start or stop is running.");
         return EXT_WIFI_FAIL;
@@ -2467,15 +2608,23 @@ int uapi_wifi_sta_get_connect_info(ext_wifi_status *connect_status)
         return EXT_WIFI_FAIL;
     }
 
-    (void)wpa_cli_get_sta_status(wpa_s, &wifi_status_sem);
+    if (wpa_cli_get_sta_status(wpa_s, &wifi_status_sem) != EXT_WIFI_OK) {
+        rc = EXT_WIFI_FAIL;
+        goto exit;
+    }
 
     if (wifi_status_sem.status != WIFI_STASTUS_OK) {
         wpa_error_log1(MSG_ERROR, "wifi status obtain fail, status = %d.", wifi_status_sem.status);
         rc = EXT_WIFI_FAIL;
     }
-    (void)osal_sem_down(&wifi_status_sem.sta_status_sem);
-    osal_sem_destroy(&wifi_status_sem.sta_status_sem);
 
+    if (osal_sem_down(&wifi_status_sem.sta_status_sem) != OSAL_SUCCESS) {
+        wpa_error_log0(MSG_ERROR, "wait sem fail.");
+        rc = EXT_WIFI_FAIL;
+    }
+
+exit:
+    osal_sem_destroy(&wifi_status_sem.sta_status_sem);
     return rc;
 }
 

@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]evt_task_ble_scan_start, start fail, env_ptr is NULL! @evt_task_ble_scan_ram.c(48),WARNING" ID="0x89440183" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]evt_task_ble_scan_start, evt task start fail! @evt_task_ble_scan_ram.c(83),WARNING" ID="0x8944029b" />
+			</MSG_LOG>

@@ -353,9 +353,13 @@ typedef enum {
 
 /*!
  * \typedef ext_wifi_mac_disconnect_reason
- * \brief 驱动上报的私有断连状态码, 与mac_common_frame_rom.h的值对应
+ * \brief wpa_supplicant与驱动上报的断连状态码, 与mac_common_frame_rom.h的值对应
  */
 typedef enum {
+    WLAN_REASON_UNSPEC = 1,
+    WLAN_REASON_DEAUTH_LEAVE = 3,
+    WLAN_REASON_4WAY_HS_TIMEOUT = 15,
+    WLAN_REASON_GROUP_KEY_REFRESH_TIMEOUT = 16,
     WLAN_JOIN_RSP_TIMEOUT = 5200,
     WLAN_AUTH_RSP2_TIMEOUT = 5201,
     WLAN_AUTH_RSP4_TIMEOUT = 5202,
@@ -363,8 +367,26 @@ typedef enum {
     WLAN_AUTH_RSP_TIMEOUT = 5204,
     WLAN_ACTIVE_DISCONNECT_OFFSET = 5205,
     WLAN_DISASOC_MISC_LINKLOSS = 5206,
-    WLAN_MAC_EXT_AUTH_FAIL = 5210
-} ext_wifi_mac_disconnect_reason; /* 驱动上报的私有断连状态 */
+    WLAN_MAC_EXT_AUTH_FAIL = 5210,
+    WLAN_STATUS_AUTH_MAX = 7000,
+    WLAN_STATUS_ASSOC_MAX = 8000,
+} ext_wifi_mac_disconnect_reason; /* wpa_supplicant与驱动上报的断连状态 */
+
+/*!
+ * \brief wlan_wpa_states, 与wpa_supplicant中的enum wpa_states值对应
+ */
+enum wlan_wpa_states {
+    WLAN_WPA_DISCONNECTED,
+    WLAN_WPA_INTERFACE_DISABLED,
+    WLAN_WPA_INACTIVE,
+    WLAN_WPA_SCANNING,
+    WLAN_WPA_AUTHENTICATING,
+    WLAN_WPA_ASSOCIATING,
+    WLAN_WPA_ASSOCIATED,
+    WLAN_WPA_4WAY_HANDSHAKE,
+    WLAN_WPA_GROUP_HANDSHAKE,
+    WLAN_WPA_COMPLETED
+};
 /**
  * @ingroup soc_wifi_basic
  *
@@ -590,6 +612,7 @@ typedef enum {
     EXT_WIFI_SSID_SCAN,              /**< Specified SSID scan. CNcomment: 指定SSID扫描.CNend */
     EXT_WIFI_SSID_PREFIX_SCAN,       /**< Prefix SSID scan. CNcomment: SSID前缀扫描.CNend */
     EXT_WIFI_BSSID_SCAN,             /**< Specified BSSID scan. CNcomment: 指定BSSID扫描.CNend */
+    EXT_WIFI_SSID_SCAN_WITH_CHANNEL, /**< Specified SSID scan with channel. CNcomment: 指定SSID与信道扫描.CNend */
 } ext_wifi_scan_type;
 
 /**
@@ -635,6 +658,22 @@ typedef enum {
     EXT_WIFI_RETRY_FRAME_MGMT,             /**< mgmt frame retrans. CNcomment: 重传管理帧.CNend */
     EXT_WIFI_RETRY_FRAME_BUTT,
 } ext_wifi_retry_frame_type;
+
+/**
+ * @ingroup soc_wifi_basic
+ *
+ * Enumeration of WiFi sta connect parameters types.CNcomment:WiFi sta 连接阶段参数枚举类型.CNend
+ */
+typedef enum {
+    EXT_CONFIG_AUTH_MAX_RETRY,
+    EXT_CONFIG_AUTH_RECV_TIMEOUT,
+    EXT_CONFIG_ASSOC_MAX_RETRY,
+    EXT_CONFIG_ASSOC_RECV_TIMEOUT,
+    EXT_CONFIG_EAPOL1_RECV_TIMEOUT,
+    EXT_CONFIG_EAPOL2_MAX_RETRY,
+    EXT_CONFIG_EAPOL3_RECV_TIMEOUT,
+    EXT_CONFIG_CONNECT_PARA_MAX,
+} ext_wifi_sta_conn_paras_enum;
 
 typedef struct {
     unsigned int rate_value;    /*!< @if Eng fixed rate value.
@@ -767,8 +806,26 @@ typedef struct {
     ext_wifi_pairwise pairwise;              /**< Encryption type. CNcomment: 加密方式,不需指定时置0.CNend */
     unsigned char hex_flag;                  /**< Hex key flag. CNcomment: 表示当前密码为十六进制格式 */
     unsigned char ft_flag;                   /**< FT flag. CNcomment: FT 标识 */
-    unsigned char resv[3];                   /**< Reserved. CNcomment: 预留.CNend */
+    unsigned char channel;                   /**< channel. CNcomment: 信道号 */
+    unsigned char resv[2];                   /**< Reserved. CNcomment: 预留.CNend */
 } ext_wifi_assoc_request;
+
+/**
+ * @ingroup soc_wifi_basic
+ *
+ * Config struct of sta connect parameters.
+ * CNcomment:sta连接参数配置结构体.CNend
+ */
+typedef struct {
+ /* bitmap:
+ |        bit0         |         bit1         |        bit2         |       bit3         |
+ |   auth max retry    |    auth recv timeout |  assoc max retry    | assoc recv timeout |
+ |        bit4         |         bit5         |        bit6         |       bit7         |
+ | eapol1 recv timeout |  eapol2 max retry    | eapol3 recv timeout |       resv bit     | */
+    uint8_t bitmap;                                   /**< Config enable bitmap. CNcomment: 参数配置比特位图.CNend */
+    uint8_t resv;                                     /**< Reserved byte. CNcomment: 保留字段.CNend */
+    uint16_t conn_paras[EXT_CONFIG_CONNECT_PARA_MAX]; /**< para values,timeout unit:ms.CNcomment:配置参数值，超时单位：毫秒.CNend */
+} ext_wifi_config_conn_paras;
 
 /**
  * @ingroup soc_wifi_basic
@@ -827,6 +884,13 @@ typedef struct {
     char ifname[WIFI_IFNAME_MAX_SIZE + 1];   /**< Iftype name. CNcomment: 接口名称.CNend */
     unsigned char locally_generated;         /**< locally_generated. CNcomment: 是否为主动触发的断连(1是0否).CNend */
     unsigned char wpa_state;                 /**< wpa_state. CNcomment: 当前WPA状态(enum wpa_states).CNend */
+    unsigned char mgmt_type;                 /**< mgmt_type. CNcomment: 管理帧类型.CNend */
+    unsigned char eapol_timeout;             /**< eapol_timeout. CNcomment: eapol接收是否超时.CNend */
+    unsigned char eapol_state;               /**< eapol_state. CNcomment: eapol阶段.CNend */
+    unsigned char is_sae;                    /**< is_sae. CNcomment: 加密方式是否是sae.CNend */
+    unsigned char sae_timeout;               /**< sae_timeout. CNcomment: sae auth是否超时.CNend */
+    unsigned char sae_auth_state;            /**< sae_auth_state. CNcomment: sae auth阶段.CNend */
+    unsigned char auth_stage;                /**< auth_stage. CNcomment: 认证阶段.CNend */
 } event_wifi_disconnected;
 
 /**
@@ -1316,6 +1380,26 @@ td_s32 uapi_wifi_get_tx_params(const td_char *mac_addr, td_u8 mac_len, td_u32 *t
 /**
  * @ingroup soc_wifi_basic
  *
+ * structure of channel intf info.CNcomment:信道干扰信息结构体.CNend
+ */
+typedef struct {
+    int16_t noise;       /**< noise floor. CNcomment: 底噪.CNend */
+    uint16_t busy_ratio; /**< busy ratio. CNcomment: 繁忙度.CNend */
+    uint16_t coch_ratio; /**< cochannel ratio. CNcomment: 同频干扰.CNend */
+    uint8_t channel;
+    uint8_t resv;
+} wifi_channel_info_stru;
+
+/**
+ * @ingroup soc_wifi_basic
+ *
+ * function definition of wifi event.CNcommment:获取当前环境干扰信息.CNend
+ */
+td_s32 uapi_wifi_get_chan_intrf_info(wifi_channel_info_stru *chan_info, td_u8 max_len, td_u8 *chan_num);
+
+/**
+ * @ingroup soc_wifi_basic
+ *
  * function definition of wifi event.CNcommment:设置低功耗函数接口定义.CNend
  */
 td_s32 uapi_set_low_current_boot_mode(td_u16 flag);
@@ -1557,10 +1641,10 @@ int uapi_wifi_sta_advance_scan(ext_wifi_scan_params *sp);
 
 /**
 * @ingroup  soc_wifi_basic
-* @brief  sta start scan.CNcomment:station进行扫描.CNend
+* @brief  start scan.CNcomment:扫描.CNend
 *
 * @par Description:
-*           Get station scan result.CNcomment:获取station扫描结果.CNend
+*           Get scan result.CNcomment:获取扫描结果.CNend
 * @attention  1. The memories of <ap_list> and <ap_num> memories are requested by the caller. \n
 *             The <ap_list> size up to : OAL_SIZEOF(ext_wifi_ap_info ap_list) * 32. \n
 *             CNcomment:1. <ap_list>和<ap_num>由调用者申请内存,
@@ -1586,7 +1670,8 @@ int uapi_wifi_sta_advance_scan(ext_wifi_scan_params *sp);
 * @see  NULL
 * @since
 */
-int uapi_wifi_sta_scan_results(ext_wifi_ap_info *ap_list, unsigned int *ap_num);
+int uapi_wifi_get_scan_results(ext_wifi_ap_info *ap_list, unsigned int *ap_num);
+int uapi_wifi_sta_config_wpa_eapol_para(ext_wifi_config_conn_paras *para);
 
 /**
 * @ingroup  soc_wifi_basic
@@ -1990,6 +2075,27 @@ int uapi_wifi_sta_get_ap_snr(void);
 * @since
 */
 td_s32 uapi_wifi_ap_get_sta_info(td_char *mac_addr, td_s8 *rssi, td_u32 *best_rate);
+
+/**
+* @ingroup  soc_wifi_basic
+* @brief  Get vendor ie.CNcomment:获取vendor ie信息.CNend
+*
+* @par Description:
+*         Get vendor ie of ap which sta last connected to.CNcomment:获取sta上一次关联的ap的vendor ie信息.CNend
+*
+* @attention  NULL
+* @param  mac_addr   [IN]    Type #char, mac address of connected last connect ap. CNcomment:sta连接的ap的mac地址.CNend
+* @param  outbuffer  [OUT]   Type #signed char, output buffer address. CNcomment: 输出缓冲区地址.CNend
+* @param  out_buffer_len  [OUT]   Type #unsigned short, output buffer max lenght. CNcomment: 输出缓冲区最大长度.CNend
+*
+* @retval #EXT_WIFI_OK        Execute successfully.
+* @retval #EXT_WIFI_FAIL      Execute failed.
+* @par Dependency:
+*            @li soc_wifi_api.h: WiFi API
+* @see  NULL
+* @since
+*/
+td_s32 uapi_wifi_sta_get_last_conn_vendor_ie(td_char *mac_addr, td_s8 *outbuffer, td_u16 out_buffer_len);
 
 /**
 * @ingroup  soc_wifi_basic
@@ -2800,6 +2906,43 @@ td_u32 uapi_wifi_set_cca_threshold(td_u8 mode, td_s8 threshold);
 * @since
 */
 td_u32 uapi_wifi_set_tx_pwr_offset(const td_char *ifname, td_s16 offset);
+
+/**
+* @ingroup  soc_wifi_basic
+* @brief  Config sta connect each stage para.CNcomment:设置sta连接各阶段参数.CNend
+*
+* @par Description:
+*           Config sta connect each stage para include auth,assoc,eapol2 max retry times and auth,assoc,
+*           eapol1,eapol3 recv timeout. CNcomment:设置sta连接各阶段参数,包括auth,assoc,eapol2重传次数
+*           auth,assoc,eapol1,eapol3接收超时时间.CNend
+*
+* @param  para          [IN]     Type #ext_wifi_config_connect_eachstage_para_stru *, para. CNcomment:连接各阶段参数.CNend
+*
+* @retval #EXT_WIFI_OK  Excute successfully
+* @retval #Other           Error code
+*
+* @par Dependency:
+*            @li soc_wifi_api.h: WiFi API
+* @see  NULL
+* @since
+*/
+td_u32 uapi_wifi_sta_config_conn_paras(ext_wifi_config_conn_paras *para);
+
+/**
+* @ingroup  soc_wifi_basic
+* @brief  Get rssi of last data frame.CNcomment:获取最后一个数据帧的信号强度.CNend
+*
+* @param  para [OUT] Type #td_s8 *, data_rssi. CNcomment:信号强度.CNend
+*
+* @retval #EXT_WIFI_OK  Excute successfully
+* @retval #Other           Error code
+*
+* @par Dependency:
+*            @li soc_wifi_api.h: WiFi API
+* @see  NULL
+* @since
+*/
+td_u32 uapi_wifi_sta_data_frame_rssi(td_s8 *rssi);
 
 /**
 * @ingroup  soc_wifi_basic

@@ -1,0 +1,8 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]hci_if_bt_rx_acl: get_buf fail @hci_if.c(45),WARNING" ID="0x8808016b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]hci_if_bt_rx_iso: get_buf fail @hci_if.c(68),WARNING" ID="0x88080223" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]hci_if_gle_rx_acb: get_buf fail @hci_if.c(89),WARNING" ID="0x880802cb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]hci_if_gle_rx_imb: get_buf fail @hci_if.c(113),WARNING" ID="0x8808038b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]hci_if_bt_rx_iso: get_buf fail @hci_if.c(137),WARNING" ID="0x8808044b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]api_h2c_write: input buffer is NULL @hci_if.c(157),WARNING" ID="0x880804eb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]api_c2h_write queue_all_in: %d c2h_queue_max: %d adv_all: %d adv_drop: %d @hci_if.c(324),INFO" ID="0x88080a25" />
+			</MSG_LOG>

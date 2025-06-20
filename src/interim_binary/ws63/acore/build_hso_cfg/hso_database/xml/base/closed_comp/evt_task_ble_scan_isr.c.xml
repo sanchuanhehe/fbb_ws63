@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][scan]evt_task_ble_scan_start_cbk, prog_num=%d @evt_task_ble_scan_isr.c(132),WARNING" ID="0x88600423" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]MSG_ALLOC_FAILED! @evt_task_ble_scan_isr.c(164),ERROR" ID="0x88600522" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][scan]evt_task_ble_scan_evt_cbk, prog_num=%d @evt_task_ble_scan_isr.c(240),WARNING" ID="0x88600783" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][scan]evt_task_ble_scan_abnormal_cbk, timestamp=0x%x, current time=0x%x @evt_task_ble_scan_isr.c(295),INFO" ID="0x8860093d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][scan]evt_task_ble_scan_abnormal_cbk, prog_num=%d @evt_task_ble_scan_isr.c(300),WARNING" ID="0x88600963" />
+			</MSG_LOG>

@@ -171,8 +171,6 @@ class CMakeBuilder(BuildEnvironment):
                 target_env.add("LIB_GEN_NAME", libs)
                 target_env.extend("SDK_LIBGEN_COMPONENTS", self.component)
                 self.compile_target(target_name, target_env)
-        chip = env.get('chip')
-        self.sdk.genarate_efuse_cfg_bin(chip)
         self.sdk.sdk_build(self.build_time, self.no_hso, self.build_level)
         self.sdk = None
         self.component = []

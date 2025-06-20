@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_irq.c(54),ERROR" ID="0x813001b2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="addr:0x%x:0x%x @hal_irq.c(58),ERROR" ID="0x813001d2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="wbase:0x%x wlen:0x%x @hal_irq.c(83),ERROR" ID="0x8130029a" />
+			</MSG_LOG>

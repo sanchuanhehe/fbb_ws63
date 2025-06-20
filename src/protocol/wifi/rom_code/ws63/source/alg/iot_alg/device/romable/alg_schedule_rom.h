@@ -1,7 +1,7 @@
 /*
 * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2022. All rights reserved.
 * Description: algorithm schedule rom
-* Author:
+* Author: FuYu
 */
 #ifndef ALG_SCHEDULE_ROM_H
 #define ALG_SCHEDULE_ROM_H

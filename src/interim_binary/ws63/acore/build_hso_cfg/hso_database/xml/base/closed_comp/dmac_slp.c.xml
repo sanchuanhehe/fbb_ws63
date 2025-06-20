@@ -1,0 +1,23 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d]dmac_lsp_stop_tx: stop vap tx @dmac_slp.c(36),WARNING" ID="0x82500123" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_lsp_resume_tx:TX GPIO REG[%x] RX GPIO REG[%x] @dmac_slp.c(58),WARNING" ID="0x825001d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_slp_frame_copy::tx_ctl memcpy failed ret[%d] @dmac_slp.c(80),ERROR" ID="0x82500282" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_slp_frame_copy::header memcpy failed ret[%d] @dmac_slp.c(85),ERROR" ID="0x825002aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_slp_frame_copy::header payload failed ret[%d] @dmac_slp.c(92),ERROR" ID="0x825002e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_lsp_rm_send_gpio_pkt:: get dmac_vap fail. @dmac_slp.c(111),WARNING" ID="0x8250037b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_lsp_rm_send_pkt:TX GPIO REG[%x] RX GPIO REG[%x] @dmac_slp.c(129),WARNING" ID="0x8250040b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_ba_send_bar::gpio send failed[%d].} @dmac_slp.c(133),WARNING" ID="0x8250042b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d]{dmac_lsp_send_request:cts send failed[%d]} @dmac_slp.c(155),WARNING" ID="0x825004db" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d]{dmac_lsp_rm_send_pkt:req send failed[%d]} @dmac_slp.c(169),WARNING" ID="0x8250054b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_lsp_rm_request_start: LSP RM START @dmac_slp.c(185),WARNING" ID="0x825005cb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_lsp_rm_request_start::lsp rm is running.} @dmac_slp.c(189),WARNING" ID="0x825005eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_lsp_rm_request_start: gpio frame memcpy fail @dmac_slp.c(207),ERROR" ID="0x8250067a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_rx_frame_lsp_handle::lsp rm is running.} @dmac_slp.c(245),WARNING" ID="0x825007ab" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_rx_frame_lsp_handle::none up vap.} @dmac_slp.c(252),WARNING" ID="0x825007e3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_rx_frame_lsp_handle: RX phase_incr[%d] frame_ie[%d] @dmac_slp.c(260),WARNING" ID="0x82500823" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_rx_frame_lsp_handle:TX GPIO REG[%x] RX GPIO REG[%x] @dmac_slp.c(271),WARNING" ID="0x8250087b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_lsp_init:: RX IN malloc error! @dmac_slp.c(316),ERROR" ID="0x825009e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_lsp_init:: RX IN malloc error! @dmac_slp.c(323),ERROR" ID="0x82500a1a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_slp_init:: RX IN register_netbuf_hooks error! @dmac_slp.c(330),ERROR" ID="0x82500a52" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_slp_init:: TX_COMP register_netbuf_hooks error! @dmac_slp.c(336),ERROR" ID="0x82500a82" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_lsp_set_enable:lsp_en[%d] invild @dmac_slp.c(377),WARNING" ID="0x82500bcb" />
+			</MSG_LOG>

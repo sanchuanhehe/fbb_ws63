@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="err para in hmac_get_vap @mac_resource_rom.c(43),WARNING" ID="0x82ea015b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{mac_res_user_init_etc:input para null.} @mac_resource_rom.c(93),ERROR" ID="0x82ea02ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_res_init_etc::mac_res_user_init_etc failed[%d].} @mac_resource_rom.c(146),ERROR" ID="0x82ea0492" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="mac_res_free_mac_user_etc::cnt==0! idx:%d @mac_resource_rom.c(168),ERROR" ID="0x82ea0542" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="mac_res_free_mac_vap_etc::cnt==0! idx:%d @mac_resource_rom.c(185),ERROR" ID="0x82ea05ca" />
+			</MSG_LOG>

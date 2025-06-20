@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[Error] sle at cmd discovery structure get params fail. ret:%d @sle_at_ssapc.c(34),ERROR" ID="0xd91c0112" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle at uuid cpy fail!. @sle_at_ssapc.c(52),ERROR" ID="0xd91c01a2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="sle at cmd discovery structure uuid[%d] = 0x%02x @sle_at_ssapc.c(62),INFO" ID="0xd91c01f5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error]at cmd ssapc write new fail! @sle_at_ssapc.c(81),ERROR" ID="0xd91c028a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error][AT] string to data error! @sle_at_ssapc.c(86),ERROR" ID="0xd91c02b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error]at cmd ssapc write new fail! @sle_at_ssapc.c(109),ERROR" ID="0xd91c036a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error][AT] string to data error! @sle_at_ssapc.c(114),ERROR" ID="0xd91c0392" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] sle at uuid cpy fail!. @sle_at_ssapc.c(157),ERROR" ID="0xd91c04ea" />
+			</MSG_LOG>

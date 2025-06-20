@@ -1,0 +1,31 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy adv_manu_spec_data fail when get adv data @sapi_ble_adv.c(211),ERROR" ID="0xdcb8069a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy adv_hi_beacon_data fail when get adv data @sapi_ble_adv.c(233),ERROR" ID="0xdcb8074a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy mac fail when get adv data @sapi_ble_adv.c(257),ERROR" ID="0xdcb8080a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy adv_alipay_data fail when get adv data @sapi_ble_adv.c(263),ERROR" ID="0xdcb8083a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy AppearanceData fail when get adv data @sapi_ble_adv.c(282),ERROR" ID="0xdcb808d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy AppearanceData fail when get adv data @sapi_ble_adv.c(301),ERROR" ID="0xdcb8096a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy ServiceUuid16Data fail when get adv data @sapi_ble_adv.c(319),ERROR" ID="0xdcb809fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy public target addr fail when get adv data @sapi_ble_adv.c(337),ERROR" ID="0xdcb80a8a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy random addr fail when get adv data @sapi_ble_adv.c(358),ERROR" ID="0xdcb80b32" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy interval data fail when get adv data @sapi_ble_adv.c(376),ERROR" ID="0xdcb80bc2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy interval data fail when get adv data @sapi_ble_adv.c(395),ERROR" ID="0xdcb80c5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy LocalName fail when get adv data @sapi_ble_adv.c(415),ERROR" ID="0xdcb80cfa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy LocalName fail when get adv data @sapi_ble_adv.c(423),ERROR" ID="0xdcb80d3a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy adv data fail @sapi_ble_adv.c(462),ERROR" ID="0xdcb80e72" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: ble general set adv data Params is invaild! DataMaxLen is %d @sapi_ble_adv.c(481),ERROR" ID="0xdcb80f0a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy adv_flags fail when get adv data @sapi_ble_adv.c(496),ERROR" ID="0xdcb80f82" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: BleGeneralSetScanRsponseData: adv_params is NULL! @sapi_ble_adv.c(547),ERROR" ID="0xdcb8111a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: BleGeneralSetScanRsponseData: scan_rsp_data is NULL! @sapi_ble_adv.c(553),ERROR" ID="0xdcb8114a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: scan_rsp_data_max_len is error: %d @sapi_ble_adv.c(559),ERROR" ID="0xdcb8117a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy tx_power_level fail when get scanRspdata @sapi_ble_adv.c(571),ERROR" ID="0xdcb811da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: local name len too long: %d @sapi_ble_adv.c(581),ERROR" ID="0xdcb8122a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy localname fail when get scanRspdata @sapi_ble_adv.c(588),ERROR" ID="0xdcb81262" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: App Start Ble Adv get localname or mac err @sapi_ble_adv.c(666),ERROR" ID="0xdcb814d2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble log: ble general set extended adv param g_adv_addr_type = %d adv_event_flag = %x,&quot; &quot;g_config_le_slave_use_privacy = %d @sapi_ble_adv.c(685),INFO" ID="0xdcb8156d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: App Start Ble Adv get localname or mac err @sapi_ble_adv.c(722),ERROR" ID="0xdcb81692" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: Start Ble Adv get localname err @sapi_ble_adv.c(728),ERROR" ID="0xdcb816c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: ble general adv data len error: %d @sapi_ble_adv.c(738),ERROR" ID="0xdcb81712" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: ble general scan rsp data len error: %d @sapi_ble_adv.c(747),ERROR" ID="0xdcb8175a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: adv data memcpy fail, data_len: %d @sapi_ble_adv.c(770),ERROR" ID="0xdcb81812" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: scan rsp data memcpy fail, data_len: %d @sapi_ble_adv.c(779),ERROR" ID="0xdcb8185a" />
+			</MSG_LOG>

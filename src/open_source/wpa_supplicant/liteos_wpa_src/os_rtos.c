@@ -1,6 +1,7 @@
 /*
  * OS specific functions for UNIX/POSIX systems
  * Copyright (c) 2005-2009, Jouni Malinen <j@w1.fi>
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2014-2019. All rights reserved.
  *
  * This software may be distributed under the terms of the BSD license.
  * See README for more details.

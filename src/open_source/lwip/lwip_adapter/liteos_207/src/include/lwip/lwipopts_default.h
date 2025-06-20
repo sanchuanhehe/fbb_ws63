@@ -1,6 +1,8 @@
 ﻿/*
  * Copyright (c) 2001-2003 Swedish Institute of Computer Science.
  * All rights reserved.
+ * Copyright (c) <2013-2020>, <CompanyNameMagicTag>
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -33,11 +35,19 @@
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
 
+#ifdef AT_COMMAND
+#include "at.h"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 #ifndef LWIP_PLATFORM_PRINT
+#ifdef AT_COMMAND
+#define LWIP_PLATFORM_PRINT         uapi_at_print
+#else
 #define LWIP_PLATFORM_PRINT         PRINTK
+#endif
 #endif
 
 /*
@@ -2127,17 +2137,17 @@ upto 255 interfaces . New versions donot have these restrictions but we stick to
 #endif
 
 #ifdef CONFIG_DENY_DNS_SERVER
-
+ 
 #ifndef LWIP_DENY_DNS_SERVER
 #define LWIP_DENY_DNS_SERVER 1
 #endif
-
+ 
 #else
-
+ 
 #ifndef LWIP_DENY_DNS_SERVER
 #define LWIP_DENY_DNS_SERVER 0
 #endif
-
+ 
 #endif
 
 #ifdef __cplusplus

@@ -1,0 +1,16 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[ADV]unknown phy %d @evt_task_ble_ext_adv.c(71),WARNING" ID="0x8914023b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]evt_task_ble_adv_config_aux_es prim_task_id(0x%x)prim_task_type(%d)aux_task_id(0x%x)aux_task_type(%d) @evt_task_ble_ext_adv.c(868),INFO" ID="0x89141b25" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]interval(0x%x), duration_min_slots(0x%x) @evt_task_ble_ext_adv.c(869),INFO" ID="0x89141b2d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="evt_task_ble_ext_adv_prim_evt_cbk prog_num is 0 @evt_task_ble_ext_adv.c(932),ERROR" ID="0x89141d22" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="evt_task_ble_ext_adv_prim_sket_cbk prog_num is 0 @evt_task_ble_ext_adv.c(954),ERROR" ID="0x89141dd2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="evt_task_ble_ext_adv_prim_late_cbk prog_num is 0 @evt_task_ble_ext_adv.c(970),ERROR" ID="0x89141e52" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="evt_task_ble_ext_adv_prim_abort_cbk prog_num is 0 @evt_task_ble_ext_adv.c(983),ERROR" ID="0x89141eba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="get rx isr in prim adv @evt_task_ble_ext_adv.c(1006),ERROR" ID="0x89141f72" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[AE]ts don't match! next_ts=0x%x, isr_ts=0x%x @evt_task_ble_ext_adv.c(1020),INFO" ID="0x89141fe5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="evt_task_ble_ext_adv_aux_evt_cbk prog_num is 0 @evt_task_ble_ext_adv.c(1058),ERROR" ID="0x89142112" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="evt_task_ble_ext_adv_aux_late_cbk prog_num is 0 @evt_task_ble_ext_adv.c(1075),ERROR" ID="0x8914219a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="evt_task_ble_ext_adv_aux_sket_cbk prog_num is 0 @evt_task_ble_ext_adv.c(1089),ERROR" ID="0x8914220a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="evt_task_ble_ext_adv_aux_abort_cbk prog_num is 0 @evt_task_ble_ext_adv.c(1107),ERROR" ID="0x8914229a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]evt_task_ble_ext_adv_set_scanrsp_data: legacy:len = %d  @evt_task_ble_ext_adv.c(1202),WARNING" ID="0x89142593" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ADV]adv_type mismatch: %d @evt_task_ble_ext_adv.c(1243),WARNING" ID="0x891426db" />
+			</MSG_LOG>

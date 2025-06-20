@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="{hal_scan_pause_handle_cb::pause type[0x%x]scan idx[%d]} timer is regsterd @hal_chan_mgmt.c(293),WARNING" ID="0x81f2092b" />
+			</MSG_LOG>

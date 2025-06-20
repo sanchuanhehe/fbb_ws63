@@ -210,7 +210,7 @@ int HILINK_GetAddrInfo(const char *nodename, const char *servname,
 
     struct addrinfo *resInfo = NULL;
     struct addrinfo *hintsInfoP = NULL;
-    struct addrinfo hintsInfo;
+    struct addrinfo hintsInfo = {0};
 
     HILINK_SAL_DEBUG_LIMITED("get addrinfo %s\r\n", nodename);
     if (hints != NULL) {
@@ -256,7 +256,6 @@ int HILINK_Socket(HiLinkSocketDomain domain, HiLinkSocketType type, HiLinkSocket
 void HILINK_Close(int fd)
 {
     (void)lwip_close(fd);
-    return;
 }
 
 static int SetFcntl(int fd, bool isBlock)
@@ -368,7 +367,6 @@ static int SetSocketMultiGroup(int fd, const char *multicastIp, bool isAdd)
         group.imr_interface.s_addr = HILINK_InetAddr(localIp);
     }
 
-    HILINK_SAL_NOTICE("SetSocketMultiGroup get ip[%s]\r\n", localIp);
     int flag = isAdd ? IP_ADD_MEMBERSHIP : IP_DROP_MEMBERSHIP;
     if (setsockopt(fd, IPPROTO_IP, flag, (void *)&group, sizeof(group)) < 0) {
         HILINK_SAL_WARN("set opt %d failed\r\n", flag);
@@ -579,7 +577,7 @@ int HILINK_SendTo(int fd, const unsigned char *buf, unsigned int len,
 static void GetFdSet(HiLinkFdSet *set, fd_set *fdSet, int *maxfd)
 {
     if ((set != NULL) && (set->fdSet != NULL)) {
-        memset_s(fdSet, sizeof(fd_set), 0, sizeof(fd_set));
+        (void)memset_s(fdSet, sizeof(fd_set), 0, sizeof(fd_set));
         for (unsigned int i = 0; i < set->num; ++i) {
             if (set->fdSet[i] >= 0) {
                 FD_SET(set->fdSet[i], fdSet);

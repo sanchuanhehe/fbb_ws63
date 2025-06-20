@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="gle factory init enter. @gle_factory_ui.c(16),INFO" ID="0xde8a0085" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle factory cleanup enter. @gle_factory_ui.c(24),INFO" ID="0xde8a00c5" />
+			</MSG_LOG>

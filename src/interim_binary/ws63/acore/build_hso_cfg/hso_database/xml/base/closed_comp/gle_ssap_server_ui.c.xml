@@ -1,0 +1,17 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="ssaps reg tree param null @gle_ssap_server_ui.c(35),ERROR" ID="0xde7c011a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps update item value param null @gle_ssap_server_ui.c(47),ERROR" ID="0xde7c017a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="property_value mem new failed @gle_ssap_server_ui.c(52),ERROR" ID="0xde7c01a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="property_value mem cpy failed @gle_ssap_server_ui.c(57),ERROR" ID="0xde7c01ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle ssaps update item value by uuid param null @gle_ssap_server_ui.c(71),ERROR" ID="0xde7c023a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="property_value mem new failed @gle_ssap_server_ui.c(76),ERROR" ID="0xde7c0262" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="property_value mem cpy failed @gle_ssap_server_ui.c(81),ERROR" ID="0xde7c028a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps find hdl by uuid param null @gle_ssap_server_ui.c(98),ERROR" ID="0xde7c0312" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="find_handl mem new failed @gle_ssap_server_ui.c(103),ERROR" ID="0xde7c033a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="target uuid mem cpy failed @gle_ssap_server_ui.c(114),ERROR" ID="0xde7c0392" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps mtu param null @gle_ssap_server_ui.c(130),ERROR" ID="0xde7c0412" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sssaps mtu mem new failed @gle_ssap_server_ui.c(135),ERROR" ID="0xde7c043a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ssap mtu size:%d @gle_ssap_server_ui.c(140),ERROR" ID="0xde7c0462" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ssaps find hdl by uuid param null @gle_ssap_server_ui.c(155),ERROR" ID="0xde7c04da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="send_rsp mem new failed @gle_ssap_server_ui.c(160),ERROR" ID="0xde7c0502" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="send_rsp mem mem cpy failed @gle_ssap_server_ui.c(166),ERROR" ID="0xde7c0532" />
+			</MSG_LOG>

@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]lm_ble_adv_hci_set_param_act:adv_intv_min=%d,adv_intv_max=%d,adv_type=%d,own_addr_type=%d @lm_ble_adv_legacy_act.c(66),INFO" ID="0x88160215" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]lm_ble_adv_hci_set_param_act:peer_addr_type=0x%x,channel_map=%d,filter_policy=%d,sed_id=%d @lm_ble_adv_legacy_act.c(68),INFO" ID="0x88160225" />
+			</MSG_LOG>

@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]evt_task_comm_task_start sched insert fail task_id(0x%x) @evt_task_fsm.c(24),WARNING" ID="0x880a00c3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]evt_task_comm_task_start sched update fail task_id(0x%x) @evt_task_fsm.c(36),WARNING" ID="0x880a0123" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp]evt_task_comm_fsm_except_handler except msg src_id(0x%x)dst_id(0x%x)msg_id(0x%x) @evt_task_fsm.c(55),WARNING" ID="0x880a01bb" />
+			</MSG_LOG>

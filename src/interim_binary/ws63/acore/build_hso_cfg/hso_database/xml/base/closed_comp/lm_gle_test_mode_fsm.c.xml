@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="lm_gle_test_mode_create_fsm @lm_gle_test_mode_fsm.c(81),INFO" ID="0x88fa028d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="lm_gle_test_mode_get_fsm_id success! @lm_gle_test_mode_fsm.c(122),INFO" ID="0x88fa03d5" />
+			</MSG_LOG>

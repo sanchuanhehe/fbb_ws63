@@ -47,7 +47,7 @@ typedef struct {
 
     osal_u16                          wait_timeout;     /* 软件定时器超时时间 */
     osal_u8                           rsv[2];      /* 保留2字节对齐 */
-    osal_u8                             protect_frame[24]; // 24 mac_vap_ext hmac_only
+    osal_u8                             protect_frame[24]; // 24 todo mac_vap_ext hmac_only
 } hal_one_packet_cfg_stru;
 
 typedef struct {
@@ -655,7 +655,8 @@ typedef struct tag_hal_to_dmac_device_stru {
 
     osal_u8 twt_session_enable             : 1;
     osal_u8 psd_enable : 1;
-    osal_u8 resv1 : 6;
+    osal_u8 clean_channel_enable : 1;
+    osal_u8 resv1 : 5;
 
     osal_u8 resv2[2]; /* 2字节resv */
     oal_bool_enum_uint8 ps_mode_ever; /* 标记干扰检测期间是否进过低功耗 */

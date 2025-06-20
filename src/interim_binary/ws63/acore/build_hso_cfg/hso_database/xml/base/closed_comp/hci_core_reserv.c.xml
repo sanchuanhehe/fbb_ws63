@@ -1,0 +1,21 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="le ext connect reserve address_resolution_enable=%d @hci_core_reserv.c(277),INFO" ID="0xddfa08ad" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[HCI][C--&gt;H] ACTION=RECV_EVENT, CODE=0x%02x, LEN=%d, HANDLE=0x%x @hci_core_reserv.c(325),INFO" ID="0xddfa0a2d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[HCI][C--&gt;H] ACTION=RECV_EVENT, CODE=0x%02x, LEN=%d @hci_core_reserv.c(328),INFO" ID="0xddfa0a45" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[HCI][C--&gt;H] ACTION=RECV_CMD_COMPLETE_EVENT, CODE=0x0E, OPCODE=0x%04x, OGF=0x%x, OCF=0x%x @hci_core_reserv.c(336),INFO" ID="0xddfa0a85" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[HCI][C--&gt;H] ACTION=RECV_CMD_STATUS_EVENT, CODE=0x0F, STATUS=0x%x, OPCODE=0x%04x @hci_core_reserv.c(341),INFO" ID="0xddfa0aad" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI][C--&gt;H] ACTION=RECV_LE_META_EVENT, CODE=0x3E, SUB_EVENT_CODE=0x%x @hci_core_reserv.c(345),INFO" ID="0xddfa0acd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[HCI][C--&gt;H] ACTION=RECV_OTHER_EVENT,CODE=0x%02x, LEN=%d @hci_core_reserv.c(349),INFO" ID="0xddfa0aed" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI][C--&gt;H] ACTION=RECV_ACL_DATA, LEN=%u @hci_core_reserv.c(360),INFO" ID="0xddfa0b45" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[HCI][C--&gt;H] %02x %02x %02x %02x @hci_core_reserv.c(368),INFO" ID="0xddfa0b85" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[HCI][C--&gt;H] %02x %02x %02x @hci_core_reserv.c(373),INFO" ID="0xddfa0bad" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[HCI][C--&gt;H] %02x %02x @hci_core_reserv.c(377),INFO" ID="0xddfa0bcd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI][C--&gt;H] %02x @hci_core_reserv.c(379),INFO" ID="0xddfa0bdd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI][SEND_ACL_DATA] SLOT=%u, the num=0 has been exhaust @hci_core_reserv.c(411),INFO" ID="0xddfa0cdd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]hci link data error! @hci_core_reserv.c(486),ERROR" ID="0xddfa0f32" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]get Local Controller object Error! @hci_core_reserv.c(514),ERROR" ID="0xddfa1012" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]find ACL Link error! @hci_core_reserv.c(519),ERROR" ID="0xddfa103a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[user &gt;&gt;&gt;&gt; Kernel] event 0x%x len %d [ @hci_core_reserv.c(561),INFO" ID="0xddfa118d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="%02X  @hci_core_reserv.c(563),INFO" ID="0xddfa119d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="] @hci_core_reserv.c(565),INFO" ID="0xddfa11ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="data_snd memcpy fail @hci_core_reserv.c(569),ERROR" ID="0xddfa11ca" />
+			</MSG_LOG>

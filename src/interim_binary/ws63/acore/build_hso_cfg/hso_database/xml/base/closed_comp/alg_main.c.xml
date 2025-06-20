@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{alg_tpc_user_distance_judge:user[%d] get rate fail!} @alg_main.c(121),ERROR" ID="0x809003ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alg_sync_param: ptr null! @alg_main.c(253),ERROR" ID="0x809007ea" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="alg_sync_param: ERROR magic! head=0x%x tail=0x%x @alg_main.c(259),ERROR" ID="0x8090081a" />
+			</MSG_LOG>

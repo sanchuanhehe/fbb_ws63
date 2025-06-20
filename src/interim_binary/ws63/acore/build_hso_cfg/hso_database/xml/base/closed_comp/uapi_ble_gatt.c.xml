@@ -1,0 +1,73 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[ACore] ble gatt upper callback register add on module_id:%02x, event:%02x @uapi_ble_gatt.c(70),INFO" ID="0xd8740235" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] ble gatt upper callback register new on module_id:%02x, event:%02x @uapi_ble_gatt.c(84),INFO" ID="0xd87402a5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] ble gatt tl find no find acl connect @uapi_ble_gatt.c(154),INFO" ID="0xd87404d5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ACore] ble gatt client event handle tl not found on addr:%02x:**:**:**:%02x:%02x @uapi_ble_gatt.c(189),INFO" ID="0xd87405ed" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ACore] ble gatt client event handle task not found on addr:%02x:**:**:**:%02x:%02x @uapi_ble_gatt.c(198),INFO" ID="0xd8740635" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ACore] ble gatt client event handle table not found task on addr:%02x:**:**:**:%02x:%02x @uapi_ble_gatt.c(216),INFO" ID="0xd87406c5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] ble gatt le conn event cbk conn_info-&gt;conn_state:%x. @uapi_ble_gatt.c(277),INFO" ID="0xd87408ad" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ACore] ble gatt le conn event cbk already connected on addr:%02x:**:**:**:%02x:%02x @uapi_ble_gatt.c(284),INFO" ID="0xd87408e5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore][ERROR] ble gatt le conn event create tl fail. @uapi_ble_gatt.c(291),ERROR" ID="0xd874091a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] ble gatt le conn event cbk memcpy addr error @uapi_ble_gatt.c(299),ERROR" ID="0xd874095a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ACore] ble gatt le conn event cbk tl not found on addr:%02x:**:**:**:%02x:%02x @uapi_ble_gatt.c(310),INFO" ID="0xd87409b5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ACore] ble gatt le conn event cbk tl remove on addr:%02x:**:**:**:%02x:%02x @uapi_ble_gatt.c(316),INFO" ID="0xd87409e5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt create server result bta len error, len = %u @uapi_ble_gatt.c(335),ERROR" ID="0xd8740a7a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] mc ble gatt create server result bta memcpy fail:%d,len:%d @uapi_ble_gatt.c(343),ERROR" ID="0xd8740aba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt create server result bta:server_handle:0x%x. @uapi_ble_gatt.c(349),INFO" ID="0xd8740aed" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt create service result bta len error. len = %u @uapi_ble_gatt.c(361),ERROR" ID="0xd8740b4a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt create service result bta memcpy fail: %d @uapi_ble_gatt.c(368),ERROR" ID="0xd8740b82" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt create service result bta service_handle:0x%x. @uapi_ble_gatt.c(373),INFO" ID="0xd8740bad" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt start service result bta len error. len = %u @uapi_ble_gatt.c(385),ERROR" ID="0xd8740c0a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt start service result bta memcpy faile error: %d @uapi_ble_gatt.c(392),ERROR" ID="0xd8740c42" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt start service result bta service_handle:0x%x. @uapi_ble_gatt.c(397),INFO" ID="0xd8740c6d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt add characteristic result bta len error, len = %u @uapi_ble_gatt.c(409),ERROR" ID="0xd8740cca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt add characteristic result bta memcpy fail error: %d @uapi_ble_gatt.c(415),ERROR" ID="0xd8740cfa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt add characteristic result bta characteristic_handle:0x%x. @uapi_ble_gatt.c(420),INFO" ID="0xd8740d25" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt get gap ui attributes result bta len error. len = %u @uapi_ble_gatt.c(434),ERROR" ID="0xd8740d92" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt get gap ui attributes result bta memcpy faile error: %d @uapi_ble_gatt.c(441),ERROR" ID="0xd8740dca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt get gap ui attributes result bta name len:%d. @uapi_ble_gatt.c(446),INFO" ID="0xd8740df5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt discovery service rsp bta len error. len = %u @uapi_ble_gatt.c(458),ERROR" ID="0xd8740e52" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt discovery service rsp bta discovery_service error @uapi_ble_gatt.c(466),ERROR" ID="0xd8740e92" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt discovery service complete bta len error. len = %u @uapi_ble_gatt.c(480),ERROR" ID="0xd8740f02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt discovery service complete bta discovery_service error @uapi_ble_gatt.c(488),ERROR" ID="0xd8740f42" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt discovery include service rsp bta len error. len = %u @uapi_ble_gatt.c(502),ERROR" ID="0xd8740fb2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt discovery include service rsp bta discovery_service error @uapi_ble_gatt.c(510),ERROR" ID="0xd8740ff2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt discovery characteristics response bta len error. len = %u @uapi_ble_gatt.c(524),ERROR" ID="0xd8741062" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore]mc ble gatt discovery characteristics response bta discovery_service error @uapi_ble_gatt.c(532),ERROR" ID="0xd87410a2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt discovery characteristics complete bta len error. len = %u @uapi_ble_gatt.c(546),ERROR" ID="0xd8741112" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore]mc ble gatt discovery characteristics complete bta discovery_service error @uapi_ble_gatt.c(554),ERROR" ID="0xd8741152" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt discovery descriptor response bta len error. len = %u @uapi_ble_gatt.c(568),ERROR" ID="0xd87411c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt discovery descriptor response bta discovery_service error @uapi_ble_gatt.c(576),ERROR" ID="0xd8741202" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt discovery descriptor complete bta len error. len = %u @uapi_ble_gatt.c(590),ERROR" ID="0xd8741272" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt discovery descriptor complete bta discovery_service error @uapi_ble_gatt.c(597),ERROR" ID="0xd87412aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt get hid report map response bta finish. result code = %x @uapi_ble_gatt.c(609),INFO" ID="0xd874130d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt get hid report map response bta len error. len = %u @uapi_ble_gatt.c(615),INFO" ID="0xd874133d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] mc ble gatt get hid report map response bta, handle = %d, val_len = %d @uapi_ble_gatt.c(621),INFO" ID="0xd874136d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt read character complete bta len error. len = %u @uapi_ble_gatt.c(633),ERROR" ID="0xd87413ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt read characterr complete bta read character error @uapi_ble_gatt.c(640),ERROR" ID="0xd8741402" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] read service value finish. error code = %x @uapi_ble_gatt.c(652),INFO" ID="0xd8741465" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] read service value response len error. len = %u @uapi_ble_gatt.c(658),INFO" ID="0xd8741495" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ACore] read service value finish. error code = %x, handle = %x, offset = %x @uapi_ble_gatt.c(665),INFO" ID="0xd87414cd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] read service value finish. error code = %x @uapi_ble_gatt.c(675),INFO" ID="0xd874151d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] read service value response len error. len = %u @uapi_ble_gatt.c(681),INFO" ID="0xd874154d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] write value finish. ret code = %x, handle = %x @uapi_ble_gatt.c(688),INFO" ID="0xd8741585" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt read descriptor response bta len error. len = %u @uapi_ble_gatt.c(699),INFO" ID="0xd87415dd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt read descriptor response bta error @uapi_ble_gatt.c(706),ERROR" ID="0xd8741612" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt character value notification bta len error. len = %u @uapi_ble_gatt.c(719),INFO" ID="0xd874167d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="mc ble gatt character value notification bta new fail @uapi_ble_gatt.c(727),ERROR" ID="0xd87416ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="mc ble gatt character value notification bta memset fail @uapi_ble_gatt.c(734),ERROR" ID="0xd87416f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt character value notification bta error @uapi_ble_gatt.c(742),ERROR" ID="0xd8741732" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt read descriptor response bta error @uapi_ble_gatt.c(750),ERROR" ID="0xd8741772" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="mc ble gatt character value notification bta handle:0x%x, len:%d @uapi_ble_gatt.c(760),INFO" ID="0xd87417c5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt handle service evt bta len error. len = %u @uapi_ble_gatt.c(772),INFO" ID="0xd8741825" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="mc ble gatt handle service evt bta new fail @uapi_ble_gatt.c(779),ERROR" ID="0xd874185a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="mc ble gatt handle service evt bta memset fail @uapi_ble_gatt.c(786),ERROR" ID="0xd8741892" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt handle service evt bta addr error @uapi_ble_gatt.c(794),ERROR" ID="0xd87418d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt server read evt bta len error len = %u @uapi_ble_gatt.c(807),INFO" ID="0xd874193d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="mc ble gatt server read evt bta new fail @uapi_ble_gatt.c(813),ERROR" ID="0xd874196a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="mc ble gatt server read evt bta memset fail @uapi_ble_gatt.c(818),ERROR" ID="0xd8741992" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt server read evt bta addr error @uapi_ble_gatt.c(824),ERROR" ID="0xd87419c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt exchange mtu ind len error. len = %u @uapi_ble_gatt.c(839),INFO" ID="0xd8741a3d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt exchange mtu ind error @uapi_ble_gatt.c(843),ERROR" ID="0xd8741a5a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] ble conn general gatt proc:cmdid:0x%02X pay_len:%d. @uapi_ble_gatt.c(891),INFO" ID="0xd8741bdd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] ble conn general gatt proc no handle for command id:0x%02x.  @uapi_ble_gatt.c(906),INFO" ID="0xd8741c55" />
+			</MSG_LOG>

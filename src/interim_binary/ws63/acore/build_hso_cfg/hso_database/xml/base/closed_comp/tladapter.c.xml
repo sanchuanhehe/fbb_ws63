@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[HCI][C--&gt;H]pack msg ptr unkown pkt_type: %x @tladapter.c(146),WARNING" ID="0xdb9c0493" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI][C--&gt;H]pack msg ptr memcpy fail! @tladapter.c(150),ERROR" ID="0xdb9c04b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI][C--&gt;H] recv data task msg == NULL @tladapter.c(190),INFO" ID="0xdb9c05f5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI][C--&gt;H]recv data task msg == NULL @tladapter.c(233),INFO" ID="0xdb9c074d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sco disconnect complete sco_hdl=0x%x @tladapter.c(409),INFO" ID="0xdb9c0ccd" />
+			</MSG_LOG>

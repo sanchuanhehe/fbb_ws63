@@ -20,6 +20,7 @@ void set_mac_derivation_ptr(mac_derivation_ptr ptr);
 void init_dev_addr(void);
 uint32_t get_dev_addr(uint8_t *pc_addr, uint8_t addr_len, uint8_t type);
 uint32_t set_dev_addr(const uint8_t *pc_addr, uint8_t mac_len, uint8_t type);
+uint32_t mac_addr_nv_check(uint8_t *mac_addr);
 
 #ifdef __cplusplus
 #if __cplusplus

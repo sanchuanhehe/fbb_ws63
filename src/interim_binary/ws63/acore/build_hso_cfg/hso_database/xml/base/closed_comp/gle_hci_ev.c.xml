@@ -1,0 +1,25 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[GLE HCI] gle hci event recv data len error, real len: %d @gle_hci_ev.c(47),ERROR" ID="0xde0a017a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE HCI]recv event error, decode len: %d, real len: %d @gle_hci_ev.c(55),ERROR" ID="0xde0a01ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] malloc fail @gle_hci_ev.c(61),ERROR" ID="0xde0a01ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE HCI] memcpy error len:%u @gle_hci_ev.c(66),ERROR" ID="0xde0a0212" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI]recv event proc opcode data error  @gle_hci_ev.c(77),ERROR" ID="0xde0a026a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]recv event proc in is NULL @gle_hci_ev.c(86),ERROR" ID="0xde0a02b2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[HCI]recv event:0x%X, opcode:0x%x, cmd:0x%x @gle_hci_ev.c(106),INFO" ID="0xde0a0355" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="gle hci read local version event verison:0x%x, subverison:0x%x, status:0x%x @gle_hci_ev.c(124),INFO" ID="0xde0a03e5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="gle hci read local buffer event acb_tx_len(%u), acb_tx_num:0x%x, status:0x%x @gle_hci_ev.c(137),INFO" ID="0xde0a044d" />
+			<MSG STRUCTURE="diag_log_msg5" NAME="gle hci read local support feats event feats:%02x:%02x:%02x:%02x:%02x @gle_hci_ev.c(150),INFO" ID="0xde0a04b5" />
+			<MSG STRUCTURE="diag_log_msg5" NAME="gle hci read local support feats event feats:%02x:%02x:%02x:%02x:%02x @gle_hci_ev.c(155),INFO" ID="0xde0a04dd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle hci ev command status restart ertx malloc fail @gle_hci_ev.c(194),ERROR" ID="0xde0a0612" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gle hci ev command status restart ertx opcode=0x%x, timeout:0x%x @gle_hci_ev.c(199),INFO" ID="0xde0a063d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle hci command timer restart fail @gle_hci_ev.c(203),ERROR" ID="0xde0a065a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[HCI]gle hci ev command status num_hci_command_packets(0x%x) command_opcode:0x%x status:0x%x @gle_hci_ev.c(229),INFO" ID="0xde0a072d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI]gle hci internal evt cbk unreg table-&gt;id = 0x%x @gle_hci_ev.c(266),INFO" ID="0xde0a0855" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI]gle hci cbk traverse op_ev:0x%x arg null @gle_hci_ev.c(278),INFO" ID="0xde0a08b5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[HCI]gle hci cbk traverse op_ev:0x%x node type:0x%x @gle_hci_ev.c(293),INFO" ID="0xde0a092d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE HCI] gle hci cbk opev: 0x%04x, len: %d @gle_hci_ev.c(311),INFO" ID="0xde0a09bd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]gle hci ev command error ev is NULL @gle_hci_ev.c(322),ERROR" ID="0xde0a0a12" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[HCI]gle hci ev command error gle hci command check send opcode:%02x, status:%02x @gle_hci_ev.c(329),ERROR" ID="0xde0a0a4a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[HCI]gle hci ev command error link is NULL @gle_hci_ev.c(334),ERROR" ID="0xde0a0a72" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[HCI]gle hci ev command error gle device link get by status link:%02x @gle_hci_ev.c(339),ERROR" ID="0xde0a0a9a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE HCI] get hci number of completed packets: 0x%x @gle_hci_ev.c(353),INFO" ID="0xde0a0b0d" />
+			</MSG_LOG>
