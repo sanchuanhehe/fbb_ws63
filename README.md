@@ -28,8 +28,8 @@
 
 |      序号      | 硬件资料                                                     | 介绍          |
 | :------------: | ------------------------------------------------------------ | ------------- |
-| 1  | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html)<img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/3.jpg" alt="3" style="zoom: 33%;" /> | ws63解决方案，一片起订 |
-| 2 | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187551/Q353333N1100E.html)<img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/3-17508360671471.jpg" alt="3" style="zoom: 33%;" /> | ws63E解决方案，一片起订 |
+| 1  | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html)<img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/image-20250625152239962.png" alt="image-20250625152239962" style="zoom:33%;" /> | ws63解决方案，一片起订 |
+| 2 | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187551/Q353333N1100E.html)<img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/image-20250625152250463.png" alt="image-20250625152250463" style="zoom:33%;" /> | ws63E解决方案，一片起订 |
 | 3 | [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D821194904380) | 星闪WiFi6模组，邮票孔，无天线 |
 | 4 | [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D823544936579) | 星闪WiFi6模组，12：板载天线，12E：外置天线 |
 | 5 | [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D820900594332) | 星闪WiFi6模组，20：板载天线，20E：外置天线 |
