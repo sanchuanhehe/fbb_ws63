@@ -26,19 +26,19 @@
 
 ## 购买渠道
 
-|      序号      | 硬件资料                                                     | 介绍          |
-| :------------: | ------------------------------------------------------------ | ------------- |
-| 1  | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html)<img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/image-20250625152239962.png" alt="image-20250625152239962" style="zoom:33%;" /> | ws63解决方案，一片起订 |
-| 2 | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187551/Q353333N1100E.html)<img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/image-20250625152250463.png" alt="image-20250625152250463" style="zoom:33%;" /> | ws63E解决方案，一片起订 |
-| 3 | [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D821194904380) | 星闪WiFi6模组，邮票孔，无天线 |
-| 4 | [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D823544936579) | 星闪WiFi6模组，12：板载天线，12E：外置天线 |
-| 5 | [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D820900594332) | 星闪WiFi6模组，20：板载天线，20E：外置天线 |
-| 6 | [烧录器：购买链接（小熊派）](https://holdiot001.feishu.cn/docx/L60wdrG7Fo314pxYyrbczZqVnSb) | 烧录器：可烧录开发板、模组等 |
-| 7 | [模组：DyCloud_WF6301星闪模组（鼎云物联）](https://ic-item.jd.com/10151639839211.html) | 星闪模组 |
-| 8 | [模组：WS63星闪模组（润和软件）](https://e.tb.cn/h.6LxYtgOmQL5b51S?tk=jkprVTA5bOC) | WS63星闪模组_HH-M01_Wi-Fi6 星闪多模 |
-| 9 | [模组：WS63E星闪模组（润和软件）](https://e.tb.cn/h.6p0TonQdm3whw0i?tk=ZjcNVTAUwUG) | WS63E星闪模组_HH-M02_Wi-Fi6 星闪多模 支持雷达人体活动感知 |
-| 10 | [模组：MYF-F63星闪模组链接 （明裕丰）](https://shop187806465.taobao.com/?spm=pc_detail.29232929.shop_block.dshopinfo.2fd27dd6T64Lbi) | 星闪模组、开发板、星闪AI模组和开发板 |
-| 11 | [模组：KHM-3863A 星闪模组购买链接 （深开鸿）](https://mall.kaihong.com/productDetail?skuId=1839224386385612801&goodsId=1839224386133954561) | 星闪、WiFi、蓝牙三模SoC通信模组，支持AT指令及OpenCPU二次开发，支持KaihongOS Lite版本及星闪链路软总线特性等 |
+|      序号      | 硬件资料                                                     | 介绍          | 购买链接二维码 |
+| :------------: | :----------------------------------------------------------: | :-----------: | :------------: |
+| 1  | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html) | ws63解决方案，一片起订 | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/image-20250625161256895.png" alt="image-20250625161256895" style="zoom:50%;" /> |
+| 2 | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187551/Q353333N1100E.html) | ws63E解决方案，一片起订 | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/image-20250625161256895.png" alt="image-20250625161256895" style="zoom:50%;" /> |
+| 3 | [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D821194904380) | 星闪WiFi6模组，邮票孔，无天线 |  |
+| 4 | [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D823544936579) | 星闪WiFi6模组，12：板载天线，12E：外置天线 |  |
+| 5 | [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D820900594332) | 星闪WiFi6模组，20：板载天线，20E：外置天线 |  |
+| 6 | [烧录器：购买链接（小熊派）](https://holdiot001.feishu.cn/docx/L60wdrG7Fo314pxYyrbczZqVnSb) | 烧录器：可烧录开发板、模组等 |  |
+| 7 | [模组：DyCloud_WF6301星闪模组（鼎云物联）](https://ic-item.jd.com/10151639839211.html) | 星闪模组 |  |
+| 8 | [模组：WS63星闪模组（润和软件）](https://e.tb.cn/h.6LxYtgOmQL5b51S?tk=jkprVTA5bOC) | WS63星闪模组_HH-M01_Wi-Fi6 星闪多模 |  |
+| 9 | [模组：WS63E星闪模组（润和软件）](https://e.tb.cn/h.6p0TonQdm3whw0i?tk=ZjcNVTAUwUG) | WS63E星闪模组_HH-M02_Wi-Fi6 星闪多模 支持雷达人体活动感知 |  |
+| 10 | [模组：MYF-F63星闪模组链接 （明裕丰）](https://shop187806465.taobao.com/?spm=pc_detail.29232929.shop_block.dshopinfo.2fd27dd6T64Lbi) | 星闪模组、开发板、星闪AI模组和开发板 |  |
+| 11 | [模组：KHM-3863A 星闪模组购买链接 （深开鸿）](https://mall.kaihong.com/productDetail?skuId=1839224386385612801&goodsId=1839224386133954561) | 星闪、WiFi、蓝牙三模SoC通信模组，支持AT指令及OpenCPU二次开发，支持KaihongOS Lite版本及星闪链路软总线特性等 |  |
 
 ## 支持的开发板
 
