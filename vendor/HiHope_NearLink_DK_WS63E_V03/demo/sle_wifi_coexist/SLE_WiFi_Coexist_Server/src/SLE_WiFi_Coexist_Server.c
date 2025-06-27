@@ -213,6 +213,7 @@ static errcode_t example_sle_server_property_add(void)
     property.permissions = SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE;
     example_sle_uuid_setu2(SLE_UUID_SERVER_PROPERTY, &property.uuid);
     property.value = osal_vmalloc(sizeof(g_sle_property_value));
+    property.operate_indication = SSAP_OPERATE_INDICATION_BIT_READ | SSAP_OPERATE_INDICATION_BIT_NOTIFY;//操作指示
     if (property.value == NULL) {
         PRINT("[SLE Server] sle property mem fail\r\n");
         return ERRCODE_MALLOC;
