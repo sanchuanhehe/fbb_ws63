@@ -55,6 +55,7 @@ def main():
             sub_index = os.path.join(doc_dir_path, index_filename)
             sub_symbol = len(sub_title) * 3 * '='
             sub_lines = [f'   {key}/index\n' for key in os.listdir(doc_dir_path) if key != 'index.rst']
+            sub_lines.sort()
             sub_doc_tree = ''.join(sub_lines)
             sub_index_content = template.format(title=sub_title, symbol=sub_symbol, doc_tree=sub_doc_tree)
             write_file(sub_index, sub_index_content)
