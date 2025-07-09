@@ -217,6 +217,13 @@ body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selector
   display: none;
 }
 
+body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors #repo-options .opTitle,
+body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors #version-options .opTitle {
+  color: #c3c3c3;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
 body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors #repo-options .option,
 body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors #version-options .option {
   font-size: 14px;
@@ -232,6 +239,10 @@ body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selector
 body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors #repo-options .option:hover,
 body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors #version-options .option:hover {
   background-color: #e1e8fd;
+}
+
+body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors #version-options {
+  min-width: 212px;
 }
 
 body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .wy-form {
