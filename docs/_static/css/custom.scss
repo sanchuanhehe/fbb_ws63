@@ -188,6 +188,12 @@ body {
               border-radius: 8px;
               display: none;
 
+              .opTitle {
+                color: #c3c3c3;
+                padding: 4px 8px;
+                font-size: 12px;
+              }
+
               .option {
                 font-size: 14px;
                 line-height: 22px;
@@ -202,6 +208,10 @@ body {
                   background-color: #e1e8fd;
                 }
               }
+            }
+
+            #version-options {
+              min-width: 212px;
             }
           }
 

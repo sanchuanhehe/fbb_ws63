@@ -116,8 +116,15 @@ function to_html_and_upload() {
 # gitee构建
 function gitee_build() {
     echo "build env: gitee"
-    echo "组织：${REPO_NAMESPACE}，仓名：${REPO_PATH}，分支/tag ${codeBranch}"
-    to_html_and_upload $REPO_PATH $codeBranch
+    # GIT_TAG空则是分支构建
+    if [ -z "${GIT_TAG}" ]; then
+        branch=$codeBranch
+    else
+        branch=$GIT_TAG
+    fi
+    export REPO_BRANCH=$branch  # 声明分支构建时使用
+    echo "组织：${REPO_NAMESPACE}，仓名：${REPO_PATH}，分支/tag ${branch}"
+    to_html_and_upload $REPO_PATH $branch
 }
 
 
