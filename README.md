@@ -22,7 +22,7 @@
 | [WS63系列用户指南.pdf](https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/WS63%E7%B3%BB%E5%88%97%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97.pdf) | 本文档主要介绍WS63系列的各项基本功能，为用户提供WS63系列的功能描述、应用场景、应用配置方法等。备注：本文档来源于云汉芯城，地址：https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html# |
 | [WS63系列硬件用户指南_04.pdf](https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/WS63%E7%B3%BB%E5%88%97%E7%A1%AC%E4%BB%B6%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97_04.pdf) | 本文档主要介绍 WS63系列的封装管脚信息、电气特性参数、原理图设计建议、PCB 设计建议、热设计建议、焊接工艺、潮敏参数、接口时序、注意事项等内容。 |
 | [SDK软件在线系列文档](https://docs.hisilicon.com/repos/fbb_ws63/zh-CN/master/) | 该系列文档主要包括IO复用关系表、 AT命令使用、 CJSON 开发流程、HTTP开发流程、MQTT 开发流程、 NV存储开发流程、设备驱动开发流程、SLE/BLE开发流程、API接口等文档，文档路径存放于docs/software |
-| [开发环境搭建指南](tools/README.md)                          | 主要包括windows系统编译工具搭建、SDK包下载，Linux系统编译工具搭建及SDK包下载，路径：tools |
+| [开发环境搭建指南](tools/README.md)                          | 主要包括windows系统编译工具搭建、SDK包下载，Linux系统编译工具搭建及SDK包下载，建议使用HiSparkStudio插件版编译烧录，路径：tools |
 
 ## 购买渠道
 
