@@ -47,7 +47,7 @@
 	})
 	versionSelect.hidden = false
 	versionSelect.onchange = toVersionHref
-	versionOptions.addEventListener('click', e => {
+	versionOptions.addEventListener('mousedown', e => {
 		if (e.target.className === 'option') {
 			versionSelect.value = e.target.innerText
 			versionSelector.setAttribute('title', versionSelect.value)
@@ -115,7 +115,7 @@
 			repoSelector.classList.remove('active')
 		}, 100)
 	})
-	repoOptions.addEventListener('click', e => {
+	repoOptions.addEventListener('mousedown', e => {
 		if (e.target.className === 'option') {
 			repoSelect.value = e.target.innerText
 			repoSelector.setAttribute('title', repoSelect.value)
