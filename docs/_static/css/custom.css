@@ -101,14 +101,14 @@ body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selector
 }
 
 body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors .repo-readOnly {
-  font-weight: bold;
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 14px;
   color: #191919;
   max-width: 124px;
 }
 
 body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors .version-readOnly {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 18px;
   color: #191919;
   max-width: 84px;
@@ -175,9 +175,9 @@ body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selector
 
 body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors .repo-select .text,
 body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors .version-select .text {
-  font-size: 12px;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  font-size: 14px;
+  color: #777777;
+  line-height: 18px;
 }
 
 body .wy-grid-for-nav .wy-nav-side .wy-side-scroll .wy-side-nav-search .selectors .version-select {

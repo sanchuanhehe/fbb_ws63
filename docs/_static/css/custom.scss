@@ -88,15 +88,15 @@ body {
             justify-content: space-between;
 
             .repo-readOnly {
-              font-weight: bold;
-              font-size: 20px;
+              font-weight: 400;
+              font-size: 14px;
               color: #191919;
               max-width: 124px;
 
             }
 
             .version-readOnly {
-              font-size: 12px;
+              font-size: 14px;
               line-height: 18px;
               color: #191919;
               max-width: 84px;
@@ -151,8 +151,9 @@ body {
               width: 100%;
 
               .text {
-                font-size: 12px;
-                flex-shrink: 0;
+                font-size: 14px;
+                color: #777777;
+                line-height: 18px;
               }
             }
 
