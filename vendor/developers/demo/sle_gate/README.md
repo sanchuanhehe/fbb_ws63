@@ -16,10 +16,10 @@
 
 ### 软件参考资料
 
-- [HiHope ws63开发板驱动开发指南](../../../docs/board/WS63V100%20%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%20%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_02.pdf)
-- [HiHope ws63开发板IO复用关系表](../../../docs/board/IO复用关系.md)
-- [WS63V100 lwIP 开发指南_02.pdf](https://gitee.com/HiSpark/fbb_ws63/blob/master/docs/board/WS63V100%20lwIP%20%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_02.pdf)
-- [WS63V100 软件开发指南_03.pdf](https://gitee.com/HiSpark/fbb_ws63/blob/master/docs/board/WS63V100%20%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_03.pdf)
+- [驱动开发指南](../../../../docs/zh-CN/software/设备驱动开发指南)
+- [开发板IO复用关系表](../../../../docs/zh-CN/software/IO复用关系.md)
+- [WS63V100 lwIP 开发指南_02.pdf](../../../../docs/zh-CN/software/lwIP开发指南)
+- [WS63V100 软件开发指南_03.pdf](../../../../docs/zh-CN/software/软件开发指南)
 
 ### 参考头文件
 
