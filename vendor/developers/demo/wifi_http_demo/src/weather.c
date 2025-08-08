@@ -179,11 +179,12 @@ void parse_weather_data(const char *json_data)
         const char *end = strchr(cityId, '"'); // 找到结束引号
         if (end)
         {
-            char cityId[50];
-            strncpy(cityId, cityId, end - cityId);
-            cityId[end - cityId] = '\0'; // 添加字符串结束符
-            const char *city_name = get_city_name(cityId);
-            osal_printk("City: %s\r\n", city_name);
+            char cityIdValue[50];
+            strncpy(cityIdValue, cityId, end - cityId);
+            cityIdValue[end - cityId] = '\0'; // 添加字符串结束符
+            osal_printk("cityIdValue: %s\r\n", cityIdValue);  
+            const char *city_name = get_city_name(cityIdValue);
+            osal_printk("City: %s\r\n", city_name);                                                                     
         }
     }
 
@@ -210,10 +211,10 @@ void parse_weather_data(const char *json_data)
         const char *end = strchr(sd, '"'); // 找到结束引号
         if (end)
         {
-            char sd[10];
-            strncpy(sd, sd, end - sd);
-            sd[end - sd] = '\0'; // 添加字符串结束符
-            osal_printk("sd: %s\r\n", sd);
+            char SD[10];
+            strncpy(SD, sd, end - sd);
+            SD[end - sd] = '\0'; // 添加字符串结束符
+            osal_printk("sd: %s\r\n", SD);
         }
     }
 
@@ -225,10 +226,10 @@ void parse_weather_data(const char *json_data)
         const char *end = strchr(qw, '"'); // 找到结束引号
         if (end)
         {
-            char qw[10];
-            strncpy(qw, qw, end - qw);
-            qw[end - qw] = '\0'; // 添加字符串结束符
-            osal_printk("qw: %s\r\n", qw);
+            char QW[10];
+            strncpy(QW, qw, end - qw);
+            QW[end - qw] = '\0'; // 添加字符串结束符
+            osal_printk("qw: %s\r\n", QW);
         }
     }
 

@@ -11,7 +11,7 @@
 #include "http.h"
 #include "weather.h"
 #include "wifista.h"
-static const char *g_request = "GET /observe?city=CH280601&key=62w9bk1okpme4k59 HTTP/1.1\r\n"
+static const char *g_request = "GET /observe?city=CH280601&key=ovpptgq9cpnbp8dp HTTP/1.1\r\n"
                                "Host: api.yytianqi.com\r\n"
                                "Connection: close\r\n"
                                "\r\n";
