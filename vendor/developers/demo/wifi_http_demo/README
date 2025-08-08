@@ -1,7 +1,6 @@
 一、本期案例：
 基于WiFi STA模式连接2.4GHz网络，完成HTTP Get请求天气预报，进行json格式解析。
 
-
 二、核心代码部分：
 1）WiFi STA案例修改建议：
     将WiFi连接改为外部传参调用，而不是在函数内部修改变量参数调用，这样子可以更加灵活地使用WiFi连接功能，同时代码规范性更强。
@@ -29,6 +28,14 @@ HTTP协议默认端口为80，HTTPS协议默认端口为443。
 HTTP案例使用建议：
 1）HTTP Get请求返回的内容包括响应头、响应体等内容，注意跳过响应头提取响应数据；
 2）可以使用Postman等工具辅助测试HTTP Get的Url链接的可靠性，在Postman请求Url成功后再开始写代码，避免多因素影响代码成功运行。
+
+三、连接WIFI部分：
+
+需修改WIFI账号密码，2.4GHz频段的WIFI，在vendor\developers\demo\wifi_http_demo\inc\http.h文件修改
+
+\#define CONFIG_WIFI_SSID "wifiname" // 要连接的WiFi热点账号
+
+\#define CONFIG_WIFI_PWD "password" // 要连接的WiFi热点密码
 
 
 具体开发案例教程请搜索CSDN原帖子：https://blog.csdn.net/2301_80981021/article/details/146347980?spm=1001.2014.3001.5501
