@@ -1,0 +1,5 @@
+if(DEFINED CONFIG_SAMPLE_SUPPORT_SLE_SERVER_MANY)
+    set(SOURCES "${SOURCES}" "${CMAKE_CURRENT_SOURCE_DIR}/sle_server_many/sle_server_adv.c" "${CMAKE_CURRENT_SOURCE_DIR}/sle_server_many/sle_server.c" PARENT_SCOPE)
+elseif(DEFINED CONFIG_SAMPLE_SUPPORT_SLE_CLIENT_ONE)
+    set(SOURCES "${SOURCES}" "${CMAKE_CURRENT_SOURCE_DIR}/sle_client_one/sle_client.c" PARENT_SCOPE)
+endif()
