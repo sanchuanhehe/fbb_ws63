@@ -104,7 +104,7 @@ Grant Node： 步骤 1 调用 enable_sle，打开 SLE 开关。
 
 * 步骤一：在xxx\src\application\samples\peripheral文件夹新建一个sample文件夹，在peripheral上右键选择“新建文件夹”，创建Sample文件夹，例如名称”sle_one_to_many“。
 
-  ![image-20240801170551992](./../../doc/media/sle_one_to_many/image-20240801170551992.png)
+  ![image-20240801170551992](../../doc/media/sle_one_to_many/image-20240801170551992.png)
 * 步骤二：将xxx\vendor\HiHope_NearLink_DK_WS63E_V03\sle_one_to_many文件里面内容拷贝到**步骤一创建的Sample文件夹中”sle_one_to_many“**下。
 
   ![image-20240821114420432](../../doc/media/sle_one_to_many/image-20240821114420432.png)
@@ -115,31 +115,31 @@ Grant Node： 步骤 1 调用 enable_sle，打开 SLE 开关。
 
   ![image-20240821114448283](../../doc/media/sle_one_to_many/image-20240821114448283.png)
 * 步骤五：点击如下图标，选择KConfig，具体选择路径“Application/Enable Sample ”，如果选择编译sle_server_many，在弹出框中选择“support  SLE_SERVER_MANY Sample”，点击Save，关闭弹窗；如果选择编译sle_client_one，在弹出框中选择“support SLE_CLIENT_ONE Sample”，点击Save，，关闭弹窗。（需要准备两块开发板，选择不同的编译选项，烧录不同的镜像）
-* <img src="./../../doc/media/sle_one_to_many/image-20250812101435709.png" alt="image-20250812101435709" style="zoom: 67%;" />
+* <img src="../../doc/media/sle_one_to_many/image-20250812101435709.png" alt="image-20250812101435709" style="zoom: 67%;" />
 
   <img src="../../doc/media/sle_one_to_many/image-20240821114521835.png" alt="image-20240821114521835" style="zoom: 67%;" />
 
 - 步骤六：点击“build”或者“rebuild”编译
 
-  ![3](./../../doc/media/sle_one_to_many/3.png)
+  ![3](../../doc/media/sle_one_to_many/3.png)
 - 步骤七：编译完成如下图所示。
 
-  ![4](./../../doc/media/sle_one_to_many/4.png)
+  ![4](../../doc/media/sle_one_to_many/4.png)
 - 步骤八：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
 
-  ![5](./../../doc/media/sle_one_to_many/5.png)
+  ![5](../../doc/media/sle_one_to_many/5.png)
 - 步骤九：配置完成后，点击工具“程序加载”按钮烧录。
 
-  ![6](./../../doc/media/sle_one_to_many/6.png)
+  ![6](../../doc/media/sle_one_to_many/6.png)
 - 步骤十：出现“Connecting, please reset device...”字样时，复位开发板，等待烧录结束。
 
-  ![7](./../../doc/media/sle_one_to_many/7.png)
+  ![7](../../doc/media/sle_one_to_many/7.png)
 
 * 步骤十一：client端只需要编译一次烧录到一块板子即可，server端由于是多块板子，需要修改MAC地址供，需在文件sle_server_adv.c
 
   修改函数为“sle_set_default_announce_param”，根据需要将“uint8_t mac[SLE_ADDR_LEN] ={0xXX,0xXX,0xXX,0xXX,0xXX,0xXX}”进行修改即可，每个server端的mac地址都要不相同。
 
-  ![8](./../../doc/media/sle_one_to_many/8.png)
+  ![8](../../doc/media/sle_one_to_many/8.png)
 
   
 
@@ -147,4 +147,4 @@ Grant Node： 步骤 1 调用 enable_sle，打开 SLE 开关。
 
 * 步骤十三：先复位8个 server设备,再复位client设备，打开串口工具，client端可以通过 （con_id#内容）的形式发送给指定con_id的server设备，这里的con_id，是根据server连接上client端的先后顺序自动生成的，编号从0开始
 
-![9](./../../doc/media/sle_one_to_many/9.png)
+![9](../../doc/media/sle_one_to_many/9.png)
