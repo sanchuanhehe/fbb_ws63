@@ -39,6 +39,8 @@
 #define SLE_ADV_HANDLE_DEFAULT                    1
 /* 最大广播数据长度 */
 #define SLE_ADV_DATA_LEN_MAX                      251
+/* 广播发射功率 */
+#define SLE_TX_POWER 20
 /* 广播名称 */
 static uint8_t sle_local_name[NAME_MAX_LENGTH] = "sle_uart_server";
 #define SLE_SERVER_INIT_DELAY_MS    1000
@@ -143,7 +145,7 @@ static int sle_set_default_announce_param(void)
     param.conn_interval_max = SLE_CONN_INTV_MAX_DEFAULT;
     param.conn_max_latency = SLE_CONN_MAX_LATENCY;
     param.conn_supervision_timeout = SLE_CONN_SUPERVISION_TIMEOUT_DEFAULT;
-    param.announce_tx_power = 20;
+    param.announce_tx_power = SLE_TX_POWER;
     param.own_addr.type = 0;
     ret = memcpy_s(param.own_addr.addr, SLE_ADDR_LEN, local_addr, SLE_ADDR_LEN);
     if (ret != EOK) {

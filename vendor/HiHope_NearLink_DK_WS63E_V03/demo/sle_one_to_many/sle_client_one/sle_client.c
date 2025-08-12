@@ -16,7 +16,6 @@
 #include "app_init.h"
 #include "pinctrl.h"
 #include "uart.h"
-// #include "pm_clock.h"
 #include "sle_low_latency.h"
 #define SLE_UART_TASK_STACK_SIZE            0x600
 #define SLE_MTU_SIZE_DEFAULT            520
@@ -50,6 +49,13 @@ uint16_t g_sle_uart_conn_num = 0;
 #define CONFIG_SLE_UART_BUS 0
 #define CONFIG_UART_TXD_PIN 17
 #define CONFIG_UART_RXD_PIN 18
+
+#define MAC_ADDR_LENGTH 6
+#define MAC_ADDR_FIRST_OCTET 0   // 第一个字节（通常用于厂商识别）
+#define MAC_ADDR_4TH_OCTET  4    // 倒数第二字节
+#define MAC_ADDR_LAST_OCTET 5    // 最后一个字节
+
+#define CHECK 3    
 
 static uint8_t g_app_uart_rx_buff[SLE_UART_TRANSFER_SIZE] = { 0 };
 
@@ -122,11 +128,9 @@ static void sle_uart_client_sample_seek_enable_cbk(errcode_t status)
     }
 }
 
+
 static void sle_uart_client_sample_seek_result_info_cbk(sle_seek_result_info_t *seek_result_data)
 {
-	osal_printk("sle_sample_seek_result_info_cbk  [%02x,%02x,%02x,%02x,%02x,%02x]\n",seek_result_data->addr.addr[0], 
-    seek_result_data->addr.addr[1],seek_result_data->addr.addr[2],seek_result_data->addr.addr[3],seek_result_data->addr.addr[4],
-    seek_result_data->addr.addr[5]);
     osal_printk("sle_sample_seek_result_info_cbk %s\r\n", seek_result_data->data);
     if (seek_result_data != NULL) {
         if(g_sle_uart_conn_num < SLE_UART_CLIENT_MAX_CON){
@@ -184,10 +188,16 @@ static void sle_uart_client_sample_connect_state_changed_cbk(uint16_t conn_id, c
     sle_start_seek();
 }
 
+
+
 void  sle_uart_client_sample_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errcode_t status)
 {
-    osal_printk("%s pair complete conn_id:%d, addr:%02x***%02x%02x\n", SLE_UART_CLIENT_LOG, conn_id,
-                addr->addr[0], addr->addr[4], addr->addr[5]);
+    osal_printk("%s pair complete conn_id:%d, addr:%02x***%02x%02x\n", 
+            SLE_UART_CLIENT_LOG, 
+            conn_id,
+            addr->addr[MAC_ADDR_FIRST_OCTET], 
+            addr->addr[MAC_ADDR_4TH_OCTET], 
+            addr->addr[MAC_ADDR_LAST_OCTET]);
     if (status == 0) {
         ssap_exchange_info_t info = {0};
         info.mtu_size = SLE_MTU_SIZE_DEFAULT;
@@ -273,7 +283,7 @@ static void sle_uart_client_sample_ssapc_cbk_register(ssapc_notification_callbac
 
 void sle_uart_client_init(ssapc_notification_callback notification_cb, ssapc_indication_callback indication_cb)
 {
-    (void)osal_msleep(1000); /* 延时5s，等待SLE初始化完毕 */
+    (void)osal_msleep(SLE_UART_TASK_DELAY_MS); /* 延时5s，等待SLE初始化完毕 */
     osal_printk("[SLE Client] try enable.\r\n");
     sle_uart_client_sample_seek_cbk_register();
     sle_uart_client_sample_connect_cbk_register();
@@ -320,7 +330,7 @@ static void sle_uart_client_read_int_handler(const void *buffer, uint16_t length
     unused(error);
 
     /* 1. 参数安全检查 */
-    if (!buffer || length < 3) {  // 至少需要：1字节conn_id + 1字节'#' + 1字节数据
+    if (!buffer || length < CHECK) {  // 至少需要：1字节conn_id + 1字节'#' + 1字节数据
         osal_printk("[UART] Error: Invalid input (buf=%p, len=%u)\n", buffer, length);
         return;
     }

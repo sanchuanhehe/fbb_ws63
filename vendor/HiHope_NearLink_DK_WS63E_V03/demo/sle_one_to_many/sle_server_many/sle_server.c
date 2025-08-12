@@ -17,7 +17,6 @@
 #include "app_init.h"
 #include "pinctrl.h"
 #include "uart.h"
-// #include "pm_clock.h"
 #include "sle_low_latency.h"
 #define OCTET_BIT_LEN           8
 #define UUID_LEN_2              2
@@ -42,6 +41,8 @@
 #define CONFIG_SLE_UART_BUS 0
 #define CONFIG_UART_TXD_PIN 17
 #define CONFIG_UART_RXD_PIN 18
+
+#define MTU_SIZE 520
 
 unsigned long g_sle_uart_server_msgqueue_id;
 #define SLE_UART_SERVER_LOG                 "[sle uart server]"
@@ -361,7 +362,7 @@ static void sle_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errc
         addr->addr[BT_INDEX_0], addr->addr[BT_INDEX_4]);
     g_sle_pair_hdl = conn_id + 1;
     ssap_exchange_info_t parameter = { 0 };
-    parameter.mtu_size = 520;
+    parameter.mtu_size = MTU_SIZE;
     parameter.version = 1;
     ssaps_set_info(g_server_id, &parameter);
 }
