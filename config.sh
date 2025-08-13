@@ -128,6 +128,12 @@ install_python_package "pycparser>=2.21"
 # 安装PYYAML
 install_python_package "pyyaml"
 
+# 安装kconfiglib
+install_python_package "kconfiglib"
+
+# 安装setuptools
+install_python_package "setuptools"
+
 echo "==== 配置clangd ===="
 
 # 检查clangd-19是否已安装
