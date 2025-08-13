@@ -163,20 +163,6 @@ export LC_ALL=C.UTF-8
 # 添加环境变量 PATH
 export PATH="/sdk/tools/bin/compiler/riscv/cc_riscv32_musl_b090/cc_riscv32_musl_fp/bin:${PATH}"
 
-# 创建激活脚本
-echo "创建虚拟环境激活脚本..."
-cat > ./src/activate_env.sh << 'EOF'
-#!/bin/bash
-# 激活虚拟环境
-source .venv/bin/activate
-export LC_ALL=C.UTF-8
-export PATH="/sdk/tools/bin/compiler/riscv/cc_riscv32_musl_b090/cc_riscv32_musl_fp/bin:${PATH}"
-echo "✓ 开发环境已激活"
-echo "使用 'deactivate' 命令退出虚拟环境"
-EOF
-
-chmod +x activate_env.sh
-
 echo "==== 环境检查总结 ===="
 echo "✓ 系统依赖已安装"
 echo "✓ Python虚拟环境已创建: .venv"
