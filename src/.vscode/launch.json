@@ -18,7 +18,6 @@
       "overrideLaunchCommands": [
         "target remote host.docker.internal:3333",
         "monitor reset halt",
-        "load"
       ],
       "postRestartCommands": [
         "monitor reset halt"
