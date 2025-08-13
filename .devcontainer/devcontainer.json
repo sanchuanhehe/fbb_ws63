@@ -11,7 +11,6 @@
     "vscode": {
       "extensions": [
         "llvm-vs-code-extensions.vscode-clangd",
-        "GitHub.copilot",
         "twxs.cmake",
         "cschlosser.doxdocgen",
         "vinirossa.vscode-gitandgithub-pack",
@@ -25,7 +24,6 @@
         "KylinIDETeam.cmake-intellisence",
         "xaver.clang-format",
         "MS-CEINTL.vscode-language-pack-zh-hans",
-        "GitHub.copilot-chat",
         "DavidAnson.vscode-markdownlint",
         "vscode-icons-team.vscode-icons",
         "ms-vscode.cpptools",
