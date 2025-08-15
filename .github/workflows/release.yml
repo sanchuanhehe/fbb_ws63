@@ -51,8 +51,14 @@ jobs:
         docker run --rm \
           -v ${{ github.workspace }}:/workspaces/$(basename ${{ github.workspace }}) \
           -w /workspaces/$(basename ${{ github.workspace }})/src \
+          --user root \
           ws63-build-env:latest \
-          bash -c "source ./activate_env.sh && python build.py -c -ninja ws63-liteos-app"
+          bash -c "
+            # 修复权限问题
+            chown -R vscode:vscode /workspaces/$(basename ${{ github.workspace }})
+            # 切换到vscode用户并执行构建
+            su vscode -c 'cd /workspaces/$(basename ${{ github.workspace }})/src && source ./activate_env.sh && python build.py -c -ninja ws63-liteos-app'
+          "
 
     - name: Create GitHub Release
       id: create-release
