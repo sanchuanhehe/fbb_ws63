@@ -401,7 +401,7 @@ static void WebSocket_unmaskData(size_t idx, PacketBuffers* bufs)
  *
  * @see WebSocket_upgrade
  */
-int WebSocket_connect( networkHandles *net, int ssl, const char *uri)
+int WebSocket_connect( networkHandles *net, int ssl, const char *uri , bool is_mqtt)
 {
 	int rc;
 	char *buf = NULL;
@@ -439,10 +439,9 @@ int WebSocket_connect( networkHandles *net, int ssl, const char *uri)
 #endif /* else if defined(_WIN32) || defined(_WIN64) */
 
 	hostname_len = MQTTProtocol_addressPort(uri, &port, &topic, ssl ? WSS_DEFAULT_PORT : WS_DEFAULT_PORT);
-
 	/* if no topic, use default */
 	if ( !topic )
-		topic = "/mqtt";
+		topic = is_mqtt ? "/mqtt" : "/";
 
 	if ( headers )
 	{
@@ -473,27 +472,51 @@ int WebSocket_connect( networkHandles *net, int ssl, const char *uri)
 
 	for ( i = 0; i < 2; ++i )
 	{
-		buf_len = snprintf( buf, (size_t)buf_len,
-			"GET %s HTTP/1.1\r\n"
-			"Host: %.*s:%d\r\n"
-			"Upgrade: websocket\r\n"
-			"Connection: Upgrade\r\n"
-			"Origin: %s://%.*s:%d\r\n"
-			"Sec-WebSocket-Key: %s\r\n"
-			"Sec-WebSocket-Version: 13\r\n"
-			"Sec-WebSocket-Protocol: mqtt\r\n"
-			"%s"
-			"\r\n", topic,
-			(int)hostname_len, uri, port,
+		if (is_mqtt)
+		{
+			buf_len = snprintf( buf, (size_t)buf_len,
+				"GET %s HTTP/1.1\r\n"
+				"Host: %.*s:%d\r\n"
+				"Upgrade: websocket\r\n"
+				"Connection: Upgrade\r\n"
+				"Origin: %s://%.*s:%d\r\n"
+				"Sec-WebSocket-Key: %s\r\n"
+				"Sec-WebSocket-Version: 13\r\n"
+				"Sec-WebSocket-Protocol: mqtt\r\n"
+				"%s"
+				"\r\n", topic,
+				(int)hostname_len, uri, port,
 #if defined(OPENSSL)
-			HTTP_PROTOCOL(net->ssl),
+				HTTP_PROTOCOL(net->ssl),
 #else
-			HTTP_PROTOCOL(0),
+				HTTP_PROTOCOL(0),
 #endif
-
-			(int)hostname_len, uri, port,
-			net->websocket_key,
-			headers_buf ? headers_buf : "");
+				(int)hostname_len, uri, port,
+				net->websocket_key,
+				headers_buf ? headers_buf : "");
+		}
+		else
+		{
+			buf_len = snprintf( buf, (size_t)buf_len,
+				"GET %s HTTP/1.1\r\n"
+				"Host: %.*s:%d\r\n"
+				"Upgrade: websocket\r\n"
+				"Connection: Upgrade\r\n"
+				"Origin: %s://%.*s:%d\r\n"
+				"Sec-WebSocket-Key: %s\r\n"
+				"Sec-WebSocket-Version: 13\r\n"
+				"%s"
+				"\r\n", topic,
+				(int)hostname_len, uri, port,
+#if defined(OPENSSL)
+				HTTP_PROTOCOL(net->ssl),
+#else
+				HTTP_PROTOCOL(0),
+#endif
+				(int)hostname_len, uri, port,
+				net->websocket_key,
+				headers_buf ? headers_buf : "");
+		}
 
 		if ( i == 0 && buf_len > 0 )
 		{
@@ -677,7 +700,7 @@ exit:
 	return rc;
 }
 
-size_t WebSocket_framePos()
+size_t WebSocket_framePos(void)
 {
 	if ( in_frames && in_frames->first )
 	{
@@ -980,7 +1003,7 @@ void WebSocket_pong(networkHandles *net, char *app_data, size_t app_data_len)
 /**
  * writes data to a socket (websocket header will be prepended if required)
  *
- * @warning buf0 will be expanded (backwords before @p buf0 buffer, to add a
+ * @warning buf0 will be expanded (backwards before @p buf0 buffer, to add a
  * websocket frame header to the data if required).  So use
  * @p WebSocket_calculateFrameHeader, to determine if extra space is needed
  * before the @p buf0 pointer.

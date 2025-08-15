@@ -1686,7 +1686,7 @@ static MQTTResponse MQTTClient_connectURIVersion(MQTTClient handle, MQTTClient_c
 					if (m->websocket)
 					{
 						m->c->connect_state = WEBSOCKET_IN_PROGRESS;
-						rc = WebSocket_connect(&m->c->net, 1, serverURI);
+						rc = WebSocket_connect(&m->c->net, 1, serverURI ,true);
 						if ( rc == SOCKET_ERROR )
 							goto exit;
 					}
@@ -1726,7 +1726,7 @@ static MQTTResponse MQTTClient_connectURIVersion(MQTTClient handle, MQTTClient_c
 			if (m->websocket)
 			{
 				m->c->connect_state = WEBSOCKET_IN_PROGRESS;
-				if ( WebSocket_connect(&m->c->net, 0, serverURI) == SOCKET_ERROR )
+				if ( WebSocket_connect(&m->c->net, 0, serverURI ,true) == SOCKET_ERROR )
 				{
 					rc = SOCKET_ERROR;
 					goto exit;
@@ -1766,7 +1766,7 @@ static MQTTResponse MQTTClient_connectURIVersion(MQTTClient handle, MQTTClient_c
 		{
 			/* wait for websocket connect */
 			m->c->connect_state = WEBSOCKET_IN_PROGRESS;
-			rc = WebSocket_connect( &m->c->net, 1, serverURI);
+			rc = WebSocket_connect( &m->c->net, 1, serverURI,true);
 			if ( rc != 1 )
 			{
 				rc = SOCKET_ERROR;
