@@ -41,8 +41,26 @@
             "icon": "terminal"
         }
     },
+    "terminal.integrated.profiles.windows": {
+        "PowerShell_with_env": {
+            "source": "PowerShell",
+            "args": ["-NoExit", "-Command", "if (Test-Path '${workspaceFolder}\\activate_env.ps1') { & '${workspaceFolder}\\activate_env.ps1' } elseif (Test-Path '${workspaceFolder}\\config.ps1') { & '${workspaceFolder}\\config.ps1' }"],
+            "icon": "terminal-powershell"
+        },
+        "cmd_with_env": {
+            "path": "cmd.exe",
+            "args": ["/k", "if exist \"${workspaceFolder}\\activate_env.bat\" (call \"${workspaceFolder}\\activate_env.bat\") else if exist \"${workspaceFolder}\\config.bat\" (call \"${workspaceFolder}\\config.bat\")"],
+            "icon": "terminal-cmd"
+        },
+        "PowerShell_clean": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        }
+    },
     "terminal.integrated.defaultProfile.linux": "zsh_with_env",
+    "terminal.integrated.defaultProfile.windows": "PowerShell_with_env",
     "terminal.integrated.automationProfile.linux": {
         "path": "zsh"
-    }
+    },
+    "terminal.integrated.automationProfile.windows": null
 }

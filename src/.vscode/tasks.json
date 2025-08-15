@@ -16,6 +16,24 @@
             },
             "presentation": {
                 "reveal": "always"
+            },
+            "linux": {
+                "command": "source ${workspaceFolder}/activate_env.sh && ./build.py -ninja",
+                "options": {
+                    "shell": {
+                        "executable": "/usr/bin/zsh",
+                        "args": ["-c"]
+                    }
+                }
+            },
+            "windows": {
+                "command": "if (Test-Path '.\\activate_env.ps1') { & '.\\activate_env.ps1' } elseif (Test-Path '.\\config.ps1') { & '.\\config.ps1' }; python build.py -ninja",
+                "options": {
+                    "shell": {
+                        "executable": "powershell.exe",
+                        "args": ["-Command"]
+                    }
+                }
             }
         },
         {
@@ -31,6 +49,24 @@
             },
             "presentation": {
                 "reveal": "always"
+            },
+            "linux": {
+                "command": "source ${workspaceFolder}/activate_env.sh && ./build.py -ninja -c",
+                "options": {
+                    "shell": {
+                        "executable": "/usr/bin/zsh",
+                        "args": ["-c"]
+                    }
+                }
+            },
+            "windows": {
+                "command": "if (Test-Path '.\\activate_env.ps1') { & '.\\activate_env.ps1' } elseif (Test-Path '.\\config.ps1') { & '.\\config.ps1' }; python build.py -ninja -c",
+                "options": {
+                    "shell": {
+                        "executable": "powershell.exe",
+                        "args": ["-Command"]
+                    }
+                }
             }
         }
     ]

@@ -163,11 +163,14 @@ fi
 
 echo "==== 设置环境变量 ====="
 
+# 获取脚本所在目录的绝对路径
+SCRIPT_DIR="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+
 # 设置环境变量
 export LC_ALL=C.UTF-8
 
 # 添加环境变量 PATH
-export PATH="/sdk/tools/bin/compiler/riscv/cc_riscv32_musl_b090/cc_riscv32_musl_fp/bin:${PATH}"
+export PATH="${SCRIPT_DIR}/tools/bin/compiler/riscv/cc_riscv32_musl_b090/cc_riscv32_musl_fp/bin:${PATH}"
 
 echo "==== 环境检查总结 ===="
 echo "✓ 系统依赖已安装"
