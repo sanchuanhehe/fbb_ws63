@@ -6,10 +6,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 # 创建工作目录
 WORKDIR /workspaces
 
+# 更新包列表并安装sudo
+RUN apt-get update && apt-get install -y sudo
+
 # 复制配置脚本
 COPY src/config.sh /tmp/config.sh
-
-RUN apt install sudo
 
 # 运行配置脚本进行环境初始化
 RUN chmod +x /tmp/config.sh && \
