@@ -1,0 +1,36 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_get_subpool_by_id:: subpool_id[%d] invalid @oal_pkt_netbuf_rom.c(55),WARNING" ID="0x849201bb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_get_subpool_by_netbuf:: index[%d] invalid @oal_pkt_netbuf_rom.c(77),WARNING" ID="0x8492026b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_get_subpool_by_netbuf:: index[%d] too large @oal_pkt_netbuf_rom.c(83),WARNING" ID="0x8492029b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="netbuf memory info: mem block total cnt=%d, used cnt=%d. @oal_pkt_netbuf_rom.c(171),WARNING" ID="0x8492055b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="netbuf subpool id[%d] info: len =%d, total cnt=%d. @oal_pkt_netbuf_rom.c(177),WARNING" ID="0x8492058b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="netbuf subpool id[%d] info: free_cnt=%d, min_free_cnt=%d, rsv_cnt=%d. @oal_pkt_netbuf_rom.c(179),WARNING" ID="0x8492059b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="Detail::addr[0x%x], subpool_id:%d, index:%u, alloc lr:0x%x. @oal_pkt_netbuf_rom.c(192),WARNING" ID="0x84920603" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="oal_pkt_create_netbuf_pool:: oal_dmac_netbuf_stru kmalloc failed! @oal_pkt_netbuf_rom.c(272),ERROR" ID="0x84920882" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="oal_pkt_init_netbuf_pool::err,tbl=%d,blk=%d,pkt=0x%x,end=0x%x @oal_pkt_netbuf_rom.c(308),WARNING" ID="0x849209a3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="mempool:%d init succ. @oal_pkt_netbuf_rom.c(311),INFO" ID="0x849209bd" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="oal_pkt_init_cfg::start_addr=%u, end_addr=%u, table_size=%u. @oal_pkt_netbuf_rom.c(326),WARNING" ID="0x84920a33" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="oal_pkt_free_pool_safty::rsv mem is not restore. @oal_pkt_netbuf_rom.c(386),WARNING" ID="0x84920c13" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_free_pool_safty::subpool_id[%d] netbuf not all free. @oal_pkt_netbuf_rom.c(392),WARNING" ID="0x84920c43" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="oal_pkt_free_pool_safty::free netbuf pool success. @oal_pkt_netbuf_rom.c(400),WARNING" ID="0x84920c83" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_find_available_blk::id[%d] can't find available blk. @oal_pkt_netbuf_rom.c(433),WARNING" ID="0x84920d8b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_netbuf_free::netbuf is invalid, lr[0x%x]. @oal_pkt_netbuf_rom.c(499),ERROR" ID="0x84920f9a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="oal_pkt_netbuf_free::dog tag modified, tag[0x%x] lr[0x%x] alloc by[0x%x]. @oal_pkt_netbuf_rom.c(510),ERROR" ID="0x84920ff2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="oal_pkt_netbuf_free::failed, free cnt[%d] state[%d] lr[0x%x]. @oal_pkt_netbuf_rom.c(523),ERROR" ID="0x8492105a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{oal_pkt_netbuf_valid_check::netbuf_pool[%p] is null.} @oal_pkt_netbuf_rom.c(546),WARNING" ID="0x84921113" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="oal_pkt_netbuf_valid_check:: mem invalid @oal_pkt_netbuf_rom.c(551),WARNING" ID="0x8492113b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{oal_pkt_netbuf_valid_check::netbuf err, ctrl_blk[%p] netbuf[%p] cnt[%u].} @oal_pkt_netbuf_rom.c(558),WARNING" ID="0x84921173" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_netbuf_valid_check:: subpool_id[%d] invalid @oal_pkt_netbuf_rom.c(564),WARNING" ID="0x849211a3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_netbuf_valid_check::netbuf abnormal idx[%d]. @oal_pkt_netbuf_rom.c(569),WARNING" ID="0x849211cb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="oal_pkt_rsv_get_subpool::subpool_id[%d] not all free, free_cnt[%d], total_cnt[%d]. @oal_pkt_netbuf_rom.c(670),WARNING" ID="0x849214f3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_rsv_get_subpool:: is lager[%d] than the current cfg. @oal_pkt_netbuf_rom.c(678),WARNING" ID="0x84921533" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_rsv_get_subpool::idx[%d] subpool len is 0. @oal_pkt_netbuf_rom.c(683),WARNING" ID="0x8492155b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="oal_pkt_rsv_get_subpool::idx[%d] not free, called by[%p] @oal_pkt_netbuf_rom.c(695),WARNING" ID="0x849215bb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_rsv_get_subpool::idx[%d] not free. @oal_pkt_netbuf_rom.c(697),WARNING" ID="0x849215cb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="oal_pkt_rsv::pkt not inited or rsv_size[%d] lr[0x%x]. @oal_pkt_netbuf_rom.c(726),WARNING" ID="0x849216b3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="oal_pkt_rsv::is_rsvd[%d] lr[0x%x]. @oal_pkt_netbuf_rom.c(730),WARNING" ID="0x849216d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_rsv::get subpool failed lr[0x%x]. @oal_pkt_netbuf_rom.c(737),WARNING" ID="0x8492170b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="oal_pkt_rsv::success, rsv_size[%d] lr[0x%x]. @oal_pkt_netbuf_rom.c(744),WARNING" ID="0x84921743" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_restore::pkt not inited lr[0x%x]. @oal_pkt_netbuf_rom.c(790),WARNING" ID="0x849218b3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="oal_pkt_restore::is_rsvd[%d] not true lr[0x%x]. @oal_pkt_netbuf_rom.c(794),WARNING" ID="0x849218d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="oal_pkt_restore::success, lr[0x%x]. @oal_pkt_netbuf_rom.c(808),WARNING" ID="0x84921943" />
+			</MSG_LOG>

@@ -1,5 +1,8 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2020. All rights reserved.
+ * Description:
+ * Author: 
+ * Create:
  */
 
 #ifndef _LOG_DEF_DSP_H_

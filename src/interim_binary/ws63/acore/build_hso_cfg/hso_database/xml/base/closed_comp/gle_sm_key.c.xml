@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[GLE SM] enter debug mode. @gle_sm_key.c(45),INFO" ID="0xde24016d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE SM] dhkey calc g addr: %02x:**:**:**:%02x:%02x @gle_sm_key.c(166),INFO" ID="0xde240535" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE SM] dhkey calc t addr: %02x:**:**:**:%02x:%02x @gle_sm_key.c(168),INFO" ID="0xde240545" />
+			</MSG_LOG>

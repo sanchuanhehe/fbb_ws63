@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2024. All rights reserved.
+# Copyright (c) CompanyNameMagicTag 2024-2024. All rights reserved.
 #===============================================================================
 if(CHIP STREQUAL "ws63")
     include (${CMAKE_CURRENT_SOURCE_DIR}/build/${CHIP}/radar_ai_entry.cmake)

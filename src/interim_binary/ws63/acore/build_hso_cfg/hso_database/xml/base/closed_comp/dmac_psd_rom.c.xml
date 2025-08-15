@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="dmac_config_psd_enable msg is null @dmac_psd_rom.c(28),WARNING" ID="0x80f000e3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_config_psd_report dmac_vap is null @dmac_psd_rom.c(48),WARNING" ID="0x80f00183" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_config_psd_report g_psd_data is null @dmac_psd_rom.c(53),WARNING" ID="0x80f001ab" />
+			</MSG_LOG>

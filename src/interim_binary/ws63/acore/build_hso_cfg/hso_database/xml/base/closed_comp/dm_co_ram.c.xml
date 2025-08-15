@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="rd addr 32 0x%x, val 0x%x @dm_co_ram.c(174),INFO" ID="0x89780575" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="wr addr 32 0x%x, val 0x%x @dm_co_ram.c(188),INFO" ID="0x897805e5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="rd addr 16 0x%x, val 0x%x @dm_co_ram.c(204),INFO" ID="0x89780665" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="wr addr 16 0x%x, val 0x%x @dm_co_ram.c(218),INFO" ID="0x897806d5" />
+			</MSG_LOG>

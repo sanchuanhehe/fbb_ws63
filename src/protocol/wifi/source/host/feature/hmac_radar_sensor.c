@@ -183,6 +183,7 @@ OSAL_STATIC osal_void hmac_radar_sensor_info_init(osal_u16 period_cycle_cnt)
 {
     hmac_radar_sensor_info_stru *radar_sensor_info = hmac_radar_sensor_get_info();
 
+    radar_sensor_info->cycle_en = OSAL_FALSE;
     if (period_cycle_cnt == 0) {
         radar_sensor_info->cycle_en = OSAL_TRUE;
     }
@@ -486,7 +487,7 @@ OSAL_STATIC osal_void hmac_radar_sensor_config_phy(osal_u16 radar_data_len, osal
     hal_set_radar_sensor_rx_iq_bypass(OSAL_FALSE);
 }
 
-OSAL_STATIC osal_float hmac_radar_sensor_calc_trx_chain(osal_u8 lna_gain, osal_u8 vga_gain)
+osal_float hmac_radar_sensor_calc_trx_chain(osal_u8 lna_gain, osal_u8 vga_gain)
 {
     osal_float tx_gain = RADAR_TX_PWR;
     osal_s16 vga_gain_value = vga_gain;
@@ -503,14 +504,10 @@ osal_u16 hamc_radar_sensor_get_ppa_gain(void)
     return g_ppa_gain;
 }
 
-osal_float hmac_radar_sensor_config_rx_gain(osal_u8 lna_gain,
+void hmac_radar_sensor_config_rx_gain(osal_u8 lna_gain,
     osal_u8 vga_gain, osal_u16 rx_dly_160m, osal_u16 rx_dly_80m)
 {
     hal_set_radar_sensor_rx_delay(lna_gain, vga_gain, rx_dly_160m, rx_dly_80m);
-
-    osal_float isolation_value = hmac_radar_sensor_calc_trx_chain(lna_gain, vga_gain);
-
-    return isolation_value;
 }
 
 osal_void hmac_radar_sensor_config_ch_num(osal_u8 ch_num)
@@ -732,11 +729,11 @@ OSAL_STATIC osal_s32 hmac_radar_sensor_complete_handle(hmac_vap_stru *hmac_vap, 
             hal_device->wifi_channel_status.en_bandwidth);
     }
 
+    /* 单次处理完成后清空接收缓存 */
+    hmac_radar_sensor_clear_rx_mem();
     if (radar_sensor_info->cycle_en != OSAL_TRUE) { // 单次发送条件下, 由上层算法控制, 直接return
         return OAL_SUCC;
     }
-    /* 单次处理完成后清空接收缓存 */
-    hmac_radar_sensor_clear_rx_mem();
 
     hal_radar_complete_clear();
 

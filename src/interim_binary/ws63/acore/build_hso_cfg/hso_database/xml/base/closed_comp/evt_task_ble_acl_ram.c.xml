@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[BGTP] evt_task_ble_acl_update_active_tx_octets tx_phy %d, active_tx_octets %d @evt_task_ble_acl_ram.c(55),INFO" ID="0x894201bd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACL][RX]MSG_ALLOC_FAILED! @evt_task_ble_acl_ram.c(73),ERROR" ID="0x8942024a" />
+			</MSG_LOG>

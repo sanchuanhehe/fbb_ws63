@@ -1,0 +1,16 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="gle set addr: 0x%02x:**:**:**:%02x:%02x @gle_service_database.c(67),INFO" ID="0xd8de021d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy failed @gle_service_database.c(70),ERROR" ID="0xd8de0232" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="memcpy = %d failed @gle_service_database.c(86),INFO" ID="0xd8de02b5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gle set name[%d] = 0x%02x @gle_service_database.c(90),INFO" ID="0xd8de02d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] data config write err. @gle_service_database.c(109),INFO" ID="0xd8de036d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] config sync data memcpy err. @gle_service_database.c(113),ERROR" ID="0xd8de038a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle acore get smp keys param err! @gle_service_database.c(125),ERROR" ID="0xd8de03ea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle acore smp keys memcmp err, data all zero! @gle_service_database.c(140),WARNING" ID="0xd8de0463" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle acore smp keys memcmp err, addr not match! @gle_service_database.c(144),WARNING" ID="0xd8de0483" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle acore get smp keys memcpy err! @gle_service_database.c(151),ERROR" ID="0xd8de04ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle acore save smp keys param err! @gle_service_database.c(166),ERROR" ID="0xd8de0532" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore memset smp key err! @gle_service_database.c(204),ERROR" ID="0xd8de0662" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle acore get bonded device memcpy err! @gle_service_database.c(230),ERROR" ID="0xd8de0732" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle acore save sm full, write_index:%02x! @gle_service_database.c(266),INFO" ID="0xd8de0855" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle acore save sm key write_index:%02x! @gle_service_database.c(283),INFO" ID="0xd8de08dd" />
+			</MSG_LOG>

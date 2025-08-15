@@ -25,6 +25,20 @@ extern "C" {
 
 /**
  * @if Eng
+ * @brief Enum of sle indication cfm result.
+ * @else
+ * @brief 指示确认结果。
+ * @endif
+ */
+typedef enum {
+    OH_SLE_INDICATION_CFM_FAIL           = 0x00,    /*!< @if Eng Indication cfm fail
+                                                      @else   指示失败 @endif */
+    OH_SLE_INDICATION_CFM_SUCESS         = 0x01,    /*!< @if Eng Indication cfm sucess
+                                                      @else   指示成功 @endif */
+} SleIndicationCfmResult;
+
+/**
+ * @if Eng
  * @brief Struct of add property information.
  * @else
  * @brief 添加特征信息。
@@ -390,6 +404,38 @@ typedef void (*SsapsWriteRequestCallback)(uint8_t serverId, uint16_t connId, Ssa
 
 /**
  * @if Eng
+ * @brief Callback invoked when receive indicate cfm.
+ * @par Callback invoked when receive indicate cfm.
+ * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
+ * @attention 2. The memories of pointer are requested and freed by the SLE service automatically.
+ * @param [in] server_id server ID.
+ * @param [in] conn_id   connection ID.
+ * @param [in] cfm_result cfm result.
+ * @param [in] status    error code.
+ * @retval #void no return value.
+ * @par Dependency:
+ * @li  sle_ssap_stru.h
+ * @see sle_ssaps_callbacks_t
+ * @else
+ * @brief  收到指示确认的回调函数。
+ * @par    收到指示确认的回调函数。
+ * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
+ * @attention  2. pointer由SLE service申请内存，也由SLE service释放，回调中不应释放。
+ * @param [in] server_id 服务端 ID。
+ * @param [in] conn_id   连接 ID。
+ * @param [in] cfm_result 确认结果。
+ * @param [in] status    执行结果错误码。
+ * @retval 无返回值。
+ * @par 依赖:
+ * @li  sle_ssap_stru.h
+ * @see sle_ssaps_callbacks_t
+ * @endif
+ */
+typedef void (*SsapsIndicateCfmCallback)(uint8_t serverId, uint16_t connId,
+    SleIndicationCfmResult cfmResult, errcode_t status);
+
+/**
+ * @if Eng
  * @brief Callback invoked when mtu size changed.
  * @par Callback invoked when mtu size changed.
  * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
@@ -442,8 +488,10 @@ typedef struct {
                                                                   @else   收到远端读请求回调函数。 @endif */
     SsapsWriteRequestCallback writeRequestCb;           /*!< @if Eng Write request received callback.
                                                                   @else   收到远端写请求回调函数。 @endif */
-    SsapsMtuChangedCallback mtuChangedCb;               /*!< @if Eng Mtu changed callback.
-                                                                  @else   mtu 大小更新回调函数。 @endif */
+    SsapsIndicateCfmCallback indicateCfmCb;              /*!< @if Eng Indicate cfm callback.
+                                                                        @else   指示确认回调函数。 @endif */
+    SsapsMtuChangedCallback mtuChangedCb;                     /*!< @if Eng Mtu changed callback.
+                                                                        @else   mtu 大小更新回调函数。 @endif */
 } SsapsCallbacks;
 
 /**
@@ -805,4 +853,5 @@ errcode_t SsapsRegisterCallbacks(SsapsCallbacks *func);
 }
 #endif
 #endif
+/** @} */
 

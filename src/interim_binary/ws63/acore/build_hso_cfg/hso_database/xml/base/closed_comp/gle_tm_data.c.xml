@@ -1,0 +1,19 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][data send] bth list node new failed, data is abandoned. @gle_tm_data.c(49),ERROR" ID="0xde16018a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][data send] TCID 0x%04x is not ready, data in queue. @gle_tm_data.c(56),INFO" ID="0xde1601c5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][data send] Invalid local TCID 0x%04x, transmission channel has not been established. @gle_tm_data.c(62),WARNING" ID="0xde1601f3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM] Not support dynamic tcid. @gle_tm_data.c(66),ERROR" ID="0xde160212" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE TM][data send] Data send successfully. LCID: 0x%04x, local TCID: 0x%04x. @gle_tm_data.c(82),INFO" ID="0xde160295" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][data send] Can not find logic link by LCID 0x%04x. @gle_tm_data.c(98),WARNING" ID="0xde160313" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][data recv] Data receive failed. Can not find logic link by LCID: 0x%04x @gle_tm_data.c(126),WARNING" ID="0xde1603f3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE TM][data recv] Data receive failed. Wrong length, expect len: %d, actual len: %u. @gle_tm_data.c(135),WARNING" ID="0xde16043b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE TM][data recv] Data receive failed. Invalid TCID: 0x%04x. @gle_tm_data.c(153),WARNING" ID="0xde1604cb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][data recv] Data receive failed. Callback function is NULL. @gle_tm_data.c(159),WARNING" ID="0xde1604fb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE TM][data recv] tcid trans mode is invalid value @gle_tm_data.c(177),ERROR" ID="0xde16058a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tm recv data cbk buf null. @gle_tm_data.c(205),INFO" ID="0xde16066d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tm recv data cbk buf len error. @gle_tm_data.c(210),INFO" ID="0xde160695" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="tm recv data cbk ev_code = 0x%x, buf-&gt;len = %u, buf-&gt;off = %u @gle_tm_data.c(215),INFO" ID="0xde1606bd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tm recv data cbk bg_pkt_buff new fail @gle_tm_data.c(219),INFO" ID="0xde1606dd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tm recv data cbk buff_stru new fail. @gle_tm_data.c(227),ERROR" ID="0xde16071a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tm recv data cbk pkt buf data memcpy fail. @gle_tm_data.c(234),ERROR" ID="0xde160752" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ev_code = 0x%x not support @gle_tm_data.c(242),INFO" ID="0xde160795" />
+			</MSG_LOG>

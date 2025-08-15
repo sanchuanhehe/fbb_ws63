@@ -1,0 +1,13 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="rf_dc_reg_addr:0x%x, reg_val:0x%x @hal_bt_cali.c(103),INFO" ID="0x88c2033d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="avg_dc_i:%d, avg_dc_q:%d @hal_bt_cali.c(104),INFO" ID="0x88c20345" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ERROR][RXDC]bt_rf_calc_dc_before_vga_delta vga_gain=%d, OUT OF RANGE! @hal_bt_cali.c(194),ERROR" ID="0x88c20612" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[RXDC]bt_rf_calc_dc_before_vga_delta vgagain=%d, dc_offset=%d, dc_offset_before_vga=%d @hal_bt_cali.c(201),WARNING" ID="0x88c2064b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[CALI][RXDC-D]I_PATH,lna_level=%d,dc=%d,reg value after=0x%x @hal_bt_cali.c(290),INFO" ID="0x88c20915" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[CALI][RXDC-D]I_PATH,lna_level=%d,dc=%d,reg value after=0x%x @hal_bt_cali.c(302),INFO" ID="0x88c20975" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[Rx IQ]i=%d q=%d @hal_bt_cali.c(366),INFO" ID="0x88c20b75" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[Rx IQ]Yw(real=%d imag=%d), Y-w=(real=%d imag=%d) @hal_bt_cali.c(381),INFO" ID="0x88c20bed" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[DYN_CALI][PWR] Tx power delta OVERRANGE! Gain %d, delta %d @hal_bt_cali.c(450),WARNING" ID="0x88c20e13" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[DYN_CALI][PWR] Tx power delta OVERRANGE! Gain %d, delta %d @hal_bt_cali.c(456),WARNING" ID="0x88c20e43" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[DYN_CALI][PWR] OPEN! power on temp %d, current temp %d @hal_bt_cali.c(549),INFO" ID="0x88c2112d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[DYN_CALI][PWR] result status = %d @hal_bt_cali.c(573),WARNING" ID="0x88c211eb" />
+			</MSG_LOG>

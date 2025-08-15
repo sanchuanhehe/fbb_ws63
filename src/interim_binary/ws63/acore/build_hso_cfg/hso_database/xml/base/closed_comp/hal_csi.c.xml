@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="hal_csi_exit usr_id: %d @hal_csi.c(525),INFO" ID="0x83ca106d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_csi_enable call msg id: %d @hal_csi.c(527),INFO" ID="0x83ca107d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_csi_disable usr_id: %d @hal_csi.c(568),INFO" ID="0x83ca11c5" />
+			</MSG_LOG>

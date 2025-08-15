@@ -1,0 +1,32 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{dmac_rx_get_vap:get vap faild, hal vap id=%d} @dmac_rx_data_rom.c(66),WARNING" ID="0x826e0213" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_rx_resume_dscr_queue::device in idle state not resume dscr queue[%u]} @dmac_rx_data_rom.c(132),WARNING" ID="0x826e0423" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_rx_resume_dscr_queue:rx_machw_dscr_addr[%u] zero! element_cnt[%u] @dmac_rx_data_rom.c(149),ERROR" ID="0x826e04aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{Q-EMPTY[%u] and did not catch any buffs!} @dmac_rx_data_rom.c(152),WARNING" ID="0x826e04c3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{error type[%d], err_code[%d].} @dmac_rx_data_rom.c(166),WARNING" ID="0x826e0533" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_mac_error_process_event::hal_device null!} @dmac_rx_data_rom.c(218),ERROR" ID="0x826e06d2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_mac_error_process_event::ignore mac error .[err1:%x][err2:%x]} @dmac_rx_data_rom.c(231),WARNING" ID="0x826e073b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{error1 state=[0x%08x], erro2 state=[0x%08x] @dmac_rx_data_rom.c(246),WARNING" ID="0x826e07b3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_rx_update_cb_from_dscr:: cb_ctrl-&gt;rx_info.vap_id = %d} @dmac_rx_data_rom.c(295),ERROR" ID="0x826e093a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_rx_frame_check:: 0 == bit_buff_nums, msdu_num=%d, amsdu_enable=%d @dmac_rx_data_rom.c(326),ERROR" ID="0x826e0a32" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_rx_frame_check:: mpdu too long! mpdu_len=[%d].} @dmac_rx_data_rom.c(331),ERROR" ID="0x826e0a5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_rx_frame_check:: HAL_RX_FCS_ERROR == rx_status @dmac_rx_data_rom.c(336),ERROR" ID="0x826e0a82" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_rx_filter_vap_state::EAPOL to host when state is WAIT_ASOC} @dmac_rx_data_rom.c(413),WARNING" ID="0x826e0ceb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_rx_filter_vap_state::the vap is not up! frame_type=%d vap_state=%d. @dmac_rx_data_rom.c(417),WARNING" ID="0x826e0d0b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_rx_frame_check_filter::netbuf or dmac_vap null! @dmac_rx_data_rom.c(437),WARNING" ID="0x826e0dab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_rx_frame_check_filter::frame_type [%d].} @dmac_rx_data_rom.c(455),WARNING" ID="0x826e0e3b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_rx_frame_check_filter::src mac is multicast.} @dmac_rx_data_rom.c(461),WARNING" ID="0x826e0e6b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_rx_frame_check_filter::dmac not to me.} @dmac_rx_data_rom.c(474),WARNING" ID="0x826e0ed3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_rx_frame_check_filter::ARP replay attack drop.} @dmac_rx_data_rom.c(484),WARNING" ID="0x826e0f23" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_rx_proc_amsdu_cpy_mac_head::memcpy_s failed, ret = %d.} @dmac_rx_data_rom.c(513),ERROR" ID="0x826e100a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_rx_proc_amsdu_cpy_mac_head::memcpy_s failed, ret = %d.} @dmac_rx_data_rom.c(524),ERROR" ID="0x826e1062" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_rx_check::frame check err drop.} @dmac_rx_data_rom.c(628),WARNING" ID="0x826e13a3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_rx_process_data_event::cpy head drop.} @dmac_rx_data_rom.c(660),WARNING" ID="0x826e14a3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="send data to host fail, err=%d @dmac_rx_data_rom.c(723),WARNING" ID="0x826e169b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_rx_process_data_event::get dmac_vap null.} @dmac_rx_data_rom.c(746),WARNING" ID="0x826e1753" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_rx_new_error_check::RX_NEW HARDWARE!dscr cnt=%d,q=%d.} @dmac_rx_data_rom.c(787),WARNING" ID="0x826e189b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_rx_new_error_check::rx one dscr, which is not in the rx cnt=%d,q=%d.} @dmac_rx_data_rom.c(794),WARNING" ID="0x826e18d3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_rx_new_error_check::RX_NEW SOFTWARE!cnt=%d,q=%d.} @dmac_rx_data_rom.c(800),WARNING" ID="0x826e1903" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_rx_update_dscr_queue::RX_NEW,rxq[%d],remain dscr cnt[%d].} @dmac_rx_data_rom.c(819),WARNING" ID="0x826e199b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_rx_process_data_event::update_cb drop.} @dmac_rx_data_rom.c(859),ERROR" ID="0x826e1ada" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_rx_process_data_event::rx_new error.} @dmac_rx_data_rom.c(865),ERROR" ID="0x826e1b0a" />
+			</MSG_LOG>

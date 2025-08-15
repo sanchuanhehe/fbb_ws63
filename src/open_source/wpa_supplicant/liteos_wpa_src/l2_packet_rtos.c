@@ -1,6 +1,7 @@
 /*
  * WPA Supplicant - Layer2 packet handling with Linux packet sockets
  * Copyright (c) 2003-2005, Jouni Malinen <j@w1.fi>
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2014-2019. All rights reserved.
  *
  * This software may be distributed under the terms of the BSD license.
  * See README for more details.

@@ -1,5 +1,6 @@
 /*******************************************************************************
- * Copyright (c) 2009, 2022 IBM Corp. and Ian Craggs
+ *Copyright (c) 2025 HiSilicon (Shanghai) Technologies Co
+ *Copyright (c) 2009, 2022 IBM Corp. and Ian Craggs
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0

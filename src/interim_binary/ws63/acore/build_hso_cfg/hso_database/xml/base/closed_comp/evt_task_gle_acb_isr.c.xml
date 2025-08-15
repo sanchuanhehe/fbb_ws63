@@ -1,0 +1,9 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]evt_task_gle_acb_update_es_param update fail @evt_task_gle_acb_isr.c(130),WARNING" ID="0x89300413" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[BGTP] evt_task_gle_acb_send_unknown_rsp src_id 0x%x, opcode 0x%x @evt_task_gle_acb_isr.c(169),WARNING" ID="0x8930054b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[BGTP] evt_task_gle_acb_recv_llcp: sed_index 0x%x, opcode 0x%x, len %d @evt_task_gle_acb_isr.c(186),INFO" ID="0x893005d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACB][RX]RX LEN ERR! @evt_task_gle_acb_isr.c(238),ERROR" ID="0x89300772" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACB][RX]MSG_ALLOC_FAILED! @evt_task_gle_acb_isr.c(245),ERROR" ID="0x893007aa" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP] evt_task_gle_acb_process_rx_desc_isr status %x, %d, 0x%x, 0x%x @evt_task_gle_acb_isr.c(337),INFO" ID="0x89300a8d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP] evt_task_gle_acb_statistics1: per=%d, noerr=%d, syncerr=%d, othererr=%d @evt_task_gle_acb_isr.c(415),INFO" ID="0x89300cfd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]ACB RX DATA MIC ERROR rxccmpktcnt=0x%x, new ble_rxccmpktcnt0=0x%x! @evt_task_gle_acb_isr.c(528),ERROR" ID="0x89301082" />
+			</MSG_LOG>

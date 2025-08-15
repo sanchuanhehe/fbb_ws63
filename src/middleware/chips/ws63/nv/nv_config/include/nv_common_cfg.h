@@ -25,6 +25,7 @@
 #define WLAN_HILINK_SSID_LEN 33
 #define WLAN_HILINK_PWD_LEN 65
 #define WLAN_HILINK_MAC_LEN 6
+#define BT_SRRC_CHANNEL_NUM 8
 /* 基础类型无需在此文件中定义，直接引用即可，对应app.json中的sample0 */
 
 /* 普通结构体，对应app.json中的sample1 */
@@ -102,28 +103,46 @@ typedef struct {
     uint8_t btc_max_txpower;
 } btc_power_type_t;
 
+/* btc 无委认证降功率信道设置 */
+typedef struct {
+    uint8_t btc_srrc_channel[BT_SRRC_CHANNEL_NUM];
+} btc_srrc_channel_type_t;
+
+/* btc 无委认证降功率,根据信道设置降功率值 */
+typedef struct {
+    uint8_t btc_srrc_power[BT_SRRC_CHANNEL_NUM];
+} btc_srrc_power_type_t;
+
 /* 雷达算法相关在此结构体中添加 */
 typedef struct {
-    uint8_t d_th_1m;              // dispersion
+    uint8_t d_th_1m;             // dispersion
     uint8_t d_th_2m;
-    uint8_t d_buf_cnt_1m;
-    uint8_t d_buf_cnt_2m;
-    uint8_t d_use_2md1m;
-    uint8_t d_use_1m_dfa;
-    uint8_t t_only_enable;
-    uint8_t d_th_1m_dfa;
-    uint8_t a_always;
-    uint8_t d_buf_cnt_1m_dfa;
-    uint8_t d_buf_cnt_2m_dfa;
-    uint8_t p_buf_cnt;           // presence
-    uint8_t p_th;
-    uint8_t t_th_1m;             // track
+    uint8_t p_th;                // presence
+    uint8_t t_th_1m;             // track * 10
     uint8_t t_th_2m;
-    uint8_t b_th_ratio;          // bitmap
+    uint8_t b_th_ratio;          // bitmap * 100
     uint8_t b_th_cnt;
-    uint8_t a_th;                // ai
+    uint8_t a_th;                // ai * 100
     uint8_t a_buf_cnt;
+    uint8_t f_win_time;          // fretting win time: min
+    uint8_t pt_cld_para_1;       // pt_cld * 10: 0~2 -> 0~20(10 def)
+    uint8_t pt_cld_para_2;
+    uint8_t pt_cld_para_3;
+    uint8_t pt_cld_para_4;
+    uint8_t rd_pwr_para_1;       // rd_pwr * 10: 0.1~10 -> 1~100(10 def)
+    uint8_t rd_pwr_para_2;
+    uint8_t rd_pwr_para_3;
+    uint8_t t_0_to_1;
+    uint8_t t_0_to_2;
+    uint8_t t_0_to_6;
+    uint8_t t_6_to_1_2;
+    uint8_t t_2_to_1;
+    uint8_t t_6_to_1_vel;
+    uint8_t t_6_to_2_vel;
+    uint8_t t_back_clear;
     uint8_t res_0;
+    uint8_t res_1;
+    uint8_t res_2;
 } radar_alg_param_t;
 
 typedef struct {
@@ -142,4 +161,10 @@ typedef struct {
     uint8_t pwd[WLAN_HILINK_PWD_LEN];
     uint8_t bssid[WLAN_HILINK_MAC_LEN];
 } hilink_connect_info_t;
+
+/* chba配置 角色与模式 */
+typedef struct {
+    uint8_t chba_mode;
+    uint8_t role_idx;
+} chba_cfg_t;
 #endif /* __NV_COMMON_CFG_H__ */

@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="g_bt_pll_tx_ct_table[%d] = %d @bt_rf_config.c(730),INFO" ID="0x897c16d5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="g_bt_pll_rx_ct_table[%d] = %d @bt_rf_config.c(737),INFO" ID="0x897c170d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[RF] bank_sel:%d, temp_code_idx:%d @bt_rf_config.c(897),WARNING" ID="0x897c1c0b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="cur_temp:%d, cali_temp:%d, pwr_delta:%d, ret:%d @bt_rf_config.c(1034),INFO" ID="0x897c2055" />
+			</MSG_LOG>

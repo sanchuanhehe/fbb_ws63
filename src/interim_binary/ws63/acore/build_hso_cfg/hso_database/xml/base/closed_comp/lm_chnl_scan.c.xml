@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="lm_chnl_scan_add_map_assessment_module fsm_id(0x%x) @lm_chnl_scan.c(51),INFO" ID="0x88a0019d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="lm_chnl_scan_remove_map_assessment_module fsm_id(0x%x) fsm_num(%d) @lm_chnl_scan.c(78),INFO" ID="0x88a00275" />
+			</MSG_LOG>

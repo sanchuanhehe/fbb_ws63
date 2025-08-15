@@ -1,5 +1,9 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.
+ * Copyright (c) 2025 HiSilicon (Shanghai) Technologies Co
+ * Copyright (c) CompanyNameMagicTag
+ * Description: Mbedtls Adaptation Layer of MQTT
+ * Author: LiteOS Team
+ * Create: 2020-08-10
  */
 #if defined(MBEDTLS)
 

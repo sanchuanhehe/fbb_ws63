@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2023. All rights reserved.
  * Description: APF mac header.
- * Author:
+ * Author: Huang
  * Create: 2022-10-14
  */
 

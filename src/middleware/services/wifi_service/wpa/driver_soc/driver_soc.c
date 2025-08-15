@@ -33,7 +33,8 @@ static int g_rx_mgmt_count = 0;
 #define RX_MGMT_EVENT_MAX_COUNT 15
 #define DELAY_REPORT_TIMEOUT 15
 #define MAX_BUF_LEN 65535
-#define WLAN_MAC_STATUS_MAX 7000
+#define MAC_STATUS_AUTH_MAX 7000
+#define MAC_STATUS_ASSOC_MAX 8000
 
 #ifdef CONFIG_ACS
 #define OAL_SUCC 0
@@ -71,6 +72,9 @@ static void drv_soc_set_conn_keys(const struct wpa_driver_associate_params *wpa_
 static uint32 drv_soc_cipher_to_cipher_suite(uint32 cipher);
 static int32 drv_soc_disconnect(ext_driver_data_stru *drv, uint16 reason_code);
 static int32 drv_soc_sta_remove(void *priv, const uint8 *addr);
+#ifdef LOS_CONFIG_PMK_CACHE
+void wifi_flush_pmk_cache(void);
+#endif /* LOS_CONFIG_PMK_CACHE */
 
 static int32 drv_soc_is_ap_interface(ext_iftype_enum_uint8 nlmode)
 {
@@ -766,9 +770,13 @@ static void drv_soc_driver_event_connect_result_process(ext_driver_data_stru *dr
 	if (accoc_info->status != 0) {
 		drv->associated = EXT_DISCONNECT;
 		/* assoc 失败时, 底层上报错误码会加上MAC_STATUS_MAX偏移; pmkid无效时, 触发reject流程清空pmkid */
-		if ((accoc_info->status == WLAN_STATUS_INVALID_PMKID + WLAN_MAC_STATUS_MAX) ||
-		    (accoc_info->status == WLAN_STATUS_AUTH_TIMEOUT + WLAN_MAC_STATUS_MAX)) {
+		if ((accoc_info->status == WLAN_STATUS_INVALID_PMKID + MAC_STATUS_ASSOC_MAX) ||
+		    (accoc_info->status == WLAN_STATUS_AUTH_TIMEOUT + MAC_STATUS_AUTH_MAX)) {
 			event.assoc_reject.status_code = accoc_info->status;
+#ifdef LOS_CONFIG_PMK_CACHE
+            /* pmkid 失效时, 清空pmk */
+            wifi_flush_pmk_cache();
+#endif /* LOS_CONFIG_PMK_CACHE */
 			wpa_supplicant_event(drv->ctx, EVENT_ASSOC_REJECT, &event);
 		} else {
 			event.disassoc_info.reason_code = accoc_info->status;

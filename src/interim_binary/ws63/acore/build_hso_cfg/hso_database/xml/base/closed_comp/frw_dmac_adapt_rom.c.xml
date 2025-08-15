@@ -1,0 +1,11 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{frw_dmac_check_rcv_msg::msg_adapt is null!} @frw_dmac_adapt_rom.c(34),ERROR" ID="0x80860112" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="frw_dmac_check_rcv_msg vap is null, vap id:%u @frw_dmac_adapt_rom.c(40),WARNING" ID="0x80860143" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[E]frw_rx_msg_cb unregister! @frw_dmac_adapt_rom.c(55),ERROR" ID="0x808601ba" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{frw_thread_do_process_msg::report sync msg rsp fail![%d], msg[%d]} @frw_dmac_adapt_rom.c(98),ERROR" ID="0x80860312" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_frw_msg_event::msg_adapt-&gt;data is null!} @frw_dmac_adapt_rom.c(130),ERROR" ID="0x80860412" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{frw_dmac_rcv_mgnt_data::msg_type %d invalid.} @frw_dmac_adapt_rom.c(164),ERROR" ID="0x80860522" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{frw_dmac_rcv_mgnt_data::vap[%d] is null.} @frw_dmac_adapt_rom.c(170),ERROR" ID="0x80860552" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_hal_post_async_msg::vap[%d] fail.ret[%d]} @frw_dmac_adapt_rom.c(182),ERROR" ID="0x808605b2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_frw_send_msg: alloc failed.msg_id %d sync %d @frw_dmac_adapt_rom.c(241),ERROR" ID="0x8086078a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_frw_send_data::wkup host failed @frw_dmac_adapt_rom.c(297),ERROR" ID="0x8086094a" />
+			</MSG_LOG>

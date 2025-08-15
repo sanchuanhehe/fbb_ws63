@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="tm recv data ind dispatch op:0x%02x, len = %u @gle_tm_manager.c(24),INFO" ID="0xde1a00c5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle get func by op failed @gle_tm_manager.c(28),ERROR" ID="0xde1a00e2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="tm recv data ind cbk data_len = %u, data_off = %u @gle_tm_manager.c(43),INFO" ID="0xde1a015d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="tm recv data ind cbk data[%u]:0x%02x @gle_tm_manager.c(47),INFO" ID="0xde1a017d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="tm recv data ind cbk:lcid = %u @gle_tm_manager.c(50),INFO" ID="0xde1a0195" />
+			</MSG_LOG>

@@ -80,6 +80,10 @@ static int mbedlts_adapt_aes_crypto(crypto_symc_ctrl_t *symc_ctrl, const unsigne
     crypto_buf_attr src_buf;
     crypto_buf_attr dst_buf;
 
+    if (data_len == 0) {
+        return CRYPTO_SUCCESS;
+    }
+
     ret = crypto_mutex_lock(&g_mbedtls_aes_lock);
     crypto_chk_return(ret != 0, ret, "crypto_mutex_lock failed\n");
 

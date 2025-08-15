@@ -3142,6 +3142,8 @@ dns_server_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, const ip_addr_t 
   }
 
   (void)udp_sendto(pcb, send_p, addr, port);
+  /* free pbuf */
+  (void)pbuf_free(send_p);
 
 ignore_packet:
   /* deallocate memory and return */

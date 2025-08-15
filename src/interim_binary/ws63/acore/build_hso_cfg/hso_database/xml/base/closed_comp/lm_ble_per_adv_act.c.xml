@@ -1,0 +1,12 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[PER ADV]lm_ble_per_adv_disabled_set_params_act: adv_handle=0x%x intv_min=%d intv_max=%d prop=0x%x @lm_ble_per_adv_act.c(51),INFO" ID="0x88dc019d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[PER ADV]lm_ble_per_adv_disabled_set_data_act: adv_handle=0x%x op=%d len=%d @lm_ble_per_adv_act.c(101),INFO" ID="0x88dc032d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[PER ADV]lm_ble_per_adv_enabled_set_data_act: adv_handle=0x%x op=%d len=%d @lm_ble_per_adv_act.c(140),INFO" ID="0x88dc0465" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[PER ADV]lm_ble_per_adv_enabled_set_enable_act: adv_handle=0x%x en=0x%x @lm_ble_per_adv_act.c(175),INFO" ID="0x88dc057d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[PER ADV]lm_ble_per_adv_configing_set_enable_act: adv_handle=0x%x en=0x%x phy=%d @lm_ble_per_adv_act.c(229),INFO" ID="0x88dc072d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[PER ADV]lm_ble_per_adv_pending_ext_adv_enabled_act: pending periodic adv enabling. phy=%d @lm_ble_per_adv_act.c(282),INFO" ID="0x88dc08d5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[CTE]lm_ble_adv_cte_set_param_aod_check: antenna_ids[%d]=%d @lm_ble_per_adv_act.c(306),INFO" ID="0x88dc0995" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[CTE]lm_ble_adv_cte_set_param_check: adv_handle(%d),cte_length(%d),cte_type(%d) @lm_ble_per_adv_act.c(319),INFO" ID="0x88dc09fd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[CTE]lm_ble_adv_cte_set_param_check: cte_count(%d),switching_pattern_length(%d) @lm_ble_per_adv_act.c(321),INFO" ID="0x88dc0a0d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[CTE]lm_ble_adv_cte_set_param_act: adv_handle=%d @lm_ble_per_adv_act.c(337),INFO" ID="0x88dc0a8d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[CTE]lm_ble_adv_cte_set_enable_common_act: adv_handle=%d @lm_ble_per_adv_act.c(359),INFO" ID="0x88dc0b3d" />
+			</MSG_LOG>

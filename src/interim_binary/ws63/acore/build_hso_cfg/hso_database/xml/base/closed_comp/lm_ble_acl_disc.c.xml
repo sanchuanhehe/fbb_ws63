@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[BGTP] lm_ble_llcp_terminate_act con_hdl(0x%x)terminate_reason(%d) @lm_ble_acl_disc.c(209),INFO" ID="0x8834068d" />
+			</MSG_LOG>

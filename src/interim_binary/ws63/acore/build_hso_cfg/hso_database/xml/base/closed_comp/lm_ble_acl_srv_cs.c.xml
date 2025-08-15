@@ -1,0 +1,10 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[bgtp] lm_ble_acl_srv_cs_instant_callback: con_hdl %d, no free sed @lm_ble_acl_srv_cs.c(77),WARNING" ID="0x8832026b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp] unknown llcp message con_hdl %d, opcode 0x%x @lm_ble_acl_srv_cs.c(209),WARNING" ID="0x8832068b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp] lm_ble_acl_srv_cs_check_llcp_config: config id %d, overflow max %d @lm_ble_acl_srv_cs.c(346),WARNING" ID="0x88320ad3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp] lm_ble_acl_srv_cs_check_proc_en_config: config id %d, overflow max %d @lm_ble_acl_srv_cs.c(401),WARNING" ID="0x88320c8b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp] lm_ble_acl_srv_cs_proc_en: enable hadm con_hdl(%d)proc_enable(%d) @lm_ble_acl_srv_cs.c(462),INFO" ID="0x88320e75" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp] lm_ble_acl_srv_cs_instant_callback: con_hdl %d, no free sed @lm_ble_acl_srv_cs.c(548),WARNING" ID="0x88321123" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp] lm_ble_acl_srv_cs_check_cs_ind: config id %d, overflow max %d @lm_ble_acl_srv_cs.c(624),WARNING" ID="0x88321383" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp] lm_ble_acl_srv_cs_check_cs_ind: instant %d, counter %d @lm_ble_acl_srv_cs.c(630),WARNING" ID="0x883213b3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp] lm_ble_acl_srv_cs_rpt_result_act, remain_count=%d @lm_ble_acl_srv_cs.c(692),INFO" ID="0x883215a5" />
+			</MSG_LOG>

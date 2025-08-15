@@ -1,0 +1,11 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_config_intrf_mode_param:get vap null!} @alg_autorate_intrf_mode_rom.c(76),WARNING" ID="0x82d80263" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_autorate_intrf_mode_proc:get vap null!} @alg_autorate_intrf_mode_rom.c(108),WARNING" ID="0x82d80363" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_ar_intrf_mode_judge:total_cnt[%d] intrf_cnt[%d]} @alg_autorate_intrf_mode_rom.c(148),WARNING" ID="0x82d804a3" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{alg_ar_config_set_11b_tx_count:rank0[%u], rank1[%u], rank2[%u], rank3[%u]} @alg_autorate_intrf_mode_rom.c(170),INFO" ID="0x82d80555" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_intrf_mode_fix_11b_process: txop_alg is null ptr!} @alg_autorate_intrf_mode_rom.c(184),WARNING" ID="0x82d805c3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_ar_intrf_mode_fix_11b_process::rate0[%d] tx_count0[%d]} @alg_autorate_intrf_mode_rom.c(203),INFO" ID="0x82d8065d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_ar_intrf_mode_fix_11n_exec:no opt needed, curr rate[%d] opt rate[%d]} @alg_autorate_intrf_mode_rom.c(227),INFO" ID="0x82d8071d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{alg_ar_intrf_mode_fix_11n_exec:11n mcs set, user_rssi[%d] mcs[%d]} @alg_autorate_intrf_mode_rom.c(237),INFO" ID="0x82d8076d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{alg_ar_intrf_mode_fix_11n_process: null ptr! user[%d], cb[%d], txop_alg[%d]} @alg_autorate_intrf_mode_rom.c(252),WARNING" ID="0x82d807e3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{alg_ar_intrf_mode_fix_11n_process:alg_ar_get_user_rate_info fail} @alg_autorate_intrf_mode_rom.c(274),WARNING" ID="0x82d80893" />
+			</MSG_LOG>

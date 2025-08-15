@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="gle device link add link alloc fail @gle_dm_link_ui.c(65),INFO" ID="0xde5c020d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle device link add node-&gt;status:0x%x @gle_dm_link_ui.c(73),INFO" ID="0xde5c024d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gle device link get by status node-&gt;status:0x%x status:0x%x @gle_dm_link_ui.c(95),INFO" ID="0xde5c02fd" />
+			</MSG_LOG>

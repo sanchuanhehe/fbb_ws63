@@ -247,7 +247,7 @@ typedef osal_u8 (*hh503_rf_get_subband_idx_cb)(wlan_channel_band_enum_uint8 band
 typedef osal_void (*hh503_pow_set_rf_regctl_enable_cb)(hal_to_dmac_device_stru *hal_device,
     oal_bool_enum_uint8 rf_linectl);
 #ifdef _PRE_WLAN_FEATURE_ALWAYS_TX
-osal_void hal_rf_get_rx_ppdu_info(osal_u8 flag);
+osal_s32 hal_rf_get_rx_ppdu_info(osal_u8 flag, osal_char *out_buff, osal_u16 out_buff_max_len, osal_u16 *copy_len);
 #endif
 osal_void hal_radar_sensing_switch_abb_lo_tx_top_test_reg12(osal_bool is_on);
 osal_void hal_set_cal_tone(osal_u32 tone_cfg);

@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[bgtp][gle_isr] isr(%d) not registered yet @gle_isr.c(112),INFO" ID="0x887c0385" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[GLE_ERR_INT]comm_errint1=0x%x, comm_errint2=0x%x, gle_errint=0x%x @gle_isr.c(132),ERROR" ID="0x887c0422" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE_ERR_INT]clk=0x%x, fincnt=%d @gle_isr.c(134),ERROR" ID="0x887c0432" />
+			</MSG_LOG>

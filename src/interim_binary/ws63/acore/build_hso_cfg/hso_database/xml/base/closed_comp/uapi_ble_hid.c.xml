@@ -1,0 +1,13 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[ACore] ble conn general hid proc:cmdid:0x%02X pay_len:%d. @uapi_ble_hid.c(124),INFO" ID="0xd88603e5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] ble conn general hid proc command id:0X%02X invaild. @uapi_ble_hid.c(138),INFO" ID="0xd8860455" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] ble conn general hid key input data len:%d @uapi_ble_hid.c(147),INFO" ID="0xd886049d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] ble conn general hid key input len %d invaild! @uapi_ble_hid.c(150),ERROR" ID="0xd88604b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bt at cmd keyboard input param null! @uapi_ble_hid.c(158),ERROR" ID="0xd88604f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] ble conn general hid keyboard input one word send key message failed! @uapi_ble_hid.c(171),ERROR" ID="0xd886055a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] bt at cmd keyboard input, data len:%d @uapi_ble_hid.c(183),INFO" ID="0xd88605bd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[Error] bt at cmd keyboard input len %d invaild! @uapi_ble_hid.c(186),ERROR" ID="0xd88605d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bt at cmd keyboard input param null! @uapi_ble_hid.c(194),ERROR" ID="0xd8860612" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bt at cmd keyboard input param invaild! @uapi_ble_hid.c(202),ERROR" ID="0xd8860652" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bt at cmd keyboard input param invaild! @uapi_ble_hid.c(207),ERROR" ID="0xd886067a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bt at cmd keyboard input one word send key message failed! @uapi_ble_hid.c(220),ERROR" ID="0xd88606e2" />
+			</MSG_LOG>

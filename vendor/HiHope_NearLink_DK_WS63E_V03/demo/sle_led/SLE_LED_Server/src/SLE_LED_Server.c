@@ -1,16 +1,18 @@
 /*
-# Copyright (C) 2024 HiHope Open Source Organization .
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+ # Copyright (C) 2024 HiHope Open Source Organization .
+ * Copyright (c) 2020 HiSilicon (Shanghai) Technologies CO., LIMITED.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * Description: sle uuid server sample.
  */
 #include "securec.h"
 #include "errcode.h"
@@ -254,6 +256,7 @@ static errcode_t example_sle_server_property_add(void)
     property.permissions = SSAP_PERMISSION_READ | SSAP_PERMISSION_WRITE;
     example_sle_uuid_setu2(SLE_UUID_SERVER_PROPERTY, &property.uuid);
     property.value = osal_vmalloc(sizeof(g_sle_property_value));
+    property.operate_indication = SSAP_OPERATE_INDICATION_BIT_READ | SSAP_OPERATE_INDICATION_BIT_NOTIFY;
     if (property.value == NULL) {
         PRINT("[SLE Server] sle property mem fail\r\n");
         return ERRCODE_MALLOC;

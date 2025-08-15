@@ -1,0 +1,29 @@
+name: Mbedtls_Gate
+on:
+  single_mr_build: 
+    branches: ['**']
+
+env:
+  branch: $codehubTargetBranch
+
+jobs:
+  Merge_Gate_Build:
+    runs-on: mbedtls_toolbox
+    steps: 
+    - name: Set DownloadCode auth token
+      uses: actions/set_env@v1.0.0
+      with:
+        git_user: ${{ secrets.git_user }}
+        git_passwd: ${{ secrets.git_passwd }}
+    - name: download
+      uses: actions/codexml@v1.0.0
+      with:
+        url: https://codehub-dg-y.huawei.com/OpenSourceCenter/mbedtls.git
+        path: codexml_path
+        branch: huawei-trunk/mbedtls-3.1.0
+        name: codexml_path/configs/huawei/Merge_Gate.xml
+    - name: compile
+      uses: actions/shell@v1.0.0
+      with:
+        command: |
+          cd ${workspace_pom}/mbedtls && make -j32 && make check

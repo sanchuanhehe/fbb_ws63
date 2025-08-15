@@ -1,0 +1,28 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="gle dd init @gle_dev_discovery_ui.c(21),INFO" ID="0xde4000ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle dd cleanup @gle_dev_discovery_ui.c(31),INFO" ID="0xde4000fd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="adv_params_len = %zu new fail @gle_dev_discovery_ui.c(50),ERROR" ID="0xde400192" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy adv params failed @gle_dev_discovery_ui.c(58),ERROR" ID="0xde4001d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy ext param failed @gle_dev_discovery_ui.c(67),ERROR" ID="0xde40021a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy adv data failed @gle_dev_discovery_ui.c(78),ERROR" ID="0xde400272" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy scan rsp data failed @gle_dev_discovery_ui.c(89),ERROR" ID="0xde4002ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="adv_gt_role = 0x%x @gle_dev_discovery_ui.c(95),INFO" ID="0xde4002fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="memcpy conn param failed @gle_dev_discovery_ui.c(103),ERROR" ID="0xde40033a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv_params point null @gle_dev_discovery_ui.c(122),ERROR" ID="0xde4003d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv_params memcpy fail @gle_dev_discovery_ui.c(136),ERROR" ID="0xde400442" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv_enable point null @gle_dev_discovery_ui.c(156),ERROR" ID="0xde4004e2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="adv_handle = 0x%x, adv_enable = 0x%x @gle_dev_discovery_ui.c(160),INFO" ID="0xde400505" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv_enable new fail @gle_dev_discovery_ui.c(163),ERROR" ID="0xde40051a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="adv_handle = 0x%x @gle_dev_discovery_ui.c(181),INFO" ID="0xde4005ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv_handle mem new failed @gle_dev_discovery_ui.c(184),ERROR" ID="0xde4005c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle clear advertising @gle_dev_discovery_ui.c(197),INFO" ID="0xde40062d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="set_scan_params pointer null @gle_dev_discovery_ui.c(210),ERROR" ID="0xde400692" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_scan_params new fail @gle_dev_discovery_ui.c(217),ERROR" ID="0xde4006ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_scan_params memcpy fail @gle_dev_discovery_ui.c(222),ERROR" ID="0xde4006f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="scan_enable pointer null @gle_dev_discovery_ui.c(236),ERROR" ID="0xde400762" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_scan_enable new fail @gle_dev_discovery_ui.c(241),ERROR" ID="0xde40078a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_set_public_addr new fail @gle_dev_discovery_ui.c(259),ERROR" ID="0xde40081a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle_set_public_addr memcpy fail @gle_dev_discovery_ui.c(263),ERROR" ID="0xde40083a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="addr pointer null @gle_dev_discovery_ui.c(277),ERROR" ID="0xde4008aa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle get public address memcpy fail @gle_dev_discovery_ui.c(281),ERROR" ID="0xde4008ca" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="addr:0x%02x:**:**:**:%02x:%02x @gle_dev_discovery_ui.c(285),INFO" ID="0xde4008ed" />
+			</MSG_LOG>

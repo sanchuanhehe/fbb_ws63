@@ -1,0 +1,23 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="dmac_tx_seqnum_proc:: get dmac_user fail. @dmac_tx_data_rom.c(381),ERROR" ID="0x845c0bea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{alg_get_tid_rate_info::mac_user[%d] is NULL!} @dmac_tx_data_rom.c(425),WARNING" ID="0x845c0d4b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_dscr_list_dequeue_ampdu::dmac_user is null. @dmac_tx_data_rom.c(464),WARNING" ID="0x845c0e83" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_dscr_list_dequeue_ampdu::tid_rate_info get failed.} @dmac_tx_data_rom.c(474),WARNING" ID="0x845c0ed3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_process_get_tx_mode: no user} @dmac_tx_data_rom.c(492),WARNING" ID="0x845c0f63" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_process_get_tx_mode: addba not succ} @dmac_tx_data_rom.c(499),WARNING" ID="0x845c0f9b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_process_get_aggr_num: no user} @dmac_tx_data_rom.c(512),ERROR" ID="0x845c1002" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_process_tid_add_num: no user} @dmac_tx_data_rom.c(524),WARNING" ID="0x845c1063" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_process_tid_dec_num: no user} @dmac_tx_data_rom.c(537),WARNING" ID="0x845c10cb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_process_tid_dec_num: no user} @dmac_tx_data_rom.c(552),WARNING" ID="0x845c1143" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_alg_tx_notify:: ERROR INFO: null ptr.} @dmac_tx_data_rom.c(579),ERROR" ID="0x845c121a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dmac_tx_dscr_list_dequeue_first:: usr_idx:%d, tid:%d. @dmac_tx_data_rom.c(649),ERROR" ID="0x845c144a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{dmac_tid_tx_retry_in_baw::a retry packet shall be dropped. baw_start=%d baw_size=%d seq_num=%d.} @dmac_tx_data_rom.c(698),WARNING" ID="0x845c15d3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_dscr_list_dequeue_ampdu::dmac_user is null. @dmac_tx_data_rom.c(737),WARNING" ID="0x845c170b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_schedule q_num wrong, return} @dmac_tx_data_rom.c(1229),ERROR" ID="0x845c266a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_schedule::dmac_vap is NULL} @dmac_tx_data_rom.c(1241),ERROR" ID="0x845c26ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d]dmac_tx_need_enqueue:slp rm start, mgmt enque @dmac_tx_data_rom.c(1323),WARNING" ID="0x845c295b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dbac running and vap pause, mgmt enque, vap_id %d @dmac_tx_data_rom.c(1332),WARNING" ID="0x845c29a3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_tx_process_dscr_queue q_num wrong, free netbuf} @dmac_tx_data_rom.c(1352),ERROR" ID="0x845c2a42" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="q_num[%d] {dmac_tx_process_dscr_queue::hook ret 0x%x.} @dmac_tx_data_rom.c(1359),WARNING" ID="0x845c2a7b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] {dmac_tx_process_data::dmac_user[%d] null.} @dmac_tx_data_rom.c(1462),WARNING" ID="0x845c2db3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_tx_process_data::free netbuf} @dmac_tx_data_rom.c(1518),WARNING" ID="0x845c2f73" />
+			</MSG_LOG>

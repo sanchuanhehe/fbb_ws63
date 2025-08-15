@@ -1,0 +1,31 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="ble general EV_DYNAMIC_PSM psm 0x%x. @sapi_ble_l2cap.c(35),INFO" ID="0xdeb2011d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general L2CAP_EV_CONNECT_CFM cid:0x%x. @sapi_ble_l2cap.c(49),INFO" ID="0xdeb2018d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general L2CAP_CONN_COMPLETE cid:0x%x. @sapi_ble_l2cap.c(74),INFO" ID="0xdeb20255" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble general L2CAP_EV_DATA_IND cid:0x%x hdl 0x%x sdu_len 0x%x. @sapi_ble_l2cap.c(119),INFO" ID="0xdeb203bd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general L2CAP_EV_DATA_IND memcpy fail. @sapi_ble_l2cap.c(124),ERROR" ID="0xdeb203e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general l2cap cbk event %d. @sapi_ble_l2cap.c(173),INFO" ID="0xdeb2056d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap callback 0x%x not found! @sapi_ble_l2cap.c(201),INFO" ID="0xdeb2064d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general reg psm param is NULL. @sapi_ble_l2cap.c(213),ERROR" ID="0xdeb206aa" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble general: l2cap general reg psm:0x%x cid:0x%x ch_type:0x%x. @sapi_ble_l2cap.c(218),INFO" ID="0xdeb206d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general unreg psm param is NULL. @sapi_ble_l2cap.c(228),ERROR" ID="0xdeb20722" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general: l2cap general unreg psm:0x%x ch_type:0x%x. @sapi_ble_l2cap.c(233),INFO" ID="0xdeb2074d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general credit conn param is NULL. @sapi_ble_l2cap.c(245),ERROR" ID="0xdeb207aa" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="ble general: l2cap general credit conn, psm:0x%x cid:0x%x mtu:0x%x mps:0x%x. @sapi_ble_l2cap.c(251),INFO" ID="0xdeb207dd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general credit conn malloc fail. @sapi_ble_l2cap.c(256),ERROR" ID="0xdeb20802" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general credit conn param is NULL. @sapi_ble_l2cap.c(285),ERROR" ID="0xdeb208ea" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="ble general: l2cap general credit conn, psm:0x%x cid:0x%x mtu:0x%x mps:0x%x. @sapi_ble_l2cap.c(291),INFO" ID="0xdeb2091d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general credit conn malloc fail. @sapi_ble_l2cap.c(296),ERROR" ID="0xdeb20942" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general credit conn rsp param is NULL. @sapi_ble_l2cap.c(321),ERROR" ID="0xdeb20a0a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble general: l2cap general credit conn rsp, psm:0x%x mtu:0x%x mps:0x%x. @sapi_ble_l2cap.c(326),INFO" ID="0xdeb20a35" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble general: l2cap general credit conn rsp, psm:0x%x malloc fail. @sapi_ble_l2cap.c(331),ERROR" ID="0xdeb20a5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general channel tx param is NULL. @sapi_ble_l2cap.c(352),ERROR" ID="0xdeb20b02" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general: l2cap general channel tx: cid:0x%x psm:0x%x malloc fail. @sapi_ble_l2cap.c(360),ERROR" ID="0xdeb20b42" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general: l2cap general channel tx: cid:0x%x psm:0x%x memcpy fail. @sapi_ble_l2cap.c(373),ERROR" ID="0xdeb20baa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general credit flow control param is NULL. @sapi_ble_l2cap.c(387),ERROR" ID="0xdeb20c1a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general: l2cap general credit flow control, psm:0x%x cid 0x%x. @sapi_ble_l2cap.c(392),INFO" ID="0xdeb20c45" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general: l2cap general credit flow control malloc fail, psm:0x%x cid 0x%x. @sapi_ble_l2cap.c(398),ERROR" ID="0xdeb20c72" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: l2cap general disconnect param is NULL. @sapi_ble_l2cap.c(420),ERROR" ID="0xdeb20d22" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general: l2cap general disconnect, psm:0x%x cid 0x%x. @sapi_ble_l2cap.c(425),INFO" ID="0xdeb20d4d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general: l2cap general disconnect malloc fail, psm:0x%x cid 0x%x. @sapi_ble_l2cap.c(431),ERROR" ID="0xdeb20d7a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble general l2cap set l2cap key size value:%d need_auth_check %d  @sapi_ble_l2cap.c(443),INFO" ID="0xdeb20ddd" />
+			</MSG_LOG>

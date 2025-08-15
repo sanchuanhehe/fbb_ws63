@@ -303,5 +303,14 @@
     "chip": "WS63",
     "buildDef": "",
     "needSmoke": "false"
+  }, {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/sle_one_to_many",
+    "chip": "WS63",
+    "buildDef": "CONFIG_SAMPLE_SUPPORT_SLE_ONE_MANY = y",
+    "needSmoke": "false",
+    "key":"13",
+    "name":"sle_one_to_many",
+    "description":"SLE一对多"
   }
 ]

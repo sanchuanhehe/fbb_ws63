@@ -1,7 +1,7 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2021. All rights reserved.
  * Description: Header file of frw public interface.
- * Author:
+ * Author: Huanghe
  * Create: 2020-01-01
  */
 

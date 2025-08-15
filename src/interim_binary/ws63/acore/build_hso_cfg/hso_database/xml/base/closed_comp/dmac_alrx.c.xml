@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="dmac_al_tx_rx_reinit_mem::size=[%u] cnt=[%u] @dmac_alrx.c(68),WARNING" ID="0x83980223" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_al_reinit_mem::reinit(%u). @dmac_alrx.c(85),WARNING" ID="0x839802ab" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_get_rx_dscr:: size(%u) @dmac_alrx.c(109),WARNING" ID="0x8398036b" />
+			</MSG_LOG>

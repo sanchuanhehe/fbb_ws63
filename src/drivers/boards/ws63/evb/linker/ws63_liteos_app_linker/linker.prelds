@@ -224,7 +224,9 @@ SECTIONS
         . = ALIGN(8);
         PLAT_ROM_KEEP(.data*)
         PLAT_ROM_NO_KEEP(.data*)
+#if defined(ROM_SYMBOL_LINK)
         VENEER_ROM_RAM_PLAT_D
+#endif
         CHECK_ALIGN_4(__rom_data_load__);
         CHECK_ALIGN_4(__rom_data_begin__);
     } > DTCM AT > PROGRAM
@@ -234,7 +236,9 @@ SECTIONS
         . = ALIGN(8);
         WIFI_ROM_KEEP(.data*)
         WIFI_ROM_NO_KEEP(.data*)
+#if defined(ROM_SYMBOL_LINK)
         VENEER_ROM_RAM_WIFI_D
+#endif
     } > DTCM AT > PROGRAM
 
     .btc_romdata : ALIGN(8) {
@@ -242,7 +246,9 @@ SECTIONS
         . = ALIGN(8);
         BTC_ROM_KEEP(.data*)
         BTC_ROM_NO_KEEP(.data*)
+#if defined(ROM_SYMBOL_LINK)
         VENEER_ROM_RAM_BTC_D
+#endif
         . = ALIGN(4);
     } > DTCM AT > PROGRAM
 
@@ -251,7 +257,9 @@ SECTIONS
         . = ALIGN(8);
         BTH_ROM_KEEP(.data*)
         BTH_ROM_NO_KEEP(.data*)
+#if defined(ROM_SYMBOL_LINK)
         VENEER_ROM_RAM_BTH_D
+#endif
         . = ALIGN(4);
         __rom_data_end__ = .;
         CHECK_ALIGN_4(__rom_data_end__);
@@ -265,16 +273,36 @@ SECTIONS
     .plat_rombss (0x1803e0) : ALIGN(8) {
         . = ALIGN(8);
         __rom_bss_begin__ = .;
+#if !defined(ROM_SYMBOL_LINK)
+        PLAT_ROM_KEEP(.bss*)
+        PLAT_ROM_NO_KEEP(.bss*)
+#endif
     } > DTCM
 
     .wifi_rombss (0x180588) : ALIGN(8) {
+#if !defined(ROM_SYMBOL_LINK)
+        . = ALIGN(8);
+        WIFI_ROM_KEEP(.bss*)
+        WIFI_ROM_NO_KEEP(.bss*)
+#endif
     } > DTCM
 
     .btc_rombss (0x182458) : ALIGN(8) {
+#if !defined(ROM_SYMBOL_LINK)
+        . = ALIGN(8);
+        BTC_ROM_KEEP(.bss*)
+        BTC_ROM_NO_KEEP(.bss*)
+#endif
     } > DTCM
 
     .bth_rombss (0x182878) : ALIGN(8) {
+#if !defined(ROM_SYMBOL_LINK)
+        . = ALIGN(8);
+        BTH_ROM_KEEP(.bss*)
+        BTH_ROM_NO_KEEP(.bss*)
+#else
         . += 0x10;
+#endif
         . = ALIGN(4);
         __rom_bss_end__ = .;
         CHECK_ALIGN_4(__rom_bss_end__);
@@ -439,7 +467,7 @@ SECTIONS
 SECTIONS
 {
 #ifdef CONFIG_SUPPORT_HILINK_INDIE_UPGRADE
-    PROVIDE (hilink_info_addr = 0x406300);
+    PROVIDE (hilink_info_addr = 0x3F0300);
 #endif
     /* cali code */
     .wifi_text_cali : ALIGN(8) {

@@ -9243,6 +9243,31 @@ static int scan_id_list_parse(struct wpa_supplicant *wpa_s, const char *value,
 }
 #endif /* EXT_CODE_CROP */
 
+static void wpas_ctrl_set_eapol_paras(struct wpa_supplicant *wpa_s, char *params)
+{
+	char *pos = NULL;
+	if (wpa_s->wpa_state == WPA_INTERFACE_DISABLED) {
+		return;
+	}
+
+	if (params) {
+		pos = os_strstr(params, "eapol2=");
+		if (pos) {
+			wpa_s->eapol2_config_max_retry = atoi(pos + 7); /* 7:len of "eapol2=" */
+		}
+		pos = os_strstr(params, "eapol1=");
+		if (pos) {
+			wpa_s->eapol1_config_recv_timeout = atoi(pos + 7); /* 7:len of "eapol1=" */
+		}
+		pos = os_strstr(params, "eapol3=");
+		if (pos) {
+			wpa_s->eapol3_config_recv_timeout = atoi(pos + 7); /* 7:len of "eapol3=" */
+		}
+        return;
+   }
+
+}
+
 static void wpas_ctrl_scan(struct wpa_supplicant *wpa_s, char *params,
 			   char *reply, int reply_size, int *reply_len)
 {
@@ -12860,6 +12885,8 @@ char * wpa_supplicant_ctrl_iface_process(struct wpa_supplicant *wpa_s,
 		wpas_ctrl_scan(wpa_s, NULL, reply, reply_size, &reply_len);
 	} else if (os_strncmp(buf, "SCAN ", 5) == 0) {
 		wpas_ctrl_scan(wpa_s, buf + 5, reply, reply_size, &reply_len);
+	} else if (os_strncmp(buf, "SET_EAPOL_PARAS ", 16) == 0) { /* 16:cmd len + 1 */
+		wpas_ctrl_set_eapol_paras(wpa_s, buf + 16); /* 16:cmd len + 1 */
 	} else if (os_strcmp(buf, "SCAN_RESULTS") == 0) {
 #ifdef EXT_CODE_CROP
 		if (reply == NULL) {

@@ -182,7 +182,7 @@ typedef struct {
  * @endif
  */
 typedef struct {
-    uint8_t linkKey[SLE_LINK_KEY_LEN];      /*!< @if Eng link key
+    uint8_t linkKey[OH_SLE_LINK_KEY_LEN];      /*!< @if Eng link key
                                                   @else   链路密钥 @endif */
     uint8_t cryptoAlgo;                     /*!< @if Eng encryption algorithm type { @ref SleCryptoAlgoType }
                                                   @else   加密算法类型 { @ref SleCryptoAlgoType } @endif */
@@ -191,6 +191,34 @@ typedef struct {
     uint8_t integrChkInd;                  /*!< @if Eng integrity check indication { @ref SleIntegrChkIndType }
                                                   @else   完整性校验指示 { @ref SleIntegrChkIndType } @endif */
 } SleAuthInfoEvt;
+
+/**
+ * @if Eng
+ * @brief Struct of sle phy parameter.
+ * @else
+ * @brief 星闪phy参数
+ * @endif
+ */
+typedef struct {
+    uint8_t txFormat;          /*!< @if Eng Transmitted radio frame type, @ref sle_radio_frame_t
+                                     @else 发送无线帧类型，参考 { @ref sle_radio_frame_t }。 @endif */
+    uint8_t rxFormat;          /*!< @if Eng Received radio frame type, @ref sle_radio_frame_t
+                                     @else 接收无线帧类型，参考 { @ref sle_radio_frame_t }。 @endif */
+    uint8_t txPhy;             /*!< @if Eng Transmitted PHY, @ref sle_phy_tx_rx_t
+                                     @else 发送PHY，参考 { @ref sle_phy_tx_rx_t }。 @endif */
+    uint8_t rxPhy;             /*!< @if Eng Received PHY, @ref sle_phy_tx_rx_t
+                                     @else 接收PHY，参考 { @ref sle_phy_tx_rx_t }。 @endif */
+    uint8_t txPilotDensity;   /*!< @if Eng Transmitted pilot density indicator, @ref sle_phy_tx_rx_pilot_density_t
+                                     @else 发送导频密度指示，参考 { @ref sle_phy_tx_rx_pilot_density_t }。 @endif */
+    uint8_t rxPilotDensity;   /*!< @if Eng Received pilot density indicator, @ref sle_phy_tx_rx_pilot_density_t
+                                     @else 接收导频密度指示，参考 { @ref sle_phy_tx_rx_pilot_density_t }。 @endif */
+    uint8_t gFeedback;         /*!< @if Eng Indicates the feedback type of the pre-transmitted link.
+                                             The value range is 0 to 63.
+                                     @else 先发链路反馈类型指示，取值范围0-63。 @endif */
+    uint8_t tFeedback;         /*!< @if Eng Indicates the feedback type of the post-transmit link.
+                                             The value range is 0-7.
+                                     @else 后发链路反馈类型指示，取值范围0-7。 @endif */
+} SleSetPhy;
 
 /**
  * @if Eng
@@ -376,6 +404,63 @@ typedef void (*SlePairCompleteCallback)(uint16_t connId, const SleAddr *addr, Er
  * @endif
  */
 typedef void (*SleReadRssiCallback)(uint16_t connId, int8_t rssi, ErrCodeType status);
+
+/**
+ * @if Eng
+ * @brief Callback invoked when set low latency complete.
+ * @par Callback invoked when set low latency complete.
+ * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
+ * @attention 2.The memories of pointer are requested and freed by the SLE service automatically.
+ * @param [in] status result of set low latency.
+ * @param [in] addr   remote device address.
+ * @param [in] rate   mouse report rate { @ref sle_low_latency_rate_t }.
+ * @retval #void no return value.
+ * @par Dependency:
+ * @li  sle_common.h
+ * @see sle_connection_callbacks_t
+ * @else
+ * @brief  设置low latency的回调函数。
+ * @par    设置low latency的回调函数。
+ * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
+ * @attention  2. 指针由SLE service申请内存，也由SLE service释放，回调中不应释放。
+ * @param [in] status 设置low latency结果。
+ * @param [in] addr   对端设备地址。
+ * @param [in] rate   鼠标回报率 { @ref sle_low_latency_rate_t }。
+ * @retval 无返回值。
+ * @par 依赖:
+ * @li  sle_common.h
+ * @see sle_connection_callbacks_t
+ * @endif
+ */
+typedef void (*SleLowLatencyCallback)(uint8_t status, SleAddr *addr, uint8_t rate);
+
+ /**
+ * @if Eng
+ * @brief Callback invoked when set PHY complete.
+ * @par Callback invoked when set PHY complete.
+ * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
+ * @attention 2.The memories of pointer are requested and freed by the SLE service automatically.
+ * @param  [in]  connId connection ID.
+ * @param  [in]  status  result of setting the PHY.
+ * @param  [in]  param   current PHY parameters { @ref sle_set_phy_t }.
+ * @par Dependency:
+ * @li  sle_common.h
+ * @see sle_connection_callbacks_t
+ * @else
+ * @brief  设置PHY的回调函数。
+ * @par    设置PHY的回调函数。
+ * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
+ * @attention  2. 指针由SLE service申请内存，也由SLE service释放，回调中不应释放。
+ * @param  [in]  connId 连接 ID。
+ * @param  [in]  status  设置PHY结果。
+ * @param  [in]  param   当前PHY参数 { @ref sle_set_phy_t }。
+ * @par 依赖:
+ * @li  sle_common.h
+ * @see sle_connection_callbacks_t
+ * @endif
+ */
+typedef void (*SleSetPhyCallback)(uint16_t connId, ErrCodeType status, const SleSetPhy *param);
+
 /**
  * @if Eng
  * @brief Struct of SLE connection manager callback function.
@@ -396,6 +481,10 @@ typedef struct {
                                                                             @else   配对完成回调函数。 @endif */
     SleReadRssiCallback readRssiCb;                                 /*!< @if Eng Read rssi callback.
                                                                             @else   读取rssi回调函数。 @endif */
+    SleLowLatencyCallback lowLatencCb;                             /*!< @if Eng Set low latency callback.
+                                                                            @else   设置low latency回调函数。 @endif */
+    SleSetPhyCallback setPhyCb;                                     /*!< @if Eng Set PHY callback.
+                                                                            @else   设置PHY回调函数。 @endif */
 } SleConnectionCallbacks;
 
 /**
@@ -611,3 +700,6 @@ ErrCodeType SleConnectionRegisterCallbacks(SleConnectionCallbacks *func);
 }
 #endif
 #endif /* OH_OH_SLE_CONNECTION_MANAGER */
+/**
+ * @}
+ */

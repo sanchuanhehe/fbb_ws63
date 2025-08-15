@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="gle_test_mode rssi_avg=%d, cnt = %d @evt_task_gle_test_mode_isr.c(34),INFO" ID="0x88f40115" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="evt_task_gle_test_mode_rx_recv_data, status=0x%x, ble_gle_rxlen=%d, rxpd_index=%d @evt_task_gle_test_mode_isr.c(62),WARNING" ID="0x88f401f3" />
+			</MSG_LOG>

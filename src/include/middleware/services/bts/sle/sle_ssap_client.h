@@ -90,6 +90,10 @@ typedef struct {
                            @else   属性句柄。 @endif */
     uint8_t  type;    /*!< @if Eng property type.
                            @else   属性类型。 @endif */
+    uint16_t data_len;  /*!< @if Eng Data Length.
+                             @else   数据长度。 @endif */
+    uint8_t  *data;     /*!< @if Eng Data.
+                             @else   数据内容。 @endif */
 } ssapc_write_result_t;
 
 /**
@@ -104,6 +108,10 @@ typedef struct {
                           @else   属性句柄。 @endif */
     uint8_t type;    /*!< @if Eng property type.
                           @else   属性类型。 @endif */
+    uint16_t   start_hdl; /*!< @if Eng start handle.
+                               @else   起始句柄 @endif */
+    uint16_t   end_hdl;   /*!< @if Eng end handle.
+                               @else   结束句柄 @endif */
 } ssapc_read_by_uuid_cmp_result_t;
 
 /**

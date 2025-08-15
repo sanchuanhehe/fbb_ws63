@@ -1,0 +1,32 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="sdp_clear_tx_buffer: cnt %d ret %d @dmac_sdp_rom.c(249),INFO" ID="0x83d007cd" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_sdp_switch_channel_off:mac_fcs_request failed[%d]} @dmac_sdp_rom.c(354),WARNING" ID="0x83d00b13" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="vap[%d]{dmac_switch_channel_off::switch src channel[%d][%d] to dst channel[%d].} @dmac_sdp_rom.c(382),INFO" ID="0x83d00bf5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{dmac_switch_channel_off, status:%d, %d, %d, %d} @dmac_sdp_rom.c(387),INFO" ID="0x83d00c1d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_sdp_switch_channel_back:hal_device null} @dmac_sdp_rom.c(402),WARNING" ID="0x83d00c93" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="vap_id[%d] {dmac_sdp_switch_channel_back::switch src channel[%d] to dst[%d].} @dmac_sdp_rom.c(418),INFO" ID="0x83d00d15" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{sdp_timer_hook_callback::callback NULL} @dmac_sdp_rom.c(491),WARNING" ID="0x83d00f5b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{sdp_timer_hook_callback::callback failed[%d]} @dmac_sdp_rom.c(497),WARNING" ID="0x83d00f8b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{sdp_period_timer_hook_callback::send msg failed, restart peroid timer} @dmac_sdp_rom.c(511),WARNING" ID="0x83d00ffb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sdp_wake_timer_hook dw_timer:%d @dmac_sdp_rom.c(602),INFO" ID="0x83d012d5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="sdp_period_time_hook period:%d wake:%d @dmac_sdp_rom.c(665),INFO" ID="0x83d014cd" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="sdp_proc_wakeup_timer:sdp not init, dw %d total %d @dmac_sdp_rom.c(714),INFO" ID="0x83d01655" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="sdp_proc_wakeup_timer:dw_period %d total %d err @dmac_sdp_rom.c(727),WARNING" ID="0x83d016bb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="sdp_proc_wakeup_timer dw_period:%d, total_period:%d @dmac_sdp_rom.c(754),INFO" ID="0x83d01795" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="SDP tx ok, tx_buffer_cnt %d @dmac_sdp_rom.c(773),INFO" ID="0x83d0182d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="SDP tx save, tx_buffer_cnt %d @dmac_sdp_rom.c(779),INFO" ID="0x83d0185d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="dmac_sdp_private_frame_time_check, time:%d_%d_%d_%d @dmac_sdp_rom.c(809),WARNING" ID="0x83d0194b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="process_sdp_private_frame, t_%d, d_%d @dmac_sdp_rom.c(816),WARNING" ID="0x83d01983" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="process_sdp_private_frame, P_%02x_%02x, A_%02x_%02x @dmac_sdp_rom.c(870),INFO" ID="0x83d01b35" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="process_sdp_sync_beacon, P_%02x_%02x, A_%02x_%02x @dmac_sdp_rom.c(901),INFO" ID="0x83d01c2d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="SDP is_private_sync %d @dmac_sdp_rom.c(941),INFO" ID="0x83d01d6d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="sdp_mgnt_data_init period_timer start [%d][%d] @dmac_sdp_rom.c(999),WARNING" ID="0x83d01f3b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sdp_dmac_rx_hook para invalid @dmac_sdp_rom.c(1031),INFO" ID="0x83d0203d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="SDP deinit @dmac_sdp_rom.c(1086),WARNING" ID="0x83d021f3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="SDP reinit @dmac_sdp_rom.c(1108),WARNING" ID="0x83d022a3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="SDP alloc len_%d fail @dmac_sdp_rom.c(1115),ERROR" ID="0x83d022da" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="SDP init OK:len_%d @dmac_sdp_rom.c(1121),WARNING" ID="0x83d0230b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sdp_dmac_rx_hook register fail! @dmac_sdp_rom.c(1128),ERROR" ID="0x83d02342" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sdp_dmac_tx_hook register fail! @dmac_sdp_rom.c(1135),ERROR" ID="0x83d0237a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_sdp_init_status, init_info is null} @dmac_sdp_rom.c(1153),WARNING" ID="0x83d0240b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="dmac_config_sdp_add_peer_mac %x_%x,handle %d valid %d @dmac_sdp_rom.c(1186),WARNING" ID="0x83d02513" />
+			</MSG_LOG>

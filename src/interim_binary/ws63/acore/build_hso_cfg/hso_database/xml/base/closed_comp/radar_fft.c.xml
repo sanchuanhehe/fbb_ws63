@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[RADAR_LOG] input x is NULL! @radar_fft.c(334),ERROR" ID="0x85460a72" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] input fft_size input is: %d. it must be &gt;= 32 and &lt;= 2048! @radar_fft.c(339),ERROR" ID="0x85460a9a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[RADAR_LOG] input x is NULL! @radar_fft.c(386),ERROR" ID="0x85460c12" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[RADAR_LOG] input fft_size input is: %d. it must be &gt;= 32 and &lt;= 2048! @radar_fft.c(391),ERROR" ID="0x85460c3a" />
+			</MSG_LOG>

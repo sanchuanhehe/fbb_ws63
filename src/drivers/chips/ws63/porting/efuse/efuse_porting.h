@@ -206,7 +206,7 @@ uint32_t efuse_write_mac(uint8_t *data, uint16_t data_len);
 uint32_t efuse_read_mac(uint8_t *data, uint16_t data_len, uint8_t *left_time);
 uint32_t efuse_write_sle_mac(uint8_t *data, uint16_t data_len);
 uint32_t efuse_read_sle_mac(uint8_t *data, uint16_t data_len);
-uint32_t efuse_write_customer_rsvd_efuse(uint8_t *data, uint16_t data_len);
+uint32_t efuse_write_customer_rsvd_efuse(uint8_t *data, uint16_t data_len, uint8_t force);
 uint32_t efuse_write_customer_rsvd2_efuse(uint8_t *data, uint16_t data_len);
 uint32_t efuse_read_customer_rsvd2_efuse(uint8_t *data, uint16_t data_len);
 #ifdef _PRE_WLAN_FEATURE_MFG_TEST

@@ -4,7 +4,7 @@
 
 ## 代码仓介绍
 
-  fbb_ws63仓是星闪ws63和ws63e解决方案代码仓，搭载LiteOS系统，主要用于智慧家居、IoT网关、电子消费类等应用场景。该SDK包从统一开发平台FBB（Family Big Box，统一开发框架，统一API）构建而来，在该平台上开发的应用很容易被移植到其他星闪解决方案上，有效降低开发者门槛，缩短开发周期，支持开发者快速开发星闪产品。
+  ws63系列是2.4GHz Wi-Fi 6 星闪多模解决方案，其中ws63E支持2.4GHz的雷达人体活动检测功能，适用于大小家电、电工照明及对人体出没检测有需求的常电类物联网智能场景。该fbb_ws63代码包从统一开发平台FBB（Family Big Box，统一开发框架，统一API）构建而来，在该平台上开发的应用很容易被移植到其他星闪解决方案上，有效降低开发者门槛，缩短开发周期，支持开发者快速开发星闪产品。软件文档在线化链接：https://docs.hisilicon.com/repos/fbb_ws63/zh-CN/master/
 
 ## 目录介绍
 
@@ -18,26 +18,27 @@
 ## 软件资料介绍
 
 | 名称                                                         | 介绍                                                         |
-| :----------------------------------------------------------- | :----------------------------------------------------------- |
+| ------------------------------------------------------------ | :----------------------------------------------------------- |
 | [WS63系列用户指南.pdf](https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/WS63%E7%B3%BB%E5%88%97%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97.pdf) | 本文档主要介绍WS63系列的各项基本功能，为用户提供WS63系列的功能描述、应用场景、应用配置方法等。备注：本文档来源于云汉芯城，地址：https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html# |
 | [WS63系列硬件用户指南_04.pdf](https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/WS63%E7%B3%BB%E5%88%97%E7%A1%AC%E4%BB%B6%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97_04.pdf) | 本文档主要介绍 WS63系列的封装管脚信息、电气特性参数、原理图设计建议、PCB 设计建议、热设计建议、焊接工艺、潮敏参数、接口时序、注意事项等内容。 |
-| [软件系列文档](docs/software)                                | 该系列文档主要包括IO复用关系表、 AT命令使用、 CJSON 开发流程、HTTP开发流程、MQTT 开发流程、 NV存储开发流程、设备驱动开发流程、SLE/BLE开发流程、API接口等文档，文档路径存放于docs/software |
+| [SDK软件在线系列文档](https://docs.hisilicon.com/repos/fbb_ws63/zh-CN/master/) | 该系列文档主要包括IO复用关系表、 AT命令使用、 CJSON 开发流程、HTTP开发流程、MQTT 开发流程、 NV存储开发流程、设备驱动开发流程、SLE/BLE开发流程、API接口等文档，文档路径存放于docs/software |
+| [开发环境搭建指南](tools/README.md)                          | 主要包括windows系统编译工具搭建、SDK包下载，Linux系统编译工具搭建及SDK包下载，建议使用HiSparkStudio插件版编译烧录，路径：tools |
 
 ## 购买渠道
 
-|      序号      | 硬件资料                                                     | 介绍          |
-| :------------: | ------------------------------------------------------------ | ------------- |
-| 1  | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html) | ws63解决方案  |
-| 2 | [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187551/Q353333N1100E.html) | ws63E解决方案 |
-| 3 | [模组购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D821194904380) | 星闪WiFi6模组，邮票孔，无天线 |
-| 4 | [模组购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D823544936579) | 星闪WiFi6模组，12：板载天线，12E：外置天线 |
-| 5 | [模组购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D820900594332) | 星闪WiFi6模组，20：板载天线，20E：外置天线 |
-| 6 | [烧录器购买链接（小熊派）](https://holdiot001.feishu.cn/docx/L60wdrG7Fo314pxYyrbczZqVnSb) | 烧录器：可烧录开发板、模组等 |
-| 7 | [DyCloud_WF6301星闪模组（鼎芯物联）](https://ic-item.jd.com/10151639839211.html) | 星闪模组 |
-| 8 | [WS63星闪模组（润和软件）](https://e.tb.cn/h.6LxYtgOmQL5b51S?tk=jkprVTA5bOC) | WS63星闪模组_HH-M01_Wi-Fi6 星闪多模 |
-| 9 | [WS63E星闪模组（润和软件）](https://e.tb.cn/h.6p0TonQdm3whw0i?tk=ZjcNVTAUwUG) | WS63E星闪模组_HH-M02_Wi-Fi6 星闪多模 支持雷达人体活动感知 |
-| 10 | [MYF-F63星闪模组、开发板链接 （明裕丰）](https://shop187806465.taobao.com/?spm=pc_detail.29232929.shop_block.dshopinfo.2fd27dd6T64Lbi) | 星闪模组、开发板、星闪AI模组和开发板 |
-| 11 | [KHM-3863A 星闪模组购买链接 （深开鸿）](https://mall.kaihong.com/productDetail?skuId=1839224386385612801&goodsId=1839224386133954561) | 星闪、WiFi、蓝牙三模SoC通信模组，支持AT指令及OpenCPU二次开发，支持KaihongOS Lite版本及星闪链路软总线特性等 |
+|      硬件资料      | 介绍                                                   | 购买链接二维码   |
+| :------------: | :----------------------------------------------------------: | :-----------: |
+| [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187550/Q353333N1100.html) |                    ws63解决方案，一片起订                    | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/image-20250625161256895.png" alt="image-20250625161256895" style="zoom:50%;" /> |
+| [购买链接（云汉芯城）](https://www.ickey.cn/detail/1003001013187551/Q353333N1100E.html) |                   ws63E解决方案，一片起订                    | <img src="vendor/HiHope_NearLink_DK_WS63E_V03/doc/media/readme/image-20250625161256895.png" alt="image-20250625161256895" style="zoom:50%;" /> |
+| [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D821194904380) |                星闪WiFi6模组，邮票孔，无天线                 |                                                              |
+| [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D823544936579) |          星闪WiFi6模组，12：板载天线，12E：外置天线          |                                                              |
+| [模组：购买链接（深圳四博智联科技有限公司）](https://gitee.com/link?target=https%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fid%3D820900594332) |          星闪WiFi6模组，20：板载天线，20E：外置天线          |                                                              |
+| [烧录器：购买链接（小熊派）](https://holdiot001.feishu.cn/docx/L60wdrG7Fo314pxYyrbczZqVnSb) |                 烧录器：可烧录开发板、模组等                 |                                                              |
+| [模组：DyCloud_WF6301星闪模组（鼎云物联）](https://ic-item.jd.com/10151639839211.html) |                           星闪模组                           |                                                              |
+| [模组：WS63星闪模组（润和软件）](https://e.tb.cn/h.6LxYtgOmQL5b51S?tk=jkprVTA5bOC) |             WS63星闪模组_HH-M01_Wi-Fi6 星闪多模              |                                                              |
+| [模组：WS63E星闪模组（润和软件）](https://e.tb.cn/h.6p0TonQdm3whw0i?tk=ZjcNVTAUwUG) |  WS63E星闪模组_HH-M02_Wi-Fi6 星闪多模 支持雷达人体活动感知   |                                                              |
+| [模组：MYF-F63星闪模组链接 （明裕丰）](https://shop187806465.taobao.com/?spm=pc_detail.29232929.shop_block.dshopinfo.2fd27dd6T64Lbi) |             星闪模组、开发板、星闪AI模组和开发板             |                                                              |
+| [模组：KHM-3863A 星闪模组购买链接 （深开鸿）](https://mall.kaihong.com/productDetail?skuId=1839224386385612801&goodsId=1839224386133954561) | 星闪、WiFi、蓝牙三模SoC通信模组，支持AT指令及OpenCPU二次开发，支持KaihongOS Lite版本及星闪链路软总线特性等 |                                                              |
 
 ## 支持的开发板
 
@@ -51,6 +52,8 @@
 | MYF-F63VA01开发板（明裕丰）                                  | [MYF-F63VA01星闪开发板 （淘宝）](https://item.taobao.com/item.htm?id=893223665987&pisk=gY0KqOj-Xdvh363LsX-GqErLqXAGvhce6vlfr82hVAHtKRbkTyxzyYetUJq3RXYSIvcXTJxyYYHtNjdP-prkybGqpJqoyb78NbMyT8AejXlUzz9Dn8LmTXPGt7LZJMw1CfPbOgtgAPu1ecJDnEYDA1aJpKDkpMF95SFbPWZ7NfOTN7N7PuwI1CF7Z9s5RYO967N4N7N5RlT_gWa5FMwQflN7igsCAa6667y_FzaSFPOTav899R5Q9an2l8zEWdHdPagT9ltiORMSUQVUvGc3Ca9jWWe4hXwOPawYpc8o6Xvduf4E1xFmKF_KHjuZB5MXydUrQ0M7wATVEyomLqrt_n_s9yeacSg6NZwoJccbBrCWRfULpog3DEdxhfhSml3MGEzLRJiu8bfvKf3KKXutZ_s_JymTD2UXu9wojj38w4JyWxhq7AFshUpC4b0mkmrVn-FlACdO4grQ_Ib8HaXdiABQ6-AQAgSzq5PTnCINVg6WE5eDsGjP4lDd.&spm=tbpc.mytb_followshop.item.goods) | ![](vendor/MYF_F63/doc/media/MYF-F63VA01开发板.png)          |
 | MYF-F63AI01开发板（明裕丰）                                  | [MYF-F63AI01星闪AI语音开发板（淘宝）](https://item.taobao.com/item.htm?id=922405424292&pisk=g4nmjMYvfqzfWqd8y0ZX8yE11r8RGoZ_sfIT6lFwz7P5DfEYXuWzL-PN75yN44DIsSp6lo3usblugfD6hRPZ_fVtkUKKhxZ_bBIMvHHjYF3Wfj2Nb8JaIJW2erusFujzbBdpvaBzlIEZ6N5BuT7zd7y4QP72EzyTIlW4QfPzzJydgllZ_8rzBJ5VbiyaauP7nRya_lSzUR2UQtzZ_YJuQ7PabrlZUvdvuSiZ40R8VjPaz8yZq-40TYYCbGqfvrPUh7SwT0e0OWk4ZGSat5OoMYDviMM8cYl3pjKPmXDIVb2rThAufbgZ_RcyA1EjJjiQrYTF4xq0NyyE4dSU6m0-L7qhQnkumS4EDyxHKXkoQ2Uo2p-QmoPqWoMOKIHomjHjqABNzoqxrym0YH1464HnjRm613cnd0GuUX-MgguAzw56TGwyB0715ry7EWU4j2Svt67QLLvl8da4F-NpELb6Mry7ENvkEwqbu8wc5&spm=a21xtw.29178619.0.0) | ![](vendor/MYF_F63/doc/media/MYF-F63AI01开发板.png)          |
 | [KHD-3863B 星闪开发板（深开鸿）](https://mall.kaihong.com/productDetail?skuId=1839195267891466241&goodsId=1839195267383955458) | [KHD-3863B星闪开发板（开鸿商城）](https://mall.kaihong.com/productDetail?skuId=1839195267891466241&goodsId=1839195267383955458) | <img src="vendor/Kaihong_KHD-3863B/doc/media/KHD-3863B.png" alt="KHD-3863B" style="zoom: 75%;" /> |
+| FB36星闪开发板（利尔达）                                     | [利尔达FB36星闪开发板（淘宝）](https://e.tb.cn/h.hkidLj95hZzH1cz?tk=yzWe4W7VT4X) | ![image-20250801141835783](./vendor/Lierda-FB36/image-20250801141835783.png) |
+| FB36星闪Wi-Fi6 AI开发板（利尔达）                            | [利尔达FB36星闪Wi-Fi6 AI开发板（淘宝）](https://e.tb.cn/h.hkUwR5OhAz12Ija?tk=latG4WfuOeAtG-#22>lD) | ![image-20250801142242182](./vendor/Lierda-FB36/image-20250801142237377.png) |
 
 ## 开发板资料
 
@@ -59,7 +62,7 @@
 | HiHope_NearLink_DK3863E_V03（润和软件） | [润和软件开发板星闪案例开发指南](vendor/HiHope_NearLink_DK_WS63E_V03/doc/星闪实验指导手册.md) | [HiHope_NearLink_DK3863E_V03开发板硬件原理图](vendor/HiHope_NearLink_DK_WS63E_V03/doc/hardware) |
 |       BearPi-Pico_H3863（小熊派）       | [小熊派开发板星闪案例开发指南](vendor/BearPi-Pico_H3863/doc/README.md) | [BearPi-Pico_H3863开发板硬件原理图](vendor/BearPi-Pico_H3863/doc/hardware) |
 |         华清远见WS63星闪开发板          | [华清远见星闪开发板案例开发指南](vendor/Hqyj_Ws63/doc/ws63实验指导手册.md) | [华清远见WS63星闪开发板硬件原理图](vendor/Hqyj_Ws63/doc/hardware) |
-|   DyCloud_WF6301_DK开发板（鼎云物联）   |                         **后续提供**                         | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">DyCloud_WF6301_DK开发板开发板硬件原理图</a> |
+|   DyCloud_WF6301_DK开发板（鼎云物联）   |                         <a href="vendor/DyCloud_WF6301_DK V1.0/doc/DyCloud_WF6301 DK 使用手册.md">DyCloud_WF6301_DK开发板案例开发指南</a>                         | <a href="vendor/DyCloud_WF6301_DK V1.0/doc/hardware">DyCloud_WF6301_DK开发板开发板硬件原理图</a> |
 |          DTU_Car(大连理工大学)          | [智能小车星闪案例开发指南](vendor/DUT_Car/doc/dut_car实验指导手册.md) |    [DTU_Car开发板硬件原理图](vendor/DUT_Car/doc/hardware)    |
 |        MYF-F63VA01开发板(明裕丰)        |         [MYF-F63VA01开发板指南](vendor/MYF_F63/doc)          |  [MYF-F63VA01开发板硬件原理图](vendor/MYF_F63/doc/hardware)  |
 |        KHD-3863B星闪开发板(深开鸿)        |         [KHD-3863B星闪开发板介绍](vendor/Kaihong_KHD-3863B/doc/README.md)          |  [KHD-3863B星闪开发板硬件原理图](vendor/Kaihong_KHD-3863B/doc/hardware/开鸿KHD-3863B星闪开发板.pdf)  |

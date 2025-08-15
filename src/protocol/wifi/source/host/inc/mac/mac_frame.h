@@ -246,9 +246,6 @@ extern "C" {
 #define MAC_WLAN_OUI_RSN0                   0x00        /* RSNA OUI 定义 0x000FAC */
 #define MAC_WLAN_OUI_RSN1                   0x0F
 #define MAC_WLAN_OUI_RSN2                   0xAC
-#define MAC_WLAN_OUI_MICRO0                 0x00        /* WPA/WMM OUI 定义 0x0050F2 */
-#define MAC_WLAN_OUI_MICRO1                 0x50
-#define MAC_WLAN_OUI_MICRO2                 0xF2
 #define MAC_WLAN_OUI_P2P0                   0x50        /* P2P OUI 定义 0x506F9A */
 #define MAC_WLAN_OUI_P2P1                   0x6F
 #define MAC_WLAN_OUI_P2P2                   0x9A
@@ -259,6 +256,9 @@ extern "C" {
 #define MAC_ACTION_VENDOR_SPECIFIC_IE_POS   6
 #endif
 #endif
+#define MAC_WLAN_OUI_MICRO0                 0x00        /* WPA/WMM OUI 定义 0x0050F2 */
+#define MAC_WLAN_OUI_MICRO1                 0x50
+#define MAC_WLAN_OUI_MICRO2                 0xF2
 #define MAC_EXT_VENDER_IE 0xAC853D /* 打桩HW IE */
 
 #define MAC_MBO_VENDOR_IE          0x506F9A /* WFA specific OUI */

@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * Copyright (c) 2025 HiSilicon (Shanghai) Technologies Co
  * Copyright (c) 2018, 2019 Wind River Systems, Inc. All Rights Reserved.
  *
  * All rights reserved. This program and the accompanying materials

@@ -10,6 +10,7 @@
 #include "sle_device_discovery.h"
 #include "sle_connection_manager.h"
 #include "sle_errcode.h"
+#include "sle_speed_server.h"
 #include "sle_speed_server_adv.h"
 
 /* sle device name */
@@ -31,85 +32,38 @@
 /* 最大广播数据长度 */
 #define SLE_ADV_DATA_LEN_MAX                      251
 
-uint8_t sle_local_name[ NAME_MAX_LENGTH] = "sle_uart_server";
+/*              SLE ADV/ScanRsp Struct
+ * | AdvA |        AdvData or ScanRspData       |
+ *        |          N * AD Structure           |
+ *        | AD Type(1) | Length(1) | AD Data(n) |
+*/
+#define SLE_ADV_DATA_TYPE_DISCOVERY_LEN     1
+#define SLE_ADV_DATA_TYPE_ACCESS_LEN        1
+#define SLE_ADV_DATA_TYPE_UUID_LEN          2
 
-static uint16_t sle_set_adv_local_name(uint8_t *adv_data, uint16_t max_len)
-{
-    errno_t ret;
-    uint8_t index = 0;
+uint8_t g_sle_announce_data[] = {
+    /* SLE ADV TYPE DISCOVERY LEVEL */
+    SLE_ADV_DATA_TYPE_DISCOVERY_LEVEL,                          /* type:支持的设备发现等级 */
+    SLE_ADV_DATA_TYPE_DISCOVERY_LEN,                            /* length:1 Byte */
+    SLE_ANNOUNCE_LEVEL_NORMAL,                                  /* value: 一般可发现 */
+    /* SLE ADV UUID TYPE */
+    SLE_ADV_DATA_TYPE_COMPLETE_LIST_OF_16BIT_SERVICE_UUIDS,     /* type:支持的UUID列表 */
+    SLE_ADV_DATA_TYPE_UUID_LEN,                                 /* length:2 Byte */
+    0x0B, 0x06,                                                 /* value:具体的UUID列表 */
+};
 
-    uint8_t *local_name = sle_local_name;
-    uint8_t local_name_len = (uint8_t)strlen((char *)local_name);
-    for (uint8_t i = 0; i < local_name_len; i++) {
-        osal_printk("local_name[%d] = 0x%02x\r\n", i, local_name[i]);
-    }
-
-    adv_data[index++] = local_name_len + 1;
-    adv_data[index++] = SLE_ADV_DATA_TYPE_COMPLETE_LOCAL_NAME;
-    ret = memcpy_s(&adv_data[index], max_len - index, local_name, local_name_len);
-    if (ret != EOK) {
-        osal_printk("memcpy fail\r\n");
-        return 0;
-    }
-    return (uint16_t)index + local_name_len;
-}
-
-static uint16_t sle_set_adv_data(uint8_t *adv_data)
-{
-    size_t len = 0;
-    uint16_t idx = 0;
-    errno_t  ret = 0;
-
-    len = sizeof(struct sle_adv_common_value);
-    struct sle_adv_common_value adv_disc_level = {
-        .length = len - 1,
-        .type = SLE_ADV_DATA_TYPE_DISCOVERY_LEVEL,
-        .value = SLE_ANNOUNCE_LEVEL_NORMAL,
-    };
-    ret = memcpy_s(&adv_data[idx], SLE_ADV_DATA_LEN_MAX - idx, &adv_disc_level, len);
-    if (ret != EOK) {
-        osal_printk("adv_disc_level memcpy fail\r\n");
-        return 0;
-    }
-    idx += len;
-
-    len = sizeof(struct sle_adv_common_value);
-    struct sle_adv_common_value adv_access_mode = {
-        .length = len - 1,
-        .type = SLE_ADV_DATA_TYPE_ACCESS_MODE,
-        .value = 0,
-    };
-    ret = memcpy_s(&adv_data[idx], SLE_ADV_DATA_LEN_MAX - idx, &adv_access_mode, len);
-    if (ret != EOK) {
-        osal_printk("memcpy fail\r\n");
-        return 0;
-    }
-    idx += len;
-    return idx;
-}
-
-static uint16_t sle_set_scan_response_data(uint8_t *scan_rsp_data)
-{
-    uint16_t idx = 0;
-    errno_t ret;
-    size_t scan_rsp_data_len = sizeof(struct sle_adv_common_value);
-
-    struct sle_adv_common_value tx_power_level = {
-        .length = scan_rsp_data_len - 1,
-        .type = SLE_ADV_DATA_TYPE_TX_POWER_LEVEL,
-        .value = SLE_ADV_TX_POWER,
-    };
-    ret = memcpy_s(scan_rsp_data, SLE_ADV_DATA_LEN_MAX, &tx_power_level, scan_rsp_data_len);
-    if (ret != EOK) {
-        osal_printk("sle scan response data memcpy fail\r\n");
-        return 0;
-    }
-    idx += scan_rsp_data_len;
-
-    /* set local name */
-    idx += sle_set_adv_local_name(&scan_rsp_data[idx], SLE_ADV_DATA_LEN_MAX - idx);
-    return idx;
-}
+#define SLE_ADV_DATA_TYPE_TX_POWER_LEN      1
+#define SLE_ADV_DATA_LOCAL_NAME_LEN         16
+uint8_t g_sle_scan_rsp_data[] = {
+    /* SLE ADV TX POWER LEVEL */
+    SLE_ADV_DATA_TYPE_TX_POWER_LEVEL,                           /* type:设置的广播功率等级 */
+    SLE_ADV_DATA_TYPE_TX_POWER_LEN,                             /* length:1 Byte */
+    SLE_ADV_TX_POWER,
+    /* SLE ADV LOCAL NAME */
+    SLE_ADV_DATA_TYPE_COMPLETE_LOCAL_NAME,                      /* type:设备广播名称 */
+    SLE_ADV_DATA_LOCAL_NAME_LEN,                                /* length:15 Byte */
+    's', 'l', 'e', '_', 's', 'p', 'e', 'e', 'd', '_', 's', 'e', 'r', 'v', 'e', 'r'
+};
 
 static int sle_set_default_announce_param(void)
 {
@@ -135,21 +89,15 @@ static int sle_set_default_announce_param(void)
 static int sle_set_default_announce_data(void)
 {
     errcode_t ret;
-    uint8_t announce_data_len = 0;
-    uint8_t seek_data_len = 0;
     sle_announce_data_t data = {0};
     uint8_t adv_handle = SLE_ADV_HANDLE_DEFAULT;
-    uint8_t announce_data[SLE_ADV_DATA_LEN_MAX] = {0};
-    uint8_t seek_rsp_data[SLE_ADV_DATA_LEN_MAX] = {0};
 
     osal_printk("set adv data default\r\n");
-    announce_data_len = sle_set_adv_data(announce_data);
-    data.announce_data = announce_data;
-    data.announce_data_len = announce_data_len;
+    data.announce_data = g_sle_announce_data;
+    data.announce_data_len = sizeof(g_sle_announce_data);
 
-    seek_data_len = sle_set_scan_response_data(seek_rsp_data);
-    data.seek_rsp_data = seek_rsp_data;
-    data.seek_rsp_data_len = seek_data_len;
+    data.seek_rsp_data = g_sle_scan_rsp_data;
+    data.seek_rsp_data_len = sizeof(g_sle_scan_rsp_data);
 
     ret = sle_set_announce_data(adv_handle, &data);
     if (ret == ERRCODE_SLE_SUCCESS) {
@@ -162,22 +110,23 @@ static int sle_set_default_announce_data(void)
 
 void sle_announce_enable_cbk(uint32_t announce_id, errcode_t status)
 {
-    osal_printk("sle announce enable id:%02x, state:%02x\r\n", announce_id, status);
+    osal_printk("sle announce enable id:0x%02x, state:0x%02x\r\n", announce_id, status);
 }
 
 void sle_announce_disable_cbk(uint32_t announce_id, errcode_t status)
 {
-    osal_printk("sle announce disable id:%02x, state:%02x\r\n", announce_id, status);
+    osal_printk("sle announce disable id:0x%02x, state:0x%02x\r\n", announce_id, status);
 }
 
 void sle_announce_terminal_cbk(uint32_t announce_id)
 {
-    osal_printk("sle announce terminal id:%02x\r\n", announce_id);
+    osal_printk("sle announce terminal id:0x%02x\r\n", announce_id);
 }
 
 void sle_enable_cbk(errcode_t status)
 {
-    osal_printk("sle enable status:%02x\r\n", status);
+    osal_printk("sle enable status:0x%02x\r\n", status);
+    sle_enable_server_cbk();
 }
 
 void sle_announce_register_cbks(void)
@@ -194,7 +143,6 @@ errcode_t sle_uuid_server_adv_init(void)
 {
     osal_printk("sle_uuid_server_adv_init in\r\n");
 
-    sle_announce_register_cbks();
     sle_set_default_announce_param();
     sle_set_default_announce_data();
     sle_start_announce(SLE_ADV_HANDLE_DEFAULT);

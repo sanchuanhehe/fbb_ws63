@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="{hh503_pow_get_pow_index::tx_pow_code=0x%x, cur_rate_pow_idx=%d,pow_code0=0x%x, pow_code1=0x%x} @hal_power_rom.c(139),WARNING" ID="0x82b8045b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="{hh503_pow_get_pow_index::pow_code2=0x%x, pow_code3=0x%x, pow_code4=0x%x, pow_code5=0x%x} @hal_power_rom.c(145),WARNING" ID="0x82b8048b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="hh503_pow_set_band_user_resp_frame_tx_power::distance[%d]subband[%d]2g_ack_cts_pow_code dsss[0x%x]ofdm 24M[0x%x] @hal_power_rom.c(248),INFO" ID="0x82b807c5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_pow_set_user_resp_frm_phy_tx_mode: pow_code[0x%x] tpc_code[0x%x]!} @hal_power_rom.c(286),INFO" ID="0x82b808f5" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hal_pow_set_user_resp_frame_tx_power::band[%d]chan_idx[%d] is invalid} @hal_power_rom.c(314),WARNING" ID="0x82b809d3" />
+			</MSG_LOG>

@@ -376,7 +376,10 @@ at_ret_t cmd_ssid_prefix_scan(const scanssid_args_t *args);
 at_ret_t cmd_wpa_bssid_scan(const scanbssid_args_t *args);
 
 /* Get Scan Results */
-at_ret_t cmd_wpa_scan_results(void);
+at_ret_t cmd_sta_scan_results(void);
+
+/* GET AP Scan Results */
+at_ret_t cmd_softap_scan_result(void);
 
 /* AT Command */
 at_ret_t cmd_start_softap(const startap_args_t *args);
@@ -458,6 +461,9 @@ at_ret_t cmd_cca_switch(const cca_args_t *args);
 
 /* AT+INTRF */
 at_ret_t cmd_intrf_switch(const intrf_args_t *args);
+
+/* AT+CHANINFO */
+at_ret_t cmd_get_channel_intf_info(void);
 
 /* AT+PS */
 at_ret_t cmd_set_sta_pm(const ps_args_t *args);
@@ -1480,7 +1486,7 @@ const at_cmd_entry_t at_wifi_cmd_parse_table[] = {
         11,
         0,
         NULL,
-        cmd_wpa_scan_results,
+        cmd_sta_scan_results,
         (at_set_func_t)NULL,
         NULL,
         NULL,
@@ -1541,6 +1547,16 @@ const at_cmd_entry_t at_wifi_cmd_parse_table[] = {
         0,
         NULL,
         cmd_softap_scan,
+        NULL,
+        NULL,
+        NULL,
+    },
+    {
+        "APSCANRESULT",
+        15,
+        0,
+        NULL,
+        cmd_softap_scan_result,
         NULL,
         NULL,
         NULL,
@@ -1684,6 +1700,16 @@ const at_cmd_entry_t at_wifi_cmd_parse_table[] = {
         intrf_syntax,
         NULL,
         (at_set_func_t)cmd_intrf_switch,
+        NULL,
+        NULL,
+    },
+    {
+        "CHANINFO",
+        19,
+        0,
+        NULL,
+        cmd_get_channel_intf_info,
+        (at_set_func_t)NULL,
         NULL,
         NULL,
     },

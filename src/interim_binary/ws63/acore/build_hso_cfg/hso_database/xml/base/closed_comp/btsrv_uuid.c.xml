@@ -1,0 +1,16 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][INFO] convert uuid1 fail @btsrv_uuid.c(36),INFO" ID="0xd88c0125" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][INFO] convert uuid2 fail @btsrv_uuid.c(42),INFO" ID="0xd88c0155" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] malloc fail @btsrv_uuid.c(59),ERROR" ID="0xd88c01da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] uuid memset fail @btsrv_uuid.c(64),ERROR" ID="0xd88c0202" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] failed to malloc for full uuid. @btsrv_uuid.c(102),ERROR" ID="0xd88c0332" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] base uuid memcpy fail. @btsrv_uuid.c(108),ERROR" ID="0xd88c0362" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] short uuid memcpy fail. @btsrv_uuid.c(115),ERROR" ID="0xd88c039a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] full uuid memcpy fail. @btsrv_uuid.c(121),ERROR" ID="0xd88c03ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] GATT only supports 16-bit or 128-bit UUIDs. @btsrv_uuid.c(127),ERROR" ID="0xd88c03fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] uuid data to len2 memcpy fail. @btsrv_uuid.c(139),ERROR" ID="0xd88c045a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[btsrv][INFO]uuid:%02X%02X @btsrv_uuid.c(148),INFO" ID="0xd88c04a5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[btsrv][INFO]uuid p1: %02X%02X%02X%02X @btsrv_uuid.c(151),INFO" ID="0xd88c04bd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[btsrv][INFO]uuid p2: %02X%02X%02X%02X @btsrv_uuid.c(153),INFO" ID="0xd88c04cd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[btsrv][INFO]uuid p3: %02X%02X%02X%02X @btsrv_uuid.c(155),INFO" ID="0xd88c04dd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[btsrv][INFO]uuid p4: %02X%02X%02X%02X @btsrv_uuid.c(157),INFO" ID="0xd88c04ed" />
+			</MSG_LOG>

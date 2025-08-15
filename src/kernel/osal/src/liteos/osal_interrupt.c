@@ -107,11 +107,25 @@ void osal_irq_disable(unsigned int irq)
     dsb();
 }
 
+
+#ifdef OSAL_IRQ_RECORD_DEBUG
+#include "hal_tcxo.h"
+static unsigned int g_irq_lock_cnt = 0;
+static unsigned long long g_irq_start_time = 0;
+static unsigned long long g_irq_end_time = 0;
+#endif
+
 unsigned int osal_irq_lock(void)
 {
     unsigned int ret = LOS_IntLock();
 #ifdef OSAL_IRQ_RECORD_DEBUG
-    osal_irq_record(IRQ_LOCK, (td_u32)__builtin_return_address(0), ret);
+    if ((osal_irq_record_flag_get() & OSAL_IRQ_RECORD_LOCK_CONSUME) != 0) {
+        if (g_irq_lock_cnt == 0) {
+            g_irq_start_time = hal_tcxo_get_funcs()->get();
+            osal_irq_record(IRQ_LOCK, (td_u32)__builtin_return_address(0), ret, 0);
+        }
+        g_irq_lock_cnt++;
+    }
 #endif
     dsb();
     return ret;
@@ -120,7 +134,15 @@ unsigned int osal_irq_lock(void)
 unsigned int osal_irq_unlock(void)
 {
 #ifdef OSAL_IRQ_RECORD_DEBUG
-    osal_irq_record(IRQ_UNLOCK, (td_u32)__builtin_return_address(0), 0);
+
+    if ((osal_irq_record_flag_get() & OSAL_IRQ_RECORD_LOCK_CONSUME) != 0) {
+        g_irq_lock_cnt--;
+        if (g_irq_lock_cnt == 0) {
+            g_irq_end_time = hal_tcxo_get_funcs()->get();
+            unsigned long long cosume_time = g_irq_end_time - g_irq_start_time;
+            osal_irq_record(IRQ_UNLOCK, (td_u32)__builtin_return_address(0), 0, cosume_time);
+        }
+    }
 #endif
     unsigned int  ret = LOS_IntUnLock();
     dsb();
@@ -130,7 +152,14 @@ unsigned int osal_irq_unlock(void)
 void osal_irq_restore(unsigned int irq_status)
 {
 #ifdef OSAL_IRQ_RECORD_DEBUG
-    osal_irq_record(IRQ_RESTORE, (td_u32)__builtin_return_address(0), irq_status);
+    if ((osal_irq_record_flag_get() & OSAL_IRQ_RECORD_LOCK_CONSUME) != 0) {
+        g_irq_lock_cnt--;
+        if (g_irq_lock_cnt == 0) {
+            g_irq_end_time = hal_tcxo_get_funcs()->get();
+            unsigned long long cosume_time = g_irq_end_time - g_irq_start_time;
+            osal_irq_record(IRQ_RESTORE, (td_u32)__builtin_return_address(0), irq_status, cosume_time);
+        }
+    }
 #endif
     LOS_IntRestore(irq_status);
     dsb();

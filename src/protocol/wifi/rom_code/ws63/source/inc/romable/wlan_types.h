@@ -1,7 +1,7 @@
 ﻿/*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2022. All rights reserved.
  * Description: Header files shared by wlan_types.h and wlan_types_rom.h.
- * Author:
+ * Author: Huanghe
  */
 
 #ifndef __WLAN_TYPES_HCM_H__

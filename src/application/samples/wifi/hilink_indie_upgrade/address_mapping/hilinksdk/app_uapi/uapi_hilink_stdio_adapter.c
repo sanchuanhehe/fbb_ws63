@@ -13,7 +13,8 @@
 
 int HILINK_Vprintf(const char *format, va_list ap)
 {
-    return app_call2(APP_CALL_HILINK_VPRINTF, int, const char *, format, va_list, ap);
+    app_call2(APP_CALL_HILINK_VPRINTF, HILINK_Vprintf, int, const char *, format, va_list, ap);
+    return 0;
 }
 
 int HILINK_Printf(const char *format, ...)
@@ -31,10 +32,12 @@ int HILINK_Printf(const char *format, ...)
 
 int HILINK_Rand(unsigned char *input, unsigned int len)
 {
-    return app_call2(APP_CALL_HILINK_RAND, int, unsigned char *, input, unsigned int, len);
+    app_call2(APP_CALL_HILINK_RAND, HILINK_Rand, int, unsigned char *, input, unsigned int, len);
+    return 0;
 }
 
 int HILINK_Trng(unsigned char *input, unsigned int len)
 {
-    return app_call2(APP_CALL_HILINK_TRNG, int, unsigned char *, input, unsigned int, len);
+    app_call2(APP_CALL_HILINK_TRNG, HILINK_Trng, int, unsigned char *, input, unsigned int, len);
+    return 0;
 }

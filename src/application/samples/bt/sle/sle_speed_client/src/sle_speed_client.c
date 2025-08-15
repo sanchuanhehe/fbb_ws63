@@ -13,6 +13,7 @@
 
 #include "sle_device_discovery.h"
 #include "sle_connection_manager.h"
+#include "sle_errcode.h"
 #include "sle_ssap_client.h"
 
 #include "sle_speed_client.h"
@@ -50,9 +51,43 @@ static sle_addr_t                    g_remote_addr = {0};
 static uint16_t                      g_conn_id = 0;
 static ssapc_find_service_result_t   g_find_service_result = {0};
 
+void sle_speed_connect_param_init(void)
+{
+    sle_default_connect_param_t param = {0};
+    param.enable_filter_policy = 0;
+    param.gt_negotiate = 0;
+    param.initiate_phys = 1;
+    param.max_interval = SPEED_DEFAULT_CONN_INTERVAL;
+    param.min_interval = SPEED_DEFAULT_CONN_INTERVAL;
+    param.scan_interval = SPEED_DEFAULT_SCAN_INTERVAL;
+    param.scan_window = SPEED_DEFAULT_SCAN_WINDOW;
+    param.timeout = SPEED_DEFAULT_TIMEOUT_MULTIPLIER;
+    sle_default_connection_param_set(&param);
+}
+
+void sle_start_scan()
+{
+    sle_seek_param_t param = {0};
+    param.own_addr_type = 0;
+    param.filter_duplicates = 0;
+    param.seek_filter_policy = 0;
+    param.seek_phys = 1;
+    param.seek_type[0] = 0;
+    param.seek_interval[0] = SLE_SEEK_INTERVAL_DEFAULT;
+    param.seek_window[0] = SLE_SEEK_WINDOW_DEFAULT;
+    sle_set_seek_param(&param);
+    sle_start_seek();
+}
+
 void sle_sample_sle_enable_cbk(errcode_t status)
 {
     if (status == 0) {
+        uint8_t local_addr[SLE_ADDR_LEN] = {0x13, 0x67, 0x5c, 0x07, 0x00, 0x51};
+        sle_addr_t local_address;
+        local_address.type = 0;
+        (void)memcpy_s(local_address.addr, SLE_ADDR_LEN, local_addr, SLE_ADDR_LEN);
+        sle_set_local_addr(&local_address);
+        sle_speed_connect_param_init();
         sle_start_scan();
     }
 }
@@ -136,40 +171,60 @@ void sle_sample_seek_cbk_register(void)
 void sle_sample_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *addr,
     sle_acb_state_t conn_state, sle_pair_state_t pair_state, sle_disc_reason_t disc_reason)
 {
-    osal_printk("[ssap client] conn state changed conn_id:%d, addr:%02x***%02x%02x\n", conn_id, addr->addr[0],
-        addr->addr[4], addr->addr[5]); /* 0 4 5: addr index */
+    osal_printk("[ssap client] conn state changed conn_id:%d, addr:0x%02x:**:**:0x%02x:0x%02x\n",
+        conn_id, addr->addr[0], addr->addr[4], addr->addr[5]); /* 0 4 5: addr index */
     osal_printk("[ssap client] conn state changed disc_reason:0x%x\n", disc_reason);
     if (conn_state == SLE_ACB_STATE_CONNECTED) {
         if (pair_state == SLE_PAIR_NONE) {
             sle_pair_remote_device(&g_remote_addr);
         }
         g_conn_id = conn_id;
+    } else if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
+        sle_start_scan();
     }
+}
+
+void sle_sample_auth_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errcode_t status,
+    const sle_auth_info_evt_t* evt)
+{
+    unused(conn_id);
+    unused(evt);
+    osal_printk("[speed server] auth cmp:0x%x\r\n", status);
+    if (status == ERRCODE_SLE_SUCCESS) {
+        return;
+    }
+    osal_printk("[speed server] auth failed, remove pair and restart scan\r\n");
+    sle_remove_paired_remote_device(addr);
+    sle_start_scan();
 }
 
 void sle_sample_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errcode_t status)
 {
-    osal_printk("[ssap client] pair complete conn_id:%d, addr:%02x***%02x%02x\n", conn_id, addr->addr[0],
+    osal_printk("[ssap client] pair complete conn_id:%d, addr:0x%02x:**:**:0x%02x:0x%02x\n", conn_id, addr->addr[0],
         addr->addr[4], addr->addr[5]); /* 0 4 5: addr index */
-    if (status == 0) {
+    if (status == ERRCODE_SLE_SUCCESS) {
         ssap_exchange_info_t info = {0};
         info.mtu_size = SLE_MTU_SIZE_DEFAULT;
         info.version = 1;
         ssapc_exchange_info_req(1, g_conn_id, &info);
+        return;
     }
+    osal_printk("[speed server] pair failed, remove pair and restart scan\r\n");
+    sle_remove_paired_remote_device(addr);
+    sle_start_scan();
 }
 
 void sle_sample_update_cbk(uint16_t conn_id, errcode_t status, const sle_connection_param_update_evt_t *param)
 {
     unused(status);
-    osal_printk("[ssap client] updat state changed conn_id:%d, interval = %02x\n", conn_id, param->interval);
+    osal_printk("[ssap client] updat state changed conn_id:%d, interval = 0x%02x\n", conn_id, param->interval);
 }
 
 void sle_sample_update_req_cbk(uint16_t conn_id, errcode_t status, const sle_connection_param_update_req_t *param)
 {
     unused(conn_id);
     unused(status);
-    osal_printk("[ssap client] sle_sample_update_req_cbk interval_min = %02x, interval_max = %02x\n",
+    osal_printk("[ssap client] sle_sample_update_req_cbk interval_min = 0x%02x, interval_max = 0x%02x\n",
         param->interval_min, param->interval_max);
 }
 
@@ -189,6 +244,7 @@ void sle_sample_read_rssi_cbk(uint16_t conn_id, int8_t rssi, errcode_t status)
 void sle_sample_connect_cbk_register(void)
 {
     g_connect_cbk.connect_state_changed_cb = sle_sample_connect_state_changed_cbk;
+    g_connect_cbk.auth_complete_cb = sle_sample_auth_complete_cbk;
     g_connect_cbk.pair_complete_cb = sle_sample_pair_complete_cbk;
     g_connect_cbk.connect_param_update_req_cb = sle_sample_update_req_cbk;
     g_connect_cbk.connect_param_update_cb = sle_sample_update_cbk;
@@ -226,7 +282,10 @@ void sle_sample_find_structure_cbk(uint8_t client_id, uint16_t conn_id, ssapc_fi
     }
     g_find_service_result.start_hdl = service->start_hdl;
     g_find_service_result.end_hdl = service->end_hdl;
-    memcpy_s(&g_find_service_result.uuid, sizeof(sle_uuid_t), &service->uuid, sizeof(sle_uuid_t));
+    if (memcpy_s(&g_find_service_result.uuid, sizeof(sle_uuid_t), &service->uuid, sizeof(sle_uuid_t)) != EOK) {
+        osal_printk("[ssap client] find structure mem cpy failed");
+        return;
+    }
 }
 
 void sle_sample_find_structure_cmp_cbk(uint8_t client_id, uint16_t conn_id,
@@ -264,11 +323,11 @@ void sle_sample_find_property_cbk(uint8_t client_id, uint16_t conn_id,
             idx, property->descriptors_type[idx]);
     }
     if (property->uuid.len == UUID_16BIT_LEN) {
-        osal_printk("[ssap client] find property cbk, uuid: %02x %02x.\n",
+        osal_printk("[ssap client] find property cbk, uuid: 0x%02x %02x.\n",
             property->uuid.uuid[14], property->uuid.uuid[15]); /* 14 15: uuid index */
     } else if (property->uuid.len == UUID_128BIT_LEN) {
         for (uint16_t idx = 0; idx < UUID_128BIT_LEN; idx++) {
-            osal_printk("[ssap client] find property cbk, uuid [%d]: %02x.\n",
+            osal_printk("[ssap client] find property cbk, uuid [%d]: 0x%02x.\n",
                 idx, property->uuid.uuid[idx]);
         }
     }
@@ -306,49 +365,15 @@ void sle_sample_ssapc_cbk_register(ssapc_notification_callback notification_cb,
     g_ssapc_cbk.indication_cb = indication_cb;
 }
 
-void sle_speed_connect_param_init(void)
-{
-    sle_default_connect_param_t param = {0};
-    param.enable_filter_policy = 0;
-    param.gt_negotiate = 0;
-    param.initiate_phys = 1;
-    param.max_interval = SPEED_DEFAULT_CONN_INTERVAL;
-    param.min_interval = SPEED_DEFAULT_CONN_INTERVAL;
-    param.scan_interval = SPEED_DEFAULT_SCAN_INTERVAL;
-    param.scan_window = SPEED_DEFAULT_SCAN_WINDOW;
-    param.timeout = SPEED_DEFAULT_TIMEOUT_MULTIPLIER;
-    sle_default_connection_param_set(&param);
-}
-
 void sle_client_init(ssapc_notification_callback notification_cb, ssapc_indication_callback indication_cb)
 {
-    uint8_t local_addr[SLE_ADDR_LEN] = {0x13, 0x67, 0x5c, 0x07, 0x00, 0x51};
-    sle_addr_t local_address;
-    local_address.type = 0;
-    (void)memcpy_s(local_address.addr, SLE_ADDR_LEN, local_addr, SLE_ADDR_LEN);
     sle_sample_seek_cbk_register();
-    sle_speed_connect_param_init();
     sle_sample_connect_cbk_register();
     sle_sample_ssapc_cbk_register(notification_cb, indication_cb);
     sle_announce_seek_register_callbacks(&g_seek_cbk);
     sle_connection_register_callbacks(&g_connect_cbk);
     ssapc_register_callbacks(&g_ssapc_cbk);
     enable_sle();
-    sle_set_local_addr(&local_address);
-}
-
-void sle_start_scan()
-{
-    sle_seek_param_t param = {0};
-    param.own_addr_type = 0;
-    param.filter_duplicates = 0;
-    param.seek_filter_policy = 0;
-    param.seek_phys = 1;
-    param.seek_type[0] = 0;
-    param.seek_interval[0] = SLE_SEEK_INTERVAL_DEFAULT;
-    param.seek_window[0] = SLE_SEEK_WINDOW_DEFAULT;
-    sle_set_seek_param(&param);
-    sle_start_seek();
 }
 
 int sle_speed_init(void)

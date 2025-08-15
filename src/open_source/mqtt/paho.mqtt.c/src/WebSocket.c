@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * Copyright (c) 2025 HiSilicon (Shanghai) Technologies Co
  * Copyright (c) 2018, 2022 Wind River Systems, Inc., Ian Craggs and others
  *
  * All rights reserved. This program and the accompanying materials

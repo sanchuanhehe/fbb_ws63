@@ -1,6 +1,7 @@
 /*
  * WPA Supplicant - command line interface for wpa_supplicant daemon
  * Copyright (c) 2004-2013, Jouni Malinen <j@w1.fi>
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2014-2019. All rights reserved.
  *
  * This software may be distributed under the terms of the BSD license.
  * See README for more details.
@@ -16,6 +17,11 @@
 #include "securec.h"
 
 #define MAX_WPA_CLI_ARGC_NUM 10
+
+typedef struct {
+    char *cfg_str;
+    unsigned int index;
+} epaol_para_pair;
 
 static int wpa_ctrl_command(void *buf)
 {
@@ -172,6 +178,32 @@ int wpa_cli_scan_results(struct wpa_supplicant *wpa_s)
 	char *cmd[] = {"SCAN_RESULTS"};
 
 	return wpa_cli_cmd(wpa_s, 1, cmd);
+}
+
+int wpa_cli_set_eapol_paras(struct wpa_supplicant *wpa_s, ext_wifi_config_conn_paras *paras)
+{
+    int i;
+    char buf[50] = {0}; /* 50:max len of str "eapol1=xxx eapol2=xxx eapol3=xxx" */
+    int ret = 0;
+    const epaol_para_pair cfg_table[] = {
+        {"eapol1=", EXT_CONFIG_EAPOL1_RECV_TIMEOUT},
+        {"eapol2=", EXT_CONFIG_EAPOL2_MAX_RETRY},
+        {"eapol3=", EXT_CONFIG_EAPOL3_RECV_TIMEOUT},
+    };
+
+    for (i = 0; i < sizeof(cfg_table) / sizeof(epaol_para_pair); i++) {
+        if ((paras->bitmap & BIT(cfg_table[i].index)) == BIT(cfg_table[i].index) &&
+            (cfg_table[i].index < EXT_CONFIG_CONNECT_PARA_MAX)) {
+            ret += os_snprintf(buf + ret, sizeof(buf) - ret, "%s%u", cfg_table[i].cfg_str,
+                paras->conn_paras[cfg_table[i].index]);
+            if (os_snprintf_error(sizeof(buf), ret)) {
+                return EXT_WIFI_FAIL;
+            }
+        }
+    }
+
+    char *cmd[] = {"SET_EAPOL_PARAS", buf};
+    return wpa_cli_cmd(wpa_s, 2, cmd);
 }
 
 int wpa_cli_channel_scan(struct wpa_supplicant *wpa_s, int channel)

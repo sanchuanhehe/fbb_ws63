@@ -101,6 +101,30 @@ typedef struct {
 
 /**
  * @if Eng
+ * @brief Struct of read by uuid request information.
+ * @else
+ * @brief 基于UUID读请求信息。
+ * @endif
+ */
+typedef struct {
+    uint16_t request_id;   /*!< @if Eng Request id.
+                                 @else   请求id。 @endif */
+    uint16_t begin_handle; /*!< @if Eng Properity start handle of the read request.
+                                 @else   请求读的起始属性句柄。 @endif */
+    uint16_t end_handle;   /*!< @if Eng Properity end handle of the read request.
+                                 @else   请求读的结束属性句柄。 @endif */
+    uint8_t type;          /*!< @if Eng property type { @ref ssap_property_type_t }.
+                                 @else   属性类型。 @endif  { @ref ssap_property_type_t } */
+    sle_uuid_t uuid;       /*!< @if Eng property UUID.
+                                 @else   属性UUID。 @endif */
+    bool need_rsp;         /*!< @if Eng Whether response is needed.
+                                 @else   是否需要发送响应。 @endif */
+    bool need_authorize;   /*!< @if Eng Whether authorize is needed.
+                                 @else   是否授权。 @endif */
+} ssaps_req_read_by_uuid_cb_t;
+
+/**
+ * @if Eng
  * @brief Struct of write request information.
  * @else
  * @brief 写请求信息。
@@ -360,6 +384,38 @@ typedef void (*ssaps_read_request_callback)(uint8_t server_id, uint16_t conn_id,
 
 /**
  * @if Eng
+ * @brief Callback invoked when receive read by uuid request.
+ * @par Callback invoked when  receive read by uuid request.
+ * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
+ * @attention 2. The memories of pointer are requested and freed by the SLE service automatically.
+ * @param [in] server_id    server ID.
+ * @param [in] conn_id      connection ID.
+ * @param [in] read_cb_para read by uuid request parameter.
+ * @param [in] status       error code.
+ * @retval #void no return value.
+ * @par Dependency:
+ * @li  sle_ssap_stru.h
+ * @see sle_ssaps_callbacks_t
+ * @else
+ * @brief  收到基于UUID读请求的回调函数。
+ * @par    收到基于UUID读请求的回调函数。
+ * @attention  1. 该回调函数运行于SLE service线程，不能阻塞或长时间等待。
+ * @attention  2. pointer由SLE service申请内存，也由SLE service释放，回调中不应释放。
+ * @param [in] server_id    服务端 ID。
+ * @param [in] conn_id      连接 ID。
+ * @param [in] read_cb_para 基于UUID读请求参数。
+ * @param [in] status       执行结果错误码。
+ * @retval 无返回值。
+ * @par 依赖:
+ * @li  sle_ssap_stru.h
+ * @see sle_ssaps_callbacks_t
+ * @endif
+ */
+typedef void (*ssaps_read_by_uuid_request_callback)(uint8_t server_id, uint16_t conn_id,
+                                                    ssaps_req_read_by_uuid_cb_t *read_cb_para, errcode_t status);
+
+/**
+ * @if Eng
  * @brief Callback invoked when receive write request.
  * @par Callback invoked when  receive write request.
  * @attention 1.This function is called in SLE service context,should not be blocked or do long time waiting.
@@ -456,23 +512,25 @@ typedef void (*ssaps_mtu_changed_callback)(uint8_t server_id, uint16_t conn_id,
  * @endif
  */
 typedef struct {
-    ssaps_add_service_callback add_service_cb;               /*!< @if Eng Service added callback.
+    ssaps_add_service_callback add_service_cb;                   /*!< @if Eng Service added callback.
                                                                   @else   添加服务回调函数。 @endif */
-    ssaps_add_property_callback add_property_cb;             /*!< @if Eng Characteristc added callback.
+    ssaps_add_property_callback add_property_cb;                 /*!< @if Eng Characteristc added callback.
                                                                   @else   添加特征回调函数。 @endif */
-    ssaps_add_descriptor_callback add_descriptor_cb;         /*!< @if Eng Descriptor added callback.
+    ssaps_add_descriptor_callback add_descriptor_cb;             /*!< @if Eng Descriptor added callback.
                                                                   @else   添加描述符回调函数。 @endif */
-    ssaps_start_service_callback start_service_cb;           /*!< @if Eng Service started callback.
+    ssaps_start_service_callback start_service_cb;               /*!< @if Eng Service started callback.
                                                                   @else   启动服务回调函数。 @endif */
-    ssaps_delete_all_service_callback delete_all_service_cb; /*!< @if Eng Service deleted callback.
+    ssaps_delete_all_service_callback delete_all_service_cb;     /*!< @if Eng Service deleted callback.
                                                                   @else   删除服务回调函数。 @endif */
-    ssaps_read_request_callback read_request_cb;             /*!< @if Eng Read request received callback.
+    ssaps_read_request_callback read_request_cb;                 /*!< @if Eng Read request received callback.
                                                                   @else   收到远端读请求回调函数。 @endif */
-    ssaps_write_request_callback write_request_cb;           /*!< @if Eng Write request received callback.
+    ssaps_read_by_uuid_request_callback read_by_uuid_request_cb; /*!< @if Eng Read by uuid request received callback.
+                                                                        @else   收到远端基于UUID读请求回调函数。 @endif */
+    ssaps_write_request_callback write_request_cb;               /*!< @if Eng Write request received callback.
                                                                   @else   收到远端写请求回调函数。 @endif */
-    ssaps_mtu_changed_callback mtu_changed_cb;               /*!< @if Eng Mtu changed callback.
+    ssaps_mtu_changed_callback mtu_changed_cb;                   /*!< @if Eng Mtu changed callback.
                                                                   @else   mtu 大小更新回调函数。 @endif */
-    ssaps_indicate_cfm_callback indicate_cfm_cb;             /*!< @if Eng Indicate cfm callback.
+    ssaps_indicate_cfm_callback indicate_cfm_cb;                 /*!< @if Eng Indicate cfm callback.
                                                                   @else   指示确认回调函数。 @endif */
 } ssaps_callbacks_t;
 

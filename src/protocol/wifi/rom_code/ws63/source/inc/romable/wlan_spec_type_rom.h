@@ -1,7 +1,7 @@
 ﻿/*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2022. All rights reserved.
  * Description: Header files shared by wlan_spec.h and wlan_spec_rom.h.
- * Author:
+ * Author: Huanghe
  */
 
 #ifndef __WLAN_SPEC_TYPE_ROM_H__

@@ -27,7 +27,7 @@
 /* Ble name adv tx power response type */
 #define BLE_SCAN_RSP_TX_POWER_LEVEL_LEN 0x03
 
-uint8_t g_device_name[ NAME_MAX_LENGTH] = { 'b', 'l', 'e', '_', 'w', 'i', 'f', 'i', '_', 'c',
+uint8_t g_device_name[NAME_MAX_LENGTH] = { 'b', 'l', 'e', '_', 'w', 'i', 'f', 'i', '_', 'c',
     'o', 'n', 'f', 'i', 'g' };
 
 uint8_t g_adv_data[31] = {0x02, 0x01, 0x02, 0x13, 0xFF, 0x7D, 0x02, 0x0E, 0x70, 0x80, 0x00, 0x00,
@@ -78,7 +78,7 @@ uint8_t ble_wifi_cfg_set_adv_data(void)
     errcode_t n_ret = 0;
     uint16_t scan_rsp_data_len;
     uint8_t set_scan_rsp_data[EXT_ADV_OR_SCAN_RSP_DATA_LEN] = { 0 };
-    gap_ble_config_adv_data_t cfg_adv_data;
+    gap_ble_config_adv_data_t cfg_adv_data = {0};
 
     /* set scan response data */
     scan_rsp_data_len = ble_set_scan_response_data(set_scan_rsp_data, EXT_ADV_OR_SCAN_RSP_DATA_LEN);
@@ -91,12 +91,12 @@ uint8_t ble_wifi_cfg_set_adv_data(void)
     cfg_adv_data.scan_rsp_data = set_scan_rsp_data;
     cfg_adv_data.scan_rsp_length = scan_rsp_data_len;
 
-    osal_printk("[uplus][debug] uplus_ble_gap_adv_data_set adv_length=%x, adv_data=",
+    osal_printk("[uplus][debug] uplus_ble_gap_adv_data_set adv_length=0x%x, adv_data=",
         cfg_adv_data.adv_length);
     for (int i = 0; i < cfg_adv_data.adv_length; i++) {
         osal_printk(" %02x", cfg_adv_data.adv_data[i]);
     }
-    osal_printk("\n[uplus][debug] uplus_ble_gap_adv_data_set scan_rsp_length=%x, scan_rsp_data=",
+    osal_printk("\n[uplus][debug] uplus_ble_gap_adv_data_set scan_rsp_length=0x%x, scan_rsp_data=",
         cfg_adv_data.scan_rsp_length);
     for (int i = 0; i < cfg_adv_data.scan_rsp_length; i++) {
         osal_printk(" %02x", cfg_adv_data.scan_rsp_data[i]);

@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[BGTP][PMU]bg_pmu_change_state fail, cur_state:%d, expected state:%d @bgtp_pmu_fsm.c(48),ERROR" ID="0x889c0182" />
+			</MSG_LOG>

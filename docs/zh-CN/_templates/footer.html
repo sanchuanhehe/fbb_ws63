@@ -1,0 +1,25 @@
+{%- extends "!footer.html" %}
+
+
+{%- block extrafooter %}
+
+<nav class="wy-nav-side-right">
+    {% if use_doc_reading == "yes" %}
+    <div class="feedback">
+        <div class="feedback-content">
+            <div class="iconfont icon-wendangzhuochong" title="点击参与捉虫"></div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="right-nav">
+        <div class="nav-item to-top">
+            <div class="iconfont icon-huidaodingbu"></div>
+            <div class="text">返回顶部</div>
+        </div>
+        <a class="nav-item download" href="{{ pathto(zip_filename, 1) }}">
+            <div class="iconfont icon-xiazai"></div>
+            <div class="text">HTML下载</div>
+        </a>
+    </div>
+</nav>
+{% endblock %}

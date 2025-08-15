@@ -1,0 +1,11 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="gdk message post, failed retry later. @gdk_msg.c(47),ERROR" ID="0xdcb4017a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gdk message timer cback @gdk_msg.c(75),DBG" ID="0xdcb4025e" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gdk message add itor_msgid:0x%x, itor_ts:0x%lld @gdk_msg.c(108),DBG" ID="0xdcb40366" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="Insert: cur_ts = 0x%x @gdk_msg.c(113),DBG" ID="0xdcb4038e" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gdk msg send malloc fail msg_id:0x%x @gdk_msg.c(144),ERROR" ID="0xdcb40482" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gdk message send later malloc fail msg_id = 0x%x! @gdk_msg.c(169),ERROR" ID="0xdcb4054a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gdk message dispatch handler = 0x%x, MsgId:0x%x @gdk_msg.c(343),DBG" ID="0xdcb40abe" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gdk message loop curr_ts:%lld,list_count:%d @gdk_msg.c(384),DBG" ID="0xdcb40c06" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gdk message loop message_ts = 0x%x @gdk_msg.c(392),DBG" ID="0xdcb40c46" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gdk message loop timeout_ms  = 0x%x @gdk_msg.c(406),DBG" ID="0xdcb40cb6" />
+			</MSG_LOG>

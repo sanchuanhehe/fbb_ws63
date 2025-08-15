@@ -8,6 +8,7 @@
 #include "bts_le_gap.h"
 #include "bts_gatt_client.h"
 #include "ble_wifi_cfg_scan.h"
+#include "common_def.h"
 
 #define UUID16_LEN 2
 
@@ -41,7 +42,7 @@ static void ble_wifi_cfg_client_discover_service_cbk(uint8_t client_id, uint16_t
     for (uint8_t i = 0; i < service->uuid.uuid_len; i++) {
         osal_printk("%02x", service->uuid.uuid[i]);
     }
-    osal_printk("\n            status:%d\n", status);
+    osal_printk("\n            status: 0x%x\n", status);
     param.service_handle = service->start_hdl;
     param.uuid.uuid_len = 0; /* uuid length is zero, discover all character */
     gattc_discovery_character(g_ble_wifi_cfg_client_id, conn_id, &param);
@@ -55,9 +56,9 @@ static void ble_wifi_cfg_client_discover_character_cbk(uint8_t client_id, uint16
     for (uint8_t i = 0; i < character->uuid.uuid_len; i++) {
         osal_printk("%02x", character->uuid.uuid[i]);
     }
-    osal_printk("\n            declare handle:%d value handle:%d properties:%x\n", character->declare_handle,
+    osal_printk("\n            declare handle:%d value handle:%d properties:0x%x\n", character->declare_handle,
         character->value_handle, character->properties);
-    osal_printk("            status:%d\n", status);
+    osal_printk("            status: 0x%x\n", status);
     gattc_discovery_descriptor(g_ble_wifi_cfg_client_id, conn_id, character->declare_handle);
 }
 
@@ -70,7 +71,7 @@ static void ble_wifi_cfg_client_discover_descriptor_cbk(uint8_t client_id, uint1
         osal_printk("%02x", descriptor->uuid.uuid[i]);
     }
     osal_printk("\n            descriptor handle:%d\n", descriptor->descriptor_hdl);
-    osal_printk("            status:%d\n", status);
+    osal_printk("            status: 0x%x\n", status);
 }
 
 static void ble_wifi_cfg_client_discover_service_compl_cbk(uint8_t client_id, uint16_t conn_id, bt_uuid_t *uuid,
@@ -82,7 +83,7 @@ static void ble_wifi_cfg_client_discover_service_compl_cbk(uint8_t client_id, ui
     for (uint8_t i = 0; i < uuid->uuid_len; i++) {
         osal_printk("%02x", uuid->uuid[i]);
     }
-    osal_printk("status:%d\n", status);
+    osal_printk("status: 0x%x\n", status);
 }
 
 static void ble_wifi_cfg_client_discover_character_compl_cbk(uint8_t client_id, uint16_t conn_id,
@@ -95,7 +96,7 @@ static void ble_wifi_cfg_client_discover_character_compl_cbk(uint8_t client_id, 
         osal_printk("%02x", param->uuid.uuid[i]);
     }
     osal_printk("\n            service handle:%d\n", param->service_handle);
-    osal_printk("            status:%d\n", status);
+    osal_printk("            status: 0x%x\n", status);
 }
 
 static void ble_wifi_cfg_client_discover_descriptor_compl_cbk(uint8_t client_id, uint16_t conn_id,
@@ -103,7 +104,7 @@ static void ble_wifi_cfg_client_discover_descriptor_compl_cbk(uint8_t client_id,
 {
     osal_printk("[GATTClient]Discovery descriptor complete----client:%d conn_id:%d\n", client_id, conn_id);
     osal_printk("            charatcer handle:%d\n", character_handle);
-    osal_printk("            status:%d\n", status);
+    osal_printk("            status: 0x%x\n", status);
 }
 
 static void ble_wifi_cfg_client_read_cfm_cbk(uint8_t client_id, uint16_t conn_id, gattc_handle_value_t *read_result,
@@ -114,7 +115,7 @@ static void ble_wifi_cfg_client_read_cfm_cbk(uint8_t client_id, uint16_t conn_id
     for (uint8_t i = 0; i < read_result->data_len; i++) {
         osal_printk("%02x", read_result->data[i]);
     }
-    osal_printk("\n            status:%d\n", status);
+    osal_printk("\n            status: 0x%x\n", status);
 }
 
 static void ble_wifi_cfg_client_read_compl_cbk(uint8_t client_id, uint16_t conn_id,
@@ -126,14 +127,14 @@ static void ble_wifi_cfg_client_read_compl_cbk(uint8_t client_id, uint16_t conn_
     for (uint8_t i = 0; i < param->uuid.uuid_len; i++) {
         osal_printk("%02x", param->uuid.uuid[i]);
     }
-    osal_printk("\n            status:%d\n", status);
+    osal_printk("\n            status: 0x%x\n", status);
 }
 
 static void ble_wifi_cfg_client_write_cfm_cbk(uint8_t client_id, uint16_t conn_id,
     uint16_t handle, gatt_status_t status)
 {
     osal_printk("[GATTClient]Write result----client:%d conn_id:%d handle:%d\n", client_id, conn_id, handle);
-    osal_printk("            status:%d\n", status);
+    osal_printk("            status: 0x%x\n", status);
 }
 
 static void ble_wifi_cfg_client_mtu_changed_cbk(uint8_t client_id, uint16_t conn_id,
@@ -141,7 +142,7 @@ static void ble_wifi_cfg_client_mtu_changed_cbk(uint8_t client_id, uint16_t conn
 {
     osal_printk("[GATTClient]Mtu changed----client:%d conn_id:%d mtu size:%d\n", client_id, conn_id,
         mtu_size);
-    osal_printk("status:%d\n", status);
+    osal_printk("status: 0x%x\n", status);
 }
 
 static void ble_wifi_cfg_client_notification_cbk(uint8_t client_id, uint16_t conn_id, gattc_handle_value_t *data,
@@ -152,7 +153,7 @@ static void ble_wifi_cfg_client_notification_cbk(uint8_t client_id, uint16_t con
     for (uint8_t i = 0; i < data->data_len; i++) {
         osal_printk("%02x", data->data[i]);
     }
-    osal_printk("\n            status:%d\n", status);
+    osal_printk("\n            status: 0x%x\n", status);
 }
 
 static void ble_wifi_cfg_client_indication_cbk(uint8_t client_id, uint16_t conn_id, gattc_handle_value_t *data,
@@ -163,13 +164,24 @@ static void ble_wifi_cfg_client_indication_cbk(uint8_t client_id, uint16_t conn_
     for (uint8_t i = 0; i < data->data_len; i++) {
         osal_printk("%02x", data->data[i]);
     }
-    osal_printk("\n            status:%d\n", status);
+    osal_printk("\n            status: 0x%x\n", status);
+}
+
+static void ble_wifi_cfg_client_enable_cbk(errcode_t status)
+{
+    osal_printk("[GATTClient]Enable status:0x%x\n", status);
+    gattc_register_client(&g_ble_wifi_cfg_client_app, &g_ble_wifi_cfg_client_id);
+}
+
+static void ble_wifi_cfg_client_disable_cbk(errcode_t status)
+{
+    osal_printk("[GATTClient]Disable status:0x%x\n", status);
 }
 
 /* ble client set scan param callback */
 void ble_wifi_cfg_set_scan_param_cbk(errcode_t status)
 {
-    osal_printk("%s set scan param status: %d\n", 0, status);
+    osal_printk("%s set scan param status: 0x%x\n", 0, status);
     gap_ble_remove_all_pairs(); /* 配网业务无需多连接，因此扫描时需将其他设备断开, 然后扫描配对新设备 */
     ble_wifi_device_start_scan();
 }
@@ -204,7 +216,7 @@ void ble_wifi_cfg_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, gap_ble_
         osal_printk("%s add server app addr memcpy failed\r\n", BLE_WIFI_CFG_CLIENT_ERROR);
         return;
     }
-    osal_printk("%s connect state change conn_id: %d, status: %d, pair_status:%d, disc_reason %x\n",
+    osal_printk("%s connect state change conn_id: %d, status: 0x%x, pair_status:%d, disc_reason 0x%x\n",
                 0, conn_id, conn_state, pair_state, disc_reason);
 
     if (conn_state == GAP_BLE_STATE_CONNECTED  &&  pair_state == GAP_BLE_PAIR_NONE) {
@@ -219,7 +231,7 @@ void ble_wifi_cfg_connect_change_cbk(uint16_t conn_id, bd_addr_t *addr, gap_ble_
 /* ble client pair result callback */
 void ble_wifi_cfg_pair_result_cb(uint16_t conn_id, const bd_addr_t *addr, errcode_t status)
 {
-    osal_printk("%s pair result conn_id: %d,status: %d \n", 0, conn_id, status);
+    osal_printk("%s pair result conn_id: %d,status: 0x%x \n", 0, conn_id, status);
     osal_printk("addr:\n");
     for (uint8_t i = 0; i < BD_ADDR_LEN; i++) {
         osal_printk("%2x", addr->addr[i]);
@@ -236,6 +248,8 @@ errcode_t ble_wifi_cfg_client_callback_register(void)
     gap_ble_callbacks_t gap_cb = { 0 };
     gattc_callbacks_t cb = {0};
 
+    gap_cb.ble_enable_cb = ble_wifi_cfg_client_enable_cbk;
+    gap_cb.ble_disable_cb = ble_wifi_cfg_client_disable_cbk;
     gap_cb.set_scan_param_cb = ble_wifi_cfg_set_scan_param_cbk;
     gap_cb.scan_result_cb = ble_wifi_cfg_scan_result_cbk;
     gap_cb.conn_state_change_cb = ble_wifi_cfg_connect_change_cbk;
@@ -265,9 +279,8 @@ errcode_t ble_wifi_cfg_client_callback_register(void)
 errcode_t ble_wifi_cfg_client_init(void)
 {
     errcode_t ret = ERRCODE_BT_SUCCESS;
+    ble_wifi_cfg_client_callback_register();
     ret |= enable_ble();
-    ret |= ble_wifi_cfg_client_callback_register();
-    ret |= gattc_register_client(&g_ble_wifi_cfg_client_app, &g_ble_wifi_cfg_client_id);
     return ret;
 }
 

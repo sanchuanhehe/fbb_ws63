@@ -1,0 +1,21 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_process_tim_elm::pm fsm not attached.} @dmac_wifi_patch.c(79),ERROR" ID="0x8562027a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_psm_tx_complete_sta:fsm not attached.} @dmac_wifi_patch.c(171),ERROR" ID="0x8562055a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_psm_max_powersave_enable:en %d num %d} @dmac_wifi_patch.c(227),WARNING" ID="0x8562071b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_psm_max_powersave_enable::dmac_vap[%d] invalid.} @dmac_wifi_patch.c(234),ERROR" ID="0x85620752" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_latency_trace_init_proc::osal_kmalloc failed. @dmac_wifi_patch.c(311),WARNING" ID="0x856209bb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_latency_trace_init_proc::osal_kmalloc failed. @dmac_wifi_patch.c(329),WARNING" ID="0x85620a4b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_latency_stats_init_proc::osal_kmalloc failed. @dmac_wifi_patch.c(350),WARNING" ID="0x85620af3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_latency_stats_init_proc::osal_kmalloc failed. @dmac_wifi_patch.c(367),WARNING" ID="0x85620b7b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_rx_ether_check::ip_hdr_len[%u] range err.} @dmac_wifi_patch.c(499),ERROR" ID="0x85620f9a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_rx_ether_check::buf_len[%u] ip_hdr_len[%u] range err.} @dmac_wifi_patch.c(506),ERROR" ID="0x85620fd2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_rx_ether_check::buf_len[%u] ip_hdr_len[%u] udp_len range err.} @dmac_wifi_patch.c(514),ERROR" ID="0x85621012" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{dmac_rx_ether_check::buf_len[%u] ip_hdr_len[%u] tcp_hdr_len[%u] range err.} @dmac_wifi_patch.c(523),ERROR" ID="0x8562105a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_rx_process_data_event::get dmac_vap null.} @dmac_wifi_patch.c(544),WARNING" ID="0x85621103" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{error type[%d], err_code[%d].} @dmac_wifi_patch.c(588),WARNING" ID="0x85621263" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_mac_error_process_event::hal_device null!} @dmac_wifi_patch.c(638),ERROR" ID="0x856213f2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_mac_error_process_event::ignore mac error .[err1:%x][err2:%x]} @dmac_wifi_patch.c(651),WARNING" ID="0x8562145b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{error1 state=[0x%08x], erro2 state=[0x%08x] @dmac_wifi_patch.c(666),WARNING" ID="0x856214d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_tx_complete_fake_queue_ampdu::q empty.} @dmac_wifi_patch.c(700),ERROR" ID="0x856215e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_tx_complete_fake_queue_ampdu:: dscr_next NULL .} @dmac_wifi_patch.c(705),ERROR" ID="0x8562160a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="alg_tpc_tx_query_vap_spectial:dmac_vap null  @dmac_wifi_patch.c(891),WARNING" ID="0x85621bdb" />
+			</MSG_LOG>

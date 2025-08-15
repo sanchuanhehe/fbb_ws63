@@ -13,7 +13,7 @@
 #include "bts_le_gap.h"
 #include "ble_speed_server_adv.h"
 
-#define  NAME_MAX_LENGTH 15
+#define NAME_MAX_LENGTH 15
 #define EXT_ADV_OR_SCAN_RSP_DATA_LEN 251
 static uint8_t u16_low_u8(uint16_t val)
 {
@@ -25,7 +25,7 @@ static uint8_t u16_high_u8(uint16_t val)
     return (uint8_t)((val >> 8) & 0xff);  /* offset 8bits */
 }
 
-uint8_t g_local_name[ NAME_MAX_LENGTH] = { 'b', 'l', 'e', '_', 'u', 'u', 'i', 'd', '_', 's',
+uint8_t g_local_name[NAME_MAX_LENGTH] = { 'b', 'l', 'e', '_', 'u', 'u', 'i', 'd', '_', 's',
     'e', 'r', 'v', 'e', 'r' };
 
 static uint8_t ble_set_adv_flag_data(uint8_t *set_adv_data_position, uint8_t max_len)
@@ -145,7 +145,7 @@ uint8_t ble_set_adv_data(void)
     uint16_t scan_rsp_data_len;
     uint8_t set_adv_data[EXT_ADV_OR_SCAN_RSP_DATA_LEN] = { 0 };
     uint8_t set_scan_rsp_data[EXT_ADV_OR_SCAN_RSP_DATA_LEN] = { 0 };
-    gap_ble_config_adv_data_t cfg_adv_data;
+    gap_ble_config_adv_data_t cfg_adv_data = {0};
 
     /* set adv data */
     adv_data_len = ble_uuid_server_set_adv_data(set_adv_data, EXT_ADV_OR_SCAN_RSP_DATA_LEN);
@@ -172,9 +172,10 @@ uint8_t ble_set_adv_data(void)
 uint8_t ble_start_adv(void)
 {
     errcode_t n_ret = 0;
+    ble_set_adv_data();
+
     gap_ble_adv_params_t adv_para = {0};
     int adv_id = BTH_GAP_BLE_ADV_HANDLE_DEFAULT;
-
     adv_para.min_interval = BLE_ADV_MIN_INTERVAL;
     adv_para.max_interval = BLE_ADV_MAX_INTERVAL;
     adv_para.duration = BTH_GAP_BLE_ADV_FOREVER_DURATION;

@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="gle glp init enter. @gle_glp_ui.c(13),INFO" ID="0xde8e006d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle glp cleanup enter. @gle_glp_ui.c(21),INFO" ID="0xde8e00ad" />
+			</MSG_LOG>

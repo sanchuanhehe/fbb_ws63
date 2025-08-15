@@ -570,9 +570,6 @@ typedef struct oal_net_device {
 #ifdef _PRE_WLAN_FEATURE_VLWIP
     oal_lwip_netif*              vlwip_netif;
 #endif
-#ifdef _PRE_WLAN_LWIP_PAYLOAD_COPY_TRANS
-    oal_netbuf_stru*             rx_pkt;
-#endif
 } oal_net_device_stru;
 
 typedef struct oal_net_notify {

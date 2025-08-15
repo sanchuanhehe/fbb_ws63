@@ -1,5 +1,8 @@
 ﻿/*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2024. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2022-2024. All rights reserved.
+ * 文 件 名   : hmac_mbo.h
+ * 作    者   : CompanyName
+ * 创建日期 : 2022年09月24日
  */
 
 #ifndef __HMAC_MBO_H__

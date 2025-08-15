@@ -1,0 +1,21 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{dmac_config_user_rate_enable::user_rate_enable[%u] invalid.} @dmac_dfx_rom.c(88),WARNING" ID="0x830202c3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_user_rate_enable:g_dmac_user_rate_info is NULL.} @dmac_dfx_rom.c(106),WARNING" ID="0x83020353" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_tx_user_rate_info::memset_s failed.} @dmac_dfx_rom.c(128),WARNING" ID="0x83020403" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_tx_user_rate_info::memset_s failed.} @dmac_dfx_rom.c(137),WARNING" ID="0x8302044b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="vap_id[%d] dmac_config_query_rx_rate: mac user[%d] is null ptr. @dmac_dfx_rom.c(155),WARNING" ID="0x830204db" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] dmac_config_query_rate: dmac_tid_get_normal_rate_stats fail @dmac_dfx_rom.c(161),WARNING" ID="0x8302050b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] dmac_config_query_rx_rate:: send_sys_event fail @dmac_dfx_rom.c(169),WARNING" ID="0x8302054b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="dfx_dmac_set_service_control:g_dmac_service_control 0x%x to 0x%x @dmac_dfx_rom.c(183),WARNING" ID="0x830205bb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_set_device_dft_switch::oam global frame switch set failed!} @dmac_dfx_rom.c(219),WARNING" ID="0x830206db" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="global_frame_switch[%d] @dmac_dfx_rom.c(223),WARNING" ID="0x830206fb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_set_device_dft_80211_frame_switch:: dmac_vap or param is null!!!} @dmac_dfx_rom.c(236),WARNING" ID="0x83020763" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{set frame switch::frame_mode[%d],frame_direction[%d],frame_type[%d].} @dmac_dfx_rom.c(250),WARNING" ID="0x830207d3" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{set frame switch::frame_switch[%d],cb_switch[%d],dscr_switch[%d].} @dmac_dfx_rom.c(253),WARNING" ID="0x830207eb" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dmac_set_device_dft_80211_frame_switch::failed[%d]!.} @dmac_dfx_rom.c(255),WARNING" ID="0x830207fb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_config_service_control_etc::msg or msg-&gt;data null.} @dmac_dfx_rom.c(271),ERROR" ID="0x8302087a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dmac_config_service_control_etc::tmp_mask 0x%x, tmp_value 0x%x error} @dmac_dfx_rom.c(287),ERROR" ID="0x830208fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="dmac_get_adjust_hso_param::netbuf or adjust_hso_param is NULL. @dmac_dfx_rom.c(314),WARNING" ID="0x830209d3" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_get_adjust_hso_param::direction[%d] error. @dmac_dfx_rom.c(319),WARNING" ID="0x830209fb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dmac_get_adjust_hso_param::dmac_vap is NULL.} @dmac_dfx_rom.c(329),WARNING" ID="0x83020a4b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_dfx_frame_report_hso::netbuf is NULL or direction[%d] error @dmac_dfx_rom.c(359),WARNING" ID="0x83020b3b" />
+			</MSG_LOG>

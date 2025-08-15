@@ -12,16 +12,18 @@
 
 HiLinkDrbgContext HILINK_SAL_DrbgInit(const char *custom)
 {
-    return app_call1(APP_CALL_HILINK_SAL_DRBG_INIT, HiLinkDrbgContext, const char *, custom);
+    app_call1(APP_CALL_HILINK_SAL_DRBG_INIT, HILINK_SAL_DrbgInit, HiLinkDrbgContext, const char *, custom);
+    return NULL;
 }
 
 void HILINK_SAL_DrbgDeinit(HiLinkDrbgContext ctx)
 {
-    app_call1(APP_CALL_HILINK_SAL_DRBG_DEINIT, void, HiLinkDrbgContext, ctx);
+    app_call1_ret_void(APP_CALL_HILINK_SAL_DRBG_DEINIT, HILINK_SAL_DrbgDeinit, HiLinkDrbgContext, ctx);
 }
 
 int HILINK_SAL_DrbgRandom(HiLinkDrbgContext ctx, unsigned char *out, unsigned int outLen)
 {
-    return app_call3(APP_CALL_HILINK_SAL_DRBG_RANDOM, int,
+    app_call3(APP_CALL_HILINK_SAL_DRBG_RANDOM, HILINK_SAL_DrbgRandom, int,
         HiLinkDrbgContext, ctx, unsigned char *, out, unsigned int, outLen);
+    return 0;
 }

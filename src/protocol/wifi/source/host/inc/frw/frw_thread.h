@@ -1,7 +1,7 @@
 ﻿/*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2023. All rights reserved.
  * Description: frw线程实现头文件.
- * Author:
+ * Author: Huanghe
  * Create: 2020-07-08
  */
 

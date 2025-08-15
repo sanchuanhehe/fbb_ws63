@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[ACore] product_type = %x @bt_data_config.c(41),INFO" ID="0xd82e014d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] bt get nv id %d, data_len = %d. @bt_data_config.c(66),INFO" ID="0xd82e0215" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] sync config err, malloc fail. @bt_data_config.c(91),ERROR" ID="0xd82e02da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] sync own addr config err, malloc fail. @bt_data_config.c(96),ERROR" ID="0xd82e0302" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] sync own addr config err, malloc fail. @bt_data_config.c(103),ERROR" ID="0xd82e033a" />
+			</MSG_LOG>

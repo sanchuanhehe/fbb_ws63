@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]dts_hci_write, tx_buff_malloc_fail @dts_hci.c(257),WARNING" ID="0x8888080b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]memcpy fail, size=%d @dts_hci.c(263),WARNING" ID="0x8888083b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]hci_write_fail, type=%d, ret=0x%x @dts_hci.c(282),WARNING" ID="0x888808d3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]dts_hci_write, tx_buff_malloc_fail @dts_hci.c(310),WARNING" ID="0x888809b3" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp][dts_hci_write]hci_write_fail, type=%d, ret=0x%x @dts_hci.c(320),WARNING" ID="0x88880a03" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]dts_thread_set_sem_fail, ret=0x%x @dts_hci.c(400),WARNING" ID="0x88880c83" />
+			</MSG_LOG>

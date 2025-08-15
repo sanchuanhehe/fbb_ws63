@@ -1,5 +1,9 @@
 /*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2014-2021. All rights reserved.
+ * 文 件 名   : hmac_frag.h
+ * 作    者   : huanghe
+ * 生成日期   : 2014年2月15日
+ * 功能描述   : hmac_frag.c 的头文件
  */
 
 #ifndef __HMAC_FRAG_H__

@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[bgtp] lm_gle_adv_hci_set_data_act, adv_handle:%d, adv_data_length %d @lm_gle_adv_act.c(204),INFO" ID="0x89000665" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[bgtp] lm_gle_adv_hci_set_rsp_data_act, adv_handle:%d, rsp_data_length %d @lm_gle_adv_act.c(231),INFO" ID="0x8900073d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp] lm_gle_adv_standby_hci_enable_act, adv_handle:%d, enable:%d, duration:%d, max_adv_evt:%d @lm_gle_adv_act.c(246),INFO" ID="0x890007b5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp] lm_gle_adv_advertising_hci_enable_act, adv_handle:%d, enable:%d, duration:%d, max_adv_evt:%d @lm_gle_adv_act.c(268),INFO" ID="0x89000865" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]lm_gle_adv_connect_req_received, clock:0x%x, us_offset:%d, clkn:0x%x, interval:%d @lm_gle_adv_act.c(321),INFO" ID="0x89000a0d" />
+			</MSG_LOG>

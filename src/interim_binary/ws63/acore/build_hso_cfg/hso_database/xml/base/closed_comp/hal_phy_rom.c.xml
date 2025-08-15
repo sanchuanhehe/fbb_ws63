@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{hh503_set_phy_max_bw_field:: Error! sect[%d].} @hal_phy_rom.c(80),ERROR" ID="0x832e0282" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_set_sec_bandwidth_offset::not support 80M.} @hal_phy_rom.c(96),ERROR" ID="0x832e0302" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_phy_rx_get_snr_info::Origin data ERR, data is %d !!!} @hal_phy_rom.c(252),ERROR" ID="0x832e07e2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hal_phy_rx_get_snr_info::Err rf chain %d @hal_phy_rom.c(282),ERROR" ID="0x832e08d2" />
+			</MSG_LOG>

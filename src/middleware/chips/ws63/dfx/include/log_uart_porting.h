@@ -1,5 +1,10 @@
 /**
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+ *
+ * Description: Log uart port \n
+ * Author:  \n
+ * History: \n
+ * 2023-03-14， Create file. \n
  */
 
 #ifndef LOG_UART_PORTING_H

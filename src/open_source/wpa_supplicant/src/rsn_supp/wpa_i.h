@@ -216,6 +216,9 @@ struct wpa_sm {
 	struct wpabuf *dpp_z;
 	int dpp_pfs;
 #endif /* CONFIG_DPP2 */
+    struct eapol2_frame eapol2_pkt;
+    u16 eapol_key_info;
+    u8 resv[2]; /* 2:reserve bytes */
 };
 
 
@@ -283,6 +286,12 @@ static inline void wpa_sm_cancel_auth_timeout(struct wpa_sm *sm)
 {
 	WPA_ASSERT(sm->ctx->cancel_auth_timeout);
 	sm->ctx->cancel_auth_timeout(sm->ctx->ctx);
+}
+
+static inline void wpa_sm_cancel_eapol3_timeout(struct wpa_sm *sm)
+{
+	WPA_ASSERT(sm->ctx->cancel_eapol3_timeout);
+	sm->ctx->cancel_eapol3_timeout(sm->ctx->ctx);
 }
 
 static inline u8 * wpa_sm_alloc_eapol(struct wpa_sm *sm, u8 type,
@@ -499,5 +508,6 @@ int wpa_derive_ptk_ft(struct wpa_sm *sm, const unsigned char *src_addr,
 
 void wpa_tdls_assoc(struct wpa_sm *sm);
 void wpa_tdls_disassoc(struct wpa_sm *sm);
+void wpa_clear_eapol2_frame(struct wpa_sm *sm);
 
 #endif /* WPA_I_H */

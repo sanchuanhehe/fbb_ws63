@@ -14,9 +14,6 @@
 #define FLASH_PHYSICAL_ADDR_START     0x200000
 #define FLASH_PHYSICAL_ADDR_END       0xA00000
 
-#define FLASH_MAPPED_ADDR_START       0x000000
-#define FLASH_MAPPED_END              0x800000
-
 #define FLASH_PAGE_SIZE 4096
 #define KV_PAGE_SIZE                  FLASH_PAGE_SIZE
 

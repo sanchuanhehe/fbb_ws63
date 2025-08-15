@@ -86,4 +86,6 @@ errcode_t sle_uuid_server_send_report_by_uuid(uint8_t *data, uint16_t len);
  * @endif
  */
 errcode_t sle_uuid_server_send_report_by_handle(const uint8_t *data, uint8_t len);
+
+void sle_enable_server_cbk(void);
 #endif

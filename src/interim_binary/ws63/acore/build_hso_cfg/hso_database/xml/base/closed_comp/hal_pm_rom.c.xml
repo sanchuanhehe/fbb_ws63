@@ -1,0 +1,18 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="hal_vap_tsf_get_32bit::hal vap id=%d &gt;= max vap=%d! @hal_pm_rom.c(59),WARNING" ID="0x804e01db" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hal_vap_tsf_get_64bit::pointer hal_vap is NULL.} @hal_pm_rom.c(76),ERROR" ID="0x804e0262" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="hal_vap_tsf_get_64bit::hal vap id=%d &gt;= max vap=%d! @hal_pm_rom.c(82),WARNING" ID="0x804e0293" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hh503_set_psm_listen_interval::vap mode [%d] != WLAN_VAP_MODE_BSS_STA,or hal vap id=%d &gt;= max vap=%d! @hal_pm_rom.c(122),WARNING" ID="0x804e03d3" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hh503_set_sta_dtim_period::vap mode [%d]!= WLAN_VAP_MODE_BSS_STA,or hal vap id=%d &gt;= max vap=%d]} @hal_pm_rom.c(149),WARNING" ID="0x804e04ab" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hh503_set_psm_dtim_count_cb::vap mode [%d] != WLAN_VAP_MODE_BSS_STA,or hal vap id=%d &gt;= max vap=%d! @hal_pm_rom.c(176),WARNING" ID="0x804e0583" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hh503_set_psm_listen_interval_count::vap mode [%d] != WLAN_VAP_MODE_BSS_STA,hal vap id=%d &gt;= max vap=%d! @hal_pm_rom.c(200),WARNING" ID="0x804e0643" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hh503_get_psm_dtim_count::vap is not sta! @hal_pm_rom.c(354),WARNING" ID="0x804e0b13" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hh503_set_psm_beacon_period::vap mode [%d]!= WLAN_VAP_MODE_BSS_STA,or hal vap id=%d &gt;= max vap=%d]} @hal_pm_rom.c(379),WARNING" ID="0x804e0bdb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_set_psm_beacon_period::after config,hal vap id[%d] beacon period[%d]} @hal_pm_rom.c(387),WARNING" ID="0x804e0c1b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_set_bcn_tim_pos::hal vap id=%d &gt; max vap=%d]} @hal_pm_rom.c(455),ERROR" ID="0x804e0e3a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hh503_tbtt_offset_probe_init fail:vap[%d]} @hal_pm_rom.c(616),ERROR" ID="0x804e1342" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] hh503_tbtt_offset_probe_no_frm_int::probe restart @hal_pm_rom.c(658),WARNING" ID="0x804e1493" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="vap_id[%d] hh503_tbtt_offset_up_probe:index[%d] beacon_rx[%d],frm_switch[%d] @hal_pm_rom.c(671),WARNING" ID="0x804e14fb" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="hh503_tbtt_offset_down_probe::done:idx-%d,ration-%d,best idx-%d,ration-%d. @hal_pm_rom.c(713),WARNING" ID="0x804e164b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hh503_tbtt_offset_done_probe:weak rx[%d],ration[%d],mac_tim[%d] @hal_pm_rom.c(742),WARNING" ID="0x804e1733" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hh503_tbtt_offset_done_probe:weak rx and restart probe. @hal_pm_rom.c(746),WARNING" ID="0x804e1753" />
+			</MSG_LOG>

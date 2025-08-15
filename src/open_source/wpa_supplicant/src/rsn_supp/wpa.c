@@ -37,8 +37,50 @@
 #include "wpa_supplicant_if.h"
 
 static const u8 null_rsc[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+void wpa_clear_eapol2_frame(struct wpa_sm *sm)
+{
+    if (sm == NULL) {
+        return;
+    }
 
+    if (sm->eapol2_pkt.msg) {
+        os_free(sm->eapol2_pkt.msg);
+    }
 
+    os_memset(&(sm->eapol2_pkt), 0, sizeof(sm->eapol2_pkt));
+}
+
+static void wpa_record_eapol2_frame(struct wpa_sm *sm, const u8 *dest, u16 proto, u8 *msg, size_t msg_len)
+{
+    if ((dest == NULL) || (msg == NULL) || (sm == NULL) || (msg_len == 0)) {
+        return;
+    }
+
+    wpa_clear_eapol2_frame(sm);
+
+    sm->eapol2_pkt.msg = os_malloc(msg_len);
+    if (sm->eapol2_pkt.msg == NULL) {
+        return;
+    }
+    (void)os_memcpy(sm->eapol2_pkt.dest, dest, sizeof(sm->eapol2_pkt.dest));
+    sm->eapol2_pkt.proto = proto;
+    (void)os_memcpy(sm->eapol2_pkt.msg, msg, msg_len);
+    sm->eapol2_pkt.msg_len = msg_len;
+}
+static int wpa_is_epaol_paras_config(struct wpa_sm *sm)
+{
+    struct wpa_supplicant *wpa_s = NULL;
+    if ((sm == NULL) || (sm->ctx == NULL) || (sm->ctx->ctx == NULL)) {
+        return 0;
+    }
+
+    wpa_s = (struct wpa_supplicant *)sm->ctx->ctx;
+    if ((wpa_s->eapol2_config_max_retry != 0) && (wpa_s->eapol3_config_recv_timeout != 0)) {
+        return 1;
+    }
+
+    return 0;
+}
 /**
  * wpa_eapol_key_send - Send WPA/RSN EAPOL-Key message
  * @sm: Pointer to WPA state machine data from wpa_sm_init()
@@ -173,6 +215,10 @@ int wpa_eapol_key_send(struct wpa_sm *sm, struct wpa_ptk *ptk,
 	wpa_hexdump(MSG_MSGDUMP, "WPA: TX EAPOL-Key", msg, msg_len);
 #endif /* CONFIG_PRINT_NOUSE */
 	ret = wpa_sm_ether_send(sm, dest, proto, msg, msg_len);
+    if (((sm->eapol_key_info & (WPA_KEY_INFO_MIC | WPA_KEY_INFO_ENCR_KEY_DATA)) == 0) &&
+        (wpa_is_epaol_paras_config(sm) == 1)) {
+        wpa_record_eapol2_frame(sm, dest, proto, msg, msg_len);
+    }
 #ifndef EXT_CODE_CROP
 	eapol_sm_notify_tx_eapol_key(sm->eapol);
 #endif /* EXT_CODE_CROP */
@@ -744,6 +790,7 @@ static void wpa_supplicant_process_1_of_4(struct wpa_sm *sm,
 	int res;
 	u8 *kde, *kde_buf = NULL;
 	size_t kde_len;
+	struct wpa_supplicant *wpa_s = NULL;
 
 	if (wpa_sm_get_network_ctx(sm) == NULL) {
 #ifndef CONFIG_PRINT_NOUSE
@@ -911,6 +958,11 @@ static void wpa_supplicant_process_1_of_4(struct wpa_sm *sm,
 		goto failed;
 	}
 
+	if ((sm->ctx) && (sm->ctx->ctx)) {
+		wpa_s = (struct wpa_supplicant *)sm->ctx->ctx;
+		wpa_s->eapol_state = 1;
+	}
+
 	if (kde_buf != NULL) {
 		os_free(kde_buf);
 	}
@@ -944,6 +996,7 @@ static void wpa_supplicant_key_neg_complete(struct wpa_sm *sm,
 #endif /* EXT_CODE_CROP */
 	(void)addr;
 	wpa_sm_cancel_auth_timeout(sm);
+	wpa_sm_cancel_eapol3_timeout(sm);
 	wpa_sm_set_state(sm, WPA_COMPLETED);
 
 	if (secure) {
@@ -3331,6 +3384,7 @@ void wpa_sm_deinit(struct wpa_sm *sm)
 	os_free(sm->ap_wpa_ie);
 	os_free(sm->ap_rsn_ie);
 	os_free(sm->ap_rsnxe);
+	wpa_clear_eapol2_frame(sm);
 	wpa_sm_drop_sa(sm);
 	os_free(sm->ctx);
 #ifdef CONFIG_IEEE80211R

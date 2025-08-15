@@ -1,0 +1,15 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{online_cali_fsm_attach::hal device id [%d] fsm have attached.} @cali_online.c(82),WARNING" ID="0x834e0293" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{online_rf_cali_handle_event::device id = [%d] fsm not attached!} @cali_online.c(119),ERROR" ID="0x834e03ba" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{online_rf_cali_handle_event::state [%d] dispatch event [%d] not succ [%d]!} @cali_online.c(127),ERROR" ID="0x834e03fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="init entry fast @cali_online.c(162),INFO" ID="0x834e0515" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="init entry delay @cali_online.c(167),INFO" ID="0x834e053d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{next notify::cur state[%d]next state[%d]} @cali_online.c(200),INFO" ID="0x834e0645" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{next nofity::cur state[%d] to next[%d] failed} @cali_online.c(205),ERROR" ID="0x834e066a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{online_cali_idle_event::event[%d] INVALID!} @cali_online.c(233),ERROR" ID="0x834e074a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{online_cali_tx_complete_dyn_process: hal_dev is NULL} @cali_online.c(266),ERROR" ID="0x834e0852" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{online_cali_tx_complete_dyn_process: en_curr_scan_state is running} @cali_online.c(274),INFO" ID="0x834e0895" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="t{online_cali_tx_complete_dyn_process::online_rf_cali_handle_event fail.} @cali_online.c(285),ERROR" ID="0x834e08ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{online_cali_tx_pow_init_param::hal device id [%d] fsm have attached.} @cali_online.c(308),WARNING" ID="0x834e09a3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{online_cali_tx_pow_init_param::timer func have initialized.} @cali_online.c(314),WARNING" ID="0x834e09d3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{online_cali_tx_pow_init_param!} @cali_online.c(333),INFO" ID="0x834e0a6d" />
+			</MSG_LOG>

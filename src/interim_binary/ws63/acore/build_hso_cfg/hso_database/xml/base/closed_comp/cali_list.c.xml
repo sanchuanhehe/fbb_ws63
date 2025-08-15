@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[CALI][ERROR] NEED CALI! But Wlan is working @cali_list.c(77),ERROR" ID="0x88c0026a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[INFO][CAL] need_cali=%d, down warning uc_cali_flag[0] = 0x%x, wlan_status 0x%x, @cali_list.c(81),INFO" ID="0x88c0028d" />
+			</MSG_LOG>

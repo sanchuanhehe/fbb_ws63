@@ -89,7 +89,6 @@ set(Wi-Fi-PRIVATE_HEADER
     #watch dog
     ${CMAKE_SOURCE_DIR}/drivers/drivers/driver/watchdog
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/source/host/common/customize
     ${CMAKE_CURRENT_SOURCE_DIR}/source/host/feature
     ${CMAKE_CURRENT_SOURCE_DIR}/source/host/feature/interface
     ${CMAKE_CURRENT_SOURCE_DIR}/source/host/forward

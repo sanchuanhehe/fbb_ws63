@@ -1,0 +1,23 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME=" frw_timer_timeout_restart timer interval is 0!  @frw_timer_rom.c(168),WARNING" ID="0x835a0543" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{frw_dmac_timer_timeout_proc:: timeout_event is null ptr!} @frw_timer_rom.c(192),ERROR" ID="0x835a0602" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{Device frw_dmac_timer_timeout_process:: the timer list is broken! } @frw_timer_rom.c(201),ERROR" ID="0x835a064a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{frw_dmac_timer_timeout_process:: func=0x%x, runtime=%u} @frw_timer_rom.c(228),WARNING" ID="0x835a0723" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{Device frw_timer_add_in_order:: the timer list is broken! } @frw_timer_rom.c(256),ERROR" ID="0x835a0802" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{Device frw_timer_add_in_order::timer list is broken!} @frw_timer_rom.c(272),ERROR" ID="0x835a0882" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{frw_dmac_timer_add_timer:: OSAL_NULL == pst_timeout} @frw_timer_rom.c(282),ERROR" ID="0x835a08d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME=" frw_dmac_timer_add_timer timer interval is 0!  @frw_timer_rom.c(294),WARNING" ID="0x835a0933" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{frw dmac_timer_create timer::timeout is!} @frw_timer_rom.c(312),ERROR" ID="0x835a09c2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{timeout %u us is below min_timer_interval %u us} @frw_timer_rom.c(320),WARNING" ID="0x835a0a03" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{frw_dmac_timer_destroy_timer::timer isn't register,func:[0x%x]} @frw_timer_rom.c(350),WARNING" ID="0x835a0af3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{frw_dmac_timer_restart_timer:: OSAL_NULL == pst_timeout} @frw_timer_rom.c(372),ERROR" ID="0x835a0ba2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{frw_dmac_timer_restart_timer::This timer is not enabled it should not be deleted} @frw_timer_rom.c(382),WARNING" ID="0x835a0bf3" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{frw_dmac_timer_stop_timer:: OSAL_NULL == pst_timeout} @frw_timer_rom.c(405),ERROR" ID="0x835a0caa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{frw timeout_event::dmac_hal_post_async_msg failed[%d].} @frw_timer_rom.c(429),WARNING" ID="0x835a0d6b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="Device:TIMER NO.%d @frw_timer_rom.c(446),WARNING" ID="0x835a0df3" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="Device:timer enabled[%d], registerd[%d], period[%d] @frw_timer_rom.c(448),WARNING" ID="0x835a0e03" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="Device:timer stamp[%u], timeout[%u]. @frw_timer_rom.c(450),WARNING" ID="0x835a0e13" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="frw_dmac_timer_init fail. @frw_timer_rom.c(466),ERROR" ID="0x835a0e92" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="frw_dmac_timer_init fail. @frw_timer_rom.c(472),ERROR" ID="0x835a0ec2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="frw_dmac_timer_init fail. @frw_timer_rom.c(478),ERROR" ID="0x835a0ef2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="frw_dmac_timer_exit:: timer list is broken. @frw_timer_rom.c(508),ERROR" ID="0x835a0fe2" />
+			</MSG_LOG>

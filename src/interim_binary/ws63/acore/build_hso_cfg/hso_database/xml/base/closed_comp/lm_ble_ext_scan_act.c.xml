@@ -1,0 +1,14 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][scan]invalid ext scan params, i=%d, scan_type=%d, scan_window=%d, scan_interval=%d @lm_ble_ext_scan_act.c(62),WARNING" ID="0x883c01f3" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][scan]set_ext_scan_params_act, own_address_type=%d, scan_filter_policy=%d, scan_phys=%d @lm_ble_ext_scan_act.c(111),INFO" ID="0x883c037d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]lm_ble_scan_off_check_ext_scan_en_param, disable scan in scan off state! @lm_ble_ext_scan_act.c(132),WARNING" ID="0x883c0423" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]Address type is static private but no static private address is available! @lm_ble_ext_scan_act.c(150),WARNING" ID="0x883c04b3" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][scan]lm_ble_ext_scan_set_duration_timer, period=%d, duration=%d, curent_time=%d @lm_ble_ext_scan_act.c(179),INFO" ID="0x883c059d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][scan]hci_set_scan_enable_act, scan_enable=%d, filter_duplicates=%d, duration=%d, period=%d @lm_ble_ext_scan_act.c(199),INFO" ID="0x883c063d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][scan]hci_set_scan_enable_act, scan_enable=%d, filter_duplicates=%d, duration=%d, period=%d @lm_ble_ext_scan_act.c(362),INFO" ID="0x883c0b55" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]lm_ble_ext_scan_off_restart, scan restart fail @lm_ble_ext_scan_act.c(458),WARNING" ID="0x883c0e53" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]lm_ble_ext_scan_report_legacy_adv, duplicate adv report! @lm_ble_ext_scan_act.c(649),INFO" ID="0x883c144d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][scan]ext report legacy adv, evt_type=%d, data_len=%d, adv_addr_type=%d, direct_addr_type=%d @lm_ble_ext_scan_act.c(689),INFO" ID="0x883c158d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp][scan]lm_ble_ext_scan_process_ext_adv, state=%d, used_ch_idx=%d, adv_mode=%d, next_pdu=%d @lm_ble_ext_scan_act.c(1300),INFO" ID="0x883c28a5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]lm_ble_scan_recv_extended_adv, report truncated adv behind AP! @lm_ble_ext_scan_act.c(1433),WARNING" ID="0x883c2ccb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp][scan]lm_ble_scan_recv_extended_adv, receive chain phu in primary channel @lm_ble_ext_scan_act.c(1444),WARNING" ID="0x883c2d23" />
+			</MSG_LOG>

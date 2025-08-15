@@ -1,0 +1,17 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] hci data parse failed @gle_hci_data.c(41),INFO" ID="0xde10014d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] hci data recv failed @gle_hci_data.c(54),INFO" ID="0xde1001b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[NO GLE]Gle is not supported! @gle_hci_data.c(107),INFO" ID="0xde10035d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="gle hci internal data send send data error. lcid:0x%x, type:0x%x @gle_hci_data.c(129),WARNING" ID="0xde10040b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE HCI] link_tx_data_num packets num: 0x%x @gle_hci_data.c(206),INFO" ID="0xde100675" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] clear all uncertain or uncomplete nodes. @gle_hci_data.c(234),INFO" ID="0xde100755" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE HCI] last pb flag does not match new pb flag, last: 0x%x, new 0x%x. @gle_hci_data.c(251),ERROR" ID="0xde1007da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] gle recombination error, previous data packet is NULL @gle_hci_data.c(269),ERROR" ID="0xde10086a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE HCI] gle recombination error, recv data len error node size 0x%x in data size 0x%x @gle_hci_data.c(275),ERROR" ID="0xde10089a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] recv data recombination new fail. @gle_hci_data.c(280),ERROR" ID="0xde1008c2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] recv data recombination memcpy old part fail. @gle_hci_data.c(287),ERROR" ID="0xde1008fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] recv data recombination memcpy new part fail. @gle_hci_data.c(294),ERROR" ID="0xde100932" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[GLE HCI] last pb flag does not match new pb flag, last: 0x%x, new 0x%x. @gle_hci_data.c(310),ERROR" ID="0xde1009b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] recv data recombination new fail. @gle_hci_data.c(333),ERROR" ID="0xde100a6a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE HCI] link status is not ok, status: 0x%x. @gle_hci_data.c(343),ERROR" ID="0xde100aba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] recv data recombination new node fail. @gle_hci_data.c(350),ERROR" ID="0xde100af2" />
+			</MSG_LOG>

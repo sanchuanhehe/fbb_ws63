@@ -112,6 +112,18 @@ config UART_NOT_SUPPORT_RX_CONDITON_SIZE_OPTIMIZE
     default n
     depends on UART_SUPPORT_RX
 
+config UART_SUPPORT_RX_FRAME_CALLBACK
+    bool
+    prompt "UART support rx frame callback."
+    default n
+    depends on UART_NOT_SUPPORT_RX_CONDITON_SIZE_OPTIMIZE
+
+config UART_SUPPORT_RX_FRAME_TIMER
+    int
+    prompt "UART support rx frame timer."
+    default 1
+    depends on UART_SUPPORT_RX_FRAME_CALLBACK
+
 config UART_SUPPORT_QUERY_REGS
     bool
     prompt "UART support query regs values"

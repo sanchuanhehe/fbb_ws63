@@ -11,6 +11,10 @@
 #include "common_def.h"
 #include "soc_osal.h"
 #include "securec.h"
+#if defined(CONFIG_UART_SUPPORT_RX_FRAME_CALLBACK)
+#include "timer.h"
+#include "hal_uart_v151.h"
+#endif
 #if defined(CONFIG_UART_SUPPORT_DMA)
 #include "dma_porting.h"
 #include "dma.h"
@@ -467,6 +471,68 @@ setup_callback:
 
 static errcode_t uart_evt_callback(uart_bus_t bus, hal_uart_evt_id_t evt, uintptr_t param);
 
+#if defined(CONFIG_UART_SUPPORT_RX)
+STATIC void uart_rx_buffer_report(uart_bus_t bus, bool error);
+
+#if defined(CONFIG_UART_SUPPORT_RX_FRAME_CALLBACK)
+STATIC timer_handle_t g_uart_timer[UART_BUS_MAX_NUMBER] = {0};
+STATIC uint32_t g_timer_delay_time = 0;
+
+STATIC void uart_rx_conditon_timer_callback(uintptr_t data)
+{
+    uart_rx_buffer_report((uart_bus_t)data, false);
+}
+
+STATIC errcode_t uart_rx_conditon_timer_init(uart_bus_t bus, uint32_t baud_rate)
+{
+    g_timer_delay_time = hal_uart_timer_delay_time_get(baud_rate);
+    return uapi_timer_create(CONFIG_UART_SUPPORT_RX_FRAME_TIMER, &(g_uart_timer[bus]));
+}
+
+STATIC errcode_t uart_rx_conditon_timer_deinit(uart_bus_t bus)
+{
+    return uapi_timer_delete(g_uart_timer[bus]);
+}
+
+STATIC void uart_rx_condition_timer_restart(uart_bus_t bus)
+{
+    (void)uapi_timer_start(g_uart_timer[bus], g_timer_delay_time, uart_rx_conditon_timer_callback, (uintptr_t)bus);
+}
+#endif
+
+STATIC void uart_rx_buffer_report(uart_bus_t bus, bool error)
+{
+#if defined(CONFIG_UART_SUPPORT_RX_FRAME_CALLBACK)
+    uapi_timer_stop(g_uart_timer[bus]);
+#endif
+    uint16_t uart_rx_isr_available;
+    uart_rx_state_t *rx_state = &g_uart_rx_state_array[bus];
+    uart_rx_isr_available = uart_rx_buffer_data_available(bus);
+    if (rx_state->rx_callback != NULL) {
+        rx_state->rx_callback(rx_state->rx_buffer, uart_rx_isr_available, error);
+    }
+    uart_rx_buffer_release(bus);
+}
+#endif
+
+STATIC void uart_global_parm_init(uart_bus_t bus, const uart_attr_t *attr, const uart_extra_attr_t *extra_attr,
+    uart_buffer_config_t *uart_buffer_config)
+{
+#if defined(CONFIG_UART_SUPPORT_LPM)
+    if (g_uart_suspend_flag[bus] == false) {
+        (void)memcpy_s(&g_uart_attr[bus], sizeof(uart_attr_t), attr, sizeof(uart_attr_t));
+        (void)memcpy_s(&g_uart_extra_attr[bus], sizeof(uart_extra_attr_t), extra_attr, sizeof(uart_extra_attr_t));
+        (void)memcpy_s(&g_uart_buffer_config[bus], sizeof(uart_buffer_config_t), uart_buffer_config,
+            sizeof(uart_buffer_config_t));
+    }
+#else
+    unused(bus);
+    unused(attr);
+    unused(extra_attr);
+    unused(uart_buffer_config);
+#endif  /* CONFIG_UART_SUPPORT_LPM */
+}
+
 errcode_t uapi_uart_init(uart_bus_t bus, const uart_pin_config_t *pins, const uart_attr_t *attr,
                          const uart_extra_attr_t *extra_attr, uart_buffer_config_t *uart_buffer_config)
 {
@@ -475,15 +541,8 @@ errcode_t uapi_uart_init(uart_bus_t bus, const uart_pin_config_t *pins, const ua
         return ERRCODE_INVALID_PARAM;
     }
     if (g_uart_inited[bus]) { return ERRCODE_SUCC; }
-#if defined(CONFIG_UART_SUPPORT_LPM)
-    if (g_uart_suspend_flag[bus] == false) {
-        (void)memcpy_s(&g_uart_pins[bus], sizeof(uart_pin_config_t), pins, sizeof(uart_pin_config_t));
-        (void)memcpy_s(&g_uart_attr[bus], sizeof(uart_attr_t), attr, sizeof(uart_attr_t));
-        (void)memcpy_s(&g_uart_extra_attr[bus], sizeof(uart_extra_attr_t), extra_attr, sizeof(uart_extra_attr_t));
-        (void)memcpy_s(&g_uart_buffer_config[bus], sizeof(uart_buffer_config_t), uart_buffer_config,
-            sizeof(uart_buffer_config_t));
-    }
-#endif  /* CONFIG_UART_SUPPORT_LPM */
+    uart_global_parm_init(bus, attr, extra_attr, uart_buffer_config);
+
 #if defined(CONFIG_UART_SUPPORT_RX_THREAD)
     g_uart_extra_attr[bus].rx_thread_enable = (extra_attr != NULL) ? extra_attr->rx_thread_enable : 0;
 #endif
@@ -519,6 +578,9 @@ errcode_t uapi_uart_init(uart_bus_t bus, const uart_pin_config_t *pins, const ua
 #endif  /* CONFIG_UART_SUPPORT_DMA */
     g_uart_inited[bus] = true;
     uart_port_register_irq(bus);
+#if defined(CONFIG_UART_SUPPORT_RX_FRAME_CALLBACK)
+    ret = uart_rx_conditon_timer_init(bus, attr->baud_rate);
+#endif
     return ret;
 }
 
@@ -551,6 +613,9 @@ errcode_t uapi_uart_deinit(uart_bus_t bus)
     uart_port_clock_enable(bus, false);
 #endif
     g_uart_inited[bus] = false;
+#if defined(CONFIG_UART_SUPPORT_RX_FRAME_CALLBACK)
+    uart_rx_conditon_timer_deinit(bus);
+#endif
     return ret;
 }
 
@@ -1236,11 +1301,7 @@ static void uart_idle_isr(uart_bus_t bus)
         rx_state->new_rx_pos++;
         /* When the rx buffer is full, callback should be invoked */
         if (uart_rx_buffer_has_free_space(bus) == false) {
-            if (rx_state->rx_callback != NULL) {
-                uart_rx_isr_available = uart_rx_buffer_data_available(bus);
-                rx_state->rx_callback(rx_state->rx_buffer, uart_rx_isr_available, false);
-            }
-            uart_rx_buffer_release(bus);
+            uart_rx_buffer_report(bus, false);
         }
 
         hal_uart_ctrl(bus, UART_CTRL_CHECK_RX_FIFO_EMPTY, (uintptr_t)&rx_fifo_empty);
@@ -1254,10 +1315,7 @@ static void uart_idle_isr(uart_bus_t bus)
         ((((uint8_t)rx_state->rx_condition & UART_RX_CONDITION_MASK_IDLE) != 0) ||
         (((uint8_t)rx_state->rx_condition & UART_RX_CONDITION_MASK_SUFFICIENT_DATA) != 0 &&
         char_recv_cnt >= rx_state->rx_condition_size))) {
-        if (rx_state->rx_callback != NULL) {
-            rx_state->rx_callback(rx_state->rx_buffer, uart_rx_isr_available, false);
-        }
-        uart_rx_buffer_release(bus);
+        uart_rx_buffer_report(bus, false);
     }
 }
 
@@ -1286,9 +1344,7 @@ static void uart_rx_isr(uart_bus_t bus)
         rx_state->new_rx_pos++;
         /* When the rx buffer is full, callback should be invoked */
         if (uart_rx_buffer_has_free_space(bus) == false) {
-            uart_rx_isr_available = uart_rx_buffer_data_available(bus);
-            rx_state->rx_callback(rx_state->rx_buffer, uart_rx_isr_available, false);
-            uart_rx_buffer_release(bus);
+            uart_rx_buffer_report(bus, false);
         }
 
         hal_uart_ctrl(bus, UART_CTRL_CHECK_RX_FIFO_EMPTY, (uintptr_t)&rx_fifo_empty);
@@ -1298,11 +1354,15 @@ static void uart_rx_isr(uart_bus_t bus)
     if (uart_rx_isr_available > 0 &&
         (((uint8_t)rx_state->rx_condition & UART_RX_CONDITION_MASK_SUFFICIENT_DATA) != 0 &&
         char_recv_cnt >= rx_state->rx_condition_size)) {
-        if (rx_state->rx_callback != NULL) {
-            rx_state->rx_callback(rx_state->rx_buffer, uart_rx_isr_available, false);
-        }
-        uart_rx_buffer_release(bus);
+        uart_rx_buffer_report(bus, false);
     }
+
+#if defined(CONFIG_UART_SUPPORT_RX_FRAME_CALLBACK)
+    uart_rx_isr_available = uart_rx_buffer_data_available(bus);
+    if (uart_rx_isr_available > 0) {
+        uart_rx_condition_timer_restart(bus);
+    }
+#endif
 }
 
 static void uart_error_isr(uart_bus_t bus)
@@ -1321,20 +1381,13 @@ static void uart_error_isr(uart_bus_t bus)
         rx_state->new_rx_pos++;
         /* Only bother to try and record UART data if there is an RX callback registered */
         if (uart_rx_buffer_has_free_space(bus) == false) {
-            if (rx_state->rx_callback != NULL) {
-                /* Calculate the amount of available data */
-                uart_rx_isr_available = uart_rx_buffer_data_available(bus);
-                /* Callback should be invoked in any case */
-                rx_state->rx_callback(rx_state->rx_buffer, uart_rx_isr_available, true);
-            }
-            uart_rx_buffer_release(bus);
+            uart_rx_buffer_report(bus, true);
         }
         hal_uart_ctrl(bus, UART_CTRL_CHECK_RX_FIFO_EMPTY, (uintptr_t)&rx_fifo_empty);
     }
     uart_rx_isr_available = uart_rx_buffer_data_available(bus);
     if (uart_rx_isr_available > 0 && rx_state->rx_callback != NULL) {
-        rx_state->rx_callback(rx_state->rx_buffer, uart_rx_isr_available, true);
-        uart_rx_buffer_release(bus);
+        uart_rx_buffer_report(bus, true);
     }
 }
 #endif  /* CONFIG_UART_SUPPORT_RX */

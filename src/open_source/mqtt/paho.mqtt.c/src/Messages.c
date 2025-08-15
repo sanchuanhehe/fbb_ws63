@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * Copyright (c) 2025 HiSilicon (Shanghai) Technologies Co
  * Copyright (c) 2009, 2021 IBM Corp., Ian Craggs
  *
  * All rights reserved. This program and the accompanying materials

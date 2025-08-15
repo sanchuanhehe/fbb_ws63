@@ -1,0 +1,8 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="ble general hci cmd cbk error! @sapi_ble_hci.c(35),WARNING" ID="0xdeb8011b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general hci memcpy error! @sapi_ble_hci.c(42),ERROR" ID="0xdeb80152" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general hci cmd cbk error! @sapi_ble_hci.c(61),WARNING" ID="0xdeb801eb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general hci memcpy error! @sapi_ble_hci.c(68),ERROR" ID="0xdeb80222" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general hci get len fail! @sapi_ble_hci.c(99),WARNING" ID="0xdeb8031b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general hci mem manager fail! @sapi_ble_hci.c(115),WARNING" ID="0xdeb8039b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt_hci_general_process_cmds cmd_evt_code:%x is not matched. @sapi_ble_hci.c(268),INFO" ID="0xdeb80865" />
+			</MSG_LOG>

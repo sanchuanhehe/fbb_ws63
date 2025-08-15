@@ -1,0 +1,31 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[ACore] bt acore get bt addr memcpy err @bt_database.c(91),ERROR" ID="0xd83002da" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] bt acore get bt addr memcpy err @bt_database.c(101),ERROR" ID="0xd830032a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] config name memcpy err. @bt_database.c(109),ERROR" ID="0xd830036a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] config name memcpy err. @bt_database.c(119),ERROR" ID="0xd83003ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] data_config write err. @bt_database.c(130),INFO" ID="0xd8300415" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] config sync data memcpy err. @bt_database.c(136),ERROR" ID="0xd8300442" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] smp keys write in. @bt_database.c(147),INFO" ID="0xd830049d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] smp keys write err. @bt_database.c(150),ERROR" ID="0xd83004b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] smp keys write memcpy err. @bt_database.c(154),ERROR" ID="0xd83004d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] nv reserv write in. @bt_database.c(161),INFO" ID="0xd830050d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] nv reserv write err. @bt_database.c(164),ERROR" ID="0xd8300522" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] nv reserv write memcpy err. @bt_database.c(168),ERROR" ID="0xd8300542" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble save smp key param error. @bt_database.c(176),INFO" ID="0xd8300585" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt acore set product type type:%02x! @bt_database.c(191),INFO" ID="0xd83005fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore set sys param err! @bt_database.c(207),ERROR" ID="0xd830067a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get smp keys param err! @bt_database.c(235),ERROR" ID="0xd830075a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get smp keys memcpy err! @bt_database.c(257),ERROR" ID="0xd830080a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get smp keys param err! @bt_database.c(272),ERROR" ID="0xd8300882" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble acore smp keys memcmp err, addr not match! @bt_database.c(291),WARNING" ID="0xd830091b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get smp keys memcpy err! @bt_database.c(298),ERROR" ID="0xd8300952" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get system config read data err! @bt_database.c(321),ERROR" ID="0xd8300a0a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore delete smp key memcpy err! @bt_database.c(338),ERROR" ID="0xd8300a92" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore memset smp key err! @bt_database.c(341),ERROR" ID="0xd8300aaa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get bonded device memcpy err! @bt_database.c(364),ERROR" ID="0xd8300b62" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt acore save smp full, write_index:%02x! @bt_database.c(429),INFO" ID="0xd8300d6d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get delete memcpy err! @bt_database.c(468),ERROR" ID="0xd8300ea2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore delete smp key memset err! @bt_database.c(473),ERROR" ID="0xd8300eca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble_file_store_init enter. @bt_database.c(485),INFO" ID="0xd8300f2d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble_file_store_init already init. @bt_database.c(487),INFO" ID="0xd8300f3d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble_file_store_deinit enter. @bt_database.c(512),INFO" ID="0xd8301005" />
+			</MSG_LOG>

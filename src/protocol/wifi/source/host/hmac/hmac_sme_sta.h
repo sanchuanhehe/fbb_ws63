@@ -98,6 +98,9 @@ void hmac_handle_assoc_rsp_succ_sta(const hmac_vap_stru *hmac_vap, hmac_asoc_rsp
 osal_void hmac_prepare_auth_req(hmac_vap_stru *hmac_vap, hmac_auth_req_stru *auth_req);
 osal_void hmac_report_connect_failed_result_etc(hmac_vap_stru *hmac_vap,
     mac_status_code_enum_uint16 reason_code);
+osal_void hmac_set_sta_conn_paras(hmac_vap_stru *hmac_vap, osal_u8 index, osal_u16 value);
+osal_u8 hmac_get_auth_max_retry_times(osal_void);
+osal_u8 hmac_get_assoc_max_retry_times(osal_void);
 #ifdef __cplusplus
 #if __cplusplus
 }

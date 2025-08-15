@@ -267,19 +267,18 @@ at_ret_t cmd_send_custom_pkt(const sendpkt_args_t *args)
     len = strlen(data) / 2;
     buf = malloc(len);
     if (buf == TD_NULL) {
-        osal_printk("wifi_send_custom_pkt malloc len[%d] fail.\r\n", len);
+        uapi_at_print("wifi_send_custom_pkt malloc len[%d] fail.\r\n", len);
         return AT_RET_SYNTAX_ERROR;
     }
     (td_void)memset_s(buf, len, 0, len);
     at_str_to_hex(data, strlen(data), buf);
     if (wifi_send_custom_pkt((wifi_if_type_enum)iftype, buf, len) != ERRCODE_SUCC) {
         free(buf);
-        osal_printk("wifi_send_custom_pkt fail.\r\n");
+        uapi_at_print("wifi_send_custom_pkt fail.\r\n");
         return AT_RET_SYNTAX_ERROR;
     }
 
     free(buf);
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -325,7 +324,6 @@ at_ret_t ssid_prefix_scan(const scanssid_args_t *args, td_u32 prefix_flag)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -353,7 +351,6 @@ at_ret_t cmd_wpa_channel_scan(const scanchn_args_t *args)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -381,7 +378,6 @@ at_ret_t cmd_wpa_bssid_scan(const scanbssid_args_t *args)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -398,7 +394,6 @@ at_ret_t cmd_wpa_scan(void)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -415,7 +410,6 @@ at_ret_t cmd_wpa_scan_result_clear(void)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -447,22 +441,26 @@ TD_PRV td_u32 at_check_ccharacter(TD_CONST td_char *tmp)
     return EXT_ERR_FAILURE;
 }
 
-/*****************************************************************************
-* Func description: wpa get scan results
-*****************************************************************************/
-at_ret_t cmd_wpa_scan_results(void)
+static at_ret_t cmd_get_scan_result(wifi_if_type_enum iftype)
 {
+    td_s32 ret = ERRCODE_FAIL;
     td_u32  num = WIFI_SCAN_AP_LIMIT;
     td_char ssid_str[EXT_AT_SSID_MAX_LEN * 4 + 3]; /* ssid length should less 32*4+3 */
 
     wifi_scan_info_stru *results = malloc(sizeof(wifi_scan_info_stru) * WIFI_SCAN_AP_LIMIT);
     if (results == TD_NULL) {
-        return AT_RET_MEM_API_ERROR;
+        return AT_RET_MALLOC_ERROR;
     }
 
-    memset_s(results, sizeof(wifi_scan_info_stru) * WIFI_SCAN_AP_LIMIT, 0, sizeof(wifi_scan_info_stru) * WIFI_SCAN_AP_LIMIT);
+    memset_s(results, sizeof(wifi_scan_info_stru) * WIFI_SCAN_AP_LIMIT,
+        0, sizeof(wifi_scan_info_stru) * WIFI_SCAN_AP_LIMIT);
 
-    td_s32 ret = wifi_sta_get_scan_info(results, &num);
+    if (iftype == IFTYPE_STA) {
+        ret = wifi_sta_get_scan_info(results, &num);
+    } else if (iftype == IFTYPE_AP) {
+        ret = wifi_ap_get_scan_info(results, &num);
+    }
+
     if (ret != ERRCODE_SUCC) {
         free(results);
         return AT_RET_MEM_API_ERROR;
@@ -476,7 +474,6 @@ at_ret_t cmd_wpa_scan_results(void)
 
         td_u32 service_flag = 0;
 
-
         td_u32 ssid_len = strlen(results[ul_loop].ssid);
         TD_CONST char* tmp = at_ssid_txt((unsigned char*)results[ul_loop].ssid, ssid_len);
         if (at_check_ccharacter(tmp) == EXT_ERR_SUCCESS) {
@@ -486,18 +483,32 @@ at_ret_t cmd_wpa_scan_results(void)
         }
         if (ret < 0) {
             free(results);
-            return AT_RET_MEM_API_ERROR;
+            return AT_RET_CMD_FORMAT_ERROR;
         }
 
-        osal_printk("+SCANRESULT:%s,"EXT_AT_MACSTR",%d,%d,%d\r\n",
-                       ssid_str, ext_at_mac2str(results[ul_loop].bssid),
-                       results[ul_loop].channel_num, results[ul_loop].rssi, results[ul_loop].security_type);
+        uapi_at_print("+SCANRESULT:%s,"EXT_AT_MACSTR",%d,%d,%d\r\n",
+            ssid_str, ext_at_mac2str(results[ul_loop].bssid),
+            results[ul_loop].channel_num, results[ul_loop].rssi, results[ul_loop].security_type);
     }
 
     free(results);
-
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
+}
+
+/*****************************************************************************
+* Func description: sta get scan results
+*****************************************************************************/
+at_ret_t cmd_sta_scan_results(void)
+{
+    return cmd_get_scan_result(IFTYPE_STA);
+}
+
+/*****************************************************************************
+* Func description: softap get scan results
+*****************************************************************************/
+at_ret_t cmd_softap_scan_result(void)
+{
+    return cmd_get_scan_result(IFTYPE_AP);
 }
 
 /*****************************************************************************
@@ -513,10 +524,10 @@ at_ret_t cmd_wpa_get_country(void)
     ret = wifi_get_country_code(cc, &len);
 
     if (ret != ERRCODE_SUCC) {
-        osal_printk("ERROR\r\n");
         return AT_RET_MEM_API_ERROR;
     }
-    osal_printk("OK\r\n");
+
+    uapi_at_print("GetCountryCode[%s][%u]\r\n", cc, len);
     return AT_RET_OK;
 }
 
@@ -529,17 +540,14 @@ at_ret_t cmd_wpa_set_country(const cc_args_t *args)
     td_s32 argc = convert_bin_to_dec(args->para_map);
 
     if ((argc != 1) || (args->para1 == TD_NULL)) {
-        osal_printk("ERROR\r\n");
         return AT_RET_MEM_API_ERROR;
     }
     /* 这里传递国家码长度需带上末尾结束符 */
     ret = wifi_set_country_code(args->para1, strlen(args->para1) + 1);
     if (ret != ERRCODE_SUCC) {
-        osal_printk("ERROR\r\n");
         return AT_RET_MEM_API_ERROR;
     }
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -553,7 +561,7 @@ at_ret_t cmd_set_sae_pwe(const pwe_args_t *args)
     if (ret != EXT_ERR_SUCCESS) {
         return AT_RET_SYNTAX_ERROR;
     }
-    uapi_at_printf("OK\r\n");
+
     return AT_RET_OK;
 }
 
@@ -576,7 +584,7 @@ at_ret_t cmd_set_sae_groups(const grp_args_t *args)
     if (ret != EXT_ERR_SUCCESS) {
         return AT_RET_SYNTAX_ERROR;
     }
-    uapi_at_printf("OK\r\n");
+
     return AT_RET_OK;
 }
 
@@ -588,7 +596,7 @@ at_ret_t cmd_set_sae_transition(const trans_args_t *args)
     if (ret != EXT_ERR_SUCCESS) {
         return AT_RET_SYNTAX_ERROR;
     }
-    uapi_at_printf("OK\r\n");
+
     return AT_RET_OK;
 }
 
@@ -600,7 +608,7 @@ at_ret_t cmd_set_sae_anti_clog_threshold(const clog_args_t *args)
     if (ret != EXT_ERR_SUCCESS) {
         return AT_RET_SYNTAX_ERROR;
     }
-    uapi_at_printf("OK\r\n");
+
     return AT_RET_OK;
 }
 
@@ -612,7 +620,7 @@ at_ret_t cmd_set_sta_assoc_auth(const sta_auth_type_args_t *args)
     if (ret != EXT_ERR_SUCCESS) {
         return AT_RET_SYNTAX_ERROR;
     }
-    uapi_at_printf("OK\r\n");
+
     return AT_RET_OK;
 }
 /*****************************************************************************
@@ -627,7 +635,7 @@ at_ret_t cmd_sta_start(void)
     if (ret != ERRCODE_SUCC) {
         return AT_RET_SYNTAX_ERROR;
     }
-    uapi_at_report("OK\r\n");
+
     return AT_RET_OK;
 }
 
@@ -690,7 +698,6 @@ at_ret_t cmd_sta_user_ie_set(const userieset_args_t *args)
     if (ret != 0)
         return AT_RET_SYNTAX_ERROR;
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -736,7 +743,7 @@ at_ret_t cmd_sta_start_adv(const startsta_args_t *args)
         return AT_RET_SYNTAX_ERROR;
     }
 #endif
-    uapi_at_report("OK\r\n");
+
     return AT_RET_OK;
 }
 
@@ -757,7 +764,7 @@ at_ret_t cmd_sta_stop(void)
     }
 #endif
 #endif
-    uapi_at_report("OK\r\n");
+
     return AT_RET_OK;
 }
 
@@ -859,7 +866,7 @@ at_ret_t cmd_sta_connect(const conn_args_t *args)
 
     /* get ssid */
     if (args->ssid != TD_NULL) {
-        osal_printk("cmd_sta_connect ssid=%s\r\n", args->ssid);
+        uapi_at_print("cmd_sta_connect ssid=%s\r\n", args->ssid);
     }
 
     if ((args->ssid != TD_NULL) && (cmd_sta_connect_get_ssid(args, &assoc_req, TD_NULL, 0) != EXT_ERR_SUCCESS)) {
@@ -895,7 +902,6 @@ at_ret_t cmd_sta_connect(const conn_args_t *args)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    uapi_at_report("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -915,7 +921,7 @@ at_ret_t cmd_sta_quick_connect(const fconn_args_t *args)
 
     /* get ssid */
     if (args->para1 != TD_NULL) {
-        osal_printk("cmd_sta_quick_connect ssid=%s\r\n", args->para1);
+        uapi_at_print("cmd_sta_quick_connect ssid=%s\r\n", args->para1);
         ret = cmd_sta_connect_get_ssid(args, TD_NULL, &fast_assoc_req, 1);
         if (ret != EXT_ERR_SUCCESS) {
             return AT_RET_SYNTAX_ERROR;
@@ -955,7 +961,7 @@ at_ret_t cmd_sta_quick_connect(const fconn_args_t *args)
     if (wifi_sta_fast_connect(&fast_assoc_req) != ERRCODE_SUCC) {
         return AT_RET_SYNTAX_ERROR;
     }
-    uapi_at_printf("OK\r\n");
+
     return AT_RET_OK;
 }
 
@@ -966,11 +972,9 @@ at_ret_t cmd_sta_disconnect(void)
 {
     td_s32 ret = wifi_sta_disconnect();
     if (ret != ERRCODE_SUCC) {
-        osal_printk("ERROR\r\n");
         return AT_RET_MEM_API_ERROR;
     }
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -993,16 +997,16 @@ at_ret_t cmd_sta_status(void)
     if (wifi_status.conn_state == WIFI_CONNECTED) {
         TD_CONST td_char *tmp = at_ssid_txt((unsigned char*)wifi_status.ssid, strlen(wifi_status.ssid));
         if (at_check_ccharacter(tmp) == EXT_ERR_SUCCESS) {
-            osal_printk("+STASTAT:1,P\"%s\","EXT_AT_MACSTR",%d,%d\r\n", tmp, ext_at_mac2str(wifi_status.bssid),
+            uapi_at_print("+STASTAT:1,P\"%s\","EXT_AT_MACSTR",%d,%d\r\n", tmp, ext_at_mac2str(wifi_status.bssid),
                 wifi_status.channel_num, wifi_status.rssi);
         } else {
-            osal_printk("+STASTAT:1,%s,"EXT_AT_MACSTR",%d,%d\r\n", wifi_status.ssid,
+            uapi_at_print("+STASTAT:1,%s,"EXT_AT_MACSTR",%d,%d\r\n", wifi_status.ssid,
                 ext_at_mac2str(wifi_status.bssid), wifi_status.channel_num, wifi_status.rssi);
         }
     } else {
-        osal_printk("+STASTAT:0,0,0,0,0\r\n");
+        uapi_at_print("+STASTAT:0,0,0,0,0\r\n");
     }
-    osal_printk("OK\r\n");
+
     return AT_RET_OK;
 }
 
@@ -1021,7 +1025,6 @@ at_ret_t cmd_wpa_wps_pbc(void)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1040,8 +1043,7 @@ at_ret_t cmd_wpa_wps_pin_get(void)
     }
     pin_txt[WIFI_WPS_PIN_LEN] = '\0';
 
-    osal_printk("+PINSHOW:%s\r\n", pin_txt);
-    osal_printk("OK\r\n");
+    uapi_at_print("+PINSHOW:%s\r\n", pin_txt);
     return AT_RET_OK;
 }
 
@@ -1062,7 +1064,6 @@ at_ret_t cmd_wpa_wps_pin(const pin_args_t *args)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 #endif
@@ -1102,8 +1103,6 @@ at_ret_t cmd_set_reconn(const reconn_args_t *args)
         return AT_RET_MEM_API_ERROR;
     }
 
-    uapi_at_printf("OK\r\n");
-
     return AT_RET_OK;
 }
 
@@ -1122,7 +1121,6 @@ TD_PRV td_u32 cmd_sta_set_powersave(td_s32 argc, TD_CONST td_char *argv[])
         return EXT_ERR_FAILURE;
     }
 
-    uapi_at_printf("OK\r\n");
     return EXT_ERR_SUCCESS;
 }
 
@@ -1133,10 +1131,9 @@ at_ret_t cmd_sta_show_config(void)
 
     mode = wifi_sta_get_protocol_mode();
     pmf_flag = uapi_wifi_get_pmf();
-    osal_printk("+mode:%d\r\n", mode);
-    osal_printk("+pmfflag:%d\r\n", pmf_flag);
+    uapi_at_print("+mode:%d\r\n", mode);
+    uapi_at_print("+pmfflag:%d\r\n", pmf_flag);
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1148,7 +1145,7 @@ at_ret_t cmd_sta_reconnect_for_wfa_test(void)
     if (ret != EXT_WIFI_OK) {
         return AT_RET_MEM_API_ERROR;
     }
-    uapi_at_printf("OK\r\n");
+
     return AT_RET_OK;
 }
 
@@ -1185,7 +1182,7 @@ at_ret_t cmd_softap_show_sta(void)
     wifi_sta_info_stru *result = (wifi_sta_info_stru *)malloc(sizeof(wifi_sta_info_stru) * sta_num);
 
     if (result == TD_NULL) {
-        osal_printk("cmd_softap_show_sta result alloc fail\r\n");
+        uapi_at_print("cmd_softap_show_sta result alloc fail\r\n");
         return AT_RET_MEM_API_ERROR;
     }
 
@@ -1198,28 +1195,28 @@ at_ret_t cmd_softap_show_sta(void)
     }
 
     for (sta_index = 0; sta_index < sta_num; sta_index++) {
-        osal_printk("+SHOWSTA:"EXT_AT_MACSTR", rssi:%d, rate:%ukbps\r\n",
+        uapi_at_print("+SHOWSTA:"EXT_AT_MACSTR", rssi:%d, rate:%ukbps\r\n",
             ext_at_mac2str(result[sta_index].mac_addr), result[sta_index].rssi, result[sta_index].best_rate);
-        osal_printk("\r\n");
+        uapi_at_print("\r\n");
     }
     free(result);
-    uapi_at_printf("OK\r\n");
+
     return AT_RET_OK;
 }
 
 void print_csi_data(unsigned char* csi_data, int csi_data_len)
 {
-    osal_printk("======csi    data   report======\n");
+    uapi_at_print("======csi    data   report======\n");
     if (g_csi_report_count == 50) {    /* 每上报50次打印一次数据 */
         g_csi_report_count = 0;
-        osal_printk("==========csi data======start======\n");
+        uapi_at_print("==========csi data======start======\n");
         for (int index = 0; index < csi_data_len; index++) {
-            osal_printk("%02x ", csi_data[index]);
+            uapi_at_print("%02x ", csi_data[index]);
             if ((index + 1) % 24 == 0) { /* 每行打印24个DWORD */
-                osal_printk("\n");
+                uapi_at_print("\n");
             }
         }
-        osal_printk("\n==========csi data======end======\n");
+        uapi_at_print("\n==========csi data======end======\n");
     }
     g_csi_report_count++;
 }
@@ -1233,21 +1230,19 @@ at_ret_t cmd_promise_enable(const startpromise_args_t *args)
     filter.umngt_en = args->para6;
 
     wifi_set_promis_mode(args->para1, args->para2, &filter);
-    osal_printk("OK\r\n");
+
     return AT_RET_OK;
 }
 #ifdef _PRE_WLAN_FEATURE_SDP
 at_ret_t cmd_sdp_enable(const startsdp_args_t *args)
 {
     wifi_set_sdp_mode(args->para1, args->para2, args->para3);
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
 at_ret_t cmd_sdp_subscribe(const sdp_subscribe_args_t *args)
 {
     wifi_set_sdp_subscribe(args->para1, (td_char *)(args->para2), args->para3);
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 #endif
@@ -1264,7 +1259,7 @@ at_ret_t cmd_csi_set_config(const csisetconfig_args_t *args)
     if (config.enable == 1) {
         config.match_ta_ra_select = args->cfg_match_ta_ra_sel;
         if (cmd_strtoaddr((td_char *)(args->mac), config.mac_addr, WIFI_MAC_LEN) != EXT_WIFI_OK) {
-            osal_printk("cmd_csi_set_config: addr set error.\r\n");
+            uapi_at_print("cmd_csi_set_config: addr set error.\r\n");
             return AT_RET_SYNTAX_ERROR;
         }
         config.frame_filter_bitmap = args->frame_type_filter_bitmap;
@@ -1275,10 +1270,10 @@ at_ret_t cmd_csi_set_config(const csisetconfig_args_t *args)
     }
 
     if (wifi_set_csi_config(ifname, &config) != EXT_WIFI_OK) {
-        osal_printk("cmd_csi_set_config: CSI set error.\r\n");
+        uapi_at_print("cmd_csi_set_config: CSI set error.\r\n");
         return AT_RET_SYNTAX_ERROR;
     }
-    osal_printk("OK\r\n");
+
     return AT_RET_OK;
 }
 
@@ -1286,7 +1281,6 @@ at_ret_t cmd_csi_start(void)
 {
     wifi_register_csi_report_cb(print_csi_data);
     wifi_csi_start();
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1294,7 +1288,6 @@ at_ret_t cmd_csi_stop(void)
 {
     wifi_register_csi_report_cb(NULL);
     wifi_csi_stop();
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1311,8 +1304,6 @@ at_ret_t cmd_autorate_fix_switch(const trc_args_t *args)
         return EXT_WIFI_FAIL;
     }
 
-    osal_printk("OK\r\n");
-
     return AT_RET_OK;
 }
 
@@ -1325,7 +1316,6 @@ at_ret_t cmd_autorate_set_rate(const setrate_args_t *args)
         return EXT_WIFI_FAIL;
     }
 
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1349,7 +1339,7 @@ at_ret_t cmd_get_rate(const getrate_args_t *args)
         return EXT_WIFI_FAIL;
     }
 
-    uapi_at_printf("OK, rate:%d\r\n", rate);
+    uapi_at_print("OK, rate:%d\r\n", rate);
     return AT_RET_OK;
 }
 
@@ -1363,7 +1353,6 @@ at_ret_t cmd_tpc_switch(const tpc_args_t *args)
         return EXT_WIFI_FAIL;
     }
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1379,7 +1368,6 @@ at_ret_t cmd_rts_switch(const rts_args_t *args)
         return EXT_WIFI_FAIL;
     }
 
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1395,7 +1383,6 @@ at_ret_t cmd_cca_switch(const cca_args_t *args)
         return EXT_WIFI_FAIL;
     }
 
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1413,7 +1400,27 @@ at_ret_t cmd_intrf_switch(const intrf_args_t *args)
         return EXT_WIFI_FAIL;
     }
 
-    uapi_at_printf("OK\r\n");
+    return AT_RET_OK;
+}
+
+#define MAC_CHANNEL_FREQ_2_BUTT 14
+at_ret_t cmd_get_channel_intf_info(void)
+{
+    wifi_channel_info_t info[MAC_CHANNEL_FREQ_2_BUTT] = {0};
+    td_u8 info_len = MAC_CHANNEL_FREQ_2_BUTT;
+    td_u8 idx;
+
+    if (wifi_get_chan_intrf_info(info, &info_len) != EXT_WIFI_OK) {
+        return EXT_WIFI_FAIL;
+    }
+
+    osal_printk("[CHANINFO] channel_num = %d, \r\n", info_len);
+    for (idx = 0; idx < info_len; idx++) {
+        osal_printk("[CHANINFO] channel = %d, busy_ratio = %d, cci = %d, noise = %d\r\n",
+            info[idx].channel, info[idx].busy_ratio, info[idx].CCI, info[idx].noise);
+    }
+
+    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1465,7 +1472,7 @@ at_ret_t cmd_start_softap(const startap_args_t *args)
         }
     }
 
-    osal_printk("at_start_softap ssid[%s]\r\n", hapd_conf.ssid);
+    uapi_at_print("at_start_softap ssid[%s]\r\n", hapd_conf.ssid);
 
     if (at_start_softap(&hapd_conf) != EXT_ERR_SUCCESS) {
         return AT_RET_SYNTAX_ERROR;
@@ -1476,7 +1483,6 @@ at_ret_t cmd_start_softap(const startap_args_t *args)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    uapi_at_report("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1496,7 +1502,6 @@ at_ret_t cmd_set_softap_advance(const setapadv_args_t *args)
         return AT_RET_MEM_API_ERROR;
     }
 
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1517,18 +1522,17 @@ at_ret_t cmd_softap_show_config(void)
     if (ret != ERRCODE_SUCC) {
         return AT_RET_MEM_API_ERROR;
     }
-    osal_printk("+ssid:%s\r\n", base_config.ssid);
-    osal_printk("+security_type:%d\r\n", base_config.security_type);
-    osal_printk("+channel:%d\r\n", base_config.channel_num);
-    osal_printk("+beacon_interval:%d\r\n", advanceConfig.beacon_interval);
-    osal_printk("+dtim_period:%d\r\n", advanceConfig.dtim_period);
-    osal_printk("+group_rekey:%d\r\n", advanceConfig.group_rekey);
-    osal_printk("+hidden_ssid_flag:%d\r\n", advanceConfig.hidden_ssid_flag);
-    osal_printk("+gi:%d\r\n", advanceConfig.gi);
-    osal_printk("+protocol_mode:%d\r\n", advanceConfig.protocol_mode);
-    osal_printk("\r\n");
+    uapi_at_print("+ssid:%s\r\n", base_config.ssid);
+    uapi_at_print("+security_type:%d\r\n", base_config.security_type);
+    uapi_at_print("+channel:%d\r\n", base_config.channel_num);
+    uapi_at_print("+beacon_interval:%d\r\n", advanceConfig.beacon_interval);
+    uapi_at_print("+dtim_period:%d\r\n", advanceConfig.dtim_period);
+    uapi_at_print("+group_rekey:%d\r\n", advanceConfig.group_rekey);
+    uapi_at_print("+hidden_ssid_flag:%d\r\n", advanceConfig.hidden_ssid_flag);
+    uapi_at_print("+gi:%d\r\n", advanceConfig.gi);
+    uapi_at_print("+protocol_mode:%d\r\n", advanceConfig.protocol_mode);
+    uapi_at_print("\r\n");
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1543,7 +1547,6 @@ at_ret_t cmd_stop_softap(void)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    uapi_at_report("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1565,7 +1568,6 @@ at_ret_t cmd_softap_deauth_sta(const deauthsta_args_t *args)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1578,7 +1580,6 @@ at_ret_t cmd_softap_scan(void)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    uapi_at_printf("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1591,7 +1592,6 @@ at_ret_t cmd_set_sta_pm(const ps_args_t *args)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1604,7 +1604,6 @@ at_ret_t cmd_wifi_init(void)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1617,7 +1616,6 @@ at_ret_t cmd_wifi_uninit(void)
         return AT_RET_SYNTAX_ERROR;
     }
 
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1625,7 +1623,7 @@ at_ret_t cmd_wifi_is_init(void)
 {
     td_s32 ret = wifi_is_wifi_inited();
 
-    osal_printk("OK wifi_is_init:%d \r\n", ret);
+    uapi_at_print("OK wifi_is_init:%d \r\n", ret);
     return AT_RET_OK;
 }
 
@@ -1637,7 +1635,6 @@ at_ret_t cmd_control_psd(const psd_args_t *args)
     psd_option.duration = args->duration;
     psd_option.cycle = args->cycle;
     wifi_set_psd_mode(&psd_option);
-    osal_printk("OK\r\n");
     return AT_RET_OK;
 }
 
@@ -1727,7 +1724,6 @@ td_s32 cmd_mesh_auto_connect(td_s32 argc, TD_CONST td_char* argv[])
         return EXT_ERR_FAILURE;
     }
 
-    uapi_at_printf("OK\r\n");
     return EXT_ERR_SUCCESS;
 }
 
@@ -1748,7 +1744,6 @@ td_s32 cmd_mesh_exit_network(td_s32 argc, TD_CONST td_char* argv[])
         return EXT_ERR_FAILURE;
     }
 
-    uapi_at_printf("OK\r\n");
     return EXT_ERR_SUCCESS;
 }
 
@@ -1774,7 +1769,6 @@ td_s32 cmd_mesh_set_rssi_threshold(td_s32 argc, TD_CONST td_char* argv[])
         return EXT_ERR_FAILURE;
     }
 
-    uapi_at_printf("OK\r\n");
     return EXT_ERR_SUCCESS;
 }
 
@@ -1802,7 +1796,6 @@ td_s32 cmd_mesh_set_autonetwork_bw(td_s32 argc, TD_CONST td_char* argv[])
     }
 
     uapi_mesh_autolink_set_bw(bw_value);
-    uapi_at_printf("OK\r\n");
     return EXT_ERR_SUCCESS;
 }
 

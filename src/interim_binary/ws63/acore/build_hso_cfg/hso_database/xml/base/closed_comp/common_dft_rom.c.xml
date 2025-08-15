@@ -1,0 +1,14 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="{dft_set_global_frame_switch: switch[%d].} @common_dft_rom.c(57),WARNING" ID="0x803201cb" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="{dft_report_to_hso:: msg_id[0x%x] len[%d] ret[%d]} @common_dft_rom.c(108),WARNING" ID="0x80320363" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dft_report_signal_addr:data is NULL.} @common_dft_rom.c(119),WARNING" ID="0x803203bb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dft_report_signal_addr:buf is NULL.} @common_dft_rom.c(130),WARNING" ID="0x80320413" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dft_report_signal_addr:memcpy_s data error.} @common_dft_rom.c(137),WARNING" ID="0x8032044b" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{dft_report_two_addr:hdr_add or frame_addr or adjust_hso_param = OSAL_NULL or hdr_len[%d] len[%d] error.} @common_dft_rom.c(155),WARNING" ID="0x803204db" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dft_report_two_addr:buf is NULL.} @common_dft_rom.c(166),WARNING" ID="0x80320533" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dft_report_two_addr:memcpy_s hdr_addr error.} @common_dft_rom.c(175),WARNING" ID="0x8032057b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dft_report_two_addr:memcpy_s hdr_addr error.} @common_dft_rom.c(185),WARNING" ID="0x803205cb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dft_get_frame_report_switch:hdr is NULL.} @common_dft_rom.c(261),WARNING" ID="0x8032082b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dft_get_frame_report_switch:direction is invalid.} @common_dft_rom.c(266),WARNING" ID="0x80320853" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{dft_get_frame_report_switch:frame_ctx is NULL.} @common_dft_rom.c(271),WARNING" ID="0x8032087b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{dft_get_frame_report_switch:get frame_ctx fail[%d].} @common_dft_rom.c(286),WARNING" ID="0x803208f3" />
+			</MSG_LOG>

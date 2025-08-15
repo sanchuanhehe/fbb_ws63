@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {dmac_config_send_beacon::memcpy_s fail} @dmac_config.c(415),ERROR" ID="0x80c00cfa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_config_set_rx_filter::param %d @dmac_config.c(433),WARNING" ID="0x80c00d8b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="dmac_config_set_clean_channel_enable::clean_channel_enable %d @dmac_config.c(472),WARNING" ID="0x80c00ec3" />
+			</MSG_LOG>

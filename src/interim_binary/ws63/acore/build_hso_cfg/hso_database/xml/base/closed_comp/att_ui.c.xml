@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt services compress memcpy error @att_ui.c(1139),ERROR" ID="0xdc4a239a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt services compress memcpy error @att_ui.c(1212),ERROR" ID="0xdc4a25e2" />
+			</MSG_LOG>

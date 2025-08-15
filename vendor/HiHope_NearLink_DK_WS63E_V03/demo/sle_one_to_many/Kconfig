@@ -1,0 +1,15 @@
+config SAMPLE_SUPPORT_SLE_SERVER_MANY
+    bool
+    prompt "Support SLE_SERVER_MANY Sample."
+    default n
+    depends on SAMPLE_SUPPORT_SLE_ONE_TO_MANY
+    help
+        This option means support SLE_SERVER_MANY Sample.
+
+config SAMPLE_SUPPORT_SLE_CLIENT_ONE
+    bool
+    prompt "Support SLE_CLIENT_ONE  Sample."
+    default n
+    depends on SAMPLE_SUPPORT_SLE_ONE_TO_MANY
+    help
+        This option means support SLE_CLIENT_ONE Sample.

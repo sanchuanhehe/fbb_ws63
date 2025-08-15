@@ -1079,12 +1079,10 @@ static int eapol_sm_erp_add_key(void *ctx, struct eap_server_erp_key *erp)
 static const struct eapol_callbacks eapol_cb =
 {
 	eapol_sm_get_eap_user,
-#ifndef EXT_CODE_CROP
 	eapol_sm_get_eap_req_id_text,
 	NULL,
 	eapol_sm_get_erp_send_reauth_start,
 	eapol_sm_get_erp_domain,
-#endif /* EXT_CODE_CROP */
 	eapol_sm_erp_get_key,
 	eapol_sm_erp_add_key,
 };

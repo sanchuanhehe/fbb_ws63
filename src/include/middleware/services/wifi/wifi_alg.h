@@ -144,6 +144,38 @@ errcode_t wifi_set_intrf_mode(const char *ifname, uint8_t enable, uint16_t flag)
 #endif
 
 /**
+ * @if Eng
+ * @brief  wifi channel intf info.
+ * @else
+ * @brief  信道干扰信息。
+ * @endif
+ */
+typedef struct {
+    int16_t noise;
+    uint16_t busy_ratio;
+    uint16_t CCI;
+    uint8_t channel;
+    uint8_t resv;
+} wifi_channel_info_t;
+
+/**
+ * @if Eng
+ * @brief  Get Wi-Fi channel interference info.
+ * @param  [out] info       Channel list to store intf info.
+ * @param  [in]  info_len   Max length of the channel list, and the actual length of the channel list will be returned.
+ * @retval ERRCODE_SUCC     Execute successfully.
+ * @retval Other            Execute failed.
+ * @else
+ * @brief  获取信道干扰信息。
+ * @param  [out] info       干扰信息信道列表.
+ * @param  [in]  info_len   信道列表的最大数量，并会返回信道列表的实际数量.
+ * @retval ERRCODE_SUCC     成功。
+ * @retval Other            失败。
+ * @endif
+ */
+errcode_t wifi_get_chan_intrf_info(wifi_channel_info_t *info, uint8_t *info_len);
+
+/**
  * @}
  */
 

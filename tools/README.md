@@ -2,6 +2,12 @@
 
 ## Windows系统环境搭建
 
+方式一：
+
+- [HiSparkStudio插件版编译及烧录（推荐）](HiSparkStudio插件版编译及烧录.md)
+
+方式二：
+
 - [HiSparkStudio工具下载及安装](HiSparkStudio工具下载及安装.md)
 - [HiSparkStudio编译及烧录](HiSparkStudio编译及烧录.md)
 

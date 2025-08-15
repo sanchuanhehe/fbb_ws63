@@ -1174,7 +1174,7 @@ __attribute__((weak)) struct wpa_bss * wpa_bss_get_bssid_latest(struct wpa_suppl
  * can help in finding the correct entry in cases where the SSID of the P2P
  * Device may have changed recently.
  */
-struct wpa_bss * wpa_bss_get_p2p_dev_addr(struct wpa_supplicant *wpa_s,
+__attribute__((weak)) struct wpa_bss * wpa_bss_get_p2p_dev_addr(struct wpa_supplicant *wpa_s,
 					  const u8 *dev_addr)
 {
 	struct wpa_bss *bss, *found = NULL;

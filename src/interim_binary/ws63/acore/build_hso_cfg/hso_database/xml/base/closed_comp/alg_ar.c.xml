@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PREPARE_PROBE] next_gi start node: protocol[%d] bw[%2d] nss[%d] mcs[%d] @alg_ar.c(83),WARNING" ID="0x8566029b" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[ALG_AR_DBG] [PREPARE_PROBE] next_gi start node: gi[%d] per[%d] theo_gdpt[%d] probe_gdpt[%d] @alg_ar.c(85),WARNING" ID="0x856602ab" />
+			</MSG_LOG>

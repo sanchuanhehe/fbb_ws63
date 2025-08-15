@@ -18,4 +18,8 @@ config SAMPLE_SUPPORT_SLE_SAMPLE
 if SAMPLE_SUPPORT_SLE_SAMPLE
 osource "application/samples/bt/sle/Kconfig"
 endif
+
+config SAMPLE_SUPPORT_CHBA_SAMPLE
+    bool "Support CHBA Sample."
+
 endchoice

@@ -61,6 +61,7 @@ typedef struct {   /* 73仅启用前三个状态 */
             wlan_bandwidth  : 4, /* 带宽: 20/40M */
             wlan_connect    : 1, /* 连接 */
             wlan_sleep      : 1, /* 睡眠 */
+            wlan_busy        : 1, /* WIFI：打流 */
             wlan_scan        : 1, /* 扫描 */
             wlan_ps_stop     : 1, /* 停止ps机制 */
             wlan_fre         : 1, /* 频段   */
@@ -72,7 +73,7 @@ typedef struct {   /* 73仅启用前三个状态 */
             wlan_pro_11bgn   : 1, /* 11bgn协议 */
             wlan_pro_11ax    : 1, /* 11ax协议 */
             wlan_ps_slot_step     : 2, /* ps请求申请提前量 */
-            wlan_rsv              : 6;
+            wlan_rsv              : 5;
 } wifi_status_stru;
 
 typedef union {

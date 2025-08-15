@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[BGTP]evt_task_gle_set_syncword, invalid frame_format:%d @evt_task_gle_comm.c(495),WARNING" ID="0x89380f7b" />
+			</MSG_LOG>

@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="gle qos state updated from %u to %u. @gle_hci_qos.c(124),INFO" ID="0xde0803e5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE HCI] drop for hci data flow ctrl, priority:%d. @gle_hci_qos.c(160),INFO" ID="0xde080505" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] drop for hci data flow ctrl, new node fail. @gle_hci_qos.c(167),INFO" ID="0xde08053d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[GLE HCI] node enter qos queue, priority:%d. @gle_hci_qos.c(176),INFO" ID="0xde080585" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GLE HCI] qos node not found. @gle_hci_qos.c(188),INFO" ID="0xde0805e5" />
+			</MSG_LOG>

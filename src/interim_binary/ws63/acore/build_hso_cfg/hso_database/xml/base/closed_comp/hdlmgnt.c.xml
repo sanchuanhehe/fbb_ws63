@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[GAP] create handle memcpy failed @hdlmgnt.c(197),ERROR" ID="0xdac8062a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP] activate handle memcpy failed @hdlmgnt.c(275),ERROR" ID="0xdac8089a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]fast act handle memcpy failed @hdlmgnt.c(318),ERROR" ID="0xdac809f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]to expire wait handle2 to expire @hdlmgnt.c(447),INFO" ID="0xdac80dfd" />
+			</MSG_LOG>

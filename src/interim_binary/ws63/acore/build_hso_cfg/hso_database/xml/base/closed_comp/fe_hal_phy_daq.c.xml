@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hal_config_chip_test_set_diag_param_phy_save_data memcpy_s: failed!} @fe_hal_phy_daq.c(211),ERROR" ID="0x84e8069a" />
+			</MSG_LOG>

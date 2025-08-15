@@ -131,5 +131,5 @@ include("${CMAKE_DIR}/build_nv_bin.cmake")
 include("${CMAKE_DIR}/build_partition_bin.cmake")
 include("${CMAKE_DIR}/build_boot_bin_cp.cmake")
 
-# create_hso_db()
+create_hso_db()
 generate_project_file()

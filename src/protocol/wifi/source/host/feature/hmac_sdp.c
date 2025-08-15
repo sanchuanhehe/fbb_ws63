@@ -1,6 +1,8 @@
 ﻿/*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021. All rights reserved.
  * Description: Function related to wifi aware(NAN) feature.
+ * Author: Huanghe
+ * Create: 2021-04-16
  */
 
 #include "hmac_sdp.h"

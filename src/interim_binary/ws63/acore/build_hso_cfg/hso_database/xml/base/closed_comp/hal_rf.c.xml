@@ -1,0 +1,6 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hh503_initialize_single_rf_sys::device == OSAL_NULL} @hal_rf.c(107),ERROR" ID="0x828a035a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hh503_initialize_rf_sys::support bw_rxdc_txdciq_txpwr. @hal_rf.c(135),INFO" ID="0x828a043d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hh503_initialize_rf_sys::hal_device is null! @hal_rf.c(138),ERROR" ID="0x828a0452" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="{hh503_config_custom_rssi_for_loss::rssi == OSAL_NULL} @hal_rf.c(184),ERROR" ID="0x828a05c2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="{hh503_adjust_tx_power_level_ext::ch=%d power=%d} @hal_rf.c(222),WARNING" ID="0x828a06f3" />
+			</MSG_LOG>

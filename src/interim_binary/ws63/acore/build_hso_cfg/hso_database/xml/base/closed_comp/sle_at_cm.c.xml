@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[Error] sle connect remote device fail! ret = %d  @sle_at_cm.c(31),ERROR" ID="0xd91600fa" />
+			</MSG_LOG>

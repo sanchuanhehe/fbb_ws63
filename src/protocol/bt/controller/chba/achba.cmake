@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+# Copyright (c) CompanyNameMagicTag 2023-2023. All rights reserved.
 #===============================================================================
 set(MODULE_NAME "bt")
 set(AUTO_DEF_FILE_ID FALSE)
@@ -29,8 +29,6 @@ set(WHOLE_LINK
 set(MAIN_COMPONENT
     false
 )
-
-set(COMPONENT_NAME "achba")
 
 if("${ACHBA_LIST}" STREQUAL "")
     set(ACHBA_LIST "__null__")

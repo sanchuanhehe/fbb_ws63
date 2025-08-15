@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * Copyright (c) 2025 HiSilicon (Shanghai) Technologies Co
  * Copyright (c) 2017, 2020 IBM Corp. and others
  *
  * All rights reserved. This program and the accompanying materials

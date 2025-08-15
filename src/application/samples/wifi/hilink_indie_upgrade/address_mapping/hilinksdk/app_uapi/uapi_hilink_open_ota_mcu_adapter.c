@@ -11,17 +11,21 @@
 
 int HILINK_GetMcuVersion(char *version, unsigned int inLen, unsigned int *outLen)
 {
-    return app_call3(APP_CALL_HILINK_GET_MCU_VERSION, int,
+    app_call3(APP_CALL_HILINK_GET_MCU_VERSION, HILINK_GetMcuVersion, int,
         char *, version, unsigned int, inLen, unsigned int *, outLen);
+    return 0;
 }
 
 int HILINK_NotifyOtaStatus(int flag, unsigned int len, unsigned int type)
 {
-    return app_call3(APP_CALL_HILINK_NOTIFY_OTA_STATUS, int, int, flag, unsigned int, len, unsigned int, type);
+    app_call3(APP_CALL_HILINK_NOTIFY_OTA_STATUS, HILINK_NotifyOtaStatus, int,
+        int, flag, unsigned int, len, unsigned int, type);
+    return 0;
 }
 
 int HILINK_NotifyOtaData(const unsigned char *data, unsigned int len, unsigned int offset)
 {
-    return app_call3(APP_CALL_HILINK_NOTIFY_OTA_DATA, int,
+    app_call3(APP_CALL_HILINK_NOTIFY_OTA_DATA, HILINK_NotifyOtaData, int,
         const unsigned char *, data, unsigned int, len, unsigned int, offset);
+    return 0;
 }

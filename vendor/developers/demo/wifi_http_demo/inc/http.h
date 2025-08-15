@@ -28,8 +28,8 @@
 #define TCP_CLIENT_TASK_DURATION_MS 2000
 #define TCP_CLIENT_TASK_STACK_SIZE 0x1000
 
-#define CONFIG_WIFI_SSID "Adragon" // 要连接的WiFi热点账号
-#define CONFIG_WIFI_PWD "lkl23613" // 要连接的WiFi热点密码
+#define CONFIG_WIFI_SSID "wifiname" // 要连接的WiFi热点账号
+#define CONFIG_WIFI_PWD "password" // 要连接的WiFi热点密码
 
 #define CONFIG_SERVER_PORT 80            // 要连接的服务器端口
 #define CONFIG_SERVER_IP "123.57.54.168" // 要连接的服务器IP

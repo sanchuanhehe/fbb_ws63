@@ -1,0 +1,7 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]calc_offset_debug_print: input_param task_id=0x%x task_type=0x%x role=%d retx_att=%d @evt_sched_calc.c(318),INFO" ID="0x887209f5" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]calc_offset_debug_print: input_param intv_min=%d intv_max=%d duration_min=%d duration_max=%d @evt_sched_calc.c(322),INFO" ID="0x88720a15" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[bgtp]calc_offset_debug_print: input_param interval=%d offset=%d parity_type=%d pref_period=%d @evt_sched_calc.c(325),INFO" ID="0x88720a2d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp]evt_task_ble_acl_create_es_task: intv_list task_id=0x%x task_type=0x%x retx_att=%d @evt_sched_calc.c(335),INFO" ID="0x88720a7d" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[bgtp]evt_task_ble_acl_create_es_task: intv_list interval=%d duration_min=%d offset=%d @evt_sched_calc.c(337),INFO" ID="0x88720a8d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[bgtp]create_newstart_arr malloc failed @evt_sched_calc.c(348),WARNING" ID="0x88720ae3" />
+			</MSG_LOG>

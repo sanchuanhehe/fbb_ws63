@@ -1,0 +1,5 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="{hh503_enable_sta_tsf_tbtt::dmac vap err. id[%d,%d]} @hal_tbtt_rom.c(71),WARNING" ID="0x8036023b" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hh503_vap_ap_start_tsf::vap mode [%d]!= WLAN_VAP_MODE_BSS_AP,or hal vap id=%d &gt;= max vap=%d! @hal_tbtt_rom.c(103),WARNING" ID="0x8036033b" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="vap_id[%d] {hh503_irq_tbtt_isr::hal_vap null.} @hal_tbtt_rom.c(140),ERROR" ID="0x80360462" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="hh503_irq_tbtt_isr callback failed[%d]! @hal_tbtt_rom.c(150),WARNING" ID="0x803604b3" />
+			</MSG_LOG>

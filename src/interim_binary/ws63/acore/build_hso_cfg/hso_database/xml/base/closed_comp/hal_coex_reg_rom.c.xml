@@ -1,0 +1,8 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="{hal_btcoex_abort_end_isr::dispatch_event failed.} @hal_coex_reg_rom.c(129),ERROR" ID="0x806c040a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="{hal_btcoex_post_event_device::post failed sub_type[%d].} @hal_coex_reg_rom.c(198),ERROR" ID="0x806c0632" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_btcoex_wait_bt_release_rf::bt release rf timeout. @hal_coex_reg_rom.c(287),WARNING" ID="0x806c08fb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="hal_device_btcoex_sw_init::support siso switch 6slot[%d]ldac[%d]. @hal_coex_reg_rom.c(482),WARNING" ID="0x806c0f13" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_set_btcoex_abort_qos_null_seq_num::empty function @hal_coex_reg_rom.c(590),INFO" ID="0x806c1275" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="hal_get_btcoex_abort_qos_null_seq_num::empty function @hal_coex_reg_rom.c(601),INFO" ID="0x806c12cd" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="hal_btcoex_sync_btble_status::ble:0x%04x, req:0x%04x, bt:0x%04x. @hal_coex_reg_rom.c(713),INFO" ID="0x806c164d" />
+			</MSG_LOG>

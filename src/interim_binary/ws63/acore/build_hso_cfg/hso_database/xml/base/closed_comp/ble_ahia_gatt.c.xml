@@ -1,0 +1,34 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt discovery service req atb. @ble_ahia_gatt.c(28),INFO" ID="0xd87200e5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt get hid report map req atb. @ble_ahia_gatt.c(37),INFO" ID="0xd872012d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt find include service req atb. @ble_ahia_gatt.c(47),INFO" ID="0xd872017d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt discovery characteristics req atb. @ble_ahia_gatt.c(57),INFO" ID="0xd87201cd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt discovery characteristics by uuid req atb. @ble_ahia_gatt.c(67),INFO" ID="0xd872021d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt read characteristics by uuid req atb. @ble_ahia_gatt.c(77),INFO" ID="0xd872026d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt discovery descriptor by handle req atb. @ble_ahia_gatt.c(87),INFO" ID="0xd87202bd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt discovery descriptor req atb. @ble_ahia_gatt.c(97),INFO" ID="0xd872030d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt write characteristic value req atb. @ble_ahia_gatt.c(107),INFO" ID="0xd872035d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt reliable write characteristic value req atb. @ble_ahia_gatt.c(117),INFO" ID="0xd87203ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] ble general: mc ble gatt write descriptor value req atb. @ble_ahia_gatt.c(127),INFO" ID="0xd87203fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] ble general: mc ble gatt set gap ui attributes req atb. @ble_ahia_gatt.c(138),INFO" ID="0xd8720455" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt get gap ui attributes req atb. @ble_ahia_gatt.c(148),INFO" ID="0xd87204a5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="[ACore] mc ble gatt mtu config req atb addr:%02x:**:**:**:%02x:%02x. @ble_ahia_gatt.c(161),INFO" ID="0xd872050d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] ble general: mc ble gatt create server req atb. @ble_ahia_gatt.c(171),INFO" ID="0xd872055d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt create server req atb. @ble_ahia_gatt.c(177),INFO" ID="0xd872058d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] ble general: mc ble gatt add include service req atb. @ble_ahia_gatt.c(187),INFO" ID="0xd87205dd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] ble general: set mtu default value comes. @ble_ahia_gatt.c(197),INFO" ID="0xd872062d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] bt at cmd set le att mtu param fail, mtu param is null! @ble_ahia_gatt.c(200),ERROR" ID="0xd8720642" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] ble general: mc ble gatt add characteristic req atb data_size:%d. @ble_ahia_gatt.c(211),INFO" ID="0xd872069d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] ble general: mc ble gatt add descriptor req atb data_size:%d. @ble_ahia_gatt.c(223),INFO" ID="0xd87206fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt start service req atb. @ble_ahia_gatt.c(233),INFO" ID="0xd872074d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt stop service req atb. @ble_ahia_gatt.c(242),INFO" ID="0xd8720795" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt send response req atb data_size:%d. @ble_ahia_gatt.c(253),INFO" ID="0xd87207ed" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt notify char changed by uuid req atb. @ble_ahia_gatt.c(272),INFO" ID="0xd8720885" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt update descriptor value change req atb. @ble_ahia_gatt.c(283),INFO" ID="0xd87208dd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt read character req atb. @ble_ahia_gatt.c(294),INFO" ID="0xd8720935" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt read descriptor req atb. @ble_ahia_gatt.c(302),INFO" ID="0xd8720975" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt read multiple character req atb. @ble_ahia_gatt.c(309),INFO" ID="0xd87209ad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt multiple value read character req atb. @ble_ahia_gatt.c(316),INFO" ID="0xd87209e5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt multiple value ntf req atb. @ble_ahia_gatt.c(323),INFO" ID="0xd8720a1d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt set att key size req atb. @ble_ahia_gatt.c(330),INFO" ID="0xd8720a55" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt set att config param req atb. @ble_ahia_gatt.c(338),INFO" ID="0xd8720a95" />
+			</MSG_LOG>

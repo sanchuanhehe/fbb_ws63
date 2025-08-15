@@ -20,6 +20,7 @@
 #include "boot_malloc.h"
 #include "boot_erase.h"
 #include "sfc_protect.h"
+#include "validate_chip.h"
 
 #define DELAY_100MS             100
 
@@ -124,6 +125,9 @@ void start_loaderboot(void)
     uapi_watchdog_init(BOOT_WATCH_DOG_TIMOUT);
     uapi_watchdog_enable(WDT_MODE_RESET);
     ws63_loaderboot_init();
+    if (check_chip_type() != ERRCODE_SUCC) {
+        return;
+    }
     /* Enter the waiting command cycle. */
     loader_ack(ACK_SUCCESS);
     boot_msg0("================ Load Cmd Loop ================\r\n");

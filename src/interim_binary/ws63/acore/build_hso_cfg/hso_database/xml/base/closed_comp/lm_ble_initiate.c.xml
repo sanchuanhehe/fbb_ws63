@@ -1,0 +1,2 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg3" NAME="[bgtp][initiate]lm_ble_initiate_set_acl_con_info, clock=0x%x, us_offset=0x0x%x, chsel=%d @lm_ble_initiate.c(273),INFO" ID="0x883e088d" />
+			</MSG_LOG>

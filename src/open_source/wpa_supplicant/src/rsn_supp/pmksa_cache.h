@@ -55,7 +55,10 @@ enum pmksa_free_reason {
 };
 
 #if defined(IEEE8021X_EAPOL) && !defined(CONFIG_NO_WPA)
-
+#ifdef LOS_CONFIG_PMK_CACHE
+struct rsn_pmksa_cache_entry *wifi_get_pmk_cache(void);
+void wifi_save_pmk_cache(struct rsn_pmksa_cache_entry *entry);
+#endif /* LOS_CONFIG_PMK_CACHE */
 struct rsn_pmksa_cache *
 pmksa_cache_init(void (*free_cb)(struct rsn_pmksa_cache_entry *entry,
 				 void *ctx, enum pmksa_free_reason reason),

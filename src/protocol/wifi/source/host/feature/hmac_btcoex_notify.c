@@ -122,11 +122,9 @@ OSAL_STATIC osal_void hmac_btcoex_update_ps_capability(hal_to_dmac_device_stru *
 
     hal_coex_sw_irq_set(HAL_COEX_SW_IRQ_BT);
 
-    oam_warning_log_alter(0, OAM_SF_COEX,
-        "{hmac_btcoex_update_ps_capability::band[%d]legacy[%d]p2p[%d]chan_idx[%d]bandwidth[%d] !}",
-        // 5表示5后面含5个待打印参数
-        5, ps_param->band, ps_param->legacy_connect_state, ps_param->p2p_connect_state, ps_param->channel_num,
-        ps_param->bandwidth);
+    oam_info_log3(0, OAM_SF_COEX,
+        "{hmac_btcoex_update_ps_capability::conn:[%d] chan:[%d] bandwidth:[%d]}",
+        ps_param->legacy_connect_state, ps_param->channel_num, ps_param->bandwidth);
 }
 
 static osal_void hmac_btcoex_update_vap_work_status(hmac_vap_stru *hmac_vap, hmac_btcoex_ps_stru *ps_param)
@@ -369,7 +367,7 @@ OSAL_STATIC osal_void hmac_btcoex_notify_inout_siso(hal_to_dmac_device_stru *hal
 osal_u32 hmac_btcoex_notify_init(osal_void)
 {
     /* 消息接口注册 */
-    frw_util_notifier_register(WLAN_UTIL_NOTIFIER_EVENT_DEL_USER_RESET, hmac_config_btcoex_disassoc_state_syn);
+    frw_util_notifier_register(WLAN_UTIL_NOTIFIER_EVENT_DEL_USER_COMPLETE, hmac_config_btcoex_disassoc_state_syn);
     hmac_feature_hook_register(HMAC_FHOOK_BTCOEX_NOTIFY_SET_WIFI_STATUS, hmac_btcoex_set_wifi_status_irq_notify);
     hmac_feature_hook_register(HMAC_FHOOK_BTCOEX_NOTIFY_INOUT_SISO, hmac_btcoex_notify_inout_siso);
     return OAL_SUCC;
@@ -378,7 +376,7 @@ osal_u32 hmac_btcoex_notify_init(osal_void)
 osal_void hmac_btcoex_notify_deinit(osal_void)
 {
     /* 消息接口去注册 */
-    frw_util_notifier_unregister(WLAN_UTIL_NOTIFIER_EVENT_DEL_USER_RESET, hmac_config_btcoex_disassoc_state_syn);
+    frw_util_notifier_unregister(WLAN_UTIL_NOTIFIER_EVENT_DEL_USER_COMPLETE, hmac_config_btcoex_disassoc_state_syn);
     hmac_feature_hook_unregister(HMAC_FHOOK_BTCOEX_NOTIFY_SET_WIFI_STATUS);
     hmac_feature_hook_unregister(HMAC_FHOOK_BTCOEX_NOTIFY_INOUT_SISO);
     return;

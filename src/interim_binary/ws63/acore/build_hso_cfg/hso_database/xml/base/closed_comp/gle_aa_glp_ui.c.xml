@@ -1,0 +1,3 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="gle cs glp report malloc fail @gle_aa_glp_ui.c(35),INFO" ID="0xde8c011d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="gle cs glp report status(%d) @gle_aa_glp_ui.c(46),INFO" ID="0xde8c0175" />
+			</MSG_LOG>

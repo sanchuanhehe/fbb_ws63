@@ -1,0 +1,4 @@
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[BGTP]lm_ble_uhd_update_evt_task, new_max_tx_time = %d, new_max_rx_time = %d @lm_ble_acl_srv_uhd_upd.c(173),INFO" ID="0x882a056d" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[BGTP]lm_ble_uhd_update_evt_task, new_tx_uhd = (0x%x)(0x%x), new_rx_uhd = (0x%x)(0x%x) @lm_ble_acl_srv_uhd_upd.c(189),INFO" ID="0x882a05ed" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[BGTP]lm_ble_uhd_upd_ind_act instant(0x%x), prog directly @lm_ble_acl_srv_uhd_upd.c(661),INFO" ID="0x882a14ad" />
+			</MSG_LOG>
