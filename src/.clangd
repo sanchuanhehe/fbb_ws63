@@ -1,0 +1,52 @@
+CompileFlags:
+  Add:
+    - -I./include
+    - -I./drivers/include
+    - -I./middleware/include
+    - -march=rv32imc
+    - -mabi=ilp32
+    - -ffreestanding
+    - -fdata-sections
+    - -ffunction-sections
+    - -fno-common
+    - -nostdlib
+    - -pipe
+  Remove:
+    - -fno-tree-scev-cprop
+    - -mpush-pop
+    - -fno-ipa-ra
+    - -fimm-compare
+    - -femit-muliadd
+    - -fmerge-immshf
+    - -femit-uxtb-uxth
+    - -femit-lli
+    - -femit-clz
+    - -fldm-stm-optimize
+    - -madjust-regorder
+    - -madjust-const-cost
+    - -freorder-commu-args
+    - -fimm-compare-expand
+    - -frmv-str-zero
+    - -mfp-const-opt
+    - -frtl-sequence-abstract
+    - -frtl-hoist-sink
+    - -fsafe-alias-multipointer
+    - -finline-optimize-size
+    - --short-enums
+    - -fmuliadd-expand
+    - -mlli-expand
+    - -foptimize-reg-alloc
+    - -fsplit-multi-zero-assignments
+    - -floop-optimize-size
+    - -mpattern-abstract
+    - -foptimize-pro-and-epilogue
+
+Diagnostics:
+  UnusedIncludes: None
+  MissingIncludes: None
+  Suppress:
+    - drv_unknown_argument
+    - drv_unknown_argument_with_suggestion
+
+Index:
+  Background: Build

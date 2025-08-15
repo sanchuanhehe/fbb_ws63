@@ -1,6 +1,27 @@
 {
-    "editor.wordWrap": "on",
     "clangd.arguments": [
-        "--compile-commands=output/ws63/acore/ws63-liteos-app/compile_commands.json"
-    ]
+        "--compile-commands-dir=./output/bs21e/acore/standard-bs21e-1100e",
+        "--background-index",
+        "--completion-style=detailed",
+        "--header-insertion=iwyu",
+        "--log=verbose"
+    ],
+    "C_Cpp.errorSquiggles": "disabled",
+    "clangd.fallbackFlags": [
+        "-I${workspaceFolder}/include",
+        "-I${workspaceFolder}/drivers/include", 
+        "-I${workspaceFolder}/middleware/include",
+        "-march=rv32imc",
+        "-mabi=ilp32",
+        "-ffreestanding",
+        "-fdata-sections",
+        "-ffunction-sections",
+        "-fno-common",
+        "-nostdlib",
+        "-pipe",
+        "-Wno-unknown-warning-option",
+        "-Wno-unused-command-line-argument"
+    ],
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "clangd.detectExtensionConflicts": false
 }
