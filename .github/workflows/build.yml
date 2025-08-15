@@ -44,14 +44,16 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-apt-
 
-    - name: Install dependencies
+    - name: Install dependencies and configure environment
       run: |
-        sudo apt-get update
+        cd src
+        chmod +x config.sh activate_env.sh
         ./config.sh
 
     - name: Build and Compile
       run: |
         cd src
+        source ./activate_env.sh
         ./build.py -c -ninja ws63-liteos-app
 
     - name: Upload artifact

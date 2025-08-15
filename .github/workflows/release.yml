@@ -22,9 +22,11 @@ jobs:
 
     - name: Build Project
       run: |
-        ./config.sh
         cd src
-        python build.py -c -ninja
+        chmod +x config.sh activate_env.sh
+        ./config.sh
+        source ./activate_env.sh
+        python build.py -c -ninja ws63-liteos-app
 
     - name: Create GitHub Release
       id: create-release
@@ -41,7 +43,7 @@ jobs:
 
     - name: Prepare Compiled Artifact
       run: |
-        zip -r compiled-artifact.zip src/output/bs21e/fwpkg/standard-bs21e-1100e
+        zip -r compiled-artifact.zip src/output/ws63/fwpkg
     
     - name: Upload Compiled Artifact
       uses: actions/upload-release-asset@v1
