@@ -11,7 +11,52 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/pip
+          src/.venv
+        key: ${{ runner.os }}-deps-${{ hashFiles('src/config.sh') }}
+        restore-keys: |
+          ${{ runner.os }}-deps-
+
+    - name: Prepare APT cache directory
+      run: |
+        sudo mkdir -p /tmp/apt-cache
+        sudo chown -R $USER:$USER /tmp/apt-cache
+
+    - name: Cache APT packages
+      uses: actions/cache@v4
+      with:
+        path: /tmp/apt-cache
+        key: ${{ runner.os }}-apt-${{ hashFiles('src/config.sh') }}
+        restore-keys: |
+          ${{ runner.os }}-apt-
+
+    - name: Configure APT cache
+      run: |
+        sudo tee /etc/apt/apt.conf.d/01cache <<EOF
+        Dir::Cache "/tmp/apt-cache";
+        Dir::Cache::archives "/tmp/apt-cache/archives";
+        APT::Keep-Downloaded-Packages "true";
+        EOF
+
+    - name: Cache APT lists
+      uses: actions/cache@v4
+      with:
+        path: |
+          /var/lib/apt/lists
+        key: ${{ runner.os }}-apt-lists-${{ hashFiles('src/config.sh') }}
+        restore-keys: |
+          ${{ runner.os }}-apt-lists-
 
     - name: Log in to GitHub Container Registry
       uses: docker/login-action@v2
