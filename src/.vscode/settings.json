@@ -23,5 +23,18 @@
         "-Wno-unused-command-line-argument"
     ],
     "C_Cpp.intelliSenseEngine": "disabled",
-    "clangd.detectExtensionConflicts": false
+    "clangd.detectExtensionConflicts": false,
+    "terminal.integrated.profiles.linux": {
+        "bash_with_env": {
+            "path": "bash",
+            "args": ["-c", "source ${workspaceFolder}/activate_env.sh 2>/dev/null || source ${workspaceFolder}/config.sh; exec bash"],
+            "icon": "terminal-bash"
+        },
+        "zsh_with_env": {
+            "path": "zsh",
+            "args": ["-c", "source ${workspaceFolder}/activate_env.sh 2>/dev/null || source ${workspaceFolder}/config.sh; exec zsh"],
+            "icon": "terminal"
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "zsh_with_env"
 }
