@@ -6,27 +6,30 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "./build.py",
-            "args": [
-            "-ninja"
-            ],
+            "command": "source ${workspaceFolder}/activate_env.sh && ./build.py -ninja",
             "group": "build",
+            "options": {
+                "shell": {
+                    "executable": "/usr/bin/zsh",
+                    "args": ["-c"]
+                }
+            },
             "presentation": {
-                // Reveal the output only if unrecognized errors occur.
                 "reveal": "always"
             }
         },
         {
             "label": "clean and build",
-            "type": "shell",
-            "command": "./build.py",
-            "args": [
-            "-ninja",
-            "-c"
-            ],
+            "type": "shell", 
+            "command": "source ${workspaceFolder}/activate_env.sh && ./build.py -ninja -c",
             "group": "build",
+            "options": {
+                "shell": {
+                    "executable": "/usr/bin/zsh",
+                    "args": ["-c"]
+                }
+            },
             "presentation": {
-                // Reveal the output only if unrecognized errors occur.
                 "reveal": "always"
             }
         }

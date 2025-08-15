@@ -34,7 +34,15 @@
             "path": "zsh",
             "args": ["-c", "source ${workspaceFolder}/activate_env.sh 2>/dev/null || source ${workspaceFolder}/config.sh; exec zsh"],
             "icon": "terminal"
+        },
+        "zsh_clean": {
+            "path": "zsh",
+            "args": [],
+            "icon": "terminal"
         }
     },
-    "terminal.integrated.defaultProfile.linux": "zsh_with_env"
+    "terminal.integrated.defaultProfile.linux": "zsh_with_env",
+    "terminal.integrated.automationProfile.linux": {
+        "path": "zsh"
+    }
 }
