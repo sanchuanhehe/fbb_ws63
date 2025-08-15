@@ -54,7 +54,7 @@ jobs:
           -v ${{ github.workspace }}:/workspaces/$(basename ${{ github.workspace }}) \
           -w /workspaces/$(basename ${{ github.workspace }})/src \
           ws63-build-env:latest \
-          bash -c "source ./activate_env.sh && ./build.py -c -ninja ws63-liteos-app"
+          bash -c "./config.sh && source ./activate_env.sh && ./build.py -c -ninja ws63-liteos-app"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
