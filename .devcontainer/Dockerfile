@@ -9,6 +9,8 @@ WORKDIR /workspaces
 # 复制配置脚本
 COPY src/config.sh /tmp/config.sh
 
+RUN apt install sudo
+
 # 运行配置脚本进行环境初始化
 RUN chmod +x /tmp/config.sh && \
     cd /tmp && \
