@@ -18,7 +18,7 @@
 - 使用目标 `ws63-liteos-app-mesh`。
 - MA 和 MF 需要使用相同的 `NetId`。当前 sample 中默认 `NetId` 为 `2`。
 
-SLE Mesh one touch start 不需要像 BLE Mesh 一样通过 AT 手动启动。sample 启动后会直接调用 `sle_enter_net_sample_init()`；如果没有从 NV 恢复到网络参数，会使用源码中配置的默认 MA/MF 地址、角色和 `NetId` 调用 `sle_mesh_start()`。
+sample 启动后会直接调用 `sle_enter_net_sample_init()`；如果没有从 NV 恢复到网络参数，会使用源码中配置的默认 MA/MF 地址、角色和 `NetId` 调用 `sle_mesh_start()`。
 
 ## 配置并烧录 MA
 

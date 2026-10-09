@@ -22,14 +22,17 @@
 #include "ble_mesh_prov.h"
 #include "ble_mesh_manager.h"
 #include "ble_mesh_nv_op.h"
+#include "ble_mesh_hex.h"
 #include "ble_mesh_sample.h"
 
 #define CID_HIS 0x010F  // HiSilicon
 
 #define BLE_ADDR_RANDOM (0x01)
 
-static uint8_t dev_uuid[BLE_MESH_UUID_LEN] = {0xdd, 0xdd};
-static uint8_t static_auth_value[BLE_MESH_STATIC_AUTH_LEN] = {0};  // 16 static auth value 长度
+#define SUPPORT_STATIC_AUTH_LEN 16
+
+static uint8_t dev_uuid[BLE_MESH_UUID_LEN] = {0};
+static uint8_t static_auth_value[SUPPORT_STATIC_AUTH_LEN] = {0};  // Mesh Static OOB value
 
 #define PROV_OWN_ADDR 0x0001
 
@@ -40,6 +43,7 @@ static void link_close(ble_mesh_prov_bearer_t bearer);
 static void provisioner_complete(uint16_t net_idx, uint16_t addr);
 static void recv_rmt_unprovisioned_beacon(uint8_t uuid[BLE_MESH_UUID_LEN], uint8_t oob_info, uint32_t *uri_hash);
 static void recv_unprovisioned_beacon(uint8_t uuid[BLE_MESH_UUID_LEN], uint8_t oob_info, uint32_t *uri_hash);
+static uint32_t ble_mesh_get_auth_string(const bd_addr_t *addr, const char *pid, const char *auth);
 uint16_t g_prov_alloc_addr = 0x0002;
 uint16_t g_net_idx = 0;
 uint16_t g_net_addr = 0;
@@ -57,7 +61,7 @@ typedef struct ble_mesh_sample_tuple {
     uint8_t dev_uuid[BLE_MESH_UUID_LEN];
     bd_addr_t addr;
     uint8_t pid[BLE_MESH_PID_LEN];
-    uint8_t auth_info[BLE_MESH_STATIC_AUTH_LEN];
+    uint8_t auth_info[SUPPORT_STATIC_AUTH_LEN];
 } ble_mesh_sample_tuple_t;
 
 static ble_mesh_sample_tuple_t g_tuple = {0};
@@ -130,6 +134,11 @@ static ble_mesh_prov_t provision = {
 
 static void ble_mesh_get_dev_uuid(void)
 {
+    static uint8_t init_uuid[BLE_MESH_UUID_LEN] = {0};
+    if (memcmp(init_uuid, dev_uuid, BLE_MESH_UUID_LEN) != 0) {
+        return;
+    }
+
     bd_addr_t addr;
     errcode_t ret = gap_ble_get_local_addr(&addr);
     if (ret != ERRCODE_BT_SUCCESS) {
@@ -138,6 +147,31 @@ static void ble_mesh_get_dev_uuid(void)
     }
 
     memcpy_s(dev_uuid, BD_ADDR_LEN, addr.addr, BD_ADDR_LEN);
+}
+
+static errcode_t ble_mesh_sample_set_tuple_addr(const bd_addr_t *addr)
+{
+    if (addr == NULL) {
+        return ERRCODE_BT_FAIL;
+    }
+
+    g_tuple.addr.type = addr->type;
+    if (memcpy_s(g_tuple.addr.addr, BD_ADDR_LEN, addr->addr, BD_ADDR_LEN) != EOK) {
+        SAMPLE_ERR("ble provisioner addr memcpy failed.");
+        return ERRCODE_BT_FAIL;
+    }
+    return ERRCODE_BT_SUCCESS;
+}
+
+static errcode_t ble_mesh_sample_store_current_addr(void)
+{
+    bd_addr_t addr = {0};
+    errcode_t ret = gap_ble_get_local_addr(&addr);
+    if (ret != ERRCODE_BT_SUCCESS) {
+        SAMPLE_ERR("gap_ble_get_local_addr faile 0x%x.", ret);
+        return ret;
+    }
+    return ble_mesh_sample_set_tuple_addr(&addr);
 }
 
 /*   远程扫描启动接口
@@ -185,10 +219,24 @@ static void recv_rmt_unprovisioned_beacon(uint8_t uuid[BLE_MESH_UUID_LEN], uint8
 static void ble_mesh_sample_load_nv(void)
 {
     SAMPLE_INFO("recover addr:0x%02x:*:*:%02x:%02x", g_tuple.addr.addr[0], g_tuple.addr.addr[4], g_tuple.addr.addr[5]);
+    static char pid[BLE_MESH_PID_LEN * 2 + 1] = {0};          // 2 : one byte two hex chars, 1 end
+    static char auth_info[SUPPORT_STATIC_AUTH_LEN * 2 + 1] = {0};  // 2 : one byte two hex chars, 1 end
     errcode_t ret = gap_ble_set_local_addr(&g_tuple.addr);
     if (ret != ERRCODE_BT_SUCCESS) {
         SAMPLE_ERR("set local addr failed, ret:0x%x.", ret);
         return;
+    }
+
+    if (memcpy_s(dev_uuid, sizeof(dev_uuid), g_tuple.dev_uuid, BLE_MESH_UUID_LEN) != EOK) {
+        SAMPLE_ERR("ble provisioner uuid memcpy failed.");
+        return;
+    }
+
+    ble_mesh_bin2hex(g_tuple.pid, BLE_MESH_PID_LEN, pid, sizeof(pid));
+    ble_mesh_bin2hex(g_tuple.auth_info, SUPPORT_STATIC_AUTH_LEN, auth_info, sizeof(auth_info));
+    ret = ble_mesh_get_auth_string(&g_tuple.addr, pid, auth_info);
+    if (ret != ERRCODE_BT_SUCCESS) {
+        SAMPLE_ERR("ble provisioner auth recover failed, ret:0x%x.", ret);
     }
     return;
 }
@@ -216,18 +264,59 @@ static uint32_t ble_mesh_get_auth_string(const bd_addr_t *addr, const char *pid,
     }
 
     mbedtls_sha256((const unsigned char *)auth_value_string, strlen(auth_value_string), sha256, 0);
-    memcpy_s(static_auth_value, sizeof(static_auth_value), sha256, sizeof(static_auth_value));
-    provision.static_value_len = sizeof(static_auth_value);
+    memcpy_s(static_auth_value, sizeof(static_auth_value), sha256, SUPPORT_STATIC_AUTH_LEN);
+    provision.static_value_len = SUPPORT_STATIC_AUTH_LEN;
     provision.static_auth_value = static_auth_value;
     return ERRCODE_BT_SUCCESS;
 }
 
 uint32_t ble_mesh_sample_set_auth_value(const char *pid, const char *auth_str)
 {
-    SAMPLE_INFO("ble device auth set pid:%s auth:%s end!\r\n", pid, auth_str);
+    SAMPLE_INFO("ble provisioner auth set pid:%s auth:%s end!\r\n", pid, auth_str);
     bd_addr_t addr = {0};
     errcode_t ret = gap_ble_get_local_addr(&addr);
-    return ble_mesh_get_auth_string(&addr, pid, auth_str);
+    if (ret != ERRCODE_BT_SUCCESS) {
+        SAMPLE_ERR("gap_ble_get_local_addr faile 0x%x.", ret);
+        return ret;
+    }
+
+    ret = ble_mesh_get_auth_string(&addr, pid, auth_str);
+    if (ret != ERRCODE_BT_SUCCESS) {
+        SAMPLE_ERR("ble_mesh_get_auth_string failed, 0x:%x!", ret);
+        return ret;
+    }
+
+    ble_mesh_hex2bin(pid, g_tuple.pid, BLE_MESH_PID_LEN);
+    ble_mesh_hex2bin(auth_str, g_tuple.auth_info, sizeof(g_tuple.auth_info));
+    ret = ble_mesh_sample_set_tuple_addr(&addr);
+    if (ret != ERRCODE_BT_SUCCESS) {
+        return ret;
+    }
+    (void)memcpy_s(g_tuple.dev_uuid, BLE_MESH_UUID_LEN, dev_uuid, BLE_MESH_UUID_LEN);
+
+    ret = ble_mesh_data_write(BTH_BLE_MESH_TUPLE_NV_ID, &g_tuple, sizeof(g_tuple));
+    if (ret != ERRCODE_BT_SUCCESS) {
+        SAMPLE_ERR("ble provisioner tuple write to nv failed, 0x%x!", ret);
+    }
+    return ret;
+}
+
+void ble_mesh_sample_set_uuid_value(uint8_t *uuid, uint8_t len)
+{
+    if (memcpy_s(dev_uuid, sizeof(dev_uuid), uuid, len) != EOK) {
+        SAMPLE_ERR("ble provisioner uuid memcpy failed, len:%d!", len);
+        return;
+    }
+
+    (void)memcpy_s(g_tuple.dev_uuid, BLE_MESH_UUID_LEN, dev_uuid, BLE_MESH_UUID_LEN);
+    errcode_t ret = ble_mesh_sample_store_current_addr();
+    if (ret != ERRCODE_BT_SUCCESS) {
+        return;
+    }
+    ret = ble_mesh_data_write(BTH_BLE_MESH_TUPLE_NV_ID, &g_tuple, sizeof(g_tuple));
+    if (ret != ERRCODE_BT_SUCCESS) {
+        SAMPLE_ERR("ble provisioner tuple write to nv failed, 0x%x!", ret);
+    }
 }
 
 uint32_t ble_mesh_sample_set_static_oob_value(const uint8_t *static_val, uint8_t size)

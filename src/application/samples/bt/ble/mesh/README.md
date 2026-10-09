@@ -43,8 +43,6 @@ src/build/config/target_config/ws63/config.py
 }
 ```
 
-如果没有这个宏，`main.c` 不会调用 `mesh_at_register()` 注册 BLE Mesh AT 命令表，`AT+BMCFGLOCAL`、`AT+BMPROVNET`、`AT+BMSTAT` 会返回 `ERROR`。
-
 ## 配置并烧录 Device
 
 在工程根目录打开 menuconfig：
@@ -79,10 +77,52 @@ fbb flash ws63-liteos-app-mesh --port COM4 --json-summary
 AT
 ```
 
-返回 `OK` 后手动启动 BLE Mesh Device。推荐使用 `3`，同时打开 PB-ADV 和 PB-GATT：
+返回 `OK` 后按验证目的二选一。
+
+### 方案一：临时启动，两块板都不写 tuple
+
+板 A 执行：
 
 ```text
 AT+BMCFGLOCAL=ble_mesh_enable,3
+```
+
+板 B 烧录 Provisioner 后也执行临时启动：
+
+```text
+AT
+AT+BMCFGLOCAL=ble_mesh_enable,3
+```
+
+等板 B 日志打印扫描地址，再执行：
+
+```text
+AT+BMPROVNET=1,<扫描地址去掉冒号>
+```
+
+### 方案二：两块板都写本地 tuple，不再临时启动
+
+板 A 执行：
+
+```text
+AT+BMPROV=uuid_set,uuid,00112233445566778899AABBCCDDEEFF
+AT+RST
+```
+
+方案二的目标流程是板 A、板 B 都写各自的本地 tuple，然后复位；复位后两块板都应自动从 NV 恢复，不再把 `AT+BMCFGLOCAL=ble_mesh_enable,3` 作为启动步骤。
+
+板 B Provisioner 也应该有自己的本地 tuple。目标命令形式如下：
+
+```text
+AT+BMPROV=uuid_set,uuid,<板B自己的32位hex uuid>
+AT+RST
+```
+
+板 B 自动启动并扫描到板 A 后，只需要指定目标地址：
+
+```text
+AT
+AT+BMPROVNET=1,<扫描地址去掉冒号>
 ```
 
 预期日志包含：
@@ -94,16 +134,7 @@ set unprov beacon flag: 1
 ble device mesh_sample_init end
 ```
 
-如果首次启动出现 `nv recover tuple info failed`，属于 NV 中没有历史配网 tuple 的情况。`AT+BMCFGLOCAL=ble_mesh_enable,3` 不是“开启 NV”，而是手动调用 sample 的 `ble_mesh_sample_enable()` 继续启动 Mesh 协议栈；该路径读取 NV 失败后只打印错误，并继续使用本机 BLE 地址生成 UUID，随后调用 `ble_mesh_enable()`。
-
-首次空 NV 时有两种处理方式：
-
-| 流程 | 命令 | 作用 | 是否写 tuple 到 NV |
-|---|---|---|---|
-| A：临时启动 | `AT+BMCFGLOCAL=ble_mesh_enable,3` | 当前这次继续启动 BLE Mesh，进入可配网状态 | 不写 |
-| B：写 tuple 后启动 | `AT+BMPROV=uuid_set,uuid,<uuid>`、`AT+BMPROV=auth_set,pid,<pid>,auth,<auth>`，然后执行 `AT+BMCFGLOCAL=ble_mesh_enable,3` 或重启 | 先把 UUID/auth/地址 tuple 写入 NV，再启动或下次上电自动启动 | 写 |
-
-流程 A 适合首次快速验证；重启后如果仍没有 tuple，自动初始化还会再次读 NV 失败。流程 B 适合固定设备参数，写入后不要随意重新设置，否则 Provisioner 或手机侧需要重新按新的 UUID/地址扫描设备。
+如果首次启动出现 `nv recover tuple info failed`，说明 NV 中还没有对应 tuple。临时验证走方案一；固定设备参数走方案二。
 
 ## 配置并烧录 Provisioner
 
@@ -133,11 +164,10 @@ fbb build --clean ws63-liteos-app-mesh
 fbb flash ws63-liteos-app-mesh --port COM5 --json-summary
 ```
 
-打开板 B 串口后启动 Provisioner：
+打开板 B 串口后观察 Provisioner 启动日志：
 
 ```text
 AT
-AT+BMCFGLOCAL=ble_mesh_enable,3
 ```
 
 预期日志包含：
@@ -146,6 +176,12 @@ AT+BMCFGLOCAL=ble_mesh_enable,3
 ble mesh provisioner init start
 mesh_initialized success
 ble onoff client mesh_sample_init end
+```
+
+如果当前样例因为空 NV 只打印 `nv recover tuple info failed`，没有继续到 `mesh_initialized success`，再手动拉起一次：
+
+```text
+AT+BMCFGLOCAL=ble_mesh_enable,3
 ```
 
 ## 发起配网
@@ -192,5 +228,5 @@ provisioning complete for net_idx 0x0000 addr 0x0002
 | 现象 | 原因 | 处理方法 |
 |------|------|----------|
 | `AT+BMCFGLOCAL`、`AT+BMPROVNET` 或 `AT+BMSTAT` 返回 `ERROR` | BLE Mesh AT 命令表未注册，根因通常是目标编译宏未包含 `BTH_BLE_MESH_AT_ENABLE` | 确认 `ws63-liteos-app-mesh` 目标启用了 BLE Mesh AT 注册宏后重新编译 |
-| Device 上电后没有自动发 Beacon | 首次启动 NV 中没有 tuple | 手动执行 `AT+BMCFGLOCAL=ble_mesh_enable,3` |
+| Device 上电后没有自动发 Beacon | 首次启动 NV 中没有 tuple | 正式验证执行 `AT+BMPROV=uuid_set,uuid,<32位hex uuid>` 写入 UUID 后复位；临时调试可执行 `AT+BMCFGLOCAL=ble_mesh_enable,3` |
 | Provisioner 扫到地址但不配网 | 没有指定期望配网地址 | 执行 `AT+BMPROVNET=1,<addr>` |
