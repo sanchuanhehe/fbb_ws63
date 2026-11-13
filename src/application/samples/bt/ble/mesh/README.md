@@ -77,46 +77,25 @@ fbb flash ws63-liteos-app-mesh --port COM4 --json-summary
 AT
 ```
 
-返回 `OK` 后按验证目的二选一。
-
-### 方案一：临时启动，两块板都不写 tuple
+返回 `OK` 后，给板 A 写入本地 tuple 并复位：
 
 板 A 执行：
 
 ```text
-AT+BMCFGLOCAL=ble_mesh_enable,3
-```
-
-板 B 烧录 Provisioner 后也执行临时启动：
-
-```text
-AT
-AT+BMCFGLOCAL=ble_mesh_enable,3
-```
-
-等板 B 日志打印扫描地址，再执行：
-
-```text
-AT+BMPROVNET=1,<扫描地址去掉冒号>
-```
-
-### 方案二：两块板都写本地 tuple，不再临时启动
-
-板 A 执行：
-
-```text
-AT+BMPROV=uuid_set,uuid,00112233445566778899AABBCCDDEEFF
+AT+BMPROV=uuid_set,uuid,00112233445566778899AABBCCDDEE01
 AT+RST
 ```
 
-方案二的目标流程是板 A、板 B 都写各自的本地 tuple，然后复位；复位后两块板都应自动从 NV 恢复，不再把 `AT+BMCFGLOCAL=ble_mesh_enable,3` 作为启动步骤。
+该命令将板 A Device 的 UUID 设置为 `00112233445566778899AABBCCDDEE01`，即 16 字节、32 个十六进制字符；末字节 `01` 用于区分板 A。复位后 Sample 从 NV 读取 tuple 并自动启动。
 
 板 B Provisioner 也应该有自己的本地 tuple。目标命令形式如下：
 
 ```text
-AT+BMPROV=uuid_set,uuid,<板B自己的32位hex uuid>
+AT+BMPROV=uuid_set,uuid,00112233445566778899AABBCCDDEE02
 AT+RST
 ```
+
+其中 `00112233445566778899AABBCCDDEE02` 是板 B Provisioner 的示例设置值，表示 16 字节、32 个十六进制字符；末字节 `02` 用于区分板 B。
 
 板 B 自动启动并扫描到板 A 后，只需要指定目标地址：
 
@@ -134,7 +113,7 @@ set unprov beacon flag: 1
 ble device mesh_sample_init end
 ```
 
-如果首次启动出现 `nv recover tuple info failed`，说明 NV 中还没有对应 tuple。临时验证走方案一；固定设备参数走方案二。
+如果首次启动出现 `nv recover tuple info failed`，说明 NV 中还没有对应 tuple。执行上面的 `AT+BMPROV=uuid_set,uuid,...` 写入 UUID 后复位即可。
 
 ## 配置并烧录 Provisioner
 
@@ -176,12 +155,6 @@ AT
 ble mesh provisioner init start
 mesh_initialized success
 ble onoff client mesh_sample_init end
-```
-
-如果当前样例因为空 NV 只打印 `nv recover tuple info failed`，没有继续到 `mesh_initialized success`，再手动拉起一次：
-
-```text
-AT+BMCFGLOCAL=ble_mesh_enable,3
 ```
 
 ## 发起配网
@@ -227,6 +200,6 @@ provisioning complete for net_idx 0x0000 addr 0x0002
 
 | 现象 | 原因 | 处理方法 |
 |------|------|----------|
-| `AT+BMCFGLOCAL`、`AT+BMPROVNET` 或 `AT+BMSTAT` 返回 `ERROR` | BLE Mesh AT 命令表未注册，根因通常是目标编译宏未包含 `BTH_BLE_MESH_AT_ENABLE` | 确认 `ws63-liteos-app-mesh` 目标启用了 BLE Mesh AT 注册宏后重新编译 |
-| Device 上电后没有自动发 Beacon | 首次启动 NV 中没有 tuple | 正式验证执行 `AT+BMPROV=uuid_set,uuid,<32位hex uuid>` 写入 UUID 后复位；临时调试可执行 `AT+BMCFGLOCAL=ble_mesh_enable,3` |
+| `AT+BMPROVNET` 或 `AT+BMSTAT` 返回 `ERROR` | BLE Mesh AT 命令表未注册，根因通常是目标编译宏未包含 `BTH_BLE_MESH_AT_ENABLE` | 确认 `ws63-liteos-app-mesh` 目标启用了 BLE Mesh AT 注册宏后重新编译 |
+| Device 上电后没有自动发 Beacon | 首次启动 NV 中没有 tuple | 执行 `AT+BMPROV=uuid_set,uuid,<32位hex uuid>` 写入 UUID 后复位 |
 | Provisioner 扫到地址但不配网 | 没有指定期望配网地址 | 执行 `AT+BMPROVNET=1,<addr>` |
