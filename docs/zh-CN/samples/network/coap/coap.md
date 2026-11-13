@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # CoAP
 
 > CoAP (Constrained Application Protocol)、UDP (User Datagram Protocol) Socket

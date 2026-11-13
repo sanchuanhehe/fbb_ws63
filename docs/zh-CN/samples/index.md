@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 参考案例
@@ -58,4 +57,14 @@ hide:
 - [cJSON 解析](./system/cjson.md)
 -->
 
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
 
+无线连接 <connectivity/index>
+外设驱动 <peripherals/index>
+RTOS 基础 <os/index>
+网络协议 <network/index>
+系统服务 <system/index>
+```

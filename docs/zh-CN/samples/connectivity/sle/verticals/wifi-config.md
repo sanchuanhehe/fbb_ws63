@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # SLE Wi-Fi 配网
 
 > 将 [参数配置与持久化](../data-comm/device-config.md) 的通用属性读写机制应用于 Wi-Fi SSID (Service Set Identifier) 、密码和入网结果传递。

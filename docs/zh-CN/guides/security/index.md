@@ -6,3 +6,12 @@
 
 - [安全软件开发指南](crypto/index.md)
 - [TLS/DTLS 开发指南](tls/index.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+安全软件开发 <crypto/index>
+TLS/DTLS <tls/index>
+```

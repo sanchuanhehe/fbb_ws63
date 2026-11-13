@@ -1,5 +1,6 @@
 ---
 title: AT命令 使用指南
+orphan: true
 ---
 
 # 前言<a name="ZH-CN_TOPIC_0000001760165149"></a>

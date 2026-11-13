@@ -8,6 +8,7 @@ owner: 待确认
 verification_level: static
 source_refs:
   - docs/zh-CN/software/release-notes/
+orphan: true
 ---
 
 # WS63 SDK 发布说明

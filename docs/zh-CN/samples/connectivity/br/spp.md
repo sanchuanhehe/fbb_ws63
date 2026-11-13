@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # SPP
 
 > BR/EDR SPP (Serial Port Profile)

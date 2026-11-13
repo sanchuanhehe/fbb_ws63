@@ -1,5 +1,6 @@
 ---
 title: LiteOS 死机问题定位指南
+orphan: true
 ---
 
 # 前言<a name="ZH-CN_TOPIC_0000002563266117"></a>

@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # LittleFS 文件系统
 
 > 使用技术：LittleFS、VFS (Virtual File System)

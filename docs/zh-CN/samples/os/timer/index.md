@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 定时器
@@ -10,3 +9,11 @@ hide:
 ## 快速导航
 
 - [OSAL 软件定时器](./periodic-timer.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+OSAL 软件定时器 <periodic-timer>
+```

@@ -49,9 +49,11 @@ WS63V100 系列芯片管脚分布如图 1-4 和图 1-5 所示。
 图1-5 WS63EV100 TOP View 管脚分布
 ![](images/fig_p13_0.png)
 
-!!! note "说明"
+```{admonition} 说明
+:class: note
 
-    WS63V100 常规版本芯片 PIN40 管脚为 GND，WS63EV100 雷达版本芯片 PIN40 管脚为 RFI。
+WS63V100 常规版本芯片 PIN40 管脚为 GND，WS63EV100 雷达版本芯片 PIN40 管脚为 RFI。
+```
 
 ## 管脚描述
 
@@ -117,9 +119,11 @@ WS63V100 系列芯片采用的封装形式为 QFN 40PIN，管脚按位置排列�
 | 20   | BUCK_LX    | EPAD | GND          |
 | 21   | AVSS_PGND  | -    | -            |
 
-!!! note "说明"
+```{admonition} 说明
+:class: note
 
-    - WS63V100 常规版本芯片 PIN40 管脚为 GND，板级可选择接地或 NC 悬空。
+- WS63V100 常规版本芯片 PIN40 管脚为 GND，板级可选择接地或 NC 悬空。
+```
 
 ### PMU 控制信号
 
@@ -207,9 +211,11 @@ GND 管脚如表 1-8 所示。
 
 ### ADC 通道
 
-!!! warning "须知"
+```{admonition} 须知
+:class: warning
 
-    ADC 管脚：LSADC 通道与 GPIO 功能只支持其中 1 种功能，ADC 通道管脚与 GPIO 管脚的对应关系如表 1-10 所示。
+ADC 管脚：LSADC 通道与 GPIO 功能只支持其中 1 种功能，ADC 通道管脚与 GPIO 管脚的对应关系如表 1-10 所示。
+```
 
 表1-10 ADC 通道管脚与复用管脚对应关系
 

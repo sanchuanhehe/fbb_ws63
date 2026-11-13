@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # A2DP
 
 > BR/EDR A2DP (Advanced Audio Distribution Profile) Source、AVRCP (Audio/Video Remote Control Profile) Target、I2S (Inter-IC Sound)

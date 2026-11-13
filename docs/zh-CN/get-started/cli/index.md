@@ -25,14 +25,21 @@ upstream_refs:
 
 在本页每组标签中选择所用系统；相同标签会同步切换。
 
-=== "Windows"
+`````{tab-set}
 
-    使用 Windows PowerShell 执行命令。
+````{tab-item} Windows
 
-=== "Linux"
+使用 Windows PowerShell 执行命令。
 
-    使用 Linux Bash 执行命令。WSL 2 使用本页 Linux 命令。
+````
 
+````{tab-item} Linux
+
+使用 Linux Bash 执行命令。WSL 2 使用本页 Linux 命令。
+
+````
+
+`````
 ## 前置条件
 
 - 已按 [Git 官方安装说明](https://git-scm.com/downloads/) 和 [Git LFS 官方安装说明](https://git-lfs.com/)安装 Git 与 Git LFS，且 `git --version`、`git lfs version` 可以正常输出版本。
@@ -72,22 +79,29 @@ cd src
 
 按所用系统执行对应的 CLI 安装命令。已经安装 CLI 时可跳过安装命令。
 
-=== "Windows"
+`````{tab-set}
 
-    在 PowerShell 中执行：
+````{tab-item} Windows
 
-    ```powershell
-    irm https://dl.hispark.hisilicon.com/bootstrap.ps1 | iex
-    ```
+在 PowerShell 中执行：
 
-=== "Linux"
+```powershell
+irm https://dl.hispark.hisilicon.com/bootstrap.ps1 | iex
+```
 
-    在 Bash 中执行：
+````
 
-    ```bash
-    curl -fsSL https://dl.hispark.hisilicon.com/bootstrap.sh | sh
-    ```
+````{tab-item} Linux
 
+在 Bash 中执行：
+
+```bash
+curl -fsSL https://dl.hispark.hisilicon.com/bootstrap.sh | sh
+```
+
+````
+
+`````
 详细安装说明和手动配置方式见[配置 WS63 开发环境](../../guides/sdk-development/environment-setup/index.md)。WS63 SDK 要求 `fbb` 不低于 `1.1.0`。
 
 检查 CLI：
@@ -186,50 +200,64 @@ output/ws63/fwpkg/ws63-liteos-app/ws63-liteos-app_all.fwpkg
 
 检查文件是否生成：
 
-=== "Windows"
+`````{tab-set}
 
-    ```powershell
-    Test-Path .\output\ws63\acore\ws63-liteos-app\ws63-liteos-app.elf
-    ```
+````{tab-item} Windows
 
-    ```powershell
-    Test-Path .\output\ws63\fwpkg\ws63-liteos-app\ws63-liteos-app_all.fwpkg
-    ```
+```powershell
+Test-Path .\output\ws63\acore\ws63-liteos-app\ws63-liteos-app.elf
+```
 
-=== "Linux"
+```powershell
+Test-Path .\output\ws63\fwpkg\ws63-liteos-app\ws63-liteos-app_all.fwpkg
+```
 
-    ```bash
-    test -s output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf && echo "ELF: OK"
-    ```
+````
 
-    ```bash
-    test -s output/ws63/fwpkg/ws63-liteos-app/ws63-liteos-app_all.fwpkg && echo "FWPKG: OK"
-    ```
+````{tab-item} Linux
 
+```bash
+test -s output/ws63/acore/ws63-liteos-app/ws63-liteos-app.elf && echo "ELF: OK"
+```
+
+```bash
+test -s output/ws63/fwpkg/ws63-liteos-app/ws63-liteos-app_all.fwpkg && echo "FWPKG: OK"
+```
+
+````
+
+`````
 ## 5. 连接开发板并确认串口
 
 使用 Type-C USB 数据线连接开发板，关闭占用串口的其他程序。
 
-=== "Windows"
+`````{tab-set}
 
-    在 PowerShell 中列出串口：
+````{tab-item} Windows
 
-    ```powershell
-    [System.IO.Ports.SerialPort]::GetPortNames()
-    ```
+在 PowerShell 中列出串口：
 
-    记录开发板对应的端口，例如 `COM3`。
+```powershell
+[System.IO.Ports.SerialPort]::GetPortNames()
+```
 
-=== "Linux"
+记录开发板对应的端口，例如 `COM3`。
 
-    查看串口设备：
+````
 
-    ```bash
-    ls /dev/ttyUSB* /dev/ttyACM* 2>/dev/null
-    ```
+````{tab-item} Linux
 
-    记录开发板对应的设备路径，例如 `/dev/ttyUSB0`。
+查看串口设备：
 
+```bash
+ls /dev/ttyUSB* /dev/ttyACM* 2>/dev/null
+```
+
+记录开发板对应的设备路径，例如 `/dev/ttyUSB0`。
+
+````
+
+`````
 ## 6. 烧录完整固件
 
 烧录会覆盖开发板中的现有固件。需要保留原固件时，先取得可恢复的固件包。

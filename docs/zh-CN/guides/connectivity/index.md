@@ -5,3 +5,11 @@
 ## 指南
 
 - [Matter 用户指南](matter/index.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+Matter <matter/index>
+```

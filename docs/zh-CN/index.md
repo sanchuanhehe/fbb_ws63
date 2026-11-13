@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # WS63 系列开发指南
@@ -94,7 +93,7 @@ WS63 系列是一款高度集成的 2.4GHz Combo 芯片，同时支持 Wi-Fi 6�
 
 <nav class="grid cards" markdown>
 
--   [**AI 语音玩具方案**](https://developers.hisilicon.com/cn/caselibrary/ai_smart_voice_toy){ target=_blank }
+-   [**AI 语音玩具方案**](https://developers.hisilicon.com/cn/caselibrary/ai_smart_voice_toy)
 
     ---
 
@@ -106,7 +105,7 @@ WS63 系列是一款高度集成的 2.4GHz Combo 芯片，同时支持 Wi-Fi 6�
 
     星闪+鸿蒙技术，低时延高可靠，多模型兼容，智能对话强。润开鸿基于WS63/WS63E提供完整软硬件方案。
 
--   [**星闪红外遥控车**](https://developers.hisilicon.com/cn/caselibrary/hqyj_smart_car){ target=_blank }
+-   [**星闪红外遥控车**](https://developers.hisilicon.com/cn/caselibrary/hqyj_smart_car)
 
     ---
 
@@ -118,7 +117,7 @@ WS63 系列是一款高度集成的 2.4GHz Combo 芯片，同时支持 Wi-Fi 6�
 
     星闪红外双模控制，毫秒级指令响应。完整教学与自动巡线，高精度避障。华清远见基于WS63提供硬件 + 软件 + 教学资料一体化方案。
 
--   [**星闪Mesh智能家居互联方案**](https://developers.hisilicon.com/cn/caselibrary/wczn_mesh_connection){ target=_blank }
+-   [**星闪Mesh智能家居互联方案**](https://developers.hisilicon.com/cn/caselibrary/wczn_mesh_connection)
 
     ---
 
@@ -132,4 +131,4 @@ WS63 系列是一款高度集成的 2.4GHz Combo 芯片，同时支持 Wi-Fi 6�
 
 </nav>
 
-[查看更多案例](https://developers.hisilicon.com/cn/caselibrary/caseconstruction){ .md-button target=_blank  }
+[查看更多案例](https://developers.hisilicon.com/cn/caselibrary/caseconstruction){.md-button}

@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 经典蓝牙
@@ -27,3 +26,15 @@ BR (Basic Rate) 是 WS63 的经典蓝牙协议栈 API，支持音频传输、串
 ## 通用
 
 - [GAP (Generic Access Profile)](gap/gap.md) — 设备发现、连接管理
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+Audio <audio/index>
+GAP <gap/gap>
+PAN <pan/pan>
+PBAP <pbap/pbap>
+SPP <spp/spp>
+```

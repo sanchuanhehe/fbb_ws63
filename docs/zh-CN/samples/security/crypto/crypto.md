@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # 硬件加密引擎
 
 > 使用技术：Security Unified API

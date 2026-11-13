@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 中间件
@@ -11,3 +10,16 @@ hide:
 - [SLP (SparkLink Positioning)](slp/slp.md) — 低功耗定位
 - [Wi-Fi](wifi/index.md) — Wi-Fi 协议栈
 - [Utils](utils/index.md) — AT / NV (Non-Volatile) / Partition / CRC (Cyclic Redundancy Check) / Upgrade / DFX (Diagnostic & Feedback)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+BTS <bts/index>
+Radar <radar/index>
+SLE <sle/index>
+SLP <slp/slp>
+Wi-Fi <wifi/index>
+Utils <utils/index>
+```

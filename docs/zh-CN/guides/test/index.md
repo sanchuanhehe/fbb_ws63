@@ -3,3 +3,11 @@
 本分类汇总 WS63 开发过程中的专项测试和验证指南。
 
 - [射频测试](rf/index.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+射频测试 <rf/index>
+```

@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # API 参考
@@ -28,3 +27,13 @@ WS63 SDK完整的接口签名参考文档，按模块分类。
 - [OS 抽象层](./osal/index.md)
     
     操作系统抽象层（OSAL (Operating System Abstraction Layer)）接口，包括任务调度、中断、信号量、互斥锁、消息队列、定时器、内存管理等。
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+驱动 <driver/index>
+中间件 <middleware/index>
+OS 抽象层 <osal/index>
+```

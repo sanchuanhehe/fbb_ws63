@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # SLE 安全机制
 
 > 统一说明 SLE (SparkLink Low Energy) 配对、绑定、白名单和加密关系。当前 SDK 没有一一对应的完整安全案例，本页作为设计与验证指导。

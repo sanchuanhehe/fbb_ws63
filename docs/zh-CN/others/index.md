@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 其他
@@ -26,3 +25,13 @@ hide:
 - [术语汇总表](terminology.md)
 
     查阅 WS63 文档中使用的缩略语、英文全称及中文解释。
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+版本说明 <versions/index>
+贡献指南 <Instruction-manual/Instruction-manual>
+术语汇总表 <terminology>
+```

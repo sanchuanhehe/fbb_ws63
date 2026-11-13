@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 蓝牙协议栈
@@ -14,3 +13,12 @@ BTS (Bluetooth Subsystem) 是 WS63 蓝牙协议栈的总入口，包含低功耗
 ## 经典蓝牙
 
 - [BR (Basic Rate)](br/index.md) — 音频（A2DP/AVRCP/HFP）、串口（SPP (Serial Port Profile)）、组网（PAN (Personal Area Network)）、电话本（PBAP (Phone Book Access Profile)）
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+BLE <ble/index>
+BR <br/index>
+```

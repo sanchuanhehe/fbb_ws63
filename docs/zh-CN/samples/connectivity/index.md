@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 无线连接
@@ -18,3 +17,14 @@ hide:
 -->
 - [Wi-Fi](./wifi/index.md)
 - [Radar（雷达）](./radar/index.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+SLE <sle/index>
+BLE <ble/index>
+Wi-Fi <wifi/index>
+Radar <radar/index>
+```

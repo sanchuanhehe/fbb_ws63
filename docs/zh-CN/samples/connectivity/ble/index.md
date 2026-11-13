@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # BLE
@@ -40,3 +39,13 @@ hide:
 - [Wi-Fi 配网](./verticals/wifi-config.md)
 - [HID (Human Interface Device)](./verticals/hid.md)
 - [网关](./verticals/gateway.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+基础入门 <basics/index>
+数据通信 <data-comm/index>
+行业方案 <verticals/index>
+```

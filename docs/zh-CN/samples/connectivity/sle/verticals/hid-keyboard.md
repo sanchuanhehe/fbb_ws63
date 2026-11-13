@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # HID 键盘
 
 > GPIO (General Purpose Input/Output) 按键 → SLE (SparkLink Low Energy) 低延迟按键码 — SLE Low Latency TX (Transmit) 模式

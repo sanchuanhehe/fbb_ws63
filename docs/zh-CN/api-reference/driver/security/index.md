@@ -1,6 +1,6 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
+orphan: true
 ---
 
 # Security 安全

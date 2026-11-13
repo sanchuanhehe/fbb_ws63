@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # 监听模式
 
 > WiFi 混杂模式 — 空口抓包 — `wifi_set_promis_mode()`、WiFi 管理帧回调

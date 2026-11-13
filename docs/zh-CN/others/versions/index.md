@@ -19,3 +19,13 @@ WS63 SDK 的各版本发布说明如下，新版本在前：
 | `1.10.108` | [WS63 1.10.108 发布说明](../../software/release-notes/WS63-1.10.108.md) | `1.10.106` |
 | `1.10.106` | [WS63 1.10.106 发布说明](../../software/release-notes/WS63-1.10.106.md) | `1.10.103` |
 | `1.10.103` | [WS63 1.10.103 发布说明](../../software/release-notes/WS63-1.10.103.md) | 见版本说明 |
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+WS63 1.10.108 <../../software/release-notes/WS63-1.10.108>
+WS63 1.10.106 <../../software/release-notes/WS63-1.10.106>
+WS63 1.10.103 <../../software/release-notes/WS63-1.10.103>
+```

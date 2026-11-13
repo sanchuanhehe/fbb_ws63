@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 ﻿# OSAL List
 
 OSAL (Operating System Abstraction Layer) List 提供双向链表的初始化、节点插入/删除、替换、移动、合并、切割及状态查询等操作，用于内核与驱动模块中的链表数据结构管理。

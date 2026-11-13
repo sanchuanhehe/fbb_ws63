@@ -31,15 +31,17 @@
 | 5a                | 24h, 30°C/60%RH。                                 |
 | 6                 | Time on Label, 30°C/60%RH。                       |
 
-!!! note "潮敏产品的使用"
+```{admonition} 潮敏产品的使用
+:class: note
 
-    - 产品在≤30℃/60%RH下连续或累计暴露超过2个小时，建议进行重新烘烤后再真空干燥包装。
+- 产品在≤30℃/60%RH下连续或累计暴露超过2个小时，建议进行重新烘烤后再真空干燥包装。
 
-    - 产品在≤30℃/60%RH下暴露累计没有超过2个小时，可以不用重新烘烤，但要更换新的干燥剂，进行真空干燥包装。
+- 产品在≤30℃/60%RH下暴露累计没有超过2个小时，可以不用重新烘烤，但要更换新的干燥剂，进行真空干燥包装。
 
-    - 本产品的潮敏参数等级为3级。
+- 本产品的潮敏参数等级为3级。
 
-    本文没有提到的存储及使用原则，请直接参考 JEDEC J-STD-033A。
+本文没有提到的存储及使用原则，请直接参考 JEDEC J-STD-033A。
+```
 
 ## 重新烘烤
 
@@ -57,10 +59,12 @@
 
 <table><tr><th>芯片厚度</th><th>MSL 潮敏等级</th><th>烘烤 125°C</th><th>烘烤 90°C/≤5% RH</th><th>烘烤 40°C/≤5% RH</th></tr><tr><td rowspan="5">≤1.4mm</td><td>2a</td><td>3h</td><td>11h</td><td>5day</td></tr><tr><td>3</td><td>7h</td><td>23h</td><td>9day</td></tr><tr><td>4</td><td>7h</td><td>23h</td><td>9day</td></tr><tr><td>5</td><td>7h</td><td>24h</td><td>10day</td></tr><tr><td>5a</td><td>10h</td><td>24h</td><td>10day</td></tr><tr><td rowspan="5">≤2.0mm</td><td>2a</td><td>16h</td><td>2day</td><td>22day</td></tr><tr><td>3</td><td>17h</td><td>2day</td><td>23day</td></tr><tr><td>4</td><td>20h</td><td>3day</td><td>28day</td></tr><tr><td>5</td><td>25h</td><td>4day</td><td>35day</td></tr><tr><td>5a</td><td>40h</td><td>6day</td><td>56day</td></tr><tr><td rowspan="5">≤4.5mm</td><td>2a</td><td>48h</td><td>7day</td><td>67day</td></tr><tr><td>3</td><td>48h</td><td>8day</td><td>67day</td></tr><tr><td>4</td><td>48h</td><td>10day</td><td>67day</td></tr><tr><td>5</td><td>48h</td><td>10day</td><td>67day</td></tr><tr><td>5a</td><td>48h</td><td>10day</td><td>67day</td></tr></table>
 
-!!! note "说明"
+```{admonition} 说明
+:class: note
 
-    - 此表中显示的均是受潮后，必须的最小的烘烤时间。
+- 此表中显示的均是受潮后，必须的最小的烘烤时间。
 
-    - 重新烘烤优先选择低温烘烤。
+- 重新烘烤优先选择低温烘烤。
 
-    - 详细情况请参考 JEDEC。
+- 详细情况请参考 JEDEC。
+```

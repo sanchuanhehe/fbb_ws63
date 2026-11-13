@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # Wi-Fi
@@ -17,3 +16,15 @@ WS63 Wi-Fi 协议栈 API，支持 802.11 b/g/n/ax，覆盖 STA (Station) 站点�
 
 - [Platform](platform/platform.md) — 平台层，底层硬件配置
 - [ALG (Application Layer Gateway)](alg/alg.md) — 算法，自动调频、抗干扰、温度保护
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+ALG <alg/alg>
+Device <device/device>
+Hotspot <hotspot/hotspot>
+P2P <p2p/p2p>
+Platform <platform/platform>
+```

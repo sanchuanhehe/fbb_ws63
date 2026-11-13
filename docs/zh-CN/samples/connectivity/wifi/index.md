@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # Wi-Fi
@@ -25,3 +24,12 @@ hide:
 - [监听模式](./monitor.md)
 - [中继](./repeater.md)
 -->
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+STA 连接 <sta/sta-connect>
+SoftAP <softap/softap>
+```

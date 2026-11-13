@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # HID 鼠标
 
 > 低延迟 HID (Human Interface Device) -- 鼠标 — SLE (SparkLink Low Energy) Low Latency Mouse 模式

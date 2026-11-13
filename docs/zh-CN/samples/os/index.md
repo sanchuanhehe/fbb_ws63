@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # RTOS 基础
@@ -33,3 +32,15 @@ hide:
 ### 内存管理
 
 - [OSAL 堆内存分配](./memory/osal-kmalloc.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+任务管理 <task/index>
+中断处理 <interrupt/index>
+IPC <ipc/index>
+定时器 <timer/index>
+内存管理 <memory/index>
+```

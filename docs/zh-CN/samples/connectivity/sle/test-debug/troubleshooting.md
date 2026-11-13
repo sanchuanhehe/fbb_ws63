@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # 故障排除
 
 > SLE (SparkLink Low Energy) 错误码、调试方法

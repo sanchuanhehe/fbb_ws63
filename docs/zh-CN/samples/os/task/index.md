@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 任务管理
@@ -10,3 +9,11 @@ hide:
 ## 快速导航
 
 - [OSAL 任务调度](./task-concurrency.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+OSAL 任务调度 <task-concurrency>
+```

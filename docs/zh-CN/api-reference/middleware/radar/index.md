@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 雷达
@@ -15,3 +14,13 @@ WS63E 雷达探测协议栈 API，支持人体存在感知、姿态识别等场�
 
 - [SLP (SparkLink Positioning)](slp/slp.md) — 低功耗雷达定位
 - [Sub-6G](sub_6g/sub_6g.md) — Sub-6G 频段雷达
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+Service <service/service>
+SLP <slp/slp>
+sub_6g <sub_6g/sub_6g>
+```

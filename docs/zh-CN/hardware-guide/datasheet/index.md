@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # SoC Wi-Fi、BLE和SLE Combo芯片
@@ -59,4 +58,17 @@ WS63 系列是集成 Wi-Fi 6、BLE (Bluetooth Low Energy) 5.4 和 SLE (SparkLink
 
     查阅本文档中使用的缩略语及其英文全称。
 
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
 
+产品概述 <product-overview/product-overview>
+系统 <system/system>
+QSPI Flash 控制器 <qspi-flash-controller/qspi-flash-controller>
+WiFi - BLE & SLE 系统 <wifi-ble-sle/wifi-ble-sle>
+安全系统 <security/security>
+外围设备 <peripherals/index>
+JTAG <JTAG/JTAG>
+缩略语 <abbreviations/abbreviations>
+```

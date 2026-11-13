@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # 诊断与日志
 
 > 使用技术：DFX (Diagnostic & Feedback)、diag_log、panic

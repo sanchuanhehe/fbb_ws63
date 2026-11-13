@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # SLE OTA 传输说明
 
 > 本页只说明 SLE (SparkLink Low Energy) OTA (Over-The-Air) 的传输和流控差异。公共升级状态机、镜像校验、切换和回滚见 [OTA 固件升级架构](../../../system/ota/ota.md)。

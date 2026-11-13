@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 外围设备
@@ -74,3 +73,21 @@ WS63 芯片提供丰富的外围设备接口，涵盖 IO 复用、通用输入�
 - [ADC](ADC.md)
 
     逐次逼近型数模转换设备（SAR ADC），将模拟信号转变成数字信号。
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+IO MUX <io-mux>
+GPIO <GPIO>
+UART <UART>
+I2C <I2C>
+SPI <SPI>
+PWM <PWM>
+Tsensor <Tsensor>
+I2S <I2S>
+QSPI <QSPI>
+DMA <DMA>
+ADC <ADC>
+```

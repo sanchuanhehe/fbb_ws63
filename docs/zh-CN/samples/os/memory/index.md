@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 内存管理
@@ -10,3 +9,11 @@ hide:
 ## 快速导航
 
 - [OSAL 堆内存分配](./osal-kmalloc.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+OSAL 堆内存分配 <osal-kmalloc>
+```
