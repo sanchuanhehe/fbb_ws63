@@ -32,7 +32,7 @@
 #define SUPPORT_STATIC_AUTH_LEN 16
 
 static uint8_t dev_uuid[BLE_MESH_UUID_LEN] = {0};
-static uint8_t static_auth_value[SUPPORT_STATIC_AUTH_LEN] = {0};  // Mesh Static OOB value
+static uint8_t static_auth_value[SUPPORT_STATIC_AUTH_LEN] = {0};  // 16 static auth value 长度
 
 #define PROV_OWN_ADDR 0x0001
 
@@ -149,31 +149,6 @@ static void ble_mesh_get_dev_uuid(void)
     memcpy_s(dev_uuid, BD_ADDR_LEN, addr.addr, BD_ADDR_LEN);
 }
 
-static errcode_t ble_mesh_sample_set_tuple_addr(const bd_addr_t *addr)
-{
-    if (addr == NULL) {
-        return ERRCODE_BT_FAIL;
-    }
-
-    g_tuple.addr.type = addr->type;
-    if (memcpy_s(g_tuple.addr.addr, BD_ADDR_LEN, addr->addr, BD_ADDR_LEN) != EOK) {
-        SAMPLE_ERR("ble provisioner addr memcpy failed.");
-        return ERRCODE_BT_FAIL;
-    }
-    return ERRCODE_BT_SUCCESS;
-}
-
-static errcode_t ble_mesh_sample_store_current_addr(void)
-{
-    bd_addr_t addr = {0};
-    errcode_t ret = gap_ble_get_local_addr(&addr);
-    if (ret != ERRCODE_BT_SUCCESS) {
-        SAMPLE_ERR("gap_ble_get_local_addr faile 0x%x.", ret);
-        return ret;
-    }
-    return ble_mesh_sample_set_tuple_addr(&addr);
-}
-
 /*   远程扫描启动接口
  *   uuid 当uuid有效时，扫描指定uuid；当uuid为NULL时，扫描所有未配网设备
  */
@@ -288,10 +263,8 @@ uint32_t ble_mesh_sample_set_auth_value(const char *pid, const char *auth_str)
 
     ble_mesh_hex2bin(pid, g_tuple.pid, BLE_MESH_PID_LEN);
     ble_mesh_hex2bin(auth_str, g_tuple.auth_info, sizeof(g_tuple.auth_info));
-    ret = ble_mesh_sample_set_tuple_addr(&addr);
-    if (ret != ERRCODE_BT_SUCCESS) {
-        return ret;
-    }
+    g_tuple.addr.type = addr.type;
+    (void)memcpy_s(g_tuple.addr.addr, BD_ADDR_LEN, addr.addr, BD_ADDR_LEN);
     (void)memcpy_s(g_tuple.dev_uuid, BLE_MESH_UUID_LEN, dev_uuid, BLE_MESH_UUID_LEN);
 
     ret = ble_mesh_data_write(BTH_BLE_MESH_TUPLE_NV_ID, &g_tuple, sizeof(g_tuple));
@@ -309,11 +282,7 @@ void ble_mesh_sample_set_uuid_value(uint8_t *uuid, uint8_t len)
     }
 
     (void)memcpy_s(g_tuple.dev_uuid, BLE_MESH_UUID_LEN, dev_uuid, BLE_MESH_UUID_LEN);
-    errcode_t ret = ble_mesh_sample_store_current_addr();
-    if (ret != ERRCODE_BT_SUCCESS) {
-        return;
-    }
-    ret = ble_mesh_data_write(BTH_BLE_MESH_TUPLE_NV_ID, &g_tuple, sizeof(g_tuple));
+    errcode_t ret = ble_mesh_data_write(BTH_BLE_MESH_TUPLE_NV_ID, &g_tuple, sizeof(g_tuple));
     if (ret != ERRCODE_BT_SUCCESS) {
         SAMPLE_ERR("ble provisioner tuple write to nv failed, 0x%x!", ret);
     }
@@ -385,9 +354,24 @@ errcode_t ble_mesh_sample_enable(ble_mesh_prov_bearer_t bearers)
         SAMPLE_INFO("Failed to enable mesh node (err %d)", ret);
         return ret;
     }
-    ret = ble_mesh_provisioner_enable(PROV_OWN_ADDR, g_net_idx, 0, 0);
-    if (ret != BLE_MESH_SUCC) {
-        SAMPLE_INFO("Failed to create net (err %d)\r\n", ret);
+    if (!ble_mesh_device_is_provisioned()) {
+        ble_mesh_local_net_info_t net_info = {0};
+        net_info.addr = PROV_OWN_ADDR;
+        net_info.net_idx = g_net_idx;
+        if (bt_rand(net_info.net_key, sizeof(net_info.net_key)) != 0 ||
+            bt_rand(net_info.dev_key, sizeof(net_info.dev_key)) != 0) {
+            SAMPLE_ERR("Failed to generate local network keys.");
+            return ERRCODE_BT_FAIL;
+        }
+        // 与 Device 使用相同的入网保存流程，保存本机地址、DevKey 和网络参数。
+        ret = ble_mesh_set_local_net_info(&net_info);
+        if (ret != BLE_MESH_SUCC) {
+            SAMPLE_ERR("Failed to create net (err %d)", ret);
+            return ret;
+        }
+        SAMPLE_INFO("Created provisioner network.");
+    } else {
+        SAMPLE_INFO("Restored provisioner network.");
     }
     bt_rand(g_app_key, sizeof(g_app_key));
 
