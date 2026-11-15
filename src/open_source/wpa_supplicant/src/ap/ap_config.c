@@ -153,11 +153,15 @@ void hostapd_config_defaults_bss(struct hostapd_bss_config *bss)
 #ifndef EXT_CODE_CROP
 	bss->radius_das_time_window = 300;
 #endif /* EXT_CODE_CROP */
+#ifdef CONFIG_HOSTAPD_WPA3
 	if (g_ap_opt_set.clog_threshold != 0) {
 		bss->anti_clogging_threshold = (g_ap_opt_set.clog_threshold == 255 ? 0 : g_ap_opt_set.clog_threshold);
 	} else {
 		bss->anti_clogging_threshold = 5;
 	}
+#else
+	bss->anti_clogging_threshold = 5;
+#endif
 	bss->sae_sync = 5;
 
 #ifndef EXT_CODE_CROP

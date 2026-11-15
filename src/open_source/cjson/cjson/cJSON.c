@@ -631,7 +631,7 @@ parse_end:
 static cJSON_bool parse_number(cJSON * const item, parse_buffer * const input_buffer)
 {
     double number = 0;
-    unsigned char number_c_string[64];
+    unsigned char *number_c_string;
 #ifndef BIOS_CJSON
     unsigned char *after_end = NULL;
     unsigned char decimal_point = get_decimal_point();
@@ -639,6 +639,8 @@ static cJSON_bool parse_number(cJSON * const item, parse_buffer * const input_bu
     size_t length = 0;
 #endif
     size_t i = 0;
+    size_t number_string_length = 0;
+    cJSON_bool has_decimal_point = false;
 
     if ((input_buffer == NULL) || (input_buffer->content == NULL))
     {
@@ -648,7 +650,7 @@ static cJSON_bool parse_number(cJSON * const item, parse_buffer * const input_bu
     /* copy the number into a temporary buffer and replace '.' with the decimal point
      * of the current locale (for strtod)
      * This also takes care of '\0' not necessarily being available for marking the end of the input */
-    for (i = 0; (i < (sizeof(number_c_string) - 1)) && can_access_at_index(input_buffer, i); i++)
+    for (i = 0; can_access_at_index(input_buffer, i); i++)
     {
         switch (buffer_at_offset(input_buffer)[i])
         {
@@ -666,11 +668,12 @@ static cJSON_bool parse_number(cJSON * const item, parse_buffer * const input_bu
             case '-':
             case 'e':
             case 'E':
-                number_c_string[i] = buffer_at_offset(input_buffer)[i];
+                number_string_length++;
                 break;
 #ifndef BIOS_CJSON
             case '.':
-                number_c_string[i] = decimal_point;
+                number_string_length++;
+                has_decimal_point = true;
                 break;
 #endif
             default:
@@ -678,11 +681,33 @@ static cJSON_bool parse_number(cJSON * const item, parse_buffer * const input_bu
         }
     }
 loop_end:
-    number_c_string[i] = '\0';
+    /* malloc for temporary buffer, add 1 for '\0' */
+    number_c_string = (unsigned char *) input_buffer->hooks.allocate(number_string_length + 1);
+    if (number_c_string == NULL)
+    {
+        return false; /* allocation failure */
+    }
+
+    memcpy(number_c_string, buffer_at_offset(input_buffer), number_string_length);
+    number_c_string[number_string_length] = '\0';
+
+    if (has_decimal_point)
+    {
+        for (i = 0; i < number_string_length; i++)
+        {
+            if (number_c_string[i] == '.')
+            {
+                /* replace '.' with the decimal point of the current locale (for strtod) */
+                number_c_string[i] = decimal_point;
+            }
+        }
+    }
 #ifndef BIOS_CJSON
     number = strtod((const char*)number_c_string, (char**)&after_end);
     if (number_c_string == after_end)
     {
+        /* free the temporary buffer */
+        input_buffer->hooks.deallocate(number_c_string);
         return false; /* parse_error */
     }
 #else
@@ -713,6 +738,8 @@ loop_end:
 #else
     input_buffer->offset += length;
 #endif
+    /* free the temporary buffer */
+    input_buffer->hooks.deallocate(number_c_string);
     return true;
 }
 #endif
@@ -796,7 +823,7 @@ CJSON_PUBLIC(char*) cJSON_SetValuestring(cJSON *object, const char *valuestring)
         return NULL;
     }
     /* return NULL if the object is corrupted */
-    if (object->valuestring == NULL)
+    if (object->valuestring == NULL || valuestring == NULL)
     {
         return NULL;
     }
@@ -2497,6 +2524,11 @@ static cJSON_bool parse_object(cJSON * const item, parse_buffer * const input_bu
             current_item->next = new_item;
             new_item->prev = current_item;
             current_item = new_item;
+        }
+
+        if (cannot_access_at_index(input_buffer, 1))
+        {
+            goto fail; /* nothing comes after the comma */
         }
 
         /* parse the name of the child */

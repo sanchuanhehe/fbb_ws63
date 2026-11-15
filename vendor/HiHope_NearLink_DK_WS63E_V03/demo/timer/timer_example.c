@@ -99,6 +99,7 @@ static void timer_entry(void)
     if (ret != OSAL_SUCCESS) {
         printf("create task failed .\n");
     }
+    osal_kthread_unlock();
 }
 /* Run the timer_entry. */
 app_run(timer_entry);

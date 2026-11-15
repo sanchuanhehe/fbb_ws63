@@ -25,6 +25,9 @@
 #include "at_utils.h"
 #include "at_wifi_cmd_table.h"
 #include "debug_print.h"
+#ifdef _PRE_FEATURE_SYSCHANNEL_LITEOS
+#include "main.h"
+#endif
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -630,7 +633,6 @@ at_ret_t cmd_sta_start(void)
 {
     td_s32  ret;
 
-    uapi_at_report("EnableSta 1\r\n");
     ret = wifi_sta_enable();
     if (ret != ERRCODE_SUCC) {
         return AT_RET_SYNTAX_ERROR;
@@ -736,7 +738,7 @@ at_ret_t cmd_sta_start_adv(const startsta_args_t *args)
     if (ret != EXT_ERR_SUCCESS) {
         return AT_RET_SYNTAX_ERROR;
     }
-	uapi_at_report("EnableSta \r\n");
+
 #ifndef CONFIG_FACTORY_TEST_MODE
     ret = wifi_sta_enable();
     if (ret != ERRCODE_SUCC) {
@@ -752,7 +754,6 @@ at_ret_t cmd_sta_start_adv(const startsta_args_t *args)
 *****************************************************************************/
 at_ret_t cmd_sta_stop(void)
 {
-    uapi_at_report("cmd_sta_stop \r\n");
 #ifndef CONFIG_FACTORY_TEST_MODE
     td_s32 ret = wifi_sta_disable();
     if (ret != ERRCODE_SUCC) {
@@ -987,8 +988,6 @@ at_ret_t cmd_sta_status(void)
     wifi_linked_info_stru wifi_status;
 
     memset_s(&wifi_status, sizeof(wifi_linked_info_stru), 0, sizeof(wifi_linked_info_stru));
-
-    uapi_at_report("cmd_sta_status \r\n");
 
     ret = wifi_sta_get_ap_info(&wifi_status);
     if (ret != ERRCODE_SUCC) {
@@ -1541,8 +1540,6 @@ at_ret_t cmd_softap_show_config(void)
 *****************************************************************************/
 at_ret_t cmd_stop_softap(void)
 {
-    uapi_at_report("cmd_stop_softap \r\n");
-
     if (wifi_softap_disable() != ERRCODE_SUCC) {
         return AT_RET_SYNTAX_ERROR;
     }
@@ -1637,6 +1634,22 @@ at_ret_t cmd_control_psd(const psd_args_t *args)
     wifi_set_psd_mode(&psd_option);
     return AT_RET_OK;
 }
+
+#ifdef _PRE_FEATURE_SYSCHANNEL_LITEOS
+td_void cmd_syschannel_init(void)
+{
+#ifndef CONFIG_HCC_SUPPORT_SPI
+    init_sdio_pinmux();
+    sdio_drv_context_init();
+#endif
+    wlan_init();
+}
+
+td_void cmd_syschannel_deinit(void)
+{
+    wlan_deinit();
+}
+#endif
 
 #ifdef LOSCFG_APP_MESH
 td_u32 cmd_mesh_auto_get_ssid(TD_CONST td_char *argv[], ext_mesh_autolink_config *mesh_auto_config)

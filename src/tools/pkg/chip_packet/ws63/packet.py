@@ -22,6 +22,9 @@ from packet_create import packet_bin
 
 TOOLS_DIR = os.path.dirname(PKG_DIR)
 SDK_DIR = os.path.dirname(TOOLS_DIR)
+BUILD_ROOT_DIR = SDK_DIR
+if os.environ.get('FBB_BUILD_ROOT_PATH'):
+    BUILD_ROOT_DIR = os.environ.get('FBB_BUILD_ROOT_PATH')
 sys.path.append(os.path.join(SDK_DIR, "build", "script"))
 sys.path.append(os.path.join(SDK_DIR, "build", "config"))
 from enviroment import TargetEnvironment
@@ -42,10 +45,10 @@ def create_tar(source_dir, output_filename):
 # ws63
 def make_all_in_one_packet(pack_style_str, extr_defines):
     # make all in one packet
-    boot_bin_dir = os.path.join(SDK_DIR, "output", "ws63", "acore", "boot_bin")
-    param_bin_dir = os.path.join(SDK_DIR, "output", "ws63", "acore", "param_bin")
-    nv_bin_dir = os.path.join(SDK_DIR, "output", "ws63", "acore", "nv_bin")
-    efuse_bin_dir = os.path.join(SDK_DIR, "output", "ws63", "acore", "boot_bin")
+    boot_bin_dir = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "acore", "boot_bin")
+    param_bin_dir = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "acore", "param_bin")
+    nv_bin_dir = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "acore", "nv_bin")
+    efuse_bin_dir = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "acore", "boot_bin")
 
     # loader boot
     loadboot_bin = os.path.join(boot_bin_dir, "root_loaderboot_sign.bin")
@@ -80,15 +83,15 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
     defines = target_env.get('defines')
     if "CONFIG_SUPPORT_HILINK_INDIE_UPGRADE" in defines:
         hilink_interim_sign_file = os.path.join(SDK_DIR, "interim_binary", "ws63", "bin", "hilink_bin", "ws63-liteos-hilink-sign.bin")
-        hilink_output_sign_file = os.path.join(SDK_DIR, "output", "ws63", "acore", "ws63-liteos-hilink", "ws63-liteos-hilink-sign.bin")
-        hilink_target_packet_dir = os.path.join(SDK_DIR, "output", "ws63", "acore", "hilink_bin")
+        hilink_output_sign_file = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "acore", "ws63-liteos-hilink", "ws63-liteos-hilink-sign.bin")
+        hilink_target_packet_dir = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "acore", "hilink_bin")
         if not os.path.isdir(hilink_target_packet_dir):
             os.makedirs(hilink_target_packet_dir)
         if os.path.isfile(hilink_interim_sign_file):
             shutil.copy(hilink_interim_sign_file, hilink_target_packet_dir)
         if os.path.isfile(hilink_output_sign_file):
             shutil.copy(hilink_output_sign_file, hilink_target_packet_dir)
-        hilink_bin_dir = os.path.join(SDK_DIR, "output", "ws63", "acore", "hilink_bin")
+        hilink_bin_dir = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "acore", "hilink_bin")
         hilink_bin = os.path.join(hilink_bin_dir, "ws63-liteos-hilink-sign.bin")
         hilink_bx = hilink_bin + f"|0x3F0000|{hex(get_file_size(hilink_bin))}|1"
 
@@ -100,7 +103,7 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
     app_templat_bx = '%s|0x230000|%s|1'
 
     # 输出目录
-    fwpkg_outdir = os.path.join(SDK_DIR, "output", "ws63", "fwpkg", pack_style_str)
+    fwpkg_outdir = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "fwpkg", pack_style_str)
 
     # 键为target名，值为rom bin、app bin的名字
     available_targets_map = {
@@ -160,6 +163,18 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
             'ws63-liteos-app_rom.bin',
             'ws63-liteos-app-sign.bin',
         ],
+        'ws63-liteos-matter': [
+            'ws63-liteos-app_rom.bin',
+            'ws63-liteos-app-sign.bin',
+        ],
+        'ws63-liteos-spi-host': [
+            'ws63-liteos-spi-host_rom.bin',
+            'ws63-liteos-spi-host-sign.bin',
+        ],
+        'ws63-liteos-spi-device': [
+            'ws63-liteos-spi-device_rom.bin',
+            'ws63-liteos-spi-device-sign.bin',
+        ],
         'ws63-liteos-perf': [
             'ws63-liteos-perf_rom.bin',
             'ws63-liteos-perf-sign.bin',
@@ -192,10 +207,38 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
             'ws63-liteos-app-iot_rom.bin',
             'ws63-liteos-app-iot-sign.bin',
         ],
-        'ws63-liteos-testsuite-radar': [
-            'ws63-liteos-testsuite-radar.bin',
-            'ws63-liteos-testsuite-radar-sign.bin',
-        ]
+        'ws63-liteos-slp-radar': [
+            'ws63-liteos-slp-radar.bin',
+            'ws63-liteos-slp-radar-sign.bin',
+        ],
+        'ws63-liteos-slp-radar-perf': [
+            'ws63-liteos-slp-radar-perf.bin',
+            'ws63-liteos-slp-radar-perf-sign.bin',
+        ],
+        'ws63-liteos-slp-radar-perf-single': [
+            'ws63-liteos-slp-radar-perf.bin',
+            'ws63-liteos-slp-radar-perf-sign.bin',
+        ],
+        'ws63-liteos-app-mesh': [
+            'ws63-liteos-app-mesh_rom.bin',
+            'ws63-liteos-app-mesh-sign.bin',
+        ],
+        'ws63-liteos-mesh-sample-prov': [
+            'ws63-liteos-mesh-sample-prov_rom.bin',
+            'ws63-liteos-mesh-sample-prov-sign.bin',
+        ],
+        'ws63-liteos-mesh-sample-server': [
+            'ws63-liteos-mesh-sample-server_rom.bin',
+            'ws63-liteos-mesh-sample-server-sign.bin',
+        ],
+        'ws63-liteos-mesh-sample-client': [
+            'ws63-liteos-mesh-sample-client_rom.bin',
+            'ws63-liteos-mesh-sample-client-sign.bin',
+        ],
+        'ws63-liteos-sle-mesh-one-touch-sample': [
+            'ws63-liteos-sle-mesh-one-touch-sample_rom.bin',
+            'ws63-liteos-sle-mesh-one-touch-sample-sign.bin',
+        ],
     }
 
     if pack_style_str in available_targets_map:
@@ -204,8 +247,8 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
             shutil.rmtree(fwpkg_outdir)
         os.makedirs(fwpkg_outdir)
 
-        rom_bin = os.path.join(SDK_DIR, "output", "ws63", "acore", pack_style_str, available_targets_map[pack_style_str][0])
-        app_bin = os.path.join(SDK_DIR, "output", "ws63", "acore", pack_style_str, available_targets_map[pack_style_str][1])
+        rom_bin = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "acore", pack_style_str, available_targets_map[pack_style_str][0])
+        app_bin = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "acore", pack_style_str, available_targets_map[pack_style_str][1])
         for fpath in (rom_bin, app_bin):
             if not os.path.isfile(fpath):
                 print(f'[!] warning: File `{fpath}` is not exists !Skip fwpkg generate for target `{pack_style_str}` !')
@@ -214,7 +257,7 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
         app_bx = app_templat_bx % (app_bin, hex(get_file_size(app_bin)))
 
         if pack_style_str == 'ws63-liteos-mfg':
-            output_bin_dir = os.path.join(SDK_DIR, "output", "ws63", "acore")
+            output_bin_dir = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "acore")
             packet_post_agvs = list()
             packet_post_agvs.append(loadboot_bx)
             packet_post_agvs.append(params_bx)
@@ -268,7 +311,7 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
             packet_post_agvs.append(efuse_bx)
 
         if "PACKET_MFG_BIN" in extr_defines or double_fwpkg:
-            mfg_sign_bin = os.path.join(SDK_DIR, "output", "ws63", "acore", "boot_bin", "ws63-liteos-mfg-sign.bin")
+            mfg_sign_bin = os.path.join(BUILD_ROOT_DIR, "output", "ws63", "acore", "boot_bin", "ws63-liteos-mfg-sign.bin")
             if os.path.exists(mfg_sign_bin):
                 mfg_bx = mfg_sign_bin + f"|0x470000|{hex(0x183000)}|1" # 0x183000为产测分区B区大小
                 packet_post_agvs.append(mfg_bx)
@@ -277,12 +320,12 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
                     packet_bin(fpga_fwpkg, packet_post_agvs)
                 else:
                     fpga_fwpkg = os.path.join(fwpkg_outdir, f"{pack_style_str}_all.fwpkg")
-                    packet_bin(fpga_fwpkg, packet_post_agvs)                   
+                    packet_bin(fpga_fwpkg, packet_post_agvs)
             else:
                 print("warning: don't find ws63-liteos-mfg-sign.bin...")
         else:
-            if os.path.exists(os.path.join(SDK_DIR, "output", "ws63", "pktbin", "ws63-liteos-mfg.bin")):
-                os.remove(os.path.join(SDK_DIR, "output", "ws63", "pktbin", "ws63-liteos-mfg.bin"))
+            if os.path.exists(os.path.join(BUILD_ROOT_DIR, "output", "ws63", "pktbin", "ws63-liteos-mfg.bin")):
+                os.remove(os.path.join(BUILD_ROOT_DIR, "output", "ws63", "pktbin", "ws63-liteos-mfg.bin"))
 
         packet_post_agvs = list()
         packet_post_agvs.append(loadboot_bx)
@@ -291,11 +334,11 @@ def make_all_in_one_packet(pack_style_str, extr_defines):
         packet_bin(fpga_loadapp_only_fwpkg, packet_post_agvs)
 
         if "windows" in platform.system().lower():
-            os.chdir(os.path.join(SDK_DIR, "output", "ws63"))
+            os.chdir(os.path.join(BUILD_ROOT_DIR, "output", "ws63"))
             create_tar('./pktbin', 'pktbin.zip')
         else:
             print("not windows.")
-            subprocess.run(["tar", "-cf", "pktbin.zip", "./pktbin"], cwd=os.path.join(SDK_DIR, "output", "ws63"))
+            subprocess.run(["tar", "-cf", "pktbin.zip", "./pktbin"], cwd=os.path.join(BUILD_ROOT_DIR, "output", "ws63"))
 
 def is_pack_double_fwpkg(pack_style_str, extr_defines):
     if 'SDK_VERSION=' in extr_defines and 'SDK_VERSION="1.10.T0"' not in extr_defines and pack_style_str == 'ws63-liteos-app':

@@ -22,4 +22,80 @@ config LARGE_THROUGHPUT_CLIENT
     default y
     depends on SAMPLE_SUPPORT_SLE_SPEED_CLIENT_SAMPLE
 
+config SAMPLE_SUPPORT_SLE_DEVICE_CONFIG_SERVER_SAMPLE
+    bool "Support SLE Device Config Server Sample."
+
+config SAMPLE_SUPPORT_SLE_DEVICE_CONFIG_CLIENT_SAMPLE
+    bool "Support SLE Device Config Client Sample."
+
+config SAMPLE_SUPPORT_SLE_FRAGMENTATION_SERVER_SAMPLE
+    bool "Support SLE Fragmentation Server Sample."
+
+config SAMPLE_SUPPORT_SLE_FRAGMENTATION_CLIENT_SAMPLE
+    bool "Support SLE Fragmentation Client Sample."
+
+config SAMPLE_SUPPORT_SLE_HELLO_SERVER_SAMPLE
+    bool "Support SLE Hello Server Sample."
+
+config SAMPLE_SUPPORT_SLE_HELLO_CLIENT_SAMPLE
+    bool "Support SLE Hello Client Sample."
+
+config SAMPLE_SUPPORT_SLE_UART_SERVER_SAMPLE
+    bool "Support SLE UART Server Sample."
+
+config SAMPLE_SUPPORT_SLE_UART_CLIENT_SAMPLE
+    bool "Support SLE UART Client Sample."
+
+config SAMPLE_SUPPORT_SLE_SENSOR_REPORT_SERVER_SAMPLE
+    bool "Support SLE Sensor Report Server Sample."
+
+config SAMPLE_SUPPORT_SLE_SENSOR_REPORT_CLIENT_SAMPLE
+    bool "Support SLE Sensor Report Client Sample."
+
+config SAMPLE_SUPPORT_SLE_CONN_PARAM_TUNING_SERVER_SAMPLE
+    bool "Support SLE Connection Parameter Tuning Server Sample."
+
+config SAMPLE_SUPPORT_SLE_CONN_PARAM_TUNING_CLIENT_SAMPLE
+    bool "Support SLE Connection Parameter Tuning Client Sample."
+
+config SAMPLE_SUPPORT_SLE_PHY_MCS_SWITCH_SERVER_SAMPLE
+    bool "Support SLE PHY/MCS Dynamic Switch Server Sample."
+
+config SAMPLE_SUPPORT_SLE_PHY_MCS_SWITCH_CLIENT_SAMPLE
+    bool "Support SLE PHY/MCS Dynamic Switch Client Sample."
+
+config SAMPLE_SUPPORT_SLE_RSSI_RANGING_SERVER_SAMPLE
+    bool "Support SLE RSSI Ranging Server Sample."
+
+config SAMPLE_SUPPORT_SLE_RSSI_RANGING_CLIENT_SAMPLE
+    bool "Support SLE RSSI Ranging Client Sample."
+
 endchoice
+
+if SAMPLE_SUPPORT_SLE_DEVICE_CONFIG_SERVER_SAMPLE || SAMPLE_SUPPORT_SLE_DEVICE_CONFIG_CLIENT_SAMPLE
+osource "application/samples/bt/sle/sle_device_config/Kconfig"
+endif
+
+if SAMPLE_SUPPORT_SLE_FRAGMENTATION_SERVER_SAMPLE || SAMPLE_SUPPORT_SLE_FRAGMENTATION_CLIENT_SAMPLE
+osource "application/samples/bt/sle/sle_fragmentation/Kconfig"
+endif
+
+if SAMPLE_SUPPORT_SLE_UART_SERVER_SAMPLE || SAMPLE_SUPPORT_SLE_UART_CLIENT_SAMPLE
+osource "application/samples/bt/sle/sle_uart/Kconfig"
+endif
+
+if SAMPLE_SUPPORT_SLE_SENSOR_REPORT_SERVER_SAMPLE || SAMPLE_SUPPORT_SLE_SENSOR_REPORT_CLIENT_SAMPLE
+osource "application/samples/bt/sle/sle_sensor_report/Kconfig"
+endif
+
+if SAMPLE_SUPPORT_SLE_CONN_PARAM_TUNING_SERVER_SAMPLE || SAMPLE_SUPPORT_SLE_CONN_PARAM_TUNING_CLIENT_SAMPLE
+osource "application/samples/bt/sle/sle_conn_param_tuning/Kconfig"
+endif
+
+if SAMPLE_SUPPORT_SLE_PHY_MCS_SWITCH_SERVER_SAMPLE || SAMPLE_SUPPORT_SLE_PHY_MCS_SWITCH_CLIENT_SAMPLE
+osource "application/samples/bt/sle/sle_phy_mcs_switch/Kconfig"
+endif
+
+if SAMPLE_SUPPORT_SLE_RSSI_RANGING_SERVER_SAMPLE || SAMPLE_SUPPORT_SLE_RSSI_RANGING_CLIENT_SAMPLE
+osource "application/samples/bt/sle/sle_rssi_ranging/Kconfig"
+endif

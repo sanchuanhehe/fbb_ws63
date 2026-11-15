@@ -116,7 +116,7 @@ static uint32_t ws63_loaderboot_init(void)
     return 0;
 }
 
-#define BOOT_WATCH_DOG_TIMOUT 7    // 7s
+#define BOOT_WATCH_DOG_TIMOUT 65    // 65s
 /* the entry of C. */
 void start_loaderboot(void)
 {

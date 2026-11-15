@@ -21,15 +21,15 @@ set(SOURCES
 )
 
 set(PUBLIC_HEADER
-    ${CMAKE_SOURCE_DIR}/include/middleware/utils
+    ${ROOT_DIR}/include/middleware/utils
     ${CMAKE_CURRENT_SOURCE_DIR}/nv_storage_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/nv_storage_app
 )
 
 set(PRIVATE_HEADER
-    ${CMAKE_SOURCE_DIR}/drivers/drivers/driver/security/hash
-    ${CMAKE_SOURCE_DIR}/middleware/chips/${chip}/nv/include
-    ${CMAKE_SOURCE_DIR}/middleware/utils/update/inner_include
+    ${ROOT_DIR}/drivers/drivers/driver/security/hash
+    ${ROOT_DIR}/middleware/chips/${chip}/nv/include
+    ${ROOT_DIR}/middleware/utils/update/inner_include
 )
 
 set(PRIVATE_DEFINES

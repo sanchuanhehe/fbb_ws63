@@ -166,9 +166,10 @@ uint8_t spi_port_rx_data_level_get(spi_bus_t bus);
 
 /**
  * @brief  SPI  clock int.
- * @param  [in]  bus_clk The SPI bus clock.
+ * @param  [in]  bus The SPI bus. see @ref spi_bus_t
+ * @param  [in]  attr The SPI attr.
  */
-void spi_porting_clock_init(uint32_t bus_clk);
+void spi_porting_clock_init(spi_bus_t bus, const void *attr);
 
 /**
  * @brief  Get the SPI FIFO DEPTH.

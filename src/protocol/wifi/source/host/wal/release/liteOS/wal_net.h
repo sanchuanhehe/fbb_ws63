@@ -84,12 +84,20 @@ td_u32 hwal_pbuf_convert_2_skb(oal_lwip_buf *lwip_buf, oal_netbuf_stru **sk_buf)
 td_u32 hwal_pbuf_convert_2_skb(oal_lwip_buf *lwip_buf, oal_netbuf_stru *sk_buf);
 #endif
 oal_lwip_buf *hwal_skb_convert_2_pbuf(const oal_netbuf_stru *sk_buf);
-td_void hwal_lwip_receive(oal_lwip_netif *netif, const oal_netbuf_stru *drv_buf);
 td_u32 hwal_lwip_notify(const oal_lwip_netif *netif, td_u32 notify_type);
 td_u32 wal_netdev_stop(oal_net_device_stru *netdev);
 td_u32 wal_netdev_open(oal_net_device_stru *netdev);
+#ifndef _PRE_WLAN_USE_CUSTOM_LWIP
+td_void hwal_lwip_receive(oal_lwip_netif *netif, const oal_netbuf_stru *drv_buf);
 td_void wal_netif_set_down(struct netif *netif, oal_net_device_stru *netdev);
 td_void wal_netif_set_up(struct netif *netif, oal_net_device_stru *netdev);
+#else
+td_void hwal_lwip_receive(const oal_netbuf_stru *drv_buf);
+td_void wal_netif_set_down(oal_net_device_stru *netdev);
+td_void wal_netif_set_up(oal_net_device_stru *netdev);
+td_void netif_set_netdev(void *netif, void *dev);
+td_void lwip_input(td_u8 *data, td_s32 data_len);
+#endif
 osal_s32 wal_report_sta_assoc_info(hmac_vap_stru *hmac_vap, frw_msg *msg);
 td_u8 wal_dev_is_running(td_void);
 td_s32 wal_init_drv_wlan_netdev(nl80211_iftype_uint8 type, wal_protocol_mode_enum mode, td_char *ifname, td_u32 *len);
@@ -97,7 +105,7 @@ td_s32 wal_deinit_drv_wlan_netdev(const td_char *ifname);
 td_void set_past_net_device_by_index(td_u32 netdev_index, oal_net_device_stru *netdev);
 td_void wal_set_delay_report_config(td_u8 enable, td_u16 timeout);
 td_u32 wal_check_auto_conn_status(oal_net_device_stru *netdev, td_u8 auto_reconn, td_u8 *bssid);
-td_u32 hwal_lwip_register(oal_net_device_stru *netdev, oal_ip_addr_t *ip, oal_ip_addr_t *netmask, oal_ip_addr_t *gw);
+td_u32 hwal_lwip_register(oal_net_device_stru *netdev);
 td_void hwal_lwip_unregister_netdev(oal_net_device_stru *netdev);
 oal_lwip_buf *hwal_netbuf_2_pbuf(const oal_netbuf_stru *drv_buf);
 

@@ -104,6 +104,28 @@ config AT_UART_BAUDRATE
     default UART1_BAUDRATE if AT_UART = 1
     default UART2_BAUDRATE if AT_UART = 2
 
+config DIAG_BEAT_HEART_SUPPORT
+    bool
+    prompt "support DIAG BEAT HEART"
+    default n
+    depends on LOG_UART!=3
+ 
+config DIAG_BEAT_HEART_PER_TIME
+    int
+    prompt "HEARTBEAT SENDING INTERVAL(ms)"
+    default 1000
+    help
+        This option means HEARTBEAT SENDING INTERVAL
+    depends on DIAG_BEAT_HEART_SUPPORT
+ 
+config DIAG_BEAT_HEART_TOTAL_TIME
+    int
+    prompt "HEARTBEAT WAITING TIME(s)"
+    default 2
+    help
+        This option means HEARTBEAT WAITING TIME
+    depends on DIAG_BEAT_HEART_SUPPORT
+
 config WVT_UART
     int
     prompt "wvt uart, select 3 means don't use this func"

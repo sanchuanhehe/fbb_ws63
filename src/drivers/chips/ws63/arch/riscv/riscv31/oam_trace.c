@@ -5,6 +5,7 @@
  * Create: 2021-10-25
  */
 #include "oam_trace.h"
+#include "memory_info.h"
 #include "print_config.h"
 #include "arch_encoding.h"
 #include "arch_trace.h"
@@ -57,7 +58,8 @@ static void back_trace(uint32_t sp)
 {
     uint32_t back_sp = sp;
     uint32_t count = 0;
-
+    print_stack_waterline_riscv();
+    print_heap_statistics_riscv();
     oam_trace_print("*******stack txt info begin*******\r\n");
 
     while (back_sp != 0) {

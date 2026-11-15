@@ -293,25 +293,17 @@ OAL_STATIC osal_u16 hmac_sdp_sync_private_action(const hmac_vap_stru *hmac_vap, 
     }
 
     /* 设置本端的MAC地址 */
-    if (memcpy_s(data + WLAN_HDR_ADDR2_OFFSET, WLAN_MAC_ADDR_LEN,
-        hmac_vap->mib_info->wlan_mib_sta_config.dot11_station_id, WLAN_MAC_ADDR_LEN) != EOK) {
-        return 0;
-    }
+    (void)memcpy_s(data + WLAN_HDR_ADDR2_OFFSET, WLAN_MAC_ADDR_LEN,
+        hmac_vap->mib_info->wlan_mib_sta_config.dot11_station_id, WLAN_MAC_ADDR_LEN);
     /* 地址3, BSSID */
-    if (memcpy_s(data + WLAN_HDR_ADDR3_OFFSET, WLAN_MAC_ADDR_LEN, hmac_vap->bssid, WLAN_MAC_ADDR_LEN) != EOK) {
-        return 0;
-    }
+    (void)memcpy_s(data + WLAN_HDR_ADDR3_OFFSET, WLAN_MAC_ADDR_LEN, hmac_vap->bssid, WLAN_MAC_ADDR_LEN);
 
     action_hdr = (sdp_action_header *)(data + MAC_80211_FRAME_LEN); /* 取action帧体 */
-    if (memcpy_s(action_hdr, sizeof(action_hdr_fixed), action_hdr_fixed, sizeof(action_hdr_fixed)) != EOK) {
-        return 0;
-    }
+    (void)memcpy_s(action_hdr, sizeof(action_hdr_fixed), action_hdr_fixed, sizeof(action_hdr_fixed));
     payload_addr = (osal_u8 *)(action_hdr + 1);
     wake_info.total_period = oal_host2net_long(wake_info.total_period);
     wake_info.wake_period = oal_host2net_long(wake_info.wake_period);
-    if (memcpy_s(payload_addr, sizeof(oal_sdp_wakeup_info), &wake_info, sizeof(oal_sdp_wakeup_info)) != EOK) {
-        return 0;
-    }
+    (void)memcpy_s(payload_addr, sizeof(oal_sdp_wakeup_info), &wake_info, sizeof(oal_sdp_wakeup_info));
 
     /* 计算帧的总长度,设置相关发送配置 */
     mac_get_cb_frame_header_length(tx_ctl) = MAC_80211_FRAME_LEN;

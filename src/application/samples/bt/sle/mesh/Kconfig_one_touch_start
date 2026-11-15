@@ -1,0 +1,23 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2026-2026. All rights reserved.
+#===============================================================================
+config SLE_MESH_DEMO_SUPPORT
+    bool "Support SLE Mesh Demo"
+    default n
+
+config SLE_MESH_DEV_MA_ROLE
+    bool "Support SLE Mesh One Touch Start Ma"
+    default n
+
+config SLE_MESH_DEV_MF_ROLE
+    bool "Support SLE Mesh One Touch Start Mf"
+    default n
+
+config SLE_MESH_SUPPORT_LIGHT_CTRL
+    bool "Support SLE Mesh Light Ctrl"
+    default n
+
+config SLE_MESH_SUPPORT_OTA
+    bool "Support SLE Mesh Sample Auto Ota"
+    default n

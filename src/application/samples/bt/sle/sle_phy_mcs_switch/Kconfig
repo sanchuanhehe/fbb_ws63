@@ -1,0 +1,12 @@
+#===============================================================================
+# @brief    Kconfig file for the SLE PHY/MCS dynamic switch sample.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2026. All rights reserved.
+#===============================================================================
+
+config SUPPORT_SLE_PERIPHERAL
+    bool
+    default y if SAMPLE_SUPPORT_SLE_PHY_MCS_SWITCH_SERVER_SAMPLE
+
+config SUPPORT_SLE_CENTRAL
+    bool
+    default y if SAMPLE_SUPPORT_SLE_PHY_MCS_SWITCH_CLIENT_SAMPLE

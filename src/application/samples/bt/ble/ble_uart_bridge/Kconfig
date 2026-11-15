@@ -1,0 +1,11 @@
+#===============================================================================
+# @brief    Kconfig file for the BLE Hello sample.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2026.
+# All rights reserved.
+#===============================================================================
+
+config SAMPLE_SUPPORT_BLE_UART_BRIDGE_SERVER_SAMPLE
+    bool "Support BLE Hello Server Sample"
+
+config SAMPLE_SUPPORT_BLE_UART_BRIDGE_CLIENT_SAMPLE
+    bool "Support BLE Hello Client Sample"

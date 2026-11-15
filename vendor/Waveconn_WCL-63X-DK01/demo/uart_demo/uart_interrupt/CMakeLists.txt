@@ -1,0 +1,3 @@
+set(SOURCES "${SOURCES}" "${CMAKE_CURRENT_SOURCE_DIR}/uart_int.c" 
+            "${SOURCES}" "${CMAKE_CURRENT_SOURCE_DIR}/ws63_uart.c" 
+PARENT_SCOPE)

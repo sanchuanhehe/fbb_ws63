@@ -43,8 +43,28 @@ typedef struct {
     uint32_t            b_th_ratio; /* Range: 0..100 */
     uint32_t            b_th_cnt; /* Range: 0..99 */
     uint32_t            a_th; /* Range: 0..100 */
+    uint32_t            pt_cld_para_1; /* Range: 0..20 */
+    uint32_t            pt_cld_para_2; /* Range: 0..20 */
+    uint32_t            pt_cld_para_3; /* Range: 0..20 */
+    uint32_t            pt_cld_para_4; /* Range: 0..20 */
+    uint32_t            rd_pwr_para_1; /* Range: 1..100 */
+    uint32_t            rd_pwr_para_2; /* Range: 1..100 */
+    uint32_t            rd_pwr_para_3; /* Range: 1..100 */
     uint32_t            write_to_nv; /* Range: 0..1 */
 } radaralgpara_args_t;
+
+typedef struct {
+    uint32_t            para_map;
+    uint32_t            update_duration; /* Range: 1..30000 */
+    uint32_t            check_duration; /* Range: 1..30000 */
+    uint32_t            calc_duration_multiplier; /* Range: 1..255 */
+    uint32_t            is_thru_wall_adapt_en; /* Range: 0..1 */
+    uint32_t            use_pwr_sum; /* Range: 0..1 */
+    uint32_t            sensitivity; /* Range: 0..500 */
+    uint32_t            save_trained_thres; /* Range: 0..1 */
+    uint32_t            use_leakage_pwr_adjust_thres; /* Range: 0..1 */
+    uint32_t            write_to_nv; /* Range: 0..1 */
+} radarwallpara_args_t;
 
 typedef struct {
     uint32_t            para_map;
@@ -96,6 +116,9 @@ at_ret_t at_radar_get_dly_time(void);
 
 /* AT+RADARSETLED=gear */
 at_ret_t at_radar_set_led_gear(const radarsetledgear_args_t *args);
+
+/* AT+RADARWALLPARA=参照参数列表 */
+at_ret_t at_radar_thru_wall_para(const radarwallpara_args_t *args);
 
 // 以下为产测命令
 #ifdef CONFIG_RADAR_MFG
@@ -261,6 +284,55 @@ const at_para_parse_syntax_t radaralgpara_syntax[] = {
     },
     {
         .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 20,
+        .offset = offsetof(radaralgpara_args_t, pt_cld_para_1)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 20,
+        .offset = offsetof(radaralgpara_args_t, pt_cld_para_2)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 20,
+        .offset = offsetof(radaralgpara_args_t, pt_cld_para_3)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 20,
+        .offset = offsetof(radaralgpara_args_t, pt_cld_para_4)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 1,
+        .entry.int_range.max_val = 100,
+        .offset = offsetof(radaralgpara_args_t, rd_pwr_para_1)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 1,
+        .entry.int_range.max_val = 100,
+        .offset = offsetof(radaralgpara_args_t, rd_pwr_para_2)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 1,
+        .entry.int_range.max_val = 100,
+        .offset = offsetof(radaralgpara_args_t, rd_pwr_para_3)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
         .last = true,
         .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
         .entry.int_range.min_val = 0,
@@ -288,6 +360,73 @@ const at_para_parse_syntax_t radarsetledgear_syntax[] = {
         .entry.int_range.min_val = 0,
         .entry.int_range.max_val = 2,
         .offset = offsetof(radarsetledgear_args_t, gear)
+    },
+};
+
+const at_para_parse_syntax_t radarwallpara_syntax[] = {
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 1,
+        .entry.int_range.max_val = 30000,
+        .offset = offsetof(radarwallpara_args_t, update_duration)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 1,
+        .entry.int_range.max_val = 30000,
+        .offset = offsetof(radarwallpara_args_t, check_duration)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 1,
+        .entry.int_range.max_val = 255,
+        .offset = offsetof(radarwallpara_args_t, calc_duration_multiplier)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 1,
+        .offset = offsetof(radarwallpara_args_t, is_thru_wall_adapt_en)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 1,
+        .offset = offsetof(radarwallpara_args_t, use_pwr_sum)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 500,
+        .offset = offsetof(radarwallpara_args_t, sensitivity)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 1,
+        .offset = offsetof(radarwallpara_args_t, save_trained_thres)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 1,
+        .offset = offsetof(radarwallpara_args_t, use_leakage_pwr_adjust_thres)
+    },
+    {
+        .type = AT_SYNTAX_TYPE_INT,
+        .last = true,
+        .attribute = AT_SYNTAX_ATTR_AT_MIN_VALUE | AT_SYNTAX_ATTR_AT_MAX_VALUE,
+        .entry.int_range.min_val = 0,
+        .entry.int_range.max_val = 1,
+        .offset = offsetof(radarwallpara_args_t, write_to_nv)
     },
 };
 
@@ -404,7 +543,7 @@ const at_cmd_entry_t at_radar_cmd_parse_table[] = {
         NULL,
         NULL,
     },
-    // 以下为产测命令
+// 以下为产测命令
 #ifdef CONFIG_RADAR_MFG
     {
         "RADARTESTISO",
@@ -437,6 +576,16 @@ const at_cmd_entry_t at_radar_cmd_parse_table[] = {
         NULL,
         NULL,
     },
+    {
+        "RADARWALLPARA",
+        10012,
+        0,
+        radarwallpara_syntax,
+        NULL,
+        (at_set_func_t)at_radar_thru_wall_para,
+        NULL,
+        NULL,
+    }
 };
 
 #endif  /* AT_RADAR_CMD_AT_CMD_TALBE_H */

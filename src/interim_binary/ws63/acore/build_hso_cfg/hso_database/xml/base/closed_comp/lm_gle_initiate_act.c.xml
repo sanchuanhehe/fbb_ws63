@@ -1,3 +1,4 @@
-<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[gle][initiate]lm_gle_initiate_off_hci_create_con_act success, switch to INITIATING state @lm_gle_initiate_act.c(171),INFO" ID="0x88d6055d" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="[gle][initiate]lm_gle_initiate_start_acl_fsm, con_role=%d, clock=0x%x, us_offset=0x%x, clkn=0x%x @lm_gle_initiate_act.c(241),INFO" ID="0x88d6078d" />
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="[bgtp] initiate_off_check_params, invalid frame_type %d @lm_gle_initiate_act.c(122),INFO" ID="0x88d603d5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[gle][initiate]lm_gle_initiate_off_hci_create_con_act success, switch to INITIATING state @lm_gle_initiate_act.c(251),INFO" ID="0x88d607dd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="[gle][initiate]lm_gle_initiate_start_acl_fsm, con_role=%d, clock=0x%x, us_offset=0x%x, clkn=0x%x @lm_gle_initiate_act.c(335),INFO" ID="0x88d60a7d" />
 			</MSG_LOG>

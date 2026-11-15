@@ -20,16 +20,37 @@ menu "wifi"
     comment "Config wifi."
 endmenu
 
-config RADAR_SERVICE
+menu "radar"
+    config RADAR_SERVICE
     bool
     prompt "Enable Radar."
     default n
     help
         This option means support Radar.
 
-if RADAR_SERVICE
-menu "radar"
-    comment "Config radar."
-    osource "protocol/radar/plat/Kconfig"
+    if RADAR_SERVICE
+        menu "radar service"
+            comment "Config radar service."
+            osource "protocol/radar/plat/Kconfig"
+        endmenu
+    endif
+
+    if RADAR_SERVICE
+        choice
+            prompt "select platform"
+            default RADAR_PLT_SLP
+            config RADAR_PLT_SUB_6G
+                bool "SUB_6G"
+            config RADAR_PLT_SLP
+                bool "SLP"
+        endchoice
+    endif
+    if RADAR_PLT_SLP
+        config RADAR_HW_SPEC_ENABLE
+        bool
+        prompt "hw config special support"
+        default n
+        help
+            This option means hw config special support.
+    endif
 endmenu
-endif

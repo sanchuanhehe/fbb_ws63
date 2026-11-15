@@ -206,11 +206,13 @@ uint32_t upg_lzma_write_image(upg_lzma_decode2_data_t *data, const upg_image_hea
     UNUSED(first_pkt);
     /* 直接写flash */
     if (image->re_enc_flag != OTA_ENCRY_FLAG) {
+        if (data->buf.write_pos != 0) {
 #if defined(UPG_CFG_SUPPORT_ERASE_WHOLE_IMAGE) && defined(YES) && (UPG_CFG_SUPPORT_ERASE_WHOLE_IMAGE == YES)
-        ret = upg_write_new_image_data(data->out_offset, data->buf.outbuf, &data->buf.write_pos, data->image_id, false);
+            ret = upg_write_new_image_data(data->out_offset, data->buf.outbuf, &data->buf.write_pos, data->image_id, false);
 #else
-        ret = upg_write_new_image_data(data->out_offset, data->buf.outbuf, &data->buf.write_pos, data->image_id, true);
+            ret = upg_write_new_image_data(data->out_offset, data->buf.outbuf, &data->buf.write_pos, data->image_id, true);
 #endif
+        }
         if (ret != ERRCODE_SUCC) {
             return SZ_ERROR_DATA;
         }
@@ -241,11 +243,17 @@ uint32_t upg_lzma_decode_to_midbuf(CLzmaDec *p, upg_lzma_decode2_data_t *data,
 
     while (in_pos < in_size) {
         SizeT in_processed = in_size - in_pos; /* 本次待解压长度 */
-        SizeT out_processed = OUT_BUF_SIZE;    /* 预计解压后长度 */
+        SizeT out_processed = OUT_BUF_SIZE - buf->write_pos;    /* 预计解压后长度 */
         finish_mode = upg_lzma_get_mode(&out_processed, data->decompress_len);
         SRes res = lzmadec_decodetobuf(p, buf->outbuf + buf->write_pos, &out_processed, buf->inbuf + in_pos,  /* 解压 */
             &in_processed, finish_mode, &status);
-        if (res != SZ_OK) {
+        
+        /* 处理剩余压缩数据长度太短无法解压 */
+        if (out_processed == 0 && status == LZMA_STATUS_NEEDS_MORE_INPUT) {
+            /* 太短的数据将存放在CLzmaDec句柄的缓存buff中，等待下一组数据一块进行解压，此处直接跳出读取下一组数据 */
+            break;
+        }
+        if ((res != SZ_OK) || (in_processed == 0)) {
             upg_log_err("[UPG] lzmadec_decodetobuf fail ret = 0x%x. \r\n", res);
             return res;
         }

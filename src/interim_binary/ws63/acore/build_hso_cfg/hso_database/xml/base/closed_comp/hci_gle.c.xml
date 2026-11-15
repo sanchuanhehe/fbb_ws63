@@ -1,4 +1,5 @@
-<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]hci_gle_cmd_reject: opcode = 0x%x, err_code = 0x%x @hci_gle.c(123),INFO" ID="0x888003dd" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]hci_gle_send_hw_err: error code(0x%x) @hci_gle.c(143),WARNING" ID="0x8880047b" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]hci_gle_cmd_received: opcode = 0x%x @hci_gle.c(175),INFO" ID="0x8880057d" />
+<MSG_LOG><MSG STRUCTURE="diag_log_msg2" NAME="[bgtp]hci_gle_cmd_reject: opcode = 0x%x, err_code = 0x%x @hci_gle.c(156),INFO" ID="0x888004e5" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]hci_gle_send_hw_err: error code(0x%x) @hci_gle.c(176),WARNING" ID="0x88800583" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[bgtp]hci_gle_cmd_received: opcode = 0x%x @hci_gle.c(208),INFO" ID="0x88800685" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[gle][acb] alloc fail! @hci_gle.c(248),ERROR" ID="0x888007c2" />
 			</MSG_LOG>

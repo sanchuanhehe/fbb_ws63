@@ -14,6 +14,7 @@
 #include <stdbool.h>
 #include "errcode.h"
 #include "key_id.h"
+#include "nv_config.h"
 
 #ifdef __cplusplus
 #if __cplusplus

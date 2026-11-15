@@ -184,6 +184,28 @@ errcode_t uapi_spi_get_attr(spi_bus_t bus, spi_attr_t *attr);
 
 /**
  * @if Eng
+ * @brief  set SPI interrupt mask.
+ * @param  [in]  bus The SPI bus. For details, see @ref spi_bus_t.
+ * @param  [in]  mask_val interrupt shield attribute.
+ * @else
+ * @param  [in]  bus 指定的SPI接口，参考 @ref spi_bus_t 。
+ * @param  [in]  mask_val 中断屏蔽值
+ * @endif
+ */
+void uapi_spi_set_interrupt_mask(spi_bus_t bus, uint32_t mask_val);
+
+/**
+ * @if Eng
+ * @brief  clear SPI interrupt.
+ * @param  [in]  bus The SPI bus. For details, see @ref spi_bus_t.
+ * @else
+ * @param  [in]  bus 指定的SPI接口，参考 @ref spi_bus_t
+ * @endif
+ */
+void uapi_spi_clear_all_interrupt(spi_bus_t bus);
+
+/**
+ * @if Eng
  * @brief  Set SPI extral configuration.
  * @param  [in]  bus The SPI bus. For details, see @ref spi_bus_t.
  * @param  [in]  extra_attr Extral configuration of SPI. For details, see @ref spi_extra_attr_t.

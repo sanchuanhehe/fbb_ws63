@@ -137,11 +137,6 @@ extern unsigned int get_hso_buff(void);
 #define GPIO_MAX_NUMBER     3  // !< Max number of GPIO available
 #define I2S_MAX_NUMBER      1
 
-#define S_DMA_CHANNEL_MAX_NUM    4  // !< Max number of SM_DMA available
-#define B_DMA_CHANNEL_MAX_NUM    8  // !< Max number of M_DMA available
-
-#define DMA_CHANNEL_MAX_NUM      (S_DMA_CHANNEL_MAX_NUM + B_DMA_CHANNEL_MAX_NUM)
-
 #define CHIP_BCPU_SWDDIO  0
 #define CHIP_BCPU_SWDCLK  0
 

@@ -282,13 +282,7 @@ dhcp_dec_pcb_refcount(void)
 static void
 dhcp_get_client_ip(u32_t *cli_ip, struct dhcp_client *dhcp, struct dhcp_state *dhcp_state)
 {
-  if (ip4_addr_isany_val(dhcp->relay_ip)) {
-    DHCP_HOST_TO_IP(*cli_ip, ip_2_ip4(&dhcp->server_ip_addr)->addr, dhcp->offered_sn_mask.addr,
-                    dhcp_state->offered_ip_addr);
-  } else {
-    DHCP_HOST_TO_IP(*cli_ip, dhcp->relay_ip.addr, dhcp->offered_sn_mask.addr,
-                    dhcp_state->offered_ip_addr);
-  }
+  *cli_ip = dhcp_state->offered_ip_addr;
 }
 
 static void
@@ -497,7 +491,7 @@ dhcp_handle_offer(struct netif *netif, struct dhcp_client *dhcp)
 #if LWIP_DHCP_SUBSTITUTE_MMBR
     offered_ip_addr = dhcp_state->offered_ip_addr;
 #endif
-    DHCP_IP_TO_HOST(dhcp_state->offered_ip_addr, cli_ip.addr, dhcp->offered_sn_mask.addr);
+    dhcp_state->offered_ip_addr = cli_ip.addr;
 #if LWIP_DHCP_SUBSTITUTE_MMBR
     /* if offered IP is not same with the preferred IP, should do duplicate IP check */
     if ((dhcp_state->addr_not_dup_check == lwIP_TRUE) && offered_ip_addr != dhcp_state->offered_ip_addr) {
@@ -1097,7 +1091,7 @@ dhcp_handle_ack(struct netif *netif, struct dhcp_client *dhcp)
 
   /* (y)our internet address */
   ip4_addr_copy(cli_ip, dhcp->msg_in->yiaddr);
-  DHCP_IP_TO_HOST(dhcp_state->offered_ip_addr, cli_ip.addr, dhcp->offered_sn_mask.addr);
+  dhcp_state->offered_ip_addr = cli_ip.addr;
 
   /* gateway router */
   if (dhcp_option_given(dhcp, DHCP_OPTION_IDX_ROUTER)) {
@@ -1316,7 +1310,6 @@ static void
 dhcp_substitute_prefer_ip(struct dhcp_client *dhcp, u32_t pref_ipv4)
 {
   ip4_addr_t cli_ip, netaddr;
-  dhcp_num_t offered_ip_addr;
   struct dhcp_state *dhcp_state = &((dhcp->states)[dhcp->cli_idx]);
 
   if (ip4_addr_isany_val(dhcp->offered_sn_mask)) {
@@ -1335,8 +1328,7 @@ dhcp_substitute_prefer_ip(struct dhcp_client *dhcp, u32_t pref_ipv4)
     return;
   }
 
-  DHCP_IP_TO_HOST(offered_ip_addr, pref_ipv4, dhcp->offered_sn_mask.addr);
-  dhcp_state->offered_ip_addr = offered_ip_addr;
+  dhcp_state->offered_ip_addr = pref_ipv4;
   dhcp_state->addr_not_dup_check = lwIP_TRUE;
 
   return;
@@ -3218,7 +3210,7 @@ dhcp_addr_clients_check(struct dhcp *netif_dhcp, const ip4_addr_t *ipaddr)
 
   dhcp = &(netif_dhcp->client);
 
-  DHCP_IP_TO_HOST(offered_ip_addr, ipaddr->addr, dhcp->offered_sn_mask.addr);
+  offered_ip_addr = ipaddr->addr;
   for (i = 0; i < DHCP_CLIENT_NUM; i++) {
     dhcp_state = &((dhcp->states)[i]);
     if ((i != LWIP_DHCP_NATIVE_IDX) && (dhcp_state->idx == 0)) {

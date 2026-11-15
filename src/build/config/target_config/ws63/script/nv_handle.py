@@ -1,14 +1,17 @@
+# Copyright (c) 2020 HiSilicon (Shanghai) Technologies CO.; LIMITED.
 import json
 from xml.dom.minidom import Document
 import re
 import os
+import sys
 
 
-NV_JSON_FILE_DIR = ["./output/ws63/acore/nv_bin/temp/cfg/acore_nv.json"]
-NV_TXT_FILE_DIR = ["./output/ws63/acore/nv_bin/temp/acore.etypes"]
+OUTPUT_ROOT = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else "./output")
+NV_JSON_FILE_DIR = [os.path.join(OUTPUT_ROOT, "ws63", "acore", "nv_bin", "temp", "cfg", "acore_nv.json")]
+NV_TXT_FILE_DIR = [os.path.join(OUTPUT_ROOT, "ws63", "acore", "nv_bin", "temp", "acore.etypes")]
 
-NV_XML_PATH = "./output/ws63/database/cco/system/hdbcfg/mss_nvi_db.xml"
-TXT_PATH = "./output/ws63/database/cco/system/nv/nv_struct_def.txt"
+NV_XML_PATH = os.path.join(OUTPUT_ROOT, "ws63", "database", "cco", "system", "hdbcfg", "mss_nvi_db.xml")
+TXT_PATH = os.path.join(OUTPUT_ROOT, "ws63", "database", "cco", "system", "nv", "nv_struct_def.txt")
 
 
 def nv_json_handle():
@@ -59,6 +62,7 @@ def dic_to_nv(nv_dic: dict):
             son_node.setAttribute("PARAM_NAME", file_cont[nv_name]["structure_type"])
     print("nv xml writing in: ", NV_XML_PATH)
     try:
+        os.makedirs(os.path.dirname(NV_XML_PATH), exist_ok=True)
         f = open(NV_XML_PATH, "w", encoding="utf-8")
         f.write(nv_data.toprettyxml())
         f.close()
@@ -84,6 +88,7 @@ def struct_to_txt():
         struct_list.extend(ret2)
     print("struct writing in:", TXT_PATH)
     try:
+        os.makedirs(os.path.dirname(TXT_PATH), exist_ok=True)
         with open(TXT_PATH, "w", encoding="utf-8") as t_file:
             t_file.write('''#include "base_datatype_def.txt"\n''')
             for i in struct_list:

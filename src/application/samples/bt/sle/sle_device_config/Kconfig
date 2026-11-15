@@ -1,0 +1,12 @@
+#===============================================================================
+# @brief    Kconfig file for SLE Device Config sample.
+# Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+#===============================================================================
+
+config SUPPORT_SLE_PERIPHERAL
+    bool
+    default y if SAMPLE_SUPPORT_SLE_DEVICE_CONFIG_SERVER_SAMPLE
+
+config SUPPORT_SLE_CENTRAL
+    bool
+    default y if SAMPLE_SUPPORT_SLE_DEVICE_CONFIG_CLIENT_SAMPLE

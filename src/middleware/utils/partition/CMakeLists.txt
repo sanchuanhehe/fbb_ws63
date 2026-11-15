@@ -12,7 +12,7 @@ set(PUBLIC_HEADER
 )
 
 set(PRIVATE_HEADER
-    ${CMAKE_SOURCE_DIR}/middleware/chips/${CHIP}/partition
+    ${ROOT_DIR}/middleware/chips/${CHIP}/partition
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 

@@ -230,21 +230,21 @@ typedef errcode_t (*hal_adc_set_t)(adc_channel_t ch, bool on);
 /**
  * @if Eng
  * @brief Channel select differential interface for hal adc.
- * @param  [in]  postive_ch The postive adc channel. For details, see @ref adc_channel_t.
+ * @param  [in]  positive_ch The positive adc channel. For details, see @ref adc_channel_t.
  * @param  [in]  negative_ch The negative adc channel. For details, see @ref adc_channel_t.
  * @param  [in]  on flag of enable or disable.
  * @retval ERRCODE_SUCC   Success.
  * @retval Other        Failure. For details, see @ref errcode_t.
  * @else
  * @brief  HAL层通道选择差分接口。
- * @param  [in]  postive_ch adc正通道 参考 @ref adc_channel_t 。
+ * @param  [in]  positive_ch adc正通道 参考 @ref adc_channel_t 。
  * @param  [in]  negative_ch adc负通道 参考 @ref adc_channel_t 。
  * @param  [in]  on 使能/去使能标志。
  * @retval ERRCODE_SUCC 成功。
  * @retval Other        失败，参考 @ref errcode_t 。
  * @endif
  */
-typedef errcode_t (*hal_adc_diff_set_t)(adc_channel_t postive_ch, adc_channel_t negative_ch, bool on);
+typedef errcode_t (*hal_adc_diff_set_t)(adc_channel_t positive_ch, adc_channel_t negative_ch, bool on);
 #endif
 
 #if defined(CONFIG_ADC_SUPPORT_AUTO_SCAN)

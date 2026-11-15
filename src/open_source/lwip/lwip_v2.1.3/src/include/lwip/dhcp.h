@@ -89,15 +89,6 @@ typedef u32_t dhcp_num_t;
   _p[3] = _dhcp_xid; \
 } while (0)
 
-#define DHCP_HOST_TO_IP(_ip, _serv_ip, _mask, _host) do { \
-  u32_t _ipaddr = (u32_t)(_host); \
-  (_ip) = (((_serv_ip) & (_mask)) | lwip_htonl(_ipaddr)); \
-} while (0)
-
-#define DHCP_IP_TO_HOST(_host, _ip, _mask) do { \
-  (_host) = (dhcp_num_t)(lwip_ntohl(_ip) & (~lwip_ntohl(_mask))); \
-} while (0)
-
 /* more related events should be defined here */
 #define DHCP_EVENT_HW 0x01
 

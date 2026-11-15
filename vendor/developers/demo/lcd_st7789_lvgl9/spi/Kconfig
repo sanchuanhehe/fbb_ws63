@@ -1,0 +1,41 @@
+config SPI_MASTER_BUS_ID
+    int
+    prompt "Choose SPI master bus id."
+    depends on SAMPLE_SUPPORT_SPI
+    default 0
+
+config SPI_DI_MASTER_PIN
+    int
+    prompt "Choose SPI DI master pin."
+    depends on SAMPLE_SUPPORT_SPI
+    default 11
+
+config SPI_DO_MASTER_PIN
+    int
+    prompt "Choose SPI DO master pin."
+    depends on SAMPLE_SUPPORT_SPI
+    default 9
+
+config SPI_CLK_MASTER_PIN
+    int
+    prompt "Choose SPI CLK master pin."
+    depends on SAMPLE_SUPPORT_SPI
+    default 7
+
+config SPI_CS_MASTER_PIN
+    int
+    prompt "Choose SPI CS master pin."
+    depends on SAMPLE_SUPPORT_SPI
+    default 10
+
+config SPI_RESET_MASTER_PIN
+    int
+    prompt "Choose SPI RESET master pin."
+    depends on SAMPLE_SUPPORT_SPI
+    default 3
+
+config SPI_DC_MASTER_PIN
+    int
+    prompt "Choose SPI DC master pin."
+    depends on SAMPLE_SUPPORT_SPI
+    default 6

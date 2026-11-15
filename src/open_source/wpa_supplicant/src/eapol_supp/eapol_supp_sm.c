@@ -248,9 +248,7 @@ struct eapol_sm {
 		EAPOL_CB_SUCCESS,
 		EAPOL_CB_FAILURE
 	} cb_status;
-#ifdef CONFIG_WPA3
 	Boolean cached_pmk;
-#endif /* CONFIG_WPA3 */
 };
 #endif /* EXT_EAP_TRIM */
 static void eapol_sm_txLogoff(struct eapol_sm *sm);
@@ -1971,7 +1969,6 @@ void eapol_sm_notify_ctrl_response(struct eapol_sm *sm)
 	}
 }
 
-#if defined (CONFIG_WPA3) || defined (CONFIG_HOSTAPD_WPA3)
 /**
  * eapol_sm_request_reauth - Request reauthentication
  * @sm: Pointer to EAPOL state machine allocated with eapol_sm_init()
@@ -1985,7 +1982,6 @@ void eapol_sm_request_reauth(struct eapol_sm *sm)
 		return;
 	eapol_sm_txStart(sm);
 }
-#endif /* CONFIG_WPA3 || CONFIG_HOSTAPD_WPA3 */
 
 /**
  * eapol_sm_notify_lower_layer_success - Notification of lower layer success

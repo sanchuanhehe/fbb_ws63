@@ -57,10 +57,13 @@ static inline uint32_t convert_cycle_2_us(uint64_t cycle)
 
 extern hal_timer_funcs_t *g_hal_timer_func[CONFIG_TIMER_MAX_NUM];
 extern timers_manager_t g_timers_manager[CONFIG_TIMER_MAX_NUM];
+extern uint32_t timer_get_next_timer(timer_index_t index);
+extern bool timer_process_timers(timer_index_t index);
+extern void timer_set_next_timer_interrupt(timer_index_t index);
+extern bool const g_hal_timer_width[TIMER_MAX_NUM + 1];
 
 // new func
 errcode_t uapi_timer_read(timer_handle_t timer, uint32_t *time_us);
-void ws63_timer_patch_init(void);
 
 #ifdef __cplusplus
 #if __cplusplus

@@ -1,0 +1,8 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2024. All rights reserved.
+#===============================================================================
+config LED_PIN
+    int
+    prompt "Choose LED pin."
+    default 4

@@ -36,6 +36,7 @@ typedef struct _hcc_test_para_ {
 } hcc_test_para;
 
 typedef struct _hcc_test_stat_ {
+    td_bool test_init;
     td_bool test_stop;  /* 开始进行流控，测试停止 */
 } hcc_test_stat;
 
@@ -134,6 +135,7 @@ td_void hcc_test_start_test_after_init_paras(td_void);
 int hcc_test_cmd_proc(int argc, char *argv[]);
 td_s32 hcc_test_proc_remote_cmd(td_u32 *argv, td_u32 argc);
 td_s32 hcc_test_cmd_ctrl_init(void);
+td_void hcc_test_cmd_ctrl_deinit(td_void);
 
 static inline td_u64 hcc_get_timestamp(td_void)
 {

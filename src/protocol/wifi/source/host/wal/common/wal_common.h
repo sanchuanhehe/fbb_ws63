@@ -63,6 +63,7 @@ wlan_p2p_mode_enum_uint8 wal_wireless_iftype_to_mac_p2p_mode_etc(enum nl80211_if
 osal_s32 wal_set_ssid(oal_net_device_stru *net_dev, const osal_u8 *ssid_ie, osal_u8 ssid_len);
 osal_s32 wal_set_mode(oal_net_device_stru *net_dev, const wal_ioctl_mode_map_stru *mode_map,
     const osal_s8 *mode_str);
+osal_s32 wal_set_rate_power(oal_net_device_stru *net_dev, osal_s32 protocol, osal_s32 rate, osal_s32 power_offset);
 osal_s32 wal_set_channel_info(osal_u8 vap_id, osal_u8 channel,
     wlan_channel_band_enum_uint8 band, wlan_channel_bandwidth_enum_uint8 bandwidth);
 osal_s32 wal_down_vap(oal_net_device_stru *net_dev, osal_u8 vap_id);

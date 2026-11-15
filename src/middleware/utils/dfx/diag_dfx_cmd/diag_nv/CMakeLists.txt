@@ -14,9 +14,9 @@ set(PUBLIC_HEADER
 )
 
 set(PRIVATE_HEADER
-    ${CMAKE_SOURCE_DIR}/include/middleware/utils
-    ${CMAKE_SOURCE_DIR}/middleware/utils/nv/nv_storage_lib
-    ${CMAKE_SOURCE_DIR}/middleware/utils/nv/nv_storage_app
+    ${ROOT_DIR}/include/middleware/utils
+    ${ROOT_DIR}/middleware/utils/nv/nv_storage_lib
+    ${ROOT_DIR}/middleware/utils/nv/nv_storage_app
 )
 set(PRIVATE_DEFINES
 )

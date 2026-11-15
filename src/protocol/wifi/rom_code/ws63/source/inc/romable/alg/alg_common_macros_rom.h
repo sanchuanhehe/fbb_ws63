@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2020-2022. All rights reserved.
  * Description: vap / user common info for host and device
  */
@@ -102,7 +102,7 @@ extern "C" {
   1.5 TPC 宏定义
 ******************************************************************************/
 #define HMAC_WLAN_NEAR_DISTANCE_RSSI        (0)             /* 默认近距离信号门限0dBm */
-#define HMAC_WLAN_FAR_DISTANCE_RSSI         (-127)             /* 默认远距离信号门限-127dBm */
+#define HMAC_WLAN_FAR_DISTANCE_RSSI         (-60)             /* 默认远距离信号门限-60dBm */
 #define HMAC_WLAN_NORMAL_DISTANCE_RSSI_UP   (-42)             /* 信号强度小于-42dBm时，才认为非超近距离 */
 #define HMAC_ALG_TPC_RATE_DOWN_GAP 2                          /* 速率下降的间隙 */
 #define HMAC_ALG_TPC_RATE_UP_GAP 2                            /* 速率上升的间隙 */

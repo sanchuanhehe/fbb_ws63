@@ -77,15 +77,23 @@ else()
         ${WIFI_DEVICE_DIR}/source/common/wifi_fe/fe_hal/rf/mpw
     )
 endif()
+if(CONFIG_SUPPORT_SLE_BASE_STATION IN_LIST DEFINES)
+    list(APPEND Wi-Fi-PUBLIC_HEADER
+        ${ROOT_DIR}/protocol/wifi/source/host/inc/oal/
+        ${ROOT_DIR}/protocol/wifi/source/host/inc/oal/liteOS/
+        ${ROOT_DIR}/protocol/wifi/source/host/forward/liteOS/
+        ${WIFI_DEVICE_DIR}/source/device/hal/hal_ws63/src/
+    )
+endif()
 set(Wi-Fi-PRIVATE_HEADER
-    ${CMAKE_SOURCE_DIR}/middleware/utils/hcc/inc
-    ${CMAKE_SOURCE_DIR}/middleware/utils/hcc/comm
-    ${CMAKE_SOURCE_DIR}/middleware/utils/hcc/cfg
-    ${CMAKE_SOURCE_DIR}/kernel/osal/include
-    ${CMAKE_SOURCE_DIR}/kernel/osal_adapt/inc
+    ${ROOT_DIR}/middleware/utils/hcc/inc
+    ${ROOT_DIR}/middleware/utils/hcc/comm
+    ${ROOT_DIR}/middleware/utils/hcc/cfg
+    ${ROOT_DIR}/kernel/osal/include
+    ${ROOT_DIR}/kernel/osal_adapt/inc
 
     #watch dog
-    ${CMAKE_SOURCE_DIR}/drivers/drivers/driver/watchdog
+    ${ROOT_DIR}/drivers/drivers/driver/watchdog
 
     ${CMAKE_CURRENT_SOURCE_DIR}/source/host/common/customize
     ${CMAKE_CURRENT_SOURCE_DIR}/source/host/feature

@@ -439,6 +439,16 @@ void
 sys_restart_timeouts(void)
 {}
 
+#if !NO_SYS
+/** In LiteOS system,
+  * the task tcpip_thread/sys_timeouts_mbox_fetch()/check_timeout() will handle timeout functions periodicity, 
+  * so this function is null for compile pass.
+  */
+void
+sys_check_timeouts(void)
+{}
+#endif
+
 err_t
 sys_timeout(u32_t msecs, sys_timeout_handler handler, void *arg)
 {

@@ -70,7 +70,7 @@ diff -Naru deviceauth/CMakeLists.txt deviceauth_new/CMakeLists.txt
 @@ -0,0 +1,111 @@
 +#===============================================================================
 +# @brief    cmake file
-+# Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
++# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
 +#===============================================================================
 +set(COMPONENT_NAME "deviceauth")
 +

@@ -68,6 +68,8 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt server read evt bta addr error @uapi_ble_gatt.c(824),ERROR" ID="0xd87419c2" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt exchange mtu ind len error. len = %u @uapi_ble_gatt.c(839),INFO" ID="0xd8741a3d" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt exchange mtu ind error @uapi_ble_gatt.c(843),ERROR" ID="0xd8741a5a" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] ble conn general gatt proc:cmdid:0x%02X pay_len:%d. @uapi_ble_gatt.c(891),INFO" ID="0xd8741bdd" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] ble conn general gatt proc no handle for command id:0x%02x.  @uapi_ble_gatt.c(906),INFO" ID="0xd8741c55" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] mc ble gatt stop service comp len error. len = %u @uapi_ble_gatt.c(855),INFO" ID="0xd8741abd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ACore] mc ble gatt stop service comp error @uapi_ble_gatt.c(860),ERROR" ID="0xd8741ae2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[ACore] ble conn general gatt proc:cmdid:0x%02X pay_len:%d. @uapi_ble_gatt.c(909),INFO" ID="0xd8741c6d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ACore] ble conn general gatt proc no handle for command id:0x%02x.  @uapi_ble_gatt.c(924),INFO" ID="0xd8741ce5" />
 			</MSG_LOG>

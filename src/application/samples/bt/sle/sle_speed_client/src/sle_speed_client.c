@@ -41,6 +41,7 @@ static uint64_t g_count_after_get_us;
 #else
 #define RECV_PKT_CNT 1
 #endif
+#define RSSI_AVG_COUNT 10
 static int g_rssi_sum = 0;
 static int g_rssi_number = 0;
 
@@ -55,7 +56,7 @@ void sle_speed_connect_param_init(void)
 {
     sle_default_connect_param_t param = {0};
     param.enable_filter_policy = 0;
-    param.gt_negotiate = 0;
+    param.gt_negotiate = SLE_ANNOUNCE_ROLE_G_CAN_NEGO;
     param.initiate_phys = 1;
     param.max_interval = SPEED_DEFAULT_CONN_INTERVAL;
     param.min_interval = SPEED_DEFAULT_CONN_INTERVAL;
@@ -65,7 +66,7 @@ void sle_speed_connect_param_init(void)
     sle_default_connection_param_set(&param);
 }
 
-void sle_start_scan()
+void sle_start_scan(void)
 {
     sle_seek_param_t param = {0};
     param.own_addr_type = 0;
@@ -132,8 +133,10 @@ static void sle_speed_notification_cb(uint8_t client_id, uint16_t conn_id, ssapc
 {
     unused(client_id);
     unused(status);
-    sle_read_remote_device_rssi(conn_id); // 用于统计rssi均值
 
+    if ((g_recv_pkt_num % RSSI_AVG_COUNT) == 0) {
+        sle_read_remote_device_rssi(conn_id); // 用于统计rssi均值
+    }
     if (g_recv_pkt_num == 0) {
         g_count_before_get_us = uapi_tcxo_get_us();
     } else if (g_recv_pkt_num == RECV_PKT_CNT) {
@@ -173,7 +176,8 @@ void sle_sample_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
 {
     osal_printk("[ssap client] conn state changed conn_id:%d, addr:0x%02x:**:**:0x%02x:0x%02x\n",
         conn_id, addr->addr[0], addr->addr[4], addr->addr[5]); /* 0 4 5: addr index */
-    osal_printk("[ssap client] conn state changed disc_reason:0x%x\n", disc_reason);
+    osal_printk("[ssap client] conn state changed disc_reason:0x%x, pair_state:0x%x, conn_state:0x%x\n",
+        disc_reason, pair_state, conn_state);
     if (conn_state == SLE_ACB_STATE_CONNECTED) {
         if (pair_state == SLE_PAIR_NONE) {
             sle_pair_remote_device(&g_remote_addr);
@@ -181,6 +185,7 @@ void sle_sample_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
         g_conn_id = conn_id;
     } else if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
         sle_start_scan();
+        g_recv_pkt_num = 0;
     }
 }
 
@@ -200,8 +205,8 @@ void sle_sample_auth_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errc
 
 void sle_sample_pair_complete_cbk(uint16_t conn_id, const sle_addr_t *addr, errcode_t status)
 {
-    osal_printk("[ssap client] pair complete conn_id:%d, addr:0x%02x:**:**:0x%02x:0x%02x\n", conn_id, addr->addr[0],
-        addr->addr[4], addr->addr[5]); /* 0 4 5: addr index */
+    osal_printk("[ssap client] pair complete conn_id:%d, addr:0x%02x:**:**:0x%02x:0x%02x, status:0x%x\n",
+        conn_id, addr->addr[0], addr->addr[4], addr->addr[5], status); /* 0 4 5: addr index */
     if (status == ERRCODE_SLE_SUCCESS) {
         ssap_exchange_info_t info = {0};
         info.mtu_size = SLE_MTU_SIZE_DEFAULT;
@@ -234,7 +239,7 @@ void sle_sample_read_rssi_cbk(uint16_t conn_id, int8_t rssi, errcode_t status)
     unused(status);
     g_rssi_sum = g_rssi_sum + rssi;
     g_rssi_number++;
-    if (g_rssi_number == RECV_PKT_CNT) {
+    if (g_rssi_number == RSSI_AVG_COUNT) {
         osal_printk("rssi average = %d dbm\r\n", g_rssi_sum / g_rssi_number);
         g_rssi_sum = 0;
         g_rssi_number = 0;
@@ -337,6 +342,7 @@ void sle_sample_write_cfm_cbk(uint8_t client_id, uint16_t conn_id, ssapc_write_r
     errcode_t status)
 {
     osal_printk("[ssap client] write cfm cbk, client id: %d status:%d.\n", client_id, status);
+    // server端在接收到read_req消息后，会创建一个发包线程
     ssapc_read_req(0, conn_id, write_result->handle, write_result->type);
 }
 
@@ -389,7 +395,7 @@ static void sle_speed_entry(void)
 {
     osal_task *task_handle = NULL;
     osal_kthread_lock();
-    task_handle = osal_kthread_create((osal_kthread_handler)sle_speed_init, 0, "RadarTask", SLE_SPEED_STACK_SIZE);
+    task_handle = osal_kthread_create((osal_kthread_handler)sle_speed_init, 0, "ThroughputTask", SLE_SPEED_STACK_SIZE);
     if (task_handle != NULL) {
         osal_kthread_set_priority(task_handle, SLE_SPEED_TASK_PRIO);
         osal_kfree(task_handle);

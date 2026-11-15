@@ -1,0 +1,12 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+
+config URTRIG_PIN
+    int "Choose URTRIG pin."
+    default 7
+
+config URECHO_PIN
+    int "Choose URECHO pin."
+    default 8

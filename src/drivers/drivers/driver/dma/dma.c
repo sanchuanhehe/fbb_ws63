@@ -170,17 +170,29 @@ static errcode_t dma_configure_memory_transfer(dma_channel_t channel, const dma_
     return ERRCODE_DMA_RET_ERROR_CONFIG;
 }
 
+static bool dma_memory_cfg_param_check(const dma_ch_user_memory_config_t *user_cfg)
+{
+    if (unlikely(user_cfg == NULL)) {
+        return false;
+    }
+    // 防止客户误操作，传入长度为0，导致后续流程异常
+    if (user_cfg->transfer_num == 0) {
+        return false;
+    }
+    if (user_cfg->priority > HAL_DMA_CH_PRIORITY_3) {
+        return false;
+    }
+    if (user_cfg->width > HAL_DMA_TRANSFER_WIDTH_32) {
+        return false;
+    }
+
+    return true;
+}
+
 errcode_t uapi_dma_transfer_memory_single(const dma_ch_user_memory_config_t *user_cfg,
                                           dma_transfer_cb_t callback, uintptr_t arg)
 {
-    if (unlikely(user_cfg == NULL)) {
-        return ERRCODE_DMA_INVALID_PARAMETER;
-    }
-    if (user_cfg->priority > HAL_DMA_CH_PRIORITY_3) {
-        return ERRCODE_DMA_INVALID_PARAMETER;
-    }
-
-    if (user_cfg->width > HAL_DMA_TRANSFER_WIDTH_32) {
+    if (!dma_memory_cfg_param_check(user_cfg)) {
         return ERRCODE_DMA_INVALID_PARAMETER;
     }
     if (unlikely(!g_dma_is_initialised)) {
@@ -198,6 +210,11 @@ errcode_t uapi_dma_transfer_memory_single(const dma_ch_user_memory_config_t *use
 static bool dma_peripheral_cfg_param_check(const dma_ch_user_peripheral_config_t *user_cfg)
 {
     if (unlikely(user_cfg == NULL)) {
+        return false;
+    }
+    // 防止客户误操作，DMA作为流控的同时传入长度为0，导致后续流程异常
+    if (unlikely(user_cfg->transfer_num == 0) &&
+        unlikely(user_cfg->trans_type <= HAL_DMA_TRANS_PERIPHERAL_TO_PERIPHERAL_DMA)) {
         return false;
     }
 
@@ -318,14 +335,7 @@ errcode_t uapi_dma_transfer_memory_lli(uint8_t channel, const dma_ch_user_memory
     if (unlikely(channel >= DMA_CHANNEL_MAX_NUM)) {
         return ERRCODE_DMA_INVALID_PARAMETER;
     }
-    if (unlikely(user_cfg == NULL)) {
-        return ERRCODE_DMA_INVALID_PARAMETER;
-    }
-    if (user_cfg->priority > HAL_DMA_CH_PRIORITY_3) {
-        return ERRCODE_DMA_INVALID_PARAMETER;
-    }
-
-    if (user_cfg->width > HAL_DMA_TRANSFER_WIDTH_32) {
+    if (!dma_memory_cfg_param_check(user_cfg)) {
         return ERRCODE_DMA_INVALID_PARAMETER;
     }
     if (unlikely(!g_dma_is_initialised)) {

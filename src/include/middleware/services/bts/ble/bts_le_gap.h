@@ -12,6 +12,7 @@
 #ifndef BTS_LE_GAP_H
 #define BTS_LE_GAP_H
 
+#include <stdbool.h>
 #include <stdint.h>
 #include "errcode.h"
 #include "bts_def.h"
@@ -364,6 +365,8 @@ typedef struct {
                                     @else   发送功率,单位dbm,范围-127~20 @endif */
     uint32_t duration;         /*!< @if Eng Duration
                                     @else   广播持续发送时长,单位dbm @endif */
+    uint8_t max_events;        /*!< @if Eng max_events
+                                    @else   广播发送次数,单位:次 @endif */
 } gap_ble_adv_params_t;
 
 /**
@@ -610,6 +613,18 @@ typedef struct {
     uint8_t ltk[BLE_PAIRED_LTK_LEN];            /*!< @if Eng link key.
                                                   @else   链路密钥。 @endif */
 } ble_auth_info_evt_t;
+
+/**
+ * @if Eng
+ * @brief Enum of connection feature.
+ * @else
+ * @brief 连接特性枚举。
+ * @endif
+ */
+typedef enum {
+    BLE_FEATURE_CONNNECTION_ASYNC = 0x00,                   /*!< @if Eng async connection
+                                                                  @else   异步连接 @endif */
+} ble_feature_type_t;
 
 /**
  * @if Eng
@@ -1093,7 +1108,24 @@ errcode_t enable_ble(void);
  * @endif
  */
 errcode_t disable_ble(void);
-
+/**
+ * @if Eng
+ * @brief Use this funtion to check BLE stack status.
+ * @par  Use this funtion to check BLE stack status.
+ * @attention NULL
+ * @retval true BLE stack is enable, false BLE stack is not enable.
+ * @par Dependency:
+ * @li  bts_def.h
+ * @else
+ * @brief  检测协议栈是否使能。
+ * @par    检测协议栈是否使能。
+ * @attention 无
+ * @retval true 协议栈已经使能，false协议栈未使能。
+ * @par 依赖:
+ * @li  bts_def.h
+ * @endif
+ */
+bool ble_is_enable(void);
 /**
  * @if Eng
  * @brief Use this funtion to set local device address.
@@ -1280,7 +1312,26 @@ errcode_t gap_ble_start_adv(uint8_t adv_id);
  * @endif
  */
 errcode_t gap_ble_stop_adv(uint8_t adv_id);
-
+/**
+ * @if Eng
+ * @brief Use this funtion to set adv random delay.
+ * @par   Use this funtion to set adv random delay.
+ * @attention NULL
+ * @param  [in] adv_id advertising ID
+ * @param  [in] enable Whether to enable random delay(1: enable, 0: disable)
+ * @par Dependency:
+ * @li  bts_def.h
+ * @else
+ * @brief  设置广播随机延迟开关
+ * @par    设置广播随机延迟开关
+ * @attention 无
+ * @param  [in] adv_id 广播ID
+ * @param  [in] enable 是否开启随机时延(1: 开启, 0: 关闭)
+ * @par 依赖:
+ * @li  bts_def.h
+ * @endif
+ */
+errcode_t gap_ble_set_adv_random_delay(uint8_t adv_id, uint8_t enable);
 /**
  * @if Eng
  * @brief Use this funtion to set scan parameter.
@@ -1607,6 +1658,27 @@ errcode_t gap_ble_connect_param_update(gap_conn_param_update_t *params);
 
 /**
  * @if Eng
+ * @brief  Configure connection feature.
+ * @par    Configure connection feature.
+ * @param  [in]  feature Set the feature number. For details, see @ref ble_feature_type_t
+ * @param  [in]  val Enable/disable the corresponding feature
+ * @retval ERRCODE_SUCC Success。
+ * @par 依赖:
+ * @li  bts_def.h
+ * @else
+ * @brief  配置连接特性。
+ * @par    配置连接特性。
+ * @param  [in]  feature 表示要设置的特性编号，详情见 @ref ble_feature_type_t
+ * @param  [in]  val 启用/禁用对应的特性。
+ * @retval ERRCODE_SUCC 成功。
+ * @par 依赖:
+ * @li  bts_def.h
+ * @endif
+ */
+errcode_t ble_set_feature(ble_feature_type_t feature, bool val);
+
+/**
+ * @if Eng
  * @brief Use this funtion to connect to a remote device.
  * @par   Use this funtion to establish an ACL connection with a remote device.
  * @param  [in]  addr address of the remote device.
@@ -1680,6 +1752,25 @@ errcode_t gap_ble_set_sec_param(gap_ble_sec_params_t *params);
  * @endif
  */
 errcode_t gap_ble_read_remote_device_rssi(uint16_t conn_id);
+
+/**
+ * @if Eng
+ * @brief  Cancels the creation of a connection.
+ * @par Description: Cancels the creation of a connection.
+ * @retval ERRCODE_SUCC Success.
+ * @retval Other        Failure. For details, see @ref errcode_t
+ * @par Depends:
+ * @li  bts_def.h
+ * @else
+ * @brief  取消创建连接。
+ * @par Description: 取消创建连接。
+ * @retval ERRCODE_SUCC 成功。
+ * @retval Other        失败。参考 @ref errcode_t
+ * @par 依赖：
+ * @li  bts_def.h
+ * @endif
+ */
+errcode_t gap_ble_create_connection_cancel(void);
 
 /**
  * @if Eng

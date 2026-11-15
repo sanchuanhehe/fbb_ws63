@@ -67,6 +67,11 @@ void uart_port_set_clock_value(uart_bus_t bus, uint32_t clock);
 void uart_port_config_pinmux(uart_bus_t bus);
 
 /**
+ * @brief  Release the pinmux of the uarts above.
+ */
+void uart_port_release_pinmux(uart_bus_t bus);
+
+/**
  * @brief  Register the interrupt of uarts.
  */
 void uart_port_register_irq(uart_bus_t bus);

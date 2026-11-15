@@ -6,6 +6,7 @@ import struct
 import hashlib
 import os
 import re
+import sys
 from sys import version_info
 
 def str_to_hex(s):
@@ -24,7 +25,23 @@ value_len = 0
 buf = b''
 csv_dir = os.path.split(os.path.realpath(__file__))[0]
 csv_path = os.path.join(csv_dir, "efuse.csv")
-bin_path = os.path.join(csv_dir + "/../../../../../output/ws63/acore/ws63-liteos-app/", 'efuse_cfg.bin')
+# 带target参数时，将使用target拼接成目标目录，不带参数时是sdk编译efuse bin，
+if len(sys.argv) == 1:
+    target_name = "ws63-liteos-app"
+elif len(sys.argv) == 2:
+    target_name = sys.argv[1]
+elif len(sys.argv) == 3:
+    target_name = sys.argv[1]
+else:
+    sys.exit("Failed to generate efuse_cfg.bin.")
+if len(sys.argv) == 3:
+    output_root = os.path.abspath(sys.argv[2])
+else:
+    output_root = os.path.realpath(
+        os.path.join(csv_dir, "../../../../../output"))
+target_path = os.path.join(output_root, "ws63", "acore", target_name)
+os.makedirs(target_path, exist_ok=True)
+bin_path = os.path.join(target_path, 'efuse_cfg.bin')
 
 def get_flash_key_param():
     cfg_file = os.path.join(csv_dir + "/../", 'sign_config', 'encry_config.cfg')

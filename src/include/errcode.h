@@ -119,6 +119,7 @@ typedef uint32_t errcode_t;
 #define ERRCODE_ADC_INVALID_SAMPLE_VALUE                    0x80001143
 #define ERRCODE_ADC_INVALID_CH_TYPE                         0x80001144
 #define ERRCODE_ADC_TIMEOUT                                 0x80001145
+#define ERRCODE_ADC_NOT_POWER_ON                            0x80001146
 
 /* Systick Error. */
 #define ERRCODE_SYSTICK_NOT_INIT                            0x80001160

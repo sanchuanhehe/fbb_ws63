@@ -136,6 +136,9 @@ u32_t sys_timeout_get_wake_time(void);
 
 void sys_untimeout(sys_timeout_handler handler, void *arg);
 void sys_restart_timeouts(void);
+#if !NO_SYS
+void sys_check_timeouts(void);
+#endif
 void tcpip_timeouts_mbox_fetch(sys_mbox_t *mbox, void **msg);
 void sys_timeouts_init(void);
 err_t sys_timeout(u32_t msecs, sys_timeout_handler handler, void *arg);

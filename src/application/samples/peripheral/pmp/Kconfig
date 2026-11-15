@@ -1,0 +1,11 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2026. All rights reserved.
+#===============================================================================
+config PMP_SAMPLE_TRIGGER_FAULT
+    bool
+    prompt "Trigger a protected write for exception verification."
+    default n
+    help
+        Write to the sample's read-only PMP region. This
+        intentionally raises a store access fault and reboots or stops the CPU.

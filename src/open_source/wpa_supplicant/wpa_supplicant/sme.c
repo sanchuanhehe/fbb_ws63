@@ -1481,7 +1481,6 @@ static int sme_sae_auth(struct wpa_supplicant *wpa_s, u16 auth_transaction,
 	return -1;
 }
 
-
 static int sme_sae_set_pmk(struct wpa_supplicant *wpa_s, const u8 *bssid)
 {
 	wpa_printf(MSG_DEBUG,
@@ -1512,7 +1511,6 @@ static int sme_sae_set_pmk(struct wpa_supplicant *wpa_s, const u8 *bssid)
 	return 0;
 }
 
-
 void sme_external_auth_mgmt_rx(struct wpa_supplicant *wpa_s,
 			       const u8 *auth_frame, size_t len)
 {
@@ -1538,6 +1536,9 @@ void sme_external_auth_mgmt_rx(struct wpa_supplicant *wpa_s,
 			header->u.auth.variable,
 			len - auth_length, 1, header->sa);
 		if (res < 0) {
+#ifdef LOS_CONFIG_PMK_CACHE
+            wifi_flush_pmk_cache();
+#endif /* LOS_CONFIG_PMK_CACHE */
 			if (header->u.auth.status_code == WLAN_STATUS_SUCCESS) {
 				sme_send_external_auth_status(
 					wpa_s, WLAN_STATUS_UNSPECIFIED_FAILURE);

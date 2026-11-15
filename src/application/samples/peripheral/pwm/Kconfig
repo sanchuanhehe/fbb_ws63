@@ -26,3 +26,8 @@ config PWM_PIN_MODE
     default 1
     depends on SAMPLE_SUPPORT_PWM
 
+config SAMPLE_SUPPORT_PWM_PRELOAD
+    bool
+    prompt "Support preload pwm config."
+    default n
+    depends on SAMPLE_SUPPORT_PWM && PWM_PRELOAD

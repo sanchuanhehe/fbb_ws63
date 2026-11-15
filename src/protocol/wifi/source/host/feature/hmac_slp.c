@@ -305,13 +305,9 @@ OSAL_STATIC osal_u32 hmac_slp_send_rts_gpio(hmac_vap_stru *hmac_vap, hmac_user_s
 *****************************************************************************/
 OSAL_STATIC osal_u32 hmac_slp_send_cts_gpio(osal_u8 *src_frame, osal_u8 *gpio_frame)
 {
-    errno_t         ret;
     mac_tx_ctl_stru *tx_ctl = (mac_tx_ctl_stru *)gpio_frame;
 
-    ret = memcpy_s(gpio_frame, OAL_MAX_CB_LEN + OAL_MAX_MAC_HDR_LEN, src_frame, OAL_MAX_CB_LEN + OAL_MAX_MAC_HDR_LEN);
-    if (ret != EOK) {
-        oam_error_log0(0, OAM_SF_SLP, "{hmac_slp_send_cts_gpio::memcpy fail.}");
-    }
+    (void)memcpy_s(gpio_frame, OAL_MAX_CB_LEN + OAL_MAX_MAC_HDR_LEN, src_frame, OAL_MAX_CB_LEN + OAL_MAX_MAC_HDR_LEN);
     /* 设置脉冲帧的标识 */
     tx_ctl->slp_frame_id = MAC_SLP_GPIO_FRAME;
 
@@ -645,6 +641,7 @@ OSAL_STATIC osal_u32 hmac_handle_slp_rm_result(hmac_vap_stru *hmac_vap, hmac_use
 
     frame_len = hmac_slp_encap_rm_result(hmac_vap, hmac_user->user_mac_addr, netbuf, frame_data, sizeof(frame_data));
     if (frame_len == 0) {
+        oal_netbuf_free(netbuf);
         oam_error_log1(0, OAM_SF_SLP, "vap_id[%d] {hmac_handle_slp_rm_result::frame_len=0.}", hmac_vap->vap_id);
         return OAL_FAIL;
     }

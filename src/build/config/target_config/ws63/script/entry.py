@@ -85,33 +85,16 @@ def do_cmd(target_name: str, hook_name: str, env: Dict[str, Any])->bool:
     if hook_name == 'build_pre':
         return True
 
-    if target_name == 'ws63-liteos-app' and root_path.endswith('output/sdk') and hook_name == 'build_post':
-        print("start build ws63-liteos-app-haier target")
-        # 海尔代码编译
-        build_haier_script = os.path.join(root_path, '../../application/samples/custom/ws63/haier/boards/HI3863/GCC/build.sh')
-        errcode = subprocess.run(['bash', build_haier_script])
-        if errcode.returncode != 0:
-            print("run build.sh failed!")
-            sys.exit(1)
-        # 拷贝海尔编译结果        
-        src_folder = os.path.join(root_path, '../../application/samples/custom/ws63/haier/boards/HI3863/GCC/libs/libhrapplication.a')
-        dest_folder = os.path.join(root_path, '../../application/samples/custom/ws63/haier/boards/HI3863/sdk/application/ws63-liteos-app/libhrapplication.a')
-        shutil.copyfile(src_folder, dest_folder)
-        # 编译最终fwpkg      
-        build_app_script = os.path.join(root_path,  '../../application/samples/custom/ws63/haier/boards/HI3863/sdk/build.py')
-        errcode = exec_shell(['python3', build_app_script, "-c", "ws63-liteos-app"], None, True)
-        if errcode != 0:
-            print("build ws63-liteos-app-haier target failed!")
-            sys.exit(1)
-        # 拷贝最终编译结果到package目录      
-        dest_folder = os.path.join(root_path, '../package/ws63/ws63_haier')
-        if os.path.exists(dest_folder):
-            print("ws63-liteos-app-haier exist")
-            return True
-        src_folder = os.path.join(root_path, '../../application/samples/custom/ws63/haier/boards/HI3863/sdk/output/ws63')
-        shutil.copytree(src_folder, dest_folder)
-        print("end build ws63-liteos-app-haier target")
-        return True
+    if env.get('build_type', '') == 'custom' and hook_name == 'build_post':
+        custom_build_py = os.path.join(root_path, 'application/samples/custom/ws63/custom_build.py')
+        print(custom_build_py)
+        if os.path.isfile(custom_build_py):
+            print("===========================build custom target start========================================")
+            errcode = exec_shell([sys.executable, custom_build_py, target_name], None, True)
+            if errcode != 0:
+                print("custom_build_py failed!")
+                sys.exit(1)
+            print("===========================build custom target  end ========================================")
 
     if target_name == 'ws63-liteos-mfg' and hook_name == 'build_post':
         errcode = exec_shell([python_path, "build.py", "ws63-liteos-app"], None, True)
@@ -132,25 +115,28 @@ def do_cmd(target_name: str, hook_name: str, env: Dict[str, Any])->bool:
     if env.get('generate_efuse_bin'):
         copy_py = os.path.join(SCRIPT_DIR, 'efuse_cfg_gen.py')
         print("generate_efuse_bin ing...")
-        errcode = exec_shell([sys.executable, copy_py], None, True)
+        errcode = exec_shell([sys.executable, copy_py, target_name, output_root], None, True)
         if errcode != 0:
             print("generate_efuse_bin failed!")
             return False
-        shutil.copy(os.path.join(root_path, 'output/ws63/acore/ws63-liteos-app/efuse_cfg.bin'), os.path.join(root_path, 'output/ws63/acore/boot_bin'))
+        target_bin_path = os.path.join(output_root, 'ws63', 'acore', target_name, 'efuse_cfg.bin')
+        boot_bin_path = os.path.join(output_root, 'ws63', 'acore', 'boot_bin')
+        os.makedirs(boot_bin_path, exist_ok=True)
+        shutil.copy(target_bin_path, boot_bin_path)
         print("generate_efuse_bin done!")
 
     if env.get('copy_files_to_interim'):
         # copy_files_to_interim
         copy_py = os.path.join(SCRIPT_DIR, 'copy_files_to_interim.py')
         print("copy_files_to_interim ing...")
-        errcode = exec_shell([sys.executable, copy_py, root_path], None, True)
+        errcode = exec_shell([sys.executable, copy_py, root_path, output_root], None, True)
         if errcode != 0:
             print("copy_files_to_interim failed!")
             return False
         print("copy_files_to_interim done!")
 
     if "CONFIG_SUPPORT_HILINK_INDIE_UPGRADE" in env.get("defines"):
-        dump_indie_upg_check_file(os.path.join(root_path, "output", "ws63", "acore", target_name), target_name)
+        dump_indie_upg_check_file(os.path.join(output_root, "ws63", "acore", target_name), target_name)
 
     if env.get('pke_rom_bin'):
         # gen pke_rom_bin
@@ -166,7 +152,7 @@ def do_cmd(target_name: str, hook_name: str, env: Dict[str, Any])->bool:
 
             # verify pke rom bin
             if env.get('fixed_pke'):
-                bin1 = os.path.join(root_path, "output", env.get('chip'), env.get('core'), 'pke_rom', 'pke_rom.bin')
+                bin1 = os.path.join(output_root, env.get('chip'), env.get('core'), 'pke_rom', 'pke_rom.bin')
                 bin2 = env.get('fixed_pke_path', '').replace('<root>', root_path)
                 if not compare_bin(bin1, bin2):
                     print(f"Verify pke rom bin ERROR! :{bin1} is not same with {bin2}")
@@ -189,7 +175,7 @@ def do_cmd(target_name: str, hook_name: str, env: Dict[str, Any])->bool:
         print("generate rom_in_one done!")
 
         # verify codepoint bin
-        bin1 = os.path.join(root_path, "output", env.get('chip'), env.get('core'), \
+        bin1 = os.path.join(output_root, env.get('chip'), env.get('core'), \
                 target_name, env.get('bin_name')+'_rompack.bin')
         if env.get('fixed_rom_in_one') and os.path.isfile(bin1):# only rompack bin exists
             bin2 = env.get('fixed_rom_in_one_path', '').replace('<root>', root_path)
@@ -198,14 +184,14 @@ def do_cmd(target_name: str, hook_name: str, env: Dict[str, Any])->bool:
                 return False
 
     if env.get('fixed_bin_name'):
-        bin1 = os.path.join(root_path, "output", env.get('chip'), env.get('core'), \
+        bin1 = os.path.join(output_root, env.get('chip'), env.get('core'), \
             target_name, env.get('fixed_bin_name'))
         bin2 = env.get('fixed_bin_path', '').replace('<root>', root_path)
         if not compare_bin(bin1, bin2):
             print(f"Verify bin ERROR! :{bin1} is not same with {bin2}")
             return False
     nv_handle = os.path.join(SCRIPT_DIR, 'nv_handle.py')
-    exec_shell([python_path, nv_handle], None, True)
+    exec_shell([python_path, nv_handle, output_root], None, True)
     return True
 
 

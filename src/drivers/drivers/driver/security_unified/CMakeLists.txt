@@ -312,23 +312,6 @@ elseif("FUZZ_TEST" IN_LIST DEFINES)
     list(APPEND PUBLIC_DEFINES -DCRYPTO_ERROR_ENV=1)    # Linux
 endif()
 
-
-# mbedtls alt
-if("MBEDTLS_HARDEN_OPEN" IN_LIST DEFINES)
-    list(APPEND SOURCES
-        ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/mbedtls_harden_adapt.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/ecp_harden_impl.c
-    )
-    if(${CHIP} STREQUAL "ws53")
-        # for deep sleep feature.
-        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/hash_harden_impl_short_term.c")
-        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/aes_harden_impl_short_term.c")
-    else()
-        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/hash_harden_impl_long_term.c")
-        list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/aes_harden_impl_long_term.c")
-    endif()
-endif()
-
 set(PRIVATE_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/drv_cipher/drv_code/fmea
     ${CMAKE_CURRENT_SOURCE_DIR}/drv_km/include
@@ -344,16 +327,10 @@ set(PUBLIC_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/kapi/include
     ${CMAKE_CURRENT_SOURCE_DIR}/init/cfbb
     ${CMAKE_CURRENT_SOURCE_DIR}/init/cfbb/${CRYPTO_BUILD_ENV}
-    ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt
-    ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls_harden_adapt/mbedtls_alt/include
     ${CMAKE_CURRENT_SOURCE_DIR}/service_layer
 
     # fix testsuite_brandy_app_yaffs compile error, need modify config.py later.
     ${ROOT_DIR}/include/driver/security_unified
-
-    # fix sdk_ws63_haier compile error for wpa-supplicant.
-	${ROOT_DIR}/open_source/mbedtls/mbedtls_v3.6.0/include
-	${ROOT_DIR}/open_source/mbedtls/mbedtls_v3.6.0
 )
 
 set(PRIVATE_DEFINES
@@ -374,5 +351,6 @@ set(WHOLE_LINK
 set(MAIN_COMPONENT
     false
 )
-
+install_sdk(${CMAKE_CURRENT_SOURCE_DIR}/drv_cipher/drv_pke_v5 "*")
+install_sdk(${CMAKE_CURRENT_SOURCE_DIR}/kapi/source "*")
 build_component()

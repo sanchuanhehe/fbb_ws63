@@ -27,7 +27,7 @@ elseif("alios_v3.3.0" IN_LIST TARGET_COMPONENT)
 endif()
 
 set(CMAKE_LITEOS_DIR_V207
-    ${CMAKE_SOURCE_DIR}/kernel/liteos/liteos_v207.0.0)
+    ${ROOT_DIR}/kernel/liteos/liteos_v207.0.0)
 
 set(SOURCES
     ${CMAKE_LWIP_SOURCE_DIR}/src/core/tcp_out.c

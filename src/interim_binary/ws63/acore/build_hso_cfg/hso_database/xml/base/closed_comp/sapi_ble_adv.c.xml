@@ -20,12 +20,12 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy tx_power_level fail when get scanRspdata @sapi_ble_adv.c(571),ERROR" ID="0xdcb811da" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: local name len too long: %d @sapi_ble_adv.c(581),ERROR" ID="0xdcb8122a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: memcpy localname fail when get scanRspdata @sapi_ble_adv.c(588),ERROR" ID="0xdcb81262" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: App Start Ble Adv get localname or mac err @sapi_ble_adv.c(666),ERROR" ID="0xdcb814d2" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="ble log: ble general set extended adv param g_adv_addr_type = %d adv_event_flag = %x,&quot; &quot;g_config_le_slave_use_privacy = %d @sapi_ble_adv.c(685),INFO" ID="0xdcb8156d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: App Start Ble Adv get localname or mac err @sapi_ble_adv.c(722),ERROR" ID="0xdcb81692" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: Start Ble Adv get localname err @sapi_ble_adv.c(728),ERROR" ID="0xdcb816c2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: ble general adv data len error: %d @sapi_ble_adv.c(738),ERROR" ID="0xdcb81712" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: ble general scan rsp data len error: %d @sapi_ble_adv.c(747),ERROR" ID="0xdcb8175a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: adv data memcpy fail, data_len: %d @sapi_ble_adv.c(770),ERROR" ID="0xdcb81812" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: scan rsp data memcpy fail, data_len: %d @sapi_ble_adv.c(779),ERROR" ID="0xdcb8185a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: App Start Ble Adv get localname or mac err @sapi_ble_adv.c(698),ERROR" ID="0xdcb815d2" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble log: ble general set extended adv param g_adv_addr_type = %d adv_event_flag = %x,&quot; &quot;g_config_le_slave_use_privacy = %d @sapi_ble_adv.c(717),INFO" ID="0xdcb8166d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: App Start Ble Adv get localname or mac err @sapi_ble_adv.c(754),ERROR" ID="0xdcb81792" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble general: Start Ble Adv get localname err @sapi_ble_adv.c(760),ERROR" ID="0xdcb817c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: ble general adv data len error: %d @sapi_ble_adv.c(770),ERROR" ID="0xdcb81812" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: ble general scan rsp data len error: %d @sapi_ble_adv.c(779),ERROR" ID="0xdcb8185a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: adv data memcpy fail, data_len: %d @sapi_ble_adv.c(802),ERROR" ID="0xdcb81912" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble log: scan rsp data memcpy fail, data_len: %d @sapi_ble_adv.c(811),ERROR" ID="0xdcb8195a" />
 			</MSG_LOG>

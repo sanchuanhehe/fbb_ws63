@@ -21,6 +21,7 @@ extern "C" {
 typedef enum _hcc_flowctrl_type_ {
     HCC_FLOWCTRL_DATA,     // 被动接收  接收端的状态，（msg方式）
     HCC_FLOWCTRL_CREDIT,   // 发送前主动获取接收端的剩余包数量
+    HCC_FLOWCTRL_LIMIT_TX,   // 根据对端信息限制TX最大发送量
     HCC_FLOWCTRL_BUTT,
     HCC_FLOWCTRL_TYPE_INVALID = 0xF
 } hcc_flowctrl_type;
@@ -31,6 +32,10 @@ typedef enum _hcc_flowctrl_flag_ {
 } hcc_flowctrl_flag;
 
 #ifdef CONFIG_HCC_SUPPORT_FLOW_CONTRL
+typedef td_u32 (*hcc_flow_ctrl_tx_limit_cb)(td_void);
+td_u16 hcc_flow_ctrl_update_tx_limit(hcc_handler *hcc, hcc_trans_queue *queue, td_u16 remain_pkt_nums);
+td_void hcc_flow_ctrl_tx_limit_register(hcc_flow_ctrl_tx_limit_cb cb);
+td_void hcc_flow_ctrl_tx_limit_unregister(td_void);
 td_bool hcc_flow_ctrl_sched_check(hcc_handler *hcc, hcc_trans_queue *queue);
 ext_errno hcc_flow_ctrl_process(hcc_handler *hcc, hcc_trans_queue *queue);
 td_u32 hcc_flowctrl_on_proc(td_u8 *data);

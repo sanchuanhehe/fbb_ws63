@@ -1,0 +1,73 @@
+#===============================================================================
+# @brief    Kconfig file — BLE WiFi Provisioning Configuration
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2026-2026. All rights reserved.
+#===============================================================================
+
+menu "BLE WiFi Provisioning Configuration"
+
+config BLE_PROV_NV_ENABLE
+    bool "Enable NV storage for WiFi credentials"
+    default y
+    help
+        When enabled, WiFi SSID and password are saved to NV (non-volatile)
+        storage after a successful provisioning. On the next boot the device
+        will skip BLE advertising and connect directly.
+
+config BLE_PROV_AUTO_RECONNECT
+    bool "Auto reconnect on boot if configured"
+    depends on BLE_PROV_NV_ENABLE
+    default y
+    help
+        If NV credentials exist at boot, skip BLE provisioning entirely
+        and reconnect to the saved WiFi network automatically.
+
+config BLE_PROV_LED_ENABLE
+    bool "Enable LED status indication"
+    default n
+    help
+        Drive a GPIO-connected LED to show provisioning state visually.
+        States: fast blink (BLE advertising), slow blink (WiFi connecting),
+        solid on (success), 3 fast blinks then off (failure/timeout).
+
+config BLE_PROV_LED_PIN
+    int "LED GPIO pin number"
+    depends on BLE_PROV_LED_ENABLE
+    default 7
+    help
+        GPIO pin connected to the status LED (active-high).
+        Default 7 is the HiHope WS63E EVB red LED.
+
+config BLE_PROV_TIMEOUT_SEC
+    int "Provisioning timeout (seconds)"
+    default 60
+    range 10 300
+    help
+        If no phone connects via BLE within this timeout, provisioning
+        stops and the device enters a low-power idle state.
+
+config BLE_PROV_MAX_RETRIES
+    int "Maximum provisioning retries"
+    default 3
+    range 1 10
+    help
+        Number of times the device will retry WiFi connection before
+        giving up and entering deep idle.
+
+config BLE_PROV_BTN_ENABLE
+    bool "Enable button to clear NV credentials (long-press)"
+    depends on BLE_PROV_NV_ENABLE
+    default n
+    help
+        When enabled, a long press (~3 seconds) on the configured GPIO
+        pin clears saved WiFi credentials from NV and reboots the device,
+        allowing re-provisioning.  Button is active-low with internal pull-up.
+
+config BLE_PROV_BTN_PIN
+    int "Button GPIO pin number"
+    depends on BLE_PROV_BTN_ENABLE
+    default 13
+    help
+        GPIO pin for the clear-credentials button (active-low).
+        Connect button between this pin and GND.
+
+endmenu

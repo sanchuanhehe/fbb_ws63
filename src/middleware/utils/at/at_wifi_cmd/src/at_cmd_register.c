@@ -49,6 +49,9 @@ td_void at_sys_cmd_register(td_void)
 #ifdef _PRE_WLAN_FEATURE_MFG_TEST
     los_at_mfg_ccpriv_cmd_register();
 #endif
+#ifdef CONFIG_SUPPORT_WIFI_TEST
+    los_at_wifi_test_cmd_register();
+#endif
 }
 
 #ifdef __cplusplus

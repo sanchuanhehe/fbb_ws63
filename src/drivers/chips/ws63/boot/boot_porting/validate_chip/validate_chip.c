@@ -31,7 +31,7 @@ typedef union {
     } time;
 } efuse_time_t;
 
-uint32_t get_efuse_chip_type(uint32_t *type)
+static uint32_t get_efuse_chip_type(uint32_t *type)
 {
     uint8_t efuse_type_id = 0;
     // 1. 读取efuse type_id，判断芯片类型

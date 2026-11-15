@@ -573,21 +573,23 @@ STATIC void kv_key_fix_header_for_validate(kv_key_header_t *key_header, bool ign
     }
 }
 
-STATIC void kv_key_hash_crc_tag_start(const kv_key_handle_t *key, uint32_t *crc_ret)
+STATIC void kv_key_hash_crc_tag_start(const kv_key_handle_t *key, uint32_t *hash_handle, uint32_t *crc_ret)
 {
+    unused(hash_handle);
     *crc_ret = 0;
     if (key->header.enc_key != AES_KDFKEY_SDRK_TYPE) {
         return;
     }
 
 #if ((CONFIG_NV_SUPPORT_ENCRYPT == NV_YES) && (CONFIG_NV_SUPPORT_HASH_FOR_CRYPT == NV_YES))
-    (void)nv_crypto_start_hash();
+    (void)nv_crypto_start_hash(hash_handle);
 #endif
 }
 
-STATIC void kv_key_hash_crc_tag_update(const kv_key_handle_t *key, uint8_t *data_chunk,
+STATIC void kv_key_hash_crc_tag_update(const kv_key_handle_t *key, uint32_t hash_handle, uint8_t *data_chunk,
                                        uint32_t data_len, uint32_t *crc_ret)
 {
+    unused(hash_handle);
 #if (defined(CONFIG_NV_SUPPORT_CRC16_VERIFY) && (CONFIG_NV_SUPPORT_CRC16_VERIFY == NV_YES))
     *crc_ret = (uint16_t)uapi_crc16((uint16_t)*crc_ret, data_chunk, data_len);
 #else
@@ -598,14 +600,15 @@ STATIC void kv_key_hash_crc_tag_update(const kv_key_handle_t *key, uint8_t *data
     }
 
 #if ((CONFIG_NV_SUPPORT_ENCRYPT == NV_YES) && (CONFIG_NV_SUPPORT_HASH_FOR_CRYPT == NV_YES))
-    nv_crypto_update_hash(data_chunk, data_len);
+    nv_crypto_update_hash(hash_handle, data_chunk, data_len);
 #endif
 }
 
-STATIC void kv_key_hash_crc_tag_finish(const kv_key_handle_t *key, uint8_t *calculated_hash, uint32_t crc_value,
-    uint32_t crypto_handle)
+STATIC void kv_key_hash_crc_tag_finish(const kv_key_handle_t *key, uint32_t hash_handle, uint8_t *calculated_hash,
+                                       uint32_t crc_value, uint32_t crypto_handle)
 {
     unused(crypto_handle);
+    unused(hash_handle);
     uint32_t crc_ret = kv_crc32_swap(crc_value);
     if (key->header.enc_key != AES_KDFKEY_SDRK_TYPE) {
         (void)memcpy_s((void *)calculated_hash, KV_CRYPTO_CRC_SIZE, (const void *)&crc_ret, KV_CRYPTO_CRC_SIZE);
@@ -614,7 +617,8 @@ STATIC void kv_key_hash_crc_tag_finish(const kv_key_handle_t *key, uint8_t *calc
 
 #if (CONFIG_NV_SUPPORT_ENCRYPT == NV_YES)
 #if (CONFIG_NV_SUPPORT_HASH_FOR_CRYPT == NV_YES)
-    nv_crypto_complete_hash(calculated_hash);
+    uint32_t calculated_hash_len = 0;
+    nv_crypto_complete_hash(hash_handle, calculated_hash, &calculated_hash_len);
     (void)memcpy_s((void *)(calculated_hash + KV_CRYPTO_HASH_SIZE - KV_CRYPTO_CRC_SIZE), KV_CRYPTO_CRC_SIZE,
         (const void *)&crc_ret, KV_CRYPTO_CRC_SIZE);
 #else
@@ -670,12 +674,13 @@ STATIC errcode_t kv_key_validate_hash_chunks(kv_key_handle_t *key, uint8_t *read
     kv_key_header_t *key_header = (kv_key_header_t *)read_data_chunk;
     uintptr_t key_location = (uintptr_t)key->key_location;
     uint32_t crc_ret = 0;
+    uint32_t hash_handle = 0;
 
     uint16_t hash_crc_len = KV_CRYPTO_CRC_SIZE;
 #if (CONFIG_NV_SUPPORT_ENCRYPT == NV_YES)
     if (key->header.enc_key == AES_KDFKEY_SDRK_TYPE) { hash_crc_len = KV_CRYPTO_HASH_SIZE; }
 #endif
-    kv_key_hash_crc_tag_start(key, &crc_ret);
+    kv_key_hash_crc_tag_start(key, &hash_handle, &crc_ret);
 
     /* Read header first, which is never encrypted */
     res = kv_key_read_data_from_flash((uintptr_t)read_data_chunk, key_location,
@@ -686,7 +691,7 @@ STATIC errcode_t kv_key_validate_hash_chunks(kv_key_handle_t *key, uint8_t *read
 
     kv_key_fix_header_for_validate(key_header, ignor_invalid);
 
-    kv_key_hash_crc_tag_update(key, read_data_chunk, sizeof(kv_key_header_t), &crc_ret);
+    kv_key_hash_crc_tag_update(key, hash_handle, read_data_chunk, sizeof(kv_key_header_t), &crc_ret);
 
     const kv_attributes_t attributes = kv_key_attributes(key);
     uint32_t decryptable_data_len = kv_key_padded_data_length(attributes, key->header.length);
@@ -713,7 +718,7 @@ STATIC errcode_t kv_key_validate_hash_chunks(kv_key_handle_t *key, uint8_t *read
             return res;
         }
 
-        kv_key_hash_crc_tag_update(key, read_data_chunk, chunk_len, &crc_ret);
+        kv_key_hash_crc_tag_update(key, hash_handle, read_data_chunk, chunk_len, &crc_ret);
         key_data_offset += chunk_len;
     }
 
@@ -721,7 +726,7 @@ STATIC errcode_t kv_key_validate_hash_chunks(kv_key_handle_t *key, uint8_t *read
     res = kv_key_read_data_from_flash((uintptr_t)read_data_chunk, (key_location + key_data_offset),
                                       hash_crc_len, INVAILD_CRYPTO_HANDLE);
 
-    kv_key_hash_crc_tag_finish(key, cal_hash_crc, crc_ret, crypto_handle);
+    kv_key_hash_crc_tag_finish(key, hash_handle, cal_hash_crc, crc_ret, crypto_handle);
     return res;
 }
 

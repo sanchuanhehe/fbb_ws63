@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
+# Copyright (c) 2020 HiSilicon (Shanghai) Technologies CO.; LIMITED.
 # Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2022. All rights reserved.
 
 """
@@ -74,16 +75,17 @@ class NvPageHead(Structure):
 
 
 class BuildNv:
-    def __init__(self, alias, root=None, targets=None, backup=False, use_crc16=False):
+    def __init__(self, alias, root=None, targets=None, backup=False, use_crc16=False, build_root=None):
         self.alias = alias
         self.root = root if root is not None else g_root
+        self.build_root = build_root if build_root is not None else self.root
         self.targets = targets
         self.is_backup = backup
         self.use_crc16 = use_crc16
-        self.tmp_path = os.path.join(self.root, json_conf["BUILD_TEMP_PATH"])
-        self.nv_relative_path = os.path.join(self.root, json_conf["NV_RELATIVE_PATH"])
+        self.tmp_path = os.path.join(self.build_root, json_conf["BUILD_TEMP_PATH"])
+        self.nv_relative_path = os.path.join(self.build_root, json_conf["NV_RELATIVE_PATH"])
         self.nv_root = os.path.join(self.root, json_conf["NV_DEFAULT_CFG_DIR"])
-        self.nv_output_dir = os.path.join(self.root, json_conf["OUT_BIN_DIR"])
+        self.nv_output_dir = os.path.join(self.build_root, json_conf["OUT_BIN_DIR"])
         if not backup:
             self.nv_output_name = json_conf["OUT_BIN_NAME"]
         else:
@@ -157,7 +159,7 @@ class BuildNv:
                 stream_gen = generate_data_stream()
                 stream_gen.phase_etypes(etypes_path)
                 chip_dict[target]["stream_gen"] = stream_gen
-        dtabase_txt = os.path.join(self.root, json_conf['DATABASE_TXT_FILE'])
+        dtabase_txt = os.path.join(self.build_root, json_conf['DATABASE_TXT_FILE'])
         shutil.copy(etypes_path, dtabase_txt)
 
 
@@ -639,24 +641,25 @@ def check_key(json_conf):
             msg = "[error] [nv_binary] need add ConfigMap (%s) in json_conf!" % (check_key)
             raise ParserError(msg)
 
-def test(targets, flag, backup, use_crc16):
+def test(targets, flag, backup, use_crc16, build_root=None):
     root = g_root
+    selected_build_root = build_root if build_root is not None else root
     nv_target_json_path = os.path.join(root, json_conf["NV_TARGET_JSON_PATH"])
     alias_conf = BuildConfParser(nv_target_json_path).get_conf_data()
-    worker = BuildNv(alias_conf, root, targets, backup, use_crc16)
+    worker = BuildNv(alias_conf, root, targets, backup, use_crc16, selected_build_root)
     if flag:
-        worker.set_nv_output_dir(os.path.join(root, json_conf["OUT_BIN_DIR"]))
+        worker.set_nv_output_dir(os.path.join(selected_build_root, json_conf["OUT_BIN_DIR"]))
     worker.start_work()
 
-def nv_begin(in_path, targets, flag, gen_backup=False, use_crc16=False):
+def nv_begin(in_path, targets, flag, gen_backup=False, use_crc16=False, build_root=None):
     global json_conf
     with open(in_path, 'r') as i:
         json_conf = json.load(i)
 
     check_key(json_conf)
-    test(targets, flag, False, use_crc16)
+    test(targets, flag, False, use_crc16, build_root)
     if gen_backup:
-        test(targets, flag, True, use_crc16)
+        test(targets, flag, True, use_crc16, build_root)
     print("build nv bin success!!")
 
 if __name__ == "__main__":

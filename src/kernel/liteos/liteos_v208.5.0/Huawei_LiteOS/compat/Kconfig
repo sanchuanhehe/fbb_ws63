@@ -1,5 +1,19 @@
 menu "Compat"
 osource "compat/cmsis/Kconfig"
 osource "compat/linux/Kconfig"
-endmenu
 
+config LOSCFG_COMPAT_RT_THREAD
+    bool "Enable RT-Thread compatibility component"
+    default n
+    help
+      Enable the independently distributed RT-Thread 5.2.1 compatibility
+      component. The LiteOS adaptation and tailored RT-Thread sources are
+      supplied by the FBB project dependency instead of the kernel tree.
+
+config LOSCFG_COMPAT_FREERTOS
+    bool "Enable FreeRTOS"
+    default n
+    help
+      Answer Y to enable LiteOS support FreeRTOS interface.
+
+endmenu

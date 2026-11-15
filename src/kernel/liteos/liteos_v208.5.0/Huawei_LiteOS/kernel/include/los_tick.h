@@ -191,16 +191,14 @@ extern UINT32 LOS_CyclePerTickGet(VOID);
  * @attention
  * <ul>
  * <li>The number of milliseconds obtained through the conversion is 32-bit. Pay attention to the value to be
- * converted because data possibly overflows.</li>
+ * converted to ensure that the conversion result does not exceed the UINT32 range.</li>
+ * <li>The calculation is performed using 64-bit arithmetic internally, and the final result is cast to UINT32.</li>
  * </ul>
  *
  * @param  tick  [IN] Number of Ticks.
- * If KERNEL_TICK_PER_SECOND > OS_SYS_MS_PER_SECOND, the value range is (0, 0xFFFFFFFF].
- * If KERNEL_TICK_PER_SECOND <= OS_SYS_MS_PER_SECOND,  the value range
- * is (0, 0xFFFFFFFF * KERNEL_TICK_PER_SECOND / OS_SYS_MS_PER_SECOND].
  *
  * @retval #UINT32 Milliseconds obtained through the conversion.
- * If 32-bit integer overflow occurs in the conversion, retval will be fixed at 0xFFFFFFFF.
+ *
  * @par  Dependency:
  * <ul><li>los_tick.h: the header file that contains the API declaration.</li></ul>
  * @see LOS_MS2Tick

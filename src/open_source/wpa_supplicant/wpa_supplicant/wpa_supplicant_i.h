@@ -712,10 +712,12 @@ struct wpa_supplicant {
 	struct wpa_supplicant *next;
 	struct l2_packet_data *l2;
 	struct l2_packet_data *l2_br;
+#ifndef EXT_CODE_CROP
 	struct os_reltime roam_start;
 	struct os_reltime roam_time;
 	struct os_reltime session_start;
 	struct os_reltime session_length;
+#endif /* EXT_CODE_CROP */
 	unsigned char own_addr[ETH_ALEN];
 	unsigned char perm_addr[ETH_ALEN];
 	char ifname[100];
@@ -732,7 +734,9 @@ struct wpa_supplicant {
 #ifdef CONFIG_CTRL_IFACE_BINDER
 	const void *binder_object_key;
 #endif /* CONFIG_CTRL_IFACE_BINDER */
+#ifdef CONFIG_WAPI
     struct wapi_asue_struct *wapi;
+#endif
 	char bridge_ifname[16];
 
 	char *confname;
@@ -756,8 +760,9 @@ struct wpa_supplicant {
 	int ap_ies_from_associnfo;
 	unsigned int assoc_freq;
 	u8 *last_con_fail_realm;
+#ifndef EXT_CODE_CROP
 	size_t last_con_fail_realm_len;
-
+#endif
 	/* Selected configuration (based on Beacon/ProbeResp WPA IE) */
 	int pairwise_cipher;
 	int deny_ptk0_rekey;
@@ -886,11 +891,17 @@ struct wpa_supplicant {
 		MANUAL_SCAN_REQ
 	} scan_req, last_scan_req;
 	enum wpa_states scan_prev_wpa_state;
+#if !defined(EXT_CODE_CROP) || defined(CONFIG_WNM)
 	struct os_reltime scan_trigger_time, scan_start_time;
 	/* Minimum freshness requirement for connection purposes */
 	struct os_reltime scan_min_time;
+#endif
+#ifdef CONFIG_WPS
 	int scan_runs; /* number of scan runs since WPS was started */
+#endif
+#if !defined(EXT_CODE_CROP) || defined(CONFIG_WNM)
 	int *next_scan_freqs;
+#endif
 	int *select_network_scan_freqs;
 	int *manual_scan_freqs;
 	int *manual_sched_scan_freqs;
@@ -976,10 +987,10 @@ struct wpa_supplicant {
 	unsigned int connection_vht:1;
 	unsigned int connection_he:1;
 	unsigned int disable_mbo_oce:1;
-
+#ifndef EXT_CODE_CROP
 	struct os_reltime last_mac_addr_change;
 	int last_mac_addr_style;
-
+#endif
 	struct ibss_rsn *ibss_rsn;
 
 	int set_sta_uapsd;
@@ -1549,7 +1560,8 @@ struct wpa_supplicant {
     u16 sae_timeout:1; /* sae auth timeout? 0:no,1:yes */
     u16 sae_auth_state:1; /* sae auth state,0:receving commit rsp,1:receving confirm rsp */
     u16 auth_stage:1; /* auth stage,0:auth,1:assoc */
-    u16 resv:9;
+    u16 not_found_ssid_scan_cnt:4;
+    u16 resv:5;
 };
 
 
@@ -1816,8 +1828,10 @@ static inline int wpas_mode_to_ieee80211_mode(enum wpas_mode mode)
 	case WPAS_MODE_P2P_GO:
 	case WPAS_MODE_P2P_GROUP_FORMATION:
 		return IEEE80211_MODE_AP;
+#ifdef CONFIG_MESH
 	case WPAS_MODE_MESH:
 		return IEEE80211_MODE_MESH;
+#endif
 	}
 }
 

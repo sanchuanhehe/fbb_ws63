@@ -73,3 +73,9 @@ config I2S_SUPPORT_QUERY_REGS
     prompt "I2S support query regs values"
     default n
     depends on DRIVER_SUPPORT_I2S
+
+config I2S_SUPPORT_DYNAMIC_SAMPLE_RATE
+    bool
+    prompt "I2S support dynamic sampling rate"
+    default n
+    depends on DRIVER_SUPPORT_I2S

@@ -108,7 +108,7 @@ struct sk_buff {
     td_u32          protocol;
 
     td_u16          mac_header;
-    td_u8           resv2;
+    td_u8           data_src;  /* 数据来源 */
     td_u8           resv;
 #ifdef TIMESTAMP_RECORD_DEBUG
     td_u32          times[19]; /* timestamp for debug */

@@ -1,3 +1,8 @@
-<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt services compress memcpy error @att_ui.c(1139),ERROR" ID="0xdc4a239a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt services compress memcpy error @att_ui.c(1212),ERROR" ID="0xdc4a25e2" />
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt assemble value memnew error @att_ui.c(850),ERROR" ID="0xdc4a1a92" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt add desc ccc memnew error @att_ui.c(927),ERROR" ID="0xdc4a1cfa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt add desc memnew error @att_ui.c(955),ERROR" ID="0xdc4a1dda" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt add desc memnew error @att_ui.c(985),ERROR" ID="0xdc4a1eca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt add desc report memnew error @att_ui.c(1012),ERROR" ID="0xdc4a1fa2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt services compress memcpy error @att_ui.c(1159),ERROR" ID="0xdc4a243a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ATT]gatt services compress memcpy error @att_ui.c(1232),ERROR" ID="0xdc4a2682" />
 			</MSG_LOG>

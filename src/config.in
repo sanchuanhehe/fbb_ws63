@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    Kconfig file.
-# Copyright (c) @CompanyNameMagicTag 2022-2022. All rights reserved.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
 #===============================================================================
 mainmenu "Configuration"
 comment "Main menu description, show how to use this configuration system."
@@ -44,3 +44,13 @@ menu "Test"
     osource "test/Kconfig"
 endmenu
 
+menu "Open Source"
+    comment "Config the open source components."
+    osource "open_source/Kconfig"
+endmenu
+
+
+menu "Project Components"
+    comment "Out-of-tree components added by `fbb add` ($FBB_COMPONENTS_KCONFIG = components dir)."
+    osource "$(FBB_COMPONENTS_KCONFIG)/Kconfig"
+endmenu

@@ -104,6 +104,7 @@
     "relativePath": "demo/radar_led",
     "chip": "WS63",
     "buildDef": "CONFIG_SAMPLE_SUPPORT_RADAR_SOFTAP = y",
+	"name":"radar_led_softap",
     "needSmoke": "false"
   },
   {
@@ -133,7 +134,7 @@
     "buildDef": "CONFIG_SAMPLE_SUPPORT_SLE_SERVER_SPEED = y",
     "needSmoke": "false",
     "key":"13",
-    "name":"sle_throughput",
+    "name":"sle_throughput_server",
     "description":"SLE速率展示"
   },
   {
@@ -141,6 +142,7 @@
     "relativePath": "demo/sle_throughput",
     "chip": "WS63",
     "buildDef": "CONFIG_SAMPLE_SUPPORT_SLE_CLIENT_SPEED = y",
+	"name":"sle_throughput_client",
     "needSmoke": "false"
   },
   {
@@ -229,13 +231,14 @@
     "buildDef": "CONFIG_SAMPLE_SUPPORT_SLE_DISTRIBUTE_NETWORK_SERVER=y",
     "needSmoke": "false",
     "key":"21",
-    "name":"sle_distribute_network",
+    "name":"sle_distribute_network_server",
     "description":"SLE配网"
   },{
     "buildTarget": "ws63-liteos-app",
     "relativePath": "demo/sle_distribute_network",
     "chip": "WS63",
     "buildDef": "CONFIG_SAMPLE_SUPPORT_SLE_DISTRIBUTE_NETWORK_CLIENT=y",
+	"name":"sle_distribute_network_client",
     "needSmoke": "false"
   },{
     "buildTarget": "ws63-liteos-app",
@@ -266,6 +269,7 @@
     "relativePath": "demo/wifidemo",
     "chip": "WS63",
     "buildDef": "CONFIG_SAMPLE_SUPPORT_WIFI_STA=y",
+	"name":"wifi_sta_demo",
     "needSmoke": "false"
   },{
     "buildTarget": "ws63-liteos-app",
@@ -274,13 +278,14 @@
     "buildDef": "CONFIG_SAMPLE_SUPPORT_SLE_LED_SERVER=y",
     "needSmoke": "false",
     "key":"24",
-    "name":"sle_led",
+    "name":"sle_led_server",
     "description":"sle灯控"
   },{
     "buildTarget": "ws63-liteos-app",
     "relativePath": "demo/sle_led",
     "chip": "WS63",
     "buildDef": "CONFIG_SAMPLE_SUPPORT_SLE_LED_CLIENT=y",
+	"name":"sle_led_client",
     "needSmoke": "false"
   },{
     "buildTarget": "ws63-liteos-app",
@@ -296,12 +301,14 @@
     "relativePath": "demo/wifi_promiscuous_mode",
     "chip": "WS63",
     "buildDef": "",
+	"name":"wifi_promiscuous_mode",
     "needSmoke": "false"
   },{
     "buildTarget": "ws63-liteos-app",
     "relativePath": "demo/sg90_demo",
     "chip": "WS63",
     "buildDef": "",
+	"name":"sg90_demo",
     "needSmoke": "false"
   }, {
     "buildTarget": "ws63-liteos-app",
@@ -312,5 +319,14 @@
     "key":"13",
     "name":"sle_one_to_many",
     "description":"SLE一对多"
+  }, {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/lcd_st7796",
+    "chip": "WS63",
+    "buildDef": "CONFIG_SAMPLE_SUPPORT_LCD=y,CONFIG_OPEN_SOURCE_LVGL=y,CONFIG_SPI_SUPPORT_MASTER=y,CONFIG_SPI_SUPPORT_DMA=y,CONFIG_SAMPLE_SUPPORT_ST7796=y,CONFIG_SPI_CS_PIN=8,CONFIG_SPI_DO_PIN=9,CONFIG_SPI_CLK_PIN=7,CONFIG_SPI_DI_PIN=11,CONFIG_SPI_RS_PIN=1,CONFIG_SPI_RST_PIN=14,CONFIG_SPI_BLK_PIN=12,CONFIG_SPI_MASTER_PIN_MODE=3,CONFIG_GPIO_PIN_MODE=0",
+    "needSmoke": "false",
+    "key":"26",
+    "name":"lcd_st7796",
+    "description":"lcd st7796屏幕 + lvgl + LiteOs样例"
   }
 ]

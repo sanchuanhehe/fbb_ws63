@@ -35,10 +35,13 @@
 #include "los_task_pri.h"
 #endif
 #ifdef _PRE_SYSCHANNEL_FEATURE
+#ifndef CONFIG_HCC_SUPPORT_SPI
+#include "hal_sdio.h"
+#include "clock_recover.h"
+#endif
 #include "syschannel_api.h"
 #include "syschannel_filter_ipv4.h"
 #include "cmsis_os2.h"
-#include "clock_recover.h"
 #include "pinctrl.h"
 #endif
 
@@ -126,6 +129,7 @@ TD_PRV osal_mutex g_ip_mux_id = {};
 
 #ifdef _PRE_SYSCHANNEL_FEATURE
 static td_bool g_chan_reint_type = TD_FALSE;
+static td_bool g_pm_open_status = TD_TRUE;
 TD_PRV int syschannel_set_ipv6_default_filter(void)
 {
     int ret;
@@ -207,31 +211,51 @@ TD_PRV int syschannel_set_default_filter(void)
     return ret;
 }
 
-TD_PRV int sdio_init_task_body(void *param)
+static void syschannel_suspend_callback(void)
+{
+#ifndef CONFIG_HCC_SUPPORT_SPI
+    uapi_syschannel_dev_reset(SDIO_TYPE);
+    uapi_lpc_set_type(PM_DEEP_SLEEP);
+#endif
+}
+
+TD_PRV int bus_init_task_body(void *param)
 {
     unused(param);
-    uapi_at_print("syschannel start sdio init:%d\r\n", g_chan_reint_type);
+    uapi_at_print("syschannel start bus init:%d\r\n", g_chan_reint_type);
     osDelay(TASK_COMMON_APP_DELAY_MS);
-    uapi_watchdog_disable();
+#ifdef CONFIG_HCC_SUPPORT_SPI
+    bus_type bus = SPI_TYPE;
+#else
+    bus_type bus = SDIO_TYPE;
+#endif
+
 #ifndef CONFIG_FACTORY_TEST_MODE
+#ifndef CONFIG_HCC_SUPPORT_SPI
+    pm_lpc_type type = g_pm_open_status ? PM_DEEP_SLEEP : PM_NO_SLEEP;
+#endif
     if (g_chan_reint_type) {
-        if (uapi_syschannel_dev_reinit(SDIO_TYPE) != EXT_ERR_SUCCESS) {
+        uapi_syschannel_dev_reset(bus);
+        if (uapi_syschannel_dev_reinit(bus) != EXT_ERR_SUCCESS) {
             uapi_at_print("syschannel_init:: syschannel_dev_reinit failed");
+#ifndef CONFIG_HCC_SUPPORT_SPI
+            uapi_lpc_set_type(type); /* 恢复低功耗 */
+#endif
         }
-        uapi_watchdog_enable();
         return 0;
     } else {
-        if (uapi_syschannel_dev_init(SDIO_TYPE) != EXT_ERR_SUCCESS) {
+        if (uapi_syschannel_dev_init(bus) != EXT_ERR_SUCCESS) {
             uapi_at_print("syschannel_init:: syschannel_dev_init failed");
-            uapi_watchdog_enable();
+#ifndef CONFIG_HCC_SUPPORT_SPI
+            uapi_lpc_set_type(type); /* 恢复低功耗 */
+#endif
             return 0;
         }
+        uapi_syschannel_register_suspend_cb(syschannel_suspend_callback);
     }
 #endif
-    uapi_watchdog_enable();
-
     syschannel_set_default_filter();
-    uapi_at_print("finish sdio init\r\n");
+    uapi_at_print("finish bus init, type %d\r\n", bus);
     return 0;
 }
 #endif
@@ -356,48 +380,43 @@ at_ret_t at_syschannel_query_filter(const queryfilter_args_t *args)
 #ifdef _PRE_SYSCHANNEL_FEATURE
     td_s32 ret = 0;
     char *filter = TD_NULL;
-    int *num = TD_NULL;
-    td_u8 filter_num;
-    if (args->para2 != 0) {
-        num = (int *)malloc(sizeof(int));
-    }
-    unsigned char type = args->para3;
-    if (args->para1 == 0) {
-        ret = uapi_syschannel_query_filter(TD_NULL, num, type);
-        uapi_at_print("num = %d \r\n", *num);
-        if (args->para2 != 0) {
-            free(num);
-        }
-        return 0;
-    }
+    int num = 0;
     syschannel_filter_list_stru *syschannel_filter = syschannel_get_filter_list();
-    ret = uapi_syschannel_query_filter((char **)&filter, num, type);
+    unsigned char type = args->para3;
+
+    if (args->para1 == 0) {
+        ret = uapi_syschannel_query_filter(TD_NULL, &num, type);
+        if (args->para2 != 0) {
+            uapi_at_print("num = %d \r\n", num);
+        }
+        return ret;
+    }
+    ret = uapi_syschannel_query_filter((char **)&filter, &num, type);
     if (filter == TD_NULL) {
         uapi_at_print("return filter is null!!!!! \r\n");
     }
     /* 区分ipv4和ipv6 */
     if (args->para1 != 0) {
-        if ((ret == 0) && (filter != TD_NULL) && (args->para3 == 0)) {
-            filter_num = syschannel_filter->ipv4_filter_num;
+        if ((ret == OSAL_OK) && (filter != TD_NULL) && (args->para3 == WIFI_FILTER_TYPE_IPV4)) {
             syschannel_ipv4_filter *ipv4_filter = (syschannel_ipv4_filter *)filter;
-            for (int i = 0; i < filter_num; i++) {
-                uapi_at_print("local_port=%d;packet_type=%dmatch_mask=%dconfig_type=%d\r\n", ipv4_filter[i].local_port,
-                    ipv4_filter[i].packet_type, ipv4_filter[i].match_mask, ipv4_filter[i].config_type);
+            for (int i = 0; i < num; i++) {
+                uapi_at_print("local_port=%d; remote_port=%d; packet_type=%d; match_mask=%d; config_type=%d\r\n",
+                    ipv4_filter[i].local_port, ipv4_filter[i].remote_port, ipv4_filter[i].packet_type,
+                    ipv4_filter[i].match_mask, ipv4_filter[i].config_type);
             }
-        } else if ((ret == 0) && (filter != TD_NULL) && (args->para3 == 1)) {
-            filter_num = syschannel_filter->ipv6_filter_num;
+        } else if ((ret == OSAL_OK) && (filter != TD_NULL) && (args->para3 == WIFI_FILTER_TYPE_IPV6)) {
             syschannel_ipv6_filter *ipv6_filter = (syschannel_ipv6_filter *)filter;
-            for (int i = 0; i < filter_num; i++) {
-                uapi_at_print("local_port=%d;packet_type=%dmatch_mask=%dconfig_type=%d\r\n", ipv6_filter[i].local_port,
-                    ipv6_filter[i].packet_type, ipv6_filter[i].match_mask, ipv6_filter[i].config_type);
+            for (int i = 0; i < num; i++) {
+                uapi_at_print("local_port=%d; remote_port=%d; packet_type=%d; match_mask=%d; config_type=%d\r\n",
+                    ipv6_filter[i].local_port, ipv6_filter[i].remote_port, ipv6_filter[i].packet_type,
+                    ipv6_filter[i].match_mask, ipv6_filter[i].config_type);
             }
         }
     }
 
     if (args->para2 != 0) {
-        uapi_at_print("length = %d \r\n", *num);
+        uapi_at_print("num = %d \r\n", num);
     }
-    free(num);
     return ret;
 #else
     los_unref_param(args);
@@ -405,27 +424,21 @@ at_ret_t at_syschannel_query_filter(const queryfilter_args_t *args)
 #endif
 }
 
-#ifdef _PRE_SYSCHANNEL_FEATURE
+#if defined(_PRE_SYSCHANNEL_FEATURE) && !defined(CONFIG_HCC_SUPPORT_SPI)
 static void sdio_hw_init(void)
 {
-    u_m_cken_0 m_cken_0;
-    u_m_cken_1 m_cken_1;
+    uapi_pin_set_pull(S_MGPIO0, PIN_PULL_UP); // d2
+    uapi_pin_set_pull(S_AGPIO6, PIN_PULL_UP); // d3
+    uapi_pin_set_pull(S_MGPIO2, PIN_PULL_UP); // cmd
+    uapi_pin_set_pull(S_MGPIO4, PIN_PULL_UP); // d0
+    uapi_pin_set_pull(S_AGPIO5, PIN_PULL_UP); // d1
 
-    m_cken_0.u32 = readl(M_CTL_RB_M_CLKEN0);
-    m_cken_0.bits.sdio_dev_clken = 1;
-    writel(M_CTL_RB_M_CLKEN0, m_cken_0.u32);
-
-    m_cken_1.u32 = readl(M_CTL_RB_M_CLKEN1);
-    m_cken_1.bits.sdio_ahb_clken = 1;
-    writel(M_CTL_RB_M_CLKEN1, m_cken_1.u32);
-
-    uapi_pin_init();
-    uapi_pin_set_mode(S_MGPIO0, 1);
-    writel(0x570360b8, 1); // S_MGPIO1
-    uapi_pin_set_mode(S_MGPIO2, 1);
-    uapi_pin_set_mode(S_MGPIO3, 1);
-    uapi_pin_set_mode(S_MGPIO4, 1);
-    uapi_pin_set_mode(S_AGPIO5, 1);
+    uapi_pin_set_mode(S_MGPIO0, 1); // sdio data2
+    uapi_pin_set_mode(S_MGPIO2, 1); // sdio cmd
+    uapi_pin_set_mode(S_MGPIO3, 1); // sdio clk
+    uapi_pin_set_mode(S_MGPIO4, 1); // sdio data0
+    uapi_pin_set_mode(S_AGPIO5, 1); // sdio data1
+    uapi_pin_set_mode(S_AGPIO6, 1); // sdio data3
 }
 #endif
 
@@ -433,11 +446,12 @@ TD_PRV td_u32 at_task_syschannel(td_bool reinit)
 {
 #ifdef _PRE_SYSCHANNEL_FEATURE
     osThreadAttr_t attr;
-
+#ifndef CONFIG_HCC_SUPPORT_SPI
     sdio_hw_init();
     g_chan_reint_type = reinit;
-    idle_set_open_pm(0);   // 关A核低功耗流程
-
+    g_pm_open_status = idle_get_open_pm();
+    uapi_lpc_set_type(PM_NO_SLEEP);   // 关A核低功耗流程
+#endif
     attr.name = "syschannel_init";
     attr.attr_bits = 0U;
     attr.cb_mem = NULL;
@@ -445,7 +459,7 @@ TD_PRV td_u32 at_task_syschannel(td_bool reinit)
     attr.stack_mem = NULL;
     attr.stack_size = SYSCHANNEL_TASK_STACK_SIZE;
     attr.priority = SYSCHANNEL_TASK_PRIO;
-    if (osThreadNew((osThreadFunc_t)sdio_init_task_body, NULL, &attr) == NULL) {
+    if (osThreadNew((osThreadFunc_t)bus_init_task_body, NULL, &attr) == NULL) {
         uapi_at_print("Falied to create syschannel init task!\n");
         return AT_RET_SYNTAX_ERROR;
     }
@@ -616,6 +630,35 @@ at_ret_t cmd_reinit_syschannel(void)
     if (ret != EXT_ERR_SUCCESS) {
         return AT_RET_SYNTAX_ERROR;
     }
+    return AT_RET_OK;
+}
+
+at_ret_t cmd_cancel_syschannel(void)
+{
+#if defined(_PRE_SYSCHANNEL_FEATURE) && !defined(CONFIG_HCC_SUPPORT_SPI)
+    uapi_at_print("=sdio cancel=\r\n");
+    sdio_force_exit_wait_card();
+#endif
+    return AT_RET_OK;
+}
+
+at_ret_t cmd_reset_syschannel(void)
+{
+#if defined(_PRE_SYSCHANNEL_FEATURE) && !defined(CONFIG_HCC_SUPPORT_SPI)
+    uapi_syschannel_dev_reset(SDIO_TYPE);
+#endif
+    return AT_RET_OK;
+}
+
+at_ret_t cmd_syschannel_netif(const syschannel_netif_args_t *args)
+{
+#ifdef _PRE_SYSCHANNEL_FEATURE
+    td_s32 argc = convert_bin_to_dec(args->para_map);
+    if (argc != 1) {
+        return AT_RET_SYNTAX_ERROR;
+    }
+    uapi_syschannel_vlwip_netif_init(args->para1);
+#endif
     return AT_RET_OK;
 }
 
@@ -1063,7 +1106,6 @@ TD_PRV td_void ip_monitor_link_close(td_void)
         } else if (g_ip_link_ctl[i].link_stats == EXT_IP_LINK_USER_CLOSE) {
             uapi_at_print("link %d CLOSED\r\n", i);
             ip_link_release(i);
-            uapi_at_print("OK\r\n");
         }
     }
 
@@ -1075,7 +1117,6 @@ TD_PRV td_void ip_monitor_link_close(td_void)
         closesocket(g_listen_fd.sfd);
         g_listen_fd.sfd = -1;
         g_listen_fd.link_stats = EXT_IP_LINK_ID_IDLE;
-        uapi_at_print("OK\r\n");
     }
     osal_mutex_unlock(&g_ip_mux_id);
 }

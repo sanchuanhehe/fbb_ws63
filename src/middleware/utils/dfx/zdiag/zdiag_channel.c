@@ -25,6 +25,9 @@ STATIC diag_channel_ctrl_t *diag_get_channel_ctrl(void)
 
 diag_channel_item_t *diag_chan_idx_2_item(diag_channel_id_t id)
 {
+    if (id >= DIAG_SUPPORT_CHANNEL_CNT) {
+        return NULL;
+    }
     diag_channel_ctrl_t *chan_ctrl = diag_get_channel_ctrl();
     return &chan_ctrl->item[id];
 }

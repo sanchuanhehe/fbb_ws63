@@ -1,0 +1,7 @@
+# fbb out-of-tree project manifest.
+# Edit chip / target to match your board.
+
+[project]
+name   = "sample_project"
+chip   = "ws63"
+target = "ws63-liteos-app"

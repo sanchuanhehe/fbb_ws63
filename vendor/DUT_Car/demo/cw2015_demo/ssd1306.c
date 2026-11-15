@@ -339,27 +339,29 @@ void ssd1306_SetCursor(uint8_t x, uint8_t y)
 // Draw line by Bresenhem's algorithm
 void ssd1306_DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, SSD1306_COLOR color)
 {
-    uint8_t x = x1;
-    uint8_t y = y1;
-    int32_t deltaX = abs(x2 - x1);
-    int32_t deltaY = abs(y2 - y1);
-    int32_t signX = ((x1 < x2) ? 1 : -1);
-    int32_t signY = ((y1 < y2) ? 1 : -1);
-    int32_t error = deltaX - deltaY;
+    int32_t x = x1;
+    int32_t y = y1;
+    int32_t delta_x = abs((int32_t)x2 - (int32_t)x1);
+    int32_t delta_y = abs((int32_t)y2 - (int32_t)y1);
+    int32_t sign_x = ((x1 < x2) ? 1 : -1);
+    int32_t sign_y = ((y1 < y2) ? 1 : -1);
+    int32_t error = delta_x - delta_y;
     int32_t error2;
-    ssd1306_DrawPixel(x2, y2, color);
-    while ((x1 != x2) || (y1 != y2)) {
-        ssd1306_DrawPixel(x1, y1, color);
+    while (1) {
+        ssd1306_DrawPixel((uint8_t)x, (uint8_t)y, color);
+        if (x == x2 && y == y2) {
+            break;
+        }
         error2 = error * DOUBLE;
-        if (error2 > -deltaY) {
-            error -= deltaY;
-            x += signX;
+        if (error2 > -delta_y) {
+            error -= delta_y;
+            x += sign_x;
         } else {
             /* nothing to do */
         }
-        if (error2 < deltaX) {
-            error += deltaX;
-            y += signY;
+        if (error2 < delta_x) {
+            error += delta_x;
+            y += sign_y;
         } else {
             /* nothing to do */
         }

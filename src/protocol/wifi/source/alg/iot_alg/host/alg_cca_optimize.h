@@ -30,6 +30,7 @@ extern "C" {
 #ifdef _PRE_RADAR_CCA_SW_OPT
 #define RADAR_ENABLE_CCA_ED_RSSI         (-30)     /* 非认证模式下，雷达开启cca能量门限和协议门限都是 -30dBm */
 #define RADAR_ENABLE_CCA_ED_RSSI_CERTIFY (-60)     /* 认证模式下，雷达开启cca能量门限和协议门限都是 -60dBm */
+#define RADAR_ENABLE_CCA_ED_RSSI_MICROWAVE  (-62)  /* 微波模式下，雷达的能量门限设置为-62dBm */
 #endif
 
 /******************************************************************************
@@ -71,7 +72,7 @@ osal_u32 alg_cca_intrf_mode_process(osal_void);
 #endif
 
 #ifdef _PRE_RADAR_CCA_SW_OPT
-osal_void alg_cca_opt_radar_sw(osal_bool radar_switch);
+osal_void alg_cca_opt_radar_sw(osal_bool radar_switch, osal_bool is_mwo_mode);
 #endif
 alg_cca_opt_stru *alg_cca_get_cca_opt(osal_void);
 #ifdef __cplusplus

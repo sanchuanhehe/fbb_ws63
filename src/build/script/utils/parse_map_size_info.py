@@ -394,7 +394,7 @@ def get_group_owner(data_dict, save_name):
         a_name, group = line.strip().split(',')
         a_name2resp_group_dict[a_name] = group
 
-    c_name2wifi_group_dict = dict()  # {c_name: 应用组  算法组  协议组 前端组 系统组}
+    c_name2wifi_group_dict = dict()  # {c_name: WIFI_APP  WIFI_ALG  WIFI_PROT WIFI_FE WIFI_FRW}
     with open(OWNER_DIR / 'wifi_owner.csv', 'r', encoding='utf-8') as f:
         header = f.readline()
         lines = f.readlines()
@@ -405,7 +405,11 @@ def get_group_owner(data_dict, save_name):
     file_stat_dict = defaultdict(lambda: [0, 'UNKNOWN'])
     # {c_name : {a_name : [sum_symb_len, group_type, wifi_group_type]}}
     wifi_stat_dict = defaultdict(lambda: defaultdict(lambda: [0, 'UNKNOWN', '']))
-    for symb_info_list in data_dict.values():
+    for symb_info_key, symb_info_list in data_dict.items():
+        # symb_info_key：section_name, rombss存放在固定地址区域，不参与size限制的统计
+        # 且使用符号表链接编译时，rombss段size为0
+        if "rombss" in symb_info_key[0]:
+            continue
         for symb_info in symb_info_list:
             symb_len, a_name, c_name = symb_info[2], symb_info[5], symb_info[6]
             # 去除后缀 .obj 但 .heap .stack .shere_mem 跳过
@@ -423,23 +427,39 @@ def get_group_owner(data_dict, save_name):
             wifi_stat_dict[c_name][a_name][0] += symb_len
     # PLAT  WIFI  BGLE 按 库名 角度统计 大小
     with open(OUTPUT_DIR / f"{save_name}_library.csv", 'w', encoding='utf_8_sig') as f:
-        header = ['库名', '大小', '负责组']
+        header = ['Lib', 'Size', 'Group']
         f.write(f"{','.join(header)}\n")
-        group_dict = defaultdict(int)  # 用于下面的 负责组的角度统计 地址大小
+        group_dict = defaultdict(int)
         for a_name, info in file_stat_dict.items():
             f.write(f"{a_name},{info[0]},{info[1]}\n")
             group_dict[info[1]] += info[0]
 
     # 从负责组的角度统计 地址大小
     with open(OUTPUT_DIR / f"{save_name}_library_summary.csv", 'w', encoding='utf_8_sig') as f:
-        header = ['Group_Owner', 'Size', 'Limit']
+        header = ['Group', 'Size', 'Limit']
         f.write(f"{','.join(header)}\n")
        # 各组规格限制 PLAT WIFI BTC BTH UNKNOWN  STACK PKTRAM
-        lim_all = {'ws63-liteos-app.map_ram': {'PLAT' : 35.50, 'WIFI':46.5, 'RADAR':49, 'BTC': 20, 'BTC_CHBA': 1, 'BTH': 10, 'UNKNOWN': 0.5, 'STACK':7,'PKTRAM':50},
-            'control_ws53.map_ram':{'PLAT' : 16.68, 'WIFI':18.64, 'BTC': 25, 'BTH': 10, 'UNKNOWN': 25, 'STACK':6,'HEAP':27},
-            'control_ws53.map_flash':{'PLAT' : 15, 'WIFI':46.5, 'BTC': 109, 'BTH': 6, 'UNKNOWN': 35},
-            'liteos_ws53_light.map_flash':{'PLAT' : 191, 'WIFI':670, 'BTC': 1, 'BTC_CHBA': 16, 'BTH': 242.5, 'UNKNOWN': 1},
-            'ws63-liteos-app.map_flash':{'PLAT' : 198.6, 'WIFI':623.89, 'RADAR':50, 'BTC': 147.98, 'BTC_CHBA': 16, 'BTH': 233.1, 'UNKNOWN': 0.5}}
+        lim_all = {'ws63-liteos-app.map_ram': {'PLAT' : 35.50,
+            # WIFI
+            'WIFI':46.5,
+            # RADAR
+            'RADAR':43.5,
+            'BTC': 20,
+            'BTC_CHBA': 1,
+            'BTH': 10, 'MESH': 150,
+            'UNKNOWN': 0.5, 'STACK':7,'PKTRAM':50},
+            # ws63 A flash
+            'ws63-liteos-app.map_flash':{'PLAT' : 215,
+            # WIFI
+            'WIFI':625.21,
+            # RADAR
+            'RADAR':50,
+            # BTC
+            'BTC': 149.98,
+            # BTC_CHBA
+            'BTC_CHBA': 16,
+            # BTH
+            'BTH': 235, 'MESH': 340.5, 'UNKNOWN': 0.1}}
         lim_i = 0
         for owner, size in group_dict.items():
             size_t = size/BIT_SIZE
@@ -453,24 +473,32 @@ def get_group_owner(data_dict, save_name):
             else:
                 f.write(f"{owner},{size_t},0\n")
 
-    # 应用组  算法组  协议组 前端组 系统组 按 文件名 库名 角度统计 地址大小
+    # WIFI_APP  WIFI_ALG  WIFI_PROT WIFI_FE WIFI_FRW 按 文件名 库名 角度统计 地址大小
     with open(OUTPUT_DIR / f"{save_name}_file.csv", 'w', encoding='utf_8_sig') as f:
-        header = ['文件名', '库名', '文件大小', '负责组', 'WIFI_责任组']
+        header = ['File', 'Lib', 'Size', 'Group', 'WIFI_Group']
         f.write(f"{','.join(header)}\n")
-        wifi_group_dict = defaultdict(int)  # 用于下面的 WIFI负责组的角度统计 地址大小
+        wifi_group_dict = defaultdict(int)
         for c_name, info_dict in wifi_stat_dict.items():
             for a_name, info in info_dict.items():
                 f.write(f"{c_name},{a_name},{info[0]},{info[1]},{info[2]}\n")
                 if info[1] == 'WIFI':
                     wifi_group_dict[info[2]] += info[0]
 
-    # 从WIFI负责组的角度统计 地址大小
+    # 从WIFI的角度统计 地址大小
     with open(OUTPUT_DIR / f"{save_name}_file_summary.csv", 'w', encoding='utf_8_sig') as f:
-        header = ['Group_Owner', 'Size', 'Limit']
+        header = ['WIFI_Group', 'Size', 'Limit']
         f.write(f"{','.join(header)}\n")
-        lim_all = {'control_ws53.map_flash':{'系统组' : 8.0, '协议组':9.5, '应用组': 2, '前端组': 27.1, '算法组': 0.5,'WIFI_UNKNOWN': 5},
-            'liteos_ws53_light.map_flash':{'系统组' : 36, '协议组':212.5, '应用组': 356, '前端组': 15, '算法组': 39,'WIFI_UNKNOWN': 0.5},
-            'ws63-liteos-app.map_flash':{'系统组' : 35.5, '协议组':197.02, '应用组': 315.1, '前端组': 37.1, '算法组': 39.7,'WIFI_UNKNOWN': 0.5}}
+        lim_all = {'control_ws53.map_flash':{'WIFI_FRW' : 8.0, 'WIFI_PROT':9.5, 'WIFI_APP': 2, 'WIFI_FE': 27.1, 'WIFI_ALG': 0.5,'WIFI_UNKNOWN': 5},
+            # ws63 wifi flash
+            'ws63-liteos-app.map_flash':{'WIFI_FRW' : 35.8,
+            # WIFI_PROT
+            'WIFI_PROT':197.3,
+            # WIFI_APP
+            'WIFI_APP': 315.500,
+            # WIFI_FE
+            'WIFI_FE': 37.1,
+            # WIFI_ALG
+            'WIFI_ALG': 39.9,'WIFI_UNKNOWN': 0.5}}
         lim_i = 0
         for owner, size in wifi_group_dict.items():
             size_t = size/BIT_SIZE

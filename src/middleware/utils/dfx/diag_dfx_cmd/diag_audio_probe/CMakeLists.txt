@@ -14,7 +14,7 @@ set(PUBLIC_HEADER
 )
 
 set(PRIVATE_HEADER
-    ${CMAKE_SOURCE_DIR}/drivers/drivers/driver/audio/include
+    ${ROOT_DIR}/drivers/drivers/driver/audio/include
 )
 
 set(PRIVATE_DEFINES

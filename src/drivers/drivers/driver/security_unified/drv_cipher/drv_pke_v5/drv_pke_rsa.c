@@ -1053,12 +1053,6 @@ td_s32 drv_cipher_pke_rsa_sign(
     crypto_chk_return(klen != DRV_PKE_LEN_1024 && klen != DRV_PKE_LEN_2048 && klen != DRV_PKE_LEN_3072 &&
         klen != DRV_PKE_LEN_4096, PKE_COMPAT_ERRNO(ERROR_INVALID_PARAM), "n_len is Invalid\n");
 
-    /* check whether the security strength is the same. */
-    crypto_chk_return((klen == DRV_PKE_LEN_2048 && hash_type < DRV_PKE_HASH_TYPE_SHA224) ||
-        (klen == DRV_PKE_LEN_3072 && hash_type < DRV_PKE_HASH_TYPE_SHA256) ||
-        (klen == DRV_PKE_LEN_4096 && hash_type < DRV_PKE_HASH_TYPE_SHA384),
-        PKE_COMPAT_ERRNO(ERROR_INVALID_PARAM), "the security strength of the hash doesn't match the rsa!\n");
-
     if ((priv_key->d_len != klen) || (input_hash->length != hash_len)) {
         ret = PKE_COMPAT_ERRNO(ERROR_INVALID_PARAM);
         crypto_log_err("d_len or hash_len is Invalid!\n");
@@ -1110,11 +1104,6 @@ td_s32 drv_cipher_pke_rsa_verify(
         crypto_log_err("k_len or hash_len is Invalid!\n");
         return ret;
     }
-    /* check whether the security strength is the same. */
-    crypto_chk_return((klen == DRV_PKE_LEN_2048 && hash_type < DRV_PKE_HASH_TYPE_SHA224) ||
-        (klen == DRV_PKE_LEN_3072 && hash_type < DRV_PKE_HASH_TYPE_SHA256) ||
-        (klen == DRV_PKE_LEN_4096 && hash_type < DRV_PKE_HASH_TYPE_SHA384),
-        PKE_COMPAT_ERRNO(ERROR_INVALID_PARAM), "the security strength of the hash doesn't match the rsa!\n");
 
     crypto_chk_return(sign->length < klen, PKE_COMPAT_ERRNO(ERROR_INVALID_PARAM), "sign_len is Invalid\n");
     crypto_chk_return(crypto_rsa_support(klen, scheme) == TD_FALSE, PKE_COMPAT_ERRNO(ERROR_UNSUPPORT),

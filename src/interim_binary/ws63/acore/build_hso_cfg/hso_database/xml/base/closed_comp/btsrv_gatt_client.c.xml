@@ -1,91 +1,90 @@
-<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] uuid to gatt uuid memcpy fail @btsrv_gatt_client.c(135),ERROR" ID="0xd88e043a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] uuid length error @btsrv_gatt_client.c(139),ERROR" ID="0xd88e045a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gatt uuid to uuid memcpy fail @btsrv_gatt_client.c(153),ERROR" ID="0xd88e04ca" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(271),ERROR" ID="0xd88e087a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memcpy cb_para fail @btsrv_gatt_client.c(277),ERROR" ID="0xd88e08aa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(297),ERROR" ID="0xd88e094a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memcpy cb_para fail @btsrv_gatt_client.c(304),ERROR" ID="0xd88e0982" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(324),ERROR" ID="0xd88e0a22" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memcpy cb_para fail @btsrv_gatt_client.c(331),ERROR" ID="0xd88e0a5a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(352),ERROR" ID="0xd88e0b02" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memcpy fail @btsrv_gatt_client.c(358),ERROR" ID="0xd88e0b32" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(379),ERROR" ID="0xd88e0bda" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memcpy fail @btsrv_gatt_client.c(386),ERROR" ID="0xd88e0c12" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(407),ERROR" ID="0xd88e0cba" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(430),ERROR" ID="0xd88e0d72" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memnew cb_para data fail @btsrv_gatt_client.c(440),ERROR" ID="0xd88e0dc2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memcpy cb_para data fail @btsrv_gatt_client.c(446),ERROR" ID="0xd88e0df2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(475),ERROR" ID="0xd88e0eda" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memcpy cb_para data fail @btsrv_gatt_client.c(482),ERROR" ID="0xd88e0f12" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(503),ERROR" ID="0xd88e0fba" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(525),ERROR" ID="0xd88e106a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(547),ERROR" ID="0xd88e111a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memnew cb_para data fail @btsrv_gatt_client.c(557),ERROR" ID="0xd88e116a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memcpy cb_para data fail @btsrv_gatt_client.c(562),ERROR" ID="0xd88e1192" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gatt event msg param is NULL @btsrv_gatt_client.c(586),ERROR" ID="0xd88e1252" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO] unhandled msg id: %d @btsrv_gatt_client.c(641),INFO" ID="0xd88e140d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gatt io msg param is NULL @btsrv_gatt_client.c(649),ERROR" ID="0xd88e144a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO] unhandled msg id: %d @btsrv_gatt_client.c(689),INFO" ID="0xd88e158d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][ERROR] wrong msg id:%d. @btsrv_gatt_client.c(702),ERROR" ID="0xd88e15f2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] disc service cbk param null. @btsrv_gatt_client.c(744),ERROR" ID="0xd88e1742" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc disc svc get conn node fail. @btsrv_gatt_client.c(749),ERROR" ID="0xd88e176a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc discovery svc cbk param fail. @btsrv_gatt_client.c(757),ERROR" ID="0xd88e17aa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] disc service compl cbk param new fail. @btsrv_gatt_client.c(769),ERROR" ID="0xd88e180a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] disc service compl cbk param null. @btsrv_gatt_client.c(773),ERROR" ID="0xd88e182a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] disc chara cbk param null. @btsrv_gatt_client.c(792),ERROR" ID="0xd88e18c2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc_disc_char get conn node fail. @btsrv_gatt_client.c(797),ERROR" ID="0xd88e18ea" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc discovery chara cbk param fail. @btsrv_gatt_client.c(806),ERROR" ID="0xd88e1932" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] disc desc cbk param null. @btsrv_gatt_client.c(832),ERROR" ID="0xd88e1a02" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc disc desc get conn node fail. @btsrv_gatt_client.c(837),ERROR" ID="0xd88e1a2a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc discovery desc cbk param fail. @btsrv_gatt_client.c(844),ERROR" ID="0xd88e1a62" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gap get conn node fail. @btsrv_gatt_client.c(871),ERROR" ID="0xd88e1b3a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc read cfm cbk param fail. @btsrv_gatt_client.c(879),ERROR" ID="0xd88e1b7a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc write cbk get conn node fail. @btsrv_gatt_client.c(907),ERROR" ID="0xd88e1c5a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc write cfm cbk param fail. @btsrv_gatt_client.c(913),ERROR" ID="0xd88e1c8a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] mtu changed cbk can not find conn node. @btsrv_gatt_client.c(927),ERROR" ID="0xd88e1cfa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc mtu changed cbk param fail. @btsrv_gatt_client.c(932),ERROR" ID="0xd88e1d22" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] receive notification can not find conn node. @btsrv_gatt_client.c(948),ERROR" ID="0xd88e1da2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] receive notification alloc cb param fail. @btsrv_gatt_client.c(956),ERROR" ID="0xd88e1de2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] receive indication can not find conn node. @btsrv_gatt_client.c(972),ERROR" ID="0xd88e1e62" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] receive indication alloc cb param fail. @btsrv_gatt_client.c(980),ERROR" ID="0xd88e1ea2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] failed to register bcore callback. @btsrv_gatt_client.c(1003),ERROR" ID="0xd88e1f5a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][INFO] GATT client has already been initialized. @btsrv_gatt_client.c(1013),INFO" ID="0xd88e1fad" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] failed to register client bcore callback. @btsrv_gatt_client.c(1017),ERROR" ID="0xd88e1fca" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][INFO] GATT client has not been initialized. @btsrv_gatt_client.c(1026),INFO" ID="0xd88e2015" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] malloc fail @btsrv_gatt_client.c(1036),ERROR" ID="0xd88e2062" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gatt client node app_uuid memcpy fail @btsrv_gatt_client.c(1041),ERROR" ID="0xd88e208a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] client num reached maximum @btsrv_gatt_client.c(1047),ERROR" ID="0xd88e20ba" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] unlikely, failed to find available client id @btsrv_gatt_client.c(1061),ERROR" ID="0xd88e212a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] failed to add client node. @btsrv_gatt_client.c(1079),ERROR" ID="0xd88e21ba" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] invalid client_id. @btsrv_gatt_client.c(1098),ERROR" ID="0xd88e2252" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO] unregister client %d success. @btsrv_gatt_client.c(1105),INFO" ID="0xd88e228d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc discovery service param error @btsrv_gatt_client.c(1127),ERROR" ID="0xd88e233a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] discovery service memcpy fail @btsrv_gatt_client.c(1132),ERROR" ID="0xd88e2362" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO]gattc disc service ret %d @btsrv_gatt_client.c(1144),INFO" ID="0xd88e23c5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc discovery character param error @btsrv_gatt_client.c(1168),ERROR" ID="0xd88e2482" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] discovery service result next request addr memcpy fail @btsrv_gatt_client.c(1174),ERROR" ID="0xd88e24b2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO]gattc disc character ret %d @btsrv_gatt_client.c(1187),INFO" ID="0xd88e251d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc discovery descriptor param error @btsrv_gatt_client.c(1211),ERROR" ID="0xd88e25da" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] discovery descriptor addr memcpy fail @btsrv_gatt_client.c(1216),ERROR" ID="0xd88e2602" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO]gattc disc descriptor ret %d @btsrv_gatt_client.c(1223),INFO" ID="0xd88e263d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc read by hdl param error @btsrv_gatt_client.c(1247),ERROR" ID="0xd88e26fa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc read by hdl addr memcpy fail @btsrv_gatt_client.c(1252),ERROR" ID="0xd88e2722" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[btsrv][INFO]gattc read by hdl att_hdl:%d ret %d @btsrv_gatt_client.c(1261),INFO" ID="0xd88e276d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc read by uuid param error @btsrv_gatt_client.c(1285),ERROR" ID="0xd88e282a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc read by uuid addr memcpy fail @btsrv_gatt_client.c(1290),ERROR" ID="0xd88e2852" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO]gattc read by uuid ret %d @btsrv_gatt_client.c(1298),INFO" ID="0xd88e2895" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc write req param error @btsrv_gatt_client.c(1322),ERROR" ID="0xd88e2952" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] write req param new fail! @btsrv_gatt_client.c(1327),ERROR" ID="0xd88e297a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] write req addr memcpy fail @btsrv_gatt_client.c(1334),ERROR" ID="0xd88e29b2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] write req value memcpy fail @btsrv_gatt_client.c(1341),ERROR" ID="0xd88e29ea" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[btsrv][INFO]write req att_hdl:%d ret:%d @btsrv_gatt_client.c(1349),INFO" ID="0xd88e2a2d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc write cmd param error @btsrv_gatt_client.c(1374),ERROR" ID="0xd88e2af2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] write cmd param new fail! @btsrv_gatt_client.c(1379),ERROR" ID="0xd88e2b1a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] write cmd addr memcpy fail @btsrv_gatt_client.c(1384),ERROR" ID="0xd88e2b42" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] write cmd value memcpy fail @btsrv_gatt_client.c(1391),ERROR" ID="0xd88e2b7a" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[btsrv][INFO]write cmd att_hdl:%d ret:%d @btsrv_gatt_client.c(1400),INFO" ID="0xd88e2bc5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gatt client callback memcpy fail @btsrv_gatt_client.c(1416),ERROR" ID="0xd88e2c42" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc exchange mtu param error @btsrv_gatt_client.c(1438),ERROR" ID="0xd88e2cf2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] addr memcpy fail @btsrv_gatt_client.c(1442),ERROR" ID="0xd88e2d12" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][ERROR] mc ble gatt mtu config req atb ret: %d @btsrv_gatt_client.c(1450),ERROR" ID="0xd88e2d52" />
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] uuid to gatt uuid memcpy fail @btsrv_gatt_client.c(133),ERROR" ID="0xd88e042a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] uuid length error @btsrv_gatt_client.c(137),ERROR" ID="0xd88e044a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gatt uuid to uuid memcpy fail @btsrv_gatt_client.c(151),ERROR" ID="0xd88e04ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(269),ERROR" ID="0xd88e086a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memcpy cb_para fail @btsrv_gatt_client.c(275),ERROR" ID="0xd88e089a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(295),ERROR" ID="0xd88e093a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(318),ERROR" ID="0xd88e09f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(342),ERROR" ID="0xd88e0ab2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(366),ERROR" ID="0xd88e0b72" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(391),ERROR" ID="0xd88e0c3a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(414),ERROR" ID="0xd88e0cf2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memnew cb_para data fail @btsrv_gatt_client.c(424),ERROR" ID="0xd88e0d42" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memcpy cb_para data fail @btsrv_gatt_client.c(430),ERROR" ID="0xd88e0d72" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(459),ERROR" ID="0xd88e0e5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(483),ERROR" ID="0xd88e0f1a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(505),ERROR" ID="0xd88e0fca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] cb_para memnew fail @btsrv_gatt_client.c(527),ERROR" ID="0xd88e107a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memnew cb_para data fail @btsrv_gatt_client.c(537),ERROR" ID="0xd88e10ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] memcpy cb_para data fail @btsrv_gatt_client.c(542),ERROR" ID="0xd88e10f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gatt event msg param is NULL @btsrv_gatt_client.c(566),ERROR" ID="0xd88e11b2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO] unhandled msg id: %d @btsrv_gatt_client.c(621),INFO" ID="0xd88e136d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gatt io msg param is NULL @btsrv_gatt_client.c(629),ERROR" ID="0xd88e13aa" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO] unhandled msg id: %d @btsrv_gatt_client.c(669),INFO" ID="0xd88e14ed" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][ERROR] wrong msg id:%d. @btsrv_gatt_client.c(682),ERROR" ID="0xd88e1552" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] disc service cbk param null. @btsrv_gatt_client.c(724),ERROR" ID="0xd88e16a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc disc svc get conn node fail. @btsrv_gatt_client.c(729),ERROR" ID="0xd88e16ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc discovery svc cbk param fail. @btsrv_gatt_client.c(737),ERROR" ID="0xd88e170a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] discovery svc cbk send fail. @btsrv_gatt_client.c(743),ERROR" ID="0xd88e173a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] disc service compl cbk param new fail. @btsrv_gatt_client.c(753),ERROR" ID="0xd88e178a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] disc service compl cbk param null. @btsrv_gatt_client.c(757),ERROR" ID="0xd88e17aa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] discovery cmp cbk send fail. @btsrv_gatt_client.c(768),ERROR" ID="0xd88e1802" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] disc chara cbk param null. @btsrv_gatt_client.c(780),ERROR" ID="0xd88e1862" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc_disc_char get conn node fail. @btsrv_gatt_client.c(785),ERROR" ID="0xd88e188a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc discovery chara cbk param fail. @btsrv_gatt_client.c(794),ERROR" ID="0xd88e18d2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] discovery char cbk send fail. @btsrv_gatt_client.c(800),ERROR" ID="0xd88e1902" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] discovery char cbk send fail. @btsrv_gatt_client.c(816),ERROR" ID="0xd88e1982" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] disc desc cbk param null. @btsrv_gatt_client.c(828),ERROR" ID="0xd88e19e2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc disc desc get conn node fail. @btsrv_gatt_client.c(833),ERROR" ID="0xd88e1a0a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc discovery desc cbk param fail. @btsrv_gatt_client.c(840),ERROR" ID="0xd88e1a42" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] discovery desc cbk send fail. @btsrv_gatt_client.c(846),ERROR" ID="0xd88e1a72" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] discovery desc cmp cbk send fail. @btsrv_gatt_client.c(862),ERROR" ID="0xd88e1af2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gap get conn node fail. @btsrv_gatt_client.c(875),ERROR" ID="0xd88e1b5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc read cfm cbk param fail. @btsrv_gatt_client.c(883),ERROR" ID="0xd88e1b9a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] read cfm cbk send fail. @btsrv_gatt_client.c(889),ERROR" ID="0xd88e1bca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] read complete cbk send fail. @btsrv_gatt_client.c(907),ERROR" ID="0xd88e1c5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc write cbk get conn node fail. @btsrv_gatt_client.c(919),ERROR" ID="0xd88e1cba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc write cfm cbk param fail. @btsrv_gatt_client.c(925),ERROR" ID="0xd88e1cea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] write cfm cbk send fail. @btsrv_gatt_client.c(931),ERROR" ID="0xd88e1d1a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] mtu changed cbk can not find conn node. @btsrv_gatt_client.c(943),ERROR" ID="0xd88e1d7a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] alloc mtu changed cbk param fail. @btsrv_gatt_client.c(948),ERROR" ID="0xd88e1da2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] mtu changed evt cbk send fail. @btsrv_gatt_client.c(954),ERROR" ID="0xd88e1dd2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] receive notification can not find conn node. @btsrv_gatt_client.c(968),ERROR" ID="0xd88e1e42" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] receive notification alloc cb param fail. @btsrv_gatt_client.c(976),ERROR" ID="0xd88e1e82" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] notify cbk send fail. @btsrv_gatt_client.c(982),ERROR" ID="0xd88e1eb2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] receive indication can not find conn node. @btsrv_gatt_client.c(996),ERROR" ID="0xd88e1f22" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] receive indication alloc cb param fail. @btsrv_gatt_client.c(1004),ERROR" ID="0xd88e1f62" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] indication cbk send fail. @btsrv_gatt_client.c(1010),ERROR" ID="0xd88e1f92" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] failed to register bcore callback. @btsrv_gatt_client.c(1031),ERROR" ID="0xd88e203a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] failed to register client bcore callback. @btsrv_gatt_client.c(1040),ERROR" ID="0xd88e2082" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] invalid client_id. @btsrv_gatt_client.c(1049),ERROR" ID="0xd88e20ca" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][ERROR] %d is invalid client_id @btsrv_gatt_client.c(1065),ERROR" ID="0xd88e214a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] malloc fail @btsrv_gatt_client.c(1076),ERROR" ID="0xd88e21a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gatt client node app_uuid memcpy fail @btsrv_gatt_client.c(1081),ERROR" ID="0xd88e21ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] client num reached maximum @btsrv_gatt_client.c(1087),ERROR" ID="0xd88e21fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] unlikely, failed to find available client id @btsrv_gatt_client.c(1101),ERROR" ID="0xd88e226a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] failed to add client node. @btsrv_gatt_client.c(1119),ERROR" ID="0xd88e22fa" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[btsrv][INFO] unregister client %d failed, ret 0x%x. @btsrv_gatt_client.c(1139),INFO" ID="0xd88e239d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO] unregister client %d success. @btsrv_gatt_client.c(1142),INFO" ID="0xd88e23b5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc discovery service param error @btsrv_gatt_client.c(1164),ERROR" ID="0xd88e2462" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO]gattc disc service ret %d @btsrv_gatt_client.c(1179),INFO" ID="0xd88e24dd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc discovery character param error @btsrv_gatt_client.c(1204),ERROR" ID="0xd88e25a2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO]gattc disc character ret %d @btsrv_gatt_client.c(1220),INFO" ID="0xd88e2625" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc discovery descriptor param error @btsrv_gatt_client.c(1245),ERROR" ID="0xd88e26ea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO]gattc disc descriptor ret %d @btsrv_gatt_client.c(1255),INFO" ID="0xd88e273d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc read by hdl param error @btsrv_gatt_client.c(1280),ERROR" ID="0xd88e2802" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[btsrv][INFO]gattc read by hdl att_hdl:%d ret %d @btsrv_gatt_client.c(1292),INFO" ID="0xd88e2865" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc read by uuid param error @btsrv_gatt_client.c(1317),ERROR" ID="0xd88e292a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][INFO]gattc read by uuid ret %d @btsrv_gatt_client.c(1328),INFO" ID="0xd88e2985" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc write req param error @btsrv_gatt_client.c(1353),ERROR" ID="0xd88e2a4a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] write req param new fail! @btsrv_gatt_client.c(1358),ERROR" ID="0xd88e2a72" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] write req value memcpy fail @btsrv_gatt_client.c(1368),ERROR" ID="0xd88e2ac2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[btsrv][INFO]write req att_hdl:%d ret:%d @btsrv_gatt_client.c(1377),INFO" ID="0xd88e2b0d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc write cmd param error @btsrv_gatt_client.c(1403),ERROR" ID="0xd88e2bda" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] write cmd param new fail! @btsrv_gatt_client.c(1408),ERROR" ID="0xd88e2c02" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] write cmd value memcpy fail @btsrv_gatt_client.c(1416),ERROR" ID="0xd88e2c42" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[btsrv][INFO]write cmd att_hdl:%d ret:%d @btsrv_gatt_client.c(1425),INFO" ID="0xd88e2c8d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gatt client callback memcpy fail @btsrv_gatt_client.c(1441),ERROR" ID="0xd88e2d0a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[btsrv][ERROR] gattc exchange mtu param error @btsrv_gatt_client.c(1463),ERROR" ID="0xd88e2dba" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[btsrv][ERROR] mc ble gatt mtu config req atb ret: %d @btsrv_gatt_client.c(1472),ERROR" ID="0xd88e2e02" />
 			</MSG_LOG>

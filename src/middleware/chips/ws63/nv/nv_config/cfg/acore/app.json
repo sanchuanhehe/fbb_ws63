@@ -197,6 +197,20 @@
             "attributions": 1,
             "value": 1
         },
+        "er_su_fail_cnt_th":{
+            "key_id": "0x2019",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 1,
+            "value": 5
+        },
+        "set_power_level_val":{
+            "key_id": "0x201B",
+            "key_status": "alive",
+            "structure_type": "tpc_type_t",
+            "attributions": 1,
+            "value": [[-13, 0]]
+        },
         "fe_rx_insert_loss":{
             "key_id": "0x2050",
             "key_status": "alive",
@@ -341,7 +355,7 @@
             "key_status": "alive",
             "structure_type": "uint8_t",
             "attributions": 1,
-            "value": 1
+            "value": 0
         },
         "btc_srrc_set_channel":{
             "key_id": "0x20A6",
@@ -385,229 +399,278 @@
             "attributions": 1,
             "value": 1
         },
+        "btc_ble_scan_channel_map":{
+            "key_id": "0x20AC",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 1,
+            "value": 0
+        },
+        "btc_ble_poweron_cali_switch":{
+            "key_id": "0x20AD",
+            "key_status": "alive",
+            "structure_type": "uint32_t",
+            "attributions": 1,
+            "value": 2147483648
+        },
         "radar_alg_param0":{
             "key_id": "0x2100",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param1":{
             "key_id": "0x2101",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param2":{
             "key_id": "0x2102",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param3":{
             "key_id": "0x2103",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param4":{
             "key_id": "0x2104",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,25,45,10,4,70,2,5,10,10,10,10,5,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param5":{
             "key_id": "0x2105",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,25,45,10,4,70,2,5,10,10,10,10,5,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param6":{
             "key_id": "0x2106",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,25,45,10,4,70,2,5,10,10,10,10,5,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param7":{
             "key_id": "0x2107",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,25,45,10,4,70,2,5,10,10,10,10,5,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param8":{
             "key_id": "0x2108",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param9":{
             "key_id": "0x2109",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param10":{
             "key_id": "0x210A",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param11":{
             "key_id": "0x210B",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param12":{
             "key_id": "0x210C",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param13":{
             "key_id": "0x210D",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param14":{
             "key_id": "0x210E",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param15":{
             "key_id": "0x210F",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param16":{
             "key_id": "0x2110",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param17":{
             "key_id": "0x2111",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param18":{
             "key_id": "0x2112",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param19":{
             "key_id": "0x2113",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param20":{
             "key_id": "0x2114",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param21":{
             "key_id": "0x2115",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param22":{
             "key_id": "0x2116",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param23":{
             "key_id": "0x2117",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param24":{
             "key_id": "0x2118",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,20,35,10,4,70,2,0,7,7,7,10,6,6,10,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param25":{
             "key_id": "0x2119",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param26":{
             "key_id": "0x211A",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param27":{
             "key_id": "0x211B",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param28":{
             "key_id": "0x211C",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param29":{
             "key_id": "0x211D",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param30":{
             "key_id": "0x211E",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
         },
         "radar_alg_param31":{
             "key_id": "0x211F",
             "key_status": "alive",
             "structure_type": "radar_alg_param_t",
             "attributions": 1,
-            "value": [32,25,30,20,30,10,4,70,2,0,10,10,10,10,10,10,10,2,2,2,2,2,2,2,2,0,0,0]
+            "value": [32,25,30,13,26,10,4,70,2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0]
+        },
+        "radar_mwo_mode":{
+            "key_id": "0x2120",
+            "key_status": "alive",
+            "structure_type": "radar_mwo_mode_t",
+            "attributions": 1,
+            "value": [400,350,500,450,32,6,1,12,50,20]
+        },
+        "radar_thru_wall_mode":{
+            "key_id": "0x2124",
+            "key_status": "alive",
+            "structure_type": "radar_thru_wall_mode_t",
+            "attributions": 1,
+            "value": [100,100,1,0,0,250,1,0]
+        },
+        "radar_chan_switch":{
+            "key_id": "0x2130",
+            "key_status": "alive",
+            "structure_type": "radar_chan_switch_t",
+            "attributions": 1,
+            "value": [600,500,2,0]
+        },
+        "slp_radar_mfg_para":{
+            "key_id": "0x2138",
+            "key_status": "alive",
+            "structure_type": "slp_radar_mfg_para_t",
+            "attributions": 4,
+            "value": [[2, 2, 2, 2], [1000, 1000], [0, 0], [500, 500]]
+        },
+        "slp_radar_mfg_status":{
+            "key_id": "0x2139",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 4,
+            "value": 0
         },
         "radar_alg_ctrl":{
             "key_id": "0x2140",

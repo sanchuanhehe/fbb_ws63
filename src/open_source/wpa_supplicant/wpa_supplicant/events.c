@@ -2080,7 +2080,9 @@ int wpa_supplicant_connect(struct wpa_supplicant *wpa_s,
 	if (wpas_wps_scan_pbc_overlap(wpa_s, selected, ssid)) {
 		wpa_msg(wpa_s, MSG_INFO, WPS_EVENT_OVERLAP
 			"PBC session overlap");
+#ifdef CONFIG_WPS
 		wpas_notify_wps_event_pbc_overlap(wpa_s);
+#endif
 #ifdef CONFIG_P2P
 		if (wpa_s->p2p_group_interface == P2P_GROUP_INTERFACE_CLIENT ||
 		    wpa_s->p2p_in_provisioning) {
@@ -2690,6 +2692,14 @@ int wpas_select_network_from_last_scan(struct wpa_supplicant *wpa_s,
 {
 	struct wpa_bss *selected;
 	struct wpa_ssid *ssid = NULL;
+#ifdef LOS_WPA_PATCH
+	int scan_interval_policy_tbl[] = {5, 5, 5, 30, 30, 60};
+	u8 policy_size = (u8)(sizeof(scan_interval_policy_tbl) / sizeof(scan_interval_policy_tbl[0]));
+	if (g_reconnect_set.enable == WPA_FLAG_OFF) {
+		/* if sta reconnect policy isn't enabled, stop req scan <default policy> */
+		os_memset(scan_interval_policy_tbl, 0, sizeof(scan_interval_policy_tbl));
+	}
+#endif /* LOS_WPA_PATCH */
 #ifndef LOS_WPA_PATCH
 	int time_to_reenable = wpas_reenabled_network_time(wpa_s);
 
@@ -2727,6 +2737,9 @@ int wpas_select_network_from_last_scan(struct wpa_supplicant *wpa_s,
 #endif /* CONFIG_MESH */
 #endif /* LOS_WPA_PATCH */
 	if (selected) {
+#ifdef LOS_WPA_PATCH
+		wpa_s->not_found_ssid_scan_cnt = 0;
+#endif
 #ifndef LOS_WPA_PATCH
 		int skip;
 		skip = !wpa_supplicant_need_to_roam(wpa_s, selected, ssid);
@@ -2810,8 +2823,23 @@ int wpas_select_network_from_last_scan(struct wpa_supplicant *wpa_s,
 #ifndef LOS_WPA_PATCH
 			int timeout_sec = wpa_s->scan_interval;
 #else
+			/*
+			 * 1.if sta reconnect policy isn't enabled, stop req scan <default policy>
+			 * 2.if sta reconnect policy isn't enabled, scan interval reach max, stop req scan <resv policy>
+			 */
+			if ((scan_interval_policy_tbl[0] == 0) ||
+				((g_reconnect_set.enable == WPA_FLAG_OFF) &&
+				(wpa_s->not_found_ssid_scan_cnt >= policy_size))) {
+				wpa_s->not_found_ssid_scan_cnt = 0;
+				wpas_request_disconnection(wpa_s);
+				return 0;
+			}
+			/* if scan interval equal max, stop increase */
+			if (wpa_s->not_found_ssid_scan_cnt < policy_size)
+				wpa_s->not_found_ssid_scan_cnt++;
 			int timeout_sec = ((wpa_is_sta(wpa_s) == WPA_FLAG_ON) &&
-					   (g_reconnect_set.pending_flag == WPA_FLAG_ON)) ? 0 : 5;
+				(g_reconnect_set.pending_flag == WPA_FLAG_ON)) ? 0 :
+				scan_interval_policy_tbl[wpa_s->not_found_ssid_scan_cnt - 1];
 #endif /* LOS_WPA_PATCH */
 			int timeout_usec = 0;
 #ifdef CONFIG_P2P
@@ -4045,7 +4073,6 @@ static void wpa_supplicant_event_assoc(struct wpa_supplicant *wpa_s,
 	}
 #endif /* CONFIG_TESTING_OPTIONS */
 #endif /* CONFIG_IEEE80211R */
-#ifndef EXT_CODE_CROP
 
 	if (wpa_s->pending_eapol_rx) {
 		struct os_reltime now, age;
@@ -4065,7 +4092,7 @@ static void wpa_supplicant_event_assoc(struct wpa_supplicant *wpa_s,
 		wpabuf_free(wpa_s->pending_eapol_rx);
 		wpa_s->pending_eapol_rx = NULL;
 	}
-#endif /* EXT_CODE_CROP */
+
 #ifdef CONFIG_WEP
 #ifndef EXT_CODE_CROP
 	if ((wpa_s->key_mgmt == WPA_KEY_MGMT_NONE ||
@@ -4977,6 +5004,11 @@ static void wpas_event_disassoc(struct wpa_supplicant *wpa_s,
 		info->reason_code = info->reason_code & ~(1 << 14);
 		reason_code = info->reason_code;
 		locally_generated = info->locally_generated;
+#ifdef LOS_CONFIG_PMK_CACHE
+        if (locally_generated == 0) {
+            wifi_flush_pmk_cache();
+        }
+#endif /* LOS_CONFIG_PMK_CACHE */
 #ifndef CONFIG_PRINT_NOUSE
 		wpa_dbg(wpa_s, MSG_DEBUG, " * reason %u (%s)%s", reason_code,
 			reason2str(reason_code),
@@ -5739,7 +5771,7 @@ void wpa_supplicant_event(void *ctx, enum wpa_event_type event,
 	if (wifi_dev == NULL)
 		return;
 
-	if (wifi_dev->iftype == EXT_WIFI_IFTYPE_AP || wifi_dev->iftype == EXT_WIFI_IFTYPE_P2P_GO) {
+	if (wifi_dev->iftype == EXT_WIFI_IFTYPE_AP) {
 		hostapd_event(g_hapd, event, data);
 		return;
 	}

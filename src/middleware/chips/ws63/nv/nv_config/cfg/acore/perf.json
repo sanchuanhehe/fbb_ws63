@@ -197,6 +197,13 @@
             "attributions": 1,
             "value": 1
         },
+        "set_power_level_val":{
+            "key_id": "0x201B",
+            "key_status": "alive",
+            "structure_type": "tpc_type_t",
+            "attributions": 1,
+            "value": [[-13, 0]]
+        },
         "fe_rx_insert_loss":{
             "key_id": "0x2050",
             "key_status": "alive",
@@ -384,6 +391,13 @@
             "structure_type": "uint8_t",
             "attributions": 1,
             "value": 1
+        },
+        "btc_ble_scan_channel_map":{
+            "key_id": "0x20AC",
+            "key_status": "alive",
+            "structure_type": "uint8_t",
+            "attributions": 1,
+            "value": 0
         },
         "radar_alg_param0":{
             "key_id": "0x2100",

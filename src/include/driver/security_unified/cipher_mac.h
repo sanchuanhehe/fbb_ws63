@@ -10,7 +10,6 @@
 #define CIPHER_MAC_H
 
 #include <stdint.h>
-#include <stdbool.h>
 #include "errcode.h"
 
 #ifdef __cplusplus

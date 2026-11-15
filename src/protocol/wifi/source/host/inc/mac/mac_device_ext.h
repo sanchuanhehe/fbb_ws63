@@ -717,6 +717,8 @@ typedef struct {
     osal_u8 scan_flag;  /* 内核下发的扫描模式,每个bit意义见wlan_scan_flag_enum，暂时只解析是否为并发扫描 */
     osal_u8 scan_func;  /* DMAC SCANNER 扫描模式 */
     osal_u8 vap_id;     /* 下发扫描请求的vap id */
+    wlan_scan_mode_enum_uint8 scan_end_mode;
+    osal_u8 rsv[3];
     osal_u64 cookie;    /* P2P 监听下发的cookie 值 */
 
     /* 重要:回调函数指针:函数指针必须放最后否则核间通信出问题 */
@@ -967,7 +969,7 @@ typedef struct {
     oal_bool_enum_uint8 dbac_enabled         : 1; /* DBAC是否已经使能 */
     oal_bool_enum_uint8 dbac_running         : 1; /* DBAC是否在运行 */
     oal_bool_enum_uint8 intol_bit_recd_40mhz : 1;
-    oal_bool_enum_uint8 sniffer_switch       : 1; /* 抓包功能开关 */
+    oal_bool_enum_uint8 sniffer_switch       : 1;
     oal_bool_enum_uint8 en_wmm               : 1; /* wmm使能开关 根据对端wmm能力更新 */
 
     oal_bool_enum_uint8 arp_offload_switch;

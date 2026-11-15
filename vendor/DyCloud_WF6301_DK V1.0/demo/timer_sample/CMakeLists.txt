@@ -1,0 +1,1 @@
+set(SOURCES "${SOURCES}" "${CMAKE_CURRENT_SOURCE_DIR}/timer_sample.c" PARENT_SCOPE)

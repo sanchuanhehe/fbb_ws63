@@ -58,6 +58,43 @@ extern "C" {
 #define CONFIG_I2S_SUPPORT_LOOPBACK     1
 #define CONFIG_DATA_LEN_MAX             128
 
+typedef enum {
+    I2S_SAMPLE_RATE_8K = 0,                 /*!< @if Eng 8K sample_rate.
+                                             @else   8K采样率。 @endif */
+    I2S_SAMPLE_RATE_11K,                    /*!< @if Eng 11K sample_rate.
+                                             @else   11K采样率。 @endif */
+    I2S_SAMPLE_RATE_12K,                    /*!< @if Eng 12K sample_rate.
+                                             @else   12K采样率。 @endif */
+    I2S_SAMPLE_RATE_16K,                    /*!< @if Eng 16K sample_rate.
+                                             @else   16K采样率。 @endif */
+    I2S_SAMPLE_RATE_22K,                    /*!< @if Eng 22K sample_rate.
+                                             @else   22K采样率。 @endif */
+    I2S_SAMPLE_RATE_24K,                    /*!< @if Eng 24K sample_rate.
+                                             @else   24K采样率。 @endif */
+    I2S_SAMPLE_RATE_32K,                    /*!< @if Eng 32K sample_rate.
+                                             @else   32K采样率。 @endif */
+    I2S_SAMPLE_RATE_44K,                    /*!< @if Eng 44K sample_rate.
+                                             @else   44K采样率。 @endif */
+    I2S_SAMPLE_RATE_48K,                    /*!< @if Eng 48K sample_rate.
+                                             @else   48K采样率。 @endif */
+    I2S_SAMPLE_RATE_88K,                    /*!< @if Eng 88K sample_rate.
+                                             @else   88K采样率。 @endif */
+    I2S_SAMPLE_RATE_96K,                    /*!< @if Eng 96K sample_rate.
+                                             @else   96K采样率。 @endif */
+    I2S_SAMPLE_RATE_176K,                   /*!< @if Eng 176K sample_rate.
+                                             @else   176K采样率。 @endif */
+    I2S_SAMPLE_RATE_192K,                   /*!< @if Eng 192K sample_rate.
+                                             @else   192K采样率。 @endif */
+    I2S_SAMPLE_RATE_MAX,
+} i2s_sample_rate_t;
+
+/**
+ * @brief  Get result if support sample_rate.
+ * @param  [in]  fs sample_rate.
+ * @return True/False.
+ */
+bool sio_porting_check_standard_sample_rate(uint32_t fs);
+
 /**
  * @brief  Definition of the contorl ID of hal sio.
  */
@@ -120,6 +157,7 @@ uint32_t sio_porting_get_mclk(void);
  * @brief  get bclk.
  */
 uint32_t sio_porting_get_bclk_div_num(uint8_t data_width, uint32_t ch);
+uint32_t sio_porting_get_bclk_div(uint8_t data_width, uint32_t ch, uint32_t sample_rate_index);
 uintptr_t i2s_porting_tx_left_data_addr_get(sio_bus_t bus);
 
 uintptr_t i2s_porting_tx_merge_data_addr_get(sio_bus_t bus);

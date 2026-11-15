@@ -284,7 +284,10 @@ typedef enum {
     MAC_QSTA_INVALID_MECHANISM = 37,
     MAC_QSTA_SETUP_NOT_DONE = 38,
     MAC_QSTA_TIMEOUT = 39,
-    MAC_QSTA_CIPHER_NOT_SUPP = 45
+    MAC_QSTA_CIPHER_NOT_SUPP = 45,
+
+    /* 用来区分TX DISASSOC/RX DISASSOC */
+    MAC_REASON_MAX = 8192,
 } mac_reason_code_enum;
 typedef osal_u16 mac_reason_code_enum_uint16;
 

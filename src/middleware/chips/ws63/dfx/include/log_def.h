@@ -22,4 +22,8 @@
 #include "log_def_gnss.h"
 #endif
 
+#ifdef SUPPORT_SLP_RADAR_CLIENT
+#include "log_def_slp_radar.h"
+#endif
+
 #endif

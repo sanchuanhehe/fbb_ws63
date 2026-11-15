@@ -1,0 +1,11 @@
+[
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "sdk/full",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false",
+    "name": "full_sdk",
+    "description": "全量SDK编译，当src/或ci/目录下发生C/H文件变更时触发"
+  }
+]

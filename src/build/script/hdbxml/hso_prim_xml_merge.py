@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
+# Copyright (c) 2020 HiSilicon (Shanghai) Technologies CO.; LIMITED.
 # Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2022. All rights reserved.
 
 import os
@@ -91,7 +92,7 @@ if __name__ == "__main__":
     root = sys.argv[1]
     chip = sys.argv[2]
     core_name = sys.argv[3]
-    if len(sys.argv) == 5:
+    if len(sys.argv) >= 5:
         hso_en_bt = sys.argv[4]
     else:
         hso_en_bt = ""
@@ -105,8 +106,9 @@ if __name__ == "__main__":
         db_conf = json.load(f)
 
     G_PARAMS = {}
-    G_PARAMS['HDB_XML_TEMP_BASE_DIR'] = os.path.join(root, db_conf["HDB_XML_TEMP_BASE_DIR"])
-    G_PARAMS['HDB_PRIM_XML_DST_FILE'] = os.path.join(root, db_conf["HDB_PRIM_XML_DST_FILE"])
+    build_root = sys.argv[5] if len(sys.argv) > 5 else root
+    G_PARAMS['HDB_XML_TEMP_BASE_DIR'] = os.path.join(build_root, db_conf["HDB_XML_TEMP_BASE_DIR"])
+    G_PARAMS['HDB_PRIM_XML_DST_FILE'] = os.path.join(build_root, db_conf["HDB_PRIM_XML_DST_FILE"])
     G_PARAMS['HDB_PRIM_XML_SRC_FILE'] = os.path.join(root, db_conf["HDB_PRIM_XML_SRC_FILE"])
 
     merge_db_xml(root, chip, core_name)

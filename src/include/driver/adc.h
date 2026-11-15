@@ -202,36 +202,36 @@ errcode_t uapi_adc_close_channel(uint8_t channel);
 /**
  * @if Eng
  * @brief  Open differential ADC channels.
- * @param  [in]  postive_ch The postive ADC channel.
+ * @param  [in]  positive_ch The positive ADC channel.
  * @param  [in]  negative_ch The negative ADC channel.
  * @retval ERRCODE_SUCC Success.
  * @retval Other        Failure. For details, see @ref errcode_t.
  * @else
  * @brief  开启ADC差分通道。
- * @param  [in]  postive_ch ADC正极通道。
+ * @param  [in]  positive_ch ADC正极通道。
  * @param  [in]  negative_ch ADC负极通道。
  * @retval ERRCODE_SUCC 成功。
  * @retval Other        失败。参考 @ref errcode_t 。
  * @endif
  */
-errcode_t uapi_adc_open_differential_channel(uint8_t postive_ch, uint8_t negative_ch);
+errcode_t uapi_adc_open_differential_channel(uint8_t positive_ch, uint8_t negative_ch);
 
 /**
  * @if Eng
  * @brief  Close differential ADC channels.
- * @param  [in]  postive_ch The postive ADC channel.
+ * @param  [in]  positive_ch The positive ADC channel.
  * @param  [in]  negative_ch The negative ADC channel.
  * @retval ERRCODE_SUCC Success.
  * @retval Other        Failure. For details, see @ref errcode_t.
  * @else
  * @brief  关闭ADC差分通道。
- * @param  [in]  postive_ch ADC正极通道。
+ * @param  [in]  positive_ch ADC正极通道。
  * @param  [in]  negative_ch ADC负极通道。
  * @retval ERRCODE_SUCC 成功。
  * @retval Other        失败。参考 @ref errcode_t 。
  * @endif
  */
-errcode_t uapi_adc_close_differential_channel(uint8_t postive_ch, uint8_t negative_ch);
+errcode_t uapi_adc_close_differential_channel(uint8_t positive_ch, uint8_t negative_ch);
 #endif
 
 #if defined(CONFIG_ADC_SUPPORT_AUTO_SCAN)

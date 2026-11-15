@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) CompanyNameMagicTag 2023-2023. All rights reserved.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
 #===============================================================================
 set(MODULE_NAME "bt")
 set(AUTO_DEF_FILE_ID FALSE)
@@ -51,5 +51,6 @@ set(PRIVATE_HEADER
     ${ROOT_DIR}/middleware/utils/common_headers/osal/
     ${ACHBA_HEADER_LIST}
 )
+
 set(LIB_OUT_PATH ${BIN_DIR}/${CHIP}/libs/bluetooth/chba/${TARGET_COMMAND})
 build_component()

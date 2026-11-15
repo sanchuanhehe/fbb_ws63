@@ -127,13 +127,13 @@ Grant Node： 步骤 1 调用 enable_sle，打开 SLE 开关。
   ![4](../../doc/media/sle_one_to_many/4.png)
 - 步骤八：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
 
-  ![5](../../doc/media/sle_one_to_many/5.png)
+  ![image-20250716163653427](../../doc/media/readme/image-20250716163653427.png)
 - 步骤九：配置完成后，点击工具“程序加载”按钮烧录。
 
-  ![6](../../doc/media/sle_one_to_many/6.png)
+  ![image-20250307164622717](../../doc/media/readme/image-20250307164622717.png)
 - 步骤十：出现“Connecting, please reset device...”字样时，复位开发板，等待烧录结束。
 
-  ![7](../../doc/media/sle_one_to_many/7.png)
+  ![image-20250716164922699](../../doc/media/readme/image-20250716164922699.png)
 
 * 步骤十一：client端只需要编译一次烧录到一块板子即可，server端由于是多块板子，需要修改MAC地址供，需在文件sle_server_adv.c
 

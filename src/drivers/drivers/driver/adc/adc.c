@@ -177,26 +177,26 @@ errcode_t uapi_adc_close_channel(uint8_t channel)
 }
 
 #if defined(CONFIG_ADC_SUPPORT_DIFFERENTIAL)
-errcode_t uapi_adc_open_differential_channel(uint8_t postive_ch, uint8_t negative_ch)
+errcode_t uapi_adc_open_differential_channel(uint8_t positive_ch, uint8_t negative_ch)
 {
-    if (unlikely(postive_ch >= ADC_CHANNEL_MAX_NUM) || unlikely(negative_ch >= ADC_CHANNEL_MAX_NUM)) {
+    if (unlikely(positive_ch >= ADC_CHANNEL_MAX_NUM) || unlikely(negative_ch >= ADC_CHANNEL_MAX_NUM)) {
         return ERRCODE_ADC_INVALID_PARAMETER;
     }
 
     uint32_t irq_sts = adc_irq_lock();
-    errcode_t ret = g_hal_funcs->diff_ch_set((adc_channel_t)postive_ch, (adc_channel_t)negative_ch, true);
+    errcode_t ret = g_hal_funcs->diff_ch_set((adc_channel_t)positive_ch, (adc_channel_t)negative_ch, true);
     adc_irq_unlock(irq_sts);
     if (ret == ERRCODE_SUCC) {
-        adc_working_channel[0] = postive_ch;
+        adc_working_channel[0] = positive_ch;
         adc_working_channel[1] = negative_ch;
     }
 
     return ret;
 }
 
-errcode_t uapi_adc_close_differential_channel(uint8_t postive_ch, uint8_t negative_ch)
+errcode_t uapi_adc_close_differential_channel(uint8_t positive_ch, uint8_t negative_ch)
 {
-    if (unlikely(postive_ch != adc_working_channel[0]) ||
+    if (unlikely(positive_ch != adc_working_channel[0]) ||
         unlikely(negative_ch != adc_working_channel[1])) {
         return ERRCODE_ADC_INVALID_PARAMETER;
     }
@@ -208,7 +208,7 @@ errcode_t uapi_adc_close_differential_channel(uint8_t postive_ch, uint8_t negati
 #endif /* CONFIG_ADC_SUPPORT_AUTO_SCAN */
 
     uint32_t irq_sts = adc_irq_lock();
-    errcode_t ret = g_hal_funcs->diff_ch_set((adc_channel_t)postive_ch, (adc_channel_t)negative_ch, false);
+    errcode_t ret = g_hal_funcs->diff_ch_set((adc_channel_t)positive_ch, (adc_channel_t)negative_ch, false);
     adc_irq_unlock(irq_sts);
     if (ret == ERRCODE_SUCC) {
         adc_working_channel[0] = ADC_CHANNEL_NONE;
@@ -248,7 +248,7 @@ errcode_t uapi_adc_auto_scan_ch_enable(uint8_t channel, adc_scan_config_t config
         return ERRCODE_ADC_INVALID_PARAMETER;
     }
     if (unlikely(!adc_is_power_on)) {
-        return ERRCODE_PWM_NOT_POWER_ON;
+        return ERRCODE_ADC_NOT_POWER_ON;
     }
 
     adc_config.type = (hal_adc_scan_type_t)config.type;

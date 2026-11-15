@@ -13,6 +13,7 @@ errcode_t kv_flash_read(const uint32_t flash_offset, const uint32_t read_size, u
 {
     errcode_t ret = uapi_sfc_reg_read(flash_offset, read_buffer, read_size);
     if (ret != ERRCODE_SUCC) {
+        nv_log_err("[NV] kv_flash_read fail, ret = %#x\r\n", ret);
         return ERRCODE_FAIL;
     }
     return ERRCODE_SUCC;
@@ -24,13 +25,16 @@ errcode_t kv_flash_write(const uint32_t flash_offset, uint32_t write_size, const
     if (do_erase == true) {
         ret = kv_flash_erase(flash_offset, write_size);
         if (ret != ERRCODE_SUCC) {
+            nv_log_err("[NV] kv_flash_write fail, ret = %#x\r\n", ret);
             return ret;
         }
     }
 
     uint8_t *cmp_data = kv_malloc(write_size);
     if (cmp_data == NULL) {
-        return ERRCODE_MALLOC;
+        ret = ERRCODE_MALLOC;
+        nv_log_err("[NV] kv_flash_write fail, ret = %#x\r\n", ret);
+        return ret;
     }
     ret = uapi_sfc_reg_write(flash_offset, (uint8_t *)write_data, write_size);
     if (ret != ERRCODE_SUCC) {
@@ -47,6 +51,9 @@ errcode_t kv_flash_write(const uint32_t flash_offset, uint32_t write_size, const
     }
 write_failed:
     kv_free(cmp_data);
+    if (ret != ERRCODE_SUCC) {
+        nv_log_err("[NV] kv_flash_write fail, ret = %#x\r\n", ret);
+    }
     return ret;
 }
 
@@ -54,6 +61,9 @@ errcode_t kv_flash_erase(const uint32_t flash_addr, uint32_t size)
 {
     errcode_t ret = ERRCODE_FAIL;
     ret = uapi_sfc_reg_erase(flash_addr, size);
+    if (ret != ERRCODE_SUCC) {
+        nv_log_err("[NV] kv_flash_erase fail, ret = %#x\r\n", ret);
+    }
     return ret;
 }
 
@@ -64,6 +74,7 @@ errcode_t kv_read_factory(uint16_t key_id, uint16_t kvalue_max_length, uint16_t 
     kv_store_key_data_t key_data = {kvalue_max_length, 0, kvalue};
     ret = kv_store_read_backup_key(key_id, &key_data, &data_attribute);
     if (ret != ERRCODE_SUCC) {
+        nv_log_err("[NV] kv_read_factory fail, ret = %#x\r\n", ret);
         return ret;
     }
     *kvalue_length = key_data.kvalue_actual_length;

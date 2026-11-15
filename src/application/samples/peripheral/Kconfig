@@ -10,6 +10,8 @@ config ENABLE_ALL_PERIPHERAL_SAMPLE
     select SAMPLE_SUPPORT_ADC
     select SAMPLE_SUPPORT_AMIC if ADC_SUPPORT_AMIC
     select SAMPLE_SUPPORT_BLINKY
+    select SAMPLE_SUPPORT_HELLOWORLD
+    select SAMPLE_SUPPORT_HELLOWORLD_OLED
     select SAMPLE_SUPPORT_BUTTON
     select SAMPLE_SUPPORT_CALENDAR
     select SAMPLE_SUPPORT_CLOCKS
@@ -23,12 +25,12 @@ config ENABLE_ALL_PERIPHERAL_SAMPLE
     select SAMPLE_SUPPORT_PDM
     select SAMPLE_SUPPORT_PDM_AMIC if ADC_SUPPORT_AMIC
     select SAMPLE_SUPPORT_PINCTRL
+    select SAMPLE_SUPPORT_PMP
     select SAMPLE_SUPPORT_PWM
     select SAMPLE_SUPPORT_QDEC
     select SAMPLE_SUPPORT_RTC
     select SAMPLE_SUPPORT_SPI
     select SAMPLE_SUPPORT_SYSTICK
-    select SAMPLE_SUPPORT_TASKS
     select SAMPLE_SUPPORT_TCXO
     select SAMPLE_SUPPORT_TIMER
     select SAMPLE_SUPPORT_UART
@@ -75,6 +77,34 @@ config SAMPLE_SUPPORT_BLINKY
 if SAMPLE_SUPPORT_BLINKY
 menu "Blinky Sample Configuration"
     osource "application/samples/peripheral/blinky/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_HELLOWORLD
+    bool
+    prompt "Support hello world Sample."
+    default n
+    depends on ENABLE_PERIPHERAL_SAMPLE
+    help
+        This option means support Hello World Sample.
+
+if SAMPLE_SUPPORT_HELLOWORLD
+menu "Hello World Sample Configuration"
+    osource "application/samples/peripheral/helloworld/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_HELLOWORLD_OLED
+    bool
+    prompt "Support hello world oled Sample."
+    default n
+    depends on ENABLE_PERIPHERAL_SAMPLE
+    help
+        This option means support Hello World oled Sample.
+
+if SAMPLE_SUPPORT_HELLOWORLD_OLED
+menu "Hello World Sample Configuration"
+    osource "application/samples/peripheral/helloworld_oled/Kconfig"
 endmenu
 endif
 
@@ -269,6 +299,20 @@ menu "PINCTRL Sample Configuration"
 endmenu
 endif
 
+config SAMPLE_SUPPORT_PMP
+    bool
+    prompt "Support PMP Sample."
+    default n
+    depends on ENABLE_PERIPHERAL_SAMPLE
+    help
+        This option means support PMP Sample.
+
+if SAMPLE_SUPPORT_PMP
+menu "PMP Sample Configuration"
+    osource "application/samples/peripheral/pmp/Kconfig"
+endmenu
+endif
+
 config SAMPLE_SUPPORT_PWM
     bool
     prompt "Support PWM Sample."
@@ -302,8 +346,9 @@ config SAMPLE_SUPPORT_RTC
     prompt "Support RTC Sample."
     default n
     depends on ENABLE_PERIPHERAL_SAMPLE
+    select DRIVER_SUPPORT_RTC
     help
-        This option means support RTC Sample.
+        This option enables the WS63 RTC software timer sample.
 
 if SAMPLE_SUPPORT_RTC
 menu "RTC Sample Configuration"
@@ -360,14 +405,6 @@ config SAMPLE_SUPPORT_SYSTICK
     depends on ENABLE_PERIPHERAL_SAMPLE
     help
         This option means support SYSTICK Sample.
-
-config SAMPLE_SUPPORT_TASKS
-    bool
-    prompt "Support TASKS Test Sample."
-    default n
-    depends on ENABLE_PERIPHERAL_SAMPLE
-    help
-        This option means support TASKS Test Sample.
 
 config SAMPLE_SUPPORT_TCXO
     bool

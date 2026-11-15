@@ -264,8 +264,8 @@ TAB_SIZE               = 4
 ALIASES                = "tagGreenTick=@htmlonly<CENTER><font color= green>✔</font></CENTER>@endhtmlonly" \
                          "tagRedCross=@htmlonly<CENTER><font color= red>✖</font></CENTER>@endhtmlonly" \
                          "tagBlackQue=@htmlonly<CENTER><font color= black>?</font></CENTER>@endhtmlonly" \
-                         "CompanyNameMagicTag=Unname." \
-                         "CompanyNameTag=Unname."
+                         "HiSilicon (Shanghai) Technologies Co., Ltd.=Unname." \
+                         "=Unname."
 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
 # A mapping has the form "name=value". For example adding "class=itcl::class"
@@ -964,6 +964,10 @@ INPUT                  =    ./../../../../build/config/target_config/ws63/doc/dr
                             ./../../../../include/middleware/services/wifi/wifi_scan_info.h \
                             \
                             ./../../../../include/middleware/services/radar/radar_service.h \
+                            ./../../../../include/middleware/services/radar/radar_service_slp.h \
+                            ./../../../../include/middleware/services/radar/radar_service_sub_6g.h \
+                            ./../../../../include/middleware/services/radar/radar_errcode.h \
+                            \
                             ./../../../../kernel/osal/include/memory/osal_addr.h \
                             ./../../../../kernel/osal/include/atomic/osal_atomic.h \
                             ./../../../../kernel/osal/include/memory/osal_barrier.h \

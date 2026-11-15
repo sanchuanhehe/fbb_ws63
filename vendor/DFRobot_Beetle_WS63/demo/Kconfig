@@ -1,0 +1,140 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+
+config SAMPLE_SUPPORT_BLE_UART
+    bool
+    prompt "Enable the Sample of BLE_UART."
+    default n
+    depends on ENABLE_BEETLE_DEMO
+    help
+        This option means enable the sample of BLE_UART.
+
+if SAMPLE_SUPPORT_BLE_UART
+menu "BLE UART Sample Configuration"
+    osource "application/samples/beetle_demo/beetle_ble_uart/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_SLE_UART
+    bool
+    prompt "Enable the Sample of SLE_UART."
+    default n
+    depends on ENABLE_BEETLE_DEMO
+    help
+        This option means enable the sample of SLE_UART.
+
+if SAMPLE_SUPPORT_SLE_UART
+menu "SLE UART Sample Configuration"
+    osource "application/samples/beetle_demo/beetle_sle_uart/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_MQTT
+    bool
+    prompt "Enable the Sample of MQTT."
+    default n
+    depends on ENABLE_BEETLE_DEMO
+    help
+        This option means enable the sample of MQTT.
+if SAMPLE_SUPPORT_MQTT
+menu "MQTT Sample Configuration"
+    osource "application/samples/beetle_demo/beetle_mqtt/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_URM37
+    bool
+    prompt "Enable the Sample of URM37."
+    default n
+    depends on ENABLE_BEETLE_DEMO
+    help
+        This option means enable the sample of URM37.
+if SAMPLE_SUPPORT_URM37
+menu "URM37 Sample Configuration"
+    osource "application/samples/beetle_demo/beetle_urm37/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_BUTTON
+    bool
+    prompt "Enable the Sample of Button."
+    default n
+    depends on ENABLE_BEETLE_DEMO
+    help
+        This option means enable the sample of Button.
+
+config SAMPLE_SUPPORT_DS18B20
+    bool
+    prompt "Enable the Sample of DS18B20."
+    default n
+    depends on ENABLE_BEETLE_DEMO
+    help
+        This option means enable the sample of beetle_DS18B20.
+if SAMPLE_SUPPORT_DS18B20
+menu "DS18B20 Sample Configuration"
+    osource "application/samples/beetle_demo/beetle_ds18b20/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_DF9GMS
+    bool
+    prompt "Enable the Sample of DF9GMS."
+    default n
+    depends on ENABLE_BEETLE_DEMO
+    help
+        This option means enable the sample of DF9GMS.
+if SAMPLE_SUPPORT_DF9GMS
+menu "DF9GMS Sample Configuration"
+    osource "application/samples/beetle_demo/beetle_df9gms/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_C4001
+    bool
+    prompt "Enable the Sample of C4001."
+    default n
+    depends on ENABLE_BEETLE_DEMO
+    help
+        This option means enable the sample of C4001.
+if SAMPLE_SUPPORT_C4001
+menu "C4001 Sample Configuration"
+    osource "application/samples/beetle_demo/beetle_c4001/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_LIS2DH12
+    bool
+    prompt "Enable the Sample of LIS2DH12."
+    default n
+    depends on ENABLE_BEETLE_DEMO
+    help
+        This option means enable the sample of LIS2DH12.
+if SAMPLE_SUPPORT_LIS2DH12
+menu "LIS2DH12 Sample Configuration"
+    osource "application/samples/beetle_demo/beetle_lis2dh12/Kconfig"
+endmenu
+endif
+
+config SAMPLE_SUPPORT_SSD1306
+    bool
+    prompt "Enable the Sample of SSD1306."
+    default n
+    depends on ENABLE_BEETLE_DEMO
+    help
+        This option means enable the sample of SSD1306.
+
+
+config SAMPLE_SUPPORT_BME680
+    bool
+    prompt "Enable the Sample of BME680."
+    default n
+    depends on ENABLE_BEETLE_DEMO
+    help
+        This option means enable the sample of BME680.
+if SAMPLE_SUPPORT_BME680
+menu "BME680 Sample Configuration"
+    osource "application/samples/beetle_demo/beetle_bme680/Kconfig"
+endmenu
+endif

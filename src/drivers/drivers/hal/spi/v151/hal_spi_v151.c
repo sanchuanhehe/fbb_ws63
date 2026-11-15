@@ -263,9 +263,10 @@ static bool hal_spi_init_config(spi_bus_t bus, const hal_spi_attr_t *attr, const
     return true;
 }
 
-__attribute__((weak)) void spi_porting_clock_init(uint32_t bus_clk)
+__attribute__((weak)) void spi_porting_clock_init(spi_bus_t bus, const void *attr)
 {
-    unused(bus_clk);
+    unused(bus);
+    unused(attr);
     return;
 }
 
@@ -277,7 +278,7 @@ errcode_t hal_spi_v151_init(spi_bus_t bus, const hal_spi_attr_t *attr,
         return ERRCODE_SPI_REG_ADDR_INVALID;
     }
 
-    spi_porting_clock_init(attr->bus_clk);
+    spi_porting_clock_init(bus, attr);
 
     if (attr->is_slave == 1) {
         spi_porting_set_device_mode(bus, SPI_MODE_SLAVE);
@@ -618,7 +619,7 @@ static errcode_t hal_spi_ctrl_select_slave(spi_bus_t bus, hal_spi_ctrl_id_t id, 
         return ERRCODE_SPI_TIMEOUT;
     }
     uint32_t slave = (uint32_t)param;
-    hal_spi_ser_set_ser(bus, slave);
+    hal_spi_ser_set_ser(bus, bit(slave));
     g_hal_spi_attrs[bus].slave_num = slave + 1;
 
     return ERRCODE_SUCC;
@@ -805,10 +806,46 @@ static errcode_t hal_spi_ctrl_set_tmod(spi_bus_t bus, hal_spi_ctrl_id_t id, uint
     hal_spi_v151_spi_ctra_set_trsm(bus, attr->tmod);
     if (attr->tmod >= HAL_SPI_TRANS_MODE_RX) {
         /* 仅在RX Only和EEPROM模式下配置。 */
-        hal_spi_v151_spi_ctrb_set_nrdf(bus, attr->ndf - 1);
+        uint32_t ndf = (attr->ndf > 0) ? (attr->ndf - 1) : 0;
+        hal_spi_v151_spi_ctrb_set_nrdf(bus, ndf);
+        g_hal_spi_attrs[bus].ndf = attr->ndf;
     }
     hal_spi_ssienr_set_ssi_en(bus, 1);
     g_hal_spi_attrs[bus].tmod = attr->tmod;
+    return ERRCODE_SUCC;
+}
+
+static errcode_t hal_spi_ctrl_en_all_int(spi_bus_t bus, hal_spi_ctrl_id_t id, uintptr_t param)
+{
+    unused(id);
+
+    uint32_t mask_val = (uint32_t)param;
+
+    hal_spi_v151_spi_inmar_set_rffis(bus, (bool)(mask_val & SPI_RX_FULL_INT));
+    hal_spi_v151_int_set_rfofis(bus, SPI_INMAR_REG, (bool)(mask_val & SPI_RX_OVERFLOW_INT));
+    hal_spi_v151_int_set_rfufis(bus, SPI_INMAR_REG, (bool)(mask_val & SPI_RX_UNDERFLOW_INT));
+    hal_spi_v151_int_set_tfeis(bus, SPI_INMAR_REG, (bool)(mask_val & SPI_TX_EMPTY_INT));
+    hal_spi_v151_int_set_tfofis(bus, SPI_INMAR_REG, (bool)(mask_val & SPI_TX_OVERFLOW_INT));
+
+    return ERRCODE_SUCC;
+}
+
+static errcode_t hal_spi_ctrl_clear_all_int(spi_bus_t bus, hal_spi_ctrl_id_t id, uintptr_t param)
+{
+    unused(id);
+    unused(param);
+    hal_spi_v151_icr_set_any(bus);
+    return ERRCODE_SUCC;
+}
+
+static errcode_t hal_spi_ctrl_clear_rx_fifo_dma(spi_bus_t bus, hal_spi_ctrl_id_t id, uintptr_t param)
+{
+    unused(id);
+    unused(param);
+    uint16_t rx_fifo_left = hal_spi_rxflr_get_rxtfl(bus);
+    for (uint32_t i = 0; i < rx_fifo_left; i++) {
+        hal_spi_dr_get_dr(bus);
+    }
     return ERRCODE_SUCC;
 }
 
@@ -835,6 +872,9 @@ static const hal_spi_ctrl_t g_hal_spi_ctrl_func_array[SPI_CTRL_MAX] = {
     hal_spi_ctrl_resume,
 #endif  /* CONFIG_SPI_SUPPORT_LPM */
     hal_spi_ctrl_set_tmod,                   /* SPI_CTRL_SET_TMOD */
+    hal_spi_ctrl_en_all_int,                 /* SPI_CTRL_SET_ALL_INT */
+    hal_spi_ctrl_clear_all_int,              /* SPI_CTRL_CLEAR_ALL_INT */
+    hal_spi_ctrl_clear_rx_fifo_dma,          /* SPI_CTRL_CLEAR_RX_FIFO_DMA */
 };
 
 #pragma weak hal_spi_ctrl = hal_spi_v151_ctrl

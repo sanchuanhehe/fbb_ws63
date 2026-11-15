@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake make file
-# Copyright (c) CompanyNameMagicTag 2022-2022. All rights reserved.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
 #===============================================================================
 
 set(COMPONENT_NAME "wpa_supplicant")
@@ -27,7 +27,6 @@ set(SOURCES
 	${ROOT_DIR}/open_source/wpa_supplicant/liteos_wpa_src/wpa_cli_rtos.c
 	${ROOT_DIR}/middleware/services/wifi_service/wpa/liteos_wpa_api/wifi_api.c
 	${ROOT_DIR}/middleware/services/wifi_service/wpa/liteos_wpa_api/wifi_softap_api.c
-	${ROOT_DIR}/middleware/services/wifi_service/wpa/liteos_wpa_api/wapi_api.c
 	${ROOT_DIR}/open_source/wpa_supplicant/src/common/ieee802_11_common.c
 	${ROOT_DIR}/open_source/wpa_supplicant/src/common/wpa_common.c
 	${ROOT_DIR}/open_source/wpa_supplicant/src/common/hw_features_common.c
@@ -127,11 +126,6 @@ set(SOURCES
 	${ROOT_DIR}/open_source/wpa_supplicant/src/eap_common/eap_wsc_common.c
 	${ROOT_DIR}/open_source/wpa_supplicant/src/eap_peer/eap_wsc.c
 	${ROOT_DIR}/open_source/wpa_supplicant/src/eap_server/eap_server_wsc.c
-	# add wapi
-	${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wapi.c
-	${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wai_sm.c
-	${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wai_rxtx.c
-	${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wai_crypto_mbedtls.c
 	# add enterprise
 	${ROOT_DIR}/open_source/wpa_supplicant/src/eap_peer/eap_tls.c
 	${ROOT_DIR}/open_source/wpa_supplicant/src/eap_peer/eap_tls_common.c
@@ -155,7 +149,6 @@ set(PUBLIC_HEADER
 )
 
 set(PRIVATE_HEADER
-	${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi
 	${ROOT_DIR}/middleware/services/wifi_service/wpa/driver_soc
 	${ROOT_DIR}/middleware/services/wifi_service/wpa/liteos_wpa_api
 	${ROOT_DIR}/middleware/services/wifi_service/wpa/ltos_src
@@ -178,8 +171,6 @@ set(PRIVATE_HEADER
 
 	${ROOT_DIR}/middleware/utils/common_headers/
 
-	${ROOT_DIR}/open_source/mbedtls/mbedtls_v3.1.0/include
-	${ROOT_DIR}/open_source/mbedtls/mbedtls_v3.1.0
 	${ROOT_DIR}/drivers/drivers/driver/watchdog
 	${ROOT_DIR}/include/driver/security_unified
 	${ROOT_DIR}/protocol/wifi/source/host/inc/liteOS
@@ -194,7 +185,7 @@ if("__ALIOS__" IN_LIST DEFINES)
     )
 endif()
 
-set(PRIVATE_DEFINES
+set(WPA-PRIVATE_DEFINES
 	INCLUDE_UNUSED
 	WLAN_HEADERS
 	WIRELESS_EXT=0
@@ -265,7 +256,6 @@ set(PRIVATE_DEFINES
 	CONFIG_SME
 	CONFIG_SAE
 	CONFIG_ECC
-	MBEDTLS_ECP_RESTARTABLE
 	LTOS_CONFIG_NO_INTERNAL_SME
 	CONFIG_HOSTAPD_WPA3
 	LOS_CONFIG_HOSTAPD_MGMT
@@ -280,15 +270,14 @@ set(PRIVATE_DEFINES
 	EAP_TLS
 	CONFIG_IEEE80211R
 	CONFIG_NO_WPA_MSG
-	CONFIG_WAPI
 	_PRE_WLAN_FEATURE_SDP
 	CONFIG_MBO
 	CONFIG_WNM
 )
 
-# 小型化版本,裁掉wps、企业级加密、WAPI、ROAM等特性
+# 小型化版本,裁掉wps、企业级加密、ROAM等特性
 if(${SMALLER})
-    list(REMOVE_ITEM PRIVATE_DEFINES
+    list(REMOVE_ITEM WPA-PRIVATE_DEFINES
 		# WPS
 		CONFIG_WPS
 		CONFIG_WPS_AP
@@ -300,8 +289,6 @@ if(${SMALLER})
 		LOS_CONFIG_WPA_ENTERPRISE
 		LOS_CONFIG_EAP_TLS
 		EAP_TLS
-		# WAPI
-		CONFIG_WAPI
 		# 11r
 		CONFIG_IEEE80211R
 		# mbo
@@ -327,12 +314,6 @@ if(${SMALLER})
 		${ROOT_DIR}/open_source/wpa_supplicant/src/eap_peer/eap_tls.c
 		${ROOT_DIR}/open_source/wpa_supplicant/src/eap_peer/eap_tls_common.c
 		${ROOT_DIR}/open_source/wpa_supplicant/liteos_wpa_src/tls_mbedtls.c
-		# WAPI
-		${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wapi.c
-		${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wai_sm.c
-		${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wai_rxtx.c
-		${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wai_crypto_mbedtls.c
-		${ROOT_DIR}/middleware/services/wifi_service/wpa/liteos_wpa_api/wapi_api.c
 		# 11r
 		${ROOT_DIR}/open_source/wpa_supplicant/src/rsn_supp/wpa_ft.c
 		# mbo
@@ -341,10 +322,18 @@ if(${SMALLER})
 		${ROOT_DIR}/open_source/wpa_supplicant/src/ap/mbo_ap.c
 		${ROOT_DIR}/open_source/wpa_supplicant/src/ap/wnm_ap.c
     )
-	list(APPEND PRIVATE_DEFINES
+	list(APPEND WPA-PRIVATE_DEFINES
 		CONFIG_SAE_NO_PW_ID
 	)
 endif()
+
+if ("wapi" IN_LIST TARGET_COMPONENT)
+	list(APPEND WPA-PRIVATE_DEFINES
+		CONFIG_WAPI
+	)
+endif()
+ 
+set(PRIVATE_DEFINES ${WPA-PRIVATE_DEFINES})
 
 set(PUBLIC_DEFINES
 )
@@ -353,7 +342,7 @@ set(PUBLIC_DEFINES
 set(COMPONENT_PUBLIC_CCFLAGS
 )
 
-set(COMPONENT_CCFLAGS
+set(WPA-COMPONENT_CCFLAGS
     -Wno-unused-parameter
     -Wno-unused-variable
     -Wno-strict-prototypes
@@ -375,11 +364,13 @@ set(COMPONENT_CCFLAGS
 )
 
 if(TOOL_CHAIN MATCHES "clang_riscv_linx_*")
-    list(APPEND COMPONENT_CCFLAGS -Wno-typedef-redefinition)
+    list(APPEND WPA-COMPONENT_CCFLAGS -Wno-typedef-redefinition)
 else()
-    list(APPEND COMPONENT_CCFLAGS -Wno-maybe-uninitialized)
-    list(APPEND COMPONENT_CCFLAGS -Wno-jump-misses-init)
+    list(APPEND WPA-COMPONENT_CCFLAGS -Wno-maybe-uninitialized)
+    list(APPEND WPA-COMPONENT_CCFLAGS -Wno-jump-misses-init)
 endif()
+
+set(COMPONENT_CCFLAGS        ${WPA-COMPONENT_CCFLAGS})
 
 set(WHOLE_LINK
     true
@@ -396,6 +387,60 @@ endif()
 build_component()
 
 install_sdk(${ROOT_DIR}/open_source/wpa_supplicant/src/tls/libtommath.c "*")
+
+# 开启wapi组件 需要在config.py中增加"wapi","wifi_wapi"
+set(COMPONENT_NAME "wapi")
+
+if(EXISTS ${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wapi.c)
+	set(SOURCES
+		# add wapi
+		${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wapi.c
+		${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wai_sm.c
+		${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wai_rxtx.c
+		${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi/wai_crypto_mbedtls.c
+		${ROOT_DIR}/middleware/services/wifi_service/wpa/liteos_wpa_api/wapi_api.c
+	)
+else()
+    set(LIBS ${BIN_DIR}/${CHIP}/libs/wifi/${TARGET_COMMAND}/lib${COMPONENT_NAME}.a)
+endif()
+
+set(PUBLIC_HEADER
+)
+
+set(PRIVATE_HEADER
+	${ROOT_DIR}/middleware/services/wifi_service/wpa/wapi
+	${ROOT_DIR}/middleware/services/wifi_service/wpa/driver_soc
+	${ROOT_DIR}/middleware/services/wifi_service/wpa/liteos_wpa_api
+	${ROOT_DIR}/middleware/services/wifi_service/wpa/ltos_src
+	${ROOT_DIR}/middleware/services/wifi_service/wpa/osdep
+	${ROOT_DIR}/open_source/wpa_supplicant
+	${ROOT_DIR}/open_source/wpa_supplicant/src
+	${ROOT_DIR}/open_source/wpa_supplicant/src/crypto
+	${ROOT_DIR}/open_source/wpa_supplicant/src/utils
+	${ROOT_DIR}/open_source/wpa_supplicant/src/tls
+	${ROOT_DIR}/open_source/wpa_supplicant/src/rsn_supp
+	${ROOT_DIR}/open_source/wpa_supplicant/wpa_supplicant
+	${ROOT_DIR}/middleware/services/wifi_service/service
+	${ROOT_DIR}/protocol/wifi/source/host/inc/liteOS
+)
+
+set(PRIVATE_DEFINES ${WPA-PRIVATE_DEFINES})
+
+set(COMPONENT_CCFLAGS        ${WPA-COMPONENT_CCFLAGS})
+
+set(WHOLE_LINK
+    true
+)
+
+set(MAIN_COMPONENT
+    false
+)
+
+if("UPDATE_WIFI_STATIC_LIB" IN_LIST DEFINES)
+    set(LIB_OUT_PATH ${BIN_DIR}/${CHIP}/libs/wifi/${TARGET_COMMAND})
+endif()
+
+build_component()
 
 set(COMPONENT_NAME "enterprise_cert")
 

@@ -24,7 +24,7 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="gle clear adv @gle_dev_discovery.c(395),INFO" ID="0xde420c5d" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="gle dd mgr enable scan scan status has been enable @gle_dev_discovery.c(432),WARNING" ID="0xde420d83" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="gle dd mgr enable scan scan status has been disable @gle_dev_discovery.c(435),WARNING" ID="0xde420d9b" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle read maximum adv data len @gle_dev_discovery.c(450),INFO" ID="0xde420e15" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gle read maximum adv data len @gle_dev_discovery.c(459),INFO" ID="0xde420e5d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[dd]event = 0x%x @gle_dev_discovery.c(470),INFO" ID="0xde420eb5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle read maximum adv data len @gle_dev_discovery.c(477),INFO" ID="0xde420eed" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gle read maximum adv data len @gle_dev_discovery.c(486),INFO" ID="0xde420f35" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[dd]event = 0x%x @gle_dev_discovery.c(497),INFO" ID="0xde420f8d" />
 			</MSG_LOG>

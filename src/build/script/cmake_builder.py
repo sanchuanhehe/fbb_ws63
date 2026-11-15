@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
+# Copyright (c) 2020 HiSilicon (Shanghai) Technologies CO.; LIMITED.
 # Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
 
 import os
@@ -7,7 +8,7 @@ import shutil
 import sys
 import time
 
-from utils.build_utils import exec_shell, root_path, output_root, sdk_output_path, pkg_tools_path
+from utils.build_utils import build_root_path, exec_shell, root_path, output_root, sdk_output_path, pkg_tools_path
 from utils.build_utils import compare_bin
 from enviroment import TargetEnvironment, BuildEnvironment
 from pack_tool import packTool
@@ -176,6 +177,8 @@ class CMakeBuilder(BuildEnvironment):
                 target_env.add("LIB_GEN_NAME", libs)
                 target_env.extend("SDK_LIBGEN_COMPONENTS", self.component)
                 self.compile_target(target_name, target_env)
+        chip = env.get('chip')
+        self.sdk.genarate_efuse_cfg_bin(chip)
         self.sdk.sdk_build(self.build_time, self.no_hso, self.build_level)
         self.sdk = None
         self.component = []
@@ -194,13 +197,39 @@ class CMakeBuilder(BuildEnvironment):
             env.append('defines', 'SUPPORT_CALLSTACK')
             env.append('ccflags', '-fno-omit-frame-pointer')
         self.add_build_param(env)
+        # Keep SDK source paths and generated output paths separate.  CMake
+        # modules consume this single build-root contract instead of reading
+        # FBB_BUILD_ROOT_PATH independently.
+        self.add_cmake_param('-DFBB_BUILD_ROOT_DIR=%s' % build_root_path)
 
         output_path = env.get_output_path()
         print("output_path: %s" % output_path)
         self.pre_sdk(output_path, env)
         if env.get('libstd_option'):
             self.add_cmake_def(env, 'std_libs')
-        self.cmake_cmd.append(root_path)
+        # Project-as-entry: FBB_PROJECT_DIR (set by hs-fbb-cli when an
+        # fbb-project.toml is detected) flips cmake's source dir to the
+        # user's project. SDK is still passed via -DROOT_DIR.
+        #
+        # FBB_PROJECT_TARGET scopes the override to one target. SDK build.py
+        # spawns auxiliary targets (ws63-flashboot, ws63-loaderboot) as child
+        # processes that inherit the env. Those keep building in-tree because
+        # only the project's declared target matches.
+        project_dir = os.environ.get('FBB_PROJECT_DIR')
+        project_target = os.environ.get('FBB_PROJECT_TARGET')
+        # target_name from compile_target's parameter (dash form, e.g.
+        # ws63-liteos-app). Compare both forms in case manifests use either.
+        if project_dir and project_target and (
+                target_name == project_target
+                or target_name.replace('-', '_') == project_target.replace('-', '_')):
+            if not os.path.isdir(project_dir):
+                raise RuntimeError(
+                    f"FBB_PROJECT_DIR={project_dir!r} does not exist or is not a directory."
+                )
+            self.cmake_cmd.append(project_dir)
+            self.cmake_cmd.append(f'-DROOT_DIR={root_path}')
+        else:
+            self.cmake_cmd.append(root_path)
 
         if env.get('product_type'):
             self.cmake_cmd.append('-DPRODUCT_TYPE={0}'.format(env.get('product_type')))

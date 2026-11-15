@@ -213,20 +213,32 @@ size_t os_strlcpy(char *dst, const char *src, size_t n)
 
 void *os_malloc(size_t size)
 {
+#ifdef CONFIG_SUPPLICANT_USE_OSAL
+	void *ptr = osal_kmalloc(size, 0);
+#else
 	void *ptr = malloc(size);
+#endif
 	return ptr;
 }
 
 void *os_realloc(void *ptr, size_t size)
 {
+#ifdef CONFIG_SUPPLICANT_USE_OSAL
+	void *reptr = osal_krealloc(ptr, size, 0);
+#else
 	void *reptr = realloc(ptr, size);
+#endif
 	return reptr;
 }
 
 void os_free(void *ptr)
 {
 	if (ptr != NULL)
+#ifdef CONFIG_SUPPLICANT_USE_OSAL
+		osal_kfree(ptr);
+#else
 		free(ptr);
+#endif
 }
 
 __attribute__((weak)) void os_free_drv_scan_bss(void *ptr)
@@ -236,7 +248,11 @@ __attribute__((weak)) void os_free_drv_scan_bss(void *ptr)
 
 void *os_zalloc(size_t size)
 {
+#ifdef CONFIG_SUPPLICANT_USE_OSAL
+	void *ptr = osal_kmalloc(size, 0);
+#else
 	void *ptr = malloc(size);
+#endif
     if (ptr != NULL) {
         memset(ptr, 0, size);
     }

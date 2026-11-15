@@ -346,7 +346,14 @@ SECTIONS
         *(.srodata*)
         KEEP (*(.flashtext))
         KEEP (*(.flashtext*))
-        . = ALIGN(4);
+        . = ALIGN(8);
+        __init_array_start = .;
+        KEEP(*(.ctors .init_array*))
+        __init_array_end = .;
+        __fini_array_start = .;
+        KEEP(*(.dtors .fini_array*))
+        __fini_array_end = .;
+        . = ALIGN(8);
         __text_end__ = .;
     } > HILINK_PROGRAM
 

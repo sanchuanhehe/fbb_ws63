@@ -466,7 +466,7 @@ static void ws63_flash_encrypt_config(uint32_t image_addr, uint32_t image_size)
     }
 }
 
-static uint32_t ws63_ftm_mode_init(uint32_t image_addr)
+static int32_t ws63_ftm_mode_init(uint32_t image_addr)
 {
     uint32_t image_size = 0;
     uint32_t jump_addr = 0;
@@ -478,8 +478,16 @@ static uint32_t ws63_ftm_mode_init(uint32_t image_addr)
     jump_addr = mfg_factory_cfg.factory_addr_start;
     image_size = mfg_factory_cfg.factory_size;
     image_key_area_t *mfg_key_area = (image_key_area_t *)(uintptr_t)(jump_addr);
+    if (mfg_key_area == NULL) { return -1; }
 
-    if (mfg_key_area->image_id == FACTORYBOOT_KEY_AREA_IMAGE_ID && mfg_factory_cfg.factory_valid == MFG_FACTORY_VALID) {
+    image_code_info_t *image_code_info = (image_code_info_t *)(uintptr_t)(jump_addr + sizeof(image_key_area_t));
+    uint32_t single_size = image_code_info->code_area_len + IMAGE_HEADER_LEN;
+
+    if (mfg_key_area->image_id == FACTORYBOOT_KEY_AREA_IMAGE_ID &&
+        mfg_key_area->structure_length == sizeof(image_key_area_t) &&
+        mfg_factory_cfg.factory_valid == MFG_FACTORY_VALID &&
+        mfg_factory_cfg.check_num == MFG_FACTORY_CONFIG_CHECK &&
+        mfg_factory_cfg.factory_size == single_size) {
         dmmu_set(image_addr, image_addr + image_size, jump_addr, 0);
     }
     return 0;

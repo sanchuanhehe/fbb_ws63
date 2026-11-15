@@ -13,8 +13,10 @@
 #endif
 #if defined(_PRE_OS_VERSION_LITEOS) && defined(_PRE_OS_VERSION) && (_PRE_OS_VERSION_LITEOS == _PRE_OS_VERSION)
 #include "oal_mm.h"
+#ifndef _PRE_WLAN_USE_CUSTOM_LWIP
 #include "lwip/netif.h"
 #include "lwip/dhcp.h"
+#endif
 #include "eth_ip_common_rom.h"
 #endif
 #include "oal_util.h"

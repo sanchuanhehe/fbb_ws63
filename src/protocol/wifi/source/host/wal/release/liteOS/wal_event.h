@@ -122,7 +122,8 @@ osal_s32 wal_p2p_listen_timeout(hmac_vap_stru *hmac_vap, frw_msg *msg);
 
 td_void wal_set_tpc_mode(td_u32 mode);
 td_void wal_set_tpc_mode_add_3db(oal_bool_enum_uint8 flag, oal_bool_enum_uint8 under_ragulation_flag);
-td_s16 *wal_get_mac_status_code(td_void);
+td_u16 *wal_get_mac_status_code(td_void);
+td_u16 *wal_get_mac_reason_code(td_void);
 #ifdef _PRE_WLAN_FEATURE_WPA3
 osal_s32 wal_trigger_external_auth_sta(hmac_vap_stru *hmac_vap, frw_msg *msg);
 osal_s32 wal_cfg80211_report_owe_info(hmac_vap_stru *hmac_vap, frw_msg *msg);

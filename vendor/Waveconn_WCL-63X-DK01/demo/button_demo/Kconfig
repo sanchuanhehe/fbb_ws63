@@ -1,0 +1,7 @@
+config GPIO_BUTTON_MODE_POLLING
+    bool
+    prompt "GPIO按键模式为轮询（选中为轮询，未选中为中断）"
+    default y
+    depends on ENABLE_BUTTON_SAMPLE
+    help
+        This option means the GPIO button mode of the currrent sample.

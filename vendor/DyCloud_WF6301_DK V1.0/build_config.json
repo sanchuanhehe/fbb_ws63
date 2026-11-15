@@ -40,6 +40,117 @@
     "chip": "WS63",                         
     "buildDef": "CONFIG_WS2812B_CHANNEL = 3,CONFIG_WS2812B_GROUP_ID = 0,CONFIG_WS2812B_PIN = 3,CONFIG_WS2812B_PIN_MODE = 1",  
     "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/button_interrupt", 
+    "chip": "WS63",                         
+    "buildDef": "CONFIG_BUTTON_PIN = 12",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/timer_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/task_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/message_queue_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/mutex_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/semaphore_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/event_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/ble_server_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/wifi_tcp_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/ble_server_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "true" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/button_interrupt", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/event_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/message_queue_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/semaphore_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/task_sample", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/wifi_tcp", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" 
   }
-
 ]

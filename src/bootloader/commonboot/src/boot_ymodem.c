@@ -161,8 +161,6 @@ uint32_t ymodem_get_packet(void)
     uint8_t cblk = 0xff;   /* set to invalid value 0xff. */
     uint32_t ret = ERRCODE_FAIL;
 
-    uint32_t i = 0;
-
     if (g_ymodem.tx_ack == true) {
         serial_putc(YMODEM_ACK);
         g_ymodem.tx_ack = false;
@@ -184,12 +182,22 @@ uint32_t ymodem_get_packet(void)
         return ERRCODE_BOOT_YMODEM_TIMEOUT;
     }
     udelay(3); /* delay 3 us. */
+
+#ifndef CONFIG_YMODEM_SUPPORT_RECEIVE_BUFFER_ONCE
+    uint32_t i = 0;
     for (i = 0; i < g_ymodem.packet_len; i++) {
         ret = ymodem_getc_timeout(&g_ymodem.packet[i]);
         if (ret == ERRCODE_FAIL) {
             return ret;
         }
     }
+#else
+    ret = serial_gets(g_ymodem.packet, g_ymodem.packet_len);
+    if (ret != ERRCODE_SUCC) {
+        return ERRCODE_BOOT_YMODEM_TIMEOUT;
+    }
+#endif
+
     ret = ymodem_getc_timeout(&crc_hi);
     if (ret == ERRCODE_FAIL) {
         return ERRCODE_BOOT_YMODEM_TIMEOUT;

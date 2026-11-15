@@ -10,6 +10,10 @@
       <REQ STRUCTURE="tool_null_stru" TYPE="Auto" PARAM_VALUE="" />
       <IND STRUCTURE="ext_mdm_mem_info" TYPE="Auto" RESULT_CODE="" />
     </CMD>
+    <CMD ID="0x1001" NAME="macNmTopo" DESCRIPTION="MAC Network Topo (ID_DIAG_CMD_QUERY_NETWORK_TOPO)" PLUGIN="0x100,0x263" TYPE="REQ_IND">
+      <IND STRUCTURE="diag_cmd_query_network_topo_stru" TYPE="Auto" />
+      <REQ STRUCTURE="null_stru" TYPE="Auto" PARAM_VALUE="" />
+    </CMD>
     <CMD ID="0x71C0" NAME="diag_dfx" DESCRIPTION="diag_test_cmd" PLUGIN="0x100,0x252" TYPE="REQ_IND">
       <REQ STRUCTURE="diag_dfx_cmd_req_st" TYPE="Auto" PARAM_VALUE="" />
       <IND STRUCTURE="diag_dfx_cmd_ind_st" TYPE="Auto" RESULT_CODE="" />

@@ -24,6 +24,20 @@
 #define NV_ID_BTH_HIDINFO                  0x00C3
 #define NV_ID_BTH_RESERVED                 0x00C4
 
+#define NV_ID_BTH_BLE_MESH_RPL             0x00D0 /* ble mesh replay list */
+#define NV_ID_BTH_BLE_MESH_NET_KEY         0x00D1 /* ble mesh net key */
+#define NV_ID_BTH_BLE_MESH_APP_KEY         0x00D2 /* ble mesh app key */
+#define NV_ID_BTH_BLE_MESH_NET_ADDR        0x00D3 /* ble mesh net addr */
+#define NV_ID_BTH_BLE_MESH_IV              0x00D4 /* ble mesh iv */
+#define NV_ID_BTH_BLE_MESH_SEQ             0x00D5 /* ble mesh sequence */
+#define NV_ID_BTH_BLE_MESH_HB_PUB          0x00D6 /* ble mesh heart beat */
+#define NV_ID_BTH_BLE_MESH_CFG             0x00D7 /* ble mesh cfg */
+#define NV_ID_BTH_BLE_MESH_VA              0x00D8 /* ble mesh virtual addr */
+#define NV_ID_BTH_BLE_MESH_OTA_FLAG        0x00D9 /* ble mesh upg flag */
+#define NV_ID_BTH_BLE_MESH_MOD             0x00E0 /* ble mesh model nv */
+#define NV_ID_BTH_BLE_MESH_TUPLE           0x00E1 /* ble mesh tuple nv */
+#define NV_ID_COMPOSITION_DATA_PAGE_128    0x00E2 /* NV nppi composition data page 128 id */
+
 /* user factory key_id [0x1000,0x2000) */
 #define NV_ID_USER_FACTORY_AREA_START      0x1000 /* Not a real key_id , just used for region determination. */
 
@@ -53,6 +67,8 @@
 #define NV_ID_LINKLOSS_DISABLE             0x2016 /* Disable linkloss */
 #define NV_ID_SOFTAP_FIX_DSPS              0x2017 /* Set Softap DSPS */
 #define NV_ID_ALG_CROSS_PROT_ENABLE        0x2018 /* alg cross protocol enable */
+#define NV_ID_ER_SU_FAIL_CNT_TH            0x2019 /* er su fail cnt threshold */
+#define NV_ID_POWER_LEVEL                  0x201B /* POWER LEVEL VAL */
 
 #define NV_ID_FE_RX_INSERT_LOSS            0x2050 /* RF RX insert loss */
 #define NV_ID_FE_CALI_MASK                 0x2051 /* RF cali mask */
@@ -79,6 +95,9 @@
 #define NV_ID_BTC_DEMOD_DIFF               0x20A9 /* bsle 1m/2m demod is diff */
 #define NV_ID_BTC_SCHED_PRE_ARG_SWITCH     0x20AA /* Scheduling pre-arrangement switch */
 #define NV_ID_BTC_CHANNEL_SCAN_SWITCH      0x20AB /* channel scan switch */
+#define NV_ID_BTC_BLE_SCAN_CHANNEL_MAP     0x20AC /* ble scan Channel_Map bit[0-2] */
+#define NV_ID_BTC_BLE_CALI_SWITCH          0x20AD /* btc_ble_poweron_cali_switch */
+#define NV_ID_BTC_SLE_CFRAME_STATS         0x20AE /* btc sle cframe statistic */
 
 #define NV_ID_RADAR_1M_HOME_STA_PLATSIC    0x2100
 #define NV_ID_RADAR_1M_HALL_STA_PLATSIC    0x2101
@@ -112,6 +131,14 @@
 #define NV_ID_RADAR_RCV6                   0x211D
 #define NV_ID_RADAR_RCV7                   0x211E
 #define NV_ID_RADAR_RCV8                   0x211F
+#define NV_ID_RADAR_MWO_MODE               0x2120
+#define NV_ID_RADAR_THRU_WALL_MODE         0x2124
+#define NV_ID_RADAR_CHN_SWITCH             0x2130
+#define NV_ID_RADAR_SLP_BASIC_PARA         0x2135
+#define NV_ID_RADAR_SLP_AI_PARA            0x2136
+#define NV_ID_RADAR_SLP_SENSITIVITY_PARA   0x2137
+#define NV_ID_RADAR_SLP_MFG_PARA           0x2138
+#define NV_ID_RADAR_SLP_MFG_STATUS         0x2139
 #define NV_ID_RADAR_CTRL                   0x2140
 
 #define NV_ID_HILINK_ENTRY_MODE            0x2150 /* hilink entry mode */
@@ -128,6 +155,9 @@
 
 /* user normal key_id [0x5000,0xFFFF) */
 #define NV_ID_USER_NORMAL_AREA_START      0x5000 /* Not a real key_id , just used for region determination. */
+
+/* Matter key_id [0x6000,0x7000) */
+#define NV_ID_MATTER_AREA_START           0x6000 /* NV restore matter cert region flag */
 #define NV_ID_RESTORE_ENABLE              0xA000 /* NV restore factory region flag */
 
 #endif /* __KEY_ID_H__ */

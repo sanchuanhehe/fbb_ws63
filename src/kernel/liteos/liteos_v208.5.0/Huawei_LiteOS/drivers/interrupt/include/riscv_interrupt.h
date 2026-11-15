@@ -100,6 +100,10 @@ extern "C" {
 /* local interrupt pending clear register */
 #define LOCIPCLR                 0xBF0
 
+#ifdef LOSCFG_COMPAT_RT_THREAD
+#define PRITHD                   0xBFE
+#endif
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

@@ -1237,10 +1237,8 @@ OAL_STATIC osal_bool hmac_rrm_get_meas_start_time(osal_void *notify_data)
     if (hmac_11k_vap_info->enable_11k != 0 && hmac_11k_vap_info->rrm_info != OAL_PTR_NULL) {
         hal_vap_tsf_get_64bit(hmac_vap->hal_vap, (osal_u32 *)&meas_start_time[1], (osal_u32 *)&meas_start_time[0]);
         /* Actual Meas Start Time */
-        if (memcpy_s(hmac_11k_vap_info->rrm_info->act_meas_start_time, OAL_SIZEOF(osal_u32) * 2, /* 2倍大小 */
-            meas_start_time, OAL_SIZEOF(osal_u32) * 2) != EOK) { /* 2倍大小 */
-            oam_warning_log0(0, OAM_SF_CFG, "{hmac_rrm_get_meas_start_time data::memcpy err.}");
-        }
+        (void)memcpy_s(hmac_11k_vap_info->rrm_info->act_meas_start_time, OAL_SIZEOF(osal_u32) * 2, /* 2倍大小 */
+            meas_start_time, OAL_SIZEOF(osal_u32) * 2); /* 2倍大小 */
     }
 
     return OAL_TRUE;
@@ -1436,14 +1434,14 @@ OAL_STATIC osal_u32 hmac_rrm_send_rm_rpt_action(hmac_vap_stru *hmac_vap)
 *****************************************************************************/
 OAL_STATIC osal_void hmac_rrm_encap_meas_rpt_reject(hmac_vap_stru *hmac_vap, mac_meas_rpt_mode_stru *rptmode)
 {
-    mac_vap_rrm_info_stru *rrm_info = hmac_11k_get_vap_rrm_info(hmac_vap);
+    mac_vap_rrm_info_stru *rrm_info;
     mac_meas_rpt_ie_stru *meas_rpt_ie;
 
     if ((hmac_vap == OAL_PTR_NULL) || (rptmode == OAL_PTR_NULL)) {
         oam_error_log0(0, OAM_SF_RRM, "{hmac_rrm_encap_meas_rpt_reject:: null param!}");
         return;
     }
-
+    rrm_info = hmac_11k_get_vap_rrm_info(hmac_vap);
     if (rrm_info == OAL_PTR_NULL) {
         oam_error_log0(0, OAM_SF_RRM, "{hmac_rrm_encap_meas_rpt_reject:: rrm_info null!}");
         return;
@@ -1481,10 +1479,8 @@ OAL_STATIC osal_void hmac_rrm_encap_meas_rpt_reject(hmac_vap_stru *hmac_vap, mac
     meas_rpt_ie->eid       = MAC_EID_MEASREP;
     meas_rpt_ie->token     = rrm_info->meas_req_ie->token;
     meas_rpt_ie->rpttype   = rrm_info->meas_req_ie->reqtype;
-    if (memcpy_s(&(meas_rpt_ie->rptmode), OAL_SIZEOF(mac_meas_rpt_mode_stru),
-        rptmode, OAL_SIZEOF(mac_meas_rpt_mode_stru)) != EOK) {
-        oam_warning_log0(0, OAM_SF_CFG, "{hmac_rrm_encap_meas_rpt_reject data::memcpy err.}");
-    }
+    (void)memcpy_s(&(meas_rpt_ie->rptmode), OAL_SIZEOF(mac_meas_rpt_mode_stru),
+        rptmode, OAL_SIZEOF(mac_meas_rpt_mode_stru));
     meas_rpt_ie->len       = MAC_MEASUREMENT_RPT_FIX_LEN - MAC_IE_HDR_LEN;
 
     rrm_info->rm_rpt_action_len          += MAC_MEASUREMENT_RPT_FIX_LEN;
@@ -2545,7 +2541,6 @@ OAL_STATIC osal_u32 hmac_rrm_bcn_scan_do(hmac_vap_stru *hmac_vap, mac_bcn_req_st
     ret_memcpy = memcpy_s((mac_scan_req_stru *)&(hmac_device->scan_params), sizeof(mac_scan_req_stru),
         (mac_scan_req_stru *)scan_req, sizeof(mac_scan_req_stru));
     if (ret_memcpy != EOK) {
-        oam_error_log1(0, OAM_SF_RRM, "{hmac_rrm_bcn_scan_do: memcpy error = [%d]}", ret_memcpy);
         return OAL_FAIL;
     }
 
@@ -2869,10 +2864,8 @@ OAL_STATIC osal_u32 hmac_rrm_parse_beacon_ssid(hmac_vap_stru *hmac_vap, osal_u8 
             oam_warning_log0(0, OAM_SF_RRM, "{hmac_rrm_parse_beacon_ssid::memalloc ssid fail}");
             return OAL_FAIL;
         }
-        if (memcpy_s(rrm_info->bcn_req_info.ssid, rrm_info->bcn_req_info.ssid_len,
-                (ssid_sub_element + 2), rrm_info->bcn_req_info.ssid_len) != EOK) { /* 偏移2 */
-            oam_warning_log0(0, OAM_SF_CFG, "{hmac_rrm_parse_beacon_ssid ::memcpy err.}");
-        }
+        (void)memcpy_s(rrm_info->bcn_req_info.ssid, rrm_info->bcn_req_info.ssid_len,
+            (ssid_sub_element + 2), rrm_info->bcn_req_info.ssid_len); /* 偏移2 */
     }
     return OAL_SUCC;
 }
@@ -2931,10 +2924,8 @@ OAL_STATIC osal_u32 hmac_rrm_parse_beacon_reqinfo(hmac_vap_stru *hmac_vap, osal_
             }
             return OAL_FAIL;
         }
-        if (memcpy_s(rrm_info->bcn_req_info.reqinfo_ieid, rrm_info->bcn_req_info.req_ie_num,
-            (reqinfo + 2), rrm_info->bcn_req_info.req_ie_num) != EOK) { /* 偏移2 */
-            oam_warning_log0(0, OAM_SF_CFG, "{hmac_rrm_parse_beacon_req data::memcpy err.}");
-        }
+        (void)memcpy_s(rrm_info->bcn_req_info.reqinfo_ieid, rrm_info->bcn_req_info.req_ie_num,
+            (reqinfo + 2), rrm_info->bcn_req_info.req_ie_num); /* 偏移2 */
     }
     return OAL_SUCC;
 }
@@ -2976,12 +2967,10 @@ OAL_STATIC osal_void hmac_rrm_parse_beacon_req(hmac_vap_stru *hmac_vap, mac_meas
         return;
     }
 
-    memset_s(&scan_req, OAL_SIZEOF(mac_scan_req_stru), 0, OAL_SIZEOF(mac_scan_req_stru));
+    (void)memset_s(&scan_req, OAL_SIZEOF(mac_scan_req_stru), 0, OAL_SIZEOF(mac_scan_req_stru));
     bcn_req = (mac_bcn_req_stru *)&(meas_req_ie->meas_req[0]);
-    if (memcpy_s(rrm_info->bcn_req_info.bssid, WLAN_MAC_ADDR_LEN, bcn_req->bssid, WLAN_MAC_ADDR_LEN) != EOK) {
-        oam_warning_log0(0, OAM_SF_CFG, "{hmac_rrm_parse_beacon_req data::memcpy err.}");
-    }
-    memset_s(&rptmode, OAL_SIZEOF(mac_meas_rpt_mode_stru), 0, OAL_SIZEOF(mac_meas_rpt_mode_stru));
+    (void)memcpy_s(rrm_info->bcn_req_info.bssid, WLAN_MAC_ADDR_LEN, bcn_req->bssid, WLAN_MAC_ADDR_LEN);
+    (void)memset_s(&rptmode, OAL_SIZEOF(mac_meas_rpt_mode_stru), 0, OAL_SIZEOF(mac_meas_rpt_mode_stru));
 
     /*************************************************************************/
     /*                    Beacon Request                                     */

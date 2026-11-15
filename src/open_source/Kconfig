@@ -1,0 +1,37 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2026-2026. All rights reserved.
+#===============================================================================
+menu "Open Source Components"
+
+config OPEN_SOURCE_LVGL
+    bool "Enable LVGL (Light and Versatile Graphics Library)"
+    default n
+    help
+        LVGL v9.4.0 embedded graphics library for building UIs.
+        When enabled, sources under open_source/lvgl/ will be compiled.
+
+        If your project does not need a GUI, disable this to reduce
+        build time and firmware size.
+
+if OPEN_SOURCE_LVGL
+
+# Override LVGL Kconfig defaults for ws63 platform
+choice LV_USE_OS
+    default LV_OS_CMSIS_RTOS2
+endchoice
+
+config LV_MEM_SIZE_KILOBYTES
+    default 128
+
+config LV_DRAW_SW_COMPLEX
+    default y
+
+config LV_DRAW_THREAD_PRIO
+    default 3
+
+osource "open_source/lvgl/Kconfig"
+
+endif
+
+endmenu

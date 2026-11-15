@@ -15,7 +15,6 @@
 #include "nv_storage.h"
 #include "upg_porting.h"
 #include "upg_alloc.h"
-#include "sha256.h"
 #include "nv_async_store.h"
 #include "nv_upg.h"
 
@@ -79,7 +78,7 @@ STATIC_UT errcode_t kv_upg_upgrade_data_verify(uint32_t kv_data_offset, uint32_t
         return ERRCODE_MALLOC;
     }
 
-    errcode_t ret = uapi_drv_cipher_sha256_start(&handle);
+    errcode_t ret = nv_crypto_start_hash(&handle);
     if (ret != ERRCODE_SUCC) {
         kv_free(image_data);
         return ret;
@@ -95,16 +94,16 @@ STATIC_UT errcode_t kv_upg_upgrade_data_verify(uint32_t kv_data_offset, uint32_t
             break;
         }
 
-        ret = uapi_drv_cipher_sha256_update(handle, image_data, read_len);
+        ret = nv_crypto_update_hash(handle, image_data, read_len);
         if (ret != ERRCODE_SUCC) {
-            nv_log_err("[NV] kv upgrade uapi_drv_cipher_sha256_update error\r\n");
+            nv_log_err("[NV] kv upgrade nv_crypto_update_hash error\r\n");
             break;
         }
         image_offset += read_len;
     } while (image_offset < aligned_image_len);
 
     kv_free(image_data);
-    ret = uapi_drv_cipher_sha256_finish(handle, data_sha, &out_length);
+    ret = nv_crypto_complete_hash(handle, data_sha, &out_length);
     if (ret != ERRCODE_SUCC) {
         return ret;
     }
@@ -190,9 +189,8 @@ STATIC_UT bool kv_upg_check_backup_upgradeable(kv_key_header_t* key_header, kv_k
     }
     return true;
 }
-#endif
-
-#endif
+#endif /* CONFIG_NV_SUPPORT_BACKUP_UPGRADE */
+#endif /* CONFIG_NV_SUPPORT_BACKUP_RESTORE */
 
 STATIC_UT bool kv_upg_check_upgradeable(kv_key_header_t* key_header)
 {
@@ -262,8 +260,8 @@ STATIC_UT errcode_t kv_upg_process_one_page(kv_store_t core, uint8_t* image_data
                 return ret;
             }
         }
-#endif
-#endif
+#endif /* CONFIG_NV_SUPPORT_BACKUP_UPGRADE */
+#endif /* CONFIG_NV_SUPPORT_BACKUP_RESTORE */
         key_length = kv_aligned(key_header->length, 4); /* 4-byte alignment */
         key_flash_size = (uint32_t)sizeof(kv_key_header_t) + key_length + KV_CRC_DATA_LENGTH;
         offset += key_flash_size;
@@ -356,7 +354,6 @@ STATIC_UT errcode_t kv_upg_upgrade_process(fota_upgrade_flag_area_t* upg_flag)
 errcode_t nv_upg_upgrade_task_process(void)
 {
 #if (defined(CONFIG_OTA_UPDATE_SUPPORT) && (CONFIG_NV_SUPPORT_OTA_UPDATE == NV_YES))
-
     errcode_t ret;
     upg_image_status_switch_t status;
     fota_upgrade_flag_area_t *upg_flag_info = NULL;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2013-2020. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2013-2020. All rights reserved.
  * Description: shell cmds APIs implementation about ping and ping6
  * Author: none
  * Create: 2020

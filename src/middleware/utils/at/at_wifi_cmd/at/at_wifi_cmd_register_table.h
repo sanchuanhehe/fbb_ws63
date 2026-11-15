@@ -193,6 +193,11 @@ typedef struct {
     uint8_t                 *para2; /*    Length: 32 */
 } brctl_args_t;
 
+typedef struct {
+    uint32_t                para_map;
+    const uint8_t           *para1; /* Length: 30 */
+} syschannel_netif_args_t;
+
 /* AT+SYSINFO */
 at_ret_t at_sys_info(void);
 
@@ -201,6 +206,15 @@ at_ret_t cmd_start_syschannel(void);
 
 /* AT+RESYSCHAN */
 at_ret_t cmd_reinit_syschannel(void);
+
+/* AT+CANCELSYSCHAN */
+at_ret_t cmd_cancel_syschannel(void);
+
+/* AT+RESETSYSCHAN */
+at_ret_t cmd_reset_syschannel(void);
+
+/* AT+SYSCHANIF */
+at_ret_t cmd_syschannel_netif(const syschannel_netif_args_t *args);
 
 /* AT+ADDFILTER */
 at_ret_t at_syschannel_add_filter(const addfilter_args_t *args);
@@ -930,6 +944,16 @@ const at_para_parse_syntax_t brctl_syntax[] = {
     },
 };
 
+const at_para_parse_syntax_t syschannel_netif_syntax[] = {
+    {
+        .type = AT_SYNTAX_TYPE_STRING,
+        .attribute = AT_SYNTAX_ATTR_MAX_LENGTH | AT_SYNTAX_ATTR_FIX_CASE,
+        .last = true,
+        .entry.string.max_length = 30,
+        .offset = offsetof(syschannel_netif_args_t, para1)
+    },
+};
+
 const at_cmd_entry_t at_wifi_register_parse_table[] = {
     {
         "DHCP",
@@ -1058,6 +1082,36 @@ const at_cmd_entry_t at_wifi_register_parse_table[] = {
         NULL,
         cmd_reinit_syschannel,
         (at_set_func_t)NULL,
+        NULL,
+        NULL,
+    },
+    {
+        "CANCELSYSCHAN",
+        13,
+        0,
+        NULL,
+        cmd_cancel_syschannel,
+        NULL,
+        NULL,
+        NULL,
+    },
+    {
+        "RESETSYSCHAN",
+        12,
+        0,
+        NULL,
+        cmd_reset_syschannel,
+        NULL,
+        NULL,
+        NULL,
+    },
+    {
+        "SYSCHANIF",
+        9,
+        0,
+        syschannel_netif_syntax,
+        NULL,
+        (at_set_func_t)cmd_syschannel_netif,
         NULL,
         NULL,
     },

@@ -154,22 +154,6 @@ coap_is_mcast(const coap_address_t *a) {
 #define COAP_BCST_REFRESH_SECS 30
 #endif /* COAP_BCST_REFRESH_SECS */
 
-#ifdef COAP_SUPPORT_SOCKET_BROADCAST
-int coap_is_bcast(const coap_address_t *a) {
-  if (a == NULL)
-    return 0;
-  switch(a->addr.sa.sa_family) {
-    case AF_INET:
-      if (a->addr.sin.sin_addr.s_addr == 0xFFFFFFFF)
-        return 1;
-      else
-        return 0;
-    case AF_INET6: /* broadcast not support ipv6 now */
-    default:
-      return 0;
-  }
-}
-#else /* !COAP_SUPPORT_SOCKET_BROADCAST */
 #if COAP_IPV4_SUPPORT && defined(HAVE_IFADDRS_H)
 static int bcst_cnt = -1;
 static coap_tick_t last_refresh;
@@ -252,7 +236,6 @@ coap_is_bcast(const coap_address_t *a) {
   return 0;
 #endif /* COAP_IPV4_SUPPORT */
 }
-#endif /* COAP_SUPPORT_SOCKET_BROADCAST */
 #endif /* !defined(WITH_CONTIKI) && !defined(WITH_LWIP) */
 
 void
@@ -277,9 +260,11 @@ coap_address_ntop(const coap_address_t *addr, char *dst, int len) {
   if (addr->addr.sa.sa_family == AF_INET) {
     const void *addrptr = &addr->addr.sin.sin_addr;
     (void)inet_ntop(addr->addr.sa.sa_family, addrptr, dst, len);
-  } else {
+  } else if (addr->addr.sa.sa_family == AF_INET6) {
     const void *addrptr = &addr->addr.sin6.sin6_addr;
     (void)inet_ntop(addr->addr.sa.sa_family, addrptr, dst, len);
+  } else {
+    coap_log_warn("coap_address_ntop not supported %d", addr->addr.sa.sa_family);
   }
 #endif
 }
@@ -504,10 +489,15 @@ coap_resolve_address_info(const coap_str_const_t *address,
 #endif /* COAP_AF_UNIX_SUPPORT */
 
   memset(addrstr, 0, sizeof(addrstr));
-  if (address && address->length)
+  if (address && address->length) {
+    if (address->length >= sizeof(addrstr)) {
+      coap_log_warn("Host name too long (%zu > 255)\n", address->length);
+      return NULL;
+    }
     memcpy(addrstr, address->s, address->length);
-  else
+  } else {
     memcpy(addrstr, "localhost", 9);
+  }
 
   memset((char *)&hints, 0, sizeof(hints));
   hints.ai_socktype = 0;

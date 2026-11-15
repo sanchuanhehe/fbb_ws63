@@ -21,6 +21,11 @@
 #include "diag_ind_src.h"
 #include "diag_filter.h"
 #include "diag_msg.h"
+#if (defined(CONFIG_SLE_MESH_DFX) && (CONFIG_SLE_MESH_DFX == 1))
+#include "sle_ssap_stru.h"
+#include "sle_mesh_sdk_equip.h"
+#include "sle_mesh_sdk_network.h"
+#endif
 #ifdef SUPPORT_DIAG_V2_PROTOCOL
 #include "diag_service.h"
 #include "diag_cmd_dispatch.h"
@@ -46,7 +51,15 @@
 #include "at_zdiag.h"
 #endif
 
+#if (defined(CONFIG_SLE_MESH_DFX) && (CONFIG_SLE_MESH_DFX == 1))
+#define DIAG_SLE_MESH_NODE_QUERY 0x1001 /* 查询网络拓扑节点信息 */
+errcode_t diag_cmd_node_info_read(uint16_t cmd_id, void *cmd_param, uint16_t cmd_param_size, diag_option_t *option);
+#endif
+
 static diag_cmd_reg_obj_t g_diag_default_cmd_tbl[] = {
+#if (defined(CONFIG_SLE_MESH_DFX) && (CONFIG_SLE_MESH_DFX == 1))
+    { DIAG_SLE_MESH_NODE_QUERY, DIAG_SLE_MESH_NODE_QUERY, diag_cmd_node_info_read },
+#endif
     { DIAG_CMD_CONNECT_RANDOM, DIAG_CMD_PWD_CHANGE, diag_cmd_password },
     { DIAG_CMD_HOST_CONNECT, DIAG_CMD_HOST_DISCONNECT, diag_cmd_hso_connect_disconnect },
 #ifndef SUPPORT_DIAG_V2_PROTOCOL
@@ -79,6 +92,7 @@ static diag_cmd_reg_obj_t g_diag_default_cmd_tbl[] = {
 
 #define DFX_MSG_STACK_SIZE          0x800
 #define TASK_PRIORITY_DFX_MSG       (osPriority_t)(5)
+#define DATA_INFO_SIZE 40
 unsigned long g_dfx_osal_queue_id;
 unsigned long dfx_get_osal_queue_id(void)
 {
@@ -170,7 +184,7 @@ static errcode_t thread_msg_event_init(void)
     }
     osal_kthread_lock();
     if (osal_kthread_set_priority(task, TASK_PRIORITY_DFX_MSG) != OSAL_SUCCESS) {
-        print_str("osal_kthread_set_priority excute failed!!! \r\n");
+        PRINT("osal_kthread_set_priority excute failed!!! \r\n");
     }
     osal_kthread_unlock();
     return ERRCODE_SUCC;
@@ -193,7 +207,7 @@ errcode_t dfx_system_init(void)
     zdiag_filter_register_notify_hook(dfx_set_log_leve);
     dfx_set_log_leve(false);
 
-#ifndef FORBID_AUTO_LOG_REPORT
+#if !defined(FORBIT_AUTO_LOG_REPORT) && !defined(CONFIG_DIAG_BEAT_HEART_SUPPORT)
     diag_auto_log_report_enable();
 #else
 #if CONFIG_DFX_SUPPORT_DIAG_BEAT_HEART == DFX_YES
@@ -233,3 +247,170 @@ errcode_t dfx_system_init(void)
 
     return ERRCODE_SUCC;
 }
+
+#if (defined(CONFIG_SLE_MESH_DFX) && (CONFIG_SLE_MESH_DFX == 1))
+#define DFX_NODE_DATA_MAGIC_NUM     0xBEE0 // 网络节点数据魔数字，节点数据开始标记位
+#define DFX_NODE_DATA_VERSION       0x0000 // 网络节点数据版本号，上报数据结构变更时修改版本号
+
+static uint16_t g_mesh_cmd_id = 0;
+static uint16_t g_report_node_num = 0;
+static uint16_t g_sn = 0;
+static diag_option_t g_mesh_option = { 0 };
+
+typedef enum {
+    DFX_DATA_CONTINUE = 0,                  /* 单次查询数据未结束，继续上报 */
+    DFX_DATA_END = 1,                       /* 单次查询数据结束 */
+} dfx_data_flag_t;
+
+#pragma pack(1)
+typedef struct {
+    uint16_t mesh_id;                       /*!< 网络地址。 */
+    uint16_t net_id;                        /*!< 网络ID。 */
+    sle_uuid_t uuid;                        /*!< 设备外观UUID */
+    uint8_t addr[SLE_ADDR_LEN];             /*!< 设备MAC地址。 */
+    uint8_t role;                           /*!< 设备网络角色 { @ref sle_mesh_role_type_t }。 */
+    uint8_t state;                          /* 网络节点状态 { @ref sle_mesh_node_state_t }。 */
+    uint8_t connect_cap;                    /* 节点连接能力位图 { @ref sle_mesh_connect_capability_t } */
+    uint32_t node_cap;                      /* 节点能力位图 { @ref sle_mesh_node_capability_t } */
+    uint8_t name[SLE_MESH_DEVICE_NAME_LEN]; /* 网络设备名称。 */
+    uint8_t address_assign;                 /* 地址分配方式 { @ref sle_mesh_address_assign_t }。 */
+} dfx_node_data_t;
+
+typedef struct {
+    uint8_t neighbor_count;                 /* 邻居数量。 */
+    uint16_t neighbor_list[0];              /* 邻居网络地址列表（动态数组，拼接时申请Buffer）。 */
+    uint8_t group_count;                    /* 组信息数量。 */
+    uint16_t group_list[0];                 /* 组信息列表（动态数组，拼接时申请Buffer）。 */
+} dfx_node_variable_lendth_data_t;
+
+typedef struct {
+    uint16_t dfx_magic_num;                 /* 节点信息魔术字，标识节点信息开始 */
+    dfx_node_data_t node_data;              /* 节点信息 */
+    dfx_node_variable_lendth_data_t node_variable_data; /* 节点可变数据信息 */
+} dfx_node_info_t;
+
+typedef struct dfx_query_node_data {
+    uint16_t version;                       /* 数据上报版本号标识，首版本填0，后续变更字段时递增版本号。 */
+    uint16_t sn;                            /* 单轮数据需分批次上报，sn用于标识分批次数据所属查询轮次。 */
+    uint16_t is_last;                       /* 单轮数据上报是否结束 { @ref dfx_data_flag_t }。 */
+    uint16_t num;                           /* 本数据包中包含的有效站点数。 */
+    uint8_t nodes[0];                       /* 包含num个dfx_node_info_t，可变数据长度。 */
+} dfx_query_node_data_t;
+#pragma pack()
+
+void diag_get_node_data(uint16_t device_num, sle_mesh_node_info_t *node_info, uint8_t *node_report)
+{
+    uint16_t total_num = 0;
+    if ((sle_mesh_get_node_num(&total_num) != ERRCODE_SLE_MESH_SUCCESS) ||
+        (total_num < (g_report_node_num + device_num))) {
+        PRINT("node num error,total:%u,report num:%u,dev num:%u\n", total_num, g_report_node_num, device_num);
+        return;
+    }
+
+    dfx_query_node_data_t *query_node_data = (dfx_query_node_data_t *)node_report;
+    query_node_data->num = device_num;
+    uint8_t *node_data = node_report + sizeof(dfx_query_node_data_t); // dfx_node_info_t
+    for (uint16_t i = 0; i < device_num; i++) {
+        // 单个节点内存大小
+        uint16_t node_size = sizeof(dfx_node_info_t) +
+            node_info[i].neighbor_count * sizeof(uint16_t) + node_info[i].group_count * sizeof(uint16_t);
+        dfx_node_info_t *dfx_node_info = (dfx_node_info_t *)node_data;
+        // 魔数
+        dfx_node_info->dfx_magic_num = DFX_NODE_DATA_MAGIC_NUM;
+        // 定长数据
+        dfx_node_info->node_data.mesh_id = node_info[i].mesh_id;
+        dfx_node_info->node_data.net_id = node_info[i].net_id;
+        dfx_node_info->node_data.uuid = node_info[i].uuid;
+        (void)memcpy_s(dfx_node_info->node_data.addr, SLE_ADDR_LEN, node_info[i].addr, SLE_ADDR_LEN);
+        dfx_node_info->node_data.role = node_info[i].role;
+        dfx_node_info->node_data.state = node_info[i].state;
+        dfx_node_info->node_data.connect_cap = node_info[i].connect_cap;
+        dfx_node_info->node_data.node_cap = node_info[i].node_cap;
+        (void)memcpy_s(dfx_node_info->node_data.name, SLE_MESH_DEVICE_NAME_LEN,
+            node_info[i].name, SLE_MESH_DEVICE_NAME_LEN);
+        dfx_node_info->node_data.address_assign = node_info[i].address_assign;
+
+        /* 邻居节点信息拼接，可变数据长度 */
+        uint8_t *neighbor_num = (uint8_t *)&dfx_node_info->node_variable_data;
+        (void)memcpy_s(neighbor_num, sizeof(uint8_t), &node_info[i].neighbor_count, sizeof(uint8_t));
+        if (*neighbor_num != 0) {
+            uint8_t *neighbor_list = neighbor_num + sizeof(uint8_t);
+            (void)memcpy_s(neighbor_list, node_info[i].neighbor_count * sizeof(uint16_t),
+                node_info[i].neighbor_list, node_info[i].neighbor_count * sizeof(uint16_t));
+        }
+
+        /* 组信息拼接，可变数据长度 */
+        uint8_t *group_num = neighbor_num + sizeof(uint8_t) + *neighbor_num * sizeof(uint16_t);
+        (void)memcpy_s(group_num, sizeof(uint8_t), &node_info[i].group_count, sizeof(uint8_t));
+        if (*group_num != 0) {
+            uint8_t *group_list = group_num + sizeof(uint8_t);
+            (void)memcpy_s(group_list, node_info[i].group_count * sizeof(uint16_t),
+                node_info[i].group_list, node_info[i].group_count * sizeof(uint16_t));
+        }
+
+        node_data += node_size;
+    }
+    g_report_node_num += device_num;
+    if (g_report_node_num == total_num) {
+        query_node_data->is_last = DFX_DATA_END;
+        g_report_node_num = 0;
+        g_sn++;
+    }
+}
+
+void diag_cmd_report_node_info(uint16_t device_num, sle_mesh_node_info_t *node_info)
+{
+    uint16_t info_size = sizeof(dfx_query_node_data_t) + device_num * sizeof(dfx_node_info_t);
+    for (uint8_t i = 0; i < device_num; i++) {
+        info_size += node_info[i].neighbor_count * sizeof(uint16_t) + node_info[i].group_count * sizeof(uint16_t);
+    }
+    PRINT("info_size %d, device_num %d\r\n", info_size, device_num);
+    uint8_t *node_report = dfx_malloc(0, info_size);
+    if (node_report == NULL) {
+        PRINT("node info report fail,alloc fail\r\n");
+        return;
+    }
+    dfx_query_node_data_t *query_node_data = (dfx_query_node_data_t *)node_report;
+    query_node_data->version = DFX_NODE_DATA_VERSION;
+    query_node_data->sn = g_sn;
+    query_node_data->is_last = DFX_DATA_CONTINUE;
+
+    diag_get_node_data(device_num, node_info, node_report);
+
+    errcode_t ret = uapi_diag_report_packet(g_mesh_cmd_id, &g_mesh_option, (uint8_t *)node_report, info_size, true);
+    if (ret != EOK) {
+        PRINT("node info report fail, ret=[0x%x]\r\n", ret);
+    }
+    dfx_free(0, node_report);
+}
+
+errcode_t diag_cmd_node_info_read(uint16_t cmd_id, void *cmd_param, uint16_t cmd_param_size, diag_option_t *option)
+{
+    PRINT("diag_cmd_node_info_read enter \r\n");
+    unused(cmd_param);
+    unused(cmd_param_size);
+
+    g_mesh_cmd_id = cmd_id;
+    (void)memcpy_s(&g_mesh_option, sizeof(diag_option_t), option, sizeof(diag_option_t));
+
+    /* 注册回调 */
+    sle_mesh_network_callback_t net_cbk = {
+        .query_cbk = diag_cmd_report_node_info,
+    };
+
+    errcode_t ret = sle_mesh_network_register_callback(&net_cbk);
+    if (ret != ERRCODE_SLE_MESH_SUCCESS) {
+        PRINT("[Error]:dfx register network callback failed.");
+        return ERRCODE_FAIL;
+    }
+
+    /* 触发查询节点信息 */
+    ret = sle_mesh_get_all_node_info();
+    if (ret != ERRCODE_SLE_MESH_SUCCESS) {
+        PRINT("[Error]:dfx query node info fail.");
+        return ERRCODE_FAIL;
+    }
+
+    return ERRCODE_FAIL;
+}
+#endif

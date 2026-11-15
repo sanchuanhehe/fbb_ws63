@@ -31,6 +31,7 @@
 #define I2S_RX_SPLIT_LEFT_DATA_ADDR     (I2S_BUS_0_REAL_BASE + 0x54)
 #define I2S_RX_SPLIT_RIGHT_DATA_ADDR    (I2S_BUS_0_REAL_BASE + 0x58)
 #define HAL_I2S_CLK_CG_ADDR 0x44001100
+#define CLDO_CRG_RST_I2S_DIV_CFG_ADDR 0x44001144
 #define CMU_NEW_CFG0 0x400034a0
 #define HAL_I2S_CLK_CG_ON 0xffffffff
 #define I2S_CLKEN_BIT                   12
@@ -143,16 +144,85 @@ uintptr_t i2s_porting_rx_right_data_addr_get(sio_bus_t bus)
 
 uint32_t sio_porting_get_bclk_div_num(uint8_t data_width, uint32_t ch)
 {
-    uint32_t s_clk, bclk_div_num, freq_of_need;
+    uint32_t bclk_div_num, freq_of_need;
     float middle_div;
-    s_clk = I2S_MCLK_RATE;
+    float s_clk = I2S_MCLK_RATE;
     freq_of_need = FREQ_OF_NEED;
-    middle_div = s_clk / (freq_of_need * data_width * ch);
+    middle_div = (float)s_clk / (freq_of_need * data_width * ch);
     if ((uint32_t)(middle_div * I2S_PARAM + 1) == ((uint32_t)middle_div * I2S_PARAM + 1)) {
         bclk_div_num = (uint32_t)middle_div;
     } else {
         bclk_div_num = (uint32_t)middle_div + 1;
     }
+    return bclk_div_num;
+}
+
+bool sio_porting_check_standard_sample_rate(uint32_t fs)
+{
+    uint32_t i;
+    const uint32_t fs_table[] = {
+        I2S_SAMPLE_RATE_8K,
+        I2S_SAMPLE_RATE_11K,
+        I2S_SAMPLE_RATE_12K,
+        I2S_SAMPLE_RATE_16K,
+        I2S_SAMPLE_RATE_22K,
+        I2S_SAMPLE_RATE_24K,
+        I2S_SAMPLE_RATE_32K,
+        I2S_SAMPLE_RATE_44K,
+        I2S_SAMPLE_RATE_48K,
+        I2S_SAMPLE_RATE_88K,
+        I2S_SAMPLE_RATE_96K,
+        I2S_SAMPLE_RATE_176K,
+        I2S_SAMPLE_RATE_192K,
+    };
+
+    for (i = 0; i < sizeof(fs_table) / sizeof(fs_table[0]); i++) {
+        if (fs_table[i] == fs) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+struct sample_rate_info {
+    uint32_t sample_rate;
+    uint32_t mclk_rate;
+    uint32_t mclk_div_num;
+};
+
+uint32_t sio_porting_get_bclk_div(uint8_t data_width, uint32_t ch, uint32_t sample_rate_index)
+{
+    const struct sample_rate_info sample_rate_information[] = {
+        {8000, 12288000, 0x1A36E3},
+        {11025, 2822400, 0x60568},
+        {12000, 12288000, 0x1A36E3},
+        {16000, 12288000, 0x1A36E3},
+        {22050, 5644800, 0xC0AD0},
+        {24000, 12288000, 0x1A36E3},
+        {32000, 12288000, 0x1A36E3},
+        {44100, 11289600, 0x1815A0},
+        {48000, 12288000, 0x1A36E3},
+        {88200, 22579200, 0x302B41},
+        {96000, 12288000, 0x1A36E3},
+        {176400, 45158400, 0x605682},
+        {192000, 12288000, 0x1A36E3},
+    };
+    
+    uint32_t sample_rate, mclk, mclk_div_num, bclk_div_num;
+    float middle_div;
+    mclk = sample_rate_information[sample_rate_index].mclk_rate;
+    sample_rate = sample_rate_information[sample_rate_index].sample_rate;
+    mclk_div_num = sample_rate_information[sample_rate_index].mclk_div_num;
+
+    reg32(CLDO_CRG_RST_I2S_DIV_CFG_ADDR) = mclk_div_num;
+    middle_div = (float)mclk / (sample_rate * data_width * ch);
+    if ((uint32_t)(middle_div * I2S_PARAM + 1) == ((uint32_t)middle_div * I2S_PARAM + 1)) {
+        bclk_div_num = (uint32_t)middle_div;
+    } else {
+        bclk_div_num = (uint32_t)middle_div + 1;
+    }
+
     return bclk_div_num;
 }
 

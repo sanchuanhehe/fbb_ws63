@@ -63,7 +63,7 @@ extern "C" {
 #define RADAR_SENSOR_MAX_T3 65535
 #define RADAR_SENSOR_MAX_T4 255
 
-#define DEVICE_SUPPORT_RX_NSS_NUM 0
+#define DEVICE_SUPPORT_RX_NSS_NUM 1
 #define DEVICE_SUPPORT_MAX_RX_NSS_NUM 3
 #define MIN_RADAR_PERIOD 1000  /* 支持配置最小1ms的雷达周期，单位us */
 #define MAX_RADAR_PERIOD 10000 /* 支持配置最大10ms的雷达周期，单位us */
@@ -669,9 +669,17 @@ OSAL_STATIC osal_void hmac_radar_sensor_disable(osal_void)
     oam_info_log0(0, OAM_SF_ANY, "hmac_radar_sensor_disable succ");
 }
 
-osal_s32 hmac_radar_sensor_start(hmac_radar_sensor_cfg_stru *radar_sensor_cfg)
+static osal_s32 hmac_radar_sensor_enable_handle(hmac_vap_stru *hmac_vap, frw_msg *msg)
 {
     osal_u32 ret = OAL_FAIL;
+    hmac_radar_sensor_cfg_stru *radar_sensor_cfg;
+    if (msg == OSAL_NULL || msg->data == NULL) {
+        return OAL_FAIL;
+    }
+
+    unref_param(hmac_vap);
+    radar_sensor_cfg = (hmac_radar_sensor_cfg_stru *)msg->data;
+
     if (radar_sensor_cfg->enable == OSAL_TRUE) {
         ret = hmac_radar_sensor_enable(radar_sensor_cfg);
     } else {
@@ -700,6 +708,16 @@ OAL_STATIC osal_void hmac_radar_sensor_del_vap(osal_void)
     return;
 }
 
+OSAL_STATIC void hmac_radar_sensor_update_channel_info(osal_u8 channel_num)
+{
+    hmac_radar_sensor_debug_stru *debug_info = hmac_radar_sensor_get_debug_info();
+    // 如果雷达所在信道发生了变化。则需要重新刷新雷达CTS帧发射功率
+    if (debug_info->ch_num != channel_num) {
+        debug_info->ch_num = channel_num;
+        hal_radar_sensing_switch_radar_param2(true);
+    }
+}
+
 OSAL_STATIC osal_s32 hmac_radar_sensor_complete_handle(hmac_vap_stru *hmac_vap, frw_msg *msg)
 {
     hmac_radar_sensor_info_stru *radar_sensor_info = hmac_radar_sensor_get_info();
@@ -707,6 +725,8 @@ OSAL_STATIC osal_s32 hmac_radar_sensor_complete_handle(hmac_vap_stru *hmac_vap, 
 
     unref_param(hmac_vap);
     unref_param(msg);
+
+    hmac_radar_sensor_update_channel_info(hal_device->wifi_channel_status.chan_number);
 
     hal_read_radar_sensing_exception();
 
@@ -726,7 +746,7 @@ OSAL_STATIC osal_s32 hmac_radar_sensor_complete_handle(hmac_vap_stru *hmac_vap, 
     osal_u32 *rx_mem = (osal_u32 *)hmac_radar_sensor_get_rx_mem_addr();
     if (g_is_cb_registered) {
         (void)g_radar_handle_cb(rx_mem, hal_device->wifi_channel_status.chan_number,
-            hal_device->wifi_channel_status.en_bandwidth);
+            hal_device->wifi_channel_status.en_bandwidth, hal_device->duty_ratio);
     }
 
     /* 单次处理完成后清空接收缓存 */
@@ -752,30 +772,30 @@ osal_void hmac_radar_sensor_one_subframe_start(osal_void)
 OSAL_STATIC osal_bool hmac_radar_sensor_scan_begin(osal_void *notify_data)
 {
     hmac_radar_sensor_info_stru *radar_sensor_info = hmac_radar_sensor_get_info();
- 
+
     unref_param(notify_data);
- 
+
     if (radar_sensor_info->probe_enable != OSAL_TRUE) {
         return OSAL_TRUE;
     }
- 
+
     report_radar_sensor_disable_reason(RADAR_SENSOR_WIFI_SCAN_BEGIN);
- 
+
     return OSAL_TRUE;
 }
 
 OSAL_STATIC osal_bool hmac_radar_sensor_scan_end(osal_void *notify_data)
 {
     hmac_radar_sensor_info_stru *radar_sensor_info = hmac_radar_sensor_get_info();
- 
+
     unref_param(notify_data);
- 
+
     if (radar_sensor_info->probe_enable != OSAL_TRUE) {
         return OSAL_TRUE;
     }
- 
+
     report_radar_sensor_disable_reason(RADAR_SENSOR_WIFI_SCAN_END);
- 
+
     return OSAL_TRUE;
 }
 
@@ -1037,6 +1057,22 @@ OSAL_STATIC osal_s32 hmac_ccpriv_radar_sensor_set_mac_t1_4(hmac_vap_stru *hmac_v
 }
 #endif
 
+osal_s32 hmac_radar_sensor_start(hmac_radar_sensor_cfg_stru *radar_sensor_cfg)
+{
+    frw_msg cfg_info;
+
+    if (radar_sensor_cfg == NULL) {
+        return OAL_FAIL;
+    }
+
+    (osal_void)memset_s(&cfg_info, sizeof(cfg_info), 0, sizeof(cfg_info));
+
+    cfg_info.data = (osal_u8 *)radar_sensor_cfg;
+    cfg_info.data_len = (osal_u16)sizeof(hmac_radar_sensor_cfg_stru);
+
+    return send_sync_cfg_to_host(0, WLAN_MSG_H2H_C_START_RADAR_SENSOR, &cfg_info);
+}
+
 osal_u32 hmac_radar_sensor_init(osal_void)
 {
     hmac_radar_sensor_info_stru *radar_sensor_info = hmac_radar_sensor_get_info();
@@ -1069,6 +1105,7 @@ osal_u32 hmac_radar_sensor_init(osal_void)
 
     /* 注册消息 */
     frw_msg_hook_register(WLAN_MSG_D2H_CRX_RADAR_SENSOR, hmac_radar_sensor_complete_handle);
+    frw_msg_hook_register(WLAN_MSG_H2H_C_START_RADAR_SENSOR, hmac_radar_sensor_enable_handle);
     /* 对外接口注册 */
     hmac_feature_hook_register(HMAC_FHOOK_RADAR_SENSOR_GET_WORK_CHAN, hmac_radar_sensor_get_work_ch_num);
     hmac_feature_hook_register(HMAC_FHOOK_RADAR_SENSOR_DEL_VAP_NOTIFY, hmac_radar_sensor_del_vap);
@@ -1091,6 +1128,7 @@ osal_void hmac_radar_sensor_deinit(osal_void)
 {
     /* 去注册消息 */
     frw_msg_hook_unregister(WLAN_MSG_D2H_CRX_RADAR_SENSOR);
+    frw_msg_hook_unregister(WLAN_MSG_H2H_C_START_RADAR_SENSOR);
     /* 对外接口去注册 */
     hmac_feature_hook_unregister(HMAC_FHOOK_RADAR_SENSOR_GET_WORK_CHAN);
     hmac_feature_hook_unregister(HMAC_FHOOK_RADAR_SENSOR_DEL_VAP_NOTIFY);
@@ -1120,9 +1158,9 @@ osal_u32 hmac_radar_sensor_register_handle_cb(radar_handle_cb cb)
 }
 
 #ifdef _PRE_RADAR_CCA_SW_OPT
-osal_void hmac_radar_sensor_cca_sw_opt(osal_bool radar_switch)
+osal_void hmac_radar_sensor_cca_sw_opt(osal_bool radar_switch, osal_bool is_mwo_mode)
 {
-    hmac_alg_cca_opt_radar_notify(radar_switch);
+    hmac_alg_cca_opt_radar_notify(radar_switch, is_mwo_mode);
 }
 #endif
 

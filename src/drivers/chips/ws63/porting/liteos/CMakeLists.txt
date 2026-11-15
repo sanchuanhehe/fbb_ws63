@@ -8,6 +8,7 @@ if(${OS} MATCHES "liteos")
     set(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/riscv31/idle_config.c
         ${CMAKE_CURRENT_SOURCE_DIR}/riscv31/tick_timer.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/riscv31/memory_info.c
     )
     set(PUBLIC_HEADER
         ${CMAKE_CURRENT_SOURCE_DIR}/riscv31

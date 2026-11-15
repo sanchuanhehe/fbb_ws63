@@ -1,0 +1,11 @@
+config WDT_TIMEOUT_SAMPLE
+    bool
+    prompt "Choose watchdog kick timeout."
+    depends on ENABLE_WATCHDOG_SAMPLE
+    default n
+
+config WDT_KICK_SAMPLE
+    bool
+    prompt "Choose watchdog kick normally."
+    depends on ENABLE_WATCHDOG_SAMPLE
+    default n

@@ -46,6 +46,7 @@ static uint8_t g_server_id = 0;
 static uint16_t g_service_handle = 0;
 /* sle ntf property handle */
 static uint16_t g_property_handle = 0;
+osal_task *g_task_handle = NULL;
 #ifdef SLE_QOS_FLOWCTRL_FUNCTION_SWITCH
 static sle_link_qos_state_t g_sle_link_state = 0;  /* sle link state */
 #endif
@@ -63,6 +64,8 @@ static sle_link_qos_state_t g_sle_link_state = 0;  /* sle link state */
 #define DEFAULT_SLE_SPEED_DATA_LEN 1500
 #define DEFAULT_SLE_SPEED_MTU_SIZE 1500
 #define SPEED_DEFAULT_TIMEOUT_MULTIPLIER 0x1f4
+#define DEFAULT_SLE_SPEED_MCS 10
+#define WAIT_MCS_SET 2000
 static unsigned char data[PKT_DATA_LEN];
 
 static uint8_t sle_uuid_base[] = { 0x37, 0xBE, 0xA8, 0x80, 0xFC, 0x70, 0x11, 0xEA, \
@@ -81,18 +84,27 @@ static void sle_uuid_setu2(uint16_t u2, sle_uuid_t *out)
     encode2byte_little(&out->uuid[14], u2);
 }
 
+static void destroy_send_data_thread(void)
+{
+    if (g_task_handle != NULL) {
+        osal_kthread_destroy(g_task_handle, 1);
+        osal_kfree(g_task_handle);
+        g_task_handle = NULL;
+    }
+}
+
 static void ssaps_read_request_cbk(uint8_t server_id, uint16_t conn_id, ssaps_req_read_cb_t *read_cb_para,
     errcode_t status)
 {
     osal_printk("[speed server] ssaps read request cbk server_id:0x%x, conn_id:0x%x, handle:0x%x, status:0x%x\r\n",
         server_id, conn_id, read_cb_para->handle, status);
-    osal_task *task_handle = NULL;
+    // 每次创建发包线程前检查线程是否已经创建，如果已经创建，则销毁当前线程。server端只允许有一个发包线程存在。
+    destroy_send_data_thread();
     osal_kthread_lock();
-    task_handle = osal_kthread_create((osal_kthread_handler)send_data_thread_function,
-        0, "RadarTask", SPEED_DEFAULT_KTHREAD_SIZE);
-    osal_kthread_set_priority(task_handle, SPEED_DEFAULT_KTHREAD_PROI + 1);
-    if (task_handle != NULL) {
-        osal_kfree(task_handle);
+    g_task_handle = osal_kthread_create((osal_kthread_handler)send_data_thread_function,
+        0, "ThroughputTask", SPEED_DEFAULT_KTHREAD_SIZE);
+    if (g_task_handle != NULL) {
+        osal_kthread_set_priority(g_task_handle, SPEED_DEFAULT_KTHREAD_PROI + 1);
     }
     osal_kthread_unlock();
     printf("kthread success\r\n");
@@ -170,7 +182,6 @@ void send_data_thread_function(void)
 {
     sle_set_data_len(g_sle_conn_hdl, DEFAULT_SLE_SPEED_DATA_LEN);
 #ifdef CONFIG_LARGE_THROUGHPUT_SERVER
-#define DEFAULT_SLE_SPEED_MCS 10
     sle_set_phy_t phy_parm = {
         .tx_format = SLE_RADIO_FRAME_2,
         .rx_format = SLE_RADIO_FRAME_2,
@@ -182,11 +193,11 @@ void send_data_thread_function(void)
         .t_feedback = 0,
     };
     sle_set_phy_param(g_sle_conn_hdl, &phy_parm);
-    sle_set_mcs(g_sle_conn_hdl, DEFAULT_SLE_SPEED_MCS);
     osal_printk("code: ploar MCS10, PHY 4MHZ, power: 20dbm \r\n");
 #else
     osal_printk("code: GFSK, PHY 1MHZ, power: 20dbm \r\n");
 #endif
+    osal_msleep(WAIT_MCS_SET);
     int i = 0;
     while (1) {
         if (sle_flow_ctrl_flag() > 0) {
@@ -307,6 +318,7 @@ static void sle_connect_state_changed_cbk(uint16_t conn_id, const sle_addr_t *ad
     if (conn_state ==  SLE_ACB_STATE_CONNECTED) {
         sle_update_connect_param(&parame);
     } else if (conn_state == SLE_ACB_STATE_DISCONNECTED) {
+        destroy_send_data_thread();
         sle_start_announce(SLE_ADV_HANDLE_DEFAULT);
     }
 }
@@ -358,6 +370,18 @@ void sle_sample_rssi_cbk(uint16_t conn_id, int8_t rssi, errcode_t status)
     osal_printk("[ssap server] conn_id:%d, rssi = %d, status = 0x%x\n", conn_id, rssi, status);
 }
 
+#ifdef CONFIG_LARGE_THROUGHPUT_SERVER
+void sle_set_phy_cbk(uint16_t conn_id, errcode_t status, const sle_set_phy_t *param)
+{
+    osal_printk("sle_set_phy_cbk: handle:%d, status 0x%x, txphy %d, rxphy %d\r\n",
+        conn_id,
+        status,
+        param->tx_phy,
+        param->rx_phy);
+    sle_set_mcs(g_sle_conn_hdl, DEFAULT_SLE_SPEED_MCS);
+}
+#endif
+
 static void sle_conn_register_cbks(void)
 {
     sle_connection_callbacks_t conn_cbks = {0};
@@ -367,6 +391,9 @@ static void sle_conn_register_cbks(void)
     conn_cbks.connect_param_update_req_cb = sle_sample_update_req_cbk;
     conn_cbks.connect_param_update_cb = sle_sample_update_cbk;
     conn_cbks.read_rssi_cb = sle_sample_rssi_cbk;
+#ifdef CONFIG_LARGE_THROUGHPUT_SERVER
+    conn_cbks.set_phy_cb = sle_set_phy_cbk;
+#endif
     sle_connection_register_callbacks(&conn_cbks);
 }
 

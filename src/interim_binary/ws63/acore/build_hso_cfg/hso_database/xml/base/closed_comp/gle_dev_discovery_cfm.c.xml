@@ -29,6 +29,5 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="adv report cfm par null error @gle_dev_discovery_cfm.c(457),ERROR" ID="0xde440e4a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="adv report cfm event_parameter null error @gle_dev_discovery_cfm.c(462),ERROR" ID="0xde440e72" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="adv_report cbk report_info new fail @gle_dev_discovery_cfm.c(470),ERROR" ID="0xde440eb2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv_report cbk memcpy fail @gle_dev_discovery_cfm.c(476),ERROR" ID="0xde440ee2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="adv_report cbk memcpy fail @gle_dev_discovery_cfm.c(482),ERROR" ID="0xde440f12" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="adv_report cbk memcpy fail @gle_dev_discovery_cfm.c(479),ERROR" ID="0xde440efa" />
 			</MSG_LOG>

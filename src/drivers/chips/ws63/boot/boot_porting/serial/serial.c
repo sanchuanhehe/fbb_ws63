@@ -74,6 +74,17 @@ uint8_t serial_getc(void)
     return getc;
 }
 
+uint32_t serial_gets(uint8_t *str, uint32_t str_len)
+{
+    if (str == NULL || str_len == 0) {
+        return ERRCODE_FAIL;
+    }
+    if (str_len != (uint32_t)uapi_uart_read(HIBURN_CODELOADER_UART, str, str_len, UART_GETS_DELAY_TIME)) {
+        return ERRCODE_FAIL;
+    }
+    return ERRCODE_SUCC;
+}
+
 
 void serial_puthex(uint32_t h, bool print_all)
 {

@@ -85,6 +85,9 @@ typedef enum hal_spi_ctrl_id {
 #endif  /* CONFIG_SPI_SUPPORT_LPM */
     SPI_CTRL_SET_TMOD,                  /*!< @if Eng Set SPI transfer mode.
                                              @else   设置SPI传输模式。 @endif */
+    SPI_CTRL_SET_ALL_INT,               /* enable all spi interrupt */
+    SPI_CTRL_CLEAR_ALL_INT,             /* clear all spi interrupt */
+    SPI_CTRL_CLEAR_RX_FIFO_DMA,         /* clear rx fifo */
     SPI_CTRL_MAX,
     SPI_CTRL_ID_INVALID = 0xFF
 } hal_spi_ctrl_id_t;
@@ -334,6 +337,19 @@ typedef enum hal_spi_addr_len {
 
 /**
  * @if Eng
+ * @brief  SPI INTERRUPT TYPE.
+ * @else
+ * @brief  SPI中断类型定义。
+ * @endif
+ */
+#define SPI_RX_FULL_INT (0x1)
+#define SPI_RX_OVERFLOW_INT (0x1 << 2)
+#define SPI_RX_UNDERFLOW_INT (0x1 << 3)
+#define SPI_TX_EMPTY_INT (0x1 << 4)
+#define SPI_TX_OVERFLOW_INT (0x1 << 5)
+
+/**
+ * @if Eng
  * @brief  Definition of the event ID of hal spi.
  * @else
  * @brief  HAL层SPI事件ID的定义
@@ -477,6 +493,15 @@ typedef struct hal_spi_extra_attr {
 
 /**
  * @if Eng
+ * @brief  Definition of SPI slave notify callback.
+ * @else
+ * @brief  slave通知master发送时钟或数据回调接口定义。
+ * @endif
+ */
+typedef void (*slave_notify_callback)(void *privdata);
+
+/**
+ * @if Eng
  * @brief  SPI transfer data structure.
  * @else
  * @brief  SPI传输结构体。
@@ -513,6 +538,11 @@ typedef struct hal_spi_xfer_data {
                                  @else   QSPI模式下的命令。 @endif */
     uint8_t reserved[3];    /*!< @if Eng Reserved.
                                  @else   保留。 @endif */
+#ifdef CONFIG_SPI_SLAVE_SUPPORT_NOTIFY
+    slave_notify_callback notify_callback; /*!< @if     slave notify master to send clock or data.
+                                                 @else   slave通知master发送时钟或数据 @endif */
+    void *privdata;
+#endif
     uint32_t addr;          /*!< @if Eng Address for QSPI mode.
                                  @else   QSPI模式下的地址。 @endif */
 } hal_spi_xfer_data_t;

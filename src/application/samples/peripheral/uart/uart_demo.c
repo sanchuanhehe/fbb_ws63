@@ -24,10 +24,13 @@
 
 static uint8_t g_app_uart_rx_buff[CONFIG_UART_TRANSFER_SIZE] = { 0 };
 #if defined(CONFIG_UART_SUPPORT_INT_MODE)
-static uint8_t g_app_uart_int_rx_flag = 0;
-static volatile uint16_t g_app_uart_int_index = 0;
-static uint8_t g_app_uart_int_rx_buff[CONFIG_UART_TRANSFER_SIZE] = { 0 };
+#define UART_CIRCULAR_BUFFER_SIZE 2048 // 环形缓冲区大小，需要大于等于CONFIG_UART_TRANSFER_SIZE
+static uint8_t g_uart_circular_buff[UART_CIRCULAR_BUFFER_SIZE];
+static volatile uint32_t g_uart_windex = 0; // 环形缓冲区写索引
+static volatile uint32_t g_uart_rindex = 0; // 环形缓冲区读索引
+static volatile uint32_t g_uart_int_tx_index = 0; // 中断发包模式已发送数据在缓冲区的索引
 #endif
+
 static uart_buffer_config_t g_app_uart_buffer_config = {
     .rx_buffer = g_app_uart_rx_buff,
     .rx_buffer_size = CONFIG_UART_TRANSFER_SIZE
@@ -85,6 +88,30 @@ static void app_uart_init_config(void)
 }
 
 #if defined(CONFIG_UART_SUPPORT_INT_MODE)
+static void uart_rx_int_write_buffer(const void *buffer, uint16_t length)
+{
+    uint8_t *buff = (uint8_t *)buffer;
+    if (g_uart_windex + length <= UART_CIRCULAR_BUFFER_SIZE) {
+        if (memcpy_s(&g_uart_circular_buff[g_uart_windex],
+            UART_CIRCULAR_BUFFER_SIZE - g_uart_windex, buff, length) != EOK) {
+            osal_printk("uart%d int mode data1 copy fail!\r\n", CONFIG_UART_BUS_ID);
+        }
+    } else {
+        uint32_t len = UART_CIRCULAR_BUFFER_SIZE - g_uart_windex;
+        if (memcpy_s(&g_uart_circular_buff[g_uart_windex], len, buff, len) != EOK) {
+            osal_printk("uart%d int mode data2 copy fail!\r\n", CONFIG_UART_BUS_ID);
+        }
+        buff = buff + len;
+        len = length - len;
+        if (len > 0) {
+            if (memcpy_s(&g_uart_circular_buff[0], UART_CIRCULAR_BUFFER_SIZE, buff, len) != EOK) {
+                osal_printk("uart%d int mode data3 copy fail! len = %d \r\n", CONFIG_UART_BUS_ID, len);
+            }
+        }
+    }
+    g_uart_windex = (g_uart_windex + length) % UART_CIRCULAR_BUFFER_SIZE;
+}
+
 static void app_uart_read_int_handler(const void *buffer, uint16_t length, bool error)
 {
     unused(error);
@@ -92,33 +119,26 @@ static void app_uart_read_int_handler(const void *buffer, uint16_t length, bool 
         osal_printk("uart%d int mode transfer illegal data!\r\n", CONFIG_UART_BUS_ID);
         return;
     }
-
-    uint8_t *buff = (uint8_t *)buffer;
-    osal_printk("uart%d  read data: ", CONFIG_UART_BUS_ID);
-    for (uint16_t i = 0; i < length; i++) {
-        osal_printk("%d ", buff[i]);
+    uint32_t available_len = (g_uart_windex >= g_uart_rindex) ?
+                (UART_CIRCULAR_BUFFER_SIZE - g_uart_windex + g_uart_rindex - 1) : (g_uart_rindex - g_uart_windex - 1);
+    uint32_t len = length;
+    if (len > available_len) {
+        osal_printk("uart%d buffer full! total %u available %u drop %d bytes!\r\n", CONFIG_UART_BUS_ID,
+                    len, available_len, len - available_len);
+        len = available_len;
     }
-    osal_printk("\r\n");
-    if (g_app_uart_int_index + length > CONFIG_UART_TRANSFER_SIZE) {
-        g_app_uart_int_index = 0;
+    if (len == 0) {
+        return;
     }
-    if (memcpy_s(g_app_uart_int_rx_buff + g_app_uart_int_index, length, buff, length) != EOK) {
-        g_app_uart_int_index = 0;
-        osal_printk("uart%d int mode data2 copy fail!\r\n", CONFIG_UART_BUS_ID);
-    }
-    g_app_uart_int_index += length;
-    g_app_uart_int_rx_flag = 1;
+    uart_rx_int_write_buffer(buffer, len);
 }
 
 static void app_uart_write_int_handler(const void *buffer, uint32_t length, const void *params)
 {
     unused(params);
-    uint8_t *buff = (void *)buffer;
-    osal_printk("uart%d write data: ", CONFIG_UART_BUS_ID);
-    for (uint16_t i = 0; i < length; i++) {
-        osal_printk("%d ", buff[i]);
-    }
-    osal_printk("\r\n");
+    unused(buffer);
+    /* 在uart发送中断回调函数中，表示数据已发送完成，更新读指针 */
+    g_uart_rindex = (g_uart_rindex + length) % UART_CIRCULAR_BUFFER_SIZE;
 }
 
 static void app_uart_register_rx_callback(void)
@@ -129,6 +149,42 @@ static void app_uart_register_rx_callback(void)
         osal_printk("uart%d int mode register receive callback succ!\r\n", CONFIG_UART_BUS_ID);
     }
 }
+
+void uart_int_tx_task(void)
+{
+    uint32_t len = 0;
+    uint32_t windex = g_uart_windex;
+    uint32_t rindex = g_uart_int_tx_index;
+    if (windex == rindex) {
+        /* fifo empty */
+        return;
+    } else if (windex > rindex) {
+        len = windex - rindex;
+        if (uapi_uart_write_int(CONFIG_UART_BUS_ID, &g_uart_circular_buff[rindex], len, 0,
+                                app_uart_write_int_handler) != ERRCODE_SUCC) {
+            osal_printk("uart%d int mode send back fail!\r\n", CONFIG_UART_BUS_ID);
+            return;
+        }
+    } else {
+        len = UART_CIRCULAR_BUFFER_SIZE - rindex;
+        if (uapi_uart_write_int(CONFIG_UART_BUS_ID, &g_uart_circular_buff[rindex], len, 0,
+                                app_uart_write_int_handler) != ERRCODE_SUCC) {
+            osal_printk("uart%d int mode send1 back fail!\r\n", CONFIG_UART_BUS_ID);
+            return;
+        }
+        g_uart_int_tx_index = 0; // 先更新已发送成功的部分
+        len = windex;
+        if (len > 0) {
+            if (uapi_uart_write_int(CONFIG_UART_BUS_ID, &g_uart_circular_buff[0], len, 0,
+                                    app_uart_write_int_handler) != ERRCODE_SUCC) {
+                osal_printk("uart%d int mode send2 back fail!\r\n", CONFIG_UART_BUS_ID);
+                return;
+            }
+        }
+    }
+    g_uart_int_tx_index = windex;
+}
+
 #endif
 
 static void *uart_task(const char *arg)
@@ -152,13 +208,8 @@ static void *uart_task(const char *arg)
 
     while (1) {
 #if defined(CONFIG_UART_SUPPORT_INT_MODE)
-        while (g_app_uart_int_rx_flag != 1) { osal_msleep(CONFIG_UART_INT_WAIT_MS); }
-        g_app_uart_int_rx_flag = 0;
-        osal_printk("uart%d int mode send back!\r\n", CONFIG_UART_BUS_ID);
-        if (uapi_uart_write_int(CONFIG_UART_BUS_ID, g_app_uart_int_rx_buff, CONFIG_UART_TRANSFER_SIZE, 0,
-                                app_uart_write_int_handler) == ERRCODE_SUCC) {
-            osal_printk("uart%d int mode send back succ!\r\n", CONFIG_UART_BUS_ID);
-        }
+        while (g_uart_int_tx_index == g_uart_windex) { osal_msleep(CONFIG_UART_INT_WAIT_MS); }
+        uart_int_tx_task();
 #elif defined(CONFIG_UART_SUPPORT_DMA)
         osal_printk("uart%d dma mode receive start!\r\n", CONFIG_UART_BUS_ID);
         if (uapi_uart_read_by_dma(CONFIG_UART_BUS_ID, g_app_uart_rx_buff, CONFIG_UART_TRANSFER_SIZE,

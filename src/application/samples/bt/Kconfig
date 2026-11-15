@@ -22,4 +22,37 @@ endif
 config SAMPLE_SUPPORT_CHBA_SAMPLE
     bool "Support CHBA Sample."
 
+config SAMPLE_SUPPORT_MESH
+    bool
+    prompt "Support Mesh."
+    default y
+    help
+        This option means support ble mesh sample.
+if SAMPLE_SUPPORT_MESH
+    config SAMPLE_SUPPORT_BLE_MESH
+        bool
+        prompt "Support Ble Mesh sample."
+        default n
+        help
+            This option means support ble mesh sample.
+    if SAMPLE_SUPPORT_BLE_MESH
+    menu "Support Ble Mesh Sample Configuration"
+        osource "application/samples/bt/ble/mesh/Kconfig"
+    endmenu
+    endif
+
+    config SAMPLE_SUPPORT_SLE_MESH
+        bool
+        prompt "Support Sle Mesh sample."
+        default y
+        help
+            This option means support sle mesh sample.
+    if SAMPLE_SUPPORT_SLE_MESH
+    menu "Support Sle Mesh Sample Configuration"
+        osource "application/samples/bt/sle/mesh/Kconfig"
+    endmenu
+    endif
+
+endif
+
 endchoice

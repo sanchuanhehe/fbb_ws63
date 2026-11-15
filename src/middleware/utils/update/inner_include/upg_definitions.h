@@ -40,6 +40,16 @@ typedef struct upg_image_partition_ids_map {
     partition_ids_t item_id;
 } upg_image_partition_ids_map_t;
 
+typedef enum upg_key_alg {
+    UPG_KEY_ALG_ECC256_HASH256      = 0x2A13C812,   /* ECC256 + HASH256 */
+    UPG_KEY_ALG_SM2_SM3             = 0x2A13C823,   /* SM2 + SM3 */
+    UPG_KEY_ALG_RSA4096_HASH256     = 0x2A13C845,   /* RSA4096 + HASH256 */
+    UPG_KEY_ALG_HASH256_ONLY_ON_ECC = 0x2A13C856,   /* 只校验HASH256（签名长度与ECC相同） */
+    UPG_KEY_ALG_HASH256_ONLY_ON_RSA = 0x2A13C867,   /* 只校验HASH256（签名长度与RSA相同） */
+    UPG_KEY_ALG_SM3_ONLY            = 0x2A13C878,   /* 只校验SM3 */
+    UPG_KEY_ALG_INVAILD             = 0xFFFFFFFF,
+} upg_key_alg_t;
+
 typedef enum upg_image_status {
     UPG_IMAGE_STATUS_NOT_STARTED,       /* 镜像未开始处理 */
     UPG_IMAGE_STATUS_STARTED,           /* 镜像已开始处理 */

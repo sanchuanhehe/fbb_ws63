@@ -104,6 +104,7 @@ td_u16 hcc_rx_queue_proc(hcc_handler *hcc, hcc_trans_queue *queue);
 td_void hcc_change_state(osal_atomic *atomic, td_u32 state);
 td_bool hcc_check_header_vaild(TD_CONST hcc_handler *hcc, TD_CONST hcc_header *hdr);
 td_void hcc_init_unc_buf(hcc_unc_struc *unc_buf, td_u8* buf, td_u32 len, hcc_transfer_param *param);
+td_void hcc_list_free_by_service(hcc_handler *hcc, hcc_service_type serv_type, td_bool is_filter_by_serv_type);
 
 /* HCC state */
 typedef enum {

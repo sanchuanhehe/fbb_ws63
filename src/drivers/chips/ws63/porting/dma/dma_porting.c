@@ -70,11 +70,13 @@ void dma_port_set_handshaking_channel_status(hal_dma_handshaking_source_t channe
     if (channel >= HAL_DMA_HANDSHAKING_MAX_NUM) {
         return;
     }
+    uint32_t irq_sts = osal_irq_lock();
     if (on) {
         g_dma_handshaking_channel_status |= (1UL << (uint8_t)channel);
     } else {
         g_dma_handshaking_channel_status &= (uint32_t)(~(1UL << (uint8_t)channel));
     }
+    osal_irq_restore(irq_sts);
 }
 
 static void dma_port_set_handshaking_source(dma_channel_t ch, hal_dma_handshaking_source_t source,

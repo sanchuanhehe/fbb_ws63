@@ -1,0 +1,50 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+choice
+    prompt "Sample"
+
+config SAMPLE_SUPPORT_STA_SAMPLE
+    bool "Support WIFI STA Sample"
+
+if SAMPLE_SUPPORT_STA_SAMPLE
+osource "application/samples/wifi_test/sta_sample/Kconfig"
+endif
+
+config SAMPLE_SUPPORT_ALILINK_SAMPLE
+    bool "Support ALILINK Sample"
+
+if SAMPLE_SUPPORT_ALILINK_SAMPLE
+osource "application/samples/wifi_test/alilink_sample/Kconfig"
+endif
+
+config SAMPLE_SUPPORT_SOFTAP_SAMPLE
+    bool "Support WIFI SoftAP Sample."
+
+if SAMPLE_SUPPORT_SOFTAP_SAMPLE
+osource "application/samples/wifi_test/softap_sample/Kconfig"
+endif
+
+config SAMPLE_SUPPORT_BLE_WIFI_CFG_SAMPLE
+    bool "Support BLE WIFI CFG Sample"
+
+if SAMPLE_SUPPORT_BLE_WIFI_CFG_SAMPLE
+osource "application/samples/wifi_test/ble_wifi_cfg_sample/Kconfig"
+endif
+
+config SUPPORT_HILINK
+    bool "Support HILINK"
+
+config SUPPORT_UAPI
+    bool "Support UAPI."
+endchoice
+
+config SAMPLE_SUPPORT_SYSCHANNEL_DEV
+    bool
+    prompt "Support Syschannel dev Sample."
+    default n
+    help
+        This option means support Syschannel Dev Sample.
+
+osource "application/samples/wifi_test/test/Kconfig"

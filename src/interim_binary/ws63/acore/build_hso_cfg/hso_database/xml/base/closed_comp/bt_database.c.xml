@@ -15,17 +15,17 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore set sys param err! @bt_database.c(207),ERROR" ID="0xd830067a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get smp keys param err! @bt_database.c(235),ERROR" ID="0xd830075a" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get smp keys memcpy err! @bt_database.c(257),ERROR" ID="0xd830080a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get smp keys param err! @bt_database.c(272),ERROR" ID="0xd8300882" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble acore smp keys memcmp err, addr not match! @bt_database.c(291),WARNING" ID="0xd830091b" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get smp keys memcpy err! @bt_database.c(298),ERROR" ID="0xd8300952" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get system config read data err! @bt_database.c(321),ERROR" ID="0xd8300a0a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore delete smp key memcpy err! @bt_database.c(338),ERROR" ID="0xd8300a92" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore memset smp key err! @bt_database.c(341),ERROR" ID="0xd8300aaa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get bonded device memcpy err! @bt_database.c(364),ERROR" ID="0xd8300b62" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="bt acore save smp full, write_index:%02x! @bt_database.c(429),INFO" ID="0xd8300d6d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get delete memcpy err! @bt_database.c(468),ERROR" ID="0xd8300ea2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore delete smp key memset err! @bt_database.c(473),ERROR" ID="0xd8300eca" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble_file_store_init enter. @bt_database.c(485),INFO" ID="0xd8300f2d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble_file_store_init already init. @bt_database.c(487),INFO" ID="0xd8300f3d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble_file_store_deinit enter. @bt_database.c(512),INFO" ID="0xd8301005" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get smp keys param err! @bt_database.c(276),ERROR" ID="0xd83008a2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble acore smp keys memcmp err, addr not match! @bt_database.c(295),WARNING" ID="0xd830093b" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get smp keys memcpy err! @bt_database.c(302),ERROR" ID="0xd8300972" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get system config read data err! @bt_database.c(329),ERROR" ID="0xd8300a4a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore delete smp key memcpy err! @bt_database.c(346),ERROR" ID="0xd8300ad2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore memset smp key err! @bt_database.c(349),ERROR" ID="0xd8300aea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get bonded device memcpy err! @bt_database.c(372),ERROR" ID="0xd8300ba2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="bt acore save smp full, write_index:%02x! @bt_database.c(438),INFO" ID="0xd8300db5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore get delete memcpy err! @bt_database.c(477),ERROR" ID="0xd8300eea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="bt acore delete smp key memset err! @bt_database.c(482),ERROR" ID="0xd8300f12" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble_file_store_init enter. @bt_database.c(494),INFO" ID="0xd8300f75" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble_file_store_init already init. @bt_database.c(496),INFO" ID="0xd8300f85" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble_file_store_deinit enter. @bt_database.c(521),INFO" ID="0xd830104d" />
 			</MSG_LOG>

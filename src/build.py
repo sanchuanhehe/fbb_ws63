@@ -35,7 +35,7 @@
 """
 import os
 import sys
-from distutils.spawn import find_executable
+from shutil import which as find_executable
 
 sys.dont_write_bytecode = True
 root_dir = os.path.split(os.path.realpath(__file__))[0]

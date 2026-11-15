@@ -78,8 +78,8 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="[ble_general_gatt] write ind mpc tx fail tx_cnt:%d @ble_ahib_gatt.c(950),ERROR" ID="0xdeac1db2" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[ble_general_gatt] read ind mpc tx fail tx_cnt:%d @ble_ahib_gatt.c(968),ERROR" ID="0xdeac1e42" />
 			<MSG STRUCTURE="diag_log_msg1" NAME="[BCore] mtu changed: new mtu:%d @ble_ahib_gatt.c(980),INFO" ID="0xdeac1ea5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib internal cbk] invalid event:%d @ble_ahib_gatt.c(1152),WARNING" ID="0xdeac2403" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib cbk reg] invalid event:%d @ble_ahib_gatt.c(1163),WARNING" ID="0xdeac245b" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_gatt.c(1186),ERROR" ID="0xdeac2512" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_gatt.c(1204),ERROR" ID="0xdeac25a2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib internal cbk] invalid event:%d @ble_ahib_gatt.c(1162),WARNING" ID="0xdeac2453" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[ahib cbk reg] invalid event:%d @ble_ahib_gatt.c(1173),WARNING" ID="0xdeac24ab" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_gatt.c(1196),ERROR" ID="0xdeac2562" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[AHIB][ERROR] failed to register bcore callback. @ble_ahib_gatt.c(1215),ERROR" ID="0xdeac25fa" />
 			</MSG_LOG>

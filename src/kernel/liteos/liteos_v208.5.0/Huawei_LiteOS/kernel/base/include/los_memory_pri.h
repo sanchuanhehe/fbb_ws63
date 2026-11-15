@@ -59,6 +59,20 @@ typedef struct {
 #endif
 } LosMemPoolInfo;
 
+#ifdef LOSCFG_MEM_LEAKCHECK_CUSTOM
+typedef enum {
+    LOS_HOOK_MEMLEAK_CUSTOM,
+    LOS_HOOK_MAX,
+} LOS_HOOK_TYPE;
+ 
+typedef void (*OsFunPara0)(void);
+typedef void (*OsFunPara1)(UINTPTR*);
+typedef void (*OsFunPara2)(UINTPTR*, UINTPTR);
+typedef void (*OsFunPara3)(UINTPTR*, UINTPTR, UINTPTR);
+typedef void (*OsFunPara4)(UINTPTR*, UINTPTR, UINTPTR, UINTPTR);
+typedef void (*OsFunPara5)(UINTPTR*, UINTPTR, UINTPTR, UINTPTR, UINTPTR);
+typedef OsFunPara2 LOS_HookFunc;
+#endif
 #elif defined(LOSCFG_KERNEL_MEM_BESTFIT_LITTLE)
 
 typedef struct LosHeapManager {
@@ -124,11 +138,19 @@ extern UINT32 OsMemExcInteractionInit(UINTPTR memStart);
 extern VOID OsMemUsedNodeShow(VOID *pool);
 #endif
 
+#ifdef LOSCFG_MEM_DEBUG
+extern VOID OsCheckPool(LosMemPoolInfo *poolInfo);
+#endif
+
 extern VOID OsMemResetEndNode(VOID *pool, UINTPTR preAddr);
 extern VOID OsMemInfoPrint(const VOID *pool);
 extern UINT32 OsShellCmdMemCheck(INT32 argc, const CHAR *argv[]);
 extern VOID OsMemIntegrityMultiCheck(VOID);
 
+#ifdef LOSCFG_MEM_LEAKCHECK_CUSTOM
+extern VOID LOS_HookReg(LOS_HOOK_TYPE hookId, LOS_HookFunc pfn);
+extern INT32 LOS_HookExe(INT32 hookId, INT32 argc, ...);
+#endif
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

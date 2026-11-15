@@ -1350,7 +1350,6 @@ osal_void hmac_btcoex_ps_status_handler(osal_void)
 *****************************************************************************/
 OSAL_STATIC osal_s32 hmac_btcoex_status_change_handler(hmac_vap_stru *hmac_vap, frw_msg *msg)
 {
-    osal_s32 ret;
     hal_btcoex_btble_status_stru *status_old = hal_btcoex_btble_status_last();
     hal_btcoex_btble_status_stru *status_curr = hal_btcoex_btble_status();
     hal_btcoex_btble_status_msg_stru *status_msg = (hal_btcoex_btble_status_msg_stru *)msg->data;
@@ -1365,11 +1364,8 @@ OSAL_STATIC osal_s32 hmac_btcoex_status_change_handler(hmac_vap_stru *hmac_vap, 
     hmac_btcoex_status_dispatch(hmac_vap, status_old, status_curr);
 #endif
     hmac_btcoex_ble_action_req(hmac_vap, status_old, status_curr);
-    ret = memcpy_s(status_old, sizeof(hal_btcoex_btble_status_stru), status_curr,
-        sizeof(hal_btcoex_btble_status_stru));
-    if (ret != EOK) {
-        oam_error_log1(0, OAM_SF_COEX, "{hmac_btcoex_status_change_handler::memcpy_s failed code = %d!}", ret);
-    }
+    (void)memcpy_s(status_old, sizeof(hal_btcoex_btble_status_stru),
+        status_curr, sizeof(hal_btcoex_btble_status_stru));
     return OAL_SUCC;
 }
 

@@ -1,0 +1,5 @@
+if(${CHIP} MATCHES "ws63")
+    include(gle_mesh_ws63.cmake)
+else()
+    include(gle_mesh.cmake)
+endif()

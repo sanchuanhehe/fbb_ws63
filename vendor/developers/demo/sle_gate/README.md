@@ -16,10 +16,10 @@
 
 ### 软件参考资料
 
-- [驱动开发指南](../../../../docs/zh-CN/software/设备驱动开发指南)
-- [开发板IO复用关系表](../../../../docs/zh-CN/software/IO复用关系.md)
-- [WS63V100 lwIP 开发指南_02.pdf](../../../../docs/zh-CN/software/lwIP开发指南)
-- [WS63V100 软件开发指南_03.pdf](../../../../docs/zh-CN/software/软件开发指南)
+- [设备驱动开发指南](../../../../docs/zh-CN/guides/peripherals/index.md)
+- [开发板 IO 复用关系表](../../../../docs/zh-CN/hardware-guide/datasheet/peripherals/io-mux.md)
+- [lwIP 开发指南](../../../../docs/zh-CN/guides/network/lwip/index.md)
+- [软件开发指南](../../../../docs/zh-CN/guides/sdk-development/index.md)
 
 ### 参考头文件
 

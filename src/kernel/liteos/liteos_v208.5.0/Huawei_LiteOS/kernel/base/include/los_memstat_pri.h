@@ -55,6 +55,7 @@ extern VOID OsMemstatTaskUsedInc(Memstat *stat, UINT32 usedSize, UINT32 taskId);
 extern VOID OsMemstatTaskUsedDec(Memstat *stat, UINT32 usedSize, UINT32 taskId);
 extern VOID OsMemstatTaskClear(Memstat *stat, UINT32 taskId);
 extern UINT32 OsMemstatTaskUsage(const Memstat *stat, UINT32 taskId);
+extern VOID OsMemTaskUsageShow(VOID *memPool, UINT32 taskId,  VOID (*print)(const char *fmt, ...));
 #endif
 
 extern VOID OsMemTaskClear(UINT32 taskId);

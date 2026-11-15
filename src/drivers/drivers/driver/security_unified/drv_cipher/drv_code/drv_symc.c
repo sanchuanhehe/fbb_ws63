@@ -224,7 +224,7 @@ td_s32 inner_symc_cfg_param_check(const crypto_symc_ctrl_t *symc_ctrl)
         SYMC_COMPAT_ERRNO(ERROR_INVALID_PARAM), "symc_alg is invalid\n");
     crypto_chk_return(symc_alg == CRYPTO_SYMC_ALG_AES && mode > CRYPTO_SYMC_WORK_MODE_GCM,
         SYMC_COMPAT_ERRNO(ERROR_INVALID_PARAM), "aes mode is invalid\n");
-    crypto_chk_return(symc_alg == CRYPTO_SYMC_ALG_SM4 && mode > CRYPTO_SYMC_WORK_MODE_CFB,
+    crypto_chk_return(symc_alg == CRYPTO_SYMC_ALG_SM4 && mode > CRYPTO_SYMC_WORK_MODE_CFB && mode != CRYPTO_SYMC_WORK_MODE_GCM,
         SYMC_COMPAT_ERRNO(ERROR_INVALID_PARAM), "sm4 mode is invalid\n");
     crypto_chk_return(key_length < CRYPTO_SYMC_KEY_128BIT || key_length > CRYPTO_SYMC_KEY_256BIT,
         SYMC_COMPAT_ERRNO(ERROR_INVALID_PARAM), "key_length is invalid\n");
@@ -238,7 +238,8 @@ td_s32 inner_symc_cfg_param_check(const crypto_symc_ctrl_t *symc_ctrl)
         /* SM4 only support ECB/CBC/CTR. */
 #if !defined(SM4_CFB_OFB_SUPPORT)
         crypto_chk_return(mode != CRYPTO_SYMC_WORK_MODE_ECB && mode != CRYPTO_SYMC_WORK_MODE_CBC &&
-            mode != CRYPTO_SYMC_WORK_MODE_CTR, SYMC_COMPAT_ERRNO(ERROR_UNSUPPORT), "sm4 unsupport this mode\n");
+            mode != CRYPTO_SYMC_WORK_MODE_CTR && mode != CRYPTO_SYMC_WORK_MODE_GCM,
+            SYMC_COMPAT_ERRNO(ERROR_UNSUPPORT), "sm4 unsupport this mode\n");
 #endif
         /* SM4's keylength must be 128. */
         crypto_chk_return(key_length != CRYPTO_SYMC_KEY_128BIT, SYMC_COMPAT_ERRNO(ERROR_UNSUPPORT),

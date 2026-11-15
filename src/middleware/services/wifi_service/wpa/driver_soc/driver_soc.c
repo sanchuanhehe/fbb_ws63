@@ -769,15 +769,15 @@ static void drv_soc_driver_event_connect_result_process(ext_driver_data_stru *dr
 	(void)memset_s(&event, sizeof(union wpa_event_data), 0, sizeof(union wpa_event_data));
 	if (accoc_info->status != 0) {
 		drv->associated = EXT_DISCONNECT;
+#ifdef LOS_CONFIG_PMK_CACHE
+        /* 关联失败时, 清空pmk */
+        wifi_flush_pmk_cache();
+#endif /* LOS_CONFIG_PMK_CACHE */
 		/* assoc 失败时, 底层上报错误码会加上MAC_STATUS_MAX偏移; pmkid无效时, 触发reject流程清空pmkid */
 		if ((accoc_info->status == WLAN_STATUS_INVALID_PMKID + MAC_STATUS_ASSOC_MAX) ||
 		    (accoc_info->status == WLAN_STATUS_AUTH_TIMEOUT + MAC_STATUS_AUTH_MAX)) {
 			event.assoc_reject.status_code = accoc_info->status;
-#ifdef LOS_CONFIG_PMK_CACHE
-            /* pmkid 失效时, 清空pmk */
-            wifi_flush_pmk_cache();
-#endif /* LOS_CONFIG_PMK_CACHE */
-			wpa_supplicant_event(drv->ctx, EVENT_ASSOC_REJECT, &event);
+            wpa_supplicant_event(drv->ctx, EVENT_ASSOC_REJECT, &event);
 		} else {
 			event.disassoc_info.reason_code = accoc_info->status;
 			wpa_supplicant_event(drv->ctx, EVENT_DISASSOC, &event);

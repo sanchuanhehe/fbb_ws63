@@ -68,8 +68,6 @@ at_ret_t at_los_wifi_al_tx(const altx_args_t *args)
     td_s32 argc = convert_bin_to_dec(args->para_map);
     td_u32 ret;
 
-    uapi_at_report("uapi_wifi_at_start \r\n");
-
     ret = uapi_wifi_at_start(argc, (td_char *)&args->para1, EXT_AT_AL_TX);
     return (at_ret_t)ret;
 }
@@ -78,8 +76,6 @@ at_ret_t at_los_wifi_al_rx(const alrx_args_t *args)
 {
     td_s32 argc = convert_bin_to_dec(args->para_map);
     td_u32 ret;
-
-    uapi_at_report("uapi_wifi_at_start \r\n");
 
     ret = uapi_wifi_at_start(argc, (td_char *)&args->para1, EXT_AT_AL_RX);
     return (at_ret_t)ret;
@@ -90,8 +86,6 @@ at_ret_t at_los_wifi_rx_info(void)
     td_s32 argc = 0;
     td_u32 ret;
     td_char *argv[EXT_AT_CCPRIV_MAX_LEN] = {0};
-
-    uapi_at_report("uapi_wifi_at_start \r\n");
 
     ret = uapi_wifi_at_start(argc, argv, EXT_AT_RX_INFO);
     return (at_ret_t)ret;
@@ -128,8 +122,6 @@ at_ret_t at_los_wifi_set_arlog(const arlog_args_t *args)
     td_s32 argc = convert_bin_to_dec(args->para_map);
     td_u32 ret;
 
-    uapi_at_report("uapi_wifi_at_start \r\n");
-
     ret = uapi_wifi_at_start(argc, (td_char *)&args->para1, EXT_AT_SET_ARLOG);
     return ret;
 }
@@ -138,8 +130,6 @@ at_ret_t at_los_wifi_get_vap_info(const vapinfo_args_t *args)
 {
     td_s32 argc = convert_bin_to_dec(args->para_map);
     td_u32 ret;
-
-    uapi_at_report("uapi_wifi_at_start \r\n");
 
     ret = uapi_wifi_at_start(argc, (td_char *)&args->para1, EXT_AT_GET_VAP_INFO);
     return ret;
@@ -150,8 +140,6 @@ at_ret_t at_los_wifi_get_usr_info(const usrinfo_args_t *args)
     td_s32 argc = convert_bin_to_dec(args->para_map);
     td_u32 ret;
 
-    uapi_at_report("uapi_wifi_at_start \r\n");
-
     ret = uapi_wifi_at_start(argc, (td_char *)&args->para1, EXT_AT_GET_USR_INFO);
     return ret;
 }
@@ -161,8 +149,6 @@ at_ret_t at_los_wifi_set_rate_power(const setrpwr_args_t *args)
     td_s32 argc = convert_bin_to_dec(args->para_map);
     td_u32 ret;
 
-    uapi_at_report("uapi_wifi_at_start \r\n");
-
     ret = uapi_wifi_at_start(argc, (td_char *)&args->para1, EXT_AT_SET_RATE_POWER);
     return ret;
 }
@@ -171,8 +157,6 @@ at_ret_t at_los_wifi_cal_tone(const caltone_args_t *args)
 {
     td_s32 argc = convert_bin_to_dec(args->para_map);
     td_u32 ret;
-
-    uapi_at_report("uapi_wifi_at_start \r\n");
 
     ret = uapi_wifi_at_start(argc, (td_char *)&args->para1, EXT_AT_CAL_TONE);
     return ret;

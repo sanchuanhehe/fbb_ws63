@@ -22,7 +22,7 @@
 
 ### 1.2.3 支持IDE版本
 
-本示例支持IDE版本号：1.0.0.6及以上；
+本示例支持IDE插件版本号：1.0.1及以上；
 
 ## 1.3 效果预览
 
@@ -128,19 +128,19 @@ Grant Node： 步骤 1 调用 enable_sle，打开 SLE 开关。
 
 - 步骤六：点击“build”或者“rebuild”编译
 
-  ![image-20240801112427220](../../doc/media/beep/image-20240801112427220.png)
+  ![image-20250716163653427](../../doc/media/readme/image-20250716163653427.png)
 - 步骤七：编译完成如下图所示。
 
-  ![image-20240801165456569](../../doc/media/beep/image-20240801165456569.png)
+  ![image-20250307164622717](../../doc/media/readme/image-20250307164622717.png)
 - 步骤八：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
 
-  ![image-20250317173145978](../../doc/media/tools/image-20250317173145978.png)
+  ![image-20250716164922699](../../doc/media/readme/image-20250716164922699.png)
 - 步骤九：配置完成后，点击工具“程序加载”按钮烧录。
 
-  ![image-20240801174117545](../../doc/media/beep/image-20240801174117545.png)
+  ![image-20250716170835615](../../doc/media/readme/image-20250716170835615.png)
 - 步骤十：出现“Connecting, please reset device...”字样时，复位开发板，等待烧录结束。
 
-  ![image-20240801174230202](../../doc/media/beep/image-20240801174230202.png)
+  ![image-20240801174230202](../../doc/media/led/image-20240801174230202.png)
 
 * 步骤十一：手机热点（路由器）开启热点SSID：NL_DK63_SLE_Distribute_Network ，密码：my_password，等待SERVER端与CLient端连接，通过server端将账号密码通过SLE发送给Client端，Client连接手机热点。
 

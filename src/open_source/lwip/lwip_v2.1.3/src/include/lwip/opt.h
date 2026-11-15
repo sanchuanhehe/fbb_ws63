@@ -44,6 +44,10 @@
 #if !defined LWIP_HDR_OPT_H
 #define LWIP_HDR_OPT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef LWIP_IPV6_PREFIX_LEN
 #define LWIP_IPV6_PREFIX_LEN 64
 #endif
@@ -4826,6 +4830,10 @@ interface identification API */
 
 #ifndef LWIP_ENABLE_CAP_NET_BROADCAST
 #define LWIP_ENABLE_CAP_NET_BROADCAST 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* LWIP_HDR_OPT_H */

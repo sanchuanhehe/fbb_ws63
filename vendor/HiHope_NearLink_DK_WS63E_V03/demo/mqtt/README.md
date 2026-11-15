@@ -18,7 +18,7 @@
 
 本示例支持版本号：1.10.102
 
-### 1.2.3 支持IDE版本、支持配套工具版本
+### 1.2.3 支持IDE插件版本
 
 本示例支持IDE版本号：1.0.0.8；
 
@@ -172,40 +172,43 @@
 
   ![image-20241226114822725](../../doc/media/mqtt_demo/image-20241226114822725.png)
 
+- 步骤16：在xxx\src\application\samples\peripheral\CMakeLists.txt文件中新增头文件引用，具体如下图所示（如果不知道在哪个地方加的，可以在“set(SOURCES "${SOURCES}" PARENT_SCOPE)”上面一行添加）。
+  
   ![image-20250107160907323](../../doc/media/mqtt_demo/image-20250107160907323.png)
-* 步骤16：在xxx\src\application\samples\peripheral\Kconfig文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加，可以在最后一行添加）。
+  
+* 步骤17：在xxx\src\application\samples\peripheral\Kconfig文件中新增编译案例，具体如下图所示（如果不知道在哪个地方加，可以在最后一行添加）。
 
   ![image-20241226114849158](../../doc/media/mqtt_demo/image-20241226114849158.png)
 
-- 步骤17：修改mqtt_demo.c文件中“ADDRESS”这个字段，将ADDRESS这个字段修改自己设备接入地址，保留tcp://，如：tcp://xxxxxxxxx.com
+- 步骤18：修改mqtt_demo.c文件中“ADDRESS”这个字段，将ADDRESS这个字段修改自己设备接入地址，保留tcp://，如：tcp://xxxxxxxxx.com
 
   ![image-20250317190717411](../../doc/media/mqtt_demo/image-20250317190717411.png)
-- 步骤18：修改mqtt_demo.c文件中“CLIENTID”、“g_username”、“g_password”三个字段，将下图地方设备ID复制到DeviceId，密钥复制到DeviceSecret，点击Generate生Clientld，Username，Password，替换代码中的三个字段，链接地址：https://iot-tool.obs-website.cn-north-4.myhuaweicloud.com/
+- 步骤19：修改mqtt_demo.c文件中“CLIENTID”、“g_username”、“g_password”三个字段，将下图地方设备ID复制到DeviceId，密钥复制到DeviceSecret，点击Generate生Clientld，Username，Password，替换代码中的三个字段，链接地址：https://iot-tool.obs-website.cn-north-4.myhuaweicloud.com/
 
   ![](../../doc/media/mqtt_demo/image-20220924160451960.png)
 
   ![image-20250317190932535](../../doc/media/mqtt_demo/image-20250317190932535.png)
-- 步骤19：修改mqtt_demo.c文件中“CONFIG_WIFI_SSID”、“CONFIG_WIFI_PWD”这两个字段，根据自己的手机热点或者路由器热点进行修改
-- 步骤20：点击如下图标，选择”**系统配置**“，具体选择路径“Application/Enable the Sample of peripheral”，在弹出框中选择“support MQTT Sample”，点击Save，关闭弹窗。
+- 步骤20：修改mqtt_demo.c文件中“CONFIG_WIFI_SSID”、“CONFIG_WIFI_PWD”这两个字段，根据自己的手机热点或者路由器热点进行修改
+- 步骤21：点击如下图标，选择”**系统配置**“，具体选择路径“Application/Enable the Sample of peripheral”，在弹出框中选择“support MQTT Sample”，点击Save，关闭弹窗。
 
   <img src="../../doc/media/mqtt_demo/image-20240801171406113.png" alt="image-20240801171406113" style="zoom: 67%;" /><img src="../../doc/media/beep/image-20240205105234692-17119401758316.png" alt="image-20240205105234692" style="zoom: 50%;" /><img src="../../doc/media/mqtt_demo/image-20241226114928801.png" alt="image-20241226114928801" style="zoom: 67%;" />
-- 步骤21：点击“build”或者“rebuild”编译
+- 步骤22：点击“build”或者“rebuild”编译
 
-  ![image-20240801112427220](../../doc/media/mqtt_demo/image-20240801112427220.png)
-- 步骤22：编译完成如下图所示。
+  ![image-20250716163653427](../../doc/media/readme/image-20250716163653427.png)
+- 步骤23：编译完成如下图所示。
 
   ![image-20240801165456569](../../doc/media/mqtt_demo/image-20240801165456569.png)
-- 步骤23：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
+- 步骤24：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
 
-  ![image-20250317173145978](../../doc/media/tools/image-20250317173145978.png)
-- 步骤24：配置完成后，点击工具“程序加载”按钮烧录。
+  ![image-20250716164922699](../../doc/media/readme/image-20250716164922699.png)
+- 步骤25：配置完成后，点击工具“程序加载”按钮烧录。
 
-  ![image-20240801174117545](../../doc/media/mqtt_demo/image-20240801174117545.png)
-- 步骤25：出现“Connecting, please reset device...”字样时，复位开发板，等待烧录结束。
+  ![image-20250307164622717](../../doc/media/readme/image-20250307164622717.png)
+- 步骤26：出现“Connecting, please reset device...”字样时，复位开发板，等待烧录结束。
 
-  ![image-20240801174230202](../../doc/media/mqtt_demo/image-20240801174230202.png)
+  ![image-20250716170835615](../../doc/media/readme/image-20250716170835615.png)
 
-* 步骤26：烧录完成后，屏幕上显示温湿度，云端网页显示设备在线，并显示对应传感器数据。
+* 步骤27：烧录完成后，屏幕上显示温湿度，云端网页显示设备在线，并显示对应传感器数据。
 
 <img src="../../doc/media/mqtt_demo/image-20241226114526118.png" alt="image-20241226114526118" style="zoom:50%;" />
 

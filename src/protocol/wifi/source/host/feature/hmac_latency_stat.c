@@ -54,10 +54,8 @@ osal_u16               **g_hmac_latency_rx = OSAL_NULL;
 *****************************************************************************/
 OSAL_STATIC osal_void hmac_latency_switch_init(const osal_u8 *param)
 {
-    if (memcpy_s(&g_hmac_latency_stat_switch, sizeof(latency_stat_switch_stru), param,
-        sizeof(latency_stat_switch_stru)) != EOK) {
-        oam_error_log0(0, OAM_SF_CFG, "hmac_latency_switch_init::memcpy failed.");
-    }
+    (void)memcpy_s(&g_hmac_latency_stat_switch, sizeof(latency_stat_switch_stru),
+        param, sizeof(latency_stat_switch_stru));
 
     /* 重置统计报文数为0 */
     g_latency_record_pkt_num_tx = 0;

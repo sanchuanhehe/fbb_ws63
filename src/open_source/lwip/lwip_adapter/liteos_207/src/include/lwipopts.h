@@ -1,7 +1,7 @@
 ﻿/*
  * Copyright (c) 2001-2003 Swedish Institute of Computer Science.
  * All rights reserved.
- * Copyright (c) <2013-2020>, <CompanyNameMagicTag>
+ * Copyright (c) <2013-2020>, <HiSilicon (Shanghai) Technologies Co., Ltd.>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,

@@ -1,0 +1,9 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2026. All rights reserved.
+#===============================================================================
+config RTC_SAMPLE_PERIOD_MS
+    int
+    prompt "RTC sampling period in milliseconds."
+    range 100 60000
+    default 1000

@@ -1,0 +1,22 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2024-2024. All rights reserved.
+#===============================================================================
+choice
+    prompt "Choose Porting"
+    config TIOT_PORTING_AIR_MOUSE
+        bool "air_mouse"
+    config TIOT_PORTING_BSXX_BRIDGE
+        bool "bsxx_bridge"
+    config TIOT_PORTING_CAXX_NFC
+        bool "caxx_nfc"
+    config TIOT_PORTING_WSXX_SLP
+        bool "wsxx_slp"
+        if TIOT_PORTING_WSXX_SLP
+            config TIOT_WS63_UART_BUS
+            int
+            prompt "Configuring the Communication UART Bus"
+            range 1 2
+            default 1
+        endif
+endchoice

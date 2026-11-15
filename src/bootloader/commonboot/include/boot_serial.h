@@ -103,6 +103,9 @@ void serial_putc(const char c);
 void serial_puts(const char *s);
 void serial_put_buf(const char *buffer, int32_t length);
 uint8_t serial_getc(void);
+#ifdef CONFIG_YMODEM_SUPPORT_RECEIVE_BUFFER_ONCE
+uint32_t serial_gets(uint8_t *str, uint32_t str_len);
+#endif
 int32_t serial_tstc(void);
 void serial_puthex(uint32_t h, bool print_all);
 uint32_t serial_getc_timeout(uint32_t timeout_us, uint8_t *ch);

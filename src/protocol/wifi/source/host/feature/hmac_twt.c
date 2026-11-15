@@ -640,12 +640,7 @@ OSAL_STATIC osal_u32 hmac_mgmt_encap_twt_teardown_req(hmac_vap_stru *hmac_vap, h
         return OAL_ERR_CODE_PTR_NULL;
     }
 
-    ret = memset_s((osal_u8 *)&twt_teardown, OAL_SIZEOF(mac_twt_teardown_stru), 0, OAL_SIZEOF(mac_twt_teardown_stru));
-    if (ret != EOK) {
-        oam_error_log0(0, OAM_SF_11AX, "{hmac_mgmt_encap_twt_teardown_req::MEMSET Teardown Frame ERROR}");
-        return OAL_FAIL;
-    }
-
+    memset_s((osal_u8 *)&twt_teardown, OAL_SIZEOF(mac_twt_teardown_stru), 0, OAL_SIZEOF(mac_twt_teardown_stru));
     oam_warning_log3(0, OAM_SF_11AX, "{hmac_mgmt_encap_twt_setup_req:: mac_addr[%02x XX XX XX %02x %02x]!.}",
         hmac_user->user_mac_addr[0], hmac_user->user_mac_addr[4], /* 4 */
         hmac_user->user_mac_addr[5]); /* 5 */

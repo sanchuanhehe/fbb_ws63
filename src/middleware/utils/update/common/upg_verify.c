@@ -340,10 +340,20 @@ errcode_t secure_authenticate(const uint8_t *key, const upg_auth_data_t *data, u
     return ret;
 }
 
-STATIC errcode_t verify_fota_key_area(uint32_t type, upg_key_area_data_t *key_area, uint8_t *public_key)
+STATIC errcode_t verify_fota_key_area(uint32_t key_alg, upg_key_area_data_t *key_area, uint8_t *public_key)
 {
-    unused(type);
-    if (key_area->signature_length == SHA_256_LENGTH) {
+    uint32_t alg = (uint32_t)upg_get_specific_verify_key_alg();
+    bool check_hash_only = false;
+    if (alg == UPG_KEY_ALG_INVAILD) {
+        alg = key_alg;
+    }
+
+    if (alg == UPG_KEY_ALG_HASH256_ONLY_ON_ECC || alg == UPG_KEY_ALG_HASH256_ONLY_ON_RSA ||
+        alg == UPG_KEY_ALG_SM3_ONLY) {
+        check_hash_only = true;
+    }
+    /* 算法为HASH only，且签名长度为32，只做HASH校验 */
+    if (check_hash_only && key_area->signature_length == SHA_256_LENGTH) {
         upg_log_info("[UPG] verify_fota_key_area -> verify SHA256\r\n");
         uint32_t key_area_len = (uint32_t)sizeof(upg_key_area_data_t) - RSA_SIG_LEN;
         return upg_verify_hash((uintptr_t)key_area, key_area_len, key_area->sig_fota_key_area, SHA_256_LENGTH);
@@ -384,27 +394,50 @@ errcode_t secure_authenticate(const uint8_t *key, const upg_auth_data_t *data, u
     return ret;
 }
 
-STATIC errcode_t verify_fota_key_area(uint32_t type, upg_key_area_data_t *key_area, uint8_t *public_key)
+STATIC errcode_t verify_fota_key_area(uint32_t key_alg, upg_key_area_data_t *key_area, uint8_t *public_key)
 {
-    unused(type);
-    upg_auth_data_t data;
-    if (key_area->signature_length == SHA_256_LENGTH) {
+    uint32_t alg = (uint32_t)upg_get_specific_verify_key_alg();
+    bool check_hash_only = false;
+    if (alg == UPG_KEY_ALG_INVAILD) {
+        alg = key_alg;
+    }
+
+    if (alg == UPG_KEY_ALG_HASH256_ONLY_ON_ECC || alg == UPG_KEY_ALG_HASH256_ONLY_ON_RSA ||
+        alg == UPG_KEY_ALG_SM3_ONLY) {
+        check_hash_only = true;
+    }
+    /* 算法为HASH only，且签名长度为32，只做HASH校验 */
+    if (check_hash_only && key_area->signature_length == SHA_256_LENGTH) {
         upg_log_info("[UPG] verify_fota_key_area -> verify SHA256\r\n");
         uint32_t key_area_len = (uint32_t)sizeof(upg_key_area_data_t) - SIG_LEN;
         return upg_verify_hash((uintptr_t)key_area, key_area_len, key_area->sig_fota_key_area, SHA_256_LENGTH);
     }
+
+    upg_log_info("[UPG] verify_fota_key_area -> verify signed\r\n");
+    upg_auth_data_t data;
+
     /* Verify app key area with flash root public key */
     data.data = (uint8_t *)key_area;
     data.length = sizeof(upg_key_area_data_t) - SIG_LEN;
-
     return secure_authenticate(public_key, &data, key_area->sig_fota_key_area);
 }
 #endif
 
-STATIC errcode_t verify_fota_info(uint32_t type, upg_fota_info_data_t *fota_info, uint8_t *public_key)
+STATIC errcode_t verify_fota_info(uint32_t key_alg, upg_fota_info_data_t *fota_info, uint8_t *public_key)
 {
-    unused(type);
-    if (fota_info->signature_length == SHA_256_LENGTH) {
+    uint32_t alg = (uint32_t)upg_get_specific_verify_key_alg();
+    if (alg == UPG_KEY_ALG_INVAILD) {
+        alg = key_alg;
+    }
+
+    bool check_hash_only = false;
+    if (alg == UPG_KEY_ALG_HASH256_ONLY_ON_ECC || alg == UPG_KEY_ALG_HASH256_ONLY_ON_RSA ||
+        alg == UPG_KEY_ALG_SM3_ONLY) {
+        check_hash_only = true;
+    }
+
+    /* 算法为HASH only，且签名长度为32，只做HASH校验 */
+    if (check_hash_only && fota_info->signature_length == SHA_256_LENGTH) {
         upg_log_info("[UPG] verify_fota_info -> verify SHA256\r\n");
         uint32_t fota_info_len = (uint32_t)sizeof(upg_fota_info_data_t) - SIG_LEN;
         return upg_verify_hash((uintptr_t)fota_info, fota_info_len, fota_info->sign_fota_info, SHA_256_LENGTH);
@@ -449,7 +482,6 @@ void uapi_upg_register_user_defined_verify_func(uapi_upg_user_defined_check func
 errcode_t uapi_upg_verify_file_head(const upg_package_header_t *pkg_header)
 {
     upg_key_area_data_t *key_area = (upg_key_area_data_t *)&(pkg_header->key_area);
-    uint32_t type = key_area->image_id;
     uint8_t *public_key = NULL;
 
     if (upg_is_inited() == false) {
@@ -471,14 +503,14 @@ errcode_t uapi_upg_verify_file_head(const upg_package_header_t *pkg_header)
     }
 
     /* 步骤一 */
-    ret = verify_fota_key_area(type, key_area, public_key);
+    ret = verify_fota_key_area(key_area->key_alg, key_area, public_key);
     if (ret != ERRCODE_SUCC) {
         upg_log_err("[UPG] upg verify: key area error. ret = 0x%x\r\n", ret);
         return ret;
     }
 
     /* 步骤二 */
-    ret = verify_fota_info(fota_info->image_id, fota_info, key_area->fota_external_public_key);
+    ret = verify_fota_info(key_area->key_alg, fota_info, key_area->fota_external_public_key);
     if (ret != ERRCODE_SUCC) {
         upg_log_err("[UPG] upg verify: fota info error. ret = 0x%x\r\n", ret);
         return ret;

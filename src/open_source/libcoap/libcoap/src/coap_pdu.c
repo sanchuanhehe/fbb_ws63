@@ -278,8 +278,9 @@ coap_pdu_resize(coap_pdu_t *pdu, size_t new_size) {
     else
       pdu->actual_token.s = &pdu->token[2];
 #endif
+    pdu->alloc_size = new_size;
   }
-  pdu->alloc_size = new_size;
+
   return 1;
 }
 
@@ -585,7 +586,13 @@ coap_insert_option(coap_pdu_t *pdu, coap_option_num_t number, size_t len,
     }
     prev_number = opt_iter.number;
   }
-  assert(option != NULL);
+
+  if (option == NULL) {
+    /* Code is broken somewhere */
+    coap_log_warn("coap_insert_option: Broken max_opt\n");
+    return 0;
+  }
+
   /* size of option inc header to insert */
   shift = coap_opt_encode_size(number - prev_number, len);
 
@@ -1525,9 +1532,6 @@ static size_t coap_pdu_encode_tcp_fix_header(uint8_t e_token_length, coap_pdu_t 
 
 size_t
 coap_pdu_encode_header(coap_pdu_t *pdu, coap_proto_t proto) {
-  if (pdu == NULL || pdu->token == NULL)
-    return 0;
-
   uint8_t e_token_length;
 
   if (pdu->actual_token.length < COAP_TOKEN_EXT_1B_BIAS) {

@@ -141,7 +141,7 @@ uint32_t loader_upload_data(const uart_ctx *cmd_ctx)
         return ERRCODE_FAIL;
     }
 
-    if ((upload_addr + file_len) > FLASH_MEM_SIZE) {
+    if (upload_addr > FLASH_MEM_SIZE - file_len) {
         boot_msg0("Upload addr exceeds flash capacity");
         return ERRCODE_FAIL;
     }

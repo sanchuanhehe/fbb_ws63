@@ -443,6 +443,33 @@ typedef void (*gatts_mtu_changed_callback)(uint8_t server_id, uint16_t conn_id, 
 
 /**
  * @if Eng
+ * @brief Callback invoked when receive remote indication confirm.
+ * @par Callback invoked when receive remote indication confirm.
+ * @attention 1.This function is called in bts context,should not be blocked or do long time waiting.
+ * @attention 2. The memories of devices are requested and freed by the bts automatically.
+ * @param [in] server_id server ID.
+ * @param [in] conn_id   connection ID.
+ * @param [in] status    error code.
+ * @par Dependency:
+ * @li  bts_def.h
+ * @see gap_ble_callbacks_t
+ * @else
+ * @brief  收到对端indication confirm的回调函数。
+ * @par    收到对端indication confirm的回调函数。
+ * @attention  1. 该回调函数运行于bts线程，不能阻塞或长时间等待。
+ * @attention  2. devices由bts申请内存，也由bts释放，回调中不应释放。
+ * @param [in] server_id 服务端 ID。
+ * @param [in] conn_id   连接 ID。
+ * @param [in] status    执行结果错误码。
+ * @par 依赖:
+ * @li  bts_def.h
+ * @see gap_ble_callbacks_t
+ * @endif
+ */
+typedef void (*gatts_indication_confirm_callback)(uint8_t server_id, uint16_t conn_id, errcode_t status);
+
+/**
+ * @if Eng
  * @brief Struct of GATT server callback function.
  * @else
  * @brief GATT server回调函数接口定义。
@@ -467,6 +494,8 @@ typedef struct {
                                                                   @else   收到远端写请求回调函数。 @endif */
     gatts_mtu_changed_callback mtu_changed_cb;               /*!< @if Eng Mtu changed callback.
                                                                   @else   mtu 大小更新回调函数。 @endif */
+    gatts_indication_confirm_callback indicate_confirm_cb;   /*!< @if Eng Indication confirm callback.
+                                                                  @else   Indication confirm回调函数。 @endif */
 } gatts_callbacks_t;
 
 /**

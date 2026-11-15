@@ -19,11 +19,36 @@ import hashlib
 import platform
 import filecmp
 
-root_path = os.path.join(os.path.split(os.path.realpath(__file__))[0], '..', '..', '..')
-root_path = os.path.abspath(root_path)
+# Use __file__ (not realpath) so Windows junctions / symlinks pointing at
+# the SDK keep their short path. Resolving them defeats the short-path
+# workaround for the 32K CreateProcess command-line limit on out-of-tree
+# builds. If FBB_SDK_DIR is set, prefer it as the authoritative SDK root
+# (this catches the case where Python imports build_utils via realpath
+# despite a junction; e.g. PowerShell launching the build).
+_env_sdk_dir = os.environ.get('FBB_SDK_DIR')
+if _env_sdk_dir and os.path.isfile(os.path.join(_env_sdk_dir, 'build.py')):
+    root_path = os.path.abspath(_env_sdk_dir)
+else:
+    root_path = os.path.join(os.path.split(os.path.abspath(__file__))[0], '..', '..', '..')
+    root_path = os.path.abspath(root_path)
+
+# Out-of-tree project support: when FBB_BUILD_ROOT_PATH is set, build outputs
+# (output/, sdk_output_path) are placed under it while SDK source resources
+# (scripts, target_config, pkg tools) keep resolving against root_path. The
+# env var MUST point to an existing directory; bogus paths silently writing
+# output to nowhere was a real bug.
+build_root_path = root_path
+_build_root_override = os.environ.get('FBB_BUILD_ROOT_PATH')
+if _build_root_override:
+    if not os.path.isdir(_build_root_override):
+        raise RuntimeError(
+            f"FBB_BUILD_ROOT_PATH={_build_root_override!r} does not exist or is not a directory. "
+            f"Either unset it (to build in-tree) or create the directory first."
+        )
+    build_root_path = os.path.abspath(_build_root_override)
 script_path = os.path.join(root_path, 'build', 'script')
 target_config_path = os.path.join(root_path, 'build', 'config', 'target_config')
-output_root = os.path.join(root_path, 'output')
+output_root = os.path.join(build_root_path, 'output')
 sdk_output_path = os.path.join(output_root, 'sdk')
 pkg_tools_path = os.path.join(root_path, 'tools', 'pkg')
 jlink_tools_path = os.path.join(root_path, 'tools', 'bin', 'jlink_tool')
@@ -122,7 +147,7 @@ class CopyModule:
     def copy_file_header(self, file):
         file_path = os.path.dirname(file)
         for inner_file in os.listdir(file_path):
-            if not inner_file.endswith('.h'):
+            if not inner_file.endswith('.h') and not inner_file.endswith('.inl'):
                 continue
             tmp_src = "%s/%s" %(file_path, inner_file)
             tmp_dest = "%s/%s" %(file_path.replace(root_path, sdk_output_path), inner_file)

@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief mqtt cmake file
-# Copyright (c) @CompanyNameMagicTag 2023-2023. All rights reserved.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
 #===============================================================================
 set(COMPONENT_NAME "mqtt")
 
@@ -57,6 +57,7 @@ set(PRIVATE_DEFINES
 )
 
 set(PUBLIC_DEFINES
+    IOT_LITEOS_ADAPT
 )
 
 # use this when you want to add ccflags like -include xxx

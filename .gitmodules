@@ -1,0 +1,4 @@
+[submodule "src/middleware/services/matter/connectedhomeip"]
+	path = src/middleware/services/matter/connectedhomeip
+	url = https://gitcode.com/HiSpark/connectedhomeip.git
+	branch = v1.4.2-branch

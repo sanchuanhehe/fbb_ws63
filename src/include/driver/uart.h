@@ -500,6 +500,25 @@ int32_t uapi_uart_write(uart_bus_t bus, const uint8_t *buffer, uint32_t length, 
 
 /**
  * @if Eng
+ * @brief  Writes a buffer to an opened UART in polling mode without using interrupt lock.
+ * @param  [in]  bus The UART bus. see @ref uart_bus_t
+ * @param  [in]  buffer Pointer to the buffer to write through the UART.
+ * @param  [in]  length Length of the buffer to write.
+ * @param  [in]  timeout Timeout duration.
+ * @return Amount of data write to UART.
+ * @else
+ * @brief  将数据发送到已经打开的UART上，使用直接发送不会锁中断的方式。
+ * @param  [in]  bus 串口号，参考 @ref uart_bus_t 。
+ * @param  [in]  buffer 要发送的数据Buffer。
+ * @param  [in]  length 要发送的数据Buffer长度。
+ * @param  [in]  timeout 超时时间。
+ * @return 实际发送的数据长度。
+ * @endif
+ */
+int32_t uapi_uart_write_nolock(uart_bus_t bus, const uint8_t *buffer, uint32_t length, uint32_t timeout);
+
+/**
+ * @if Eng
  * @brief  Writes a buffer to an opened UART by interrupt and
  *         calls a finished_with_buffer_func call back when it finish.
  * @note   callback will be called in an interrupt context.

@@ -227,5 +227,5 @@ if (${CHIP} STREQUAL "socmn1")
 endif()
 
 if(syschannel_host_ko IN_LIST TARGET_COMPONENT)
-install_sdk(${CMAKE_SOURCE_DIR}/kernel/osal/src/linux "*") 
+install_sdk(${ROOT_DIR}/kernel/osal/src/linux "*") 
 endif()

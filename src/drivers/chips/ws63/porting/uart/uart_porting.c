@@ -12,11 +12,18 @@
 #include "pinctrl_porting.h"
 #include "pinctrl.h"
 #endif
+#include "panic.h"
 #include "uart.h"
 #include "platform_core.h"
 #include "securec.h"
 #include "osal_interrupt.h"
 #include "soc_osal.h"
+#include "tcxo.h"
+#if (defined(SUPPORT_DFX_LOG) && defined(LOG_SUPPORT))
+#include "dfx_channel.h"
+#include "diag_filter.h"
+#include "diag_mocked_shell.h"
+#endif
 #if defined(CONFIG_UART_SUPPORT_DMA)
 #include "dma_porting.h"
 #endif
@@ -56,8 +63,6 @@
 #define UART_BUS_0_BASE_ADDR (UART0_BASE - 4)
 #define UART_BUS_1_BASE_ADDR (UART1_BASE - 4)
 #define UART_BUS_2_BASE_ADDR (UART2_BASE - 4)
-#define GPIO12_PAD_CTRL_GROUP_ADDR 0x4400D030
-#define GPIO13_PAD_CTRL_GROUP_ADDR 0x4400D034
 
 #define UART_TRANS_LEN_MAX   128
 
@@ -144,14 +149,6 @@ uint32_t uart_port_get_clock_value(uart_bus_t bus)
 #define UART_0_MODE   1
 void uart_port_config_pinmux(uart_bus_t bus)
 {
-#ifndef BOARD_ASIC
-    // uart2需要配管脚复用
-    if (bus == UART_BUS_2) {
-        uapi_reg_write32(GPIO12_PAD_CTRL_GROUP_ADDR, 0x1);
-        uapi_reg_write32(GPIO13_PAD_CTRL_GROUP_ADDR, 0x1);
-    }
-    return;
-#else
     if (bus == UART_BUS_2) {
         writel(GPIO_07_SEL, UART_2_MODE);
         writel(GPIO_08_SEL, UART_2_MODE);
@@ -162,10 +159,40 @@ void uart_port_config_pinmux(uart_bus_t bus)
         writel(UART0_TXD_SEL, UART_0_MODE);
         writel(UART0_RXD_SEL, UART_0_MODE);
     }
-#endif
+
 #if !defined(BUILD_NOOSAL)
     if (bus < UART_BUS_MAX_NUMBER && g_uart_support_mutex[bus] == true && g_uart_tx_mutex[bus].mutex == NULL) {
         osal_mutex_init(&g_uart_tx_mutex[bus]);
+    }
+#endif
+}
+
+#define UART_SOFT_RESET_ADDR        0x44001138
+#define UART_SOFT_RESET_DELAY_1US   1
+void uart_port_release_pinmux(uart_bus_t bus)
+{
+    if (bus >= UART_BUS_MAX_NUM) {
+        return;
+    }
+ 
+    if (bus == UART_BUS_2) {
+        writel(GPIO_07_SEL, 0);
+        writel(GPIO_08_SEL, 0);
+    } else if (bus == UART_BUS_1) {
+        writel(UART1_TXD_SEL, 0);
+        writel(UART1_RXD_SEL, 0);
+    } else if (bus == UART_BUS_0) {
+        writel(UART0_TXD_SEL, 0);
+        writel(UART0_RXD_SEL, 0);
+    }
+ 
+    uapi_reg_clrbit(UART_SOFT_RESET_ADDR, (uint32_t)bus);
+    uapi_tcxo_delay_us(UART_SOFT_RESET_DELAY_1US);
+    uapi_reg_setbit(UART_SOFT_RESET_ADDR, (uint32_t)bus);
+ 
+#if !defined(BUILD_NOOSAL)
+    if (bus < UART_BUS_MAX_NUMBER && g_uart_support_mutex[bus] == true && g_uart_tx_mutex[bus].mutex != NULL) {
+        osal_mutex_destroy(&g_uart_tx_mutex[bus]);
     }
 #endif
 }
@@ -199,6 +226,7 @@ void irq_uart2_handler(void)
 void uart_port_unregister_irq(uart_bus_t bus)
 {
     osal_irq_disable(g_uart_interrupt_lines[bus].irq_num);
+    osal_irq_free(g_uart_interrupt_lines[bus].irq_num, NULL);
 }
 
 void uart_port_set_pending_irq(uart_bus_t uart)
@@ -322,6 +350,9 @@ uint32_t at_uart_get_rcv_cnt(void)
     return g_at_uart_recv_cnt;
 }
 
+#if defined(LOG_SUPPORT)
+static uart_bus_t g_hso_uart;
+#endif
 #ifdef SW_UART_DEBUG
 #define DEBUG_UART_RX_BUFFER_SIZE 1
 static uart_bus_t g_sw_debug_uart = SW_DEBUG_UART_BUS;
@@ -435,6 +466,27 @@ void uart2_init(uint32_t baud_rate)
 }
 #endif
 
+#if defined(LOG_SUPPORT)
+static uart_bus_t g_hso_uart;
+#endif
+
+errcode_t uartputs_hso(const char *s, uint32_t len)
+{
+#if (defined(SUPPORT_DFX_LOG) && defined(LOG_SUPPORT))
+    if (g_hso_uart != g_sw_debug_uart || !zdiag_is_enable()) {
+        return ERRCODE_FAIL;
+    }
+    uint32_t sent_len = (uint32_t)zdiag_mocked_shell_uart_puts((unsigned char *)s, len);
+    if (sent_len != len) {
+        return ERRCODE_FAIL;
+    }
+    return ERRCODE_SUCC;
+#else
+    unused(s);
+    unused(len);
+    return ERRCODE_FAIL;
+#endif
+}
 #ifdef SW_UART_CHIP_DEFINE
 void UartPuts(const char *s, uint32_t len, bool is_lock)
 {
@@ -444,6 +496,9 @@ void UartPuts(const char *s, uint32_t len, bool is_lock)
 
     UNUSED(is_lock);
 #ifdef SW_UART_DEBUG
+    if (uartputs_hso(s, len) == ERRCODE_SUCC) {
+        return;
+    }
     uapi_uart_write(g_sw_debug_uart, (const void *)s, len, 0);
 #elif defined(TEST_SUITE)
     test_suite_uart_send(s);
@@ -480,7 +535,9 @@ static void print_str_inner(const char *fmt, va_list ap)
         buflen = buflen << 1;
         tmp_buf = (char *)osal_kmalloc(buflen, OSAL_GFP_KERNEL);
         if (tmp_buf == NULL) {
-            uapi_uart_write(g_sw_debug_uart, (const uint8_t *)errmsgmalloc, (uint32_t)strlen(errmsgmalloc), 0);
+            if (uartputs_hso(errmsgmalloc, strlen(errmsgmalloc)) != ERRCODE_SUCC) {
+                uapi_uart_write(g_sw_debug_uart, (const uint8_t *)errmsgmalloc, (uint32_t)strlen(errmsgmalloc), 0);
+            }
             return;
         }
         len = vsnprintf_s(tmp_buf, buflen, buflen - 1, fmt, ap);
@@ -490,9 +547,15 @@ static void print_str_inner(const char *fmt, va_list ap)
             return;
         }
     }
+#else
+    if (len == -1) {
+        len = UART_TRANS_LEN_MAX - 1;
+    }
 #endif
     *(tmp_buf + len) = '\0';
-    uapi_uart_write(g_sw_debug_uart, (const uint8_t *)tmp_buf, (uint32_t)len, 0);
+    if (uartputs_hso(tmp_buf, (uint32_t)len) != ERRCODE_SUCC) {
+        uapi_uart_write(g_sw_debug_uart, (const uint8_t *)tmp_buf, (uint32_t)len, 0);
+    }
 #ifdef CONFIG_PRINTF_BUFFER_DYNAMIC
     if (buflen != UART_TRANS_LEN_MAX) {
         osal_kfree(tmp_buf);
@@ -527,7 +590,6 @@ void __attribute__((weak)) uapi_at_print(const char* str, ...)
 /** UART Settings. Define these in the C file to avoid pulling in the UART header in the header file. */
 #define LOG_UART_RX_MAX_BUFFER_SIZE 16
 static uint8_t g_uart_log_rx_buffer[LOG_UART_RX_MAX_BUFFER_SIZE];
-static uart_bus_t g_hso_uart;
 
 static uart_bus_t hso_uart_get_bus_id(void)
 {
@@ -542,6 +604,16 @@ static uart_bus_t hso_uart_get_bus_id(void)
     return (uart_bus_t)uart_bus_id;
 #else
     return LOG_UART_BUS;
+#endif
+}
+
+void log_uart_rx_callback_all(const void *buffer, uint16_t length, bool remaining)
+{
+    log_uart_rx_callback(buffer, length, remaining);
+#if defined(AT_COMMAND)
+    if (g_hso_uart == g_sw_debug_uart && !zdiag_is_enable()) {
+        at_uart_rx_callback(buffer, length, remaining);
+    }
 #endif
 }
 
@@ -570,7 +642,7 @@ void log_uart_port_init(void)
 
 #if SYS_DEBUG_MODE_ENABLE == YES
     uapi_uart_register_rx_callback(g_hso_uart, UART_RX_CONDITION_FULL_OR_SUFFICIENT_DATA_OR_IDLE,
-                                   LOG_UART_RX_MAX_BUFFER_SIZE, log_uart_rx_callback);
+                                   LOG_UART_RX_MAX_BUFFER_SIZE, log_uart_rx_callback_all);
 #endif
 }
 
@@ -652,7 +724,7 @@ uint8_t uart_port_get_dma_trans_src_handshaking(uart_bus_t bus)
 {
     switch (bus) {
         case UART_BUS_0:
-            return (uint8_t)HAL_DMA_HANDSHAKING_UART_L_TX;
+            return (uint8_t)HAL_DMA_HANDSHAKING_UART_L_RX;
         case UART_BUS_1:
             return (uint8_t)HAL_DMA_HANDSHAKING_UART_H0_RX;
         case UART_BUS_2:

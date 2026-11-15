@@ -425,7 +425,7 @@ static void handle_discover(struct netif *netif, struct dhcps *dhcps,
   dhcp_common_option_long(srvr_msg, ntohl(ip4_addr_get_u32(ip_2_ip4(&netif->netmask))), &options_len);
 #if LWIP_DHCPS_GW
   dhcp_common_option(srvr_msg, DHCP_OPTION_ROUTER, DHCP_OPTION_ROUTER_LEN, &options_len);
-  if (ip4_addr_isany_val(netif->gw.u_addr.ip4)) {
+  if (ip4_addr_isany_val(*ip_2_ip4(&netif->gw))) {
     dhcp_common_option_long(srvr_msg, ntohl(ip_2_ip4(&netif->ip_addr)->addr), &options_len);
   } else {
     dhcp_common_option_long(srvr_msg, ntohl(ip_2_ip4(&netif->gw)->addr), &options_len);
@@ -658,7 +658,7 @@ static void handle_request(struct netif *netif, struct dhcps *dhcps,  struct dhc
 
 #if LWIP_DHCPS_GW
     dhcp_common_option(srvr_msg, DHCP_OPTION_ROUTER, DHCP_OPTION_ROUTER_LEN, &options_len);
-    if (ip4_addr_isany_val(netif->gw.u_addr.ip4)) {
+    if (ip4_addr_isany_val(*ip_2_ip4(&netif->gw))) {
       dhcp_common_option_long(srvr_msg, ntohl(ip_2_ip4(&netif->ip_addr)->addr), &options_len);
     } else {
       dhcp_common_option_long(srvr_msg, ntohl(ip_2_ip4(&netif->gw)->addr), &options_len);

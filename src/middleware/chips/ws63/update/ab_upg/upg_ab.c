@@ -374,12 +374,10 @@ errcode_t upg_region_verify(upg_region_index region)
  */
 errcode_t upg_ab_start(upg_region_index upg_region)
 {
-    if (upg_region == UPG_REGION_A || upg_region == UPG_REGION_B) {
+    if (upg_region >= UPG_REGION_COUNT) {
         return ERRCODE_INVALID_PARAM;
     }
 
-    if (ws63_upg_init() != ERRCODE_SUCC) {
-        return ERRCODE_FAIL;
-    }
+    (void)ws63_upg_init();
     return upg_region_erase(upg_get_upg_region());
 }

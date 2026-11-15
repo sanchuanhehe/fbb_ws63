@@ -2822,13 +2822,14 @@ static INLINE__ osal_u32 mac_mib_rsn_pair_match_suites(const hmac_vap_stru *hmac
     return 0;
 }
 
-static INLINE__ osal_u32 mac_mib_wpa_akm_match_suites(const hmac_vap_stru *hmac_vap, osal_u32 *pul_suites)
+static INLINE__ osal_u32 mac_mib_wpa_akm_match_suites(const hmac_vap_stru *hmac_vap, osal_u32 *pul_suites,
+    osal_u8 pul_suites_size)
 {
     osal_u8 idx_local;
     osal_u8 idx_peer;
 
     for (idx_local = 0; idx_local < WLAN_AUTHENTICATION_SUITES; idx_local++) {
-        for (idx_peer = 0; idx_peer < WLAN_AUTHENTICATION_SUITES; idx_peer++) {
+        for (idx_peer = 0; idx_peer < pul_suites_size; idx_peer++) {
             if (hmac_vap->mib_info->wlan_mib_privacy.wlan_mib_rsna_cfg.wpa_akm_suites[idx_local] ==
                 pul_suites[idx_peer]) {
                 return pul_suites[idx_peer];
@@ -2838,13 +2839,14 @@ static INLINE__ osal_u32 mac_mib_wpa_akm_match_suites(const hmac_vap_stru *hmac_
     return 0;
 }
 
-static INLINE__ osal_u32 mac_mib_rsn_akm_match_suites(const hmac_vap_stru *hmac_vap, const osal_u32 *pul_suites)
+static INLINE__ osal_u32 mac_mib_rsn_akm_match_suites(const hmac_vap_stru *hmac_vap, const osal_u32 *pul_suites,
+    osal_u8 pul_suites_size)
 {
     osal_u8 idx_local;
     osal_u8 idx_peer;
 
     for (idx_local = 0; idx_local < WLAN_AUTHENTICATION_SUITES; idx_local++) {
-        for (idx_peer = 0; idx_peer < WLAN_AUTHENTICATION_SUITES; idx_peer++) {
+        for (idx_peer = 0; idx_peer < pul_suites_size; idx_peer++) {
             if (hmac_vap->mib_info->wlan_mib_privacy.wlan_mib_rsna_cfg.rsn_akm_suites[idx_local] ==
                 pul_suites[idx_peer]) {
                 return pul_suites[idx_peer];

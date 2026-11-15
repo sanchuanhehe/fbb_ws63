@@ -1,0 +1,14 @@
+
+set(SOURCES_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/adapter.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/init_adapter.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/mesh_gap_adapter.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/mesh_gatt_adapter.c
+)
+set(HEADER_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/console
+)
+
+set(SOURCES "${SOURCES}" ${SOURCES_LIST} PARENT_SCOPE)
+set(PRIVATE_HEADER "${PRIVATE_HEADER}" ${HEADER_LIST} PARENT_SCOPE)

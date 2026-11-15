@@ -47,6 +47,11 @@
 #include "los_sched_debug_pri.h"
 #endif
 
+#ifdef LOSCFG_COMPAT_FREERTOS
+#include "FreeRTOSConfig.h"
+typedef int (*TaskHookFunction_t)(void *arg);
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -202,6 +207,16 @@ typedef struct tagTaskCB {
 #ifdef LOSCFG_TRUSTZONE
     void                *secureContextSP;
 #endif
+#ifdef LOSCFG_COMPAT_FREERTOS
+    TaskHookFunction_t pxTaskTag;
+#if ( configNUM_THREAD_LOCAL_STORAGE_POINTERS > 0 )
+    void *pvThreadLocalStoragePointers[ configNUM_THREAD_LOCAL_STORAGE_POINTERS ];
+#endif /* configNUM_THREAD_LOCAL_STORAGE_POINTERS > 0 */
+#if ( configUSE_TASK_NOTIFICATIONS == 1 )
+    volatile uint32_t ulNotifiedValue[ configTASK_NOTIFICATION_ARRAY_ENTRIES ];
+    volatile uint8_t ucNotifyState[ configTASK_NOTIFICATION_ARRAY_ENTRIES ];
+#endif /* configUSE_TASK_NOTIFICATIONS == 1 */
+#endif /* LOSCFG_COMPAT_FREERTOS */
 } LosTaskCB;
 
 /* scheduler lock */

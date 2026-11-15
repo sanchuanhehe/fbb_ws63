@@ -35,6 +35,11 @@ bd_addr_t g_ble_speed_addr = {
     .addr = {0x11, 0x22, 0x33, 0x63, 0x88, 0x63},
 };
 
+bd_addr_t g_ble_client_addr = {
+    .type = 0,
+    .addr = {0x11, 0x22, 0x33, 0x63, 0x88, 0x64},
+};
+
 void ble_speed_start_scan(void)
 {
     gap_ble_scan_params_t ble_device_scan_params = { 0 };
@@ -214,7 +219,9 @@ static void ble_gatt_client_enable_cbk(errcode_t status)
 {
     osal_printk("[GATTClient]Enable status:0x%x\n", status);
     errcode_t ret = gattc_register_client(&g_client_app_uuid, &g_client_id);
-    osal_printk("[BLE Client] init ret: 0x%x.\n", ret);
+    osal_printk("[GATTClient] init ret: 0x%x.\n", ret);
+    ret = gap_ble_set_local_addr(&g_ble_client_addr);
+    osal_printk("[GATTClient] gap_ble_set_local_addr ret 0x%x\r\n", ret);
     ble_speed_start_scan();
 }
 

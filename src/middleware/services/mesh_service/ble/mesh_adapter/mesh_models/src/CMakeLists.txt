@@ -1,0 +1,34 @@
+set(
+    SOURCES_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/generic_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/generic_server.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/light_ctl_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/light_ctl_server.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lightness_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lightness_server.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/priv_beacon_srv.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/priv_beacon_cli.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/model_common.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/scene_server.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/vnd_common.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/vnd_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/vnd_server.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/time_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/time_server.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/scheduler_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/scheduler_server.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/dfu_bank.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/dfu_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/dfu_metadata.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/dfu_server.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/blob_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/blob_server.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/dfd_server.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/dfd_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/mesh_ota_common.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/remote_prov_client.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/remote_prov_server.c
+)
+
+set(SOURCES "${SOURCES}" ${SOURCES_LIST} PARENT_SCOPE)

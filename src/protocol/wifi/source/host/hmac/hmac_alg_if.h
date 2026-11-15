@@ -82,7 +82,7 @@ osal_u32  hmac_alg_unregister_txbf_pow_update_notify_func(osal_void);
 osal_u32  hmac_alg_unregister_distance_notify_func(alg_distance_notify_enum_uint8 notify_sub_type);
 
 #ifdef _PRE_RADAR_CCA_SW_OPT
-osal_void hmac_alg_cca_opt_radar_notify(osal_bool radar_switch);
+osal_void hmac_alg_cca_opt_radar_notify(osal_bool radar_switch, osal_bool is_mwo_mode);
 osal_void hmac_alg_register_cca_opt_radar_notify_func(p_alg_cca_opt_radar_notify_func func);
 osal_void hmac_alg_unregister_cca_opt_radar_notify_func(osal_void);
 #endif

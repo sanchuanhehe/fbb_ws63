@@ -343,6 +343,11 @@ typedef enum {
     OAL_ERR_CODE_PROXY_ND_NS_REPLY_NA2ETH_COMP    = (OAL_ERR_CODE_PROXY_ARP_BASE + 29), /* 收到NS后，AP正常回复NA到ETH */
     OAL_ERR_CODE_PROXY_ARP_BUTT                   = (OAL_ERR_CODE_PROXY_ARP_BASE + 499),
 
+    /********************************* 中继模块 **********************************/
+    OAL_ERR_CODE_PROXY_STA_BASE                   = 27500,
+    OAL_ERR_CODE_PROXY_STA_BUF_DROP            = (OAL_ERR_CODE_PROXY_STA_BASE + 0), /* 报文内部处理 不继续转发 */
+    OAL_ERR_CODE_PROXY_STA_BUTT                   = (OAL_ERR_CODE_PROXY_STA_BASE + 499),
+
     /********************************* 队列模块 **********************************/
     OAL_ERR_CODE_QUEUE_BASE                             = 28000,
     OAL_ERR_CODE_QUEUE_CNT_ZERO                         = (OAL_ERR_CODE_QUEUE_BASE + 0),    /* 队列为空 */

@@ -1,0 +1,70 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+choice
+    prompt "Select BME680_I2C or BME680_SPI Sample"
+    default SAMPLE_SUPPORT_BME680_I2C_SAMPLE
+    config SAMPLE_SUPPORT_BME680_I2C_SAMPLE
+        bool "Support BME680_I2C Sample."
+
+    config SAMPLE_SUPPORT_BME680_SPI_SAMPLE
+        bool "Support BME680_SPI Sample."
+
+endchoice
+
+config I2C_MASTER_BUS_ID
+    int "Choose I2C bus id."
+    default 1
+    depends on SAMPLE_SUPPORT_BME680_I2C_SAMPLE
+
+config I2C_SCL_MASTER_PIN
+    int "Choose I2C SCL pin"
+    default 16
+    depends on SAMPLE_SUPPORT_BME680_I2C_SAMPLE
+
+config I2C_SDA_MASTER_PIN
+    int "Choose I2C SDA pin"
+    default 15
+    depends on SAMPLE_SUPPORT_BME680_I2C_SAMPLE
+
+config I2C_SLAVE_ADDR
+    int "Choose I2C ADDR"
+    default 0x77
+    depends on SAMPLE_SUPPORT_BME680_I2C_SAMPLE
+
+config CALIBRATE_PRESSURE
+    bool "enable CALIBRATE_PRESSURE."
+    default y
+    depends on SAMPLE_SUPPORT_BME680_I2C_SAMPLE
+
+
+config SPI_MASTER_BUS_ID
+    int "Choose SPI bus id."
+    default 0
+    depends on SAMPLE_SUPPORT_BME680_SPI_SAMPLE
+
+config SPI_CLK_MASTER_PIN
+    int "Choose SPI CLK pin."
+    default 7
+    depends on SAMPLE_SUPPORT_BME680_SPI_SAMPLE
+
+config SPI_DO_MASTER_PIN
+    int "Choose SPI MOSI pin."
+    default 9
+    depends on SAMPLE_SUPPORT_BME680_SPI_SAMPLE
+
+config SPI_DI_MASTER_PIN
+    int "Choose SPI MISO pin."
+    default 11
+    depends on SAMPLE_SUPPORT_BME680_SPI_SAMPLE
+
+config SPI_CS_MASTER_PIN
+    int "Choose SPI CS pin."
+    default 10
+    depends on SAMPLE_SUPPORT_BME680_SPI_SAMPLE
+
+config CALIBRATE_PRESSURE
+    bool "enable CALIBRATE_PRESSURE."
+    default y
+    depends on SAMPLE_SUPPORT_BME680_SPI_SAMPLE

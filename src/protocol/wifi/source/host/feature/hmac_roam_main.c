@@ -224,7 +224,8 @@ OAL_STATIC osal_void hmac_roam_renew_privacy_wpa(hmac_vap_stru *hmac_vap, mac_bs
     }
     conn_sec->crypto.pair_suite[1] = 0;
 
-    match_suite = mac_mib_wpa_akm_match_suites(hmac_vap, conn_sec->crypto.pair_suite);
+    match_suite = mac_mib_wpa_akm_match_suites(hmac_vap, conn_sec->crypto.akm_suite,
+        osal_array_size(conn_sec->crypto.akm_suite));
     if (match_suite != 0) {
         conn_sec->crypto.akm_suite[0] = match_suite;
     }
@@ -260,7 +261,8 @@ OAL_STATIC osal_void hmac_roam_renew_privacy_rsn(hmac_vap_stru *hmac_vap, mac_bs
         conn_sec->crypto.akm_suite[0] = (conn_sec->crypto.akm_suite[0] == MAC_RSN_AKM_SAE_SHA256) ?
             conn_sec->crypto.akm_suite[0] : conn_sec->crypto.akm_suite[1];
     } else {
-        match_suite = mac_mib_rsn_akm_match_suites(hmac_vap, conn_sec->crypto.pair_suite);
+        match_suite = mac_mib_rsn_akm_match_suites(hmac_vap, conn_sec->crypto.akm_suite,
+            osal_array_size(conn_sec->crypto.akm_suite));
         if (match_suite != 0) {
             conn_sec->crypto.akm_suite[0] = match_suite;
         }

@@ -42,7 +42,9 @@
 
 oal_netbuf_stru* oal_netbuf_alloc(td_u32 size, td_u32 l_reserve, td_u32 align);
 td_u32 oal_netbuf_free(oal_netbuf_stru *netbuf);
+#ifdef _PRE_WLAN_TCP_OPT
 td_void oal_netbuf_free_any(oal_netbuf_stru *netbuf);
+#endif
 
 #define OAL_MEM_NETBUF_ALLOC(subpool_id, len, netbuf_priority) \
     oal_netbuf_alloc(len, 0, WLAN_MEM_NETBUF_ALIGN)

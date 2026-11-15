@@ -11,6 +11,7 @@
 #include "interrupt/osal_interrupt.h"
 #include "common_def.h"
 #include "gpio_porting.h"
+#include "tcxo.h"
 #include "hal_gpio_v150.h"
 
 #pragma weak hal_gpio_init = hal_gpio_v150_init
@@ -293,8 +294,11 @@ errcode_t hal_gpio_v150_register(pin_t pin, uint32_t trigger, gpio_callback_t ca
             hal_gpio_v150_unregister_cb(channel, group, group_pin);
             return ERRCODE_INVALID_PARAM;
     }
+    hal_gpio_gpio_int_debounce_set_bit(channel, group, group_pin, HAL_GPIO_DEBOUNCE_DISABLED);
     // 去屏蔽中断
     hal_gpio_gpio_int_mask_set_bit(channel, group, group_pin, HAL_GPIO_INTR_UNMASK);
+    hal_gpio_gpio_int_debounce_set_bit(channel, group, group_pin, HAL_GPIO_DEBOUNCE_ENABLED);
+    uapi_tcxo_delay_ms(1);
     // 继承原逻辑, 注册回调后默认使能中断
     hal_gpio_v150_ctrl_enable_interrupt(pin, GPIO_CTRL_ENABLE_INTERRUPT);
     return ERRCODE_SUCC;

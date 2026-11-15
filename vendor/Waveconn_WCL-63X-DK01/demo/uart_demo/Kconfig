@@ -1,0 +1,25 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+choice
+    prompt "Sample"
+
+config UART_POLL
+    bool
+    prompt "Support UART POLL Sample."
+    default n
+    depends on ENABLE_UART_SAMPLE
+    help
+        This option means support UART_POLL Sample.
+
+
+config UART_INT
+    bool
+    prompt "Support UART INT Sample."
+    default n
+    depends on ENABLE_UART_SAMPLE
+    help
+        This option means support UART_INT Sample.
+
+endchoice

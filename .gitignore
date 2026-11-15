@@ -1,2 +1,9 @@
 .venv
 *.zip
+.vscode
+src/output
+src/analyzerJson
+src/interim_binary
+src/build.log
+__pycache__
+*.hiproj

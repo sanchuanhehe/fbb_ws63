@@ -289,6 +289,10 @@ typedef VOID (*SWTMR_PROC_FUNC)(UINTPTR arg);
  */
 extern UINT32 LOS_SwtmrStart(UINT16 swtmrId);
 
+#if defined(LOSCFG_COMPAT_RT_THREAD) || defined(LOSCFG_COMPAT_FREERTOS)
+extern UINT32 OsSwtmrStartTimer(UINT16 swtmrId, UINT32 interval, UINT32 expiry);
+#endif
+
 /**
  * @ingroup los_swtmr
  * @brief Stop a software timer.

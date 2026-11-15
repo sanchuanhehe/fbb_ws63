@@ -275,7 +275,7 @@ typedef osal_void (*p_alg_update_cb_rssi_level_notify_func)(hmac_vap_stru *hmac_
     hmac_user_stru *hmac_user);
 #ifdef _PRE_RADAR_CCA_SW_OPT
 /* 雷达开启需要将CCA能量门限和协议门限都设置到不小于-60，避免影响雷达帧间隔 */
-typedef osal_void (*p_alg_cca_opt_radar_notify_func)(osal_bool radar_switch);
+typedef osal_void (*p_alg_cca_opt_radar_notify_func)(osal_bool radar_switch, osal_bool is_mwo_mode);
 #endif
 typedef osal_u32 (*p_alg_para_sync_notify_func)(alg_param_sync_stru *para);
 typedef osal_u32 (*p_alg_para_cfg_notify_func)(hmac_vap_stru *hmac_vap, frw_msg *msg);
@@ -289,6 +289,7 @@ typedef osal_void (*p_alg_intf_det_cca_chk_noise_notify_func)(osal_s8 avg_rssi_2
     oal_bool_enum_uint8 coch_intf_state_sta, osal_u8 cur_intf);
 typedef osal_u32 (*p_alg_scan_param_func)(const mac_scan_req_stru *scan_req_params);
 typedef osal_void (*p_alg_intf_det_scan_chn_cb_func)(const osal_void *param);
+typedef osal_void (*p_alg_temp_protect_notify_func)(osal_s16 ave_temp, osal_u8 state);
 /*****************************************************************************
   7 STRUCT定义
 *****************************************************************************/
@@ -348,6 +349,9 @@ typedef struct {
 #endif
     p_alg_para_sync_notify_func alg_para_sync_notify_func[ALG_PARAM_SYNC_NOTIFY_BUTT];
     p_alg_para_cfg_notify_func alg_para_cfg_notify_func[ALG_PARAM_CFG_NOTIFY_BUTT];
+#ifdef _PRE_WLAN_FEATURE_TEMP_PROTECT_ACTION
+    p_alg_temp_protect_notify_func alg_temp_protect_notify_func;
+#endif
 } hmac_alg_stru;
 
 #ifdef __cplusplus

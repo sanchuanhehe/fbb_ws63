@@ -119,10 +119,7 @@ OAL_STATIC osal_u32 hmac_m2u_add_member_list(hmac_m2u_grp_list_entry_stru *grp_l
 
     memset_s(grp_member, OAL_SIZEOF(hmac_m2u_grp_member_stru), 0x0,  OAL_SIZEOF(hmac_m2u_grp_member_stru));
     osal_list_add_tail(&(grp_member->member_entry), &(grp_list->src_list)); // 插入节点
-    if (memcpy_s(grp_member->src_ip_addr, sizeof(grp_member->src_ip_addr), list_entry->src_ip_addr,
-        sizeof(list_entry->src_ip_addr)) != EOK) {
-        oam_error_log0(0, OAM_SF_M2U, "{hmac_m2u_add_member_list::memcpy_s ip error}");
-    }
+    (void)memcpy_s(grp_member->src_ip_addr, OAL_IPV6_ADDR_SIZE, list_entry->src_ip_addr, OAL_IPV6_ADDR_SIZE);
     oal_set_mac_addr(grp_member->grp_member_mac, list_entry->new_member_mac);
 
     grp_member->hmac_user       = list_entry->hmac_user;
@@ -1514,7 +1511,7 @@ OAL_STATIC osal_u8 hmac_m2u_count_member_anysrclist(hmac_m2u_grp_list_entry_stru
             ip_is_zero = (osal_u8)(*((osal_s32 *)(grp_member->src_ip_addr)) == 0);
         }
         if (ip_is_zero) {
-            if (count > MAX_STA_NUM_OF_ONE_GROUP) {
+            if (count >= MAX_STA_NUM_OF_ONE_GROUP) {
                 break;
             }
             oal_set_mac_addr(&table[count * WLAN_MAC_ADDR_LEN], grp_member->grp_member_mac);
@@ -1539,14 +1536,14 @@ OAL_STATIC osal_u8 hmac_m2u_count_member_src_list(hmac_m2u_grp_list_entry_stru *
     struct osal_list_head      *grp_member_entry;
     osal_u8 count_tmp = count;
 
-    if (count_tmp > MAX_STA_NUM_OF_ONE_GROUP) {
+    if (count_tmp >= MAX_STA_NUM_OF_ONE_GROUP) {
         return count_tmp;
     }
 
     osal_list_for_each(grp_member_entry, &(grp_list->src_list)) {
         grp_member = (hmac_m2u_grp_member_stru *)osal_list_entry(grp_member_entry,
             hmac_m2u_grp_member_stru, member_entry);
-        if (count_tmp > MAX_STA_NUM_OF_ONE_GROUP) {
+        if (count_tmp >= MAX_STA_NUM_OF_ONE_GROUP) {
             break;
         }
         /* 组播源地址符合，模式是inc，加入到输出的table中 */

@@ -10,12 +10,12 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_BLINKY)
     add_subdirectory_if_exist(blinky)
 endif()
 
-if(DEFINED CONFIG_SAMPLE_SUPPORT_BUTTON)
-    add_subdirectory_if_exist(button)
+if(DEFINED CONFIG_SAMPLE_SUPPORT_HELLOWORLD)
+    add_subdirectory_if_exist(helloworld)
 endif()
 
-if(DEFINED CONFIG_SAMPLE_SUPPORT_TASKS)
-    add_subdirectory_if_exist(tasks)
+if(DEFINED CONFIG_SAMPLE_SUPPORT_BUTTON)
+    add_subdirectory_if_exist(button)
 endif()
 
 if(DEFINED CONFIG_SAMPLE_SUPPORT_TCXO)
@@ -48,6 +48,10 @@ endif()
 
 if(DEFINED CONFIG_SAMPLE_SUPPORT_PINCTRL)
     add_subdirectory_if_exist(pinctrl)
+endif()
+
+if(DEFINED CONFIG_SAMPLE_SUPPORT_PMP)
+    add_subdirectory_if_exist(pmp)
 endif()
 
 if(DEFINED CONFIG_SAMPLE_SUPPORT_QDEC)
@@ -117,4 +121,9 @@ endif()
 if(DEFINED CONFIG_SAMPLE_SUPPORT_CLOCKS)
     add_subdirectory_if_exist(clocks)
 endif()
+
+if(DEFINED CONFIG_SAMPLE_SUPPORT_HELLOWORLD_OLED)
+    add_subdirectory_if_exist(helloworld_oled)
+endif()
+
 set(SOURCES "${SOURCES}" PARENT_SCOPE)

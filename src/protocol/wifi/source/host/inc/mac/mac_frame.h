@@ -2352,6 +2352,8 @@ osal_void mac_add_wps_ie_etc(const osal_void *vap, osal_u8 *buffer, osal_u16 *ie
 osal_void mac_add_extend_app_ie_etc(const osal_void *vap, osal_u8 **buffer, app_ie_type_uint8 type);
 oal_bool_enum_uint8 mac_frame_is_null_data(oal_netbuf_stru *net_buf);
 
+osal_void hmac_eapol_key_log(const mac_eapol_header_stru *eapol_header, oal_bool_enum_uint8 is_rx);
+osal_bool hmac_is_rx_ucast_frame_for_current_bss(const osal_void *vap, const osal_u8 *mac_hdr);
 #ifdef __cplusplus
 #if __cplusplus
 }

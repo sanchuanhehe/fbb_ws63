@@ -1,0 +1,7 @@
+
+set(SOURCES_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/ble_mesh_manager.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/ble_mesh_config.c
+)
+
+set(SOURCES "${SOURCES}" ${SOURCES_LIST} PARENT_SCOPE)

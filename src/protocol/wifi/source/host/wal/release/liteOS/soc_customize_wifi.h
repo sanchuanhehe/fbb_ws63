@@ -83,6 +83,7 @@ extern "C" {
 #define CUS_NUM_5G_DELTA_RSSI_NUM       (4)    /* 20M/40M/80M/160M */
 #define CUS_BASE_PWR_NUM_5G              DY_CALI_NUM_5G_BAND    /* 5g Base power 5个 band1 2&3 4&5 6 7 */
 #define CUS_BASE_PWR_NUM_2G             1
+#define CUS_AUTO_SEND_NULL_DATA         1
 
 #define DTS_CALI_PARAMS_ETC_REF_2G_VAL_CHAN1    (6250)
 #define DTS_CALI_PARAMS_ETC_REF_2G_VAL_CHAN2    (5362)
@@ -244,6 +245,7 @@ typedef enum {
     WLAN_CFG_PRIV_TXDATA_QUE_LIMIT,
     WLAN_CFG_PRIV_CUSTOM_DATA_END,
     WLAN_CFG_PRIV_CROSS_PROT_ENABLE,
+    WLAN_CFG_PRIV_COMPATIBILITY_ER_SU_TH,
     WLAN_CFG_PRIV_BUTT,
 }wlan_cfg_priv;
 typedef osal_u8 wlan_cfg_priv_id_uint8;
@@ -513,6 +515,8 @@ extern osal_void hwifi_set_wow_event(osal_u32 wow_event);
 extern osal_void hwifi_set_wow_enable(osal_u8 wow_enable);
 extern osal_u8 hwifi_get_wow_enable(osal_void);
 extern uint8_t hwifi_get_smooth_phase_en(void);
+extern osal_u8 hwifi_get_compatibility_er_su_th(osal_void);
+extern osal_void hwifi_set_compatibility_er_su_th(osal_u8 num);
 extern void hwifi_set_smooth_phase_en(uint8_t smooth_phase_en);
 #ifdef _PRE_WLAN_FEATURE_BTCOEX
 extern uint8_t hwifi_get_ext_coex_en(void);

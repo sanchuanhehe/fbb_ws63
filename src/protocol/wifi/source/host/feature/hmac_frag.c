@@ -171,9 +171,7 @@ osal_u32 hmac_frag_process(oal_netbuf_stru *netbuf_orig, mac_tx_ctl_stru *tx_ctr
         oal_netbuf_put(netbuf, frag_size);
         tx_ctrl_copy = (mac_tx_ctl_stru *)OAL_NETBUF_CB(netbuf);
         /* 拷贝cb字段 */
-        if (memcpy_s(tx_ctrl_copy, MAC_TX_CTL_SIZE, tx_ctrl, MAC_TX_CTL_SIZE) != EOK) {
-            oam_warning_log0(0, OAM_SF_ANY, "{hmac_frag_process::memcpy_s fail.}");
-        }
+        (void)memcpy_s(tx_ctrl_copy, MAC_TX_CTL_SIZE, tx_ctrl, MAC_TX_CTL_SIZE);
         oal_netbuf_copy_queue_mapping(netbuf, netbuf_orig);
 
         /* netbuf的headroom大于802.11 mac头长度 */

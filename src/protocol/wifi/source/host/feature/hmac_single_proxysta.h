@@ -49,7 +49,8 @@ typedef struct {
     struct osal_list_head   entry;
     osal_u8       ipv4[ETH_TARGET_IP_ADDR_LEN];       /* 记录对应的ipv4地址 */
     osal_u8       mac[WLAN_MAC_ADDR_LEN];             /* 记录对应的mac地址 */
-    osal_u8       rsv[2];
+    osal_u8       data_src;                           /* 记录对应的数据来源 */
+    osal_u8       rsv;
     osal_u32      last_active_timestamp;              /* 最近一次发送数据的时间 */
 } hmac_bridge_ipv4_hash_stru;
 
@@ -94,6 +95,28 @@ typedef struct {
     td_char if_name[BRIDGE_CMD_NAME_MAX_LEN];
 } mac_cfg_brctl_stru;
 
+#ifdef CONFIG_SUPPORT_SLE_BASE_STATION
+typedef osal_u32 (*hmac_bridge_forward_fn)(oal_netbuf_stru *netbuf);
+
+typedef struct {
+    hmac_bridge_forward_fn forward_fn;
+    osal_u32 ret_value;
+} hmac_bridge_forward_stru;
+
+typedef enum {
+    DATA_SRC_STA,
+    DATA_SRC_SOFTAP,
+    DATA_SRC_SYSCHANNEL,
+    DATA_SRC_AP,
+    DATA_SRC_BUTT
+} mac_data_src_enum;
+
+typedef enum {
+    HMAC_BRIDGE_FORWARD_TX,
+    HMAC_BRIDGE_FORWARD_RX,
+    HMAC_BRIDGE_FORWARD_BUTT
+} hmac_bridge_forward_direct_enum;
+#endif
 /*****************************************************************************
     函数声明
 *****************************************************************************/

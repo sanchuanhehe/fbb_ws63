@@ -1,0 +1,11 @@
+
+add_subdirectory(npl)
+
+set(SOURCES_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/mesh_atomic.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/mesh_task.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/ble_mesh_nv_op.c
+)
+
+set(SOURCES "${SOURCES}" ${SOURCES_LIST} PARENT_SCOPE)
+set(PRIVATE_HEADER "${PRIVATE_HEADER}" ${HEADER_LIST} PARENT_SCOPE)

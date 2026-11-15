@@ -96,6 +96,7 @@ def generate_db():
     global G_PARAMS
     root = sys.argv[1]
     chip = sys.argv[2]
+    build_root = sys.argv[3] if len(sys.argv) > 3 else root
     in_path = XML_PATH
     in_path = in_path.replace('<chip>', chip)
 
@@ -105,7 +106,7 @@ def generate_db():
         db_conf = json.load(f)
 
     G_PARAMS = {}
-    G_PARAMS['HDB_XML_TEMP_BASE_DIR'] = os.path.join(root, db_conf["HDB_XML_TEMP_BASE_DIR"])
+    G_PARAMS['HDB_XML_TEMP_BASE_DIR'] = os.path.join(build_root, db_conf["HDB_XML_TEMP_BASE_DIR"])
     G_PARAMS["OTA_MSG_DIR"] = os.path.join(root, db_conf["OTA_MSG_DIR"])
 
     generate_db_file()

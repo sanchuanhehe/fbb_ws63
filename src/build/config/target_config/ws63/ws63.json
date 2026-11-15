@@ -1,5 +1,11 @@
 {
 	"chipName": "ws63",
+	"requires": {
+		"min_cli_version": "1.1.0",
+		"toolchains": [
+			{ "name": "hcc", "version": "7.3.0-20240618" }
+		]
+	},
 	"seriesName": "cfbb",
 	"board": "ws63",
 	"compile": {
@@ -96,6 +102,34 @@
 		"baud": "115200",
 		"stop_bit": "0",
 		"parity": "N"
+	},
+	"monitor": {
+		"default_baud": 115200,
+		"reset_method": "at_rst",
+		"reset_command": "AT+RST\r\n",
+		"boot_marker_examples": [
+			"boot.",
+			"APP|dbg uart init ok.",
+			"device_module_init:: succ!",
+			"cpu 0 entering scheduler"
+		]
+	},
+	"examples": {
+		"roots": [
+			"application/samples/peripheral",
+			"application/samples/bt/ble",
+			"application/samples/bt/sle",
+			"application/samples/bt/sle_chba"
+		]
+	},
+	"flash": {
+		"backend": "hsflash",
+		"transport": "serial",
+		"chiptype": "WS63",
+		"signalbaud": 921600,
+		"switch_after_loader": true,
+		"before_reset": true,
+		"after_reset": true
 	},
 	"need_sdk": true,
 	"need_project_path": true,

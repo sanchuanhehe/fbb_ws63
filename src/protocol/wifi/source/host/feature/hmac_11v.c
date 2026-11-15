@@ -383,11 +383,7 @@ OAL_STATIC osal_u32 hmac_rx_bsst_req_action_parses(hmac_bsst_req_info_stru *bsst
                 oam_error_log0(0, OAM_SF_ANY, "{hmac_rx_bsst_req_action_parses:: session_url alloc fail.}");
                 return OAL_FAIL;
             }
-            if (memcpy_s(bsst_req_info->session_url, data[handle_len], data + (handle_len + 1), data[handle_len]) !=
-                EOK) {
-                oam_error_log0(0, OAM_SF_ANY, "{hmac_rx_bsst_req_action_parses:: memcpy_s fail.}");
-                return OAL_FAIL;
-            }
+            (void)memcpy_s(bsst_req_info->session_url, data[handle_len], data + (handle_len + 1), data[handle_len]);
             /* 转化成字符串 */
             bsst_req_info->session_url[data[handle_len]] = '\0';
         }
@@ -422,9 +418,9 @@ OAL_STATIC osal_void hmac_rx_bsst_req_action_handle(hmac_vap_stru *hmac_vap,
         return;
     }
 
+    memset_s(&bsst_rsp_info, sizeof(bsst_rsp_info), 0, sizeof(bsst_rsp_info));
     best_neighbor_bss = hmac_handle_neighbor_list(bsst_req_info, hmac_vap, hmac_user, &need_roam);
     if (best_neighbor_bss != OAL_PTR_NULL) {
-        memset_s(&bsst_rsp_info, sizeof(bsst_rsp_info), 0, sizeof(bsst_rsp_info));
         bsst_rsp_info.status_code = 0;    /* 默认设置为同意切换 */
         bsst_rsp_info.termination_delay = 0;    /* 仅当状态码为5时有效，此次无意义设为0 */
         bsst_rsp_info.chl_num = best_neighbor_bss->chl_num;
@@ -451,6 +447,8 @@ OAL_STATIC osal_void hmac_rx_bsst_req_action_handle(hmac_vap_stru *hmac_vap,
         }
     } else {
         oam_warning_log0(0, OAM_SF_ANY, "{hmac_rx_bsst_req_action:: not find best bss sending BTM rsp}");
+        bsst_rsp_info.status_code = MAC_UNSPEC_FAIL;
+        hmac_tx_bsst_rsp_action(hmac_vap, (hmac_user_stru *)hmac_user, &bsst_rsp_info);
     }
 
     return;

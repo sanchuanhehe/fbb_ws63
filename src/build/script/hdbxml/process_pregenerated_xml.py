@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
+# Copyright (c) 2020 HiSilicon (Shanghai) Technologies CO.; LIMITED.
 # Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2022. All rights reserved.
 
 import os
@@ -38,6 +39,7 @@ def process_pre_generated_db_xml():
     global G_PARAMS
     root = sys.argv[1]
     chip = sys.argv[2]
+    build_root = sys.argv[4] if len(sys.argv) > 4 else root
     in_path = XML_PATH
     in_path = in_path.replace('<chip>', chip)
 
@@ -51,7 +53,7 @@ def process_pre_generated_db_xml():
         return
 
     G_PARAMS = {}
-    G_PARAMS['BUILD_TEMP_PATH'] = os.path.join(root, db_conf["BUILD_TEMP_PATH"])
+    G_PARAMS['BUILD_TEMP_PATH'] = os.path.join(build_root, db_conf["BUILD_TEMP_PATH"])
     G_PARAMS['HDB_XML_PRE_GENERATED_DIR'] = db_conf["HDB_XML_PRE_GENERATED_DIR"]
 
     src_dir = []

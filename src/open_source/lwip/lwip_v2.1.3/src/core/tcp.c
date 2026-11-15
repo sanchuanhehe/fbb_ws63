@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * Transmission Control Protocol for IP
  * See also @ref tcp_raw
@@ -272,7 +272,7 @@ tcp_tmr(void)
 static u32_t
 tcp_set_timer_tick_by_persist(struct tcp_pcb *pcb, u32_t tick)
 {
-  u32_t val;
+  s16_t val;
 
   if (pcb->persist_backoff > 0) {
     u8_t backoff_cnt = tcp_persist_backoff[pcb->persist_backoff - 1];
@@ -283,10 +283,11 @@ tcp_set_timer_tick_by_persist(struct tcp_pcb *pcb, u32_t tick)
   /* timer not running */
   if (pcb->rtime >= 0) {
     val = pcb->rto - pcb->rtime;
-    if (val == 0) {
+    if (val <= 0) {
       val = 1;
     }
     SET_TMR_TICK(tick, val);
+    LOWPOWER_DEBUG(("pcb->rto %d pcb->rtime %d\n", pcb->rto, pcb->rtime));
   }
   return tick;
 }

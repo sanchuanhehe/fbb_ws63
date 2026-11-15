@@ -1,0 +1,31 @@
+# BLE HID Button — physical button → HID keyboard keycode
+
+menu "BLE HID Button Configuration"
+
+config BLE_HID_BTN_PIN
+    int "Button GPIO pin"
+    default 13
+    help
+        GPIO pin for the physical button (active-low, connect to GND).
+
+config BLE_HID_BTN_KEYCODE
+    int "HID keycode (USB HID usage ID)"
+    default 78
+    help
+        HID keyboard keycode sent when button is pressed.
+        Common values: 0x4E=PageDown, 0x4B=PageUp, 0x2C=Space,
+        0x28=Enter, 0xE9=VolUp, 0xEA=VolDown.
+
+config BLE_HID_BTN_LONGPRESS
+    bool "Enable long-press auto-repeat"
+    default y
+    help
+        When enabled, holding the button > 500 ms sends repeated keycodes.
+
+config BLE_HID_DEVICE_NAME
+    string "BLE device name"
+    default "ble_hid_btn"
+    help
+        Device name shown during Bluetooth discovery.
+
+endmenu

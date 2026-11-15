@@ -9,4 +9,5 @@
 #include "td_type.h"
 
 td_void los_at_bt_productline_cmd_register(td_void);
+td_void los_at_bt_sle_productline_cmd_register(td_void);
 #endif

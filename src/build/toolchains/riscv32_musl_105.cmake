@@ -12,8 +12,13 @@ function(find_env_exe var full_path exe)
     endif()
 endfunction(find_env_exe)
 
-set(COMPILER_ROOT ${PROJECT_SOURCE_DIR}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl)
-set(COMPILER_ROOT_WIN ${PROJECT_SOURCE_DIR}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl_win)
+# Self-locate from the toolchain file's own path so out-of-tree builds
+# (where PROJECT_SOURCE_DIR points at the user's project, not the SDK)
+# still find the SDK-bundled compiler. Toolchain lives at
+# <SDK>/build/toolchains/, compiler at <SDK>/tools/bin/compiler/...
+get_filename_component(_FBB_SDK_ROOT "${CMAKE_CURRENT_LIST_DIR}/../.." ABSOLUTE)
+set(COMPILER_ROOT ${_FBB_SDK_ROOT}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl)
+set(COMPILER_ROOT_WIN ${_FBB_SDK_ROOT}/tools/bin/compiler/riscv/cc_riscv32_musl_105/cc_riscv32_musl_win)
 set(OBJDUMP_PATH ${COMPILER_ROOT}/bin)
 
 if(EXISTS ${COMPILER_ROOT})

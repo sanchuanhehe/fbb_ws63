@@ -42,6 +42,7 @@ class upg_base_info:
         # 产品镜像路径
         self.flashboot = os.path.join(self.root_path, "output", "ws63", "acore","boot_bin", "flashboot_sign.bin")
         self.app_bin = os.path.join(self.output, "acore", "ws63-liteos-app", "ws63-liteos-app-sign.bin")
+        self.app_mesh_bin = os.path.join(self.output, "acore", "ws63-liteos-app-mesh", "ws63-liteos-app-mesh-sign.bin")
         self.app_iot_bin = os.path.join(self.output, "acore", "ws63-liteos-app-iot", "ws63-liteos-app-iot-sign.bin")
         self.app_iot_check = os.path.join(self.output, "acore", "ws63-liteos-app-iot", "ws63-liteos-app-iot-check.json")
         self.hilink_bin = os.path.join(self.output, "acore", "ws63-liteos-hilink", "ws63-liteos-hilink-sign.bin")
@@ -52,11 +53,13 @@ class upg_base_info:
         # 签名加密前原始镜像
         self.src_boot = os.path.join(self.root_path, "output", "ws63", "acore", "boot_bin", "flashboot.bin")
         self.src_app = os.path.join(self.output, "acore", "ws63-liteos-app", "ws63-liteos-app.bin")
+        self.src_app_mesh = os.path.join(self.output, "acore", "ws63-liteos-app-mesh", "ws63-liteos-app-mesh.bin")
         self.src_test = os.path.join(self.output, "acore", "ws63-liteos-testsuite", "ws63-liteos-testsuite.bin")
 
         # 差分升级时，以下路径配置为上一个版本的镜像路径
         self.flashboot_old_bin = os.path.join(self.output, "acore", "old_version", "flashboot_sign.bin")
         self.app_old_bin = os.path.join(self.output, "acore", "old_version", "ws63-liteos-app-sign.bin")
+        self.app_mesh_old_bin = os.path.join(self.output, "acore", "old_version", "ws63-liteos-app-mesh-sign.bin")
         self.app_iot_old_bin = os.path.join(self.output, "acore", "old_version", "ws63-liteos-app-iot-sign.bin")
         self.hilink_old_bin = os.path.join(self.output, "acore", "old_version", "ws63-liteos-hilink-sign.bin")
         self.test_old_bin = os.path.join(self.output, "acore", "old_version", "ws63-liteos-testsuite-sign.bin")
@@ -82,6 +85,8 @@ def get_new_image(input_param, info):
     image_list = []
     if 'app' in input_param:
         image_list.append("=".join([info.app_bin, "application"]))
+    if 'app_mesh' in input_param:
+        image_list.append("=".join([info.app_mesh_bin, "application"]))    
     if 'app_iot' in input_param:
         image_list.append("=".join([info.app_iot_bin, "application"]))
         target_env = TargetEnvironment("ws63-liteos-app-iot")
@@ -105,6 +110,8 @@ def get_old_image(input_param, info):
     image_list = []
     if 'app' in input_param:
         image_list.append("=".join([info.app_old_bin, "application"]))
+    if 'app_mesh' in input_param:
+        image_list.append("=".join([info.app_mesh_old_bin, "application"]))    
     if 'app_iot' in input_param:
         image_list.append("=".join([info.app_iot_old_bin, "application"]))
         target_env = TargetEnvironment("ws63-liteos-app-iot")
@@ -141,6 +148,8 @@ def make_pkt(info, input_param):
     shutil.copy(info.fota_cfg, info.upg_pkt)
     if 'app' in input_param:
         shutil.copy(info.src_app, info.upg_pkt)
+    if 'app_mesh' in input_param:
+        shutil.copy(info.src_app_mesh, info.upg_pkt)    
     if 'test' in input_param:
         shutil.copy(info.src_test, info.upg_pkt)
     if 'boot' in input_param:
@@ -159,8 +168,6 @@ if __name__ == '__main__':
     conf = get_parameters()
     print("update param: ", conf)
     input_param = conf.pkt.split(",")
-    if "boot" not in input_param:
-        input_param.append("boot")
     if not check_bin_match(input_param, info):
         sys.exit(1)
     if len(conf.ver) > 16:  # 预留字节数为0~52，默认版本号占16字节

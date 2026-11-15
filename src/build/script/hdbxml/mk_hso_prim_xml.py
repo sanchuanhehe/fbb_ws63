@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
+# Copyright (c) 2020 HiSilicon (Shanghai) Technologies CO.; LIMITED.
 # Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2022. All rights reserved.
 
 import os
@@ -571,6 +572,7 @@ def generate_db_temp_dir(sys_argv):
     root = sys_argv[2]
     chip = sys_argv[3]
     core_name = sys_argv[4]
+    build_root = sys_argv[5] if len(sys_argv) > 5 else root
     in_path = XML_PATH
     in_path = in_path.replace('<chip>', chip)
 
@@ -580,12 +582,12 @@ def generate_db_temp_dir(sys_argv):
     with open(conf, 'r') as f:
         db_conf = json.load(f)
 
-    base_file_dir = os.path.join(os.path.join(root, db_conf["HDB_XML_TEMP_BASE_DIR"]), core_name)
+    base_file_dir = os.path.join(os.path.join(build_root, db_conf["HDB_XML_TEMP_BASE_DIR"]), core_name)
     if not os.path.exists(base_file_dir):
         os.makedirs(base_file_dir)
 
 #${target} ${root} ${chip} ${core} ${src_file} ${file_id_dir}
-def generate_db_xml(root, core_name, auto_def, module_name, src_file, closed_flag):
+def generate_db_xml(root, build_root, core_name, auto_def, module_name, src_file, closed_flag):
     global log_info_list
     if not os.path.isfile(src_file):
         return
@@ -603,9 +605,9 @@ def generate_db_xml(root, core_name, auto_def, module_name, src_file, closed_fla
     _, filename = os.path.split(src_file)
     filename = filename + ".xml"
     if (closed_flag != True):
-        base_file_dir = os.path.join(os.path.join(root, db_conf["HDB_XML_TEMP_BASE_DIR"]), core_name)
+        base_file_dir = os.path.join(os.path.join(build_root, db_conf["HDB_XML_TEMP_BASE_DIR"]), core_name)
     else:
-        base_file_dir = os.path.join(os.path.join(root, db_conf["HDB_XML_TEMP_BASE_DIR"]), "closed_comp")
+        base_file_dir = os.path.join(os.path.join(build_root, db_conf["HDB_XML_TEMP_BASE_DIR"]), "closed_comp")
         if not os.path.exists(base_file_dir):
             os.makedirs(base_file_dir)
 
@@ -641,6 +643,7 @@ if __name__ == "__main__":
     else:
         closed_flag = False
     info_file = sys.argv[8]
+    build_root = sys.argv[9] if len(sys.argv) > 9 else root
 
     try:
         with open(info_file, 'r') as f:
@@ -653,6 +656,6 @@ if __name__ == "__main__":
 
         for src_file in src_files:
             src_file = src_file.strip()
-            generate_db_xml(root, core_name, auto_def, module_name, src_file, closed_flag)
+            generate_db_xml(root, build_root, core_name, auto_def, module_name, src_file, closed_flag)
     except:
         print("[WARN] open %s exception" % info_file)

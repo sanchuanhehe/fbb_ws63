@@ -1,0 +1,2 @@
+src/protocol/wifi/ws63-liteos-matter/libwifi_driver_hmac.a filter=lfs diff=lfs merge=lfs -text
+src/protocol/wifi/ws63-liteos-matter/libwpa_supplicant.a filter=lfs diff=lfs merge=lfs -text

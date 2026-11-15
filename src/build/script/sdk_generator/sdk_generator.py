@@ -131,6 +131,11 @@ class SdkGenerator:
         if self.env.get('auto_gen_config'):
             self.genarate_sdk_target_config(self.env.get('pkg_target_name', False))
 
+    def genarate_efuse_cfg_bin(self, chip_name):
+        if self.env.get('generate_efuse_bin') == True:
+            print("source build efuse_cfg.bin...")
+            exec_shell([sys.executable, os.path.join(target_config_path, chip_name, "script", "efuse_cfg_gen.py")])
+
     def genarate_sdk_target_config(self, targets):
         reserve = {}
         for target in targets:

@@ -1,0 +1,26 @@
+#===============================================================================
+# @brief    Kconfig file for the SLE RSSI ranging sample.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2026. All rights reserved.
+#===============================================================================
+
+config SUPPORT_SLE_PERIPHERAL
+    bool
+    default y if SAMPLE_SUPPORT_SLE_RSSI_RANGING_SERVER_SAMPLE
+
+config SUPPORT_SLE_CENTRAL
+    bool
+    default y if SAMPLE_SUPPORT_SLE_RSSI_RANGING_CLIENT_SAMPLE
+
+if SAMPLE_SUPPORT_SLE_RSSI_RANGING_CLIENT_SAMPLE
+
+config SLE_RSSI_RANGING_RSSI_AT_1M
+    int "Calibrated RSSI at 1 metre (dBm)"
+    range -100 -20
+    default -45
+
+config SLE_RSSI_RANGING_PATH_LOSS_TENTHS
+    int "Path loss exponent multiplied by 10"
+    range 10 60
+    default 20
+
+endif

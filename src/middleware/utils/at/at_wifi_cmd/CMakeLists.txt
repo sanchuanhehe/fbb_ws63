@@ -19,6 +19,12 @@ list (APPEND SOURCES
 )
 endif()
 
+if(DEFINED CONFIG_SUPPORT_WIFI_TEST)
+list (APPEND SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/at/at_wifi_test.c
+)
+endif()
+
 set(PUBLIC_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
@@ -33,6 +39,10 @@ set(PRIVATE_HEADER
     ${ROOT_DIR}/protocol/wifi/source/host/main/liteOS
     ${ROOT_DIR}/middleware/services/wifi_service/service
 )
+
+if("_PRE_FEATURE_SYSCHANNEL_LITEOS" IN_LIST DEFINES)
+    list(APPEND PRIVATE_HEADER ${ROOT_DIR}/middleware/utils/syschannel/)
+endif()
 
 string(REPLACE "\${ROOT_DIR}" "${ROOT_DIR}" CONFIG_LWIP_COMPILE_PATH "${CONFIG_LWIP_COMPILE_PATH}")
 if (EXISTS ${CONFIG_LWIP_COMPILE_PATH}/src/include)

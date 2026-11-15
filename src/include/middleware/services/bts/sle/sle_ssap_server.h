@@ -392,7 +392,6 @@ typedef void (*ssaps_read_request_callback)(uint8_t server_id, uint16_t conn_id,
  * @param [in] conn_id      connection ID.
  * @param [in] read_cb_para read by uuid request parameter.
  * @param [in] status       error code.
- * @retval #void no return value.
  * @par Dependency:
  * @li  sle_ssap_stru.h
  * @see sle_ssaps_callbacks_t
@@ -405,7 +404,6 @@ typedef void (*ssaps_read_request_callback)(uint8_t server_id, uint16_t conn_id,
  * @param [in] conn_id      连接 ID。
  * @param [in] read_cb_para 基于UUID读请求参数。
  * @param [in] status       执行结果错误码。
- * @retval 无返回值。
  * @par 依赖:
  * @li  sle_ssap_stru.h
  * @see sle_ssaps_callbacks_t

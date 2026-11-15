@@ -188,6 +188,22 @@ static errcode_t hal_sio_v151_get_config(sio_bus_t bus, hal_sio_config_t *config
     return ERRCODE_SUCC;
 }
 
+#if defined(CONFIG_I2S_SUPPORT_DYNAMIC_SAMPLE_RATE)
+#pragma weak hal_sio_set_sample_rate = hal_sio_v151_set_sample_rate
+void hal_sio_v151_set_sample_rate(sio_bus_t bus, uint32_t sample_rate_index)
+{
+    uint32_t bclk_div_num, data_width, channels;
+ 
+    data_width = g_hal_sio_config[bus].div_number;
+    channels = g_hal_sio_config[bus].number_of_channels;
+    bclk_div_num = sio_porting_get_bclk_div(data_width, channels, sample_rate_index);
+ 
+    hal_sio_v151_i2s_crg_set_bclk_div_en(bus, 0);
+    hal_sio_v151_bclk_div_num_set_num(bus, bclk_div_num);
+    hal_sio_v151_i2s_crg_set_bclk_div_en(bus, 1);
+}
+#endif
+
 static void hal_sio_v151_rx_enable(sio_bus_t bus, bool en)
 {
     hal_i2s_config(bus, I2S_MODE);
@@ -250,7 +266,7 @@ static void hal_i2s_write(sio_bus_t bus, hal_sio_tx_data_t *data, hal_sio_mode_t
     }
     uapi_tcxo_delay_us(SIO_LAST_DELAY_US);
     hal_sio_v151_ct_clr_set_tx_enable(bus, 1);
-    hal_sio_v151_crg_clock_enable(bus, false);
+
     g_tx_trans[bus].trans_succ = false;
 }
 

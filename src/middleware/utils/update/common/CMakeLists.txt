@@ -14,11 +14,11 @@ set(SOURCES
 )
 
 set(PUBLIC_HEADER
-    ${CMAKE_SOURCE_DIR}/middleware/utils/update/inner_include
+    ${ROOT_DIR}/middleware/utils/update/inner_include
 )
 
 set(PRIVATE_HEADER
-    ${CMAKE_SOURCE_DIR}/drivers/drivers/driver/security/hash
+    ${ROOT_DIR}/drivers/drivers/driver/security/hash
 )
 
 set(PRIVATE_DEFINES

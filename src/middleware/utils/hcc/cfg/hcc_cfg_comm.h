@@ -40,6 +40,7 @@ typedef enum _hcc_bus_type_ {
     HCC_BUS_MIN = 0x0,
     HCC_BUS_USB = 0x0,
     HCC_BUS_SDIO = 0x1,
+    HCC_BUS_SPI = 0x2,
     HCC_BUS_IPC = 0x3,
     HCC_BUS_PCIE = 0x4,
     HCC_BUS_VIRTUAL = 0x5,
@@ -48,7 +49,13 @@ typedef enum _hcc_bus_type_ {
     HCC_BUS_MAX  = 0xFF
 } hcc_bus_type;
 
+#if defined (CONFIG_HCC_SUPPORT_SDIO)
+#define HCC_CHANNEL_AP HCC_BUS_SDIO
+#elif defined (CONFIG_HCC_SUPPORT_SPI)
+#define HCC_CHANNEL_AP HCC_BUS_SPI
+#else
 #define HCC_CHANNEL_AP HCC_BUS_IPC
+#endif
 
 typedef enum _hcc_serv_main_type {
     HCC_ACTION_TYPE_BT = 0,        /* data from bt */
@@ -82,6 +89,13 @@ typedef enum _syschannel_queue_type {
     SYSCH_DATA_QUEUE = 1,               /* used for syschannel data */
     SYSCH_TEST_QUEUE = 2,               /* used for syschannel test */
 } syschannel_queue_type;
+
+/* 用于和hcc通讯的类型区分 */
+typedef enum {
+    SYSCHANNEL_SERVICE_TYPE_MSG = 0,        /* msg */
+    SYSCHANNEL_SERVICE_TYPE_PKT = 1,       /* packet */
+    SYSCHANNEL_SERVICE_TYPE_MAX,
+} syschannel_service_type;
 
 typedef enum _d2h_msg_type {
     D2H_MSG_FLOWCTRL_ON = 0,       /* can't send data, now discard, wifi flowctrl self */

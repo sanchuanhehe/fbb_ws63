@@ -14,9 +14,9 @@ set(PUBLIC_HEADER
 )
 
 set(PRIVATE_HEADER
-	${CMAKE_SOURCE_DIR}/middleware/utils/common_headers/drivers/gpu
-	${CMAKE_SOURCE_DIR}/middleware/chips/brandy/dfx/include
-	${CMAKE_SOURCE_DIR}/middleware/services/gpu/drv/include
+	${ROOT_DIR}/middleware/utils/common_headers/drivers/gpu
+	${ROOT_DIR}/middleware/chips/brandy/dfx/include
+	${ROOT_DIR}/middleware/services/gpu/drv/include
 )
 
 set(PRIVATE_DEFINES

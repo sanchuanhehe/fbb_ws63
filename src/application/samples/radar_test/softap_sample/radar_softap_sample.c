@@ -1,0 +1,269 @@
+/**
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2023. All rights reserved.
+ *
+ * Description: Application core main function for standard \n
+ *
+ * History: \n
+ * 2022-07-27, Create file. \n
+ */
+
+#include "lwip/netifapi.h"
+#include "wifi_hotspot.h"
+#include "wifi_hotspot_config.h"
+#include "td_base.h"
+#include "td_type.h"
+#include "stdlib.h"
+#include "uart.h"
+#include "cmsis_os2.h"
+#include "soc_osal.h"
+#include "radar_service.h"
+#include "app_init.h"
+
+#define RADAR_STACK_SIZE          0x800
+#define RADAR_TASK_PRIO           24
+
+#define WIFI_IFNAME_MAX_SIZE             16
+#define WIFI_MAX_KEY_LEN                 65
+#define WIFI_MAX_SSID_LEN                33
+#define WIFI_INIT_WAIT_TIME              500 // 5s
+#define WIFI_START_SOFTAP_DELAY          100 // 1s
+#define WIFI_IP_1                        192
+#define WIFI_IP_2                        168
+#define WIFI_IP_3                        130
+#define WIFI_IP_4                        1
+#define WIFI_IP_5                        255
+
+#define WIFI_CHANNEL_NUM                 12
+#define WIFI_SECURITY_TYPE               3
+
+#define WIFI_BECAON_INTERVAL             100
+#define WIFI_DTIM_PERIOD                 2
+#define WIFI_GROUP_REKEY                 86400
+#define WIFI_PROTOCOL_MODE               4
+#define WIFI_HIDDEN_SSID_FLAG            1
+
+#define RADAR_STATUS_QUERY_DELAY         1000 // 10s
+#define RADAR_QUIT_DELAY_TIME            8 // 8s
+
+#define RADAR_DEFAULT_TIMES 0
+#define RADAR_DEFAULT_LOOP 8
+#define RADAR_DEFAULT_ANT 0
+#define RADAR_DEFAULT_PERIOD 5000
+#define RADAR_DEFAULT_DBG_TYPE 3
+#define RADAR_DEFAULT_WAVE 2
+
+#define RADAR_DBG_INFO_RPT_COEF 1
+#define RADAR_DBG_INFO_LEN 16
+
+/*****************************************************************************
+  Radar SoftAP+Socket sample用例
+*****************************************************************************/
+td_s32 radar_start_softap(uint16_t ap_iso)
+{
+    /* SoftAp接口的信息 */
+    td_char base_ssid[WIFI_MAX_SSID_LEN] = "my_softAP";
+    td_char ssid[WIFI_MAX_SSID_LEN] = {0};
+    sprintf(ssid, "%s-%d", base_ssid, ap_iso);
+    td_char pre_shared_key[WIFI_MAX_KEY_LEN] = "123456789";
+    softap_config_stru hapd_conf = {0};
+    softap_config_advance_stru config = {0};
+    td_char ifname[WIFI_IFNAME_MAX_SIZE + 1] = "ap0"; /* 创建的SoftAp接口名 */
+    struct netif *netif_p = TD_NULL;
+    ip4_addr_t   st_gw;
+    ip4_addr_t   st_ipaddr;
+    ip4_addr_t   st_netmask;
+    IP4_ADDR(&st_ipaddr, WIFI_IP_1, WIFI_IP_2, WIFI_IP_3, WIFI_IP_4); /* IP地址设置：192.168.43.1 */
+    IP4_ADDR(&st_netmask, WIFI_IP_5, WIFI_IP_5, WIFI_IP_5, 0); /* 子网掩码设置：255.255.255.0 */
+    IP4_ADDR(&st_gw, WIFI_IP_1, WIFI_IP_2, WIFI_IP_3, WIFI_IP_4); /* 网关地址设置：192.168.43.2 */
+
+    (void)osDelay(WIFI_INIT_WAIT_TIME); /* 500: 延时5s，等待wifi初始化完毕 */
+    PRINT("SoftAP try enable.\r\n");
+
+    (td_void)memcpy_s(hapd_conf.ssid, sizeof(hapd_conf.ssid), ssid, sizeof(ssid));
+    (td_void)memcpy_s(hapd_conf.pre_shared_key, WIFI_MAX_KEY_LEN, pre_shared_key, WIFI_MAX_KEY_LEN);
+    hapd_conf.security_type = WIFI_SECURITY_TYPE; /* 3: 加密方式设置为WPA_WPA2_PSK */
+    hapd_conf.channel_num = WIFI_CHANNEL_NUM; /* 12：工作信道设置为12信道 */
+    hapd_conf.wifi_psk_type = 0;
+
+    /* 配置SoftAp网络参数 */
+    config.beacon_interval = WIFI_BECAON_INTERVAL; /* 100：Beacon周期设置为100ms */
+    config.dtim_period = WIFI_DTIM_PERIOD; /* 2：DTIM周期设置为2 */
+    config.gi = 0; /* 0：short GI默认关闭 */
+    config.group_rekey = WIFI_GROUP_REKEY; /* 86400：组播秘钥更新时间设置为1天 */
+    config.protocol_mode = WIFI_PROTOCOL_MODE; /* 4：协议类型设置为802.11b + 802.11g + 802.11n + 802.11ax */
+    config.hidden_ssid_flag = WIFI_HIDDEN_SSID_FLAG; /* 1：不隐藏SSID */
+    if (wifi_set_softap_config_advance(&config) != 0) {
+        return -1;
+    }
+    /* 启动SoftAp接口 */
+    if (wifi_softap_enable(&hapd_conf) != 0) {
+        return -1;
+    }
+    /* 配置DHCP服务器 */
+    netif_p = netif_find(ifname);
+    if (netif_p == TD_NULL) {
+        (td_void)wifi_softap_disable();
+        return -1;
+    }
+    if (netifapi_netif_set_addr(netif_p, &st_ipaddr, &st_netmask, &st_gw) != 0) {
+        (td_void)wifi_softap_disable();
+        return -1;
+    }
+    if (netifapi_dhcps_start(netif_p, NULL, 0) != 0) {
+        (td_void)wifi_softap_disable();
+        return -1;
+    }
+    PRINT("SoftAp start success.\r\n");
+    return 0;
+}
+
+static void radar_print_res(radar_result_t *res)
+{
+    PRINT("[RADAR_SAMPLE] lb:%u, hb:%u, hm:%u\r\n", res->lower_boundary, res->upper_boundary, res->is_human_presence);
+}
+
+static void radar_print_cur_frame_res(radar_current_frame_result_t *res)
+{
+    PRINT("[RADAR_SAMPLE] gear:%u, rng:%04d, vel:%04d, snr:%u\r\n",
+        res->gear, res->rng, res->vel, (uint32_t)res->snr);
+}
+
+// 维测信息依次为:
+// 1.告知上层是否需要写入flash
+// 2.LNA * 10 + VGA
+// 3.原始回波峰值
+// 4.过去period帧的平均MO1底噪
+// 5.过去period帧的平均MO2底噪
+// 6.过去period帧的平均DP底噪
+// 7.过去period帧的平均帧间隔
+// 8.过去period帧中帧间隔超过Xms的帧数
+// 9.过去period帧中bitmap数量超过X门限的帧数
+// 10.过去period帧中bitmap比例超过X门限的帧数
+// 11.过去period帧中是在参与统计的帧数
+// 12.过去period帧中帧间隔最大值
+// 13.过去period帧中帧间隔最大值下标
+// 14.当前所使用的算法参数MO1门限
+// 15.当前所使用的算法参数MO2门限
+// 16.当前所使用的算法参数DP门限
+static void radar_print_dbg_info(int16_t *arr, uint8_t len)
+{
+    if (len > RADAR_DBG_INFO_LEN || len == 0) {
+        return;
+    }
+
+    PRINT("dbg_info: %d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\r\n",
+        arr[0], arr[1], arr[2], arr[3], arr[4], arr[5], arr[6], arr[7], arr[8], arr[9], arr[10],
+        arr[11], arr[12], arr[13], arr[14], arr[15]);
+}
+
+static void radar_init_para(void)
+{
+    // 维测模式设置
+    radar_dbg_para_t dbg_para;
+    dbg_para.times = RADAR_DEFAULT_TIMES;
+    dbg_para.loop = RADAR_DEFAULT_LOOP;
+    dbg_para.ant = RADAR_DEFAULT_ANT;
+    dbg_para.wave = RADAR_DEFAULT_WAVE;
+    dbg_para.dbg_type = RADAR_DEFAULT_DBG_TYPE;
+    dbg_para.period = RADAR_DEFAULT_PERIOD;
+    uapi_radar_set_debug_para(&dbg_para);
+    // 无人档位退出时延设置
+    int16_t dly_time = RADAR_QUIT_DELAY_TIME;
+    uapi_radar_set_delay_time(dly_time);
+    // 算法门限设置
+    radar_alg_para_t alg_para;
+    alg_para.d_th_1m = 32;
+    alg_para.d_th_2m = 25;
+    alg_para.p_th = 30;
+    alg_para.t_th_1m = 20;
+    alg_para.t_th_2m = 35;
+    alg_para.b_th_ratio = 10;
+    alg_para.b_th_cnt = 4;
+    alg_para.a_th = 70;
+    alg_para.pt_cld_para_1 = 7;
+    alg_para.pt_cld_para_2 = 7;
+    alg_para.pt_cld_para_3 = 7;
+    alg_para.pt_cld_para_4 = 10;
+    alg_para.rd_pwr_para_1 = 6;
+    alg_para.rd_pwr_para_2 = 6;
+    alg_para.rd_pwr_para_3 = 10;
+    uapi_radar_set_alg_para(&alg_para, 0);
+}
+
+td_s32 radar_start_sta(td_void)
+{
+    (void)osDelay(WIFI_INIT_WAIT_TIME); /* 500: 延时0.5s, 等待wifi初始化完毕 */
+    PRINT("STA try enable.\r\n");
+    /* 创建STA接口 */
+    if (wifi_sta_enable() != 0) {
+        PRINT("sta enbale fail !\r\n");
+        return -1;
+    }
+
+    /* 连接成功 */
+    PRINT("STA enable success.\r\n");
+    return 0;
+}
+
+int radar_demo_init(void *param)
+{
+    PRINT("[RADAR_SAMPLE] radar_demo_init softap!\r\n");
+    param = param;
+
+    radar_start_sta();
+    uapi_radar_register_result_cb(radar_print_res); // 注册雷达档位结果回调函数
+    uapi_radar_register_current_frame_result_cb(radar_print_cur_frame_res); // 注册雷达单帧结果回调函数
+    uapi_radar_register_debug_info_cb(radar_print_dbg_info, RADAR_DBG_INFO_RPT_COEF);  // 注册雷达维测数据回调函数
+
+    // 启动雷达
+    (void)osDelay(WIFI_START_SOFTAP_DELAY);
+    uapi_radar_set_status(RADAR_STATUS_START);
+    // 获取隔离度值
+    (void)osDelay(WIFI_START_SOFTAP_DELAY);
+    uint16_t ap_iso;
+    uapi_radar_get_isolation(&ap_iso);
+    uapi_radar_set_status(RADAR_STATUS_STOP);
+    wifi_sta_disable();
+
+	(void)osDelay(WIFI_START_SOFTAP_DELAY);
+
+    radar_start_softap(ap_iso);
+    uapi_radar_set_status(RADAR_STATUS_START);
+	radar_init_para();
+
+    for (;;) {
+        (void)osDelay(RADAR_STATUS_QUERY_DELAY);
+        uint8_t sts;
+        uapi_radar_get_status(&sts); // 打印查询到的雷达工作状态
+        uint16_t time;
+        uapi_radar_get_delay_time(&time); // 打印查询到的无人档位退出时延
+        uint16_t iso;
+        uapi_radar_get_isolation(&iso); // 打印查询到的隔离度值
+        radar_result_t res = {0};
+        uapi_radar_get_result(&res); // 打印查询到的结果档位上报结果
+        int16_t arr[RADAR_DBG_INFO_LEN] = {0};
+        uapi_radar_get_debug_info(arr, RADAR_DBG_INFO_LEN);
+        radar_print_dbg_info(arr, RADAR_DBG_INFO_LEN); // 获取维测数据并打印
+    }
+
+    return 0;
+}
+
+static void radar_sample_entry(void)
+{
+    osThreadAttr_t attr;
+    attr.name       = "radar_sample_task";
+    attr.attr_bits  = 0U;
+    attr.cb_mem     = NULL;
+    attr.cb_size    = 0U;
+    attr.stack_mem  = NULL;
+    attr.stack_size = RADAR_STACK_SIZE;
+    attr.priority   = RADAR_TASK_PRIO;
+    if (osThreadNew((osThreadFunc_t)radar_demo_init, NULL, &attr) == NULL) {
+        PRINT("[RADAR_SAMPLE] Create softap_sample_task fail.\r\n");
+    }
+    PRINT("[RADAR_SAMPLE] Create softap_sample_task succ.\r\n");
+}
+
+/* Run the softap_sample_task. */
+app_run(radar_sample_entry);

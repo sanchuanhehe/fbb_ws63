@@ -80,7 +80,7 @@ static crypto_symc_hard_context g_symc_hard_context[CRYPTO_SYMC_HARD_CHANNEL_MAX
 static td_s32 hal_cipher_symc_ccm_mac_update(td_u32 chn_num, td_phys_addr_t data_phys_addr, td_u32 data_len,
     in_node_type_e in_node_type);
 static td_s32 hal_cipher_symc_gcm_mac_update(td_u32 chn_num, td_phys_addr_t data_phys_addr, td_u32 data_len,
-    in_node_type_e in_node_type);
+    in_node_type_e in_node_type, crypto_symc_alg symc_alg);
 
 static td_s32 hal_cipher_symc_out_node_done_try(td_u32 chn_num);
 
@@ -534,6 +534,7 @@ static crypto_table_item g_symc_alg_mode_table[] = {
 #define SYMC_ALG_AES_VAL        0x2
 #define SYMC_ALG_SM4_VAL        0x5
 #define SYMC_ALG_GHASH_VAL      0x6
+#define SM4_GHASH_VAL           0x9
 
 static crypto_table_item g_symc_alg_table[] = {
     {
@@ -643,7 +644,7 @@ static td_s32 hal_gcm_get_j0_by_iv(td_u32 chn_num, crypto_symc_hard_context *har
     crypto_chk_goto(ret != EOK, exit_free, "memcpy_s failed\n");
 
     ret = hal_cipher_symc_gcm_mac_update(chn_num, crypto_get_phys_addr(buffer), buffer_len,
-        IN_NODE_TYPE_FIRST | IN_NODE_TYPE_LAST | IN_NODE_TYPE_GCM_IV);
+        IN_NODE_TYPE_FIRST | IN_NODE_TYPE_LAST | IN_NODE_TYPE_GCM_IV, hard_ctx->symc_config.symc_alg);
     crypto_chk_goto(ret != EOK, exit_free, "hal_cipher_symc_gcm_mac_update failed\n");
 
     // get J0
@@ -1011,7 +1012,9 @@ static td_s32 hal_symc_process_gcm_p_pre(td_u32 chn_num, td_phys_addr_t data_phy
     td_u8 *gcm_p_padding = TD_NULL;
     td_u32 gcm_p_padding_len = 0;
     in_node_type_e gcm_p_type = IN_NODE_TYPE_NORMAL;
+    crypto_symc_hard_context *hard_ctx = TD_NULL;
 
+    hard_ctx = &g_symc_hard_context[chn_num];
     gcm_p_padding = crypto_malloc_coherent(CRYPTO_AES_BLOCK_SIZE_IN_BYTES);
     crypto_chk_return(gcm_p_padding == TD_NULL, TD_FAILURE, "crypto_malloc_coherent failed\n");
     /* gcm_p_padding must be zeros. */
@@ -1022,13 +1025,14 @@ static td_s32 hal_symc_process_gcm_p_pre(td_u32 chn_num, td_phys_addr_t data_phy
     }
     /* If padding_len == 0, then as the last node. */
     gcm_p_type = (td_u32)gcm_p_type | (gcm_p_padding_len == 0 ? IN_NODE_TYPE_LAST : 0);
-    ret = hal_cipher_symc_gcm_mac_update(chn_num, data_phys_addr, data_len, IN_NODE_TYPE_FIRST | (td_u32)gcm_p_type);
+    ret = hal_cipher_symc_gcm_mac_update(chn_num, data_phys_addr, data_len,
+                                         IN_NODE_TYPE_FIRST | (td_u32)gcm_p_type, hard_ctx->symc_config.symc_alg);
     crypto_chk_goto(ret != TD_SUCCESS, exit_free, "hal_cipher_symc_gcm_mac_update failed\n");
 
     /* If paddding_len != 0, then gcm_p_padding as the last node. */
     if (gcm_p_padding_len != 0) {
         ret = hal_cipher_symc_gcm_mac_update(chn_num, crypto_get_phys_addr(gcm_p_padding), gcm_p_padding_len,
-            IN_NODE_TYPE_LAST);
+            IN_NODE_TYPE_LAST, hard_ctx->symc_config.symc_alg);
         crypto_chk_goto(ret != TD_SUCCESS, exit_free, "hal_cipher_symc_gcm_mac_update failed\n");
     }
 
@@ -1069,13 +1073,14 @@ static td_s32 hal_symc_process_gcm_p_final(td_u32 chn_num)
 
     /* If padding_len == 0, then as the last node. */
     gcm_p_type = (td_u32)gcm_p_type | (gcm_p_padding_len == 0 ? IN_NODE_TYPE_LAST : 0);
-    ret = hal_cipher_symc_gcm_mac_update(chn_num, pre_phys_addr, pre_length, IN_NODE_TYPE_FIRST | (td_u32)gcm_p_type);
+    ret = hal_cipher_symc_gcm_mac_update(chn_num, pre_phys_addr, pre_length,
+                                         IN_NODE_TYPE_FIRST | (td_u32)gcm_p_type, hard_ctx->symc_config.symc_alg);
     crypto_chk_goto(ret != TD_SUCCESS, exit_free, "hal_cipher_symc_gcm_mac_update failed\n");
 
     /* If paddding_len != 0, then gcm_p_padding as the last node. */
     if (gcm_p_padding_len != 0) {
         ret = hal_cipher_symc_gcm_mac_update(chn_num, crypto_get_phys_addr(gcm_p_padding),
-            gcm_p_padding_len, IN_NODE_TYPE_LAST);
+            gcm_p_padding_len, IN_NODE_TYPE_LAST, hard_ctx->symc_config.symc_alg);
         crypto_chk_goto(ret != TD_SUCCESS, exit_free, "hal_cipher_symc_gcm_mac_update failed\n");
     }
 
@@ -1274,7 +1279,7 @@ static td_s32 hal_cipher_symc_ccm_mac_update(td_u32 chn_num, td_phys_addr_t data
 }
 
 static td_s32 hal_cipher_symc_gcm_mac_update(td_u32 chn_num, td_phys_addr_t data_phys_addr, td_u32 data_len,
-    in_node_type_e in_node_type)
+    in_node_type_e in_node_type, crypto_symc_alg symc_alg)
 {
     td_s32 ret;
     in_sym_chn_key_ctrl in_key_ctrl = {0};
@@ -1289,7 +1294,14 @@ static td_s32 hal_cipher_symc_gcm_mac_update(td_u32 chn_num, td_phys_addr_t data
 
     /* To gcm_mac_update, you should choose ALG_GHASH. */
     in_key_ctrl.u32 = spacc_reg_read(IN_SYM_CHN_KEY_CTRL(chn_num));
-    in_key_ctrl.bits.sym_alg_sel = SYMC_ALG_GHASH_VAL;
+    if (symc_alg == CRYPTO_SYMC_ALG_AES) {
+        in_key_ctrl.bits.sym_alg_sel = SYMC_ALG_GHASH_VAL;
+    } else if (symc_alg == CRYPTO_SYMC_ALG_SM4) {
+        in_key_ctrl.bits.sym_alg_sel = SM4_GHASH_VAL;
+    } else {
+        crypto_log_err("invalid symc alg\n");
+        return TD_FAILURE;
+    }
     /* symc_alg_mode must be 0 for GHASH, otherwise the calculation will timeout. */
     in_key_ctrl.bits.sym_alg_mode = 0;
     in_key_ctrl.bits.sym_alg_decrypt = TD_FALSE;
@@ -1400,7 +1412,7 @@ static td_s32 add_ccm_in_node(td_u32 chn_num, td_phys_addr_t data_phys_addr, td_
 }
 
 static td_s32 add_gcm_in_node(td_u32 chn_num, td_phys_addr_t data_phys_addr, td_u32 data_len,
-    in_node_type_e in_node_type)
+    in_node_type_e in_node_type, crypto_symc_alg symc_alg)
 {
     td_s32 ret;
     crypto_symc_hard_context *hard_ctx = TD_NULL;
@@ -1412,7 +1424,7 @@ static td_s32 add_gcm_in_node(td_u32 chn_num, td_phys_addr_t data_phys_addr, td_
 
     /* For GCM_AAD, you should mac_update it. */
     if (((td_u32)in_node_type & IN_NODE_TYPE_GCM_A) > 0) {
-        ret = hal_cipher_symc_gcm_mac_update(chn_num, data_phys_addr, data_len, in_node_type);
+        ret = hal_cipher_symc_gcm_mac_update(chn_num, data_phys_addr, data_len, in_node_type, symc_alg);
         crypto_chk_return(ret != TD_SUCCESS, ret, "hal_cipher_symc_gcm_mac_update failed\n");
         return TD_SUCCESS;
     }
@@ -1430,7 +1442,14 @@ static td_s32 add_gcm_in_node(td_u32 chn_num, td_phys_addr_t data_phys_addr, td_
     /* For GCM_GHASH, the work_mode is MODE_GCTR_NOOUT and the iv is j0. */
     if (((td_u32)in_node_type & IN_NODE_TYPE_GCM_GHASH) > 0) {
         in_key_ctrl.u32 = spacc_reg_read(IN_SYM_CHN_KEY_CTRL(chn_num));
-        in_key_ctrl.bits.sym_alg_sel = SYMC_ALG_AES_VAL;
+        if (symc_alg == CRYPTO_SYMC_ALG_AES) {
+            in_key_ctrl.bits.sym_alg_sel = SYMC_ALG_AES_VAL;
+        } else if (symc_alg == CRYPTO_SYMC_ALG_SM4) {
+            in_key_ctrl.bits.sym_alg_sel = SYMC_ALG_SM4_VAL;
+        } else {
+            crypto_log_err("invalid symc alg\n");
+            return TD_FAILURE;
+        }
         in_key_ctrl.bits.sym_alg_mode = SYMC_ALG_MODE_GCTR_NOOUT_VAL;
         spacc_reg_write(IN_SYM_CHN_KEY_CTRL(chn_num), in_key_ctrl.u32);
         hal_cipher_symc_set_iv(chn_num, hard_ctx->symc_config.iv0, sizeof(hard_ctx->symc_config.iv0));
@@ -1439,7 +1458,14 @@ static td_s32 add_gcm_in_node(td_u32 chn_num, td_phys_addr_t data_phys_addr, td_
     /* For gcm, the work_mode is GCTR and the iv is gcm_iv. */
     if (((td_u32)in_node_type & IN_NODE_TYPE_GCM_P) > 0) {
         in_key_ctrl.u32 = spacc_reg_read(IN_SYM_CHN_KEY_CTRL(chn_num));
-        in_key_ctrl.bits.sym_alg_sel = SYMC_ALG_AES_VAL;
+        if (symc_alg == CRYPTO_SYMC_ALG_AES) {
+            in_key_ctrl.bits.sym_alg_sel = SYMC_ALG_AES_VAL;
+        } else if (symc_alg == CRYPTO_SYMC_ALG_SM4) {
+            in_key_ctrl.bits.sym_alg_sel = SYMC_ALG_SM4_VAL;
+        } else {
+            crypto_log_err("invalid symc alg\n");
+            return TD_FAILURE;
+        }
         in_key_ctrl.bits.sym_alg_mode = SYMC_ALG_MODE_GCTR_VAL;
         spacc_reg_write(IN_SYM_CHN_KEY_CTRL(chn_num), in_key_ctrl.u32);
         hal_cipher_symc_set_iv(chn_num, hard_ctx->iv_ctr, sizeof(hard_ctx->iv_ctr));
@@ -1497,7 +1523,7 @@ td_s32 hal_cipher_symc_add_in_node(td_u32 chn_num, td_phys_addr_t data_phys_addr
             ret = add_ccm_in_node(chn_num, data_phys_addr, data_len, in_node_type);
             break;
         case CRYPTO_SYMC_WORK_MODE_GCM:
-            ret = add_gcm_in_node(chn_num, data_phys_addr, data_len, in_node_type);
+            ret = add_gcm_in_node(chn_num, data_phys_addr, data_len, in_node_type, hard_ctx->symc_config.symc_alg);
             break;
         case CRYPTO_SYMC_WORK_MODE_CBC_MAC:
             ret = add_cbc_mac_in_node(chn_num, data_phys_addr, data_len, in_node_type);
@@ -1585,7 +1611,7 @@ td_s32 hal_cipher_symc_get_tag(td_u32 chn_num, td_u8 *tag, td_u32 tag_len)
         }
     } else if (hard_ctx->symc_config.work_mode == CRYPTO_SYMC_WORK_MODE_GCM) {
         ret = hal_cipher_symc_gcm_mac_update(chn_num, hard_ctx->gcm_len_addr, CRYPTO_AES_IV_SIZE,
-            IN_NODE_TYPE_FIRST | IN_NODE_TYPE_LAST);
+            IN_NODE_TYPE_FIRST | IN_NODE_TYPE_LAST, hard_ctx->symc_config.symc_alg);
         crypto_chk_return(ret != TD_SUCCESS, ret, "hal_cipher_symc_gcm_mac_update failed\n");
 
         iv_ghash = crypto_malloc_coherent(sizeof(hard_ctx->symc_config.iv_mac));

@@ -5,9 +5,6 @@
  * Create:  2023-04-09
  */
 
-#include <stdint.h>
-
-#include "chip_io.h"
 #include "dyn_mem.h"
 
 /**
@@ -119,3 +116,17 @@ __attribute__((section(".text.runtime.init"))) void dyn_mem_cfg(void)
     return;
 }
 
+uint8_t dyn_get_em_mem_cfg(void)
+{
+    uint8_t em_size = EM_SIZE_0K;
+#if defined(CONFIG_BGLE_RAM_SIZE_16K)
+    em_size = EM_SIZE_16K; // em 16 k
+#elif defined(CONFIG_BGLE_RAM_SIZE_32K) // default 32 k
+    em_size = EM_SIZE_32K; // em 32 k
+#elif defined(CONFIG_BGLE_RAM_SIZE_64K)
+    em_size = EM_SIZE_64K; // em 64 k
+#else
+    em_size = EM_SIZE_0K; // em 0 k
+#endif
+    return em_size;
+}

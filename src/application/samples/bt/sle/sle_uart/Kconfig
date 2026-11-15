@@ -1,0 +1,59 @@
+#===============================================================================
+# @brief    Kconfig file for SLE UART Bridge sample.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2026. All rights reserved.
+#===============================================================================
+
+config UART_BUS_ID
+    int "UART Bus ID"
+    default 1
+
+config UART_TXD_PIN
+    int "UART TXD Pin"
+    default 15
+
+config UART_RXD_PIN
+    int "UART RXD Pin"
+    default 16
+
+config UART_TXD_PIN_MODE
+    int "UART TXD Pin Mode"
+    default 1
+
+config UART_RXD_PIN_MODE
+    int "UART RXD Pin Mode"
+    default 1
+
+config SLE_UART_BAUDRATE
+    int "UART Baudrate"
+    default 115200
+
+config SLE_UART_RX_BUF_SIZE
+    int "UART RX Buffer Size (bytes)"
+    default 512
+
+config SLE_UART_MSGQ_LEN
+    int "Message Queue Depth"
+    default 16
+
+config SLE_UART_MSGQ_ITEM_SIZE
+    int "Message Queue Item Size (bytes)"
+    default 520
+
+config SLE_UART_MTU_SIZE
+    int "SLE MTU Size"
+    default 520
+
+config SLE_UART_CONN_INTERVAL
+    int "Connection Interval (x1.25ms)"
+    default 12
+    range 6 32
+    help
+        Connection interval in units of 1.25ms.
+        12 = 15ms, lower values reduce latency but increase power consumption.
+config SUPPORT_SLE_PERIPHERAL
+    bool
+    default y if SAMPLE_SUPPORT_SLE_UART_SERVER_SAMPLE
+
+config SUPPORT_SLE_CENTRAL
+    bool
+    default y if SAMPLE_SUPPORT_SLE_UART_CLIENT_SAMPLE

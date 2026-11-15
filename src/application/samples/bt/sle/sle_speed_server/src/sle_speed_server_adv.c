@@ -15,10 +15,10 @@
 
 /* sle device name */
 #define NAME_MAX_LENGTH 15
-/* 连接调度间隔12.5ms，单位125us */
-#define SLE_CONN_INTV_MIN_DEFAULT                 0xA
-/* 连接调度间隔12.5ms，单位125us */
-#define SLE_CONN_INTV_MAX_DEFAULT                 0xA
+/* 连接调度间隔2.5ms，单位125us */
+#define SLE_CONN_INTV_MIN_DEFAULT                 0x14
+/* 连接调度间隔2.5ms，单位125us */
+#define SLE_CONN_INTV_MAX_DEFAULT                 0x14
 /* 连接调度间隔25ms，单位125us */
 #define SLE_ADV_INTERVAL_MIN_DEFAULT              0xC8
 /* 连接调度间隔25ms，单位125us */

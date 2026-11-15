@@ -15,8 +15,12 @@
 
 
 dfx_timer g_diag_beat_heart_timer;
+#ifndef CONFIG_DFX_DIAG_BEAT_HEART_PER_TIME
 #define CONFIG_DFX_DIAG_BEAT_HEART_PER_TIME (60 * 1000) /* ms */
-#define CONFIG_DFX_DIAG_BEAT_HEART_TOTAL_TIME (60 * 6)  /* second */
+#endif
+#ifndef CONFIG_DFX_DIAG_BEAT_HEART_TOTAL_TIME
+#define CONFIG_DFX_DIAG_BEAT_HEART_TOTAL_TIME (60 * 6) /* second */
+#endif
 
 errcode_t diag_cmd_beat_heart(uint16_t cmd_id, void *cmd_param, uint16_t cmd_param_size, diag_option_t *option)
 {

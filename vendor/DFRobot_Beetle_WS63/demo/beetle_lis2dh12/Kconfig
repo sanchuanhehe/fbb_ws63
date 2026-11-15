@@ -1,0 +1,35 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+choice
+    prompt "Select getAcceleration or interrupt Sample"
+    default SAMPLE_SUPPORT_ACCELERATION_SAMPLE
+    config SAMPLE_SUPPORT_ACCELERATION_SAMPLE
+        bool "Support getAcceleration Sample."
+
+    config SAMPLE_SUPPORT_INTERRUPT_SAMPLE
+        bool "Support interrupt Sample."
+
+endchoice
+
+config I2C_MASTER_BUS_ID
+    int "Choose I2C bus id."
+    default 1
+
+config I2C_SCL_MASTER_PIN
+    int "Choose I2C SCL pin"
+    default 16
+
+config I2C_SDA_MASTER_PIN
+    int "Choose I2C SDA pin"
+    default 15
+
+config I2C_SLAVE_ADDR
+    int "Choose I2C SLAVE ADDR"
+    default 0x18
+
+config INTERRUPT_PIN
+    int "Choose INTERRUPT pin"
+    default 2
+    depends on SAMPLE_SUPPORT_INTERRUPT_SAMPLE

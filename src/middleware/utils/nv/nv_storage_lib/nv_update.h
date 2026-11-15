@@ -133,6 +133,7 @@ typedef struct {
     uint32_t write_location;      /* Current location in flash to write to */
     uint32_t resume_location;     /* Write location reached when state machine was suspended */
     uint32_t crypto_handle;       /* AES crypo handle */
+    uint32_t hash_handle;         /* hash handle */
     uint16_t size;                /* Size of the RAM buffer */
     uint16_t data_length;         /* Length of data written to RAM buffer */
     uint32_t crc_ret;             /* crc_ret counter */

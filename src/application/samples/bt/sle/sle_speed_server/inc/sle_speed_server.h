@@ -15,7 +15,7 @@
 #include "sle_ssap_server.h"
 
 /* Service UUID */
-#define SLE_UUID_SERVER_SERVICE        0xABCD
+#define SLE_UUID_SERVER_SERVICE        0x060B
 
 /* Property UUID */
 #define SLE_UUID_SERVER_NTF_REPORT     0x1122

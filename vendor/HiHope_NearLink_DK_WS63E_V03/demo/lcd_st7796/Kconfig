@@ -1,0 +1,65 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+config SAMPLE_SUPPORT_ST7796
+    bool
+    prompt "Support ST7796."
+    default y
+    depends on SAMPLE_SUPPORT_LCD && OPEN_SOURCE_LVGL && SPI_SUPPORT_MASTER && SPI_SUPPORT_DMA
+    help
+        This option means support ST7796 IPS SPI LCD Sample.
+
+config SPI_DI_PIN
+    int
+    prompt "Choose SPI DI PIN."
+    depends on SAMPLE_SUPPORT_ST7796
+    default 11
+
+config SPI_DO_PIN
+    int
+    prompt "Choose SPI DO PIN."
+    depends on SAMPLE_SUPPORT_ST7796
+    default 9
+
+config SPI_CLK_PIN
+    int
+    prompt "Choose SPI CLK PIN."
+    depends on SAMPLE_SUPPORT_ST7796
+    default 7
+
+config SPI_CS_PIN
+    int
+    prompt "Choose SPI CS PIN."
+    depends on SAMPLE_SUPPORT_ST7796
+    default 8
+
+config SPI_MASTER_PIN_MODE
+    int
+    prompt "Choose SPI MASTER PIN MODE."
+    depends on SAMPLE_SUPPORT_ST7796
+    default 3
+
+config SPI_RS_PIN
+    int
+    prompt "Support SPI RS PIN."
+    depends on SAMPLE_SUPPORT_ST7796
+    default 1
+
+config SPI_RST_PIN
+    int
+    prompt "Choose SPI RST PIN."
+    depends on SAMPLE_SUPPORT_ST7796
+    default 14
+
+config SPI_BLK_PIN
+    int
+    prompt "Choose SPI BLK PIN."
+    depends on SAMPLE_SUPPORT_ST7796
+    default 12
+
+config GPIO_PIN_MODE
+    int
+    prompt "Choose GPIO PIN MODE."
+    depends on SAMPLE_SUPPORT_ST7796
+    default 0

@@ -1,0 +1,42 @@
+[ 
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/led_demo", 
+    "chip": "WS63",                         
+    "buildDef": "",  
+    "needSmoke": "false" ,
+    "description": "闪烁灯"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/button_demo", 
+    "chip": "WS63",                         
+    "buildDef": "GPIO_BUTTON_MODE_POLLING = y",
+    "needSmoke": "false" ,
+    "description": "按键轮询和中断检测"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/watchdog_demo", 
+    "chip": "WS63",                         
+    "buildDef": "WDT_TIMEOUT_SAMPLE = n, WDT_KICK_SAMPLE = y",  
+    "needSmoke": "false" ,
+    "description": "看门狗踢狗"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/i2c_sht30_demo", 
+    "chip": "WS63",                         
+    "buildDef": "",
+    "needSmoke": "false" ,
+    "description": "I2C读取SHT30温湿度"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",  
+    "relativePath": "demo/uart_demo", 
+    "chip": "WS63",
+    "buildDef": "ENABLE_UART_POLL = n, ENABLE_UART_INTERRUPT = y",  
+    "needSmoke": "false" ,
+    "description": "串口轮询和中断读取"
+  }
+]

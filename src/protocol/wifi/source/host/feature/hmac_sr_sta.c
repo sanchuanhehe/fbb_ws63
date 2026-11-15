@@ -25,7 +25,7 @@ extern "C" {
 #define THIS_FILE_ID DIAG_FILE_ID_WIFI_DEV_DMAC_SR_STA_ROM_C
 
 #undef THIS_MOD_ID
-#define THIS_MOD_ID DIAG_MOD_ID_WIFI_DEVICE
+#define THIS_MOD_ID DIAG_MOD_ID_WIFI_HOST
 
 OSAL_STATIC hmac_sta_sr_stru *g_hmac_sta_sr_info[WLAN_VAP_MAX_NUM_PER_DEVICE_LIMIT] = {
     OSAL_NULL, OSAL_NULL, OSAL_NULL, OSAL_NULL
@@ -479,9 +479,6 @@ OSAL_STATIC osal_s32 hmac_set_srg_bitmap(const mac_frame_he_spatial_reuse_parame
         hal_set_srg_bss_color_bitmap(bitmap_low, bitmap_high);
         ret = memcpy_s(sr_cfg_info->srg_bss_color_bitmap, MAC_HE_SRG_BSS_COLOR_BITMAP_LEN, bitmap,
             MAC_HE_SRG_BSS_COLOR_BITMAP_LEN);
-        if (ret != EOK) {
-            oam_error_log0(0, OAM_SF_SR, "{hmac_set_srg_bitmap::srg_bss_color_bitmap memcpy error!.}");
-        }
     }
 
     bitmap = (osal_u8 *)sr_ie_info->ac_srg_partial_bssid_bitmap;
@@ -496,9 +493,6 @@ OSAL_STATIC osal_s32 hmac_set_srg_bitmap(const mac_frame_he_spatial_reuse_parame
         hal_set_srg_partial_bssid_bitmap(bitmap_low, bitmap_high);
         ret = memcpy_s(sr_cfg_info->srg_partial_bssid_bitmap, MAC_HE_SRG_PARTIAL_BSSID_BITMAP_LEN, bitmap,
             MAC_HE_SRG_PARTIAL_BSSID_BITMAP_LEN);
-        if (ret != EOK) {
-            oam_error_log0(0, OAM_SF_SR, "{hmac_set_srg_bitmap::srg_partial_bssid_bitmap memcpy error!.}");
-        }
     }
 
     return ret;
@@ -879,7 +873,6 @@ OAL_STATIC osal_s32 hmac_config_collision_syn(hmac_vap_stru *hmac_vap, mac_color
 
     if ((hmac_vap == OSAL_NULL) || (dth_color_area == OSAL_NULL)) {
         oam_error_log0(0, OAM_SF_COEX, "{hmac_config_collision_syn::vap or param null.}");
-        hmac_report_collision(hmac_vap);
         return OAL_ERR_CODE_PTR_NULL;
     }
 

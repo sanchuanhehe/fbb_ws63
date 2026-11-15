@@ -328,82 +328,92 @@ SECTIONS
 SECTIONS
 {
     /* tcm text */
-    .plat_text_tcm : ALIGN(8) {
+    .text_tcm : ALIGN(8) {
         FILL(0xFF)
         ADD_ROM_VERIFY_OFFSET
         . = ALIGN(8);
         PROVIDE (__int_stack_start = .);
         *(.int_stack);
-        __tcm_text_load__ = LOADADDR(.plat_text_tcm);
+        __tcm_text_load__ = LOADADDR(.text_tcm);
         __tcm_text_begin__ = .;
-        PLAT_TCM_NONROM(.text* .rodata*)
         CHECK_ALIGN_4(__tcm_text_load__);
         CHECK_ALIGN_4(__tcm_text_begin__);
-    } > ITCM AT > PROGRAM
 
-    .btc_text_tcm : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
+        __plat_tcmtext_start__ = .;
+        PLAT_TCM_NONROM(.text* .rodata*)
+        __plat_tcmtext_end__ = .;
+
+        __btc_tcmtext_start__ = .;
         BTC_TCM_NONROM(.text* .rodata*)
-    } > ITCM AT > PROGRAM
+        __btc_tcmtext_end__ = .;
 
-    .wifi_text_tcm : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
+        __wifi_tcmtext_start__ = .;
         WIFI_TCM_SECTION()
         WIFI_TCM_NONROM(.text* .rodata*)
         LWIP_TCM_SECTION()
-    } > ITCM AT > PROGRAM
+        __wifi_tcmtext_end__ = .;
 
-    .patch_on_tcm : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
+        __patch_text_on_tcm_start__ = .;
         KEEP(*(.patch.text.on.itcm .patch.rodata.on.itcm))
+        __patch_text_on_tcm_end__ = .;
         . = ALIGN(4);
         __tcm_text_end__ = .;
         CHECK_ALIGN_4(__tcm_text_end__);
     } > ITCM AT > PROGRAM
     __tcm_text_size__ = __tcm_text_end__ - __tcm_text_begin__;
+    __plat_tcmtext_size__ = __plat_tcmtext_end__ - __plat_tcmtext_start__;
+    __btc_tcmtext_size__ = __btc_tcmtext_end__ - __btc_tcmtext_start__;
+    __wifi_tcmtext_size__ = __wifi_tcmtext_end__ - __wifi_tcmtext_start__;
+    __patch_text_on_tcm_size__ = __patch_text_on_tcm_end__ - __patch_text_on_tcm_start__;
 
     /* tcm data */
-    .plat_data_tcm : ALIGN(8) {
+    .data_tcm : ALIGN(8) {
         FILL(0xFF)
         ADD_ROM_VERIFY_OFFSET
         . = ALIGN(8);
-        __tcm_data_load__ = LOADADDR(.plat_data_tcm);
+        __tcm_data_load__ = LOADADDR(.data_tcm);
         __tcm_data_begin__ = .;
-        PLAT_TCM_NONROM(.data*)
         CHECK_ALIGN_4(__tcm_data_load__);
         CHECK_ALIGN_4(__tcm_data_begin__);
-    } > DTCM AT > PROGRAM
 
-    .btc_data_tcm : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
+        __plat_tcmdata_start__ = .;
+        PLAT_TCM_NONROM(.data*)
+        __plat_tcmdata_end__ = .;
+
+        __btc_tcmdata_start__ = .;
         BTC_TCM_NONROM(.data*)
-    } > DTCM AT > PROGRAM
+        __btc_tcmdata_end__ = .;
 
-    .wifi_data_tcm : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
+        __wifi_tcmdata_start__ = .;
         WIFI_TCM_NONROM(.data*)
         WIFI_FLASH_NONROM(.data*)
         WIFI_OPTIMIZE_DTCM(.data*)
+        __wifi_tcmdata_end__ = .;
+
         . = ALIGN(4);
         __tcm_data_end__ = .;
         CHECK_ALIGN_4(__tcm_data_end__);
     } > DTCM AT > PROGRAM
     __tcm_data_size__ = __tcm_data_end__ - __tcm_data_begin__;
+    __plat_tcmdata_size__ = __plat_tcmdata_end__ - __plat_tcmdata_start__;
+    __btc_tcmdata_size__ = __btc_tcmdata_end__ - __btc_tcmdata_start__;
+    __wifi_tcmdata_size__ = __wifi_tcmdata_end__ - __wifi_tcmdata_start__;
 
     .plat_bss_tcm : ALIGN(8) {
         __tcm_bss_begin__ = .;
         PLAT_TCM_NONROM(.bss*)
+#if defined(CONFIG_BGLE_RAM_SIZE_16K) && !defined(WIFI_PERF_DTCM_16K)
+        PLAT_DTCM_BSS
+#endif
     } > DTCM
 
     .btc_bss_tcm : ALIGN(8) {
         FILL(0xFF)
         . = ALIGN(8);
         BTC_TCM_NONROM(.bss*)
+#if defined(CONFIG_BGLE_RAM_SIZE_16K) && !defined(WIFI_PERF_DTCM_16K)
+        BTC_NONROM(.bss*)
+#endif
     } > DTCM
 
     .wifi_bss_tcm : ALIGN(8) {
@@ -420,40 +430,36 @@ SECTIONS
 SECTIONS
 {
     /* sram text */
-    .plat_text_sram : ALIGN(8) {
+    .text_sram : ALIGN(8) {
         FILL(0xFF)
         ADD_ROM_VERIFY_OFFSET
         . = ALIGN(8);
-        __sram_text_load__ = LOADADDR(.plat_text_sram);
+        __sram_text_load__ = LOADADDR(.text_sram);
         __sram_text_begin__ = .;
-        LITEOS_TASK_RAM_TEXT()
-        PLAT_SRAM_NONROM(*.text* *.rodata*)
         CHECK_ALIGN_4(__sram_text_load__);
         CHECK_ALIGN_4(__sram_text_begin__);
-    } > SRAM AT > PROGRAM
 
-    .wifi_text_sram : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
+        __plat_sramtext_start__ = .;
+        LITEOS_TASK_RAM_TEXT()
+        PLAT_SRAM_NONROM(*.text* *.rodata*)
+        __plat_sramtext_end__ = .;
+
+        __wifi_sramtext_start__ = .;
         WIFI_SRAM_NONROM(.text* .rodata*)
-    } > SRAM AT > PROGRAM
+        __wifi_sramtext_end__ = .;
 
-    .btc_text_sram : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
+        __btc_sramtext_start__ = .;
         BTC_SRAM_NONROM(.text* .rodata*)
-    } > SRAM AT > PROGRAM
+        __btc_sramtext_end__ = .;
 
-    .bth_text_sram : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
+        __bth_sramtext_start__ = .;
         BTH_SRAM_NONROM(.text* .rodata*)
-    } > SRAM AT > PROGRAM
+        __bth_sramtext_end__ = .;
 
-    .patch_on_sram : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
+        __patch_text_on_tcm_start__ = .;
         KEEP(*(.patch.text.on.sram .patch.rodata.on.sram))
+        __patch_text_on_tcm_end__ = .;
+
         . = ALIGN(4);
         *(.text.__riscv_*)
         . = ALIGN(4);
@@ -461,6 +467,11 @@ SECTIONS
         CHECK_ALIGN_4(__sram_text_end__);
     } > SRAM AT > PROGRAM
     __sram_text_size__ = __sram_text_end__ - __sram_text_begin__;
+    __plat_sramtext_end__ = __plat_sramtext_end__ - __plat_sramtext_start__;
+    __wifi_sramtext_size__ = __wifi_sramtext_end__ - __wifi_sramtext_start__;
+    __btc_sramtext_size__ = __btc_sramtext_end__ - __btc_sramtext_start__;
+    __bth_sramtext_size__ = __bth_sramtext_end__ - __bth_sramtext_start__;
+    __patch_text_on_tcm_size__ = __patch_text_on_tcm_end__ - __patch_text_on_tcm_start__;
 }
 
 /* flash */
@@ -516,6 +527,11 @@ SECTIONS
         BTH_NONROM(.text* .rodata*)
     } > PROGRAM
 
+    .mesh_text_flash : ALIGN(8) {
+        FILL(0xFF)
+        BTH_MESH_NONROM(.text* .rodata*)
+    } > PROGRAM
+
     .radar_text_flash : ALIGN(8) {
         FILL(0xFF)
         RADAR_NONROM(.text* .rodata*)
@@ -556,87 +572,82 @@ SECTIONS
         *(.srodata*)
         KEEP (*(.flashtext))
         KEEP (*(.flashtext*))
-        . = ALIGN(4);
+        . = ALIGN(8);
+        __init_array_start = .;
+        KEEP(*(.ctors .init_array*))
+        __init_array_end = .;
+        __fini_array_start = .;
+        KEEP(*(.dtors .fini_array*))
+        __fini_array_end = .;
+        . = ALIGN(8);
         __text_end__ = .;
     } > PROGRAM
 
     /* sram data */
-    .plat_data_sram : ALIGN(8) {
-        FILL(0xFF)
-        __data_load__ = LOADADDR(.plat_data_sram);
-        __data_begin__ = .;
-        PLAT_SRAM_NONROM(.data*)
-        CHECK_ALIGN_4(__data_load__);
-        CHECK_ALIGN_4(__data_begin__);
-    } > SRAM AT > PROGRAM
-
-    .wifi_data_sram : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
-        WIFI_SRAM_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
-    .btc_data_sram : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
-        BTC_SRAM_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
-    .bth_data_sram : ALIGN(8) {
-        FILL(0xFF)
-        . = ALIGN(8);
-        BTH_SRAM_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
-    /* cali data */
-    .wifi_data_cali : ALIGN(8) {
-        FILL(0xFF)
-        WIFI_CALI_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
-    .btc_data_cali : ALIGN(8) {
-        FILL(0xFF)
-        BTC_CALI_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
-    .bth_data_cali : ALIGN(8) {
-        FILL(0xFF)
-        BTH_CALI_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
-    /* other flash data */
-    .plat_data_flash : ALIGN(8) {
-        FILL(0xFF)
-        PLAT_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
-    .wifi_data_flash : ALIGN(8) {
-        FILL(0xFF)
-        WIFI_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
-    .radar_data_flash : ALIGN(8) {
-        FILL(0xFF)
-        RADAR_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
-    .radar_ai_data_flash : ALIGN(8) {
-        FILL(0xFF)
-        RADAR_AI_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
-    .btc_data_flash : ALIGN(8) {
-        FILL(0xFF)
-        BTC_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
-    .bth_data_flash : ALIGN(8) {
-        FILL(0xFF)
-        BTH_NONROM(.data*)
-    } > SRAM AT > PROGRAM
-
     .data : ALIGN(8) {
         FILL(0xFF)
+        __data_load__ = LOADADDR(.data);
+        __data_begin__ = .;
+        CHECK_ALIGN_4(__data_load__);
+        CHECK_ALIGN_4(__data_begin__);
+
+        __plat_sramdata_start__ = .;
+        PLAT_SRAM_NONROM(.data*)
+        __plat_sramdata_end__ = .;
+
+        __wifi_sramdata_start__ = .;
+        WIFI_SRAM_NONROM(.data*)
+        __wifi_sramdata_end__ = .;
+
+        __btc_sramdata_start__ = .;
+        BTC_SRAM_NONROM(.data*)
+        __btc_sramdata_end__ = .;
+
+        __bth_sramdata_start__ = .;
+        BTH_SRAM_NONROM(.data*)
+        __bth_sramdata_end__ = .;
+
+        __wifi_calidata_start__ = .;
+        WIFI_CALI_NONROM(.data*)
+        __wifi_calidata_end__ = .;
+
+        __btc_calidata_start__ = .;
+        BTC_CALI_NONROM(.data*)
+        __btc_calidata_end__ = .;
+
+        __bth_calidata_start__ = .;
+        BTH_CALI_NONROM(.data*)
+        __bth_calidata_end__ = .;
+
+        __plat_flashdata_start__ = .;
+        PLAT_NONROM(.data*)
+        __plat_flashdata_end__ = .;
+
+        __wifi_flashdata_start__ = .;
+        WIFI_NONROM(.data*)
+        __wifi_flashdata_end__ = .;
+
+        __radar_flashdata_start__ = .;
+        RADAR_NONROM(.data*)
+        __radar_flashdata_end__ = .;
+
+        __radar_ai_flashdata_start__ = .;
+        RADAR_AI_NONROM(.data*)
+        __radar_ai_flashdata_end__ = .;
+
+        __btc_flashdata_start__ = .;
+        BTC_NONROM(.data*)
+        __btc_flashdata_end__ = .;
+
+        __bth_flashdata_start__ = .;
+        BTH_NONROM(.data*)
+        __bth_flashdata_end__ = .;
+
+        __bth_mesh_flashdata_start__ = .;
+        BTH_MESH_NONROM(.data*)
+        __bth_mesh_flashdata_end__ = .;
+
+        __other_data_start__ = .;
         *(.data)
         *(.data*)
         *(.got)
@@ -647,10 +658,26 @@ SECTIONS
         *(.sdata)
         *(.sdata*)
         . = ALIGN(4);
+        __other_data_end__ = .;
         __data_end__ = .;
         CHECK_ALIGN_4(__data_end__);
     } > SRAM AT > PROGRAM
     __data_size__ = __data_end__ - __data_begin__;
+    __plat_sramdata_size__ = __plat_sramdata_end__ - __plat_sramdata_start__;
+    __wifi_sramdata_size__ = __wifi_sramdata_end__ - __wifi_sramdata_start__;
+    __btc_sramdata_size__ = __btc_sramdata_end__ - __btc_sramdata_start__;
+    __bth_sramdata_size__ = __bth_sramdata_end__ - __bth_sramdata_start__;
+    __wifi_calidata_size__ = __wifi_calidata_end__ - __wifi_calidata_start__;
+    __btc_calidata_size__ = __btc_calidata_end__ - __btc_calidata_start__;
+    __bth_calidata_size__ = __bth_calidata_end__ - __bth_calidata_start__;
+    __plat_flashdata_size__ = __plat_flashdata_end__ - __plat_flashdata_start__;
+    __wifi_flashdata_size__ = __wifi_flashdata_end__ - __wifi_flashdata_start__;
+    __radar_flashdata_size__ = __radar_flashdata_end__ - __radar_flashdata_start__;
+    __radar_ai_flashdata_size__ = __radar_ai_flashdata_end__ - __radar_ai_flashdata_start__;
+    __btc_flashdata_size__ = __btc_flashdata_end__ - __btc_flashdata_start__;
+    __bth_flashdata_size__ = __bth_flashdata_end__ - __bth_flashdata_start__;
+    __bth_mesh_flashdata_size__ = __bth_mesh_flashdata_end__ - __bth_mesh_flashdata_start__;
+    __other_data_size__ = __other_data_end__ - __other_data_start__;
 
     /* sram bss */
     .plat_bss_sram (NOLOAD) : ALIGN(8) {
@@ -705,6 +732,10 @@ SECTIONS
 
     .bth_bss_flash (NOLOAD) : ALIGN(8) {
         BTH_NONROM(.bss*)
+    } > SRAM
+
+    .mesh_bss_flash (NOLOAD) : ALIGN(8) {
+        BTH_MESH_NONROM(.bss*)
     } > SRAM
 
     .bss  (NOLOAD) : ALIGN(8) {

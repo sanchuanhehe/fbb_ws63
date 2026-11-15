@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) @CompanyNameMagicTag 2022-2022. All rights reserved.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
 #===============================================================================
 add_subdirectory_if_exist(mbedtls)
 add_subdirectory_if_exist(7-zip-lzma-sdk)
@@ -12,6 +12,7 @@ add_subdirectory_if_exist(littlefs)
 add_subdirectory_if_exist(huks)
 add_subdirectory_if_exist(deviceauth)
 add_subdirectory_if_exist(libcoap)
+add_subdirectory_if_exist(lvgl)
 
 if (EXISTS ${ROOT_DIR}/protocol/wifi/CMakeLists.txt)
     add_subdirectory_if_exist(lwip)

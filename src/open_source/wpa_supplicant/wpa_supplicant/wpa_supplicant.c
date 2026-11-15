@@ -4278,7 +4278,7 @@ static void wpas_start_assoc_cb(struct wpa_radio_work *work, int deinit)
 
 	params.p2p = ssid->p2p_group;
 
-	if (wpa_s->p2pdev->set_sta_uapsd)
+	if ((wpa_s->p2pdev != NULL) && (wpa_s->p2pdev->set_sta_uapsd))
 		params.uapsd = wpa_s->p2pdev->sta_uapsd;
 	else
 		params.uapsd = -1;

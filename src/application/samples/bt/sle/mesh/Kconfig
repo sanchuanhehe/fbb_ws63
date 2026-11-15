@@ -1,0 +1,20 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2026-2026. All rights reserved.
+#===============================================================================
+config SAMPLE_SUPPORT_SLE_MESH_ONE_TOUCH_START
+    bool
+    prompt "Support Sle Mesh one touch start sample."
+    default n
+    help
+        This option means support sle mesh one touch start sample.
+
+config SAMPLE_SUPPORT_SLE_MESH_SAMPLE
+    bool
+    default y if SAMPLE_SUPPORT_SLE_MESH_ONE_TOUCH_START
+
+if SAMPLE_SUPPORT_SLE_MESH_ONE_TOUCH_START
+    menu "Support Sle Mesh one touch start Sample Configuration"
+        osource "application/samples/bt/sle/mesh/Kconfig_one_touch_start"
+    endmenu
+endif

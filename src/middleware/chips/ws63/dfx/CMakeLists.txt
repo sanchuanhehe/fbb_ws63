@@ -49,6 +49,7 @@ set(LOG_DEF
     ${CMAKE_CURRENT_SOURCE_DIR}/include/log_def_dsp.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/log_def_pf.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/log_def_wifi.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/log_def_mesh.h
 )
 
 build_component()

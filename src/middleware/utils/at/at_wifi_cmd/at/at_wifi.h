@@ -67,6 +67,10 @@ td_void los_at_mesh_cmd_register(td_void);
 #ifdef _PRE_WLAN_FEATURE_MFG_TEST
 td_void los_at_mfg_ccpriv_cmd_register(td_void);
 #endif
+#ifdef _PRE_FEATURE_SYSCHANNEL_LITEOS
+td_void cmd_syschannel_init(void);
+td_void cmd_syschannel_deinit(void);
+#endif
 
 #ifdef __cplusplus
 #if __cplusplus

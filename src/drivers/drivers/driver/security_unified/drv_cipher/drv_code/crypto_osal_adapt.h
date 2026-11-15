@@ -126,12 +126,13 @@ td_bool crypto_data_buf_check(const crypto_buf_attr *buf_attr, td_u32 length);
 #if !defined(crypto_owner) && (CRYPTO_ERROR_ENV != ERROR_ENV_NOOS)
 #define crypto_owner                        long
 #define crypto_owner_dump(owner)            crypto_log_dbg("Owner's pid is 0x%x\n", owner)
+#define CRYPTO_PID                          1
 static inline td_s32 crypto_get_owner(crypto_owner *owner)
 {
     if (owner == TD_NULL) {
         return CRYPTO_FAILURE;
     }
-    *owner = crypto_getpid();
+    *owner = CRYPTO_PID;
     return CRYPTO_SUCCESS;
 }
 #endif

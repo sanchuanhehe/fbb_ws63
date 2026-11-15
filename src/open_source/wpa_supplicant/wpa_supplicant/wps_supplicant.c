@@ -1288,6 +1288,18 @@ int wpas_wps_start_pbc(struct wpa_supplicant *wpa_s, const u8 *bssid,
 		return -1;
 	}
 #endif /* CONFIG_WPS_AP */
+
+#ifdef LOS_CONFIG_P2P
+	/*
+	 * Due to CODE_CROP, the priority field(->pnext) has become ineffective.
+	 * To address this, all config->ssid entries must be cleared(with MGMT_WPS tag) to ensure WPS retains only a single target.
+	 * therefore, we can solve p2p reconnect problem.
+	 */
+	for (ssid = wpa_s->conf->ssid; ssid; ssid = ssid->next) {
+		ssid->key_mgmt |= WPA_KEY_MGMT_WPS;
+	}
+#endif /* LOS_CONFIG_P2P */
+
 	wpas_clear_wps(wpa_s);
 	ssid = wpas_wps_add_network(wpa_s, 0, NULL, bssid);
 	if (ssid == NULL)

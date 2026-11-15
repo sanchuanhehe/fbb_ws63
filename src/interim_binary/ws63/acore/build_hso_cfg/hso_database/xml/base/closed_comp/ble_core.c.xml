@@ -71,30 +71,30 @@
 			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble disconnect, reason = 0x%x @ble_core.c(979),INFO" ID="0xdcc01e9d" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: The number of links has reached the maximum. @ble_core.c(1007),INFO" ID="0xdcc01f7d" />
 			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: ble connected peer address: 0x%02x:**:**:**:0x%02x:0x%02x @ble_core.c(1020),INFO" ID="0xdcc01fe5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble state ind handle message is NULL @ble_core.c(1032),ERROR" ID="0xdcc02042" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: ble connect change, state = 0x%x, value = 0x%x, conn_handle = %d @ble_core.c(1037),INFO" ID="0xdcc0206d" />
-			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: ble connect change, addr = 0x%02x:**:**:**:%02x:%02x @ble_core.c(1040),INFO" ID="0xdcc02085" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: The number of links has reached the maximum. @ble_core.c(1047),INFO" ID="0xdcc020bd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble state ind rmt is NULL @ble_core.c(1081),ERROR" ID="0xdcc021ca" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble state ind memcpy rmt fail: %d @ble_core.c(1088),ERROR" ID="0xdcc02202" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: app ble smp key handle message is NULL @ble_core.c(1102),ERROR" ID="0xdcc02272" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[pair]ble core: report pair keys to mcu  @ble_core.c(1107),INFO" ID="0xdcc0229d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE ENCRYTION SUCCEED @ble_core.c(1118),INFO" ID="0xdcc022f5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE KEY MISS connect_inst not found  @ble_core.c(1145),ERROR" ID="0xdcc023ca" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE KEY MISS @ble_core.c(1149),ERROR" ID="0xdcc023ea" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: conn update tiomeout @ble_core.c(1166),ERROR" ID="0xdcc02472" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: AppBleConnResult msg_data is NULL @ble_core.c(1175),ERROR" ID="0xdcc024ba" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="ble core: final conn status = 0x%02x, mode = %d @ble_core.c(1185),INFO" ID="0xdcc0250d" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="ble core: handle&amp;interval&amp;latency&amp;timeout, 0x%04x &amp; 0x%04x &amp; 0x%04x &amp; 0x%04x @ble_core.c(1188),INFO" ID="0xdcc02525" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: conn update result fail = %d @ble_core.c(1204),WARNING" ID="0xdcc025a3" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: Service Change reachs limit times,Active Disconn @ble_core.c(1305),INFO" ID="0xdcc028cd" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ServiceChangedNotify @ble_core.c(1317),INFO" ID="0xdcc0292d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: Had Active Disconn,not to retry @ble_core.c(1332),INFO" ID="0xdcc029a5" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[ANCS]500ms comes! @ble_core.c(1366),INFO" ID="0xdcc02ab5" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: unsupported msg_id: 0x%x @ble_core.c(1386),INFO" ID="0xdcc02b55" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE PAIR FAIL @ble_core.c(1394),ERROR" ID="0xdcc02b92" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: app ble init fail ret:%x @ble_core.c(1483),ERROR" ID="0xdcc02e5a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble core connect proc cmds param NULL @ble_core.c(1529),ERROR" ID="0xdcc02fca" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble core connect proc cmds pkt_ptr NULL @ble_core.c(1534),ERROR" ID="0xdcc02ff2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble core connect proc cmds, pkt_ptr 0x%x @ble_core.c(1538),INFO" ID="0xdcc03015" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble state ind handle message is NULL @ble_core.c(1041),ERROR" ID="0xdcc0208a" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: ble connect change, state = 0x%x, value = 0x%x, conn_handle = %d @ble_core.c(1046),INFO" ID="0xdcc020b5" />
+			<MSG STRUCTURE="diag_log_msg3" NAME="ble core: ble connect change, addr = 0x%02x:**:**:**:%02x:%02x @ble_core.c(1049),INFO" ID="0xdcc020cd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: The number of links has reached the maximum. @ble_core.c(1056),INFO" ID="0xdcc02105" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble state ind rmt is NULL @ble_core.c(1092),ERROR" ID="0xdcc02222" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble state ind memcpy rmt fail: %d @ble_core.c(1099),ERROR" ID="0xdcc0225a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: app ble smp key handle message is NULL @ble_core.c(1113),ERROR" ID="0xdcc022ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[pair]ble core: report pair keys to mcu  @ble_core.c(1118),INFO" ID="0xdcc022f5" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE ENCRYTION SUCCEED @ble_core.c(1129),INFO" ID="0xdcc0234d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE KEY MISS connect_inst not found  @ble_core.c(1156),ERROR" ID="0xdcc02422" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE KEY MISS @ble_core.c(1160),ERROR" ID="0xdcc02442" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: conn update tiomeout @ble_core.c(1177),ERROR" ID="0xdcc024ca" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble log: AppBleConnResult msg_data is NULL @ble_core.c(1186),ERROR" ID="0xdcc02512" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="ble core: final conn status = 0x%02x, mode = %d @ble_core.c(1196),INFO" ID="0xdcc02565" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="ble core: handle&amp;interval&amp;latency&amp;timeout, 0x%04x &amp; 0x%04x &amp; 0x%04x &amp; 0x%04x @ble_core.c(1199),INFO" ID="0xdcc0257d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: conn update result fail = %d @ble_core.c(1215),WARNING" ID="0xdcc025fb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: Service Change reachs limit times,Active Disconn @ble_core.c(1316),INFO" ID="0xdcc02925" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ServiceChangedNotify @ble_core.c(1328),INFO" ID="0xdcc02985" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: Had Active Disconn,not to retry @ble_core.c(1343),INFO" ID="0xdcc029fd" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[ANCS]500ms comes! @ble_core.c(1377),INFO" ID="0xdcc02b0d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: unsupported msg_id: 0x%x @ble_core.c(1397),INFO" ID="0xdcc02bad" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: BLE PAIR FAIL @ble_core.c(1405),ERROR" ID="0xdcc02bea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: app ble init fail ret:%x @ble_core.c(1494),ERROR" ID="0xdcc02eb2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble core connect proc cmds param NULL @ble_core.c(1540),ERROR" ID="0xdcc03022" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="ble core: ble core connect proc cmds pkt_ptr NULL @ble_core.c(1545),ERROR" ID="0xdcc0304a" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="ble core: ble core connect proc cmds, pkt_ptr 0x%x @ble_core.c(1549),INFO" ID="0xdcc0306d" />
 			</MSG_LOG>

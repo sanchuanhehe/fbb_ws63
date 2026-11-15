@@ -467,6 +467,21 @@ typedef struct hal_sio_funcs {
 #endif
 } hal_sio_funcs_t;
 
+#if defined(CONFIG_I2S_SUPPORT_DYNAMIC_SAMPLE_RATE)
+/**
+ * @if Eng
+ * @brief  Set sample_rate interface for hal sio.
+ * @param  [in]  bus The SIO bus. For details, see @ref sio_bus_t
+ * @param  [in]  sample_rate_index The SIO sample_rate index. For details, see @ref i2s_sample_rate_t
+ * @else
+ * @brief  HAL层SIO设置采样率接口。
+ * @param  [in]  bus SIO端口号。参考 @ref sio_bus_t
+ * @param  [in]  sample_rate_index SIO配置采样率枚举值。参考 @ref i2s_sample_rate_t
+ * @endif
+ */
+void hal_sio_set_sample_rate(sio_bus_t bus, uint32_t sample_rate_index);
+#endif
+
 /**
  * @if Eng
  * @brief  Init the registers of SIO IPs.
@@ -534,7 +549,6 @@ errcode_t hal_sio_unregister_funcs(sio_bus_t bus);
  */
 hal_sio_funcs_t *hal_sio_get_funcs(sio_bus_t bus);
 
-#if defined(CONFIG_I2S_SUPPORT_DMA)
 /**
  * @if Eng
  * @brief  sio crg clock enable.
@@ -573,7 +587,6 @@ void hal_sio_set_tx_enable(sio_bus_t bus, uint32_t val);
  * @endif
  */
 void hal_sio_set_rx_enable(sio_bus_t bus, uint32_t val);
-#endif
 /**
  * @}
  */

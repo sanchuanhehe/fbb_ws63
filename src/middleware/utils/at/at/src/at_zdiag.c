@@ -53,7 +53,6 @@ errcode_t zdiag_at_proc(uint16_t cmd_id, void *cmd_param, uint16_t cmd_param_siz
     errcode_t ret;
     zdiag_at_input_t *at_input = (zdiag_at_input_t *)cmd_param;
 
-    print_str("xxx zdiag_at_proc at_input.str: '%s', size = %u\r\n", at_input->data, at_input->data_size);
     ret = uapi_at_channel_data_recv(AT_ZDIAG_PORT, (uint8_t *)at_input->data, (uint32_t)at_input->data_size);
     if (ret != ERRCODE_SUCC) {
         /* 前一个字符为'\r'时单独一个'\n'导致的CHANNEL_BUSY不打印 */

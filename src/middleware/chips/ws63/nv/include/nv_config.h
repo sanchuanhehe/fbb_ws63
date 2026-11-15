@@ -8,7 +8,7 @@
 
 #define NV_TASKS_MAX_NUM             64             /* 可支持的NV保存任务的最大数（多核系统使用） */
 #define NV_NORMAL_KVALUE_MAX_LEN     4060           /* 普通NV的最大数据长度 */
-#define NV_ENCRYPTED_KVALUE_MAX_LEN  4048           /* 加密NV的最大数据长度 */
+#define NV_ENCRYPTED_KVALUE_MAX_LEN  4032           /* 加密NV的最大数据长度 */
 
 /* Flash 物理地址起始和结束 */
 #define FLASH_PHYSICAL_ADDR_START     0x200000
@@ -76,7 +76,7 @@
 
 /* 特性： 支持NV加密 */
 #ifndef CONFIG_NV_SUPPORT_ENCRYPT
-#define CONFIG_NV_SUPPORT_ENCRYPT               NV_NO
+#define CONFIG_NV_SUPPORT_ENCRYPT               NV_YES
 #endif
 
 /* 特性： 支持NV跳过被破坏的NV项 */
@@ -87,6 +87,11 @@
 /* 特性： 加密NV使用HASH校验 */
 #ifndef CONFIG_NV_SUPPORT_HASH_FOR_CRYPT
 #define CONFIG_NV_SUPPORT_HASH_FOR_CRYPT        NV_NO
+#endif
+
+/* 特性：KEY变更通知 */
+#ifndef CONFIG_NV_SUPPORT_CHANGE_NOTIFY
+#define CONFIG_NV_SUPPORT_CHANGE_NOTIFY         NV_NO
 #endif
 
 /* NV debug */
@@ -104,7 +109,7 @@
 #define CONFIG_NV_SUPPORT_CRC16_VERIFY          NV_NO
 #endif
 
-/* 特性：NV备份单独存放 */
+/* 特性：NV备份区单独存放 */
 #ifndef CONFIG_NV_SUPPORT_BACKUP_REGION
 #define CONFIG_NV_SUPPORT_BACKUP_REGION         NV_YES
 #endif

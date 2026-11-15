@@ -10,6 +10,7 @@
 /* 修改此文件后需要先编译A核任意版本生成中间文件application.etypes后才能在编译nv.bin时生效 */
 #define WLAN_MAC_ADDR_LEN 6
 #define WLAN_COUNTRY_CODE_LEN 2
+#define WLAN_POWER_LEVEL_CFG_LEN 2
 #define WLAN_XO_TRIM_TEMP_LEN 8
 #define WLAN_RF_FE_RX_LOSS_NUM 3
 #define WLAN_RF_FE_MAX_POWER_NUM 1
@@ -26,6 +27,10 @@
 #define WLAN_HILINK_PWD_LEN 65
 #define WLAN_HILINK_MAC_LEN 6
 #define BT_SRRC_CHANNEL_NUM 8
+#define SLP_RADAR_MFG_PHASE_CALI_NUM        2
+#define SLP_RADAR_MFG_DELAY_CALI_NUM        4
+#define SLP_RADAR_AI_OFFSET_PARA_NUM        8
+#define SLP_RADAR_MAX_SENSITIVITY_ARR_LEN   60
 /* 基础类型无需在此文件中定义，直接引用即可，对应app.json中的sample0 */
 
 /* 普通结构体，对应app.json中的sample1 */
@@ -45,6 +50,10 @@ typedef struct {
 typedef struct {
     uint8_t country[WLAN_COUNTRY_CODE_LEN];
 } country_type_t;
+
+typedef struct {
+    int8_t tpc[WLAN_POWER_LEVEL_CFG_LEN];
+} tpc_type_t;
 
 typedef struct {
     int8_t xo_trim_temp_fine_code[WLAN_XO_TRIM_TEMP_LEN];
@@ -146,6 +155,37 @@ typedef struct {
 } radar_alg_param_t;
 
 typedef struct {
+    uint16_t drop_sta_thres;      // STA模式下丢帧门限
+    uint16_t mwo_sta_thres;       // STA模式下微波模式识别门限
+    uint16_t drop_ap_thres;       // AP模式下丢帧门限
+    uint16_t mwo_ap_thres;        // AP模式下微波模式识别门限
+    uint8_t mwo_slide_win_len;    // 微波模式识别选取窗长度
+    uint8_t mwo_slide_win_thres;  // 微波模式识别选取窗门限
+    uint8_t mwo_timeout;          // 微波模式识别超时时间, 单位:min
+    uint8_t mwo_dis_coef;         // 微波模式距离缩放系数, 扩大10倍配置
+    uint8_t mwo_duty_thres_ap;    // 微波模式与WIFI AP业务共存duty门限
+    uint8_t mwo_duty_thres_sta;   // 微波模式与WIFI STA业务共存duty门限
+} radar_mwo_mode_t;
+
+typedef struct {
+    uint32_t update_duration;               // buffer_update周期
+    uint32_t check_duration;                // buffer_check周期
+    uint8_t calc_duration_multiplier;       // thres_calc周期倍率
+    uint8_t is_thru_wall_adapt_en;          // 是否开启防穿墙
+    uint8_t use_pwr_sum;                    // 是否使用power_sum
+    uint32_t sensitivity;                   // 门限比较灵敏度
+    uint8_t save_trained_thres;             // 是否多信道存储门限
+    uint8_t use_leakage_pwr_adjust_thres;   // 是否使用leakage_pwr适配门限
+} radar_thru_wall_mode_t;
+
+typedef struct {
+    uint16_t abn_frame_th;      // 异常帧间隔门限
+    uint16_t abn_frame_avg_th;  // 异常帧间隔均值门限
+    uint8_t abn_frame_ratio;    // 异常帧间隔比例门限
+    uint8_t chan_switch;        // 信道切换开关, 1-开, 0-关
+} radar_chan_switch_t;
+
+typedef struct {
     uint8_t height;               // 模组安装架高信息: 1/2/3米
     uint8_t scenario;             // 场景: 家居/空旷
     uint8_t wifi_mode;            // WIFI模式: STA/SOFTAP
@@ -154,6 +194,39 @@ typedef struct {
     uint8_t fusion_ai;            // 是否融合AI结果
     uint16_t quit_dly_time;       // 退出时间
 } radar_alg_ctrl_t;
+
+typedef struct {
+    uint8_t delay_idx_arr[SLP_RADAR_MFG_DELAY_CALI_NUM];
+    int16_t phs_cali_i[SLP_RADAR_MFG_PHASE_CALI_NUM];
+    int16_t phs_cali_q[SLP_RADAR_MFG_PHASE_CALI_NUM];
+    uint16_t ant_space[SLP_RADAR_MFG_PHASE_CALI_NUM];
+} slp_radar_mfg_para_t;
+
+typedef struct {
+    uint32_t rpt_mode;
+    uint32_t sensitivity;
+    uint32_t rng_boundary;
+    uint32_t delay_time;
+    uint16_t ant_space_amp_coef;
+    uint16_t static_create_range;
+    uint8_t is_wire_down;
+    uint8_t angle_boundary;
+    uint8_t anti_multipath_mode;
+    uint8_t cali_res_save_mode;
+} slp_radar_alg_basic_para_t;
+
+typedef struct {
+    int32_t dynamic_offset_direction[SLP_RADAR_AI_OFFSET_PARA_NUM];
+    int32_t static_offset_direction[SLP_RADAR_AI_OFFSET_PARA_NUM];
+    uint16_t ai_status;
+} slp_radar_ai_para_t;
+
+typedef struct {
+    uint8_t para_len;
+    uint8_t dyn_sensitivity_0[SLP_RADAR_MAX_SENSITIVITY_ARR_LEN];
+    uint8_t dyn_sensitivity_1[SLP_RADAR_MAX_SENSITIVITY_ARR_LEN];
+    uint8_t sta_sensitivity_0[SLP_RADAR_MAX_SENSITIVITY_ARR_LEN];
+} slp_radar_sensitivity_para_t;
 
 /* hilink配网 ssid与密码 */
 typedef struct {

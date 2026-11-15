@@ -191,6 +191,25 @@ errcode_t uapi_i2s_deinit(sio_bus_t bus);
  */
 errcode_t uapi_i2s_set_config(sio_bus_t bus, const i2s_config_t *config);
 
+#if defined(CONFIG_I2S_SUPPORT_DYNAMIC_SAMPLE_RATE)
+/**
+ * @if Eng
+ * @brief  Set the sample_rate of the I2S device.
+ * @param  [in]  bus The SIO bus. For details, see @ref sio_bus_t.
+ * @param  [in]  sample_rate of I2S device.For details, see @ref i2s_sample_rate_t.
+ * @retval ERRCODE_SUCC Success.
+ * @retval Other        Failure. For details, see @ref errcode_t.
+ * @else
+ * @brief  设置I2S设备的采样率。
+ * @param  [in]  bus 指定的SIO接口，参考 @ref sio_bus_t 。
+ * @param  [in]  sample_rate I2S设备的采样率。参考 @ref i2s_sample_rate_t 。
+ * @retval ERRCODE_SUCC 成功。
+ * @retval Other        失败，参考 @ref errcode_t 。
+ * @endif
+ */
+errcode_t uapi_i2s_set_sample_rate(sio_bus_t bus, i2s_sample_rate_t sample_rate);
+#endif
+
 /**
  * @if Eng
  * @brief  Get the configuration of the I2S device.
@@ -239,6 +258,19 @@ errcode_t uapi_i2s_write_data(sio_bus_t bus, i2s_tx_data_t *data);
  * @endif
  */
 errcode_t uapi_i2s_read_start(sio_bus_t bus);
+
+/**
+ * @if Eng
+ * @brief  I2S CRG Enable.
+ * @param  [in]  bus The SIO bus. For details, see @ref sio_bus_t.
+ * @param  [in]  enable Open/Close Bclk/Ws.
+ * @else
+ * @brief  I2S时钟使能。
+ * @param  [in]  bus 指定的SIO接口，参考 @ref sio_bus_t 。
+ * @param  [in]  enable 打开/关闭位时钟/采样时钟 。
+ * @endif
+ */
+void uapi_i2s_set_crg_clock_enable(sio_bus_t bus, bool enable);
 
 /**
  * @if Eng

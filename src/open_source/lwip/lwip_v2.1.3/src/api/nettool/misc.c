@@ -1,5 +1,5 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2013-2020. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2013-2020. All rights reserved.
  * Description: shell cmds APIs implementation about dhcps dhcp dns and so on.
  * Author: none
  * Create: 2020
@@ -217,11 +217,7 @@ u32_t os_shell_show_dns(void)
       return OS_NOK;
     }
   }
-#ifdef CUSTOM_AT_COMMAND
-  (void)uapi_at_printf("OK"CRLF);
-#else
-  LWIP_PLATFORM_PRINT("OK"CRLF);
-#endif
+
   return OS_OK;
 }
 
@@ -269,9 +265,7 @@ os_shell_dns(int argc, const char **argv)
         return OS_NOK;
       }
     }
-#ifdef CUSTOM_AT_COMMAND
-    (void)uapi_at_printf("OK"CRLF);
-#endif
+
     return OS_OK;
   } else if (argc == 2) { /* 2 : current argc index */
     i = atoi(argv[0]);
@@ -321,9 +315,7 @@ os_shell_dns(int argc, const char **argv)
 #endif
       return OS_NOK;
     }
-#ifdef CUSTOM_AT_COMMAND
-    (void)uapi_at_printf("OK"CRLF);
-#endif
+
     return OS_OK;
   }
 usage:
@@ -367,13 +359,8 @@ dhcp_client_info_show(struct dhcp_client *dhcp)
     /* 2 : skip two index */
     char_p = char_p + 2;
   }
-  if (ip4_addr_isany_val(dhcp->relay_ip)) {
-    DHCP_HOST_TO_IP(cli_ip.addr, ip_2_ip4(&dhcp->server_ip_addr)->addr, dhcp->offered_sn_mask.addr,
-                    dhcp_state->offered_ip_addr);
-  } else {
-    DHCP_HOST_TO_IP(cli_ip.addr, dhcp->relay_ip.addr, dhcp->offered_sn_mask.addr,
-                    dhcp_state->offered_ip_addr);
-  }
+
+  cli_ip.addr = dhcp_state->offered_ip_addr;
   state = dhcp_state->state;
 
   (void)ip4addr_ntoa_r(&cli_ip, buf, IP4ADDR_STRLEN_MAX);

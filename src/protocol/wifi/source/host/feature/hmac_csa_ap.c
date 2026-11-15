@@ -366,7 +366,6 @@ OSAL_STATIC osal_u16 hmac_ap_encap_csa_action(hmac_vap_stru *hmac_vap, oal_netbu
     osal_u8 *mac_header = oal_netbuf_header(buffer);
     osal_u8 *payload_addr = oal_netbuf_data_offset(buffer, MAC_80211_FRAME_LEN);
     osal_u8 *payload_addr_origin = payload_addr;
-    osal_u16 frame_length;
 
     /*************************************************************************/
     /*                        Management Frame Format                        */
@@ -423,12 +422,7 @@ OSAL_STATIC osal_u16 hmac_ap_encap_csa_action(hmac_vap_stru *hmac_vap, oal_netbu
     }
     payload_addr += len;
 
-    frame_length = ((osal_u16)(payload_addr - payload_addr_origin) + MAC_80211_FRAME_LEN);
-
-    oam_warning_log2(0, OAM_SF_DFS, "vap_id[%d] {hmac_ap_encap_csa_action::LEN = %d.}",
-        hmac_vap->vap_id, frame_length);
-
-    return frame_length;
+    return ((osal_u16)(payload_addr - payload_addr_origin) + MAC_80211_FRAME_LEN);
 }
 
 /*****************************************************************************

@@ -153,13 +153,29 @@ netifapi_do_netif_get_addr(struct tcpip_api_call_data *m)
 err_t
 netifapi_wake_queue(struct netif *netif)
 {
+#if LWIP_TCPIP_CORE_LOCKING
+  err_t err;
+  LOCK_TCPIP_CORE();
+  err = netif_wake_queue(netif);
+  UNLOCK_TCPIP_CORE();
+  return err;
+#else
   return netifapi_netif_common(netif, NULL, netif_wake_queue);
+#endif
 }
 
 err_t
 netifapi_stop_queue(struct netif *netif)
 {
+#if LWIP_TCPIP_CORE_LOCKING
+  err_t err;
+  LOCK_TCPIP_CORE();
+  err = netif_stop_queue(netif);
+  UNLOCK_TCPIP_CORE();
+  return err;
+#else
   return netifapi_netif_common(netif, NULL, netif_stop_queue);
+#endif
 }
 #endif /* DRIVER_STATUS_CHECK */
 

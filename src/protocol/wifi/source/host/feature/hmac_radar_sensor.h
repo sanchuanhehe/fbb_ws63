@@ -85,7 +85,7 @@ typedef enum {
     RADAR_SENSOR_WIFI_MODE_BUTT,
 } radar_sensor_wifi_mode_t;
 
-typedef osal_void (*radar_handle_cb)(uint32_t *rx_mem, osal_u8 chan_num, osal_u8 bandwidth);
+typedef osal_void (*radar_handle_cb)(uint32_t *rx_mem, osal_u8 chan_num, osal_u8 bandwidth, osal_u32 duty);
 typedef osal_u32 (*report_radar_sensor_disable_reason_cb)(radar_sensor_disable_reason_enum_uint8 reason);
 typedef osal_u8 (*hmac_radar_sensor_get_work_ch_num_cb)(osal_void);
 typedef osal_void (*hmac_radar_sensor_del_vap_cb)(osal_void);
@@ -106,7 +106,7 @@ osal_void hmac_radar_sensor_one_subframe_start(osal_void);
 osal_u32 hmac_radar_sensor_set_rx_dc_val(osal_u8 rxdc_gain_lna_lvl_num, osal_u8 rxdc_gain_vga_lvl_num);
 osal_u32 hmac_radar_sensor_set_rx_iq_val(osal_u8 lna_code);
 #ifdef _PRE_RADAR_CCA_SW_OPT
-osal_void hmac_radar_sensor_cca_sw_opt(osal_bool radar_switch);
+osal_void hmac_radar_sensor_cca_sw_opt(osal_bool radar_switch, osal_bool is_mwo_mode);
 #endif
 radar_sensor_wifi_mode_t hmac_radar_sensor_get_wifi_mode_info(osal_void);
 

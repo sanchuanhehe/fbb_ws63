@@ -60,14 +60,12 @@ depends on MIDDLEWARE_SUPPORT_UPG
     config MIDDLEWARE_SUPPORT_UPG_COMPRESS
         bool
         prompt "FOTA for compress"
-        default y
         help
             This option means support FOTA for compress.
 
     config MIDDLEWARE_SUPPORT_UPG_AB
         bool
         prompt "FOTA for AB"
-        default n
         help
             This option means support FOTA for AB plane.
 endchoice
@@ -90,18 +88,17 @@ config MIDDLEWARE_SUPPORT_UPG_SAMPLE_VERIFY
 
 choice
     prompt "EXCEPTION MODE"
-config MIDDLEWARE_SUPPORT_EXCEPT_REBOOT
-    bool
-    prompt "Reboot after exception"
-    default y
-    help
-        This option means support reboot after exception.
-config MIDDLEWARE_SUPPORT_EXCEPT_WAITFOREVER
-    bool
-    prompt "Wait forever after exception"
-    default n
-    help
-        This option means support wait forever after exception.
+    default MIDDLEWARE_SUPPORT_EXCEPT_REBOOT
+    config MIDDLEWARE_SUPPORT_EXCEPT_REBOOT
+        bool
+        prompt "Reboot after exception"
+        help
+            This option means support reboot after exception.
+    config MIDDLEWARE_SUPPORT_EXCEPT_WAITFOREVER
+        bool
+        prompt "Wait forever after exception"
+        help
+            This option means support wait forever after exception.
 endchoice
 
 config MIDDLEWARE_SUPPORT_LFS
@@ -114,7 +111,7 @@ config LFS_PARTITION_ID
     int
     depends on MIDDLEWARE_SUPPORT_LFS
     prompt "littlefs flash partition ID"
-    default 0x21
+    default 33
     help
         This option means support little file system partition ID.
 config LFS_ADAPT_DEBUG

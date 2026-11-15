@@ -1,0 +1,31 @@
+#===============================================================================
+# @brief    Kconfig file for the SLE connection parameter tuning sample.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2026. All rights reserved.
+#===============================================================================
+
+config SUPPORT_SLE_PERIPHERAL
+    bool
+    default y if SAMPLE_SUPPORT_SLE_CONN_PARAM_TUNING_SERVER_SAMPLE
+
+config SUPPORT_SLE_CENTRAL
+    bool
+    default y if SAMPLE_SUPPORT_SLE_CONN_PARAM_TUNING_CLIENT_SAMPLE
+
+if SAMPLE_SUPPORT_SLE_CONN_PARAM_TUNING_SERVER_SAMPLE
+
+choice
+    prompt "SLE connection parameter profile"
+    default SLE_CONN_PARAM_PROFILE_BALANCED
+
+config SLE_CONN_PARAM_PROFILE_LOW_POWER
+    bool "Low power: 100 ms interval, latency 49, 12 s timeout"
+
+config SLE_CONN_PARAM_PROFILE_BALANCED
+    bool "Balanced: 12.5 ms interval, latency 0, 5 s timeout"
+
+config SLE_CONN_PARAM_PROFILE_LOW_LATENCY
+    bool "Low latency: 7.5 ms interval, latency 0, 2 s timeout"
+
+endchoice
+
+endif

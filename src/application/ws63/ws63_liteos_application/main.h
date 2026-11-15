@@ -19,6 +19,7 @@ __attribute__((section(".text.runtime.init"))) void init_mem_value(unsigned int 
     const unsigned int *const end_addr, unsigned int init_val);
 __attribute__((section(".text.runtime.init"))) void do_relocation(void);
 __attribute__((section(".text.runtime.init"))) void runtime_init(void);
+int external_board_init(void);
 
 extern void LOS_PrepareMainTask(void);
 
@@ -39,6 +40,10 @@ extern void splz_thread_handle(void *para);
 
 #ifdef AT_COMMAND
 void at_uart_init(void);
+#endif
+
+#ifdef CONFIG_SUPPORT_MATTER
+extern void MatterAppEntry(void);
 #endif
 
 #ifdef __cplusplus

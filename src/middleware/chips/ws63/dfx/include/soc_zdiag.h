@@ -1,5 +1,5 @@
 /**
-* Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021. All rights reserved.
+* Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2021.All rights reserved. \n
 * Description: header file for diag api. \n
 * Author:  \n
 * History: \n

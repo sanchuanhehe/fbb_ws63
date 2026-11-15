@@ -13,6 +13,7 @@
 #include "hal_pwm_v151.h"
 
 #define PWM_INT_MASK_BIT 3
+#define PWM_START_INTERVAL_US 1
 
 static hal_pwm_callback_t g_hal_pwm_v151_callback[CONFIG_PWM_CHANNEL_NUM] = { NULL };
 static uint32_t g_freq_time = 0;
@@ -87,6 +88,9 @@ static void hal_pwm_v151_set_group_en(pwm_v151_group_t group, bool en)
             hal_pwm_en_set_pwm_en_j(i, en);
         }
     }
+    if (en == false) {
+        return;
+    }
     hal_pwm_startclrcnt_en_set_pwm_startclrcnt_en_i(group, 1);
     hal_pwm_start_set_pwm_start_i(group, 1);
 
@@ -97,10 +101,10 @@ static void hal_pwm_v151_set_group_en(pwm_v151_group_t group, bool en)
                 hal_pwm_en_set_pwm_en_j(i, 0);
             }
         }
+        uapi_tcxo_delay_us(PWM_START_INTERVAL_US);
+        hal_pwm_startclrcnt_en_set_pwm_startclrcnt_en_i(group, 0);
+        hal_pwm_start_set_pwm_start_i(group, 1);
     }
-
-    hal_pwm_startclrcnt_en_set_pwm_startclrcnt_en_i(group, 0);
-    hal_pwm_start_set_pwm_start_i(group, 1);
 #else
     hal_pwm_startclrcnt_en_set_pwm_startclrcnt_en_i(group, 0);
 #endif /* CONFIG_PWM_PRELOAD */
@@ -123,6 +127,11 @@ static void hal_pwm_v151_stop(pwm_v151_group_t group)
     hal_pwm_v151_set_group_en(group, false);
 }
 
+static void hal_pwm_v151_refresh(pwm_v151_group_t group)
+{
+    hal_pwm_startclrcnt_en_set_pwm_startclrcnt_en_i(group, 1);
+    hal_pwm_start_set_pwm_start_i(group, 1);
+}
 static void hal_pwm_v151_set_action(uint8_t group, pwm_action_t action)
 {
     if (action == PWM_ACTION_START) {
@@ -131,6 +140,8 @@ static void hal_pwm_v151_set_action(uint8_t group, pwm_action_t action)
         hal_pwm_v151_stop((pwm_v151_group_t)group);
     } else if (action == PWM_ACTION_CONTINUE_SET) {
         g_repeat_flag = true;
+    } else if (action == PWM_ACTION_REFRESH) {
+        hal_pwm_v151_refresh(group);
     }
 }
 

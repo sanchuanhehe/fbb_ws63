@@ -22,9 +22,9 @@
 
 本示例支持版本号：1.10.101及以上
 
-### 1.2.3 支持IDE版本、支持配套工具版本
+### 1.2.3 支持IDE插件版本
 
-本示例支持IDE版本号：1.0.0.6及以上；
+本示例支持IDE插件版本号：1.0.1及以上；
 
 ## 1.3 效果预览
 
@@ -56,23 +56,23 @@
   
 - 步骤六：点击“build”或者“rebuild”编译
 
-  ![image-20240801112427220](../../doc/media/beep/image-20240801112427220.png)
+  ![image-20250716163653427](../../doc/media/readme/image-20250716163653427.png)
   
 - 步骤七：编译完成如下图所示。
 
-  ![image-20240801165456569](../../doc/media/beep/image-20240801165456569.png)
+  ![image-20250307164622717](../../doc/media/readme/image-20250307164622717.png)
   
 - 步骤八：在HiSpark Studio工具中点击“工程配置”按钮，选择“程序加载”，传输方式选择“serial”，端口选择“comxxx”，com口在设备管理器中查看（如果找不到com口，请参考windows环境搭建）。
 
-  ![image-20250317173145978](../../doc/media/tools/image-20250317173145978.png)
+  ![image-20250716164922699](../../doc/media/readme/image-20250716164922699.png)
   
 - 步骤九：配置完成后，点击工具“程序加载”按钮烧录。
 
-  ![image-20240801174117545](../../doc/media/beep/image-20240801174117545.png)
+  ![image-20250716170835615](../../doc/media/readme/image-20250716170835615.png)
   
 - 步骤十：出现“Connecting, please reset device...”字样时，复位开发板，等待烧录结束。
 
-  ![image-20240801174230202](../../doc/media/beep/image-20240801174230202.png)
+  ![image-20240801174230202](../../doc/media/led/image-20240801174230202.png)
   
 - 步骤十一：“软件烧录成功后，按一下开发板的RESET按键复位开发板，可以发现舵机转动90°、45°、0°、-45°、-90°。
 
@@ -82,98 +82,137 @@
 
   如果需要使用其他IO口复用为PWM输出50hz波形，目前案例使用GPIO02,其他7路PWM可以参考:
 
+  #define CLDO_SUB_CRG_CKEN_CTL0   0x44004400
+  #define CLDO_CRG_DIV_CTL3        0x44001114
+  #define CLDO_CRG_DIV_CTL4        0x44001118
+  #define CLDO_CRG_DIV_CTL5        0x4400111C
+  
+  #define BIT_WIDTH_LIMIT     0xFFFF
+  
+  #define CLDO_CRG_CLK_SEL     0x44001134
+  
+  #define PWM_CKSEL_BIT      7
+  
+  #define PWM_BUS_CKEN             2
+  #define PWM_CHANNEL_CKEN_LEN     9
+
+  #define PWM0_LOAD_DIV_EN         20
+  #define PWM0_DIV1_CFG            16
+  #define PWM0_DIV1_CFG_LEN        4
+  #define PWM1_LOAD_DIV_EN         30
+  #define PWM1_DIV1_CFG            26
+  #define PWM1_DIV1_CFG_LEN        4
+  #define PWM2_LOAD_DIV_EN         8
+  #define PWM2_DIV1_CFG            4
+  #define PWM2_DIV1_CFG_LEN        4
+  #define PWM3_LOAD_DIV_EN         18
+  #define PWM3_DIV1_CFG            14
+  #define PWM3_DIV1_CFG_LEN        4
+  #define PWM4_LOAD_DIV_EN         28
+  #define PWM4_DIV1_CFG            24
+  #define PWM4_DIV1_CFG_LEN        4
+  #define PWM5_LOAD_DIV_EN         8
+  #define PWM5_DIV1_CFG            4
+  #define PWM5_DIV1_CFG_LEN        4
+  #define PWM6_LOAD_DIV_EN         18
+  #define PWM6_DIV1_CFG            14
+  #define PWM6_DIV1_CFG_LEN        4
+  #define PWM7_LOAD_DIV_EN         28
+  #define PWM7_DIV1_CFG            24
+  #define PWM7_DIV1_CFG_LEN        4
+  
   PWM0:
-
+  
   ​    uapi_reg_clrbit(CLDO_CRG_CLK_SEL, PWM_CKSEL_BIT);
-
+  
   ​    reg32_setbits(CLDO_SUB_CRG_CKEN_CTL0, PWM_BUS_CKEN, PWM_CHANNEL_CKEN_LEN, 0x1FF);
-
+  
   ​    reg32_clrbit(CLDO_CRG_DIV_CTL3, PWM0_LOAD_DIV_EN);
-
+  
   ​    reg32_setbits(CLDO_CRG_DIV_CTL3, PWM0_DIV1_CFG, PWM0_DIV1_CFG_LEN, 0xF);
-
+  
   ​    reg32_setbit(CLDO_CRG_DIV_CTL3, PWM0_LOAD_DIV_EN);
-
+  
   PWM1:
-
+  
   ​    uapi_reg_clrbit(CLDO_CRG_CLK_SEL, PWM_CKSEL_BIT);
-
+  
   ​    reg32_setbits(CLDO_SUB_CRG_CKEN_CTL0, PWM_BUS_CKEN, PWM_CHANNEL_CKEN_LEN, 0x1FF);
-
+  
   ​    reg32_clrbit(CLDO_CRG_DIV_CTL3, PWM1_LOAD_DIV_EN);
-
+  
   ​    reg32_setbits(CLDO_CRG_DIV_CTL3, PWM1_DIV1_CFG, PWM1_DIV1_CFG_LEN, 0xF);
-
+  
   ​    reg32_setbit(CLDO_CRG_DIV_CTL3, PWM1_LOAD_DIV_EN);
-
+  
   PWM2;
-
+  
   ​    uapi_reg_clrbit(CLDO_CRG_CLK_SEL, PWM_CKSEL_BIT);
-
+  
   ​    reg32_setbits(CLDO_SUB_CRG_CKEN_CTL0, PWM_BUS_CKEN, PWM_CHANNEL_CKEN_LEN, 0x1FF);    
-
+  
   ​    reg32_clrbit(CLDO_CRG_DIV_CTL4, PWM2_LOAD_DIV_EN);
-
+  
   ​    reg32_setbits(CLDO_CRG_DIV_CTL4, PWM2_DIV1_CFG, PWM2_DIV1_CFG_LEN, 0xF);
-
+  
   ​    reg32_setbit(CLDO_CRG_DIV_CTL4, PWM2_LOAD_DIV_EN);
-
+  
   PWM3:
-
+  
   ​	uapi_reg_clrbit(CLDO_CRG_CLK_SEL, PWM_CKSEL_BIT);
-
+  
   ​    reg32_setbits(CLDO_SUB_CRG_CKEN_CTL0, PWM_BUS_CKEN, PWM_CHANNEL_CKEN_LEN, 0x1FF);    
-
+  
   ​    reg32_clrbit(CLDO_CRG_DIV_CTL4, PWM3_LOAD_DIV_EN);
-
+  
   ​    reg32_setbits(CLDO_CRG_DIV_CTL4, PWM3_DIV1_CFG, PWM3_DIV1_CFG_LEN, 0xF);
-
+  
   ​    reg32_setbit(CLDO_CRG_DIV_CTL4, PWM3_LOAD_DIV_EN);
-
+  
   PWM4:
-
+  
   ​	uapi_reg_clrbit(CLDO_CRG_CLK_SEL, PWM_CKSEL_BIT);
-
+  
   ​    reg32_setbits(CLDO_SUB_CRG_CKEN_CTL0, PWM_BUS_CKEN, PWM_CHANNEL_CKEN_LEN, 0x1FF);    
-
+  
   ​    reg32_clrbit(CLDO_CRG_DIV_CTL4, PWM4_LOAD_DIV_EN);
-
+  
   ​    reg32_setbits(CLDO_CRG_DIV_CTL4, PWM4_DIV1_CFG, PWM4_DIV1_CFG_LEN, 0xF);
-
+  
   ​    reg32_setbit(CLDO_CRG_DIV_CTL4, PWM4_LOAD_DIV_EN);
-
+  
   PWM5:
-
+  
   ​	uapi_reg_clrbit(CLDO_CRG_CLK_SEL, PWM_CKSEL_BIT);
-
+  
   ​    reg32_setbits(CLDO_SUB_CRG_CKEN_CTL0, PWM_BUS_CKEN, PWM_CHANNEL_CKEN_LEN, 0x1FF);    
-
+  
   ​    reg32_clrbit(CLDO_CRG_DIV_CTL5, PWM5_LOAD_DIV_EN);
-
+  
   ​    reg32_setbits(CLDO_CRG_DIV_CTL5, PWM5_DIV1_CFG, PWM5_DIV1_CFG_LEN, 0xF);
-
+  
   ​    reg32_setbit(CLDO_CRG_DIV_CTL5, PWM5_LOAD_DIV_EN);
-
+  
   PWM6:
-
+  
   ​	uapi_reg_clrbit(CLDO_CRG_CLK_SEL, PWM_CKSEL_BIT);
-
+  
   ​    reg32_setbits(CLDO_SUB_CRG_CKEN_CTL0, PWM_BUS_CKEN, PWM_CHANNEL_CKEN_LEN, 0x1FF);    
-
+  
   ​    reg32_clrbit(CLDO_CRG_DIV_CTL5, PWM6_LOAD_DIV_EN);
-
+  
   ​    reg32_setbits(CLDO_CRG_DIV_CTL5, PWM6_DIV1_CFG, PWM6_DIV1_CFG_LEN, 0xF);
-
+  
   ​    reg32_setbit(CLDO_CRG_DIV_CTL5, PWM6_LOAD_DIV_EN);
-
+  
   PWM7:
-
+  
   ​	uapi_reg_clrbit(CLDO_CRG_CLK_SEL, PWM_CKSEL_BIT);
-
+  
   ​    reg32_setbits(CLDO_SUB_CRG_CKEN_CTL0, PWM_BUS_CKEN, PWM_CHANNEL_CKEN_LEN, 0x1FF);    
-
+  
   ​    reg32_clrbit(CLDO_CRG_DIV_CTL5, PWM7_LOAD_DIV_EN);
-
+  
   ​    reg32_setbits(CLDO_CRG_DIV_CTL5, PWM7_DIV1_CFG, PWM7_DIV1_CFG_LEN, 0xF);
-
+  
   ​    reg32_setbit(CLDO_CRG_DIV_CTL5, PWM7_LOAD_DIV_E

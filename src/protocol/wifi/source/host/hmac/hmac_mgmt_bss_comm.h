@@ -60,6 +60,14 @@ typedef struct {
     hmac_ba_rx_hdl_stru *ba_rx_hdl;
 } hmac_mgmt_tx_addba;
 
+typedef struct {
+    osal_u8 peer[WLAN_MAC_ADDR_LEN];
+    osal_u8 subtype;
+    osal_u16 auth_seq;
+    osal_u16 auth_alg;
+    osal_u16 status;
+} hmac_mgmt_print_info;
+
 /*****************************************************************************
   8 UNION定义
 *****************************************************************************/
@@ -177,7 +185,10 @@ osal_u32  hmac_mgmt_tx_delba(hmac_vap_stru *hmac_vap, hmac_user_stru *hmac_user,
 osal_u32  hmac_mgmt_scan_vap_down(const hmac_vap_stru *hmac_vap);
 osal_void hmac_set_cap_info_field(hmac_vap_stru *hmac_vap, osal_u8 *buffer);
 osal_u8   hmac_get_dsss_ie_channel_num(const hmac_vap_stru *hmac_vap, osal_u8 scan_flag);
-
+osal_u32 hmac_get_mgmt_print_info(const osal_u8 *mac_hdr, osal_u16 frame_len,
+    hmac_mgmt_print_info *info, oal_bool_enum_uint8 is_rx);
+osal_void hmac_mgmt_print(const hmac_mgmt_print_info *info, oal_bool_enum_uint8 is_rx);
+osal_void hmac_mgmt_rx_print(const hmac_vap_stru *hmac_vap, const mac_rx_ctl_stru *rx_info, const osal_u8 *mac_hdr);
 #ifdef __cplusplus
 #if __cplusplus
 }

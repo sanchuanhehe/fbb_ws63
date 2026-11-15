@@ -1,21 +1,21 @@
 function(messagexml TARGETDIR)
-    string(REPLACE "${CMAKE_SOURCE_DIR}/" "" RE_TARGETDIR ${TARGETDIR})
+    string(REPLACE "${ROOT_DIR}/" "" RE_TARGETDIR ${TARGETDIR})
     set(TARGET "${RE_TARGETDIR}/${CORE}_messages")
     set(STACK_XML "${RE_TARGETDIR}/stack.xml")
     set(MESSAGES_XML "${TARGET}.xml")
     set(MESSAGES_EXTERNAL_XML "${TARGET}_external.xml")
     set(MESSAGES_HFILE "${TARGET}.h")
     set(MESSAGES_CPPFILE "${TARGET}.i")
-    set(MESSAGEXMLCONFIG ${CMAKE_SOURCE_DIR}/build/script/hdbxml_custom/MessageXmlGen/MessageXmlGen_${CORE}.cfg)
-    set(MESSAGERULES ${CMAKE_SOURCE_DIR}/build/script/hdbxml_custom/MessageXmlGen/MessageRules_${CORE}.xml)
-    if(EXISTS "${CMAKE_SOURCE_DIR}/${MESSAGES_HFILE}")
-        message(STATUS "REMOVE ${CMAKE_SOURCE_DIR}/${MESSAGES_HFILE}")
-        file(REMOVE "${CMAKE_SOURCE_DIR}/${MESSAGES_HFILE}")
+    set(MESSAGEXMLCONFIG ${ROOT_DIR}/build/script/hdbxml_custom/MessageXmlGen/MessageXmlGen_${CORE}.cfg)
+    set(MESSAGERULES ${ROOT_DIR}/build/script/hdbxml_custom/MessageXmlGen/MessageRules_${CORE}.xml)
+    if(EXISTS "${ROOT_DIR}/${MESSAGES_HFILE}")
+        message(STATUS "REMOVE ${ROOT_DIR}/${MESSAGES_HFILE}")
+        file(REMOVE "${ROOT_DIR}/${MESSAGES_HFILE}")
     endif()
     list(LENGTH WANTED_HEADERS LI_LEN)
     set(INDEX 1)
     foreach(h_file ${WANTED_HEADERS})
-        string(REPLACE "${CMAKE_SOURCE_DIR}/" "" re_h_file ${h_file})
+        string(REPLACE "${ROOT_DIR}/" "" re_h_file ${h_file})
         if (${INDEX} EQUAL ${LI_LEN})
             file(APPEND ${MESSAGES_HFILE} "#include \"${re_h_file}\"")
         else()
@@ -26,7 +26,7 @@ function(messagexml TARGETDIR)
 
     set(XML_CPPINCFLAGS)
     foreach(inc ${INCLUDES})
-        string(REPLACE "${CMAKE_SOURCE_DIR}/" "" re_inc ${inc})
+        string(REPLACE "${ROOT_DIR}/" "" re_inc ${inc})
         list(APPEND XML_CPPINCFLAGS "-I${re_inc} ")
     endforeach()
 
@@ -46,7 +46,7 @@ function(messagexml TARGETDIR)
     file(WRITE ${RE_TARGETDIR}/database_define.rsp ${XML_CPPDEFFLAGS})
 
     execute_process(COMMAND ${CMAKE_C_COMPILER} -E @${RE_TARGETDIR}/database_include.rsp @${RE_TARGETDIR}/database_define.rsp ${MESSAGES_HFILE}
-                    WORKING_DIRECTORY  ${CMAKE_SOURCE_DIR}
+                    WORKING_DIRECTORY  ${ROOT_DIR}
                     RESULT_VARIABLE RES
                     ERROR_VARIABLE ERR
                     OUTPUT_VARIABLE OUT)
@@ -59,9 +59,9 @@ function(messagexml TARGETDIR)
     endif()
     file(APPEND ${MESSAGES_CPPFILE} "${OUT}")
     message(STATUS ${Python3_EXECUTABLE})
-    message(STATUS "${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/build/script/hdbxml_custom/MessageXmlGen/MessageXmlGen.py ${MESSAGES_CPPFILE} ${MESSAGES_XML} ${MESSAGEXMLCONFIG} ${CORE} ${CORE} ${MESSAGERULES}")
-    execute_process(COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/build/script/hdbxml_custom/MessageXmlGen/MessageXmlGen.py ${MESSAGES_CPPFILE} ${MESSAGES_XML} ${MESSAGEXMLCONFIG} ${CORE} ${CORE} ${MESSAGERULES}
-                    WORKING_DIRECTORY  ${CMAKE_SOURCE_DIR}
+    message(STATUS "${Python3_EXECUTABLE} ${ROOT_DIR}/build/script/hdbxml_custom/MessageXmlGen/MessageXmlGen.py ${MESSAGES_CPPFILE} ${MESSAGES_XML} ${MESSAGEXMLCONFIG} ${CORE} ${CORE} ${MESSAGERULES}")
+    execute_process(COMMAND ${Python3_EXECUTABLE} ${ROOT_DIR}/build/script/hdbxml_custom/MessageXmlGen/MessageXmlGen.py ${MESSAGES_CPPFILE} ${MESSAGES_XML} ${MESSAGEXMLCONFIG} ${CORE} ${CORE} ${MESSAGERULES}
+                    WORKING_DIRECTORY  ${ROOT_DIR}
                     RESULT_VARIABLE RES
                     ERROR_VARIABLE ERR
                     OUTPUT_VARIABLE OUT)
@@ -103,8 +103,8 @@ function(messagexml_generate_defs)
     # message(STATUS ${WANTED_HEADERS})
     list(INSERT INCLUDES 0 ${MSGDEF_INCLUDES})
     list(INSERT INCLUDES 0 ${MSGDEF_INCLUDES_DFX})
-    list(APPEND INCLUDES ${CMAKE_SOURCE_DIR})
-    list(APPEND INCLUDES ${CMAKE_SOURCE_DIR}/kernel/liteos/liteos_v208.6.0_b017_cat1/Huawei_LiteOS/platform/libsec/include)
+    list(APPEND INCLUDES ${ROOT_DIR})
+    list(APPEND INCLUDES ${ROOT_DIR}/kernel/liteos/liteos_v208.6.0_b017_cat1/Huawei_LiteOS/platform/libsec/include)
     set(XML_DEFINES ${ALL_DEFINES})
     list(APPEND XML_DEFINES "SOC_DO_NOT_PACK_STRUCTS")
     messagexml("${PROJECT_BINARY_DIR}")

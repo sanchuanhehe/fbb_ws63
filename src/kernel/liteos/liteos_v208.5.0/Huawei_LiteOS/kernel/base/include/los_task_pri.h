@@ -93,6 +93,12 @@ extern "C" {
 #define OS_TASK_STACK_POOL m_aucSysMem1
 #endif
 
+/* rtthread thread init tick */
+#ifdef LOSCFG_COMPAT_RT_THREAD
+#define MAX_TASKS LOSCFG_BASE_CORE_TSK_LIMIT
+extern UINT32 g_threadTick[MAX_TASKS];
+#endif
+
 /* Maximum number of tasks */
 extern UINT32 g_taskMaxNum;
 

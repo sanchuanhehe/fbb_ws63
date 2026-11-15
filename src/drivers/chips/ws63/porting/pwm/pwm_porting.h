@@ -28,9 +28,6 @@ extern "C" {
  */
 uintptr_t pwm_porting_base_addr_get(void);
 
-
-#define PWM_MAX_NUMBER      6  /* < Max number of PWM available */
-
 /**
  * @brief  PWM v150 channel ID.
  */
@@ -51,7 +48,7 @@ typedef enum {
     PWM_13,                 /* < PWM Peripheral 13. */
     PWM_14,                 /* < PWM Peripheral 14. */
     PWM_15,                 /* < PWM Peripheral 15. */
-    PWM_NONE = PWM_MAX_NUMBER
+    PWM_NONE = CONFIG_PWM_CHANNEL_NUM
 } pwm_channel_t;
 
 /**

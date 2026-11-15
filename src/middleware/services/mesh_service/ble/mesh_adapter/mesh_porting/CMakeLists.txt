@@ -1,0 +1,14 @@
+
+add_subdirectory(liteos)
+set(HEADER_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+set(SOURCES_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/bt_mesh_nv_task.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/bt_mesh_errcode.c
+)
+
+set(SOURCES "${SOURCES}" ${SOURCES_LIST} PARENT_SCOPE)
+set(PRIVATE_HEADER "${PRIVATE_HEADER}" ${HEADER_LIST} PARENT_SCOPE)

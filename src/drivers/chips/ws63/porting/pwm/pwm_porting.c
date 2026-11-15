@@ -139,8 +139,9 @@ void pwm_port_register_irq(pwm_channel_t channel)
 {
     unused(channel);
     osal_irq_request((uintptr_t)PWM_ABNOR_IRQN, (osal_irq_handler)pwm_handler, NULL, NULL, NULL);
-
+    osal_irq_request((uintptr_t)PWM_CFG_IRQN, (osal_irq_handler)pwm_handler, NULL, NULL, NULL);
     osal_irq_enable((uintptr_t)PWM_ABNOR_IRQN);
+    osal_irq_enable((uintptr_t)PWM_CFG_IRQN);
 }
 
 void pwm_port_unregister_irq(pwm_channel_t channel)
@@ -166,7 +167,7 @@ void pwm_irq_unlock(uint8_t channel)
 
 uint32_t pwm_port_get_clock_value(pwm_channel_t channel)
 {
-    if (channel >= PWM_MAX_NUMBER) {
+    if (channel >= CONFIG_PWM_CHANNEL_NUM) {
         return 0;
     }
     return BUS_CLOCK_TIME_40M;

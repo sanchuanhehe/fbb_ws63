@@ -9,6 +9,7 @@ endif()
 
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/nv_flash.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/nv_crypto.c
 )
 
 set(PUBLIC_HEADER

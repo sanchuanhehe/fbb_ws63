@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
+# Copyright (c) 2020 HiSilicon (Shanghai) Technologies CO.; LIMITED.
 # Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2021-2022. All rights reserved.
 
 import os
@@ -49,6 +50,7 @@ def create():
     global G_PARAMS
     root = sys.argv[1]
     chip = sys.argv[2]
+    build_root = sys.argv[3] if len(sys.argv) > 3 else root
     in_path = XML_PATH
     in_path = in_path.replace('<chip>', chip)
 
@@ -58,9 +60,9 @@ def create():
         db_conf = json.load(f)
 
     G_PARAMS["DATABASE_BASE"] = os.path.join(root, db_conf["DATABASE_BASE"])
-    G_PARAMS["DATABASE_MSS_PRIM_PATH"] = os.path.join(root, db_conf["DATABASE_MSS_PRIM_PATH"])
-    G_PARAMS["DATABASE_DIAG_DIR_PATH"] = os.path.join(root, db_conf["DATABASE_DIAG_DIR_PATH"])
-    G_PARAMS["OUT_DIR"] = os.path.join(root, db_conf["OUT_DIR"])
+    G_PARAMS["DATABASE_MSS_PRIM_PATH"] = os.path.join(build_root, db_conf["DATABASE_MSS_PRIM_PATH"])
+    G_PARAMS["DATABASE_DIAG_DIR_PATH"] = os.path.join(build_root, db_conf["DATABASE_DIAG_DIR_PATH"])
+    G_PARAMS["OUT_DIR"] = os.path.join(build_root, db_conf["OUT_DIR"])
     G_PARAMS["DATABASE_VERSION"] = db_conf["DATABASE_VERSION"]
     G_PARAMS["DATABASE_VERSION_CORE"] = db_conf["DATABASE_VERSION_CORE"]
 

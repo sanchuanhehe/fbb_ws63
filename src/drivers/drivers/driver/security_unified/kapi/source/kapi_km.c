@@ -42,7 +42,7 @@ crypto_mutex g_keyslot_mutex;
 
 #define CRYPTO_MCIPHER_KEYSLOT_NUM      8
 #define CRYPTO_HMAC_KEYSLOT_NUM         2
-#define CRYPTO_KLAD_VIRT_NUM            4
+#define CRYPTO_KLAD_VIRT_NUM            6
 
 static crypto_kapi_keyslot_ctx g_keyslot_symc_ctx_list[CRYPTO_MCIPHER_KEYSLOT_NUM] = {0};
 static crypto_kapi_keyslot_ctx g_keyslot_hmac_ctx_list[CRYPTO_HMAC_KEYSLOT_NUM] = {0};

@@ -354,7 +354,7 @@ STATIC errcode_t kv_update_hash_encrypt_chunk(kv_managed_write_buffer_t *write_b
         if (!write_buffer->hash_claimed) {
             return ERRCODE_NV_HASH_UNAVAILABLE;
         }
-        nv_crypto_update_hash((const uint8_t *)(uintptr_t)chunk_dest, chunk_len);
+        nv_crypto_update_hash(write_buffer->hash_handle, (const uint8_t *)(uintptr_t)chunk_dest, chunk_len);
     }
 
     /* Need to encrypt data? */
@@ -472,8 +472,10 @@ STATIC errcode_t select_next_source_buffer(void)
             if (source_buffer->data_length < KV_CRYPTO_HASH_SIZE) {
                 return ERRCODE_NV_KEY_HASH_BUFFER_TOO_SMALL;
             }
+
+            uint32_t data_len = 0;
             (void)memset_s(source_buffer->data,  source_buffer->data_length, 0, source_buffer->data_length);
-            nv_crypto_complete_hash(source_buffer->data);
+            nv_crypto_complete_hash(write_buffer->hash_handle, source_buffer->data, &data_len);
 
             write_buffer->crc_ret = kv_crc32_swap(write_buffer->crc_ret);
             (void)memcpy_s((void *)(source_buffer->data + KV_CRYPTO_HASH_SIZE - KV_CRYPTO_CRC_SIZE),
@@ -1145,7 +1147,7 @@ STATIC kv_update_event_t kv_update_action_claim_crypto(void)
 
 #if (CONFIG_NV_SUPPORT_HASH_FOR_CRYPT == NV_YES)
         if (!write_buffer->hash_claimed) {
-            errcode_t res = nv_crypto_start_hash();
+            errcode_t res = nv_crypto_start_hash(&(write_buffer->hash_handle));
             if (res != ERRCODE_SUCC) {
                 nv_crypto_release_aes(write_buffer->crypto_handle);
                 write_buffer->crypto_handle = INVAILD_CRYPTO_HANDLE;

@@ -103,6 +103,15 @@ static void hal_i2s_config(sio_bus_t bus, hal_sio_mode_t mode)
     hal_sio_v150_ct_set_set_tx_fifo_threshold(bus, CONFIG_I2S_TX_THRESHOLD);
 }
 
+#if defined(CONFIG_I2S_SUPPORT_DYNAMIC_SAMPLE_RATE)
+#pragma weak hal_sio_set_sample_rate = hal_sio_v150_set_sample_rate
+void hal_sio_v150_set_sample_rate(sio_bus_t bus, uint32_t sample_rate_index)
+{
+    unused(bus);
+    unused(sample_rate_index);
+}
+#endif
+
 static void hal_pcm_config(sio_bus_t bus, hal_sio_mode_t mode)
 {
     sio_porting_register_irq(bus);

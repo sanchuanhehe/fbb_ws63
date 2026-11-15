@@ -49,7 +49,7 @@ extern "C" {
 
 VOID LOS_SetSysClosk(UINT32 clock);
 UINT32 LOS_GetSysClosk(VOID);
-
+VOID sys_mem_show(VOID);
 #ifdef __cplusplus
 #if __cplusplus
 }

@@ -14,6 +14,7 @@
 #include "osal_adapt.h"
 #endif
 #include "hal_dma_mem.h"
+#include "soc_osal.h"
 
 #define HAL_DMA_CH_MAX_TRANSFER_NUM 4096
 
@@ -229,13 +230,16 @@ dma_channel_t hal_dma_v151_get_idle_ch(hal_dma_handshaking_source_t source,
     unused(burst_length);
     unused(source);
 #endif /* CONFIG_DMA_SUPPORT_SMDMA */
+    uint32_t irq_sts = osal_irq_lock();
     for (ch = start_ch_num; ch < max_ch_num; ch++) {
         if (!hal_dma_v151_is_enabled((dma_channel_t)ch) &&
             (g_hal_dma_channel[ch].state == HAL_DMA_CH_STATE_CLOSED)) {
             g_hal_dma_channel[ch].state = HAL_DMA_CH_STATE_ACTIVE;
+            osal_irq_restore(irq_sts);
             return (dma_channel_t)ch;
         }
     }
+    osal_irq_restore(irq_sts);
     return DMA_CHANNEL_NONE;
 }
 
@@ -307,6 +311,8 @@ errcode_t hal_dma_v151_config_single_block(dma_channel_t ch,
 
     if (base_cfg->callback != NULL) {
         hal_dma_ctrl_set_tc_int_en(tmp_dma_ch, (uint32_t)1, tmp_dma_regs);
+    } else {
+        g_hal_dma_channel[ch].state = HAL_DMA_CH_STATE_CLOSED;
     }
 
     if (periph_cfg != NULL) {
@@ -382,7 +388,10 @@ errcode_t hal_dma_v151_add_lli_transfer(dma_channel_t ch,
                                         hal_dma_transfer_peri_config_t *periph_cfg)
 {
     bool dma_flag = false;
-
+    // 防止客户误操作，传入长度超过最大值，导致后续流程异常
+    if (base_cfg->transfer_num >= HAL_DMA_CH_MAX_TRANSFER_NUM) {
+        return ERRCODE_DMA_RET_TOO_MANY_DATA_TO_TRANSFER;
+    }
     if (g_dma_node_cfg[ch] == NULL) {
         dma_flag = true;
     }

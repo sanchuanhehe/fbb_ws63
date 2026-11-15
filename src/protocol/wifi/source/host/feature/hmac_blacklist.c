@@ -488,8 +488,7 @@ OAL_STATIC osal_u32 hmac_whitelist_check_user(hmac_vap_stru *hmac_vap)
             continue;
         }
 
-        ret = hmac_blacklist_filter_etc(hmac_vap, hmac_user->user_mac_addr);
-        if (ret != OAL_TRUE) {
+        if (hmac_blacklist_filter_etc(hmac_vap, hmac_user->user_mac_addr) != OAL_TRUE) {
             continue;
         }
         /* 2014.6.30 在如上的hmac_blacklist_filter()中会 drop_counter++ 它不是实际的过滤数，所以--恢复 */
@@ -1486,8 +1485,8 @@ OAL_STATIC osal_bool hmac_blacklist_free_pointer(osal_void *notify_data)
         return OSAL_FALSE;
     }
     blacklist_info = hmac_vap->blacklist_info;
-    if (blacklist_info == OAL_PTR_NULL) {
-        return OSAL_FALSE;
+    if (blacklist_info == OAL_PTR_NULL) {   /* 如果没有黑名单，指针为空，属于正常逻辑，返回OSAL_TRUE */
+        return OSAL_TRUE;
     }
 
     if (hmac_vap->vap_mode == WLAN_VAP_MODE_BSS_AP) {

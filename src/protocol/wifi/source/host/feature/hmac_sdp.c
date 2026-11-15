@@ -398,6 +398,7 @@ OAL_STATIC osal_void hmac_sdp_fill_followup_content(osal_u8 *data_input, const o
         oam_error_log0(0, OAM_SF_SDP, "hmac_sdp_fill_followup_content::memcpy_s attr failed");
         return;
     }
+
     data += sizeof(hmac_sdp_descriptor_attr);
 
     if (memcpy_s(data, sdp_info->len, sdp_info->data, sdp_info->len) != EOK) {
@@ -430,24 +431,16 @@ OAL_STATIC osal_u16 hmac_sdp_encap_action(const hmac_vap_stru *hmac_vap, oal_net
 
     /* 设置地址1，对端地址 */
     dst_mac = (is_publish == OAL_TRUE) ? mcast_mac : sdp_info->name;
-    if (memcpy_s(data + WLAN_HDR_ADDR1_OFFSET, WLAN_MAC_ADDR_LEN, dst_mac, WLAN_MAC_ADDR_LEN) != EOK) {
-        return 0;
-    }
+    (void)memcpy_s(data + WLAN_HDR_ADDR1_OFFSET, WLAN_MAC_ADDR_LEN, dst_mac, WLAN_MAC_ADDR_LEN);
 
     /* 设置本端的MAC地址 */
-    if (memcpy_s(data + WLAN_HDR_ADDR2_OFFSET, WLAN_MAC_ADDR_LEN,
-        hmac_vap->mib_info->wlan_mib_sta_config.dot11_station_id, WLAN_MAC_ADDR_LEN) != EOK) {
-        return 0;
-    }
+    (void)memcpy_s(data + WLAN_HDR_ADDR2_OFFSET, WLAN_MAC_ADDR_LEN,
+        hmac_vap->mib_info->wlan_mib_sta_config.dot11_station_id, WLAN_MAC_ADDR_LEN);
     /* 地址3, BSSID */
-    if (memcpy_s(data + WLAN_HDR_ADDR3_OFFSET, WLAN_MAC_ADDR_LEN, bssid, WLAN_MAC_ADDR_LEN) != EOK) {
-        return 0;
-    }
+    (void)memcpy_s(data + WLAN_HDR_ADDR3_OFFSET, WLAN_MAC_ADDR_LEN, bssid, WLAN_MAC_ADDR_LEN);
 
     action_hdr = (sdp_action_header *)(data + MAC_80211_FRAME_LEN); /* 取action帧体 */
-    if (memcpy_s(action_hdr, sizeof(action_hdr_fixed), action_hdr_fixed, sizeof(action_hdr_fixed)) != EOK) {
-        return 0;
-    }
+    (void)memcpy_s(action_hdr, sizeof(action_hdr_fixed), action_hdr_fixed, sizeof(action_hdr_fixed));
     payload_addr = (osal_u8 *)(action_hdr + 1);
 
     /* 以下为填充SDP除action头之外帧体内容 */

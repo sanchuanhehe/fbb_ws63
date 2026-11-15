@@ -22,8 +22,17 @@ set(HSO_XML_MERGE ${HDB_SCRIPT_DIR}/hso_prim_xml_merge.py)
 set(HSO_XML_DB_CREATE ${HDB_SCRIPT_DIR}/database_create.py)
 set(HSO_XML_PRE_PROCESS ${HDB_SCRIPT_DIR}/process_pregenerated_xml.py)
 
+# Build outputs belong to the selected build root. ROOT_DIR remains the SDK
+# source root and must not be used for generated artifacts in out-of-tree
+# builds. cmake_builder.py passes FBB_BUILD_ROOT_DIR explicitly; the fallback
+# preserves direct/in-tree CMake compatibility.
+if(NOT DEFINED FBB_BUILD_ROOT_DIR OR "${FBB_BUILD_ROOT_DIR}" STREQUAL "")
+    set(FBB_BUILD_ROOT_DIR "${ROOT_DIR}")
+endif()
+file(TO_CMAKE_PATH "${FBB_BUILD_ROOT_DIR}" FBB_BUILD_ROOT_DIR)
+
 # PARSE script
-set(OUTPUT_DIR "${ROOT_DIR}/output")
+set(OUTPUT_DIR "${FBB_BUILD_ROOT_DIR}/output")
 set(HSO_PARSE_DIR ${SCRIPT_DIR}/parse_tool)
 set(HSO_PARSE_MAIN ${HSO_PARSE_DIR}/parse_main_phase1.py)
 

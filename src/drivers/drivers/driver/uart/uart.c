@@ -239,7 +239,7 @@ void uart_rx_thread_debug_print(void)
 STATIC void uart_rx_thread_debug_increase(uint16_t length)
 {
     g_uart_rx_thread_debug.cur_heap_size += length;
-    g_uart_rx_thread_debug.cur_heap_size += sizeof(uart_rx_thread_node);
+    g_uart_rx_thread_debug.cur_heap_size += (uint32_t)sizeof(uart_rx_thread_node);
     g_uart_rx_thread_debug.cur_node_cnt++;
 
     if (g_uart_rx_thread_debug.cur_heap_size > g_uart_rx_thread_debug.max_heap_size) {
@@ -258,7 +258,7 @@ STATIC void uart_rx_thread_debug_increase(uint16_t length)
 STATIC void uart_rx_thread_debug_decrease(uint16_t length)
 {
     g_uart_rx_thread_debug.cur_heap_size -= length;
-    g_uart_rx_thread_debug.cur_heap_size -= sizeof(uart_rx_thread_node);
+    g_uart_rx_thread_debug.cur_heap_size -= (uint32_t)sizeof(uart_rx_thread_node);
     g_uart_rx_thread_debug.cur_node_cnt--;
 }
 #endif
@@ -298,7 +298,7 @@ STATIC int uart_rx_thread(void *unused)
                 osal_list_del(rx_list_entry);
 
                 irq_sts = osal_irq_lock();
-                g_uart_rx_thread_ctrl.cur_heap_size -= ((size_t)(sizeof(uart_rx_thread_node)) +
+                g_uart_rx_thread_ctrl.cur_heap_size -= ((uint32_t)(sizeof(uart_rx_thread_node)) +
                     (rx_list_node->buf_len));
 #if defined(CONFIG_UART_SUPPORT_RX_THREAD_DEBUG)
                 uart_rx_thread_debug_decrease(rx_list_node->buf_len);
@@ -321,7 +321,7 @@ STATIC void uart_rx_thread_trigger(void)
  
 STATIC void uart_rx_thread_entry(uart_bus_t bus, const void *buffer, uint16_t length, bool error)
 {
-    if (g_uart_rx_thread_ctrl.cur_heap_size + sizeof(uart_rx_thread_node) + length >
+    if (g_uart_rx_thread_ctrl.cur_heap_size + (uint32_t)sizeof(uart_rx_thread_node) + length >
         CONFIG_UART_SUPPORT_RX_THREAD_BUFFER_SIZE) {
 #if defined(CONFIG_UART_SUPPORT_RX_THREAD_DEBUG)
         g_uart_rx_thread_debug.drop_node_size += length;
@@ -350,7 +350,7 @@ STATIC void uart_rx_thread_entry(uart_bus_t bus, const void *buffer, uint16_t le
     }
 
     uint32_t irq_sts = osal_irq_lock();
-    g_uart_rx_thread_ctrl.cur_heap_size += ((size_t)(sizeof(uart_rx_thread_node)) + length);
+    g_uart_rx_thread_ctrl.cur_heap_size += ((uint32_t)(sizeof(uart_rx_thread_node)) + length);
     osal_list_add_tail(&(node->node), &(g_uart_rx_list[bus]));
 #if defined(CONFIG_UART_SUPPORT_RX_THREAD_DEBUG)
     uart_rx_thread_debug_increase(length);
@@ -478,9 +478,19 @@ STATIC void uart_rx_buffer_report(uart_bus_t bus, bool error);
 STATIC timer_handle_t g_uart_timer[UART_BUS_MAX_NUMBER] = {0};
 STATIC uint32_t g_timer_delay_time = 0;
 
+/**
+ * 在定时器到期时，先检查UART接收FIFO是否为空：
+ * - 如果FIFO为空，说明数据已全部接收，可以安全上报
+ * - 如果FIFO非空，说明对端可能正在发送数据，本次定时器到期不上报
+ */
 STATIC void uart_rx_conditon_timer_callback(uintptr_t data)
 {
-    uart_rx_buffer_report((uart_bus_t)data, false);
+    bool rx_fifo_empty = false;
+    uart_bus_t bus = (uart_bus_t)data;
+    hal_uart_ctrl(bus, UART_CTRL_CHECK_RX_FIFO_EMPTY, (uintptr_t)&rx_fifo_empty);
+    if (rx_fifo_empty == true) {
+        uart_rx_buffer_report((uart_bus_t)data, false);
+    }
 }
 
 STATIC errcode_t uart_rx_conditon_timer_init(uart_bus_t bus, uint32_t baud_rate)
@@ -549,7 +559,6 @@ errcode_t uapi_uart_init(uart_bus_t bus, const uart_pin_config_t *pins, const ua
 #if defined(CONFIG_UART_SUPPORT_LPC)
     uart_port_clock_enable(bus, true);
 #endif
-    uart_claim_pins(bus, pins);
 
 #if defined(CONFIG_UART_SUPPORT_RX)
     if (uart_config_rx_state(bus, uart_buffer_config) == false) {
@@ -581,6 +590,8 @@ errcode_t uapi_uart_init(uart_bus_t bus, const uart_pin_config_t *pins, const ua
 #if defined(CONFIG_UART_SUPPORT_RX_FRAME_CALLBACK)
     ret = uart_rx_conditon_timer_init(bus, attr->baud_rate);
 #endif
+
+    uart_claim_pins(bus, pins);
     return ret;
 }
 
@@ -593,9 +604,8 @@ errcode_t uapi_uart_deinit(uart_bus_t bus)
     if (!g_uart_inited[bus]) {
         return ERRCODE_SUCC;
     }
-    ret = hal_uart_deinit(bus);
-
     uart_port_unregister_irq(bus);
+    ret = hal_uart_deinit(bus);
 
 #if defined(CONFIG_UART_SUPPORT_RX) || defined(CONFIG_UART_SUPPORT_TX)
     uart_deconfig_state(bus);
@@ -649,6 +659,7 @@ errcode_t uapi_uart_register_rx_callback(uart_bus_t bus, uart_rx_condition_t con
                                          uint32_t size, uart_rx_callback_t callback)
 {
     errcode_t ret = ERRCODE_FAIL;
+    uint32_t rx_size = size;
 
     if (bus >= UART_BUS_MAX_NUM || callback == NULL) {
         return ERRCODE_INVALID_PARAM;
@@ -676,9 +687,9 @@ errcode_t uapi_uart_register_rx_callback(uart_bus_t bus, uart_rx_condition_t con
 #if !defined(CONFIG_UART_NOT_SUPPORT_RX_CONDITON_SIZE_OPTIMIZE)
     uint32_t uart_rx_fifo_thresh = 0;
     ret = hal_uart_ctrl(bus, UART_CTRL_GET_RX_FIFO_THRESHOLD, (uintptr_t)&uart_rx_fifo_thresh);
-    size = size > uart_rx_fifo_thresh ? uart_rx_fifo_thresh : size;
+    rx_size = size > uart_rx_fifo_thresh ? uart_rx_fifo_thresh : size;
 #endif
-    rx_state->rx_condition_size = (uint16_t)size;
+    rx_state->rx_condition_size = (uint16_t)rx_size;
     ret = hal_uart_ctrl(bus, UART_CTRL_EN_RX_INT, 1);
     ret = hal_uart_ctrl(bus, UART_CTRL_EN_FRAME_ERR_INT, 1);
     ret = hal_uart_ctrl(bus, UART_CTRL_EN_PARITY_ERR_INT, 1);
@@ -761,6 +772,31 @@ int32_t uapi_uart_write(uart_bus_t bus, const uint8_t *buffer, uint32_t length, 
     return write_count;
 }
 
+int32_t uapi_uart_write_nolock(uart_bus_t bus, const uint8_t *buffer, uint32_t length, uint32_t timeout)
+{
+    unused(timeout);
+    bool tx_fifo_full = false;
+    uint8_t *data_buffer = (uint8_t *)buffer;
+    int32_t write_count = 0;
+    uint32_t len = length;
+ 
+    int32_t ret = uapi_uart_param_check(bus, buffer, length);
+    if (ret != ERRCODE_SUCC) {
+        return ret;
+    }
+ 
+    while (len > 0) {
+        hal_uart_ctrl(bus, UART_CTRL_CHECK_TX_FIFO_FULL, (uintptr_t)&tx_fifo_full);
+        if (tx_fifo_full == false) {
+            hal_uart_write(bus, data_buffer++, 1);
+            len--;
+            write_count++;
+        }
+    }
+ 
+    return write_count;
+}
+
 #if defined(CONFIG_UART_SUPPORT_TX_INT)
 static void uapi_uart_data_send(uart_bus_t bus)
 {
@@ -791,14 +827,14 @@ errcode_t uapi_uart_write_int(uart_bus_t bus, const uint8_t *buffer, uint32_t le
         return ret;
     }
 
-    uint32_t irq_sts = uart_porting_lock(bus);
+    uint32_t irq_sts = osal_irq_lock();
     if (uart_helper_are_there_fragments_to_process(bus) == true) {
         uapi_uart_data_send(bus);
     }
 
     bool fragment_added = uart_helper_add_fragment(bus, buffer, length, params, finished_with_buffer_func);
     if (!fragment_added) {
-        uart_porting_unlock(bus, irq_sts);
+        osal_irq_restore(irq_sts);
         return ERRCODE_UART_ADD_QUEUE_FAIL;
     }
     /* If it is the first on the list process it */
@@ -810,7 +846,7 @@ errcode_t uapi_uart_write_int(uart_bus_t bus, const uint8_t *buffer, uint32_t le
             hal_uart_ctrl(bus, UART_CTRL_EN_TX_INT, true);
         }
     }
-    uart_porting_unlock(bus, irq_sts);
+    osal_irq_restore(irq_sts);
     return ERRCODE_SUCC;
 }
 #endif
@@ -1273,7 +1309,7 @@ static void uart_claim_pins(uart_bus_t bus, const uart_pin_config_t *pins)
 
 static void uart_release_pins(uart_bus_t bus)
 {
-    unused(bus);
+    uart_port_release_pinmux(bus);
 }
 
 #if defined(CONFIG_UART_SUPPORT_RX)

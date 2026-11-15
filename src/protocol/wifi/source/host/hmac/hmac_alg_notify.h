@@ -63,6 +63,11 @@ oal_bool_enum_uint8 hmac_alg_dbac_is_pause(hal_to_dmac_device_stru *hal_device);
 osal_s32 hmac_alg_update_dbac_fcs_config(hmac_vap_stru *hmac_vap);
 #endif
 osal_void hmac_alg_vap_up_hmac_to_dmac(hmac_vap_stru *mac_vap);
+#ifdef _PRE_WLAN_FEATURE_TEMP_PROTECT_ACTION
+osal_u32 hmac_alg_register_temp_protect_notify_func(p_alg_temp_protect_notify_func func);
+osal_u32 hmac_alg_unregister_temp_protect_notify_func(osal_void);
+osal_void hmac_alg_temp_protect_notify(osal_s16 ave_temp, osal_u8 state);
+#endif
 
 /*****************************************************************************
  函 数 名  : hmac_alg_tx_schedule_notify

@@ -36,7 +36,7 @@ static void example_event_read(const char *arg)
     // 超时等待读事件，超时时间为永远等待
     printf("example_event wait event 0x%x\r\n", TEST_EVENT);
     ret = osal_event_read(&g_event_id, TEST_EVENT, OSAL_WAIT_FOREVER, OSAL_WAITMODE_AND);
-    if (ret == 1) {
+    if (ret == TEST_EVENT) {
         printf("example_event read event 0x%x\r\n", TEST_EVENT);
     } else {
         printf("example_event read event failed\r\n");

@@ -47,7 +47,9 @@
 #include <linux/ieee80211.h>
 #endif
 #if defined(_PRE_OS_VERSION_LITEOS) && defined(_PRE_OS_VERSION) && (_PRE_OS_VERSION_LITEOS == _PRE_OS_VERSION)
+#ifndef _PRE_WLAN_USE_CUSTOM_LWIP
 #include "lwip/netif.h"
+#endif
 #include "oal_skbuff.h"
 #endif
 
@@ -545,7 +547,7 @@ typedef struct oal_net_device {
     td_u32                      last_rx;
     td_u32                      flags;
     oal_iw_handler_def_stru*     wireless_handlers;
-    td_u8                       dev_addr[ETHER_ADDR_LEN];
+    td_u8                       dev_addr[OAL_MAC_ADDR_LEN];
     td_u8                       addr_idx;
     td_u8                       resv;
     td_s32                      tx_queue_len;
@@ -566,7 +568,9 @@ typedef struct oal_net_device {
     td_void*                     priv;
     td_u32                      num_tx_queues;
     oal_ext_eapol_stru          ext_eapol;   /* EAPOL报文收发数据结构 */
+#ifndef _PRE_WLAN_USE_CUSTOM_LWIP
     oal_lwip_netif*              lwip_netif; /* LWIP协议栈数据结构 */
+#endif
 #ifdef _PRE_WLAN_FEATURE_VLWIP
     oal_lwip_netif*              vlwip_netif;
 #endif
@@ -968,7 +972,9 @@ typedef struct ieee80211_mgmt               oal_ieee80211_mgmt;
 /* dmac未使用 */
 #if defined(_PRE_OS_VERSION_LITEOS) && defined(_PRE_OS_VERSION) && (_PRE_OS_VERSION_LITEOS == _PRE_OS_VERSION)
 #ifndef _PRE_WLAN_FEATURE_MFG_ONLY
+#ifndef _PRE_WLAN_USE_CUSTOM_LWIP
 typedef ip4_addr_t                          oal_ip_addr_t;
+#endif
 #if LWIP_API_MESH
 typedef linklayer_event_ap_conn_t           oal_event_ap_conn_stru;
 #endif

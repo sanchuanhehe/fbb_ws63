@@ -11,9 +11,9 @@ import json
 
 from utils.build_utils import root_path
 
-mapping_path = os.path.join(root_path, "application", "samples", "wifi", "hilink_indie_upgrade", "address_mapping")
+mapping_path = os.path.join(root_path, "application", "samples", "wifi_test", "hilink_indie_upgrade", "address_mapping")
 func_list_file = os.path.join(mapping_path, "include", "func_call_list.h")
-hilink_adapt_path = os.path.join(root_path, "application", "samples", "wifi", "ohos_connect", "hilink_adapt")
+hilink_adapt_path = os.path.join(root_path, "application", "samples", "wifi_test", "ohos_connect", "hilink_adapt")
 
 default_config = {
     "app": {

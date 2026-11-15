@@ -33,5 +33,5 @@ def run_custom_cmd(env: TargetEnvironment, target_name: str, hook_name: str)->bo
             traceback.print_exc()
             print(f"[{chip}][{core}] run custom cmd failed!")
             return False
-        
+
     return True

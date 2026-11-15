@@ -8,7 +8,7 @@ add_custom_target(HSO_DB
 )
 if(DEFINED LOG_CUSTOM_ENABLE)
     if(${LOG_CUSTOM_ENABLE} STREQUAL True)
-        include(${CMAKE_SOURCE_DIR}/build/script/hdbxml_custom/MessageXmlGen/messagexmlgen.cmake)
+        include(${ROOT_DIR}/build/script/hdbxml_custom/MessageXmlGen/messagexmlgen.cmake)
     endif()
 endif()
 
@@ -21,7 +21,7 @@ function(create_hso_db)
 
     set(XML_FILE ${ROOT_DIR}/build/config/target_config/${XML_CHIP}/hdb_config/database_template/acore/system/hdbcfg/mss_cmd_db.xml)
     add_custom_target(HSO_DB_MKDIR
-        COMMAND ${Python3_EXECUTABLE} ${MAK_HSO_XML} mkdir ${ROOT_DIR}/ ${XML_CHIP} ${CORE}
+        COMMAND ${Python3_EXECUTABLE} ${MAK_HSO_XML} mkdir ${ROOT_DIR}/ ${XML_CHIP} ${CORE} ${FBB_BUILD_ROOT_DIR}/
         COMMENT "HSO_DB Makedir"
     )
 
@@ -49,7 +49,7 @@ function(create_hso_db)
             OUTPUT ${PROJECT_BINARY_DIR}/hso_temp/${COMPONENT}.txt
             # for re-run HDB
             COMMAND ${CP} ${PROJECT_BINARY_DIR}/hso_temp/${COMPONENT}_temp.txt ${PROJECT_BINARY_DIR}/hso_temp/${COMPONENT}.txt
-            COMMAND ${Python3_EXECUTABLE} ${MAK_HSO_XML} ${ROOT_DIR}/ ${XML_CHIP} ${CORE} ${ARCH} ${${COMPONENT}_AUTO_DEF} ${${COMPONENT}_MODULE_NAME} ${CLOSED_FLAG} ${PROJECT_BINARY_DIR}/hso_temp/${COMPONENT}.txt
+            COMMAND ${Python3_EXECUTABLE} ${MAK_HSO_XML} ${ROOT_DIR}/ ${XML_CHIP} ${CORE} ${ARCH} ${${COMPONENT}_AUTO_DEF} ${${COMPONENT}_MODULE_NAME} ${CLOSED_FLAG} ${PROJECT_BINARY_DIR}/hso_temp/${COMPONENT}.txt ${FBB_BUILD_ROOT_DIR}/
             COMMENT "Building HSO_DB_${COMPONENT}"
             DEPENDS  "${${COMPONENT}_SOURCES}" ${LOG_DEF_LIST} HSO_DB_MKDIR
         )
@@ -63,17 +63,17 @@ function(create_hso_db)
     endif()
     if(${CORE} STREQUAL "bt_core" OR ${HSO_ENABLE_BT} STREQUAL "True")
         add_custom_target(HSO_DB_BT_STATUS
-            COMMAND ${Python3_EXECUTABLE} ${BT_STATUS_HSO_XML} ${ROOT_DIR}/ ${XML_CHIP}
-            COMMAND ${Python3_EXECUTABLE} ${OTA_MSG_HSO_XML}   ${ROOT_DIR}/ ${XML_CHIP}
+            COMMAND ${Python3_EXECUTABLE} ${BT_STATUS_HSO_XML} ${ROOT_DIR}/ ${XML_CHIP} ${FBB_BUILD_ROOT_DIR}/
+            COMMAND ${Python3_EXECUTABLE} ${OTA_MSG_HSO_XML}   ${ROOT_DIR}/ ${XML_CHIP} ${FBB_BUILD_ROOT_DIR}/
         )
         add_dependencies(HSO_DB HSO_DB_BT_STATUS)
     endif()
 
     add_custom_command(TARGET HSO_DB POST_BUILD
         COMMENT "Merge HSO_XML & Create HSO_DB"
-        COMMAND ${Python3_EXECUTABLE} ${HSO_XML_PRE_PROCESS} ${ROOT_DIR}/ ${XML_CHIP} ${CORE}
-        COMMAND ${Python3_EXECUTABLE} ${HSO_XML_MERGE} ${ROOT_DIR}/ ${XML_CHIP} ${CORE} "${HSO_ENABLE_BT}"
-        COMMAND ${Python3_EXECUTABLE} ${HSO_XML_DB_CREATE} ${ROOT_DIR}/ ${XML_CHIP}
+        COMMAND ${Python3_EXECUTABLE} ${HSO_XML_PRE_PROCESS} ${ROOT_DIR}/ ${XML_CHIP} ${CORE} ${FBB_BUILD_ROOT_DIR}/
+        COMMAND ${Python3_EXECUTABLE} ${HSO_XML_MERGE} ${ROOT_DIR}/ ${XML_CHIP} ${CORE} "${HSO_ENABLE_BT}" ${FBB_BUILD_ROOT_DIR}/
+        COMMAND ${Python3_EXECUTABLE} ${HSO_XML_DB_CREATE} ${ROOT_DIR}/ ${XML_CHIP} ${FBB_BUILD_ROOT_DIR}/
     )
     if(NOT DEFINED GEN_PARSE_TOOL)
         set(HSO_ENABLE_BT FALSE)

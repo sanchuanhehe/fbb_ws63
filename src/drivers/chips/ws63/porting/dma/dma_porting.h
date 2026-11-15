@@ -26,13 +26,13 @@ extern "C" {
  * @{
  */
 
-#define S_DMA_CHANNEL_MAX_NUM    4  /*!< Max number of SM_DMA available. */
-#define B_DMA_CHANNEL_MAX_NUM    8  /*!< Max number of M_DMA available. */
+
+#define B_DMA_CHANNEL_MAX_NUM    4  /*!< Max number of M_DMA available. */
 
 #define S_MGPIO33 33
 #define S_MGPIO34 34
 
-#define DMA_CHANNEL_MAX_NUM      (S_DMA_CHANNEL_MAX_NUM + B_DMA_CHANNEL_MAX_NUM)
+#define DMA_CHANNEL_MAX_NUM      B_DMA_CHANNEL_MAX_NUM
 
 /**
  * @brief  DMA channel ID.

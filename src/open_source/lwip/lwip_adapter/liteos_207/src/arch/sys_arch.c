@@ -1,5 +1,5 @@
 /*
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2019-2020. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2019-2020. All rights reserved.
  * Description: implementation for mbox, ticks and memory adaptor
  * Author: none
  * Create: 2020

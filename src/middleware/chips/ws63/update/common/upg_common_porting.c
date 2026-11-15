@@ -379,14 +379,74 @@ end:
     return ret;
 }
 
+STATIC errcode_t check_verify_enable(void)
+{
+    uint32_t ret = 0;
+    uint8_t verify_enable = 0xff;
+
+    /* sizeof(verify_enable) = 1 */
+    ret = efuse_read_item(EFUSE_SEC_VERIFY_ENABLE, &verify_enable, (uint16_t)sizeof(verify_enable));
+    if (ret != ERRCODE_SUCC) {
+        upg_log_err("check_verify_enable efuse_read_item fail[0x%x]!", ret);
+        return ERRCODE_FAIL;
+    }
+    if (verify_enable == 0) {
+        return ERRCODE_NOT_SUPPORT;
+    }
+    return ERRCODE_SUCC;
+}
+
 #if (UPG_CFG_VERIFICATION_SUPPORT == YES)
+STATIC errcode_t verify_public_rootkey_etc(root_public_key *rootkey_buff)
+{
+    uint8_t hash_result[SHA_256_LENGTH] = { 0 };
+    uint8_t hash_from_otp[SHA_256_LENGTH] = { 0 };
+    uint32_t ret = ERRCODE_SUCC;
+
+    /* check verify enable */
+    ret = check_verify_enable();
+    if (ret == ERRCODE_NOT_SUPPORT) {
+        return ERRCODE_SUCC;
+    } else if (ret == ERRCODE_FAIL) {
+        return ERRCODE_FAIL;
+    }
+
+    /* check rootkey_buff->image_id */
+    if (rootkey_buff->image_id != OEM_ROOT_PUBLIC_KEY_IMAGE_ID) {
+        upg_log_err("rootkey image id[0x%x] error!", rootkey_buff->image_id);
+        return ERRCODE_FAIL;
+    }
+
+    /* caculate rootkey hash */
+    ret = calc_hash((uintptr_t)rootkey_buff, (uint32_t)sizeof(root_public_key), hash_result, SHA_256_LENGTH);
+    if (ret != ERRCODE_SUCC) {
+        upg_log_err("verify_rootkey upg_calc_hash_directly fail[0x%x]", ret);
+        return ERRCODE_FAIL;
+    }
+
+    /* read efuse rootkey hash */
+    ret = efuse_read_item(EFUSE_HASH_ROOT_PUBLIC_KEY_ID, hash_from_otp, (uint16_t)sizeof(hash_from_otp));
+    if (ret != ERRCODE_SUCC) {
+        upg_log_err("verify_rootkey efuse_read_item fail[0x%x]", ret);
+        return ERRCODE_FAIL;
+    }
+
+    /* check hash */
+    ret = (uint32_t)memcmp(hash_from_otp, hash_result, (uint32_t)SHA_256_LENGTH);
+    if (ret != 0) {
+        upg_log_err("verify_rootkey hash memcmp fail!");
+        return ERRCODE_FAIL;
+    }
+
+    return ret;
+}
+
 /*
  * 获取校验用的root_public_key
  */
 uint8_t *upg_get_root_public_key(void)
 {
-#if (UPG_CFG_DIRECT_FLASH_ACCESS == YES)
-    /* 使用Upgrader_External_Public_Key校验Key Area的签名  */
+    /* 使用rootkey校验Key Area的签名  */
     partition_information_t info;
     errcode_t ret_val = uapi_partition_get_info(PARTITION_FLASH_ROOT_PUBLIC_KEYS_AREA, &info);
     if (ret_val != ERRCODE_SUCC) {
@@ -394,20 +454,12 @@ uint8_t *upg_get_root_public_key(void)
     }
     uint32_t rootkey_buff_addr = info.part_info.addr_info.addr + upg_get_flash_base_addr();
     root_public_key *rootkey_buff = (root_public_key *)(uintptr_t)rootkey_buff_addr;
-    return (uint8_t *)(rootkey_buff->root_key_area);
-#else
-    upg_package_header_t *pkg_header = NULL;
-    errcode_t ret;
-    ret = upg_get_package_header(&pkg_header);
-    if (ret != ERRCODE_SUCC || pkg_header == NULL) {
-        upg_log_err("[UPG] get package header fail\r\n");
+    ret_val = verify_public_rootkey_etc(rootkey_buff);
+    if (ret_val != ERRCODE_SUCC) {
         return NULL;
     }
-    static uint8_t public_key[PUBLIC_KEY_LEN];
-    memcpy_s(public_key, sizeof(public_key), (pkg_header->key_area.fota_external_public_key), PUBLIC_KEY_LEN);
-    upg_free(pkg_header);
-    return public_key;
-#endif
+
+    return (uint8_t *)(rootkey_buff->root_key_area);
 }
 
 STATIC errcode_t check_fota_msid(const uint32_t msid_ext, const uint32_t mask_msid_ext)
@@ -607,3 +659,14 @@ errcode_t upg_erase_whole_image(const upg_image_header_t *img_header)
     return ERRCODE_SUCC;
 }
 #endif
+
+/* 获取指定的校验算法 */
+upg_key_alg_t upg_get_specific_verify_key_alg(void)
+{
+    /* check verify enable */
+    errcode_t ret = check_verify_enable();
+    if (ret == ERRCODE_SUCC) {
+        return UPG_KEY_ALG_ECC256_HASH256;
+    }
+    return UPG_KEY_ALG_INVAILD;
+}

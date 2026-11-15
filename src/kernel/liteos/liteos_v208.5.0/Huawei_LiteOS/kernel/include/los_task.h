@@ -1483,6 +1483,7 @@ extern UINT32 LOS_TaskDetach(UINT32 taskId);
  * <ul><li>los_task.h: the header file that contains the API declaration.</li></ul>
  */
 extern UINT32 LOS_TaskJoin(UINT32 taskId, UINTPTR *retval);
+extern INT32 LOS_TaskMemInfoShow(VOID *pool, UINT32 taskId,  VOID (*print)(const char *fmt, ...));
 
 #ifdef __cplusplus
 }

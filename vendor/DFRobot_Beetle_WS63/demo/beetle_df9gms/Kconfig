@@ -1,0 +1,8 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+
+config DF9GMS_PIN
+    int "Choose DF9GMS pin."
+    default 2

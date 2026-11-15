@@ -432,6 +432,11 @@ static void spi_int_mode_init(spi_bus_t bus)
 #endif  /* CONFIG_SPI_SUPPORT_INTERRUPT */
 }
 
+__attribute__((weak)) void spi_port_set_pin_config(spi_bus_t bus)
+{
+    unused(bus);
+}
+
 errcode_t uapi_spi_init(spi_bus_t bus, spi_attr_t *attr, spi_extra_attr_t *extra_attr)
 {
     errcode_t ret = ERRCODE_SUCC;
@@ -443,6 +448,7 @@ errcode_t uapi_spi_init(spi_bus_t bus, spi_attr_t *attr, spi_extra_attr_t *extra
     if (g_spi_is_initialised[bus]) {
         return ret;
     }
+    spi_port_set_pin_config(bus);
 
 #if defined(CONFIG_SPI_SUPPORT_LPC)
     spi_port_clock_enable(bus, true);
@@ -634,13 +640,11 @@ static void spi_dma_tx_config(dma_ch_user_peripheral_config_t *transfer_config, 
     transfer_config->dest = data_addr;
 }
 
-static errcode_t spi_write_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint32_t timeout)
+static errcode_t spi_write_dma_config(spi_bus_t bus, uint8_t *ch, const spi_xfer_data_t *data)
 {
     dma_ch_user_peripheral_config_t transfer_config = { 0 };
     uint8_t channel = DMA_CHANNEL_NONE;
-    if (data->tx_buff == NULL || data->tx_bytes == 0) {
-        return ERRCODE_INVALID_PARAM;
-    }
+
     transfer_config.src = (uint32_t)(uintptr_t)data->tx_buff;
 #if defined(CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH) && (CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH == 1)
     transfer_config.src_width = spi_dma_get_mem_width(transfer_config.src, data->tx_bytes);
@@ -669,20 +673,58 @@ static errcode_t spi_write_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint3
 
     g_dma_trans_tx[bus].channel = channel + 1;
     g_dma_trans_tx[bus].trans_succ = false;
+    *ch = channel;
 
-    if (uapi_dma_start_transfer(channel) != ERRCODE_SUCC) {
+    return ERRCODE_SUCC;
+}
+
+static errcode_t spi_write_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint32_t timeout)
+{
+    uint8_t channel_tx;
+    errcode_t ret;
+    if (data->tx_buff == NULL || data->tx_bytes == 0) {
+        return ERRCODE_INVALID_PARAM;
+    }
+
+    ret = spi_write_dma_config(bus, &channel_tx, data);
+    if (ret != ERRCODE_SUCC) {
+        return ret;
+    }
+
+    hal_spi_dma_cfg_param_t dcfg = {0};
+    dcfg.is_enable = false;
+    dcfg.dma_tx_level = spi_port_tx_data_level_get(bus);
+    hal_spi_ctrl(bus, SPI_CTRL_SET_DMA_CFG, (uintptr_t)&dcfg);
+
+#ifdef CONFIG_SUPPORT_DATA_CACHE
+    osal_flush_cache();
+#endif
+
+    if (uapi_dma_start_transfer(channel_tx) != ERRCODE_SUCC) {
         g_dma_trans_tx[bus].channel = 0;
         return ERRCODE_SPI_DMA_CONFIG_ERROR;
     }
 
+    dcfg.is_enable = true;
+    hal_spi_ctrl(bus, SPI_CTRL_SET_DMA_CFG, (uintptr_t)&dcfg);
+#ifdef CONFIG_SPI_SLAVE_SUPPORT_NOTIFY
+    if (data->notify_callback != NULL && data->privdata != NULL) {
+        data->notify_callback(data->privdata);
+    }
+#endif
     if (osal_sem_down_timeout(&(g_dma_trans_tx[bus].dma_sem), timeout) != OSAL_SUCCESS) {
-        uapi_dma_end_transfer(channel);
+        uapi_dma_end_transfer(channel_tx);
         g_dma_trans_tx[bus].channel = 0;
         return ERRCODE_SPI_DMA_TRANSFER_ERROR;
     }
 
-    uapi_dma_end_transfer(channel);
     g_dma_trans_tx[bus].channel = 0;
+
+#ifdef CONFIG_SPI_SUPPORT_DELAY_FOR_WRITEREAD
+    if (spi_get_attr_tmod(bus) == HAL_SPI_TRANS_MODE_TXRX) {
+        hal_spi_ctrl(bus, SPI_CTRL_CLEAR_RX_FIFO_DMA, 0);
+    }
+#endif
 
     if (!g_dma_trans_tx[bus].trans_succ) {
         return ERRCODE_SPI_DMA_TRANSFER_ERROR;
@@ -706,61 +748,6 @@ static void spi_dma_rx_config(dma_ch_user_peripheral_config_t *transfer_config, 
     transfer_config->protection = HAL_DMA_PROTECTION_CONTROL_BUFFERABLE;
     transfer_config->dest_handshaking =  0;
     transfer_config->src = data_addr;
-}
-
-static errcode_t spi_read_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint32_t timeout)
-{
-    dma_ch_user_peripheral_config_t transfer_config = { 0 };
-    uint8_t channel = DMA_CHANNEL_NONE;
-
-    spi_dma_rx_config(&transfer_config, bus);
-    transfer_config.dest = (uint32_t)(uintptr_t)data->rx_buff;
-#if defined(CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH) && (CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH == 1)
-    transfer_config.dest_width = spi_dma_get_mem_width(transfer_config.dest, data->rx_bytes);
-    transfer_config.burst_length = HAL_DMA_BURST_TRANSACTION_LENGTH_1;
-    transfer_config.priority = HAL_DMA_CH_PRIORITY_0;
-    transfer_config.transfer_num = (uint16_t)data->rx_bytes >> transfer_config.src_width;
-#else
-    if (data->rx_bytes % bit(g_dma_cfg[bus].src_width) == 0) {
-        transfer_config.transfer_num = (uint16_t)data->rx_bytes >> g_dma_cfg[bus].src_width;
-    } else {
-        return ERRCODE_INVALID_PARAM;
-    }
-
-    spi_dma_common_config(&transfer_config, &(g_dma_cfg[bus]));
-#endif  /* CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH */
-
-    transfer_config.src_handshaking = spi_port_get_dma_trans_src_handshaking(bus);
-    if (transfer_config.src_handshaking == HAL_DMA_HANDSHAKING_MAX_NUM) {
-        return ERRCODE_SPI_DMA_CONFIG_ERROR;
-    }
-
-    if (uapi_dma_configure_peripheral_transfer_single(&transfer_config, &channel, spi_dma_isr, 1) != ERRCODE_SUCC) {
-        return ERRCODE_SPI_DMA_CONFIG_ERROR;
-    }
-
-    g_dma_trans_rx[bus].channel = channel + 1;
-    g_dma_trans_rx[bus].trans_succ = false;
-
-    if (uapi_dma_start_transfer(channel) != ERRCODE_SUCC) {
-        g_dma_trans_rx[bus].channel = 0;
-        return ERRCODE_SPI_DMA_CONFIG_ERROR;
-    }
-
-    if (osal_sem_down_timeout(&(g_dma_trans_rx[bus].dma_sem), timeout) != OSAL_SUCCESS) {
-        uapi_dma_end_transfer(channel);
-        g_dma_trans_rx[bus].channel = 0;
-        return ERRCODE_SPI_DMA_TRANSFER_ERROR;
-    }
-
-    uapi_dma_end_transfer(channel);
-    g_dma_trans_rx[bus].channel = 0;
-
-    if (!g_dma_trans_rx[bus].trans_succ) {
-        return ERRCODE_SPI_DMA_TRANSFER_ERROR;
-    }
-
-    return ERRCODE_SUCC;
 }
 
 static errcode_t spi_read_dma_config(spi_bus_t bus, uint8_t *ch, const spi_xfer_data_t *data)
@@ -801,40 +788,43 @@ static errcode_t spi_read_dma_config(spi_bus_t bus, uint8_t *ch, const spi_xfer_
     return ERRCODE_SUCC;
 }
 
-static errcode_t spi_write_dma_config(spi_bus_t bus, uint8_t *ch, const spi_xfer_data_t *data)
+static errcode_t spi_read_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint32_t timeout)
 {
-    dma_ch_user_peripheral_config_t transfer_config = { 0 };
-    uint8_t channel = DMA_CHANNEL_NONE;
-
-    transfer_config.src = (uint32_t)(uintptr_t)data->tx_buff;
-#if defined(CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH) && (CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH == 1)
-    transfer_config.src_width = spi_dma_get_mem_width(transfer_config.src, data->tx_bytes);
-    transfer_config.transfer_num = (uint16_t)data->tx_bytes >> transfer_config.src_width;
-    transfer_config.burst_length = HAL_DMA_BURST_TRANSACTION_LENGTH_1;
-    transfer_config.priority = HAL_DMA_CH_PRIORITY_0;
-#else
-    if (data->tx_bytes % bit(g_dma_cfg[bus].src_width) == 0) {
-        transfer_config.transfer_num = (uint16_t)data->tx_bytes >> g_dma_cfg[bus].src_width;
-    } else {
-        return ERRCODE_INVALID_PARAM;
+    uint8_t channel_rx;
+    errcode_t ret = spi_read_dma_config(bus, &channel_rx, data);
+    if (ret != ERRCODE_SUCC) {
+        return ret;
     }
 
-    spi_dma_common_config(&transfer_config, &(g_dma_cfg[bus]));
-#endif  /* CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH */
-    spi_dma_tx_config(&transfer_config, bus);
-
-    transfer_config.dest_handshaking = spi_port_get_dma_trans_dest_handshaking(bus);
-    if (transfer_config.dest_handshaking == HAL_DMA_HANDSHAKING_MAX_NUM) {
+    hal_spi_dma_cfg_param_t dcfg = {0};
+    dcfg.is_enable = false;
+    hal_spi_ctrl(bus, SPI_CTRL_SET_DMA_CFG, (uintptr_t)&dcfg);
+    if (uapi_dma_start_transfer(channel_rx) != ERRCODE_SUCC) {
+        g_dma_trans_rx[bus].channel = 0;
         return ERRCODE_SPI_DMA_CONFIG_ERROR;
     }
 
-    if (uapi_dma_configure_peripheral_transfer_single(&transfer_config, &channel, spi_dma_isr, 0) != ERRCODE_SUCC) {
-        return ERRCODE_SPI_DMA_CONFIG_ERROR;
+    dcfg.is_enable = true;
+    hal_spi_ctrl(bus, SPI_CTRL_SET_DMA_CFG, (uintptr_t)&dcfg);
+#ifdef CONFIG_SPI_SLAVE_SUPPORT_NOTIFY
+    if (data->notify_callback != NULL && data->privdata != NULL) {
+        data->notify_callback(data->privdata);
+    }
+#endif
+    if (osal_sem_down_timeout(&(g_dma_trans_rx[bus].dma_sem), timeout) != OSAL_SUCCESS) {
+        uapi_dma_end_transfer(channel_rx);
+        g_dma_trans_rx[bus].channel = 0;
+        return ERRCODE_SPI_DMA_TRANSFER_ERROR;
     }
 
-    g_dma_trans_tx[bus].channel = channel + 1;
-    g_dma_trans_tx[bus].trans_succ = false;
-    *ch = channel;
+    g_dma_trans_rx[bus].channel = 0;
+
+    if (!g_dma_trans_rx[bus].trans_succ) {
+        return ERRCODE_SPI_DMA_TRANSFER_ERROR;
+    }
+#ifdef CONFIG_SUPPORT_DATA_CACHE
+    osal_flush_cache();
+#endif
 
     return ERRCODE_SUCC;
 }
@@ -845,6 +835,16 @@ static void spi_writeread_dma_clear_trans(spi_bus_t bus, uint8_t channel_tx, uin
     g_dma_trans_rx[bus].channel = 0;
     uapi_dma_end_transfer(channel_rx);
     uapi_dma_end_transfer(channel_tx);
+}
+
+static void spi_dma_request_enable(bool enable, spi_bus_t bus)
+{
+    uint32_t irq_sts = spi_porting_lock(bus);
+    hal_spi_dma_cfg_param_t dcfg = {0};
+    dcfg.is_enable = enable;
+    dcfg.dma_tx_level = spi_port_tx_data_level_get(bus);
+    hal_spi_ctrl(bus, SPI_CTRL_SET_DMA_CFG, (uintptr_t)&dcfg);
+    spi_porting_unlock(bus, irq_sts);
 }
 
 static errcode_t spi_writeread_dma(spi_bus_t bus, const spi_xfer_data_t *data, uint32_t timeout)
@@ -859,6 +859,12 @@ static errcode_t spi_writeread_dma(spi_bus_t bus, const spi_xfer_data_t *data, u
     if (spi_read_dma_config(bus, &channel_rx, data) != ERRCODE_SUCC) {
         return ERRCODE_SPI_DMA_CONFIG_ERROR;
     }
+
+    spi_dma_request_enable(false, bus);
+
+#ifdef CONFIG_SUPPORT_DATA_CACHE
+    osal_flush_cache();
+#endif
 
     if (uapi_dma_start_transfer(channel_rx) != ERRCODE_SUCC) {
         g_dma_trans_rx[bus].channel = 0;
@@ -876,6 +882,8 @@ static errcode_t spi_writeread_dma(spi_bus_t bus, const spi_xfer_data_t *data, u
         return ERRCODE_SPI_DMA_CONFIG_ERROR;
     }
 
+    spi_dma_request_enable(true, bus);
+
     if (osal_sem_down_timeout(&(g_dma_trans_tx[bus].dma_sem), timeout) != OSAL_SUCCESS) {
         spi_writeread_dma_clear_trans(bus, channel_tx, channel_rx);
         return ERRCODE_SPI_DMA_TRANSFER_ERROR;
@@ -885,8 +893,11 @@ static errcode_t spi_writeread_dma(spi_bus_t bus, const spi_xfer_data_t *data, u
         spi_writeread_dma_clear_trans(bus, channel_tx, channel_rx);
         return ERRCODE_SPI_DMA_TRANSFER_ERROR;
     }
-
-    spi_writeread_dma_clear_trans(bus, channel_tx, channel_rx);
+#ifdef CONFIG_SUPPORT_DATA_CACHE
+    osal_flush_cache();
+#endif
+    g_dma_trans_tx[bus].channel = 0;
+    g_dma_trans_rx[bus].channel = 0;
 
     if ((!g_dma_trans_tx[bus].trans_succ) || (!g_dma_trans_rx[bus].trans_succ)) {
         return ERRCODE_SPI_DMA_TRANSFER_ERROR;
@@ -925,6 +936,25 @@ errcode_t uapi_spi_get_attr(spi_bus_t bus, spi_attr_t *attr)
     return hal_spi_ctrl(bus, SPI_CTRL_GET_ATTR, (uintptr_t)attr);
 }
 
+void uapi_spi_set_interrupt_mask(spi_bus_t bus, uint32_t mask_val)
+{
+    if (bus >= SPI_BUS_MAX_NUM) {
+        return;
+    }
+
+    hal_spi_ctrl(bus, SPI_CTRL_SET_ALL_INT, (uintptr_t)mask_val);
+}
+
+void uapi_spi_clear_all_interrupt(spi_bus_t bus)
+{
+    if (bus >= SPI_BUS_MAX_NUM) {
+        return;
+    }
+
+    hal_spi_ctrl(bus, SPI_CTRL_CLEAR_ALL_INT, 0);
+}
+
+#if defined(CONFIG_SPI_SUPPORT_QUAD_SPI)
 errcode_t uapi_spi_set_extra_attr(spi_bus_t bus, spi_extra_attr_t *extra_attr)
 {
     if (bus >= SPI_BUS_MAX_NUM || extra_attr == NULL) {
@@ -942,6 +972,7 @@ errcode_t uapi_spi_get_extra_attr(spi_bus_t bus, spi_extra_attr_t *extra_attr)
 
     return hal_spi_ctrl(bus, SPI_CTRL_GET_EXTRA_ATTR, (uintptr_t)extra_attr);
 }
+#endif
 
 #if defined(CONFIG_SPI_SUPPORT_INTERRUPT) && (CONFIG_SPI_SUPPORT_INTERRUPT == 1)
 errcode_t uapi_spi_set_irq_mode(spi_bus_t bus, bool irq_en, spi_rx_callback_t rx_callback,
@@ -1121,6 +1152,7 @@ errcode_t uapi_spi_master_write(spi_bus_t bus, const spi_xfer_data_t *data, uint
 
     uint32_t irq_sts = spi_porting_lock(bus);
     ret = hal_spi_write(bus, (hal_spi_xfer_data_t *)data, timeout_tmp);
+    hal_spi_ctrl(bus, SPI_CTRL_CHECK_FIFO_BUSY, timeout_tmp);
     spi_porting_unlock(bus, irq_sts);
     spi_mutex_unlock(bus);
 
@@ -1293,6 +1325,11 @@ errcode_t uapi_spi_slave_write(spi_bus_t bus, const spi_xfer_data_t *data, uint3
 #endif  /* CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH */
 
     uint32_t irq_sts = spi_porting_lock(bus);
+#ifdef CONFIG_SPI_SLAVE_SUPPORT_NOTIFY
+    if (data->notify_callback != NULL && data->privdata != NULL) {
+        data->notify_callback(data->privdata);
+    }
+#endif
     ret = hal_spi_write(bus, (hal_spi_xfer_data_t *)data, timeout_tmp);
     spi_porting_unlock(bus, irq_sts);
     spi_mutex_unlock(bus);
@@ -1337,6 +1374,11 @@ errcode_t uapi_spi_slave_read(spi_bus_t bus, const spi_xfer_data_t *data, uint32
 #endif  /* CONFIG_SPI_SUPPORT_POLL_AND_DMA_AUTO_SWITCH */
 
     uint32_t irq_sts = spi_porting_lock(bus);
+#ifdef CONFIG_SPI_SLAVE_SUPPORT_NOTIFY
+    if (data->notify_callback != NULL && data->privdata != NULL) {
+        data->notify_callback(data->privdata);
+    }
+#endif
     ret = hal_spi_read(bus, (hal_spi_xfer_data_t *)data, timeout_tmp);
     spi_porting_unlock(bus, irq_sts);
     spi_mutex_unlock(bus);

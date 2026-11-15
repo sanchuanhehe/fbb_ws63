@@ -1,9 +1,11 @@
-<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="tm signal capability failed, conn id is invalid. @sle_srv_tm.c(41),ERROR" ID="0xd8ce014a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="tm signal capability memcpy failed. @sle_srv_tm.c(48),ERROR" ID="0xd8ce0182" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="[tm_signal_capability_req]failed, conn(%d) failed, ret = 0x%x @sle_srv_tm.c(55),ERROR" ID="0xd8ce01ba" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="tm send data busy cbk failed, length:%d @sle_srv_tm.c(74),ERROR" ID="0xd8ce0252" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="tm send data busy cbk memcpy failed. @sle_srv_tm.c(78),ERROR" ID="0xd8ce0272" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle data send busy cbk, lcid is invalid. @sle_srv_tm.c(85),ERROR" ID="0xd8ce02aa" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_tm.c(101),INFO" ID="0xd8ce032d" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle server manager init failed. @sle_srv_tm.c(116),ERROR" ID="0xd8ce03a2" />
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="tm signal capability failed, conn id is invalid. @sle_srv_tm.c(43),ERROR" ID="0xd8ce015a" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="[tm_signal_capability_req]failed, conn(%d) failed, ret = 0x%x @sle_srv_tm.c(54),ERROR" ID="0xd8ce01b2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="transmission send data failed, param is null. @sle_srv_tm.c(63),ERROR" ID="0xd8ce01fa" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[transmission_send_data]failed, malloc fail @sle_srv_tm.c(68),ERROR" ID="0xd8ce0222" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[transmission_send_data]failed, ret = 0x%x @sle_srv_tm.c(82),ERROR" ID="0xd8ce0292" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="tm send data busy cbk failed, length:%d @sle_srv_tm.c(103),ERROR" ID="0xd8ce033a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="tm send data busy cbk memcpy failed. @sle_srv_tm.c(107),ERROR" ID="0xd8ce035a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle data send busy cbk, lcid is invalid. @sle_srv_tm.c(114),ERROR" ID="0xd8ce0392" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="unhandled msg id %x @sle_srv_tm.c(130),INFO" ID="0xd8ce0415" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle server manager init failed. @sle_srv_tm.c(145),ERROR" ID="0xd8ce048a" />
 			</MSG_LOG>

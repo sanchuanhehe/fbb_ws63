@@ -160,6 +160,13 @@ errcode_t upg_flash_write(const uint32_t flash_offset, uint32_t size, const uint
  */
 errcode_t upg_flash_erase(const uint32_t flash_offset, const uint32_t size);
 
+/*
+ * 获取指定的校验算法
+ * 说明：算法值参见upg_key_alg_t。
+ *       如返回特定算法，升级包的校验时，则强制使用该算法校验；如返回UPG_KEY_ALG_INVAILD，则根据升级包打包时使用的算法校验。
+ */
+upg_key_alg_t upg_get_specific_verify_key_alg(void);
+
 #ifdef __cplusplus
 #if __cplusplus
 }

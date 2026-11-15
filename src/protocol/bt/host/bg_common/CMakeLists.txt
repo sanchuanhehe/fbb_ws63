@@ -1,6 +1,6 @@
 #===============================================================================
 # @brief    cmake file
-# Copyright (c) @CompanyNameMagicTag. 2023. All rights reserved.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd.. 2023. All rights reserved.
 #===============================================================================
 # Temporarily Released
 set(MODULE_NAME "bth")

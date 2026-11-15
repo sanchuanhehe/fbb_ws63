@@ -282,9 +282,7 @@ typedef struct {
     UINT32 uwMaxFreeNodeSize;
     UINT32 uwUsedNodeNum;
     UINT32 uwFreeNodeNum;
-#ifdef LOSCFG_MEM_TASK_STAT
-    UINT32 uwUsageWaterLine;  /**< this structure member is defined only when LOSCFG_MEM_TASK_STAT is defined. */
-#endif
+    UINT32 uwUsageWaterLine;
 } LOS_MEM_POOL_STATUS;
 
 /**
@@ -512,6 +510,12 @@ extern UINT32 LOS_MemPoolSizeGet(const VOID *pool);
  */
 extern UINT32 LOS_MemTotalUsedGet(VOID *pool);
 
+#ifdef LOSCFG_COMPAT_RT_THREAD
+#ifdef LOSCFG_MEM_TASK_STAT
+extern UINT32 LOS_MemTotalPeakUsedGet(VOID *pool);
+#endif
+#endif
+
 /**
  * @ingroup los_memory
  * @brief Get the number of free memory nodes.
@@ -735,6 +739,7 @@ extern UINT32 LOS_MemCheckLevelSet(UINT8 checkLevel);
  */
 extern UINT8 LOS_MemCheckLevelGet(VOID);
 #endif
+extern VOID LOS_MemTaskHeapInfoGet(VOID *pool, UINT8 taskId, VOID (*print)(const char *fmt, ...));
 
 /**
  * @ingroup los_memory

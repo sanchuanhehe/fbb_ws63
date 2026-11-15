@@ -1,0 +1,44 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+
+config SERVER_IP_ADDR
+    string "Set MQTT server ip addr."
+    default "192.168.x.x"
+
+config WIFI_SSID
+    string "Set WIFI_SSID."
+    default "wifi_account"
+
+config WIFI_PWD
+    string "Set WIFI_PWD."
+    default "wifi_pwd"
+
+config MQTT_TOPIC_SUB
+    string "Set MQTT_TOPIC_SUB."
+    default "subTopic"
+
+config MQTT_TOPIC_PUB
+    string "Set MQTT_TOPIC_PUB."
+    default "pubTopic"
+
+config MQTT_PUB_MSG
+    string "Set MQTT_PUB_MSG."
+    default "hello!"
+
+config MQTT_AUTH_ENABLE
+    bool "Enable MQTT Authentication"
+    default n
+    help
+      Enable MQTT username and password authentication
+
+config MQTT_USERNAME
+    string "Set MQTT username"
+    default "mqtt_user"
+    depends on MQTT_AUTH_ENABLE
+
+config MQTT_PASSWORD
+    string "Set MQTT password"
+    default "mqtt_pass"
+    depends on MQTT_AUTH_ENABLE

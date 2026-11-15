@@ -1,0 +1,42 @@
+[
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/led",
+    "chip": "WS63",
+    "buildDef": "CONFIG_LED_PIN=4",
+    "needSmoke": "false",
+    "key":"1",
+    "name":"led",
+    "description":"Led blink"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/pwm_led",
+    "chip": "WS63",
+    "buildDef": "CONFIG_LED_PIN=4",
+    "needSmoke": "false",
+    "key":"2",
+    "name":"pwm_led",
+    "description":"Breathing led by PWM"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/key",
+    "chip": "WS63",
+    "buildDef": "CONFIG_KEY_PIN=12",
+    "needSmoke": "false",
+    "key":"3",
+    "name":"key",
+    "description":"Key interrupt"
+  },
+  {
+    "buildTarget": "ws63-liteos-app",
+    "relativePath": "demo/sle_uart",
+    "chip": "WS63",
+    "buildDef": "",
+    "needSmoke": "false",
+    "key":"4",
+    "name":"sle_uart",
+    "description":"sle uart demo, include server and client"
+  }
+]

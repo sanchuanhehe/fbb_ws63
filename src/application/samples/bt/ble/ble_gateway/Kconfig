@@ -1,0 +1,48 @@
+menu "BLE MQTT Gateway Configuration"
+
+config GATEWAY_WIFI_SSID
+    string "Gateway Wi-Fi SSID"
+    default ""
+    help
+        Private deployment value. Configure locally and never commit the configured target file.
+
+config GATEWAY_WIFI_PASSWORD
+    string "Gateway Wi-Fi password"
+    default ""
+    help
+        Secret deployment value. Configure locally and never commit it or include it in documentation.
+
+config IOTDA_MQTT_HOST
+    string "IoTDA MQTTS host"
+    default ""
+    help
+        Configure the MQTTS access host shown by the selected IoTDA instance.
+
+config IOTDA_MQTT_PORT
+    int "IoTDA MQTTS port"
+    range 1 65535
+    default 8883
+
+config IOTDA_DEVICE_ID
+    string "IoTDA device ID"
+    default ""
+    help
+        This value is sensitive deployment data. Keep it in a private local configuration.
+
+config IOTDA_DEVICE_SECRET
+    string "IoTDA device secret"
+    default ""
+    help
+        This value is secret. Never commit a configured target .config or firmware package.
+
+config IOTDA_AUTH_TIMESTAMP
+    string "IoTDA no-timestamp-check authentication timestamp"
+    default "2020010100"
+    help
+        Ten UTC digits used with signature type 0. IoTDA does not validate its freshness.
+
+config IOTDA_SERVICE_ID
+    string "IoTDA product model service ID"
+    default "environment"
+
+endmenu

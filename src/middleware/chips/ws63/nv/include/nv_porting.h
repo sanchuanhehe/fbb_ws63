@@ -81,13 +81,13 @@ errcode_t nv_crypto_validate_tag(uint32_t crypto_handle);
 void nv_crypto_generate_random(uint32_t *rnd);
 
 /* 启动HASH计算 */
-errcode_t nv_crypto_start_hash(void);
+errcode_t nv_crypto_start_hash(uint32_t *handle);
 
 /* 更新HASH */
-errcode_t nv_crypto_update_hash(const uint8_t *src, uint32_t length);
+errcode_t nv_crypto_update_hash(uint32_t handle, const uint8_t *src, uint32_t length);
 
 /* 完成HASH计算并返回HASH值 */
-errcode_t nv_crypto_complete_hash(uint8_t *hash);
+errcode_t nv_crypto_complete_hash(uint32_t handle, uint8_t *hash, uint32_t *hash_len);
 
 /* 直接读取NV factory区域 */
 errcode_t kv_read_factory(uint16_t key_id, uint16_t kvalue_max_length, uint16_t *kvalue_length, uint8_t *kvalue);
@@ -101,6 +101,21 @@ errcode_t kv_read_factory(uint16_t key_id, uint16_t kvalue_max_length, uint16_t 
 #define nv_log_info(fmt, arg...)
 #define nv_log_debug(fmt, arg...)
 #endif
+
+/* Error Check */
+#define nv_chk_goto(cond, label, ...) do {          \
+    if (cond) {                                     \
+        nv_log_err(__VA_ARGS__);                    \
+        goto label;                                 \
+    }                                               \
+} while (0)
+
+#define nv_chk_return(cond, err_ret, ...) do {      \
+    if (cond) {                                     \
+        nv_log_err(__VA_ARGS__);                    \
+        return err_ret;                             \
+    }                                               \
+} while (0)
 
 #endif /* NV_PORTING_H */
 

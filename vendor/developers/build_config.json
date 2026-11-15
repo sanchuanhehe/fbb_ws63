@@ -65,8 +65,28 @@
       "chip": "WS63",
       "buildDef": "",
       "needSmoke": "false",
-      "key": "6",
+      "key": "7",
       "name": "SLEController",
       "description": "星闪控制器"
+    },
+    {
+      "buildTarget": "ws63-liteos-app",
+      "relativePath": "demo/nfc",
+      "chip": "WS63",
+      "buildDef": "",
+      "needSmoke": "false",
+      "key": "8",
+      "name": "nfc",
+      "description": "nfc"
+    },
+    {
+      "buildTarget": "ws63-liteos-app",
+      "relativePath": "demo/lcd_st7789_lvgl9",
+      "chip": "WS63",
+      "buildDef": "",
+      "needSmoke": "false",
+      "key": "9",
+      "name": "lcd_st7789_lvgl9",
+      "description": "lcd_st7789_lvgl9"
     }
 ]

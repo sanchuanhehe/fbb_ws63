@@ -36,6 +36,13 @@ config LOSCFG_LIB_VENDORNAME
     help
       Config nodename for uname api, default is "vendor".
 
+config LOSCFG_POSIX_STUB_VFS
+    bool "Enable Stub VFS"
+    default n
+    depends on LOSCFG_COMPAT_POSIX
+    help
+      Enable, will instrument VFS functions.
+
 config LOSCFG_LIB_LIBM
     bool "Enable Math"
     default y

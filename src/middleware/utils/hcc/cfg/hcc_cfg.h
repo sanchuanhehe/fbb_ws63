@@ -36,6 +36,8 @@ typedef enum _d2h_srv_msg_type {
     D2H_MSG_WLAN_ALLOW_SLEEP = 11,       /* wlan device回复host允许睡眠 */
     D2H_MSG_WLAN_DISALLOW_SLEEP = 12,    /* wlan device回复host不允许睡眠 */
     D2H_MSG_WLAN_WAKEUP_REQ = 13,        /* wlan device请求唤醒host */
+    D2H_MSG_HEARTBEAT = 14,              /* hcc hearbeat */
+    D2H_MSG_SUSPEND_ACK = 15,              /* ack for host suspend */
     D2H_MSG_HCC_RX_MAX = HCC_RX_MAX_MESSAGE, /* max support msg count */
 } d2h_srv_msg_type;
 
@@ -43,6 +45,13 @@ typedef enum _d2h_srv_msg_type {
 typedef enum _h2d_srv_msg_type {
     H2D_MSG_WLAN_WAKE_UP_REQ = H2D_MSG_PLAT_END,  /* wlan host唤醒devcie请求 */
     H2D_MSG_WLAN_SLEEP_REQ = 11,    /* wlan host请求device睡眠 */
+    H2D_MSG_SWITCH_FREQ = 12,    /* host请求切时钟 */
+    H2D_MSG_HEARTBEAT_ACK = 13,      /* hcc hearbeat ack */
+    H2D_MSG_HOST_READY = 14,         /* syschannnel host ready */
+    H2D_MSG_SWITCH_UDSLEEP = 15,    /* A核请求进入深睡 */
+    H2D_MSG_HOST_SUSPEND = 16,       /* syschannnel host suspend */
+    H2D_MSG_SYNC_MAC_IP = 17,       /* A核请求同步MAC和IP */
+    H2D_MSG_SFC_LOCK = 18,          /* A核请求SFC锁存 */
     H2D_MSG_HCC_HCC_TX_MAX = HCC_TX_MAX_MESSAGE, /* max support msg count */
 } h2d_srv_msg_type;
 

@@ -9,6 +9,7 @@ import os
 import sys
 import json
 import copy
+import shutil
 import importlib
 from utils.build_utils import fn_get_subdirs, rm_pyc, target_config_path
 
@@ -334,11 +335,9 @@ class BuildEnvironment:
         self.build_as_lib_output_file = ''
         self.target_names = []
         self.group_names = []
-        self.generator = 'Unix Makefiles'
+        self.generator = 'Ninja' if shutil.which('ninja') else 'Unix Makefiles'
         self.no_hso = False
         self.open_kconfig = False
-        if get_platform_name() == "windows":
-            self.generator = "Ninja"
         self.dump = False
         self.build_time = ''
         self.parse_cmd(param_list)

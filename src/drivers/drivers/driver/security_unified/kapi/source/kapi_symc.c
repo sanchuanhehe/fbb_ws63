@@ -172,13 +172,15 @@ static td_s32 priv_process_symc_init(td_void)
         crypto_chk_goto_with_ret(ret, symc_channel == TD_NULL, exit_unlock, SYMC_COMPAT_ERRNO(ERROR_NOT_INIT),
             "get symc channel failedI\n");
 
-        if (symc_channel->init_counter >= CRYPTO_SYMC_INIT_MAX_NUM) {
-            ret = SYMC_COMPAT_ERRNO(ERROR_COUNT_OVERFLOW);
-        } else {
-            ret = TD_SUCCESS;
-            ++(symc_channel->init_counter);
+        if (symc_channel->is_used == TD_TRUE) {
+            if (symc_channel->init_counter >= CRYPTO_SYMC_INIT_MAX_NUM) {
+                ret = SYMC_COMPAT_ERRNO(ERROR_COUNT_OVERFLOW);
+            } else {
+                ret = TD_SUCCESS;
+                ++(symc_channel->init_counter);
+            }
+            goto exit_unlock;
         }
-        goto exit_unlock;
     }
 
     ret = get_idle_channel(&i);

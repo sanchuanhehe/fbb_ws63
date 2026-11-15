@@ -360,6 +360,38 @@ errcode_t uapi_pwm_stop_group(uint8_t group)
     return ret;
 }
 
+errcode_t uapi_pwm_update_cfg(uint8_t channel, const pwm_config_t *cfg)
+{
+    errcode_t ret = uapi_pwm_check(channel);
+    if (ret != ERRCODE_SUCC) {
+        return ret;
+    }
+
+    if (unlikely(cfg->cycles > PWM_CYCLES_MAX_NUMBER)) {
+        return ERRCODE_PWM_INVALID_PARAMETER;
+    }
+
+    if (pwm_port_param_check(cfg) != ERRCODE_SUCC) {
+        return ERRCODE_PWM_INVALID_PARAMETER;
+    }
+
+    uint8_t start_group = 0;
+    ret = uapi_pwm_get_group(&start_group, channel);
+    if (ret != ERRCODE_SUCC) {
+        return ret;
+    }
+
+    uint32_t id = osal_irq_lock();
+    g_hal_funcs->set_time(PWM_SET_LOW_TIME, (pwm_channel_t)channel, cfg->low_time);
+    g_hal_funcs->set_time(PWM_SET_HIGH_TIME, (pwm_channel_t)channel, cfg->high_time);
+    g_hal_funcs->set_time(PWM_SET_OFFSET_TIME, (pwm_channel_t)channel, cfg->offset_time);
+    g_hal_funcs->set_cycles((pwm_channel_t)channel, cfg->cycles);
+    g_hal_funcs->set_action(start_group, PWM_ACTION_REFRESH);
+    osal_irq_restore(id);
+
+    return ret;
+}
+
 #if defined(CONFIG_PWM_PRELOAD)
 errcode_t uapi_pwm_config_preload(uint8_t group, uint8_t channel, const pwm_config_t *cfg)
 {

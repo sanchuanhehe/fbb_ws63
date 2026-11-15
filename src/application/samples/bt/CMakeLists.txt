@@ -10,6 +10,10 @@ if(DEFINED CONFIG_SAMPLE_SUPPORT_SLE_SAMPLE)
     add_subdirectory_if_exist(sle)
 endif()
 
+if(DEFINED CONFIG_SAMPLE_SUPPORT_SLE_MESH_SAMPLE OR "CONFIG_SAMPLE_SUPPORT_SLE_MESH_SAMPLE" IN_LIST DEFINES)
+    add_subdirectory_if_exist(sle/mesh)
+endif()
+
 if(DEFINED CONFIG_SAMPLE_SUPPORT_CHBA_SAMPLE)
     add_subdirectory_if_exist(sle_chba)
 endif()

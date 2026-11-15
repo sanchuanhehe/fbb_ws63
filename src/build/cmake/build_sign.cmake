@@ -16,7 +16,7 @@ if (EXISTS ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/${BUILD_TA
     add_custom_target(GENERAT_SIGNBIN ALL
         COMMAND ${SIGN_TOOL} 0 ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/${BUILD_TARGET_NAME}.cfg 1>nul 2>nul &&
                 ${CP} ${PROJECT_BINARY_DIR}/flashboot_sign_a.bin ${PROJECT_BINARY_DIR}/flashboot_sign_b.bin
-        COMMENT "sign file:gen boot sign file"
+        COMMENT "sign file: gen boot sign file"
         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
         DEPENDS GENERAT_BIN
     )
@@ -41,13 +41,46 @@ if (EXISTS ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/${BUILD_TA
     endif()
 endif()
 elseif (${TARGET_NAME} STREQUAL "loaderboot")
-if (EXISTS ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/${BUILD_TARGET_NAME}.cfg)
+set(BUILD_TARGET_NAME_CFG ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/${BUILD_TARGET_NAME}.cfg)
+if (EXISTS ${BUILD_TARGET_NAME_CFG})
+    message(STATUS "BUILD_TARGET_NAME_CFG existed")
+    # Materialize the .cfg by replacing the literal `{SDK_DIR}` placeholder
+    # with the actual ROOT_DIR; the sign tool expects absolute paths.
+    set(TEMP_BUILD_TARGET_NAME_CFG ${PROJECT_BINARY_DIR}/${BUILD_TARGET_NAME}_temp.cfg)
+    file(READ ${BUILD_TARGET_NAME_CFG} BUILD_TARGET_NAME_CFG_CONTENT)
+    string(REPLACE "{SDK_DIR}" "${ROOT_DIR}" BUILD_TARGET_NAME_CFG_CONTENT "${BUILD_TARGET_NAME_CFG_CONTENT}")
+    file(WRITE ${TEMP_BUILD_TARGET_NAME_CFG} "${BUILD_TARGET_NAME_CFG_CONTENT}")
     add_custom_target(GENERAT_SIGNBIN ALL
-        COMMAND ${SIGN_TOOL} 0 ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/${BUILD_TARGET_NAME}.cfg 1>nul 2>nul
-        COMMENT "sign file:gen boot sign file"
+        COMMAND ${SIGN_TOOL} 0 ${TEMP_BUILD_TARGET_NAME_CFG} 1>nul 2>nul
+        COMMENT "sign file: gen loaderboot sign file"
         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
         DEPENDS GENERAT_BIN
     )
+    set(ROOT_PUB_KEY_CFG ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/root_pubk.cfg)
+    set(ADD_KEY_HEADER ${ROOT_DIR}/build/config/target_config/${CHIP}/script/add_key_header.py)
+    if (EXISTS ${ROOT_PUB_KEY_CFG} AND EXISTS ${ADD_KEY_HEADER})
+        # Materialize the .cfg by replacing the literal `{SDK_DIR}` placeholder
+        # with the actual ROOT_DIR; the sign tool expects absolute paths.
+        set(TEMP_ROOT_PUB_KEY_CFG ${PROJECT_BINARY_DIR}/root_pubk_temp.cfg)
+        file(READ ${ROOT_PUB_KEY_CFG} ROOT_PUB_KEY_CFG_CONTENT)
+        string(REPLACE "{SDK_DIR}" "${ROOT_DIR}" ROOT_PUB_KEY_CFG_CONTENT "${ROOT_PUB_KEY_CFG_CONTENT}")
+        file(WRITE ${TEMP_ROOT_PUB_KEY_CFG} "${ROOT_PUB_KEY_CFG_CONTENT}")
+        add_custom_target(GENERAT_KEYBIN ALL
+            COMMAND ${SIGN_TOOL} 1 ${TEMP_ROOT_PUB_KEY_CFG}
+            COMMAND ${Python3_EXECUTABLE} ${ADD_KEY_HEADER} ${TEMP_ROOT_PUB_KEY_CFG} ${TEMP_BUILD_TARGET_NAME_CFG}
+            COMMENT "add root key: gen boot sign file"
+            WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+            DEPENDS GENERAT_SIGNBIN
+        )
+    endif()
+    if (NOT EXISTS ${ROOT_PUB_KEY_CFG} AND EXISTS ${ADD_KEY_HEADER})
+        add_custom_target(GENERAT_KEYBIN ALL
+            COMMAND ${Python3_EXECUTABLE} ${ADD_KEY_HEADER} ${ROOT_PUB_KEY_CFG} ${TEMP_BUILD_TARGET_NAME_CFG}
+            COMMENT "add root key: gen boot sign file"
+            WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
+            DEPENDS GENERAT_SIGNBIN
+        )
+    endif()
     if (${UPDATE_BIN})
         string(REPLACE "_" "-" TARGET_DIR ${BUILD_TARGET_NAME})
         if (NOT EXISTS ${ROOT_DIR}/interim_binary/${CHIP}/bin/boot_bin)
@@ -67,9 +100,16 @@ endif()
 elseif (${TARGET_NAME} MATCHES "application*" OR ${TARGET_NAME} STREQUAL "ate_debug" OR ${TARGET_NAME} STREQUAL "ate" OR
         ${TARGET_NAME} MATCHES "protocol*" )
 if (EXISTS ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/${BUILD_TARGET_NAME}.cfg)
+        set(BUILD_TARGET_NAME_CFG ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/${BUILD_TARGET_NAME}.cfg)
+        # Materialize the .cfg by replacing the literal `{SDK_DIR}` placeholder
+        # with the actual ROOT_DIR; the sign tool expects absolute paths.
+        set(TEMP_BUILD_TARGET_NAME_CFG ${PROJECT_BINARY_DIR}/${BUILD_TARGET_NAME}_temp.cfg)
+        file(READ ${BUILD_TARGET_NAME_CFG} BUILD_TARGET_NAME_CFG_CONTENT)
+        string(REPLACE "{SDK_DIR}" "${ROOT_DIR}" BUILD_TARGET_NAME_CFG_CONTENT "${BUILD_TARGET_NAME_CFG_CONTENT}")
+        file(WRITE ${TEMP_BUILD_TARGET_NAME_CFG} "${BUILD_TARGET_NAME_CFG_CONTENT}")
 add_custom_target(GENERAT_SIGNBIN ALL
-    COMMAND ${SIGN_TOOL} 0 ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/${BUILD_TARGET_NAME}.cfg  1>nul 2>nul
-    COMMENT "sign file:gen boot sign file"
+            COMMAND ${SIGN_TOOL} 0 ${TEMP_BUILD_TARGET_NAME_CFG} 1>nul 2>nul
+    COMMENT "sign file: gen boot sign file"
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
     DEPENDS GENERAT_BIN
 )
@@ -78,7 +118,7 @@ elseif (${TARGET_NAME} MATCHES "control_ws53*")
 if (EXISTS ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/${BUILD_TARGET_NAME}.cfg)
 add_custom_target(GENERAT_SIGNBIN ALL
     COMMAND ${SIGN_TOOL} 0 ${ROOT_DIR}/build/config/target_config/${CHIP}/sign_config/${BUILD_TARGET_NAME}.cfg
-    COMMENT "sign file:gen boot sign file"
+    COMMENT "sign file: gen boot sign file"
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
     DEPENDS GENERAT_BIN
 )

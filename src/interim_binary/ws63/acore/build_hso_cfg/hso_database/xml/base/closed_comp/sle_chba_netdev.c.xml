@@ -1,32 +1,31 @@
-<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="sle_chba_netdev_stop_queue osal_event_clear fail(0x%x)!! @sle_chba_netdev.c(69),ERROR" ID="0x8fd8022a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA net device open %d. @sle_chba_netdev.c(78),INFO" ID="0x8fd80275" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA net device stop %d. @sle_chba_netdev.c(87),INFO" ID="0x8fd802bd" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="%s: CHBA net device switch %d! @sle_chba_netdev.c(97),INFO" ID="0x8fd8030d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="%s: CHBA net device NULL! @sle_chba_netdev.c(99),ERROR" ID="0x8fd8031a" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="TX buffer save %zd, total %d @sle_chba_netdev.c(154),DBG" ID="0x8fd804d6" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="cur_data is not NULL, but cur_data-&gt;ctrl_data is NULL!! @sle_chba_netdev.c(227),WARNING" ID="0x8fd8071b" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="TX buffer ctrl send %d, buffer %d @sle_chba_netdev.c(233),DBG" ID="0x8fd8074e" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="TX buffer send %d, buffer %d @sle_chba_netdev.c(251),DBG" ID="0x8fd807de" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="malloc sle_chba_control_pkt fail! @sle_chba_netdev.c(285),WARNING" ID="0x8fd808eb" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="malloc sle_acb_data fail! @sle_chba_netdev.c(290),WARNING" ID="0x8fd80913" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle_chba_netdev_driver_send invalid dev @sle_chba_netdev.c(350),ERROR" ID="0x8fd80af2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="CHBA SLE tx buffer 0. @sle_chba_netdev.c(373),INFO" ID="0x8fd80bad" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="chba rx: low on mem - packet dropped @sle_chba_netdev.c(411),WARNING" ID="0x8fd80cdb" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="pbuf_take fail(%d)!!! @sle_chba_netdev.c(425),ERROR" ID="0x8fd80d4a" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="%s: opcode 0x%04x handler is null!! @sle_chba_netdev.c(460),WARNING" ID="0x8fd80e63" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="%s: NULL data pointer @sle_chba_netdev.c(474),ERROR" ID="0x8fd80ed2" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="%s: Data too short len %d @sle_chba_netdev.c(483),ERROR" ID="0x8fd80f1a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA buffered len %d. @sle_chba_netdev.c(487),DBG" ID="0x8fd80f3e" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="CHBA internal error, len mismatch %d != %d @sle_chba_netdev.c(493),ERROR" ID="0x8fd80f6a" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA report len %d. @sle_chba_netdev.c(508),DBG" ID="0x8fd80fe6" />
-			<MSG STRUCTURE="diag_log_msg4" NAME="%s: RX buffer overflow! %d + %d &gt;= %d @sle_chba_netdev.c(538),ERROR" ID="0x8fd810d2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA RX save buffer len %d. @sle_chba_netdev.c(549),DBG" ID="0x8fd8112e" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA tx cmp event buffer +%d. @sle_chba_netdev.c(590),DBG" ID="0x8fd81276" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="%s: Data too short len %d @sle_chba_netdev.c(623),ERROR" ID="0x8fd8137a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="CHBA module deinit done. @sle_chba_netdev.c(743),INFO" ID="0x8fd8173d" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="sle_chba_netdev_msg_task_create err(%d)! @sle_chba_netdev.c(767),ERROR" ID="0x8fd817fa" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="%s: create netif fail err(%d)! @sle_chba_netdev.c(781),ERROR" ID="0x8fd8186a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="CHBA module init done. @sle_chba_netdev.c(797),INFO" ID="0x8fd818ed" />
-			<MSG STRUCTURE="diag_log_msg2" NAME="chba_role = %d, chba_mode = %d @sle_chba_netdev.c(808),INFO" ID="0x8fd81945" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="sle chba net dev is invalid!! @sle_chba_netdev.c(853),WARNING" ID="0x8fd81aab" />
+<MSG_LOG><MSG STRUCTURE="diag_log_msg1" NAME="sle_chba_netdev_set_ready osal_event fail(0x%x)!! @sle_chba_netdev.c(78),ERROR" ID="0x8fd80272" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA net device open %d. @sle_chba_netdev.c(115),INFO" ID="0x8fd8039d" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA net device stop %d. @sle_chba_netdev.c(125),INFO" ID="0x8fd803ed" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="%s: CHBA net device switch %d! @sle_chba_netdev.c(133),INFO" ID="0x8fd8042d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="TX buffer save %zd, total %d @sle_chba_netdev.c(190),DBG" ID="0x8fd805f6" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="cur_data is not NULL, but cur_data-&gt;ctrl_data is NULL!! @sle_chba_netdev.c(255),WARNING" ID="0x8fd807fb" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="TX buffer ctrl send %d, buffer %d @sle_chba_netdev.c(273),DBG" ID="0x8fd8088e" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="TX buffer send %d, buffer %d @sle_chba_netdev.c(313),DBG" ID="0x8fd809ce" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="malloc sle_chba_control_pkt fail! @sle_chba_netdev.c(351),WARNING" ID="0x8fd80afb" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="malloc sle_acb_data fail! @sle_chba_netdev.c(356),WARNING" ID="0x8fd80b23" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle_chba_priv is NULL!! @sle_chba_netdev.c(422),ERROR" ID="0x8fd80d32" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="CHBA SLE tx buffer 0. @sle_chba_netdev.c(452),INFO" ID="0x8fd80e25" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="%s: opcode 0x%04x handler is null!! @sle_chba_netdev.c(486),WARNING" ID="0x8fd80f33" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="%s: NULL data pointer @sle_chba_netdev.c(500),ERROR" ID="0x8fd80fa2" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="%s: Data too short len %d @sle_chba_netdev.c(509),ERROR" ID="0x8fd80fea" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA buffered len %d. @sle_chba_netdev.c(513),DBG" ID="0x8fd8100e" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="CHBA internal error, len mismatch %d != %d @sle_chba_netdev.c(519),ERROR" ID="0x8fd8103a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="g_sle_chba_netdev_cbks.netdev_input_cb is null !! @sle_chba_netdev.c(536),ERROR" ID="0x8fd810c2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA report len %d. @sle_chba_netdev.c(540),DBG" ID="0x8fd810e6" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="%s: RX buffer overflow! %d + %d &gt;= %d @sle_chba_netdev.c(570),ERROR" ID="0x8fd811d2" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA RX save buffer len %d. @sle_chba_netdev.c(581),DBG" ID="0x8fd8122e" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="CHBA tx cmp event buffer +%d. @sle_chba_netdev.c(632),DBG" ID="0x8fd813c6" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="%s: Data too short len %d @sle_chba_netdev.c(663),ERROR" ID="0x8fd814ba" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="g_sle_chba_priv malloc fail! @sle_chba_netdev.c(736),ERROR" ID="0x8fd81702" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="g_chba_mutex init fail! @sle_chba_netdev.c(741),ERROR" ID="0x8fd8172a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="CHBA module deinit done. @sle_chba_netdev.c(784),INFO" ID="0x8fd81885" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="sle_chba_netdev_msg_task_create err(%d)! @sle_chba_netdev.c(797),ERROR" ID="0x8fd818ea" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="CHBA module init done. @sle_chba_netdev.c(803),INFO" ID="0x8fd8191d" />
+			<MSG STRUCTURE="diag_log_msg2" NAME="chba_role = %d, chba_mode = %d @sle_chba_netdev.c(819),INFO" ID="0x8fd8199d" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="sle chba net priv is invalid!! @sle_chba_netdev.c(873),WARNING" ID="0x8fd81b4b" />
 			</MSG_LOG>

@@ -486,6 +486,37 @@ dns_init(void)
 #endif
 }
 
+void update_dnsserver_index(u8_t* numdns, const ip_addr_t *dnsserver)
+{
+  u8_t i;
+
+  if (dnsserver == NULL) {
+    return;
+  }
+
+  for(i = 0; i < DNS_MAX_SERVERS; i++) {
+    /* If the same address is found, overwrite it. */
+    if(ip_addr_cmp(&dns_servers[i], dnsserver)) {
+      *numdns = i;
+      return;
+    }
+  }
+
+  for (i = 0; i < DNS_MAX_SERVERS; i++) {
+    /* If any address is found, the address is written to this index. */
+    if (ip_addr_isany(&dns_servers[i])) {
+      *numdns = i;
+      return;
+    }
+  }
+
+  /* If the DNS_MAX_SERVERS server address already exists, 
+   the latest address overwrites the oldest one*/
+  if(i == DNS_MAX_SERVERS) {
+    *numdns = 0;
+  }
+}
+
 /**
  * @ingroup dns
  * Initialize one of the DNS servers.
@@ -506,6 +537,7 @@ dns_setserver(u8_t numdns, const ip_addr_t *dnsserver)
 #if LWIP_RIPPLE
     server = dns_servers[numdns];
 #endif
+    update_dnsserver_index(&numdns, dnsserver);
     if (dnsserver != NULL) {
       dns_servers[numdns] = (*dnsserver);
     } else {

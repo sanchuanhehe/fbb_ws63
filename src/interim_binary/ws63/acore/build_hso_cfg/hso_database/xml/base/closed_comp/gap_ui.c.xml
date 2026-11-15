@@ -1,8 +1,11 @@
-<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="[GAP]memset failed @gap_ui.c(1327),ERROR" ID="0xdb5c297a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]memcpy failed @gap_ui.c(1331),ERROR" ID="0xdb5c299a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gap get local name memcpy failed @gap_ui.c(1336),ERROR" ID="0xdb5c29c2" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gap set simple pairing oob data memcpy failed @gap_ui.c(2122),ERROR" ID="0xdb5c4252" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="gap create connection whitelist start @gap_ui.c(2446),INFO" ID="0xdb5c4c75" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gap le set oobtk value memcpy failed @gap_ui.c(2548),ERROR" ID="0xdb5c4fa2" />
-			<MSG STRUCTURE="diag_log_msg1" NAME="[SADP][GAP] gap set local addr cbk result is %u @gap_ui.c(3073),INFO" ID="0xdb5c600d" />
+<MSG_LOG><MSG STRUCTURE="diag_log_msg0" NAME="sapi_gap_create_connection_async enter! @gap_ui.c(710),INFO" ID="0xdb5c1635" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]memset failed @gap_ui.c(1347),ERROR" ID="0xdb5c2a1a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]memcpy failed @gap_ui.c(1351),ERROR" ID="0xdb5c2a3a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gap get local name memcpy failed @gap_ui.c(1356),ERROR" ID="0xdb5c2a62" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="param memcpy failed @gap_ui.c(1456),ERROR" ID="0xdb5c2d82" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[GAP]gap set simple pairing oob data memcpy failed @gap_ui.c(2142),ERROR" ID="0xdb5c42f2" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="gap create connection whitelist start @gap_ui.c(2466),INFO" ID="0xdb5c4d15" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="set_adv_random_delay, ret: 0x%x @gap_ui.c(2751),INFO" ID="0xdb5c55fd" />
+			<MSG STRUCTURE="diag_log_msg4" NAME="set adv filter memcpy failed,[%p %d %p %d] @gap_ui.c(2848),ERROR" ID="0xdb5c5902" />
+			<MSG STRUCTURE="diag_log_msg1" NAME="[SADP][GAP] gap set local addr cbk result is %u @gap_ui.c(3115),INFO" ID="0xdb5c615d" />
 			</MSG_LOG>

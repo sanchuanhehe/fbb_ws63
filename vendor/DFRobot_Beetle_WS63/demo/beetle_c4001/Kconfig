@@ -1,0 +1,31 @@
+#===============================================================================
+# @brief    Kconfig file.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2023-2023. All rights reserved.
+#===============================================================================
+choice
+    prompt "Select Motion Detection or Range Velocity Sample"
+    default SAMPLE_SUPPORT_MOTION_SAMPLE
+    config SAMPLE_SUPPORT_MOTION_SAMPLE
+        bool "Support Motion Detection Sample."
+
+    config SAMPLE_SUPPORT_MRANGE_SAMPLE
+        bool "Support Range Velocity Sample."
+
+endchoice
+
+config UART_BUS_ID
+    int "Choose UART BUS id."
+    default 2    
+
+config RADAR_UART_BAUD
+    int "Choose UART baud."
+    default 9600    
+
+config RADAR_UART_TX_PIN
+    int "Choose UART TX pin."
+    default 8   
+
+config RADAR_UART_RX_PIN
+    int "Choose UART RX pin."
+    default 7
+    

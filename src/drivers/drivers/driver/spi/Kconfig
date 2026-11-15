@@ -15,6 +15,12 @@ config SPI_SUPPORT_SLAVE
     default y
     depends on DRIVER_SUPPORT_SPI
 
+config SPI_SLAVE_SUPPORT_NOTIFY
+    bool
+    prompt "SPI support NOTIFY."
+    default n
+    depends on DRIVER_SUPPORT_SPI
+
 config SPI_SUPPORT_DMA
     bool
     prompt "SPI Support DMA transfer"
@@ -109,5 +115,11 @@ config SPI_SUPPORT_QUERY_REGS
 config SPI_SUPPORT_TXRX_TRANS_MODE
     bool
     prompt "SPI support transmit and receive mode."
+    default n
+    depends on DRIVER_SUPPORT_SPI
+
+config SPI_SUPPORT_DELAY_FOR_WRITEREAD
+    bool
+    prompt "SPI support delay between write and read."
     default n
     depends on DRIVER_SUPPORT_SPI

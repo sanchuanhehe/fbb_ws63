@@ -208,8 +208,9 @@ enum ieee80211_op_mode {
 	IEEE80211_MODE_INFRA = 0,
 	IEEE80211_MODE_IBSS = 1,
 	IEEE80211_MODE_AP = 2,
+#ifdef CONFIG_MESH
 	IEEE80211_MODE_MESH = 5,
-
+#endif
 	/* only add new entries before IEEE80211_MODE_NUM */
 	IEEE80211_MODE_NUM
 };

@@ -118,6 +118,12 @@ static errcode_t hal_uart_v151_init(uart_bus_t uart, hal_uart_callback_t callbac
     hal_uart_sir_mode_en(uart, false);
     hal_uart_tx_pause_en(uart, false);
 
+    if (flow_ctrl == UART_FLOW_CTRL_RTS_CTS) {
+        hal_uart_auto_flow_ctl_en(uart, HAL_UART_AUTO_FLOW_CTL_ENABLED);
+    } else {
+        hal_uart_auto_flow_ctl_en(uart, HAL_UART_AUTO_FLOW_CTL_DISABLED);
+    }
+
     hal_uart_set_baud_rate(uart, attr->baud_rate, uart_port_get_clock_value(uart));
     uapi_tcxo_delay_us(HAL_UART_INIT_DELAY_10US);
 #ifdef HSO_SUPPORT
@@ -134,11 +140,6 @@ static errcode_t hal_uart_v151_init(uart_bus_t uart, hal_uart_callback_t callbac
     }
 #endif
     g_hal_uart_callback[uart] = callback;
-    if (flow_ctrl == UART_FLOW_CTRL_RTS_CTS) {
-        hal_uart_auto_flow_ctl_en(uart, HAL_UART_AUTO_FLOW_CTL_ENABLED);
-    } else {
-        hal_uart_auto_flow_ctl_en(uart, HAL_UART_AUTO_FLOW_CTL_DISABLED);
-    }
 
 #if defined(CONFIG_UART_IP_VERSION_V151_PRO)
     hal_uart_set_ptim_en(uart, true);
@@ -801,8 +802,12 @@ hal_uart_funcs_t *hal_uart_v151_funcs_get(void)
 }
 
 #if defined(CONFIG_UART_SUPPORT_RX_FRAME_CALLBACK)
+/* UART RX Idle 中断存在约 4~5 字节时长的检测延迟。为保证包边界识别准确，请确保两包间隔 ≥ 10 字节传输时间
+   示例:115200 波特率下，10 字节时间 ≈ 868μs，建议包间隔 ≥ 1ms
+*/
+#define S_TRANS_PACKET_INTERVAL 100
 uint32_t hal_uart_timer_delay_time_get(uint32_t baud_rate)
 {
-    return S_TRANS_TO_US * 770 / baud_rate;  /* 770: rx idle中断触发时间最晚为768个波特率长度 */
+    return S_TRANS_TO_US * S_TRANS_PACKET_INTERVAL / baud_rate;
 }
 #endif

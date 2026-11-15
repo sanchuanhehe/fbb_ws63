@@ -252,7 +252,7 @@ coap_session_t *coap_new_client_session(
 );
 
 void coap_session_set_sessions(coap_context_t *ctx, coap_session_t *session);
-coap_session_t * coap_session_get_sessions(coap_context_t *ctx);
+coap_session_t *coap_session_get_sessions(coap_context_t *ctx);
 
 /**
 * Creates a new client session to the designated server with PSK credentials

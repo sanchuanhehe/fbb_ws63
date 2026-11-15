@@ -38,6 +38,7 @@ extern "C" {
 /*****************************************************************************
   2 宏定义
 *****************************************************************************/
+#define DEVICE_VAP_STAT_NUM (HMAC_PKTS_CNT_TYPE_BUTT - HOST_PKTS_CNT_TYPE_END)
 #ifdef _PRE_WLAN_DFT_STAT
 #define HMAC_DFT_PHY_STAT_NODE_0_BASE 0           /* phy统计节点0的基准bit，寄存器PHY_STA_01_EN的bit0 */
 #define HMAC_DFT_PHY_STAT_NODE_1_BASE 16          /* phy统计节点1的基准bit，寄存器PHY_STA_01_EN的bit16 */
@@ -49,8 +50,6 @@ extern "C" {
 #define HMAC_DFT_VAP_STAT_RATE_TO_KBPS 250        /* 速率单位是kbps，应该是字节数除以周期(2s)再除以1000在乘以8(B/b) */
 #define HMAC_DFT_REG_OTA_LEN 1024 /* 寄存器OTA上报的最大限制 */
 #define HMAC_DFT_VAP_AGGRE_REPORT_NUM 20          /* 聚合上报的数目 */
-
-#define DEVICE_VAP_STAT_NUM (HMAC_PKTS_CNT_TYPE_BUTT - HOST_PKTS_CNT_TYPE_END)
 
 /*****************************************************************************
   3 枚举定义
@@ -243,6 +242,15 @@ typedef enum {
     HMAC_PKTS_CNT_TYPE_BUTT
 } dft_hmac_vap_stat_enum;
 
+typedef enum {
+    RX_ICMP_HMAC_START = 0,
+    RX_ICMP_HMAC_END,
+    TX_ICMP_HMAC_START,
+    TX_ICMP_HMAC_END,
+    ICMP_TRX_TYPE_BUTT
+} icmp_trx_type_enum;
+typedef osal_u8 icmp_trx_type_enum_u8;
+
 /*****************************************************************************
   4 全局变量声明
 *****************************************************************************/
@@ -267,6 +275,15 @@ typedef struct {
     osal_u32 tx_from_dmac_mpdu_cnt;          /* DMAC挂硬件队列发送mpdu报文个数 */
     osal_u32 tx_complete_mpdu_cnt;           /* 硬件上报发送完成中断mpdu数量 */
 } dft_hw_statis_cnt_stru;
+
+struct mac_icmp_header {
+    uint8_t  icmp_type;  // ICMP类型
+    uint8_t  icmp_code;  // ICMP代码
+    uint16_t icmp_sum;   // 校验和
+    uint16_t icmp_id;    // 标识符
+    uint16_t icmp_seq;   // 序列号
+};
+typedef struct mac_icmp_header mac_icmp_header_stru;
 
 /*****************************************************************************
   8 UNION定义

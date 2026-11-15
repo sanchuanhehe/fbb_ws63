@@ -291,5 +291,5 @@ set(WHOLE_LINK
 set(MAIN_COMPONENT
     false
 )
-
+install_sdk(${CMAKE_CURRENT_SOURCE_DIR}/hal_cipher/pke "*")
 build_component()

@@ -9,9 +9,9 @@
 			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt add descriptor str to data fail @ble_at_gatts.c(210),ERROR" ID="0xd9100692" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt send response at cmd value new fail @ble_at_gatts.c(274),ERROR" ID="0xd9100892" />
 			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt send response str to data fail @ble_at_gatts.c(279),ERROR" ID="0xd91008ba" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt send indication at cmd val new fail @ble_at_gatts.c(319),ERROR" ID="0xd91009fa" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt send indication str to data fail @ble_at_gatts.c(324),ERROR" ID="0xd9100a22" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts notify indicate by uuid par uuid error @ble_at_gatts.c(349),ERROR" ID="0xd9100aea" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts notify indicate by uuid new fail @ble_at_gatts.c(359),ERROR" ID="0xd9100b3a" />
-			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts notify indicate str to data fail @ble_at_gatts.c(364),ERROR" ID="0xd9100b62" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt send indication at cmd val new fail @ble_at_gatts.c(331),ERROR" ID="0xd9100a5a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatt send indication str to data fail @ble_at_gatts.c(336),ERROR" ID="0xd9100a82" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts notify indicate by uuid par uuid error @ble_at_gatts.c(361),ERROR" ID="0xd9100b4a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts notify indicate by uuid new fail @ble_at_gatts.c(371),ERROR" ID="0xd9100b9a" />
+			<MSG STRUCTURE="diag_log_msg0" NAME="[Error] gatts notify indicate str to data fail @ble_at_gatts.c(376),ERROR" ID="0xd9100bc2" />
 			</MSG_LOG>

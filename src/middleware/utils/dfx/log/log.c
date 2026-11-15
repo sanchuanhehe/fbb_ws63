@@ -201,7 +201,6 @@ static void log_event_trigger(void)
 void log_event(const uint8_t *buffer, uint16_t length)
 {
 #if (USE_COMPRESS_LOG_INSTEAD_OF_SDT_LOG == NO)
-    log_ret_t lret;
     uint32_t lb_available = 0;
     bool was_empty = false;
     log_buffer_header_t lb_header;
@@ -216,12 +215,14 @@ void log_event(const uint8_t *buffer, uint16_t length)
 
     // If missed messages pending send notification
     /* Check if there is space for the missed message indication. */
+#if defined(LOG_SUPPORT)
+    log_ret_t lret;
     lret = log_buffer_get_available_for_next_message(&lb_available);
     if (lret != LOG_RET_OK) {
         osal_irq_restore(irq);
         return;
     }
-
+#endif
     if (lb_available > length) {
         lb_header.length = length + (uint16_t)sizeof(lb_header);
         lb_magic_set(&lb_header);

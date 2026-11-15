@@ -1,7 +1,7 @@
 ﻿/*
  * Copyright (c) 2001-2003 Swedish Institute of Computer Science.
  * All rights reserved.
- * Copyright (c) <2013-2020>, <CompanyNameMagicTag>
+ * Copyright (c) <2013-2020>, <HiSilicon (Shanghai) Technologies Co., Ltd.>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -124,7 +124,11 @@ extern "C" {
 #endif
 
 #ifndef LWIP_IPV6_MLD
+#ifdef CONFIG_SUPPORT_MATTER
+#define LWIP_IPV6_MLD 1
+#else
 #define LWIP_IPV6_MLD 0
+#endif
 #endif
 
 #ifndef LWIP_IPV6_MLD_QUERIER
@@ -581,7 +585,11 @@ extern "C" {
 #endif
 
 #ifndef PBUF_POOL_SIZE
+#ifdef CONFIG_SUPPORT_MATTER
+#define PBUF_POOL_SIZE          5
+#else
 #define PBUF_POOL_SIZE          1
+#endif
 #endif
 
 #if defined (CONFIG_LWIP_FOR_WIFI_SIGMA)

@@ -1605,7 +1605,7 @@ OSAL_STATIC osal_bool hmac_csa_sta_scan_end(osal_void *notify_data)
         return OSAL_TRUE;
     }
 
-    if (hmac_device->scan_params.scan_mode != WLAN_SCAN_MODE_BACKGROUND_CSA) {
+    if (hmac_device->scan_params.scan_end_mode != WLAN_SCAN_MODE_BACKGROUND_CSA) {
         return OSAL_TRUE;
     }
 

@@ -17,7 +17,12 @@
 #define SFC_REG_BASE_ADDR   0x48000000
 
 #define SFC_DELAY_ONCE_US   100
+
+#ifdef CONFIG_LOADERBOOT
+#define SFC_DELAY_TIMES     610000
+#else
 #define SFC_DELAY_TIMES     50000
+#endif
 
 uintptr_t const g_sfc_start_addr = (uintptr_t)SFC_MCPU_START;
 

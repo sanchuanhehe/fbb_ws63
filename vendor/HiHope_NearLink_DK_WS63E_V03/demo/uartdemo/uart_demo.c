@@ -21,9 +21,6 @@
 #include "app_init.h"
 
 #define UART_BAUDRATE 115200
-#define UART_DATA_BITS 3
-#define UART_STOP_BITS 1
-#define UART_PARITY_BIT 0
 #define UART_TRANSFER_SIZE 18
 #define CONFIG_UART1_TXD_PIN 15
 #define CONFIG_UART1_RXD_PIN 16
@@ -59,9 +56,9 @@ static void app_uart_init_pin(void)
 static void app_uart_init_config(void)
 {
     uart_attr_t attr = {.baud_rate = UART_BAUDRATE,
-                        .data_bits = UART_DATA_BITS,
-                        .stop_bits = UART_STOP_BITS,
-                        .parity = UART_PARITY_BIT};
+                        .data_bits = UART_DATA_BIT_8,
+                        .stop_bits = UART_STOP_BIT_1,
+                        .parity = UART_PARITY_NONE};
 
     uart_pin_config_t pin_config = {.tx_pin = S_MGPIO0, .rx_pin = S_MGPIO1, .cts_pin = PIN_NONE, .rts_pin = PIN_NONE};
     uapi_uart_deinit(CONFIG_UART1_BUS_ID); // 重点，UART初始化之前需要去初始化，否则会报0x80001044

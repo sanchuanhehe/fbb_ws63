@@ -1,0 +1,33 @@
+set(SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/osal_msg_queue_sample.c
+)
+
+set(PUBLIC_HEADER
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+set(PRIVATE_HEADER
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+set(PRIVATE_DEFINES
+)
+
+set(PUBLIC_DEFINES
+)
+
+set(COMPONENT_PUBLIC_CCFLAGS
+)
+
+set(COMPONENT_CCFLAGS
+)
+
+set(WHOLE_LINK
+    true
+)
+
+set(MAIN_COMPONENT
+    false
+)
+
+set(SOURCES "${SOURCES}" PARENT_SCOPE)

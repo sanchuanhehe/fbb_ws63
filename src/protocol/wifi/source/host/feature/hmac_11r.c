@@ -210,8 +210,8 @@ OAL_STATIC osal_u32 hmac_roam_ft_notify_wpas(hmac_vap_stru *hmac_vap, osal_u8 *m
     oal_set_mac_addr(ft_event->bssid, target_bssid);
     /* save ft ie */
     ft_event->ft_ie_len = msg_len - ie_offset;
-    ret = memcpy_s(evt + sizeof(hmac_roam_ft_stru), msg_len - ie_offset, mac_hdr + ie_offset, msg_len - ie_offset);
-    if (ret != EOK) {
+    if (memcpy_s(evt + sizeof(hmac_roam_ft_stru), msg_len - ie_offset,
+        mac_hdr + ie_offset, msg_len - ie_offset) != EOK) {
         oal_mem_free(evt, OSAL_TRUE);
         evt = OSAL_NULL;
         return OAL_FAIL;

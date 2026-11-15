@@ -1,0 +1,7 @@
+set(
+    SOURCES_LIST
+    ${CMAKE_CURRENT_SOURCE_DIR}/bts_mesh_netbuf.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/ble_mesh_hex.c
+)
+
+set(SOURCES "${SOURCES}" ${SOURCES_LIST} PARENT_SCOPE)

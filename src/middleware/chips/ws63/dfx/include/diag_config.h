@@ -21,4 +21,8 @@
 #define CONFIG_DIAG_TRANSMIT_ITEM_CNT   3       /* diag:Maximum transfer item cnt */
 #define CONFIG_DIAG_FILTER_GROUP_NUM    10      /* diag: Maximum number of diag file group */
 
+#ifdef CONFIG_DIAG_BEAT_HEART_SUPPORT
+#define CONFIG_DFX_DIAG_BEAT_HEART_PER_TIME CONFIG_DIAG_BEAT_HEART_PER_TIME /* ms */
+#define CONFIG_DFX_DIAG_BEAT_HEART_TOTAL_TIME CONFIG_DIAG_BEAT_HEART_TOTAL_TIME /* second */
+#endif
 #endif /* DIAG_CONFIG_H */

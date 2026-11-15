@@ -79,3 +79,10 @@ config LOADERBOOT_SUPPORT_SET_BUADRATE
     default n
     help
         This option means loaderboot support set baudrate.
+
+    config YMODEM_SUPPORT_RECEIVE_BUFFER_ONCE
+        bool
+        prompt "ymodem support receive buffer at once."
+        default n
+        help
+            This option means ymodem receive data packet at once rather than in a loop.

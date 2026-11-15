@@ -335,6 +335,11 @@
     SORT(*libsamples.a:)(sections_patterns) \
     SORT(*libtestsuite.a:)(sections_patterns)
 
+// BTH非ROM组件 请在此添加
+#define BTH_MESH_NONROM(sections_patterns) \
+    SORT(*libmesh_samples.a:)(sections_patterns) \
+    SORT(*libble_mesh.a:)(sections_patterns)
+
 // WIFI cali非ROM 请在此添加
 #define WIFI_CALI_NONROM(sections_patterns)
 
@@ -413,6 +418,10 @@
 // PLAT 需要放在tcm中的 请在此添加
 #define PLAT_TCM_NONROM(sections_patterns)
 
+#if defined(CONFIG_BGLE_RAM_SIZE_16K) && !defined(WIFI_PERF_DTCM_16K)
+#define PLAT_DTCM_BSS \
+    SORT(*libinit.a:)(.bss*)
+#endif
 // LWIP性能相关请在此添加
 #define LWIP_PERFORMANCE_SECTION() \
     SORT(*liblwip_tcm.a:)(.text.get_socket) \

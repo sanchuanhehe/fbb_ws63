@@ -56,6 +56,8 @@
 #define WPA_KEY_MGMT_WPA3_FT_PSK        "SAE FT-SAE"
 #define WPA_KEY_MGMT_WPA3_FT_PSK_MIX    "SAE WPA-PSK WPA-PSK-SHA256 FT-SAE FT-PSK"
 #define WPA2_PROTO  "WPA2"
+#define EVENT_QUEUE_MAX_SIZE 10
+#define EVENT_QUEUE_ID_INIT 0xFFFFFFFF
 
 #ifdef LOS_CONFIG_PMK_CACHE
 /* pmk缓存, 一个缓存与一份assoc配置对应 */
@@ -108,6 +110,7 @@ static unsigned int g_wpa_event_taskid                   = 0;
 static unsigned char g_direct_cb                         = 0; /* 0:create new task call cb, 1:direct call cb */
 static unsigned char g_cb_task_prio                      = 20; /* callback task priority */
 static unsigned short g_cb_stack_size                    = 0x800; /* callback task stack size 2k */
+static unsigned long g_event_queue_id                    = EVENT_QUEUE_ID_INIT;
 
 ext_wifi_scan_no_save_cb g_raw_scan_cb = NULL;
 
@@ -1334,7 +1337,6 @@ int uapi_wifi_ap_scan(void)
         goto EXIT;
     }
 
-    g_scan_flag = WPA_FLAG_ON;
     rc = memset_s(&g_scan_record, sizeof(g_scan_record), 0, sizeof(g_scan_record));
     if (rc != EOK) {
         wpa_error_log0(MSG_ERROR, "uapi_wifi_ap_scan memset_s failed");
@@ -1441,6 +1443,9 @@ int uapi_wifi_sta_raw_scan(ext_wifi_scan_params *sp, ext_wifi_scan_no_save_cb cb
     g_usr_scanning_flag = WPA_FLAG_OFF;
     g_ssid_prefix_flag = WPA_FLAG_OFF;
 EXIT:
+    if (ret != EXT_WIFI_OK) {
+        g_scan_flag = WPA_FLAG_OFF;
+    }
     wifi_free_scan_param(scan_params);
     return ret;
 }
@@ -2411,6 +2416,7 @@ static void wifi_flush_wpa3_pmk(const ext_wifi_assoc_request *req)
         wpa_warning_log1(MSG_DEBUG, "add a new config, cur idx[%d]\r\n", g_pmk_cache_list.cur_idx);
     }
     g_pmk_cache_list.pmk_entry[g_pmk_cache_list.cur_idx].channel = req->channel;
+    g_pmk_cache_list.pmk_idx = g_pmk_cache_list.cur_idx;
 }
 
 /* 将当前pmk存入cache */
@@ -2864,6 +2870,7 @@ WIFI_STA_EXIT:
     return EXT_WIFI_FAIL;
 }
 
+void wfa_flags_clear(void);
 int uapi_wifi_sta_stop(void)
 {
     int ret = EXT_WIFI_FAIL;
@@ -2899,8 +2906,17 @@ int uapi_wifi_sta_stop(void)
     g_mesh_sta_flag = WPA_FLAG_OFF;
     g_connecting_flag = WPA_FLAG_OFF;
     g_wpa_rm_network = SOC_WPA_RM_NETWORK_END;
+    g_scan_flag = WPA_FLAG_OFF;
     os_intrestore(int_save);
+    wfa_flags_clear();
+    ret = EXT_WIFI_OK;
+WIFI_STA_STOP_FAIL:
+    clr_lock_flag();
+    return ret;
+}
 
+void wfa_flags_clear()
+{
 #ifdef LOS_CONFIG_WPA_ENTERPRISE
     if (g_wfa_ca_cert != NULL) {
         free(g_wfa_ca_cert);
@@ -2922,11 +2938,6 @@ int uapi_wifi_sta_stop(void)
         g_wfa_ent_identity = NULL;
     }
 #endif
-
-    ret = EXT_WIFI_OK;
-WIFI_STA_STOP_FAIL:
-    clr_lock_flag();
-    return ret;
 }
 
 #ifdef CONFIG_WPS
@@ -3259,20 +3270,32 @@ protocol_mode_enum uapi_wifi_sta_get_protocol_mode(void)
     return g_sta_opt_set.hw_mode;
 }
 
-void wifi_event_task_handler(unsigned int event)
+void wifi_event_task_handler(unsigned int param)
 {
-    if (g_wpa_event_cb != NULL) {
-        g_wpa_event_cb((ext_wifi_event *)(uintptr_t)event);
+    ext_wifi_event event;
+    unsigned int data_size = (unsigned int)sizeof(ext_wifi_event);
+    int ret;
+
+    (void)param;
+    while (1) {
+        (void)memset_s(&event, sizeof(ext_wifi_event), 0, sizeof(ext_wifi_event));
+        ret = osal_msg_queue_read_copy(g_event_queue_id, &event, &data_size, 0);
+        if (ret != EXT_WIFI_OK) {
+            break;
+        }
+        /* 对应的event处理函数 */
+        if (g_wpa_event_cb != NULL) {
+            g_wpa_event_cb(&event);
+        }
     }
     g_wpa_event_running = 0;
-    os_free((void *)(uintptr_t)event);
 }
 
 /* create a task and call user's cb */
 void wifi_new_task_event_cb(const ext_wifi_event *event_cb)
 {
     wifi_task_attr event_cb_task = {0};
-    ext_wifi_event *event_new = NULL;
+    int ret;
     unsigned int timeout = 0;
 
     if ((g_wpa_event_cb == NULL) || (event_cb == NULL)) {
@@ -3282,37 +3305,36 @@ void wifi_new_task_event_cb(const ext_wifi_event *event_cb)
         g_wpa_event_cb(event_cb);
         return;
     }
-    while (g_wpa_event_running != 0) {
-        os_task_delay(10);   /* delay 1 tick (10ms) and try again */
-        timeout++;
-        if (timeout > 100) { /* 100 tick = 1s */
-            printf("wifi_new_task_event_cb::current event[%d] wait timeout, last event[%d]\r\n",
-                event_cb->event, g_wpa_event_running - 1);
+    /* 创建一个msg queue，大小为10，用于接收处理event */
+    if (g_event_queue_id == EVENT_QUEUE_ID_INIT) {
+        ret = osal_msg_queue_create("wpa_event_msg", EVENT_QUEUE_MAX_SIZE, &g_event_queue_id, 0,
+            sizeof(ext_wifi_event));
+        if (ret != EXT_WIFI_OK) {
+            osal_printk("event queue init fail [%d]\r\n", ret);
             return;
         }
     }
+
+    if (osal_msg_queue_write_copy(g_event_queue_id, (void *)event_cb, sizeof(ext_wifi_event), 0) != EXT_WIFI_OK) {
+        osal_printk("event:%d\r\n", __LINE__);
+        return;
+    }
+    if (g_wpa_event_running != 0) {
+        osal_printk("event:%d\r\n", __LINE__);
+        return;
+    }
+
     wpa_event_task_free();
-    event_new = (ext_wifi_event *)os_zalloc(sizeof(ext_wifi_event));
-    if (event_new == NULL) {
-        wpa_error_log0(MSG_ERROR, "ext_wifi_event malloc err.");
-        return;
-    }
-    if (memcpy_s(event_new, sizeof(ext_wifi_event), event_cb, sizeof(ext_wifi_event)) != EOK) {
-        wpa_error_log0(MSG_ERROR, "memcpy event info err.");
-        os_free(event_new);
-        return;
-    }
+
     event_cb_task.task_entry = (wifi_tsk_entry_func)wifi_event_task_handler;
     event_cb_task.stack_size  = g_cb_stack_size;
     event_cb_task.task_name = "wpa_event_cb";
     event_cb_task.task_prio = g_cb_task_prio; /* task prio, must lower than wifi/lwip/wpa */
-    event_cb_task.arg = (void *)event_new;
     event_cb_task.task_policy = WIFI_TASK_STATUS_DETACHED;
     g_wpa_event_running = event_cb->event + 1; /* event runing */
     if (os_task_create(&g_wpa_event_taskid, &event_cb_task) != WIFI_OS_OK) {
         osal_printk("Event cb create task failed, %d.\r\n", event_cb->event);
         g_wpa_event_running = 0;
-        os_free(event_new);
     }
 }
 

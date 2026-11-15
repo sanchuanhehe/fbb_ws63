@@ -114,7 +114,7 @@ typedef u32_t sys_mutex_t;
 static inline u32_t lwip_stime(const time_t *t)
 {
     struct timeval tv = { .tv_sec = *t, .tv_usec = 0 };
-    return settimeofday(&tv, (void *)0);
+    return settimeofday(&tv, NULL);
 }
 
 static inline char *lwip_ctime(const time_t *t)

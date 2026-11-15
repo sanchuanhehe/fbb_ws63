@@ -1,0 +1,58 @@
+#===============================================================================
+# @brief    Kconfig file for OSAL and RTOS samples.
+# Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2026. All rights reserved.
+#===============================================================================
+
+choice
+    prompt "Select an OSAL IPC sample."
+    depends on ENABLE_OS_SAMPLE
+
+config SAMPLE_SUPPORT_OSAL_EVENT_FLAG
+    bool
+    prompt "Support OSAL event flag Sample."
+    help
+        This option enables the OSAL event flag AND-wait sample.
+
+config SAMPLE_SUPPORT_OSAL_MUTEX
+    bool
+    prompt "Support OSAL mutex Sample."
+    help
+        This option enables the OSAL mutex exclusive-access sample.
+
+config SAMPLE_SUPPORT_OSAL_MSG_QUEUE
+    bool
+    prompt "Support OSAL interrupt-to-task message queue Sample."
+    help
+        This option enables the interrupt-to-task message queue sample.
+
+config SAMPLE_SUPPORT_OSAL_SEMAPHORE
+    bool
+    prompt "Support OSAL semaphore Sample."
+    help
+        This option enables the OSAL producer-consumer semaphore sample.
+
+endchoice
+
+config SAMPLE_SUPPORT_OSAL_KMALLOC
+    bool
+    prompt "Support OSAL dynamic memory Sample."
+    default n
+    depends on ENABLE_OS_SAMPLE
+    help
+        This option enables the OSAL dynamic memory allocation sample.
+
+config SAMPLE_SUPPORT_OSAL_TASK_CONCURRENCY
+    bool
+    prompt "Support OSAL task concurrency Sample."
+    default n
+    depends on ENABLE_OS_SAMPLE
+    help
+        This option enables the OSAL task concurrency and priority preemption sample.
+
+config SAMPLE_SUPPORT_OSAL_INTERRUPT
+    bool
+    prompt "Support OSAL interrupt management Sample."
+    default n
+    depends on ENABLE_OS_SAMPLE
+    help
+        This option enables the OSAL interrupt registration and handling sample.

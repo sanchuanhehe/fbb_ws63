@@ -1,5 +1,5 @@
 /**
- * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved.
+ * Copyright (c) HiSilicon (Shanghai) Technologies Co., Ltd. 2022-2022. All rights reserved. \n
  *
  * Description: Provides at product config header \n
  * Author:  \n

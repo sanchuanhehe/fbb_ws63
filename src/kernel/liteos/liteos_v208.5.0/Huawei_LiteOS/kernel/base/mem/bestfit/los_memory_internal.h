@@ -117,6 +117,7 @@ typedef struct tagLosMemDynNode {
 #define OS_MEM_MAGIC_VALID(value) \
     (((UINTPTR)(value) ^ (UINTPTR)&(value)) == (UINTPTR)(-1))
 
+extern UINT32 OsHeapTaskHeapInfoGet(VOID *pool, UINT8 taskId, VOID (*print)(const char *fmt, ...));
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

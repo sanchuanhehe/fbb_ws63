@@ -78,18 +78,18 @@ endmacro()
 macro(ut_autogen_fsms FSM_FILES AUTOGEN_SOURCES AUTOGEN_INCLUDE_PATH)
     set(FSM_AUTOGEN_INCLUDE_PATH)
     foreach(FILE_PATH ${FSM_FILES})
-        if(EXISTS ${CMAKE_SOURCE_DIR}/../../../../../../protocol/cat1/lte/${FILE_PATH})
+        if(EXISTS ${ROOT_DIR}/../../../../../../protocol/cat1/lte/${FILE_PATH})
             get_filename_component(FILE_REL_PATH ${FILE_PATH} ABSOLUTE BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
             get_filename_component(FILE_DIRECTORY ${FILE_REL_PATH} DIRECTORY)
             string(REGEX MATCH "${CMAKE_CURRENT_SOURCE_DIR}/" MATCH_RES ${FILE_DIRECTORY})
             if(MATCH_RES STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}/")
                 set(AUTOGEN_PATH ${CMAKE_CURRENT_SOURCE_DIR}/stub/fsm_autogen)
                 file(MAKE_DIRECTORY ${AUTOGEN_PATH})
-                file(RELATIVE_PATH FILE_RELATIVE_PATH ${CMAKE_SOURCE_DIR} ${FILE_REL_PATH})
+                file(RELATIVE_PATH FILE_RELATIVE_PATH ${ROOT_DIR} ${FILE_REL_PATH})
                 set(FSM_FILE_ABSOLUTE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../protocol/cat1/lte/${FSM_FILES})
                 execute_process(
-                    COMMAND python ${CMAKE_SOURCE_DIR}/../../../../../../tools/fsmgen/fsmgen.py ${FSM_FILE_ABSOLUTE_PATH} --out_dir ${AUTOGEN_PATH}
-                    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+                    COMMAND python ${ROOT_DIR}/../../../../../../tools/fsmgen/fsmgen.py ${FSM_FILE_ABSOLUTE_PATH} --out_dir ${AUTOGEN_PATH}
+                    WORKING_DIRECTORY ${ROOT_DIR}
                     )
                 list(APPEND FSM_AUTOGEN_INCLUDE_PATH ${AUTOGEN_PATH})
             endif()
@@ -128,10 +128,10 @@ macro(autogen_fsms FSM_FILES AUTOGEN_SOURCES AUTOGEN_INCLUDE_PATH)
                 set(AUTOGEN_PATH ${CMAKE_CURRENT_BINARY_DIR}/private)
                 file(MAKE_DIRECTORY ${AUTOGEN_PATH})
                 # message(STATUS "Autogen fsm code form ${FILE_PATH}")
-                file(RELATIVE_PATH FILE_RELATIVE_PATH ${CMAKE_SOURCE_DIR} ${FILE_REL_PATH})
+                file(RELATIVE_PATH FILE_RELATIVE_PATH ${ROOT_DIR} ${FILE_REL_PATH})
                 execute_process(
-                    COMMAND python ${CMAKE_SOURCE_DIR}/tools/fsmgen/fsmgen.py ${FILE_RELATIVE_PATH} --out_dir ${AUTOGEN_PATH}
-                    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+                    COMMAND python ${ROOT_DIR}/tools/fsmgen/fsmgen.py ${FILE_RELATIVE_PATH} --out_dir ${AUTOGEN_PATH}
+                    WORKING_DIRECTORY ${ROOT_DIR}
                     )
                 list(APPEND FSM_AUTOGEN_INCLUDE_PATH ${AUTOGEN_PATH})
             endif()
@@ -167,23 +167,23 @@ macro(autogen_rpc_code RPC_JSON_PATH)
     endif()
     if(DEFINED RPC_CORE)
         string(REPLACE "_" "-" TARGET_DIR ${BUILD_TARGET_NAME})
-        set(RPC_BASE_PATH ${CMAKE_SOURCE_DIR}/output/${CHIP}/${CORE}/${TARGET_DIR}/rpc_autogen)
+        set(RPC_BASE_PATH ${ROOT_DIR}/output/${CHIP}/${CORE}/${TARGET_DIR}/rpc_autogen)
         set(PRC_INCLUDE_DIR_PATH ${RPC_BASE_PATH}/public/${RPC_CORE})
         set(PRC_INCLUDE_FILE_PATH ${PRC_INCLUDE_DIR_PATH}/rpc_auto_generated.h)
         set(RPC_SOURCE_FILE_PATH ${RPC_BASE_PATH}/private/${RPC_CORE}/rpc_auto_generated_${RPC_CORE}.c)
         set(RPC_OPT_FILE_PATH ${RPC_BASE_PATH}/public/${RPC_CORE}/rpc_auto_generated_call_tree.opt)
-        set(RPC_SCRIPT_PATH ${CMAKE_SOURCE_DIR}/tools/fsmgen/autogen/rpc/json_to_rpc_code.py)
+        set(RPC_SCRIPT_PATH ${ROOT_DIR}/tools/fsmgen/autogen/rpc/json_to_rpc_code.py)
         execute_process(
             COMMAND python3 ${RPC_SCRIPT_PATH} ${RPC_CORE} ${RPC_SOURCE_FILE_PATH} ${PRC_INCLUDE_FILE_PATH} ${RPC_OPT_FILE_PATH} ${RPC_JSON_PATH}
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            WORKING_DIRECTORY ${ROOT_DIR}
         )
     endif()
 endmacro(autogen_rpc_code)
 
 macro(autogen_at_json_code)
     string(REPLACE "_" "-" TARGET_DIR ${BUILD_TARGET_NAME})
-    set(AT_GEN_DIR ${CMAKE_SOURCE_DIR}/output/${CHIP}/${CORE}/${TARGET_DIR}/at_autogen)
-    set(AT_GEN_TOOL ${CMAKE_SOURCE_DIR}/tools/fsmgen/autogen/at/json_to_at_code.py)
+    set(AT_GEN_DIR ${ROOT_DIR}/output/${CHIP}/${CORE}/${TARGET_DIR}/at_autogen)
+    set(AT_GEN_TOOL ${ROOT_DIR}/tools/fsmgen/autogen/at/json_to_at_code.py)
     if((DEFINED TARGET_AT_JSON_FILES) AND (DEFINED AT_GEN_DIR))
         if(NOT EXISTS ${AT_GEN_DIR})
             file(MAKE_DIRECTORY ${AT_GEN_DIR})

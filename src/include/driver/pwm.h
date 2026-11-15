@@ -306,6 +306,22 @@ errcode_t uapi_pwm_start_group(uint8_t group);
  */
 errcode_t uapi_pwm_stop_group(uint8_t group);
 
+/**
+ * @if Eng
+ * @brief  Update a PWM device with the specified configuration.
+ * @param  [in]  channel PWM channel to use. For details, see @ref pwm_channel_t.
+ * @param  [in]  cfg Config set to the PWM device. For details, see @ref pwm_config_t.
+ * @retval ERRCODE_SUCC Success.
+ * @retval Other        Failure. For details, see @ref errcode_t.
+ * @else
+ * @brief  更新指定PWM通道的配置。
+ * @param  [in]  channel PWM通道，参考 @ref pwm_channel_t 。
+ * @param  [in]  cfg PWM设备的配置信息，参考 @ref pwm_config_t 。
+ * @retval ERRCODE_SUCC 成功。
+ * @retval Other        失败，参考 @ref errcode_t 。
+ * @endif
+ */
+errcode_t uapi_pwm_update_cfg(uint8_t channel, const pwm_config_t *cfg);
 #if defined(CONFIG_PWM_PRELOAD)
 /**
  * @if Eng

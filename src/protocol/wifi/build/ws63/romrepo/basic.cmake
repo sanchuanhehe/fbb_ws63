@@ -80,14 +80,14 @@ endif()
 
 
 set(Wi-Fi-PRIVATE_HEADER
-    ${CMAKE_SOURCE_DIR}/middleware/utils/hcc/inc
-    ${CMAKE_SOURCE_DIR}/middleware/utils/hcc/comm
-    ${CMAKE_SOURCE_DIR}/middleware/utils/hcc/cfg
-    ${CMAKE_SOURCE_DIR}/kernel/osal/include
-    ${CMAKE_SOURCE_DIR}/kernel/osal_adapt/inc
+    ${ROOT_DIR}/middleware/utils/hcc/inc
+    ${ROOT_DIR}/middleware/utils/hcc/comm
+    ${ROOT_DIR}/middleware/utils/hcc/cfg
+    ${ROOT_DIR}/kernel/osal/include
+    ${ROOT_DIR}/kernel/osal_adapt/inc
 
     #watch dog
-    ${CMAKE_SOURCE_DIR}/drivers/drivers/driver/watchdog
+    ${ROOT_DIR}/drivers/drivers/driver/watchdog
 
     ${CMAKE_CURRENT_SOURCE_DIR}/source/host/feature
     ${CMAKE_CURRENT_SOURCE_DIR}/source/host/feature/interface
@@ -427,6 +427,15 @@ endif()
 set(Wi-Fi-PUBLIC_DEFINES
 )
 
+if(CONFIG_SUPPORT_SLE_BASE_STATION IN_LIST DEFINES)
+    list(APPEND Wi-Fi-PUBLIC_HEADER
+        ${ROOT_DIR}/protocol/wifi/source/host/inc/oal/
+        ${ROOT_DIR}/protocol/wifi/source/host/inc/oal/liteOS/
+        ${ROOT_DIR}/protocol/wifi/source/host/forward/liteOS/
+        ${WIFI_DEVICE_DIR}/source/device/hal/hal_ws63/src
+    )
+endif()
+
 if("__ALIOS__" IN_LIST DEFINES OR "__FREERTOS__" IN_LIST DEFINES)
     list (APPEND Wi-Fi-PRIVATE_DEFINES
         FREERTOS_DEFINE
@@ -457,8 +466,9 @@ endmacro()
 
 macro(add_rom_base_config)
     set(PUBLIC_HEADER            ${Wi-Fi-ROM-PUBLIC_HEADER})
-    set(PRIVATE_DEFINES          ${Wi-Fi-PRIVATE_DEFINES})
+    set(PRIVATE_DEFINES          ${Wi-Fi-ROM-PRIVATE_DEFINES})
     set(PUBLIC_DEFINES           ${Wi-Fi-PUBLIC_DEFINES})
+    set(COMPONENT_CCFLAGS        ${Wi-Fi-COMPONENT_CCFLAGS})
     set(WHOLE_LINK               ${Wi-Fi-WHOLE_LINK})
     set(MAIN_COMPONENT           ${Wi-Fi-MAIN_COMPONENT})
     set(LIB_OUT_PATH ${BIN_DIR}/${CHIP}/libs/wifi/${TARGET_COMMAND})

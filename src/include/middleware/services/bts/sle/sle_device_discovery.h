@@ -198,6 +198,24 @@ typedef enum {
 
 /**
  * @if Eng
+ * @brief SLE stack status.
+ * @else
+ * @brief SLE协议栈状态。
+ * @endif
+ */
+typedef enum {
+    SLE_STATE_DISABLED,                             /*!< @if Eng SLE stack has been disabled.
+                                                    @else  SLE协议栈已禁能 @endif */
+    SLE_STATE_DISABLING,                            /*!< @if Eng SLE stack is being disabled.
+                                                    @else  SLE协议栈禁能中 @endif */
+    SLE_STATE_ENABLED,                              /*!< @if Eng SLE stack has been enabled.
+                                                    @else  SLE协议栈已使能 @endif */
+    SLE_STATE_ENABLING,                             /*!< @if Eng SLE stack is being enabled.
+                                                    @else  SLE协议栈使能中 @endif */
+} sle_stack_state_t;
+
+/**
+ * @if Eng
  * @brief  Connection parameter, only valid in role G.
  * @else
  * @brief  连接参数，做G时有效。
@@ -334,10 +352,10 @@ typedef struct sle_seek_params {
                                                        @else   扫描类型，{ @ref sle_seek_type_t }
                                                        @endif */
     uint16_t seek_interval[SLE_SEEK_PHY_NUM_MAX]; /*!< @if Eng scan interval
-                                                       @else   扫描间隔，取值范围[0x0004, 0xFFFF]，time = N * 0.125ms
+                                                       @else   扫描间隔，取值范围[0x0014, 0xFFFF]，time = N * 0.125ms
                                                        @endif */
     uint16_t seek_window[SLE_SEEK_PHY_NUM_MAX];   /*!< @if Eng scan window
-                                                       @else   扫描窗口，取值范围[0x0004, 0xFFFF]，time = N * 0.125ms
+                                                       @else   扫描窗口，取值范围[0x0014, 0xFFFF]，time = N * 0.125ms
                                                        @endif */
 } sle_seek_param_t;
 
@@ -657,6 +675,25 @@ errcode_t enable_sle(void);
  * @endif
  */
 errcode_t disable_sle(void);
+
+/**
+ * @if Eng
+ * @brief Querying the SLE stack status.
+ * @par Description: Querying the SLE stack status.
+ * @param [in] stack_state Result of querying the SLE stack status { @ref sle_stack_state_t }.
+ * @retval error code.
+ * @par Depends:
+ * @li sle_common.h
+ * @else
+ * @brief 查询SLE协议栈状态。
+ * @par Description: 查询SLE协议栈状态。
+ * @param [in] stack_state 协议栈状态 { @ref sle_stack_state_t }。
+ * @retval 执行结果错误码。
+ * @par 依赖：
+ * @li sle_common.h
+ * @endif
+ */
+errcode_t sle_get_stack_state(uint8_t *stack_state);
 
 /**
  * @if Eng

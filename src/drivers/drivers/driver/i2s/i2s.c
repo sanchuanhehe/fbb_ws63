@@ -117,6 +117,26 @@ errcode_t uapi_i2s_set_config(sio_bus_t bus, const i2s_config_t *config)
     return ERRCODE_SUCC;
 }
 
+#if defined(CONFIG_I2S_SUPPORT_DYNAMIC_SAMPLE_RATE)
+errcode_t uapi_i2s_set_sample_rate(sio_bus_t bus, i2s_sample_rate_t sample_rate)
+{
+    uint32_t sample_rate_index = (uint32_t)sample_rate;
+    if (unlikely(!g_i2s_inited)) {
+        return ERRCODE_I2S_NOT_INIT;
+    }
+    if (unlikely(bus >= CONFIG_I2S_BUS_MAX_NUM)) {
+        return ERRCODE_INVALID_PARAM;
+    }
+
+    if (sio_porting_check_standard_sample_rate(sample_rate_index) == false) {
+        return ERRCODE_INVALID_PARAM;
+    }
+
+    hal_sio_set_sample_rate(bus, sample_rate_index);
+    return ERRCODE_SUCC;
+}
+#endif
+
 errcode_t uapi_i2s_get_config(sio_bus_t bus, i2s_config_t *config)
 {
     if (unlikely(!g_i2s_inited)) {
@@ -188,6 +208,10 @@ errcode_t uapi_i2s_read_start(sio_bus_t bus)
     }
 
     g_hal_funcs->rx_enable(bus, true);
+    g_hal_funcs->get_config(bus, &g_hal_config);
+    if (g_hal_config.drive_mode == MASTER) {
+        hal_sio_set_crg_clock_enable(bus, true);
+    }
 
     return ERRCODE_SUCC;
 }
@@ -208,6 +232,11 @@ errcode_t uapi_i2s_loop_trans(sio_bus_t bus, i2s_tx_data_t *data)
     g_hal_funcs->loop_trans(bus, (hal_sio_tx_data_t *)(uintptr_t)data, I2S_MODE);
 
     return ERRCODE_SUCC;
+}
+
+void uapi_i2s_set_crg_clock_enable(sio_bus_t bus, bool enable)
+{
+    hal_sio_set_crg_clock_enable(bus, enable);
 }
 
 #if defined(CONFIG_I2S_SUPPORT_LOOPBACK) && (CONFIG_I2S_SUPPORT_LOOPBACK == 1)

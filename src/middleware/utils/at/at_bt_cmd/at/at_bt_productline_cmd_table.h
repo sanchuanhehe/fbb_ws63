@@ -381,31 +381,11 @@ at_ret_t cmd_get_bsle_pwr_cali_flag(void);
 /* AT BT PRODUCTLINE CMD TABLE */
 const at_cmd_entry_t at_bt_productline_cmd_parse_table[] = {
     {
-        "SLEENABLE",
-        1, // ID
-        0, // Attribute
-        NULL,
-        (at_cmd_func_t)bt_at_enable_sle_cmd,
-        NULL,
-        NULL,
-        NULL,
-    },
-    {
         "BLEFACCALLBACK",
         2, // ID
         0, // Attribute
         NULL,
         (at_cmd_func_t)bt_at_ble_register_callback_cmd,
-        NULL,
-        NULL,
-        NULL,
-    },
-    {
-        "SLEFACCALLBACK",
-        3, // ID
-        0, // Attribute
-        NULL,
-        (at_cmd_func_t)bt_at_sle_register_callback_cmd,
         NULL,
         NULL,
         NULL,
@@ -446,46 +426,6 @@ const at_cmd_entry_t at_bt_productline_cmd_parse_table[] = {
         0, // Attribute
         NULL,
         (at_cmd_func_t)bt_at_ble_reset_cmd,
-        NULL,
-        NULL,
-        NULL,
-    },
-    {
-        "SLETX",
-        8, // ID
-        0, // Attribute
-        sle_rf_tx_param_syntax,
-        NULL,
-        (at_set_func_t)bt_at_sle_rf_tx_cmd,
-        NULL,
-        NULL,
-    },
-    {
-        "SLERX",
-        9, // ID
-        0, // Attribute
-        sle_rf_rx_param_syntax,
-        NULL,
-        (at_set_func_t)bt_at_sle_rf_rx_cmd,
-        NULL,
-        NULL,
-    },
-    {
-        "SLETRXEND",
-        10, // ID
-        0,  // Attribute
-        NULL,
-        (at_cmd_func_t)bt_at_sle_rf_trxend_cmd,
-        NULL,
-        NULL,
-        NULL,
-    },
-    {
-        "SLERST",
-        11, // ID
-        0,  // Attribute
-        NULL,
-        (at_cmd_func_t)bt_at_sle_reset_cmd,
         NULL,
         NULL,
         NULL,
