@@ -43,5 +43,9 @@ separate. The startup Flash warning0x80001341 is not fixed by this workaround.
 The first matched RF run on2026-11-16 has passed: coded30/30 CRC-qualified
 frames equal the complete255-byte PRBS9, with uncoded control also passing.
 Final TXPD moves0x5af6→0x5af8 while the allocator node stays0x5af6.
-The same frozen SDK/model/RF setup is being checked across the24 original coded
-combinations; do not infer their acceptance from this first representative run.
+The same frozen SDK/model/RF setup then passed all24 original coded combinations:
+739/739 complete candidate frames, five boundary-truncated segments retained.
+A real host SIGTERM trial exited nonzero as intended, confirmed END and RF
+restoration, and returned the buffer/TXPD pools byte-for-byte to baseline. The
+following restart passed30/30 frames. These are observed candidates, not an
+absolute RF packet-error-rate measurement or business-protocol qualification.
