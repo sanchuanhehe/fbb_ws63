@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 工具中心
@@ -21,3 +20,11 @@ hide:
 
     芯片配套的专用烧写工具，通过打断程序启动的方式对单板烧写镜像文件，支持工厂烧写，便于脚本集成。
 
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+HiSpark插件 <HiSparkStudioforVSCodeUserGuide/HiSparkStudioforVSCodeUserGuide>
+BurnTool <BurnToolUserGuide/BurnToolUserGuide>
+```

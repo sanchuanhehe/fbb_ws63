@@ -61,17 +61,19 @@ I2S 接口支持 Master/Slave 模式，接口时序 TBD。
 
 ## SPI 时序
 
-!!! note "说明"
+```{admonition} 说明
+:class: note
 
-    以下缩略语或字母含义：
-    
-    • MSB: Most Significant Bit
-    
-    • LSB: Least Significant Bit
-    
-    • SPI_CK(0): spo=0
-    
-    • SPI_CK(1): spo=1
+以下缩略语或字母含义：
+
+• MSB: Most Significant Bit
+
+• LSB: Least Significant Bit
+
+• SPI_CK(0): spo=0
+
+• SPI_CK(1): spo=1
+```
 
 标准 SPI 接口（SPI0）支持 Master/Slave 模式，接口时序如图 8-3 所示。
 

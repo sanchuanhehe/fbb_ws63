@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # RF 认证测试
 
 > SLE (SparkLink Low Energy) Factory API（定频 TX/RX、单载波）

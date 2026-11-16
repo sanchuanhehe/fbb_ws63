@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # HADM 测距
 
 > SLE (SparkLink Low Energy) HADM (High Accuracy Distance Measurement)、Channel Sounding

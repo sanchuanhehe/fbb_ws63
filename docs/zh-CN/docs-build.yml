@@ -1,0 +1,40 @@
+# 项目名称
+project: WS63 开发者中心
+# 查看源码
+view_source: true
+# 生成离线包
+offline_package: true
+
+# 顶级导航，二级开始，由各级目录 index.md 承载其下的全部文档
+root_toctree:
+  - 概览: index
+  - 快速入门: get-started/index
+  - 整体架构: overall-architecture/index
+  - 开发指南: guides/index
+  - 参考案例: samples/index
+  - API 参考: api-reference/index
+  - 硬件指南: hardware-guide/index
+  - 工具中心: tools/index
+  - FAQ: FAQ/index
+  - 其他: others/index
+
+# 屏蔽的文件
+exclude_patterns:
+  - '**/*.rst'
+  # 无任何页面引用
+  - samples/appendix/partition-ref.md
+  - samples/peripherals/sdio/sdio.md
+  - samples/system/power/power.md
+  - docker
+  - software
+
+html_context:
+  # 「下载HTML」按钮
+  download:
+    href: fbb_ws63-master.zip
+    tooltip: 下载HTML
+  feedback_url: https://gitcode.com/HiSpark/fbb_ws63/issues
+  version_selector:
+    repo_path: fbb_ws63
+    version: master
+

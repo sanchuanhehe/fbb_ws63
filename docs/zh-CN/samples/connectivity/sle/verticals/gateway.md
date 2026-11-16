@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # 网关
 
 > SLE (SparkLink Low Energy) Client（多连接）+ WiFi STA (Station) + 数据桥接

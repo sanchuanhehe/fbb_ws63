@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # Utils 工具
@@ -11,3 +10,16 @@ hide:
 - [CRC (Cyclic Redundancy Check) 计算](crc.md)
 - [升级](upgrade.md)
 - [dfx](dfx/dfx.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+DFX <dfx/dfx>
+AT 命令 <at>
+NV 存储 <nv>
+分区管理 <partition>
+CRC 计算 <crc>
+升级 <upgrade>
+```

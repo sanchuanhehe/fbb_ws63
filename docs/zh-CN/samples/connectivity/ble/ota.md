@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # BLE OTA 传输说明
 
 > 本页只说明通过 BLE (Bluetooth Low Energy) GATT (Generic Attribute Profile) 传输升级数据时的协议设计。镜像、分区、校验、切换和回滚统一参考 [OTA 固件升级架构](../../system/ota/ota.md)。

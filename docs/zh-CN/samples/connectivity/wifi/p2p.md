@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # P2P
 
 > WiFi P2P (Peer-to-Peer) — WiFi Direct — WiFi P2P API

@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # Wi-Fi 中继设计说明
 
 > 本页说明 STA (Station) 与 SoftAP 组合时的架构约束。当前 `src/application/samples` 和 `vendor` 中没有可直接构建的中继案例工程。

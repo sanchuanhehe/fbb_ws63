@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 低功耗蓝牙
@@ -19,3 +18,13 @@ BLE (Bluetooth Low Energy) 是 WS63 的低功耗蓝牙协议栈 API，基于 GAT
 ## 工厂模式
 
 - [Factory](factory/factory.md) — 创建和管理 BLE 协议栈实例
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+Factory <factory/factory>
+GAP <gap/gap>
+GATT <gatt/index>
+```

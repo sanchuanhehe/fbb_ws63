@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # 扫描
 
 > WiFi Scan API

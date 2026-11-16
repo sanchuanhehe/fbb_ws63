@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # CHBA IP
 
 > CHBA (Converged Host Bus Adapter) — IP (Internet Protocol) 承载与上网 — SLE (SparkLink Low Energy)、CHBA、lwIP (Lightweight IP)

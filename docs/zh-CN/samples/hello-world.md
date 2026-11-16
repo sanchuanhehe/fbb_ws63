@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # Hello World
 
 > 第一个 WS63 应用：Hello World

@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # BLE 配对与绑定
 
 > 说明 BLE (Bluetooth Low Energy) 的 Just Works、Passkey、绑定和重连加密。当前 SDK 没有独立的 Passkey 案例工程，本页作为安全机制说明。

@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 开发指南
@@ -75,3 +74,20 @@ hide:
 
 - [WS63 用户指南](https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/WS63%E7%B3%BB%E5%88%97%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97.pdf)
 - [WS63 系列硬件用户指南](https://hispark-obs.obs.cn-east-3.myhuaweicloud.com/WS63%E7%B3%BB%E5%88%97%E7%A1%AC%E4%BB%B6%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97_04.pdf)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+SDK 开发 <sdk-development/index>
+无线连接 <connectivity/index>
+网络协议 <network/index>
+操作系统 <os/index>
+设备驱动开发 <peripherals/index>
+安全 <security/index>
+系统服务 <system/index>
+AT 命令 <commands/index>
+第三方软件移植 <open-source/index>
+测试与验证 <test/index>
+```

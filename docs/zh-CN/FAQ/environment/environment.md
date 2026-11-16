@@ -2,10 +2,12 @@
 
 本页收集编译与环境搭建过程中常见的报错与解决方案，涵盖 SDK 路径、工具链（Ninja / CMake / ccache / 工具链）、HiSpark Studio 编译、串口等问题。
 
-!!! warning "前置检查：避免中文路径"
-    请确保：SDK (Software Development Kit) 源码存放路径、工具链安装路径、Windows 用户名路径中均**不包含中文**。如果用户名包含中文路径，请参考 **HiSpark Studio 工具下载及安装** 说明进行处理。
+```{admonition} 前置检查：避免中文路径
+:class: warning
+请确保：SDK (Software Development Kit) 源码存放路径、工具链安装路径、Windows 用户名路径中均**不包含中文**。如果用户名包含中文路径，请参考 **HiSpark Studio 工具下载及安装** 说明进行处理。
 
-    下述各问题中，多类编译报错（flashboot 失败、CMake/Ninja 找不到、ccache 权限拒绝等）都与中文路径有关，请优先排除该因素。
+下述各问题中，多类编译报错（flashboot 失败、CMake/Ninja 找不到、ccache 权限拒绝等）都与中文路径有关，请优先排除该因素。
+```
 
 ---
 

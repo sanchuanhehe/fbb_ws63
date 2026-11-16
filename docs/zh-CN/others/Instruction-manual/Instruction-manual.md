@@ -1,12 +1,12 @@
 # 贡献指南
 
-我们欢迎对 WS63 文档项目做出贡献，如修复错误，添加文档等。我们通过 [GitCode Pull Requests](https://gitcode.com/HiSpark/fbb_ws63/pulls){ target=_blank} 接受贡献。
+我们欢迎对 WS63 文档项目做出贡献，如修复错误，添加文档等。我们通过 [GitCode Pull Requests](https://gitcode.com/HiSpark/fbb_ws63/pulls) 接受贡献。
 
 ## 提交流程
 
 这一节，是对 `新增问题` 和 `修改问题` 两个操作的流程简要介绍，流程中涉及的环节具体要求，请点击链接查看。
 
-针对 `git` 相关操作不做具体的介绍，可以查看 [Git 相关教程](https://git-scm.com/book/zh/v2){ target=_blank}。
+针对 `git` 相关操作不做具体的介绍，可以查看 [Git 相关教程](https://git-scm.com/book/zh/v2)。
 
 ### 新增问题
 
@@ -105,7 +105,7 @@ artificial-intelligence: bs21e support sle_measure_dis.
 我们使用 GitCode 合并请求功能将分支合并到主分支中，步骤：
 
 1. 将您的分支推送到 GitCode 仓库；
-2. 转到 [fbb_ws63](https://gitcode.com/HiSpark/fbb_ws63/pulls){ target=_blank}，然后单击 "新建Pull Request"；
+2. 转到 [fbb_ws63](https://gitcode.com/HiSpark/fbb_ws63/pulls)，然后单击 "新建Pull Request"；
 3. 选择您刚创建准备合并的分支，然后填写"合并请求"详细信息。
 
 ### 提交合并请求相关规范

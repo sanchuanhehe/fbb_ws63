@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 硬件指南
@@ -18,3 +17,12 @@ hide:
 - [硬件用户指南](hardware-user-guide/index.md)
 
     介绍 WS63 系列芯片的封装管脚信息、电气特性参数、原理图设计建议、PCB 设计建议、热设计建议、焊接工艺、潮敏参数、接口时序与注意事项等内容。
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+芯片手册 <datasheet/index>
+硬件用户指南 <hardware-user-guide/index>
+```

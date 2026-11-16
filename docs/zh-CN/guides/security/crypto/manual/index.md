@@ -1,5 +1,6 @@
 ---
 title: 安全软件开发指南
+orphan: true
 ---
 
 # 前言<a name="ZH-CN_TOPIC_0000001880631385"></a>

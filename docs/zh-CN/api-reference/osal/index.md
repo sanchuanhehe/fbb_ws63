@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # OS 抽象层
@@ -30,3 +29,26 @@ hide:
 - [Semaphore](semaphore/semaphore.md) — 信号量
 - [String](string/string.md) — 字符串操作
 - [Time](time/time.md) — 时间与定时器
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+Atomic <atomic/atomic>
+Debug <debug/debug>
+Device <device/device>
+Drvbox <drvbox/drvbox>
+Event <event/event>
+FileOps <fileops/fileops>
+Interrupt <interrupt/interrupt>
+Lock <lock/index>
+Math <math/index>
+Memory <memory/index>
+MsgQueue <msgqueue/msgqueue>
+Proc <proc/proc>
+Schedule <schedule/index>
+Semaphore <semaphore/semaphore>
+String <string/string>
+Time <time/time>
+```

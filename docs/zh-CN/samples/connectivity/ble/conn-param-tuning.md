@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # 连接参数调优
 
 > BLE (Bluetooth Low Energy) GAP (Generic Access Profile) 连接参数更新、PHY (Physical Layer) 切换

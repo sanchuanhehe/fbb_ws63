@@ -1,5 +1,6 @@
 ---
 title: NV存储 用户指南
+orphan: true
 ---
 
 # 前言<a name="ZH-CN_TOPIC_0000001814189501"></a>

@@ -49,3 +49,12 @@ source_refs:
 - 串口持续输出 `hello world`。
 
 本入口和两个教程当前只完成源码、配置和文档静态核对；目标板端到端验证完成后，再更新页面验证等级。
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+使用 CLI 完成第一次开发 <cli/index>
+使用 VS Code 完成第一次开发 <vscode/index>
+```

@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # SLE
@@ -58,3 +57,13 @@ hide:
 - [故障排除](./test-debug/troubleshooting.md)
 -->
 
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+概述 <overview/index>
+基础入门 <basics/index>
+连接管理 <link-mgmt/index>
+数据通信 <data-comm/index>
+```

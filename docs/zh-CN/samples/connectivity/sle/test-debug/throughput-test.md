@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # SLE 吞吐量测试
 
 > 本页只说明测试方法和结果分析。数据通道、流控和发送循环请参考 [高吞吐传输](../data-comm/high-throughput.md)。

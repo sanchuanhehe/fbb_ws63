@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 硬件用户指南
@@ -52,3 +51,20 @@ hide:
 - [缩略语](abbreviations.md)
 
     术语与缩略语对照表。
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+封装与管脚 <package-and-pins>
+电性能参数 <electrical-characteristics>
+原理图设计建议 <schematic-design>
+PCB 设计建议 <pcb-design>
+热设计建议 <thermal-design>
+焊接工艺 <soldering-process>
+潮敏参数 <moisture-sensitivity>
+接口时序 <interface-timing>
+注意事项 <precautions>
+缩略语 <abbreviations>
+```

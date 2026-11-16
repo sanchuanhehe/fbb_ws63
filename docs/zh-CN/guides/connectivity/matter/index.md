@@ -694,8 +694,10 @@ fbb build ws63-liteos-matter
 
 ## WSL编译Matter时pgi安装失败
 
-!!! warning "重要：pgi必须使用Python 3.11"
-    对当前仓库锁定的 `pgi==0.0.11.2`，Python 3.11 是最后推荐且可复现的兼容环境。Python 3.12/3.13不是本文的兼容基线，Python 3.14已明确不兼容；如果只编译WS63 Matter固件，请使用 `--platform none` 跳过 `pgi`。
+```{admonition} 重要：pgi必须使用Python 3.11
+:class: warning
+对当前仓库锁定的 `pgi==0.0.11.2`，Python 3.11 是最后推荐且可复现的兼容环境。Python 3.12/3.13不是本文的兼容基线，Python 3.14已明确不兼容；如果只编译WS63 Matter固件，请使用 `--platform none` 跳过 `pgi`。
+```
 
 执行 `source scripts/activate.sh` 时，可能出现以下错误：
 

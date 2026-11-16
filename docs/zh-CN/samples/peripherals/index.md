@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 外设驱动
@@ -25,3 +24,25 @@ hide:
 <!-- - [TSensor](./tsensor/tsensor.md) -->
 - [UART](./uart/uart.md)
 - [Watchdog](./watchdog/watchdog.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+ADC <adc/adc>
+DMA <dma/dma>
+eFuse <efuse/efuse>
+GPIO <gpio/gpio-output>
+I2C <i2c/i2c>
+I2S <i2s/i2s>
+Pinctrl <pinctrl/pinctrl>
+PWM <pwm/pwm>
+SFC <sfc/sfc>
+SPI <spi/spi>
+SysTick <systick/systick>
+TCXO <tcxo/tcxo>
+Timer <timer-hw/timer-hw>
+UART <uart/uart>
+Watchdog <watchdog/watchdog>
+```

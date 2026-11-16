@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 网络协议
@@ -16,3 +15,14 @@ hide:
 - [MQTT](./mqtt/mqtt.md)
 <!-- - [CoAP](./coap/coap.md) -->
 - [HTTP](./http.md)
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+TCP/UDP <tcp-udp/tcp-udp>
+DHCP/DNS <dhcp-dns/dhcp-dns>
+MQTT <mqtt/mqtt>
+HTTP <http>
+```

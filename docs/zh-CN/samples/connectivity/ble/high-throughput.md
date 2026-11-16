@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # 高吞吐传输
 
 > BLE (Bluetooth Low Energy) GAP (Generic Access Profile) PHY/Data Length、GATT (Generic Attribute Profile) Notify

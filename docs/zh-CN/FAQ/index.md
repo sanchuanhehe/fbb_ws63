@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 常见问题
@@ -55,6 +54,20 @@ hide:
 
 如果以上内容未能解决您的疑问，欢迎通过以下渠道反馈：
 
-- 提交问题 [提交 Issue](https://gitcode.com/HiSpark/fbb_ws63/issues){ target=_blank }
-- 前往 [海思开发者论坛](https://developers.hisilicon.com/forum/0133146886267870001){ target=_blank } 提问
+- 提交问题 [提交 Issue](https://gitcode.com/HiSpark/fbb_ws63/issues)
+- 前往 [海思开发者论坛](https://developers.hisilicon.com/forum/0133146886267870001) 提问
 - 阅读 [贡献指南](../others/Instruction-manual/Instruction-manual.md) 参与文档共建
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+编译 <compile/compile>
+环境 <environment/environment>
+系统 <system/system>
+无线通信 <wireless/wireless>
+外设 <peripherals/peripherals>
+射频测试 <rf-testing/rf-testing>
+产线测试 <production-testing/production-testing>
+```

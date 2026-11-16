@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 星闪低功耗
@@ -27,3 +26,14 @@ SLE (SparkLink Low Energy) 是星闪低功耗接入技术的协议栈 API，提�
 ## 组网
 
 - [CHBA (Converged Host Bus Adapter)](chba/chba.md) — 全屋智能 CHBA  IP (Internet Protocol) 组网
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+CHBA <chba/chba>
+Connection <connection/connection>
+Service <service/index>
+SSAP <ssap/index>
+```

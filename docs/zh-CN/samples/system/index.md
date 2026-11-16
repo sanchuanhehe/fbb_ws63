@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 系统服务
@@ -20,3 +19,12 @@ hide:
 - [诊断与日志](./diagnostics/diagnostics.md)
 - [cJSON 解析](./cjson.md)
 -->
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+NV 持久化存储 <nv/nv>
+OTA 固件升级 <ota/ota>
+```

@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # 省电模式
 
 > WiFi Power Save API

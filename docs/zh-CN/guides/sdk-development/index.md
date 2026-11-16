@@ -17,3 +17,12 @@
 - [API 参考](../../api-reference/index.md)
 
 建议先通过完整手册了解功能和开发流程，再从参考案例选择可运行实现，最后按需查询 API 细节。
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+配置开发环境 <environment-setup/index>
+软件开发指南 <manual/index>
+```

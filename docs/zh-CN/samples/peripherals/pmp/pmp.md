@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # PMP 内存保护
 
 > 使用技术：RISC-V PMP（Physical Memory Protection，物理内存保护）、TOR 地址匹配、访问权限、故障验证

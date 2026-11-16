@@ -1,6 +1,5 @@
 ---
-hide:
-  - toc
+html_theme.sidebar_secondary.remove: true
 ---
 
 # 整体架构
@@ -56,3 +55,17 @@ hide:
 - [内存布局](memory-layout/index.md)
 
     了解 Flash 分区表与 RAM (Random Access Memory) 内存分配说明。
+
+```{toctree}
+:hidden:
+:titlesonly:
+:maxdepth: 1
+
+软件架构介绍 <software-introduction>
+目录结构 <source-tree/index>
+构建系统 <build-output/index>
+内核 <kernel/index>
+启动流程 <boot-flow/index>
+运行时架构 <runtime-architecture/index>
+Flash 与 RAM <memory-layout/index>
+```
