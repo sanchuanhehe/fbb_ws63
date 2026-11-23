@@ -1,0 +1,64 @@
+/* Generated automatically by the program `genconstants'
+   from the machine description file `md'.  */
+
+#ifndef GCC_INSN_CONSTANTS_H
+#define GCC_INSN_CONSTANTS_H
+
+#define RETURN_ADDR_REGNUM 1
+#define S0_REGNUM 8
+#define A0_REGNUM 10
+#define T0_REGNUM 5
+#define S2_REGNUM 18
+#define SP_REGNUM 2
+#define S1_REGNUM 9
+#define T1_REGNUM 6
+#define ZERO_REGNUM 0
+
+enum unspec {
+  UNSPEC_EH_RETURN = 0,
+  UNSPEC_ADDRESS_FIRST = 1,
+  UNSPEC_PCREL = 2,
+  UNSPEC_LOAD_GOT = 3,
+  UNSPEC_TLS = 4,
+  UNSPEC_TLS_LE = 5,
+  UNSPEC_TLS_IE = 6,
+  UNSPEC_TLS_GD = 7,
+  UNSPEC_AUIPC = 8,
+  UNSPEC_FLT_QUIET = 9,
+  UNSPEC_FLE_QUIET = 10,
+  UNSPEC_COPYSIGN = 11,
+  UNSPEC_LRINT = 12,
+  UNSPEC_LROUND = 13,
+  UNSPEC_TIE = 14,
+  UNSPEC_PREFI = 15,
+  UNSPEC_PREFD = 16,
+  UNSPEC_LLI_IMM = 17,
+  UNSPEC_LLI_SYMBOL = 18,
+  UNSPEC_RISCV_CASESI = 19,
+  UNPSEC_ZERO_SET = 20,
+  UNSPEC_SEQUENCE_ABSTRACT_JUMP = 21,
+  UNSPEC_COMPARE_AND_SWAP = 22,
+  UNSPEC_SYNC_OLD_OP = 23,
+  UNSPEC_SYNC_EXCHANGE = 24,
+  UNSPEC_ATOMIC_STORE = 25,
+  UNSPEC_MEMORY_BARRIER = 26
+};
+#define NUM_UNSPEC_VALUES 27
+extern const char *const unspec_strings[];
+
+enum unspecv {
+  UNSPECV_GPR_SAVE = 0,
+  UNSPECV_GPR_RESTORE = 1,
+  UNSPECV_FRFLAGS = 2,
+  UNSPECV_FSFLAGS = 3,
+  UNSPECV_BLOCKAGE = 4,
+  UNSPECV_FENCE = 5,
+  UNSPECV_FENCE_I = 6,
+  UNSPECV_RISCV_PUSH = 7,
+  UNSPECV_RISCV_POP = 8,
+  UNSPECV_RISCV_POPRET = 9
+};
+#define NUM_UNSPECV_VALUES 10
+extern const char *const unspecv_strings[];
+
+#endif /* GCC_INSN_CONSTANTS_H */

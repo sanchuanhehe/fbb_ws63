@@ -30,6 +30,8 @@
         不更新HSO数据库
     -out_libs:
         -out_libs=file_path, 不再链接成elf, 转而将所有.a打包成一个大的.a
+    macOS:
+        Apple Silicon 原生编译，输出未签名的 ELF/BIN
     others:
         作为匹配编译target_names的关键字
 """

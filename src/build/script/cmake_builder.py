@@ -9,7 +9,7 @@ import sys
 import time
 
 from utils.build_utils import build_root_path, exec_shell, root_path, output_root, sdk_output_path, pkg_tools_path
-from utils.build_utils import compare_bin
+from utils.build_utils import compare_bin, get_platform_name
 from enviroment import TargetEnvironment, BuildEnvironment
 from pack_tool import packTool
 from sdk_generator.sdk_generator import SdkGenerator
@@ -27,6 +27,7 @@ class CMakeBuilder(BuildEnvironment):
         self.cmake_cmd = []
         self.sdk = None
         self.pack_tool = None
+        self.compile_only = get_platform_name() == "darwin"
 
     def get_component(self, env):
         com_config = CommonConfig(env.get('arch'))
@@ -46,14 +47,15 @@ class CMakeBuilder(BuildEnvironment):
                     components.append(comm)
         return components
 
-    def get_build_cmd(self, env):
-        ext_cmd = []
+    def get_build_targets(self, env):
         components = self.get_component(env)
-        ext_cmd.extend(components)
-        if self.generator == 'Ninja':
-            return ['ninja'] + ext_cmd + ['-j%d' % self.thread]
-        else:
-            return ['make'] + ext_cmd + ['-j%d' % self.thread]
+        if self.compile_only and not components:
+            return ['GENERAT_BIN']
+        return components
+
+    def get_build_cmd(self, env):
+        build_tool = 'ninja' if self.generator == 'Ninja' else 'make'
+        return [build_tool] + self.get_build_targets(env) + ['-j%d' % self.thread]
 
     def build(self):
         """
@@ -62,6 +64,8 @@ class CMakeBuilder(BuildEnvironment):
         for group in self.group_names:
             need_pack = False
             if group.startswith('pack'):
+                if self.compile_only:
+                    sys.exit("Firmware packaging requires the Linux or Windows SDK tools.")
                 need_pack = True
                 chip = self.get_chip_name(group)
                 if os.path.exists(os.path.join(output_root, 'package', chip, group)):
@@ -108,6 +112,10 @@ class CMakeBuilder(BuildEnvironment):
 
     def build_target(self, target):
         env = TargetEnvironment(target, self.extr_defines)
+        if self.compile_only:
+            if env.get('build_type') in ('SDK', 'GuardSDKSample'):
+                sys.exit("SDK packaging requires the Linux or Windows SDK tools.")
+            print("macOS build: compile and link only (unsigned ELF/BIN).")
         if env.get('build_type') == 'SDK':
             self.build_sdk(env)
             return
@@ -117,7 +125,7 @@ class CMakeBuilder(BuildEnvironment):
 
         self.compile_target(target, env)
 
-        if env.get('just_build_components'):
+        if self.compile_only or env.get('just_build_components'):
             return
 
         if env.get("fs_image"):
@@ -379,10 +387,10 @@ class CMakeBuilder(BuildEnvironment):
             _excute(self.get_build_cmd(env), log_file, self.dump)
         else:
             ext_cmd = []
-            components_target = self.get_component(env)
-            print(components_target)
-            if components_target:
-                ext_cmd = ['--target'] + components_target
+            build_targets = self.get_build_targets(env)
+            print(build_targets)
+            if build_targets:
+                ext_cmd = ['--target'] + build_targets
             _excute(["cmake", "--build", output_path, '-j%d' % self.thread] + ext_cmd, log_file, self.dump)
 
         if len(self.get_component(env)) > 0:
@@ -390,7 +398,7 @@ class CMakeBuilder(BuildEnvironment):
             print("######### Build target:%s, component:[%s] success" % (target_name, ' '.join(self.get_component(env))))
             return 0
 
-        if env.is_enable_hso() and not nhso:
+        if env.is_enable_hso() and not nhso and not self.compile_only:
             cmd = self.get_build_cmd(env)
             cmd.append("HSO_DB")
             _excute(cmd, log_file, self.dump)

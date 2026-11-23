@@ -8,7 +8,7 @@ set(RM     ${CMAKE_COMMAND} -E rm -f)
 set(RM_DIR ${CMAKE_COMMAND} -E rm -rf)
 set(UNZIP ${CMAKE_COMMAND} -E tar x)
 
-if(${BUILD_PLATFORM} MATCHES "linux")
+if("${BUILD_PLATFORM}" MATCHES "^(linux|darwin)$")
 set(CP     cp)
 elseif(${BUILD_PLATFORM} MATCHES "windows")
 set(CP     ${CMAKE_COMMAND} -E copy)
