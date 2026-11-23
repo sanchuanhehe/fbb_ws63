@@ -62,8 +62,7 @@ def do_cmd(target_name: str, hook_name: str, env: Dict[str, Any])->bool:
  
     target_array = ['ws63-flashboot', 'ws63-loaderboot']
  
-    if (hook_name == 'build_pre' and env.get('build_platform') != 'darwin'
-            and "sdk_ws63" not in all_target and target_name not in target_array):
+    if not "sdk_ws63" in all_target and target_name not in target_array and hook_name == 'build_pre':
         if '-c' in par_list:
             print("flashboot start build .....")
             errcode = exec_shell([python_path, 'build.py', '-c', 'ws63-flashboot'], None, True)

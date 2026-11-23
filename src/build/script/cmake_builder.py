@@ -9,7 +9,7 @@ import sys
 import time
 
 from utils.build_utils import build_root_path, exec_shell, root_path, output_root, sdk_output_path, pkg_tools_path
-from utils.build_utils import compare_bin, get_platform_name
+from utils.build_utils import compare_bin
 from enviroment import TargetEnvironment, BuildEnvironment
 from pack_tool import packTool
 from sdk_generator.sdk_generator import SdkGenerator
@@ -27,7 +27,6 @@ class CMakeBuilder(BuildEnvironment):
         self.cmake_cmd = []
         self.sdk = None
         self.pack_tool = None
-        self.compile_only = get_platform_name() == "darwin"
 
     def get_component(self, env):
         com_config = CommonConfig(env.get('arch'))
@@ -65,7 +64,7 @@ class CMakeBuilder(BuildEnvironment):
             need_pack = False
             if group.startswith('pack'):
                 if self.compile_only:
-                    sys.exit("Firmware packaging requires the Linux or Windows SDK tools.")
+                    sys.exit("Firmware packaging cannot be combined with -unsigned.")
                 need_pack = True
                 chip = self.get_chip_name(group)
                 if os.path.exists(os.path.join(output_root, 'package', chip, group)):
@@ -114,12 +113,12 @@ class CMakeBuilder(BuildEnvironment):
         env = TargetEnvironment(target, self.extr_defines)
         if self.compile_only:
             if env.get('build_type') in ('SDK', 'GuardSDKSample'):
-                sys.exit("SDK packaging requires the Linux or Windows SDK tools.")
-            print("macOS build: compile and link only (unsigned ELF/BIN).")
+                sys.exit("SDK packaging cannot be combined with -unsigned.")
+            print("Compile and link only (unsigned ELF/BIN).")
         if env.get('build_type') == 'SDK':
             self.build_sdk(env)
             return
-        if not run_custom_cmd(env, target, 'build_pre'):
+        if not self.compile_only and not run_custom_cmd(env, target, 'build_pre'):
             self.print_build_result(target, 1)
             sys.exit(1)
 

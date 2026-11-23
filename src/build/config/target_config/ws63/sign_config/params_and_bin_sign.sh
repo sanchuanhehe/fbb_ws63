@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$(uname -s)" = Darwin ]; then
+    exec python3 "$(dirname "$0")/params_and_bin_sign.py" "${1:-ws63-liteos-app}"
+fi
+
+
 set -e
 
 script_dir=$(cd $(dirname $0); pwd)

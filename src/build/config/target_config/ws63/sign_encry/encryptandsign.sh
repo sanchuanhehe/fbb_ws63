@@ -4,6 +4,16 @@ CUR_DIR=$(cd $(dirname $0);pwd)
 
 # 签名工具
 SIGN_TOOL=${CUR_DIR}/sign_tool_pltuni
+HOST_SYSTEM=$(uname -s)
+
+run_sign_tool()
+{
+    if [ "$HOST_SYSTEM" = Darwin ]; then
+        python3 "$CUR_DIR/../../../../../tools/bin/sign_tool/sign_tool_native.py" "$@"
+    else
+        "$SIGN_TOOL" "$@"
+    fi
+}
 PACK_TOOL=${CUR_DIR}/packet_allinone.py
 EFUSE_TOOL=${CUR_DIR}/efuse_cfg_gen.py
 
@@ -20,6 +30,21 @@ SIGN_CONF_DIR="${CUR_DIR}/config/sign"
 
 set_opt()
 {
+    if [ "$HOST_SYSTEM" = Darwin ]; then
+        python3 - "$1" "$2" "$3" <<'PYCFG'
+from pathlib import Path
+import sys
+
+name, value, path = sys.argv[1:]
+config = Path(path)
+lines = config.read_text().splitlines()
+config.write_text("\n".join(
+    f"{name}={value}" if line.startswith(f"{name}=") else line
+    for line in lines
+) + "\n")
+PYCFG
+        return
+    fi
     local tmp=$2
     tmp=${tmp//\//\\\/}
     sed -r -i "s/$1=.*/$1=$tmp/g" $3
@@ -28,8 +53,8 @@ set_opt()
 update_keyfile_path()
 {
     local file=$1
-    local root_keyfile=`sed '/^RootKeyFile=/!d;s/.*=//' ${file}`
-    local sub_keyfile=`sed '/^SubKeyFile=/!d;s/.*=//' ${file}`
+    local root_keyfile=`sed '/^RootKeyFile=/!d;s/.*=//' "$file" | tr -d '\r'`
+    local sub_keyfile=`sed '/^SubKeyFile=/!d;s/.*=//' "$file" | tr -d '\r'`
     set_opt RootKeyFile ${SIGN_CONF_DIR}/${root_keyfile} $file
     set_opt SubKeyFile ${SIGN_CONF_DIR}/${sub_keyfile} $file
 }
@@ -45,11 +70,15 @@ sign_image()
     local dst_image=${TMP_DIR}/`basename ${image_name} .bin`_sign.bin
     local tmp_image=${TMP_DIR}/${image_name}_64B
     local image_size=`wc -c < ${src_image}`
-    local cnt=`expr ${image_size} / 64 + 1`
+    local alignment=64
+    if [ "$HOST_SYSTEM" = Darwin ] && grep -Eq "^SignSuite=1[[:space:]]*$" "$src_config"; then
+        alignment=256
+    fi
+    local cnt=$((image_size / alignment + 1))
 
     echo "Start sign ${src_image} by ${config} ${image_size}"
     # 1.镜像64bye对齐
-    dd if=${src_image} of=${tmp_image} bs=64c seek=0 count=${cnt} conv=sync
+    dd if="$src_image" of="$tmp_image" bs="$alignment" seek=0 count="$cnt" conv=sync
     mv ${tmp_image} ${src_image}
     # 2.准备签名配置文件
     cp ${src_config} ${dst_config}
@@ -57,7 +86,7 @@ sign_image()
     set_opt DstFile ${dst_image} ${dst_config}
     update_keyfile_path ${dst_config}
 
-    ${SIGN_TOOL} 0 ${dst_config}
+    run_sign_tool 0 "$dst_config" || exit 1
     rm -rf ${src_image}
     echo "Sign ${src_image} successful!!!"
 }
@@ -76,7 +105,7 @@ make_root_puk()
     cp ${src_config} ${dst_config}
     set_opt DstFile ${puk_image} ${dst_config}
     set_opt SrcFile ${SIGN_CONF_DIR}/ec_bp256_oem_root_private_key.pem ${dst_config}
-    $SIGN_TOOL 1 ${dst_config}
+    run_sign_tool 1 "$dst_config" || exit 1
     mv ${TMP_DIR}/root_pubk.bin.hash ${CONF_DIR}/sign/root_pubk.bin.hash
     # 2.将根公钥放到指定镜像头中
     cat ${puk_image} ${TMP_DIR}/${image_name} > ${TMP_DIR}/root_`basename ${image_name}`
@@ -156,7 +185,7 @@ case ${IMG_TYPE} in
         if [[ $OTA_IMAGES == *"boot"* ]]; then
             sign_image flash_bin_ecc.cfg flashboot.bin
         fi
-        python3 ${CUR_DIR}/build_ota_pkt.py --path=${TMP_DIR},${OUT_PATH} --pkt=$OTA_IMAGES
+        python3 "$CUR_DIR/build_ota_pkt.py" --path="$TMP_DIR,$OUT_PATH" --pkt="$OTA_IMAGES" || exit 1
         ;;
     *"all"*)
         cp ${INPUT_FILE} ${OUT_PATH}/all.zip
@@ -182,9 +211,9 @@ case ${IMG_TYPE} in
             sign_image liteos_mfg_bin_ecc.cfg ws63-liteos-mfg.bin
         fi
         # efuse
-        $EFUSE_TOOL ${TMP_DIR}/efuse.csv ${TMP_DIR}/efuse_cfg.bin
+        "$EFUSE_TOOL" "$TMP_DIR/efuse.csv" "$TMP_DIR/efuse_cfg.bin" || exit 1
         # 打包
-        python3 $PACK_TOOL $TMP_DIR $EXTERN_PARAM
+        python3 "$PACK_TOOL" "$TMP_DIR" "$EXTERN_PARAM" || exit 1
         # 整包fwpkg镜像加密 & 模块烧写文件
         make_burn_image ws63-liteos-app_all.fwpkg ws63-liteos-app_encry.fwpkg
         ;;

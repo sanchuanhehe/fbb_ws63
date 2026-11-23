@@ -37,7 +37,11 @@ set(HSO_PARSE_DIR ${SCRIPT_DIR}/parse_tool)
 set(HSO_PARSE_MAIN ${HSO_PARSE_DIR}/parse_main_phase1.py)
 
 # sign tool
-set(SIGN_TOOL ${ROOT_DIR}/tools/bin/sign_tool/sign_tool_pltuni)
+if("${BUILD_PLATFORM}" STREQUAL "darwin")
+    set(SIGN_TOOL "${Python3_EXECUTABLE}" "${ROOT_DIR}/tools/bin/sign_tool/sign_tool_native.py")
+else()
+    set(SIGN_TOOL ${ROOT_DIR}/tools/bin/sign_tool/sign_tool_pltuni)
+endif()
 
 # concat tool
 set(CONCAT_TOOL ${ROOT_DIR}/build/script/concat_bin.py)

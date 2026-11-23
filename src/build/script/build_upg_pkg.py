@@ -28,6 +28,9 @@ import subprocess
 import copy
 import struct
 import platform
+import lzma
+from pathlib import Path
+import shlex
 from ctypes import *
 
 ###############################Defining Basic Types###############################################
@@ -259,6 +262,12 @@ def fill_fota_image_hash_node(hash_bin, image_id, image_index, tmp_hash, addr_of
     return
 
 def lzma_compress_bin(src_file, dst_file, lzma_tool):
+    if platform.system() == "Darwin":
+        source = Path(src_file.strip('"')).read_bytes()
+        filters = [{"id": lzma.FILTER_LZMA1, "dict_size": 4096, "lc": 0, "lp": 0, "pb": 2}]
+        output = lzma.compress(source, format=lzma.FORMAT_ALONE, filters=filters)
+        Path(dst_file.strip('"')).write_bytes(output[:5] + len(source).to_bytes(8, "little") + output[13:])
+        return
     # print('lzma compress tool :', lzma_tool)
     # print('lzma    src   file :', src_file)
     # print('lzma    out   file :', dst_file)
@@ -432,7 +441,7 @@ def encry_ota_image(cf, image_confg_key, image_bin_1, fota_obj):
 
     create_encry_cfg(fota_obj, upg_align_file, upg_encry_file)
     cmd = ' '.join([fota_obj.upg_tool, '5', '"%s"' % fota_obj.encry_conf_file])
-    subprocess.run(cmd, shell=True)
+    subprocess.run(cmd, shell=True, check=True)
     with open(upg_encry_file, 'rb') as fp:
         image_bin_1= fp.read()
     return image_bin_1
@@ -838,6 +847,12 @@ class fota_info:
             self.user_firmware_version = None
 
     def _set_tool_path(self):
+        if platform.system() == "Darwin":
+            sdk_root = Path(__file__).resolve().parents[2]
+            signer = sdk_root / "tools/bin/sign_tool/sign_tool_native.py"
+            self.upg_tool = " ".join(shlex.quote(str(arg)) for arg in (sys.executable, signer))
+            self.lzma_tool = None
+            return
         if platform.system().lower() == "linux":
             self.upg_tool = self.base_cfg.get('TOOLS', 'UpgToolPath')
             self.lzma_tool = self.base_cfg.get('TOOLS', 'LzmaToolPath')

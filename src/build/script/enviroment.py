@@ -337,6 +337,7 @@ class BuildEnvironment:
         self.group_names = []
         self.generator = 'Ninja' if shutil.which('ninja') else 'Unix Makefiles'
         self.no_hso = False
+        self.compile_only = False
         self.open_kconfig = False
         self.dump = False
         self.build_time = ''
@@ -366,6 +367,8 @@ class BuildEnvironment:
                 self.build_level = param[1:]
             elif param == '-dump':
                 self.dump = True
+            elif param == '-unsigned':
+                self.compile_only = True
             elif param == '-nhso':
                 self.no_hso = True
             elif param == '-nsymlink':

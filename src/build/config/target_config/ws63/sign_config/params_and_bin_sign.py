@@ -20,9 +20,11 @@ build_root_path = g_root
 if os.environ.get('FBB_BUILD_ROOT_PATH'):
     build_root_path = os.environ.get('FBB_BUILD_ROOT_PATH')
 if "windows" in platform.platform().lower():
-    sign_tool = "../../../../../tools/bin/sign_tool/sign_tool_pltuni.exe"
+    sign_tool = ["../../../../../tools/bin/sign_tool/sign_tool_pltuni.exe"]
+elif platform.system() == "Darwin":
+    sign_tool = [sys.executable, os.path.join(g_root, "tools/bin/sign_tool/sign_tool_native.py")]
 else:
-    sign_tool = "../../../../../tools/bin/sign_tool/sign_tool_pltuni"
+    sign_tool = ["../../../../../tools/bin/sign_tool/sign_tool_pltuni"]
 out_put = os.path.join(build_root_path, 'output', 'ws63', 'acore')
 pktbin = os.path.join(build_root_path, 'output', 'ws63', 'pktbin')
 inter_bin = "../../../../../interim_binary/ws63/bin/boot_bin"
@@ -84,7 +86,7 @@ def sign_app(file_path, type, cfg_name):
         print("sign name: ", file_path)
         dd64c(file_path)
         with temp_cfg_with_absolute_paths(cfg_name) as temp_cfg:
-            ret = subprocess.run([sign_tool, type, temp_cfg], stdout=subprocess.DEVNULL)
+            ret = subprocess.run([*sign_tool, type, temp_cfg], stdout=subprocess.DEVNULL, check=True)
         if ret.returncode == 0:
             print(file_path, " generated successfully!!!")
         else:
@@ -130,16 +132,16 @@ if os.path.isfile("params.bin"):
     print("params.bin generate successfully!!!")
 
     # generate params_sign.bin
-    param_bin_ecc_cmd = [sign_tool, "0", "param_bin_ecc.cfg"]
-    ret = subprocess.run(param_bin_ecc_cmd, cwd=cwd_path, stdout=subprocess.DEVNULL)
+    param_bin_ecc_cmd = [*sign_tool, "0", "param_bin_ecc.cfg"]
+    ret = subprocess.run(param_bin_ecc_cmd, cwd=cwd_path, stdout=subprocess.DEVNULL, check=True)
     if ret.returncode == 0:
         print("params_sign.bin generate successfully!!!")
     else:
         print("params_sign.bin generate failed!!!")
 
     # generate root public key
-    root_pubk_cmd = [sign_tool, "1", "root_pubk.cfg"]
-    ret = subprocess.run(root_pubk_cmd, cwd=cwd_path, stdout=subprocess.DEVNULL)
+    root_pubk_cmd = [*sign_tool, "1", "root_pubk.cfg"]
+    ret = subprocess.run(root_pubk_cmd, cwd=cwd_path, stdout=subprocess.DEVNULL, check=True)
     if ret.returncode == 0:
         print("root_pubk.bin generate successfully!!!")
     else:
@@ -164,7 +166,7 @@ if os.path.isfile(os.path.join(out_put, "ws63-ssb/ssb.bin")):
     dd64c(os.path.join(out_put, "ws63-ssb/ssb.bin"))
     shutil.copy(os.path.join(out_put, "ws63-ssb/ssb.bin"), pktbin)
     with temp_cfg_with_absolute_paths("ssb_bin_ecc.cfg") as temp_cfg:
-        ret1 = subprocess.run([sign_tool, "0", temp_cfg], stdout=subprocess.DEVNULL)
+        ret1 = subprocess.run([*sign_tool, "0", temp_cfg], stdout=subprocess.DEVNULL, check=True)
     if ret1.returncode == 0:
         print("ssb_sign.bin generated successfully!!!")
         shutil.copy(os.path.join(out_put, "ws63-ssb/ssb_sign.bin"), boot_bin)
@@ -189,9 +191,9 @@ if os.path.isfile(os.path.join(out_put, "ws63-flashboot/flashboot.bin")):
     dd64c(os.path.join(out_put, "ws63-flashboot/flashboot.bin"))
     shutil.copy(os.path.join(out_put, "ws63-flashboot/flashboot.bin"), pktbin)
     with temp_cfg_with_absolute_paths("flash_bin_ecc.cfg") as temp_cfg:
-        ret1 = subprocess.run([sign_tool, "0", temp_cfg], stdout=subprocess.DEVNULL)
+        ret1 = subprocess.run([*sign_tool, "0", temp_cfg], stdout=subprocess.DEVNULL, check=True)
     with temp_cfg_with_absolute_paths("flash_backup_bin_ecc.cfg") as temp_cfg:
-        ret2 = subprocess.run([sign_tool, "0", temp_cfg], stdout=subprocess.DEVNULL)
+        ret2 = subprocess.run([*sign_tool, "0", temp_cfg], stdout=subprocess.DEVNULL, check=True)
     if ret1.returncode == 0 and ret2.returncode == 0:
         print("flash_sign.bin generated successfully!!!")
     else:
@@ -205,7 +207,7 @@ if os.path.isfile(os.path.join(out_put, "ws63-flashboot/flashboot.bin")):
 if os.path.isfile(os.path.join(out_put, "ws63-ate-flash", "ws63-ate-flash.bin")):
     dd64c(os.path.join(out_put, "ws63-ate-flash", "ws63-ate-flash.bin"))
     with temp_cfg_with_absolute_paths("flash_htol_bin_ecc.cfg") as temp_cfg:
-        ret1 = subprocess.run([sign_tool, "0", temp_cfg], stdout=subprocess.DEVNULL)
+        ret1 = subprocess.run([*sign_tool, "0", temp_cfg], stdout=subprocess.DEVNULL, check=True)
     if ret1.returncode == 0:
         print("ws63_ate_flash.bin generated successfully!!!")
     else:
@@ -215,7 +217,7 @@ if os.path.isfile(os.path.join(out_put, "ws63-loaderboot", "loaderboot.bin")):
     dd64c(os.path.join(out_put, "ws63-loaderboot", "loaderboot.bin"))
     shutil.copy(os.path.join(out_put, "ws63-loaderboot", "loaderboot.bin"), pktbin)
     with temp_cfg_with_absolute_paths("loaderboot_bin_ecc.cfg") as temp_cfg:
-        ret1 = subprocess.run([sign_tool, "0", temp_cfg], stdout=subprocess.DEVNULL)
+        ret1 = subprocess.run([*sign_tool, "0", temp_cfg], stdout=subprocess.DEVNULL, check=True)
     if ret1.returncode == 0:
         print("loaderboot_sign.bin generated successfully!!!")
     else:
